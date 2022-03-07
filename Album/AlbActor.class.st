@@ -234,13 +234,13 @@ AlbActor >> removeEventHandlersFromWidget [
 ]
 
 { #category : #'event management' }
-AlbActor >> request: aBrRequest [
+AlbActor >> request: aRequest [
 
-	aBrRequest canBePropagated
-		ifTrue: [ self fireEvent: aBrRequest ]
-		ifFalse: [ self dispatchEvent: aBrRequest ].
+	aRequest canBePropagated
+		ifTrue: [ self fireEvent: aRequest ]
+		ifFalse: [ self dispatchEvent: aRequest ].
 
-	^ aBrRequest response
+	^ aRequest response
 ]
 
 { #category : #'private - event management' }

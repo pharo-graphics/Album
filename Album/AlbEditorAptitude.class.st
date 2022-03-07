@@ -45,9 +45,9 @@ AlbEditorAptitude >> initializeListeners [
 AlbEditorAptitude >> initializeRequests [
 	super initializeRequests.
 
-	self request: BrEditorStylerRequest new.
-	self request: BrEditorTextRequest new.
-	self request: BrEditorModeRequest new
+	self request: AlbEditorStylerRequest new.
+	self request: AlbEditorTextRequest new.
+	self request: AlbEditorModeRequest new
 ]
 
 { #category : #accessing }

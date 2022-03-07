@@ -76,7 +76,7 @@ AlbEditor >> initialize [
 		do: [ :anEvent | self viewModel text: anEvent text ].
 
 	self editor: AlbTextEditor new.
-	self viewModel: BrEditorModel new
+	self viewModel: AlbEditorModel new
 ]
 
 { #category : #'api - editor' }

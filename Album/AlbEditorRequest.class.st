@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorRequest,
-	#superclass : #BrRequest,
+	#superclass : #AlbRequest,
 	#category : #'Album-Editor - Events'
 }

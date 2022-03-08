@@ -6,5 +6,5 @@ Class {
 
 { #category : #initialization }
 AlbEditorModeRequest >> responseClass [
-	^ BrEditorModeChanged
+	^ AlbEditorModeChanged
 ]

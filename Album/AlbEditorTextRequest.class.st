@@ -6,5 +6,5 @@ Class {
 
 { #category : #initialization }
 AlbEditorTextRequest >> responseClass [
-	^ BrEditorTextChanged
+	^ AlbEditorTextChanged
 ]

@@ -44,15 +44,6 @@ AlbWidgetModel class >> withAllSuperclassModels [
 	^ theModels
 ]
 
-{ #category : #'as yet unclassified' }
-AlbWidgetModel class >> withAllSuperclassRequests [
-	<return: #Set of: #'BrRequest class'>
-
-	^ ((self withAllSuperclassModels
-		flatCollect: [ :eachLookClass | eachLookClass referencedClasses
-			select: [ :eachReferencedClass | eachReferencedClass isKindOf: BrRequest class ] ]) as: Set) asArray
-]
-
 { #category : #'api - composition' }
 AlbWidgetModel >> + anotherModel [
 	self add: anotherModel asModel

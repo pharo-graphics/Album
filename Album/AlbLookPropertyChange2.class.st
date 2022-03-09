@@ -1,12 +1,21 @@
 Class {
 	#name : #AlbLookPropertyChange2,
-	#superclass : #AlbLookChange,
+	#superclass : #Object,
 	#instVars : [
+		'initialized',
 		'old',
 		'new',
 		'read',
 		'path',
-		'value'
+		'value',
+		'oldV',
+		'newV',
+		'readBlock',
+		'writeBlock',
+		'propertyValue',
+		'source',
+		'up',
+		'down'
 	],
 	#category : #'Album-Core-Changes'
 }
@@ -23,15 +32,26 @@ AlbLookPropertyChange2 >> downOn: aLook [
 { #category : #initialization }
 AlbLookPropertyChange2 >> initialize [
 	super initialize.
+	initialized := false.
 	read := [ :e | self readOn: e ].
 	up := [ :e :f | 
 	self
-		writeOn: e
+		writeOn: e 
 		value:
 			(value isBlock
 				ifTrue: [ value cull: f ]
 				ifFalse: [ value ]) ].
 	down := [ :e :f :g | self writeOn: e value: f ]
+]
+
+{ #category : #accessing }
+AlbLookPropertyChange2 >> newV: aBlock [
+	newV := aBlock
+]
+
+{ #category : #accessing }
+AlbLookPropertyChange2 >> oldV: aBlock [
+	oldV := aBlock
 ]
 
 { #category : #accessing }
@@ -49,18 +69,34 @@ AlbLookPropertyChange2 >> printOn: aStream [
 	aStream nextPutAll: (' ' join: (path collect: #asString))
 ]
 
+{ #category : #accessing }
+AlbLookPropertyChange2 >> propertyValue: anObject [
+	propertyValue := anObject
+]
+
+{ #category : #accessing }
+AlbLookPropertyChange2 >> readBlock: aBlock [
+	readBlock := aBlock
+]
+
 { #category : #initialization }
 AlbLookPropertyChange2 >> readOn: aLook [
 
-	^ path inject: aLook into: [ :e :f | e perform: f ]
+	^ readBlock value: aLook
+]
+
+{ #category : #accessing }
+AlbLookPropertyChange2 >> source: anObject [
+	source := anObject
 ]
 
 { #category : #initialization }
 AlbLookPropertyChange2 >> upOn: aLook [
 	self assert: [ initialized not ].
-	old := read value: aLook.
+	old := self readOn: aLook.
+	self writeOn: aLook value: self value.
 	up value: aLook value: old.
-	new := read value: aLook.
+	new := self readOn: aLook.
 	initialized := true
 ]
 
@@ -74,11 +110,13 @@ AlbLookPropertyChange2 >> value: anObject [
 	value := anObject
 ]
 
+{ #category : #accessing }
+AlbLookPropertyChange2 >> writeBlock: aBlock [
+	writeBlock := aBlock
+]
+
 { #category : #initialization }
 AlbLookPropertyChange2 >> writeOn: aLook value: anObject [
-	| receiver |
-	receiver := (path copyFrom: 1 to: path size - 1)
-		inject: aLook
-		into: [ :e :f | e perform: f ].
-	^ receiver perform: (path last asString , ':') asSymbol with: anObject
+	
+	^ writeBlock value: aLook value: anObject
 ]

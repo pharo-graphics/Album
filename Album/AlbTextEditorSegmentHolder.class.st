@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorSegmentHolder,
 	#superclass : #AlbEditorSegmentHolder,
-	#category : #'Album-Editor-Model - Segment'
+	#category : #'Album-Editor-Model - Segment-Text'
 }
 
 { #category : #updating }

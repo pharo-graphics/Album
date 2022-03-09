@@ -46,7 +46,7 @@ AlbTextEditorParagraphElement class >> fontStretchToSkia: aBlFontStretch [
 
 { #category : #'api - cursor' }
 AlbTextEditorParagraphElement >> addCursorAt: aTextPosition [
-	<return: #BrCursorElement>
+	<return: #AlbCursorElement>
 
 	^ self
 		cursorAt: aTextPosition
@@ -143,7 +143,7 @@ AlbTextEditorParagraphElement >> buildParagraph [
 		(eachElement isKindOf: BlTextElement)
 			ifTrue: [ self addText: eachElement text toBuilder: aBuilder ]
 			ifFalse: [
-				(eachElement isKindOf: BrCursorElement)
+				(eachElement isKindOf: AlbCursorElement)
 					ifFalse: [
 						aBuilder
 							addPlaceholder: (SkiaParagraphPlaceholderStyle new alignMiddle extent: eachElement measuredExtent)
@@ -162,7 +162,7 @@ AlbTextEditorParagraphElement >> cursorAt: aTextPosition ifFound: aFoundBlock if
 
 { #category : #accessing }
 AlbTextEditorParagraphElement >> cursorElements [
-	<return: #Collection of: #BrCursorElement>
+	<return: #Collection of: #AlbCursorElement>
 
 	^ cursorElements
 ]
@@ -289,7 +289,7 @@ AlbTextEditorParagraphElement >> newCursor [
 AlbTextEditorParagraphElement >> onChildAdded: anElement [
 	super onChildAdded: anElement.
 	
-	(anElement isKindOf: BrCursorElement)
+	(anElement isKindOf: AlbCursorElement)
 		ifFalse: [ paragraph := nil ]
 	
 	
@@ -371,7 +371,7 @@ AlbTextEditorParagraphElement >> placeholderAndCursorElements [
 
 { #category : #private }
 AlbTextEditorParagraphElement >> placeholderElements [
-	^ self children reject: [ :each | (each isKindOf: BlTextElement) or: [ each isKindOf: BrCursorElement ] ]
+	^ self children reject: [ :each | (each isKindOf: BlTextElement) or: [ each isKindOf: AlbCursorElement ] ]
 ]
 
 { #category : #'api - cursor' }
@@ -490,7 +490,7 @@ AlbTextEditorParagraphElement >> selection: anObject [
 
 { #category : #'api - cursor' }
 AlbTextEditorParagraphElement >> setCursors: aCollectionOfCursorPositions [
-	<return: #BrCursorElement>
+	<return: #AlbCursorElement>
 	| theExistingCursors theAddedCursors theRemovedCursors theMovedCursors |
 	
 	theExistingCursors := self cursorElements collect: [ :eachElement | eachElement textPosition ].

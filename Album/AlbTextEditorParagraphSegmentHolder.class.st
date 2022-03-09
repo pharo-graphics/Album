@@ -103,7 +103,7 @@ AlbTextEditorParagraphSegmentHolder >> createSegmentElement [
 		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical fitContent ];
-		aptitude: (BrLayoutResizerAptitude new
+		aptitude: (AlbLayoutResizerAptitude new
 			hInherit;
 			vAnyToFitContent);
 		yourself

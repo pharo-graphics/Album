@@ -58,7 +58,7 @@ AlbLookPropertyChange >> readOn: aLook [
 { #category : #initialization }
 AlbLookPropertyChange >> upOn: aLook [
 	self assert: [ initialized not ].
-	self halt.
+
 	old := read value: aLook.
 	up value: aLook value: old.
 	new := read value: aLook.
@@ -67,6 +67,7 @@ AlbLookPropertyChange >> upOn: aLook [
 
 { #category : #accessing }
 AlbLookPropertyChange >> value [
+
 	^ value
 ]
 

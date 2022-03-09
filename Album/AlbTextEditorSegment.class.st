@@ -1,0 +1,95 @@
+Class {
+	#name : #AlbTextEditorSegment,
+	#superclass : #AlbEditorSegment,
+	#traits : 'TAblTextEditorTextualPiece',
+	#classTraits : 'TAblTextEditorTextualPiece classTrait',
+	#category : #'Album-Editor-Model - Segment-Text'
+}
+
+{ #category : #initialization }
+AlbTextEditorSegment >> initializeWith: aBlText from: aTextStart to: aTextEnd delimiter: aDelimiterLength [
+	self
+		assert: [ aBlText isKindOf: BlSubText ]
+		description: [ 'Must be sub-text' ].
+
+	text := aBlText.
+	
+	textStart := aTextStart.
+	textEnd := aTextEnd.
+	delimiterLength := aDelimiterLength.
+
+	self clearCache.
+	self updateSegmentProperties
+]
+
+{ #category : #'api - operations' }
+AlbTextEditorSegment >> insert: aCollectionOfSegments [
+	| theSegments theRestLength |
+	<return: #Collection of: #AblTextEditorSegment>
+
+	theSegments := { self }, aCollectionOfSegments allButFirst.
+
+	theRestLength := self textLength - (aCollectionOfSegments first textStart - textStart).
+
+	"when inserting multiple segments we just need to alter intervals of the first (myself)
+	and the last inserted segments accordingly"
+	self
+		scopeText: self textStart
+		end: aCollectionOfSegments first textEnd.
+
+	delimiterLength := aCollectionOfSegments first delimiterLength.
+
+	theSegments last
+		scopeText: theSegments last textStart
+		end: theSegments last textEnd + theRestLength.
+
+	^ theSegments
+]
+
+{ #category : #testing }
+AlbTextEditorSegment >> isAllLineBreak [
+	"Return true if segment only consists of line break, false otherwise"
+	<return: #Boolean>
+	
+	^ self text allSatisfy: #isLineBreak
+]
+
+{ #category : #testing }
+AlbTextEditorSegment >> isLineBreak [
+	"Return true if segment only consists of line break, false otherwise"
+	<return: #Boolean>
+	
+	^ self text anySatisfy: #isLineBreak
+]
+
+{ #category : #'text - modifications' }
+AlbTextEditorSegment >> moveTextBy: aNumber [
+	"Move all sub-text pieces (#start and #end) known by the segment by a given amount of indicies.
+	If aNumber is negative sub-texts will be moved to the left (maybe this is a result of a deletion).
+	If aNumber is positive sub-texts will be moved to the right (maybe this is a result of an insertion).
+	aNumber must not be zero - undefined behaviour (nothing was inserted but the message is sent? Probably a bug)"
+
+	self start: textStart + aNumber end: textEnd + aNumber
+]
+
+{ #category : #'text - modifications' }
+AlbTextEditorSegment >> moveTextPiecesBy: aNumber at: aTextIndex [
+]
+
+{ #category : #printing }
+AlbTextEditorSegment >> printOn: aStream [
+	self text printOn: aStream
+]
+
+{ #category : #accessing }
+AlbTextEditorSegment >> segmentType [
+	"Return a type of this segment responsible for creation
+	of segment holder and also used as a key for caching purposes"
+	<return: #BrEditorSegmentType>
+	
+	^ self subclassResponsibility
+]
+
+{ #category : #'text - modifications' }
+AlbTextEditorSegment >> updateSegmentProperties [
+]

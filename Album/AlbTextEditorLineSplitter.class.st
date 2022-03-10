@@ -6,7 +6,7 @@ Class {
 
 { #category : #'instance creation' }
 AlbTextEditorLineSplitter >> newSegment [
-	^ BrTextEditorLineSegment new
+	^ AlbTextEditorLineSegment new
 ]
 
 { #category : #'instance creation' }

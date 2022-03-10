@@ -1,0 +1,81 @@
+Class {
+	#name : #AlbTextEditorParagraphSegmentPiece,
+	#superclass : #Object,
+	#traits : 'TAblTextEditorTextualPiece',
+	#classTraits : 'TAblTextEditorTextualPiece classTrait',
+	#instVars : [
+		'segment'
+	],
+	#category : #'Album-Editor-Model - Segment-Text-Paragraph'
+}
+
+{ #category : #'instance creation' }
+AlbTextEditorParagraphSegmentPiece >> createElement: anEditorElement [
+	<return: #BlElement>
+
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+AlbTextEditorParagraphSegmentPiece >> isText [
+	^ false
+]
+
+{ #category : #updating }
+AlbTextEditorParagraphSegmentPiece >> onRecycled: aPieceElement in: anEditorElement [
+]
+
+{ #category : #printing }
+AlbTextEditorParagraphSegmentPiece >> printOn: aStream [
+	self text printOn: aStream
+]
+
+{ #category : #accessing }
+AlbTextEditorParagraphSegmentPiece >> segment [
+	^ segment
+]
+
+{ #category : #accessing }
+AlbTextEditorParagraphSegmentPiece >> segment: anObject [
+	segment := anObject
+]
+
+{ #category : #updating }
+AlbTextEditorParagraphSegmentPiece >> updateFocus: hasFocus of: aTextPieceElement in: anEditorElement [
+	| aRequest |
+
+	aRequest := hasFocus
+		ifTrue: [ BrTextEditorFocusRequest new ]
+		ifFalse: [ BrTextEditorBlurRequest new ].
+
+	aTextPieceElement dispatchEvent: (aRequest editorElement: anEditorElement)
+]
+
+{ #category : #updating }
+AlbTextEditorParagraphSegmentPiece >> updateText: aTextElement of: aLineSegment in: anEditorElement [
+	aTextElement dispatchEvent: (BrTextEditorTextChangedRequest new
+		editorElement: anEditorElement;
+		segmentPiece: self;
+		text: self text;
+		textStart: self textStart;
+		textEnd: self textEnd)
+]
+
+{ #category : #'api - geometry' }
+AlbTextEditorParagraphSegmentPiece >> wordMargin [
+	<return: #BlInsets>
+	| aHalfOfLineSpacing |
+	
+	aHalfOfLineSpacing := (self segment lineSpacing / 2.0) floor.
+
+	^ BlInsets
+		top: aHalfOfLineSpacing
+		bottom: (self segment lineSpacing - aHalfOfLineSpacing)
+]
+
+{ #category : #'api - geometry' }
+AlbTextEditorParagraphSegmentPiece >> wordPadding [
+	<return: #BlInsets>
+		
+	^ self segment wordPadding
+]

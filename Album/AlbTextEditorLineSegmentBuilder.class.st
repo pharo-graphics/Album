@@ -151,7 +151,7 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aB
 		assert: [ aString isNotEmpty ]
 		description: [ 'String must not be empty' ].
 
-	aStream := BrEditorSegmentStream new.
+	aStream := AlbEditorSegmentStream new.
 	aStream limit: Float infinity.
 
 	self

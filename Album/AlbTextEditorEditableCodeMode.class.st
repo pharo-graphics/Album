@@ -6,5 +6,5 @@ Class {
 
 { #category : #defaults }
 AlbTextEditorEditableCodeMode >> returnKeyAndAction [
-	^ BrEditorCarriageReturnShortcut new
+	^ AlbEditorCarriageReturnShortcut new
 ]

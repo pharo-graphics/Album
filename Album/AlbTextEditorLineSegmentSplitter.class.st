@@ -7,7 +7,7 @@ Class {
 { #category : #'instance creation' }
 AlbTextEditorLineSegmentSplitter >> adornmentPiece: aBlText with: anAdornmentAttribute from: aTextStart to: aTextEnd [
 	"Create and return a segment piece with adornment"
-	<return: #BrTextEditorLineSegmentPiece>
+	<return: #AlbTextEditorLineSegmentPiece>
 
 	^ self adornmentPieceClass new
 		initializeWith: aBlText
@@ -22,7 +22,7 @@ AlbTextEditorLineSegmentSplitter >> adornmentPieceClass [
 	"Create and return a segment piece with adornment"
 	<return: #TBrTextEditorTextualPiece>
 
-	^ BrTextEditorLineSegmentAdornmentPiece
+	^ AlbTextEditorLineSegmentAdornmentPiece
 ]
 
 { #category : #'private - pieces computation' }
@@ -205,7 +205,7 @@ AlbTextEditorLineSegmentSplitter >> split: aText from: aStartIndex to: anEndInde
 { #category : #'instance creation' }
 AlbTextEditorLineSegmentSplitter >> textPiece: aBlText from: aTextStart to: aTextEnd [
 	"Create and return a text segment piece"
-	<return: #BrTextEditorLineSegmentPiece>
+	<return: #AlbTextEditorLineSegmentPiece>
 
 	^ self textPieceClass new
 		initializeWith: aBlText
@@ -217,7 +217,7 @@ AlbTextEditorLineSegmentSplitter >> textPiece: aBlText from: aTextStart to: aTex
 { #category : #accessing }
 AlbTextEditorLineSegmentSplitter >> textPieceClass [
 	"Create and return a text segment piece"
-	<return: #TBrTextEditorTextualPiece>
+	<return: #TAblTextEditorTextualPiece>
 
-	^ BrTextEditorLineSegmentTextPiece
+	^ AlbTextEditorLineSegmentTextPiece
 ]

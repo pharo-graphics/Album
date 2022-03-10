@@ -188,12 +188,12 @@ AlbTextEditor >> defaultCursors [
 
 { #category : #initialization }
 AlbTextEditor >> defaultSegmentBuilder [
-	^ BrTextEditorLineSegmentBuilder new
+	^ AlbTextEditorLineSegmentBuilder new
 ]
 
 { #category : #initialization }
 AlbTextEditor >> defaultSegmentCollector [
-	^ BrTextEditorSegmentCollector new
+	^ AlbTextEditorSegmentCollector new
 ]
 
 { #category : #initialization }
@@ -205,9 +205,9 @@ AlbTextEditor >> defaultSelection [
 
 { #category : #initialization }
 AlbTextEditor >> defaultSelectionRecorder [
-	<return: #BrTextEditorSelectionRecorder>
+	<return: #AblTextEditorSelectionRecorder>
 
-	^ BrTextEditorSelectionOverwriteRecorder new
+	^ AblTextEditorSelectionOverwriteRecorder new
 ]
 
 { #category : #initialization }
@@ -464,7 +464,7 @@ AlbTextEditor >> itemIdAt: aPosition [
 { #category : #accessing }
 AlbTextEditor >> itemTypeAt: aPosition [
 	"Return segment type at a given position"
-	<return: #BrEditorSegmentType>
+	<return: #AlbEditorSegmentType>
 	
 	^ (segmentCollector segmentAt: aPosition) segmentType
 ]
@@ -638,7 +638,7 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition payloads: aCollectio
 { #category : #'instance creation' }
 AlbTextEditor >> onCreateHolder: anEditorElement type: aSegmentType [
 	"Create and return a new segment holder of a given type to be used with provided editor element"
-	<return: #BrEditorSegmentHolder>
+	<return: #AlbEditorSegmentHolder>
 	
 	"We perform a single dispatch on a segment type in order to support multiple types"
 	^ aSegmentType holder
@@ -996,7 +996,7 @@ AlbTextEditor >> segmentBuilderDo: aBlock [
 
 { #category : #accessing }
 AlbTextEditor >> segmentCollector [
-	<return: #BrTextEditorSegmentCollector>
+	<return: #AlbTextEditorSegmentCollector>
 
 	^ segmentCollector
 ]
@@ -1061,7 +1061,7 @@ AlbTextEditor >> selection: aTextSelection [
 
 { #category : #accessing }
 AlbTextEditor >> selectionRecorder [
-	<return: #BrTextEditorSelectionRecorder>
+	<return: #AblTextEditorSelectionRecorder>
 
 	self
 		assert: [ selectionRecorder isNotNil ]

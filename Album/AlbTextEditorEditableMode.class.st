@@ -20,36 +20,36 @@ AlbTextEditorEditableMode >> initialize [
 	super initialize.
 
 	shortcuts := shortcuts, {
-		BrEditorDeleteOneLetterAfterCursorShortcut new.
-		BrEditorDeleteOneLetterBeforeCursorShortcut new.
-		BrEditorShiftRightShortcut new.
-		BrEditorCutShortcut new.
-		BrEditorCopyShortcut new.
-		BrEditorPasteShortcut new.
-		BrEditorUndoShortcut new.
-		BrEditorRedoShortcut new.
+		AlbEditorDeleteOneLetterAfterCursorShortcut new.
+		AlbEditorDeleteOneLetterBeforeCursorShortcut new.
+		AlbEditorShiftRightShortcut new.
+		AlbEditorCutShortcut new.
+		AlbEditorCopyShortcut new.
+		AlbEditorPasteShortcut new.
+		AlbEditorUndoShortcut new.
+		AlbEditorRedoShortcut new.
 	
 		self returnKeyAndAction.
 		
-		BrEditorMoveCursorLeftShortcut new.
-		BrEditorMoveCursorRightShortcut new.
-		BrEditorMoveCursorUpShortcut new.
-		BrEditorMoveCursorDownShortcut new.
-		BrEditorMoveCursorToPreviousWordShortcut new.
-		BrEditorMoveCursorToNextWordShortcut new.
-		BrEditorMoveCursorToLineStartShortcut new.
-		BrEditorMoveCursorToLineEndShortcut new.
+		AlbEditorMoveCursorLeftShortcut new.
+		AlbEditorMoveCursorRightShortcut new.
+		AlbEditorMoveCursorUpShortcut new.
+		AlbEditorMoveCursorDownShortcut new.
+		AlbEditorMoveCursorToPreviousWordShortcut new.
+		AlbEditorMoveCursorToNextWordShortcut new.
+		AlbEditorMoveCursorToLineStartShortcut new.
+		AlbEditorMoveCursorToLineEndShortcut new.
 		
-		BrEditorSelectAllShortcut new.
-		BrEditorDeselectAllShortcut new.
-		BrEditorSelectLetterAfterCursorShortcut new.
-		BrEditorSelectLetterBeforeCursorShortcut new.
-		BrEditorSelectWordBeforeCursorShortcut new.
-		BrEditorSelectWordAfterCursorShortcut new.
-		BrEditorSelectLineBeforeCursorShortcut new.
-		BrEditorSelectLineAfterCursorShortcut new.
-		BrEditorSelectLineBelowCursorShortcut new.
-		BrEditorSelectLineAboveCursorShortcut new.
+		AlbEditorSelectAllShortcut new.
+		AlbEditorDeselectAllShortcut new.
+		AlbEditorSelectLetterAfterCursorShortcut new.
+		AlbEditorSelectLetterBeforeCursorShortcut new.
+		AlbEditorSelectWordBeforeCursorShortcut new.
+		AlbEditorSelectWordAfterCursorShortcut new.
+		AlbEditorSelectLineBeforeCursorShortcut new.
+		AlbEditorSelectLineAfterCursorShortcut new.
+		AlbEditorSelectLineBelowCursorShortcut new.
+		AlbEditorSelectLineAboveCursorShortcut new.
 	}
 ]
 
@@ -67,5 +67,5 @@ AlbTextEditorEditableMode >> isEditable [
 
 { #category : #defaults }
 AlbTextEditorEditableMode >> returnKeyAndAction [
-	^ BrEditorLineEndingShortcut new
+	^ AlbEditorLineEndingShortcut new
 ]

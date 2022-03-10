@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbSandBox,
 	#superclass : #Object,
-	#category : #'Album-SandBox'
+	#category : #'Album-Editor-SandBox'
 }
 
 { #category : #'as yet unclassified' }
@@ -9,7 +9,6 @@ AlbSandBox class >> example_EditorAsTextArea1 [
 
 	| ed space propagations |
 	ed := AlbEditor new.
-	ed beParagraphBased.
 	
 	"propagations := AlbLayoutResizerPropagations new."
 	"ed layoutResizerPropagations addPropagations: propagations."

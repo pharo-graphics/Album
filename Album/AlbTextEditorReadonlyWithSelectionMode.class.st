@@ -19,9 +19,9 @@ AlbTextEditorReadonlyWithSelectionMode >> initialize [
 	super initialize.
 	
 	shortcuts := {
-		BrEditorCopyShortcut new.
-		BrEditorSelectAllShortcut new.
-		BrEditorDeselectAllShortcut new.
+		AlbEditorCopyShortcut new.
+		AlbEditorSelectAllShortcut new.
+		AlbEditorDeselectAllShortcut new.
 	}
 ]
 

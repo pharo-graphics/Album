@@ -28,7 +28,7 @@ AlbTextEditorSegmentBuilder >> beReadOnly [
 
 { #category : #initialization }
 AlbTextEditorSegmentBuilder >> defaultSplitter [
-	<return: #BrTextEditorSplitter>
+	<return: #AlbTextEditorSplitter>
 
 	^ self subclassResponsibility
 ]

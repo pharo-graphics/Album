@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'defaultSegmentLayoutBlock'
 	],
-	#category : #'Album-Editor-Model - Segment'
+	#category : #'Album-Editor-Model - Segment-Text-Paragraph'
 }
 
 { #category : #cleanup }
@@ -164,7 +164,7 @@ AlbTextEditorParagraphSegmentHolder >> hasSelection [
 
 { #category : #'private - segment' }
 AlbTextEditorParagraphSegmentHolder >> newPiecesMap [
-	^ BrTextEditorLineSegmentPieceCollectionMap new
+	^ AlbTextEditorLineSegmentPieceCollectionMap new
 ]
 
 { #category : #updating }

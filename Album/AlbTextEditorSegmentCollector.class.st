@@ -129,7 +129,7 @@ AlbTextEditorSegmentCollector >> cacheLimit: aNumber [
 AlbTextEditorSegmentCollector >> cachedAt: anIndex [
 	"Return a cached segment at an absolute index within editor
 	(I must convert index from editor coordiantes to my local cache coordinates)"
-	<return: #BrEditorSegment>
+	<return: #AlbEditorSegment>
 	| aCachedIndex |
 
 	aCachedIndex := anIndex - segmentsInterval first + 1.
@@ -219,7 +219,7 @@ AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 	streamLimit := overlap > 0
 		ifTrue: [ overlap ]
 		ifFalse: [ self cacheLimit ].
-	stream := BrEditorSegmentStream new.
+	stream := AlbEditorSegmentStream new.
 	stream limit: streamLimit.
 	builder := self editor segmentBuilder.
 	
@@ -257,7 +257,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	"the collection in which we will cache segments"
 	segments := self forwardSegments: cachedInterval.
 
-	stream := BrEditorSegmentStream new.
+	stream := AlbEditorSegmentStream new.
 	stream skip: skip.
 	stream limit: self cacheLimit - segments size.
 	builder := self editor segmentBuilder.
@@ -289,7 +289,7 @@ AlbTextEditorSegmentCollector >> computeInterval: anIndex [
 
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> computeSegmentAt: anIndex [
-	<return: #BrEditorSegment>
+	<return: #AlbEditorSegment>
 
 	self
 		assert: [ (self isCachedAt: anIndex) not ]
@@ -395,7 +395,7 @@ AlbTextEditorSegmentCollector >> firstIndex [
 AlbTextEditorSegmentCollector >> forwardSegments: aNewCachedInterval [
 	"Create and return a collection which will be used to collect segments for a given new cached interval.
 	If existing cached interval overlaps with the new one, we should copy already cached segments to reduce amount of work"
-	<return: #SequenceableCollection of: #BrEditorSegment>
+	<return: #SequenceableCollection of: #AlbEditorSegment>
 	| startIndex |
 
 	startIndex := aNewCachedInterval first - segmentsInterval first + 1.
@@ -540,7 +540,7 @@ AlbTextEditorSegmentCollector >> resetCache [
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 	"Return segment at given index"
-	<return: #BrEditorSegment>
+	<return: #AlbEditorSegment>
 	
 	^ (self isCachedAt: anIndex)
 		ifTrue: [ self cachedAt: anIndex ]
@@ -549,7 +549,7 @@ AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> segments [
-	<return: #SequenceableCollection of: #BrEditorSegment>
+	<return: #SequenceableCollection of: #AlbEditorSegment>
 
 	^ segments
 ]

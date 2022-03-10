@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'defaultSegmentLayoutBlock'
 	],
-	#category : #'Album-Editor-Model - Segment'
+	#category : #'Album-Editor-Model - Segment-Text-Line'
 }
 
 { #category : #cleanup }
@@ -98,7 +98,7 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 
 { #category : #'private - accessing' }
 AlbTextEditorLineSegmentHolder >> cachedPieces [
-	<return: #Collection of: #BrTextEditorLineSegmentPiece>
+	<return: #Collection of: #AlbTextEditorLineSegmentPiece>
 	
 	^ pieceElements allPieces
 ]
@@ -106,7 +106,7 @@ AlbTextEditorLineSegmentHolder >> cachedPieces [
 { #category : #initialization }
 AlbTextEditorLineSegmentHolder >> createSegmentElement [
 	<return: #BlElement>
-self halt.
+
 	^ AlbTextEditorSegmentElement new
 		beInSeparateCompositionLayer;
 		layout: self class defaultSegmentLayout;
@@ -185,7 +185,7 @@ AlbTextEditorLineSegmentHolder >> hasSelection [
 
 { #category : #'private - segment' }
 AlbTextEditorLineSegmentHolder >> newPiecesMap [
-	^ BrTextEditorLineSegmentPieceCollectionMap new
+	^ AlbTextEditorLineSegmentPieceCollectionMap new
 ]
 
 { #category : #updating }

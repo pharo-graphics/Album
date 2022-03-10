@@ -16,7 +16,7 @@ AlbEditor >> addEditorShortcut: aBrTextEditorInteraction [
 
 { #category : #'api - editor' }
 AlbEditor >> beEditable [
-	self beMode: BrTextEditorEditableMode new
+	self beMode: AlbTextEditorEditableMode new
 ]
 
 { #category : #'api - editor' }
@@ -26,17 +26,17 @@ AlbEditor >> beMode: aTextEditorMode [
 
 { #category : #'api - editor' }
 AlbEditor >> beReadOnlyWithSelection [
-	self beMode: BrTextEditorReadonlyWithSelectionMode new
+	self beMode: AlbTextEditorReadonlyWithSelectionMode new
 ]
 
 { #category : #'api - editor' }
 AlbEditor >> beReadOnlyWithoutSelection [
-	self beMode: BrTextEditorReadonlyWithoutSelectionMode new
+	self beMode: AlbTextEditorReadonlyWithoutSelectionMode new
 ]
 
 { #category : #'editor - accessing' }
 AlbEditor >> cursors [
-	<return: #BrTextEditorCursor>
+	<return: #AlbTextEditorCursor>
 	^ self editor cursors
 ]
 

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'mode'
 	],
-	#category : #'Album-Editor - Events'
+	#category : #'Album-Editor-Events'
 }
 
 { #category : #initialization }

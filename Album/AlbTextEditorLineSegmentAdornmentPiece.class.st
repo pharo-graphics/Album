@@ -21,7 +21,7 @@ AlbTextEditorLineSegmentAdornmentPiece >> = anotherObject [
 
 { #category : #accessing }
 AlbTextEditorLineSegmentAdornmentPiece >> adornmentAttribute [
-	<return: #BrTextAdornmentAttribute>
+	<return: #AlbTextAdornmentAttribute>
 
 	^ adornmentAttribute
 ]

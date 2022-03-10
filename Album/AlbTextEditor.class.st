@@ -75,21 +75,21 @@ AlbTextEditor >> assertUIProcess [
 	allUIProcesses := self uiProcesses.
 	
 	(allUIProcesses size <= 1)
-		ifFalse: [ BrEditorWrongThreadError signal: 'The editor is attached to multiple elements from different UI processes' ].
+		ifFalse: [ AlbEditorWrongThreadError signal: 'The editor is attached to multiple elements from different UI processes' ].
 		
 	(allUIProcesses isEmpty or: [ allUIProcesses anyOne == aCurrentProcess ])
-		ifFalse: [ BrEditorWrongThreadError signal: ('I am running from a non-UI process ({1}) expected ({2})'
+		ifFalse: [ AlbEditorWrongThreadError signal: ('I am running from a non-UI process ({1}) expected ({2})'
 				format: { aCurrentProcess asString . allUIProcesses anyOne asString }) ].
 ]
 
 { #category : #'api - mode' }
 AlbTextEditor >> beEditable [
-	self editorMode: BrTextEditorEditableMode new
+	self editorMode: AlbTextEditorEditableMode new
 ]
 
 { #category : #'api - mode' }
 AlbTextEditor >> beEditableCode [
-	self editorMode: BrTextEditorEditableCodeMode new
+	self editorMode: AlbTextEditorEditableCodeMode new
 ]
 
 { #category : #accessing }
@@ -104,12 +104,12 @@ AlbTextEditor >> beParagraphBased [
 
 { #category : #'api - mode' }
 AlbTextEditor >> beReadOnlyWithSelection [
-	self editorMode: BrTextEditorReadonlyWithSelectionMode new
+	self editorMode: AlbTextEditorReadonlyWithSelectionMode new
 ]
 
 { #category : #'api - mode' }
 AlbTextEditor >> beReadOnlyWithoutSelection [
-	self editorMode: BrTextEditorReadonlyWithoutSelectionMode new
+	self editorMode: AlbTextEditorReadonlyWithoutSelectionMode new
 ]
 
 { #category : #'private - selection' }
@@ -181,9 +181,9 @@ AlbTextEditor >> cutSelected [
 
 { #category : #initialization }
 AlbTextEditor >> defaultCursors [
-	<return: #BrTextEditorCursor>
+	<return: #AlbTextEditorCursor>
 
-	^ BrTextEditorMultipleCursor new
+	^ AlbTextEditorMultipleCursor new
 ]
 
 { #category : #initialization }
@@ -285,7 +285,7 @@ AlbTextEditor >> disableStyleTextWhenModifiedDuring: aBlock [
 
 { #category : #'api - mode' }
 AlbTextEditor >> editorMode [
-	<return: #BrTextEditorMode>
+	<return: #AlbTextEditorMode>
 
 	^ mode
 ]
@@ -379,7 +379,7 @@ AlbTextEditor >> initialize [
 	
 	attachedElements := Set new.
 	
-	filter := BrTextEditorNoInputFilter new.
+	filter := AlbTextEditorNoInputFilter new.
 	cursors := self defaultCursors.
 	selection := self defaultSelection.
 	selectionRecorder := self defaultSelectionRecorder.
@@ -398,7 +398,7 @@ AlbTextEditor >> initialize [
 	self useDefaultStylerStrategy.
 	
 	shortcuts := AlbTextEditorShortcuts new.
-	history := BrTextEditorHistory new.
+	history := AlbTextEditorHistory new.
 	
 	isFocused := false.
 	shouldStyleWhenTextModified := true.
@@ -417,7 +417,7 @@ AlbTextEditor >> initializeText: aBrText [
 
 { #category : #'api - filter' }
 AlbTextEditor >> inputFilter [
-	<return: #BrTextEditorInputFilter>
+	<return: #AlbTextEditorInputFilter>
 
 	^ filter
 ]
@@ -496,27 +496,27 @@ AlbTextEditor >> navigator [
 
 { #category : #'commands - creation' }
 AlbTextEditor >> newFocusChangedCommand [
-	^ BrTextEditorFocusChangedCommand new
+	^ AlbTextEditorFocusChangedCommand new
 ]
 
 { #category : #'commands - creation' }
 AlbTextEditor >> newInvalidateCommand [
-	^ BrTextEditorInvalidateCommand new
+	^ AlbTextEditorInvalidateCommand new
 ]
 
 { #category : #'commands - creation' }
 AlbTextEditor >> newSelectCommand [
-	^ BrTextEditorSelectCommand new
+	^ AlbTextEditorSelectCommand new
 ]
 
 { #category : #'commands - creation' }
 AlbTextEditor >> newSelectionUpdateCommand [
-	^ BrTextEditorSelectionUpdateCommand new
+	^ AlbTextEditorSelectionUpdateCommand new
 ]
 
 { #category : #'commands - creation' }
 AlbTextEditor >> newUpdateCommand [
-	^ BrTextEditorUpdateCommand new
+	^ AlbTextEditorUpdateCommand new
 ]
 
 { #category : #'private - cursor' }
@@ -527,7 +527,7 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 	self isFocused
 		ifFalse: [ ^ self ].
 
-	anEvent := BrTextCursorAttributeEnterEvent new.
+	anEvent := AlbTextCursorAttributeEnterEvent new.
 	
 	theEventHandlingAttributes := (aCollectionOfAttributes select: [ :eachAttribute | eachAttribute isEventHandler ]) asSet.
 	
@@ -857,8 +857,8 @@ AlbTextEditor >> processCursorAttributes [
 
 	| anEnteredEvent aLeavedEvent eventHandlingAttributesOutside eventHandlingAttributesInside |
 
-	anEnteredEvent := BrTextCursorAttributeEnterEvent new.
-	aLeavedEvent := BrTextCursorAttributeLeaveEvent new.
+	anEnteredEvent := AlbTextCursorAttributeEnterEvent new.
+	aLeavedEvent := AlbTextCursorAttributeLeaveEvent new.
 
 	eventHandlingAttributesOutside := OrderedDictionary new.
 	eventHandlingAttributesInside := OrderedDictionary new.

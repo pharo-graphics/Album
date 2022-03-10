@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'text'
 	],
-	#category : #'Album-Editor - Events'
+	#category : #'Album-Editor-Events'
 }
 
 { #category : #accessing }

@@ -22,7 +22,7 @@ AlbTextEditorLineSegmentPiece >> currentCursors [
 	"Return a collection of known unique cursors within this segment piece.
 	It is important to remember cursors in order to send fine grained events when cursor's location changes
 	or new cursors are added"
-	<return: #Set of: #BrTextEditorSingleCursor>
+	<return: #Set of: #AlbTextEditorSingleCursor>
 	
 	^ currentCursors
 ]
@@ -35,7 +35,7 @@ AlbTextEditorLineSegmentPiece >> currentCursors: aSetOfCursors [
 { #category : #'api - cursor' }
 AlbTextEditorLineSegmentPiece >> findAddedCursors: theUpdatedCursors to: theCurrentCursors [
 	"Find which cursors are new relative to the set of current cursors"
-	<return: #Set of: #BrTextEditorSingleCursor>
+	<return: #Set of: #AlbTextEditorSingleCursor>
 	
 	^ theUpdatedCursors difference: theCurrentCursors
 ]
@@ -43,7 +43,7 @@ AlbTextEditorLineSegmentPiece >> findAddedCursors: theUpdatedCursors to: theCurr
 { #category : #'api - cursor' }
 AlbTextEditorLineSegmentPiece >> findRemovedCursors: theUpdatedCursors from: theCurrentCursors [
 	"Find which cursors were removed relative from the set of current cursors"
-	<return: #Set of: #BrTextEditorSingleCursor>
+	<return: #Set of: #AlbTextEditorSingleCursor>
 	
 	^ theCurrentCursors difference: theUpdatedCursors
 ]
@@ -51,7 +51,7 @@ AlbTextEditorLineSegmentPiece >> findRemovedCursors: theUpdatedCursors from: the
 { #category : #'api - cursor' }
 AlbTextEditorLineSegmentPiece >> globalCursorToLocal: aSingleCursor [
 	"Convert a global cursor as specified in the editor to a local one"
-	<return: #BrTextEditorSingleCursor>
+	<return: #AlbTextEditorSingleCursor>
 	| aLocalCursor |
 	
 	aLocalCursor := aSingleCursor copy.

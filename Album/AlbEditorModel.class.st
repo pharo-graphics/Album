@@ -6,7 +6,7 @@ Class {
 		'text',
 		'mode'
 	],
-	#category : #'Album-Editor - Model'
+	#category : #'Album-Editor-Model'
 }
 
 { #category : #accessing }

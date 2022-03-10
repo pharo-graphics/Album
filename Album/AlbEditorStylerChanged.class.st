@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'styler'
 	],
-	#category : #'Album-Editor - Events'
+	#category : #'Album-Editor-Events'
 }
 
 { #category : #accessing }

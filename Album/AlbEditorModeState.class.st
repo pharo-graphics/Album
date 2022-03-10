@@ -9,7 +9,7 @@ Class {
 
 { #category : #'instance creation' }
 AlbEditorModeState class >> editable [
-	^ self new mode: BrTextEditorEditableMode
+	^ self new mode: AlbTextEditorEditableMode
 ]
 
 { #category : #'instance creation' }
@@ -24,12 +24,12 @@ AlbEditorModeState class >> readOnly [
 
 { #category : #'instance creation' }
 AlbEditorModeState class >> readOnlyWithSelection [
-	^ self new mode: BrTextEditorReadonlyWithSelectionMode 
+	^ self new mode: AlbTextEditorReadonlyWithSelectionMode 
 ]
 
 { #category : #'instance creation' }
 AlbEditorModeState class >> readOnlyWithoutSelection [
-	^ self new mode: BrTextEditorReadonlyWithoutSelectionMode
+	^ self new mode: AlbTextEditorReadonlyWithoutSelectionMode
 ]
 
 { #category : #comparing }

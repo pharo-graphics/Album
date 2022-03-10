@@ -1,0 +1,103 @@
+"
+!Cursor attribute
+Allows users to react to the cursor movement within the editor. 
+${example:AlbTextCursorAttributeExamples>>#changingForeground|previewExpanded=true|previewShow=#gtTextFor:|previewHeight=100}$
+"
+Class {
+	#name : #AlbTextCursorAttribute,
+	#superclass : #AlbTextEventHandlerAttribute,
+	#instVars : [
+		'enterAction',
+		'leaveAction',
+		'isInside'
+	],
+	#category : #'Album-Editor-Attributes'
+}
+
+{ #category : #accessing }
+AlbTextCursorAttribute >> enterAction [
+	^ enterAction
+]
+
+{ #category : #accessing }
+AlbTextCursorAttribute >> enterAction: aBlock [
+	"A Block in a form [ :aTextEditor :anEvent :aTextStart :aTextEnd | ]"
+	self 
+		assert: [ aBlock notNil ] 
+		description: [ 'Leave action should be initialized' ].
+	
+	enterAction := aBlock
+]
+
+{ #category : #events }
+AlbTextCursorAttribute >> handleEvent: anEvent in: aTextEditor on: aTTextEditorTextualPiece [
+	"Handle a given event or dispatch it using #sendTo:"
+
+	(anEvent isKindOf: AlbTextCursorAttributeEnterEvent)
+		ifTrue: [ self performEnterAction: anEvent in: aTextEditor ].
+
+	(anEvent isKindOf: AlbTextCursorAttributeLeaveEvent)
+		ifTrue: [ self performLeaveAction: anEvent in: aTextEditor ]
+]
+
+{ #category : #initialization }
+AlbTextCursorAttribute >> initialize [
+	super initialize.
+
+	enterAction := [ :aTextEditor :anEvent :aTextStart :aTextEnd | ].
+	leaveAction := [ :aTextEditor :anEvent :aTextStart :aTextEnd | ].
+	isInside := nil
+]
+
+{ #category : #accessing }
+AlbTextCursorAttribute >> leaveAction [
+	^ leaveAction
+]
+
+{ #category : #accessing }
+AlbTextCursorAttribute >> leaveAction: aBlock [
+	"A Block in a form [ :aTextEditor :anEvent :aTextStart :aTextEnd | ]"
+	self 
+		assert: [ aBlock notNil ] 
+		description: [ 'Leave action should be initialized' ].
+
+	leaveAction := aBlock
+]
+
+{ #category : #private }
+AlbTextCursorAttribute >> performEnterAction: anEvent in: aTextEditor [
+	isInside = true
+		ifTrue: [ ^ self ].
+
+	isInside := true.
+	
+	self enterAction glamourValueWithArgs: {
+		aTextEditor. "then the whole editor element"
+		anEvent. "the event itself"
+		anEvent attributeStart.
+		anEvent attributeEnd }
+]
+
+{ #category : #private }
+AlbTextCursorAttribute >> performLeaveAction: anEvent in: aTextEditor [
+	isInside = false
+		ifTrue: [ ^ self ].
+
+	isInside := false.
+
+	self leaveAction glamourValueWithArgs: {
+		aTextEditor. "then the whole editor element"
+		anEvent. "the event itself"
+		anEvent attributeStart.
+		anEvent attributeEnd }
+]
+
+{ #category : #events }
+AlbTextCursorAttribute >> wantsEvent: anEvent in: aTextEditor [
+	"Return true if I am interested in a given event and want to handle it,
+	false otherwise"
+	<return: #Boolean>
+
+	^ (anEvent isKindOf: AlbTextCursorAttributeEnterEvent)
+		or: [ anEvent isKindOf: AlbTextCursorAttributeLeaveEvent ]
+]

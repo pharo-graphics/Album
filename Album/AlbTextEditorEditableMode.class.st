@@ -7,11 +7,11 @@ Class {
 { #category : #initialization }
 AlbTextEditorEditableMode >> createEventHandlers [
 	^ super createEventHandlers, {
-		BrTextEditorMouseDownHandler uniqueInstance.
-		BrTextEditorDoubleClickHandler uniqueInstance.
-		BrTextEditorSelectionHandler new.
-		BrTextEditorInsertionHandler uniqueInstance.
-		BrTextEditorCursorIconHandler uniqueInstance.
+		AlbTextEditorMouseDownHandler uniqueInstance.
+		AlbTextEditorDoubleClickHandler uniqueInstance.
+		AlbTextEditorSelectionHandler new.
+		AlbTextEditorInsertionHandler uniqueInstance.
+		AlbTextEditorCursorIconHandler uniqueInstance.
 	}
 ]
 

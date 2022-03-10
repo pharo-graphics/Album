@@ -208,6 +208,11 @@ AlbAptitude >> remove: aBrLook [
 	aLookInstance widgetDo: [ :anElement | aLookInstance onUninstalledIn: anElement ]
 ]
 
+{ #category : #'*Album-Theme' }
+AlbAptitude >> theme [
+	^ widget ifNil: [ AlbTheme default ] ifNotNil: #theme
+]
+
 { #category : #accessing }
 AlbAptitude >> widgetContent [
 	"Return widget's content container element"

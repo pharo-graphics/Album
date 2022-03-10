@@ -218,7 +218,7 @@ AlbTextEditor >> defaultStyler [
 { #category : #initialization }
 AlbTextEditor >> defaultStylerEventHandler [
 	^ BlEventHandler
-		on: BrTextStyledEvent
+		on: AlbTextStyledEvent
 		do: [ :anEvent | self onTextStyled: anEvent ]
 ]
 
@@ -247,7 +247,7 @@ AlbTextEditor >> delete: aFromTextIndex to: aToTextIndex [
 
 { #category : #'api - modification' }
 AlbTextEditor >> deleter [
-	^ BrTextEditorDeleter new editor: self
+	^ AlbTextEditorDeleter new editor: self
 ]
 
 { #category : #'private - text' }
@@ -264,9 +264,9 @@ AlbTextEditor >> deselect: aFromTextIndex to: aToTextIndex [
 
 { #category : #'api - modification' }
 AlbTextEditor >> deselecter [
-	<return: #BrTextEditorDeselecter>
+	<return: #AlbTextEditorDeselecter>
 
-	^ BrTextEditorDeselecter new editor: self
+	^ AlbTextEditorDeselecter new editor: self
 ]
 
 { #category : #'text - styling' }
@@ -441,7 +441,7 @@ AlbTextEditor >> insertString: aString at: aTextIndex [
 
 { #category : #'api - modification' }
 AlbTextEditor >> inserter [
-	^ BrTextEditorInserter new editor: self
+	^ AlbTextEditorInserter new editor: self
 ]
 
 { #category : #accessing }
@@ -482,7 +482,7 @@ AlbTextEditor >> model: anObject [
 { #category : #'text - cursor' }
 AlbTextEditor >> moveCursorTo: aTextIndex [
 	"Moves cursor to a given position without any further action such as cancelling selection"
-	<event: #BrTextEditorCursorMovedEvent>
+	<event: #AlbTextEditorCursorMovedEvent>
 
 	self navigator
 		moveTo: aTextIndex;
@@ -491,7 +491,7 @@ AlbTextEditor >> moveCursorTo: aTextIndex [
 
 { #category : #'api - modification' }
 AlbTextEditor >> navigator [
-	^ BrTextEditorNavigator new editor: self
+	^ AlbTextEditorNavigator new editor: self
 ]
 
 { #category : #'commands - creation' }
@@ -544,7 +544,7 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyDeletedFrom: aFromIndex to: aToIndex [
-	self dispatchEvent: (BrTextEditorDeletedEvent new
+	self dispatchEvent: (AlbTextEditorDeletedEvent new
 		editor: self;
 		fromIndex: aFromIndex;
 		toIndex: aToIndex)
@@ -552,37 +552,37 @@ AlbTextEditor >> notifyDeletedFrom: aFromIndex to: aToIndex [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyInserted: aText at: aTextIndex [
-	self dispatchEvent: (BrTextEditorInsertedEvent text: aText at: aTextIndex)
+	self dispatchEvent: (AlbTextEditorInsertedEvent text: aText at: aTextIndex)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyInteractionAdded: anInteraction [
-	self dispatchEvent: (BrTextEditorInteractionAddedEvent new interaction: anInteraction)
+	self dispatchEvent: (AlbTextEditorInteractionAddedEvent new interaction: anInteraction)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyInteractionRemoved: anInteraction [
-	self dispatchEvent: (BrTextEditorInteractionRemovedEvent new interaction: anInteraction)
+	self dispatchEvent: (AlbTextEditorInteractionRemovedEvent new interaction: anInteraction)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyModified: aText [
-	self dispatchEvent: (BrTextEditorModifiedEvent new text: aText)
+	self dispatchEvent: (AlbTextEditorModifiedEvent new text: aText)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifySelectionChanged: aSelection [
-	self dispatchEvent: (BrTextEditorSelectionChangedEvent new selection: aSelection)
+	self dispatchEvent: (AlbTextEditorSelectionChangedEvent new selection: aSelection)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyTextReplaced: aText [
-	self dispatchEvent: (BrTextEditorTextReplacedEvent new text: aText)
+	self dispatchEvent: (AlbTextEditorTextReplacedEvent new text: aText)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyTextStyled: aText [
-	self dispatchEvent: (BrTextEditorTextStyledEvent new styledText: aText)
+	self dispatchEvent: (AlbTextEditorTextStyledEvent new styledText: aText)
 ]
 
 { #category : #hooks }
@@ -843,7 +843,7 @@ AlbTextEditor >> paste [
 
 { #category : #'api - modification' }
 AlbTextEditor >> paster [
-	^ BrTextEditorPaster new editor: self
+	^ AlbTextEditorPaster new editor: self
 ]
 
 { #category : #'private - selection' }
@@ -1040,9 +1040,9 @@ AlbTextEditor >> selectedText [
 
 { #category : #'api - modification' }
 AlbTextEditor >> selecter [
-	<return: #BrTextEditorSelecter>
+	<return: #AlbTextEditorSelecter>
 
-	^ BrTextEditorSelecter new editor: self
+	^ AlbTextEditorSelecter new editor: self
 ]
 
 { #category : #accessing }
@@ -1093,7 +1093,7 @@ AlbTextEditor >> styleText [
 AlbTextEditor >> styleTextAndAfterDo: aBlock [
 	"I first style, and then I do aBlock once I am finished"
 	
-	self dispatchEvent: (BrTextEditorTextStyleRequested new afterAction: aBlock)
+	self dispatchEvent: (AlbTextEditorTextStyleRequested new afterAction: aBlock)
 ]
 
 { #category : #accessing }
@@ -1138,7 +1138,7 @@ AlbTextEditor >> surroundMap [
 		(anOperator hasSpaceAroundIndex: anIndex)
 			or: [ anOperator selection contains: anIndex ] ].
 
-	^ BrTextEditorSurroundMap newFromArrays:
+	^ AlbTextEditorSurroundMap newFromArrays:
 		{ 
 			{ #'('. #')'. spaceBlock. }.
 			{ #'"'. #'"'. spaceBlock. }.
@@ -1223,9 +1223,9 @@ AlbTextEditor >> updateSelection: aFromTextIndex to: aToTextIndex [
 
 { #category : #'api - modification' }
 AlbTextEditor >> updater [
-	<return: #BrTextEditorUpdater>
+	<return: #AlbTextEditorUpdater>
 
-	^ BrTextEditorUpdater new editor: self
+	^ AlbTextEditorUpdater new editor: self
 ]
 
 { #category : #initialization }

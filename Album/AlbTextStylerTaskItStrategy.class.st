@@ -33,7 +33,7 @@ AlbTextStylerTaskItStrategy >> newStylingCommandFor: aBlText with: aStyler inEdi
 		| aStyledText |
 		aStyledText := self doStyleText: aBlText with: aStyler afterDo: aBlock.
 		aEditorElement enqueueTask: (BlTaskAction new action: [
-			aEditorElement editor dispatchEvent: (BrTextStyledEvent new
+			aEditorElement editor dispatchEvent: (AlbTextStyledEvent new
 				text: aStyledText;
 				afterAction: aBlock;
 				editorElement: aEditorElement) ]).
@@ -63,7 +63,7 @@ AlbTextStylerTaskItStrategy >> scheduleStyleTextInEditorElement: aEditorElement 
 		otherwise: [
 			| aStyledText |
 			aStyledText := self doStyleText: aTextToStyle with: aStyler afterDo: aBlock.
-			aEditorElement editor dispatchEvent: (BrTextStyledEvent new
+			aEditorElement editor dispatchEvent: (AlbTextStyledEvent new
 				text: aStyledText;
 				afterAction: aBlock;
 				editorElement: aEditorElement) ]

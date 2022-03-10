@@ -49,7 +49,7 @@ AlbTextStylerAsyncStrategy >> enqueueTaskOn: aEditorElement afterDo: aBlock [
                with: aEditorElement editor styler
                afterDo: aBlock.
 
-		aEditorElement editor dispatchEvent: (BrTextStyledEvent new
+		aEditorElement editor dispatchEvent: (AlbTextStyledEvent new
 			 text: aStyledText;
 			 afterAction: aBlock;
 			 editorElement: aEditorElement) ])

@@ -46,7 +46,7 @@ AlbEditorElement >> initialize [
 	self when: BlFocusOutEvent do: [ hasFocus := false ].
 	
 	textStyleHandler := BlEventHandler
-		on: BrTextEditorTextStyleRequested
+		on: AlbTextEditorTextStyleRequested
 		do: [ :anEvent | self editor stylerStrategy styleTextInEditorElement: self thenDo: anEvent afterAction ]
 ]
 

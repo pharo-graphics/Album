@@ -42,14 +42,14 @@ AlbEditor >> cursors [
 
 { #category : #'editor - operations' }
 AlbEditor >> deleter [
-	<return: #BrTextEditorDeleter>
+	<return: #AlbTextEditorDeleter>
 
 	^ self editor deleter
 ]
 
 { #category : #'editor - operations' }
 AlbEditor >> deselecter [
-	<return: #BrTextEditorDeselecter>
+	<return: #AlbTextEditorDeselecter>
 
 	^ self editor deselecter
 ]
@@ -70,7 +70,7 @@ AlbEditor >> initialize [
 	self matchParent.
 
 	textReplacedHandler := BlEventHandler
-		on: BrTextEditorTextReplacedEvent
+		on: AlbTextEditorTextReplacedEvent
 		"we intentionally set text directly to the viewModel
 		to prevent any possible #asRopedText convertion"
 		do: [ :anEvent | self viewModel text: anEvent text ].
@@ -86,7 +86,7 @@ AlbEditor >> inputFilter: aBrTextEditorInputFilter [
 
 { #category : #'editor - operations' }
 AlbEditor >> inserter [
-	<return: #BrTextEditorInserter>
+	<return: #AlbTextEditorInserter>
 
 	^ self editor inserter
 ]
@@ -107,14 +107,14 @@ AlbEditor >> isReadOnly [
 
 { #category : #'editor - operations' }
 AlbEditor >> navigator [
-	<return: #BrTextEditorNavigator>
+	<return: #AlbTextEditorNavigator>
 
 	^ self editor navigator
 ]
 
 { #category : #'editor - operations' }
 AlbEditor >> selecter [
-	<return: #BrTextEditorSelecter>
+	<return: #AlbTextEditorSelecter>
 
 	^ self editor selecter
 ]

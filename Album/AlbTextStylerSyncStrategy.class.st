@@ -25,7 +25,7 @@ AlbTextStylerSyncStrategy >> styleTextInEditorElement: aEditorElement thenDo: aB
 
 	"Dispatch the event in the UI thread. Needed?"
 	aEditorElement enqueueTask: (BlTaskAction new action: [
-		aEditorElement editor dispatchEvent: (BrTextStyledEvent new
+		aEditorElement editor dispatchEvent: (AlbTextStyledEvent new
 			text: aStyledText;
 			afterAction: aBlock;
 			editorElement: aEditorElement) ])

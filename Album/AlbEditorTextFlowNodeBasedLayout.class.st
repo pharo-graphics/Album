@@ -5,7 +5,7 @@ Class {
 		'lines',
 		'lineSpacing'
 	],
-	#category : #'Album-Editor-Layout'
+	#category : #'Album-Layout'
 }
 
 { #category : #constraints }

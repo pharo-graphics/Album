@@ -5,7 +5,7 @@ Class {
 		'fromIndices',
 		'toIndices'
 	],
-	#category : #'Album-Editor-History'
+	#category : #'Album-History'
 }
 
 { #category : #accessing }

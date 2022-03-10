@@ -10,7 +10,7 @@ Class {
 		'position',
 		'cursor'
 	],
-	#category : #'Album-Editor-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #accessing }

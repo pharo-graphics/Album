@@ -1,7 +1,7 @@
 Class {
 	#name : #AblTextEditorSelectionRecorder,
 	#superclass : #Object,
-	#category : #'Album-Editor-Model - Selection'
+	#category : #'Album-Model-Selection'
 }
 
 { #category : #selection }

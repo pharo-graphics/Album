@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'screenPosition'
 	],
-	#category : #'Album-Editor-Model - Cursor'
+	#category : #'Album-Model-Cursor'
 }
 
 { #category : #dispatching }

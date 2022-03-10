@@ -6,7 +6,7 @@ I should be treated differently by text widgets with the support of multi-line t
 Class {
 	#name : #AlbTextParagraphAttribute,
 	#superclass : #BlTextAttribute,
-	#category : #'Album-Editor-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #hook }

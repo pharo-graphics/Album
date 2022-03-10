@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'selection'
 	],
-	#category : #'Album-Editor-Model - Selection'
+	#category : #'Album-Model-Selection'
 }
 
 { #category : #printing }

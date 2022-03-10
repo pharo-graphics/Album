@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextReplacingAttributeStrategy,
 	#superclass : #Object,
-	#category : #'Album-Editor-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #replacing }

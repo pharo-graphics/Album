@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorInputFilter,
 	#superclass : #Object,
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #accessing }

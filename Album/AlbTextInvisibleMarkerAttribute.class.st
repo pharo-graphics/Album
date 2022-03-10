@@ -4,7 +4,7 @@ I am a special marker attribute that is intended to be used together with ${meth
 Class {
 	#name : #AlbTextInvisibleMarkerAttribute,
 	#superclass : #BlTextAttribute,
-	#category : #'Album-Editor-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #comparing }

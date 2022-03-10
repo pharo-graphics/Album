@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Album-Editor-UI - Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #cleanup }

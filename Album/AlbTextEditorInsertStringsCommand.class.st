@@ -5,7 +5,7 @@ Class {
 		'strings',
 		'indices'
 	],
-	#category : #'Album-Editor-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #executing }

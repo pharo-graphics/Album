@@ -12,7 +12,7 @@ Class {
 		'segmentsInterval',
 		'map'
 	],
-	#category : #'Album-Editor-Model - Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #'cache - adding / removing' }

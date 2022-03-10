@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : #'Album-Editor-Signals'
+	#category : #'Album-Signals'
 }
 
 { #category : #accessing }

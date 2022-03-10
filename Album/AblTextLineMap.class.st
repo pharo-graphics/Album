@@ -5,7 +5,7 @@ Class {
 		'map',
 		'minEntrySpacing'
 	],
-	#category : #'Album-Editor-Model - Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #adding }

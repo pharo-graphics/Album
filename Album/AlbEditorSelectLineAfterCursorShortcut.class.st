@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'combinationForUnix'
 	],
-	#category : #'Album-Editor-Shortcuts'
+	#category : #'Album-Shortcuts'
 }
 
 { #category : #accessing }

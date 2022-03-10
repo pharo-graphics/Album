@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextAreaAptitude,
 	#superclass : #AlbEditorAptitude,
-	#category : #'Album-Editor-Look'
+	#category : #'Album-Look'
 }
 
 { #category : #'focus handlers' }

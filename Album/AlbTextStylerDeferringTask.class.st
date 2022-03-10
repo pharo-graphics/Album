@@ -9,7 +9,7 @@ Class {
 		'textEditor',
 		'afterBlock'
 	],
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #accessing }

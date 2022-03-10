@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Album-Editor-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #accessing }

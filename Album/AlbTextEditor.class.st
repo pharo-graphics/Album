@@ -32,7 +32,7 @@ Class {
 	#classInstVars : [
 		'isDebug'
 	],
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #cleanup }
@@ -960,15 +960,15 @@ AlbTextEditor >> restoreText: aToText [
 
 { #category : #'api - save state' }
 AlbTextEditor >> saveState [
-	<return: #BrTextEditorMemento>
+	<return: #AlbTextEditorMemento>
 	self assertUIProcess.
 	
-	^ (BrTextEditorCompositeMemento new all) saveStateOf: self
+	^ (AlbTextEditorCompositeMemento new all) saveStateOf: self
 ]
 
 { #category : #'api - save state' }
 AlbTextEditor >> saveState: aBrTextEditorMemento [
-	<return: #BrTextEditorMemento>
+	<return: #AlbTextEditorMemento>
 	self assertUIProcess.
 	
 	^ aBrTextEditorMemento saveStateOf: self

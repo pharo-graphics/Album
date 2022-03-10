@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorReadonlyWithoutSelectionMode,
 	#superclass : #AlbTextEditorBasicMode,
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #'api - hooks' }

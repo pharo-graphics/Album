@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #'Album-Editor-Model - Segment'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #'pieces - computation' }

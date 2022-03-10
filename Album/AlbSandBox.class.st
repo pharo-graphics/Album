@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbSandBox,
 	#superclass : #Object,
-	#category : #'Album-Editor-SandBox'
+	#category : #'Album-SandBox'
 }
 
 { #category : #'as yet unclassified' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorReadonlyWithSelectionMode,
 	#superclass : #AlbTextEditorBasicMode,
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #initialization }

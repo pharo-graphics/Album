@@ -4,7 +4,7 @@ I trigger a cursor update in the text piece
 Class {
 	#name : #AlbTextEditorCursorChangedHolderCommand,
 	#superclass : #AlbTextEditorHolderCommand,
-	#category : #'Album-Editor-Commands-Holder'
+	#category : #'Album-Commands-Holder'
 }
 
 { #category : #executing }

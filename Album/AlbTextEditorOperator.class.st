@@ -6,7 +6,7 @@ Class {
 		'subscriptions',
 		'context'
 	],
-	#category : #'Album-Editor-Model - Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'private - asserting' }

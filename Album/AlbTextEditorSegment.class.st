@@ -3,7 +3,7 @@ Class {
 	#superclass : #AlbEditorSegment,
 	#traits : 'TAblTextEditorTextualPiece',
 	#classTraits : 'TAblTextEditorTextualPiece classTrait',
-	#category : #'Album-Editor-Model - Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #initialization }

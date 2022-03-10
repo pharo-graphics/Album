@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorSegmentHolder,
 	#superclass : #BlInfiniteHolder,
-	#category : #'Album-Editor-Model - Segment'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #initialization }

@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'stencilBuilder'
 	],
-	#category : #'Album-Editor-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }

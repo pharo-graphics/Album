@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'context'
 	],
-	#category : #'Album-Editor-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #accessing }

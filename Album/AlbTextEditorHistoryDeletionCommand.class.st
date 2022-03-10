@@ -6,7 +6,7 @@ Class {
 		'undoIndices',
 		'redoIndices'
 	],
-	#category : #'Album-Editor-History'
+	#category : #'Album-History'
 }
 
 { #category : #printing }

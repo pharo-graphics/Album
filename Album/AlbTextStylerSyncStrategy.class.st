@@ -11,7 +11,7 @@ Example: ${example:BrTextStylerExamples>>#editorWithSyncStylerStrategy|codeExpan
 Class {
 	#name : #AlbTextStylerSyncStrategy,
 	#superclass : #AlbTextStylerStrategy,
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #styling }

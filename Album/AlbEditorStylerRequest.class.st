@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorStylerRequest,
 	#superclass : #AlbEditorRequest,
-	#category : #'Album-Editor-Events'
+	#category : #'Album-Events'
 }
 
 { #category : #initialization }

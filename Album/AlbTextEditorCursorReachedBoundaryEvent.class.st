@@ -9,7 +9,7 @@ Class {
 		'Bottom',
 		'Top'
 	],
-	#category : #'Album-Editor-Model - Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #'class initialization' }

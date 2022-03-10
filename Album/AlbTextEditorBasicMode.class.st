@@ -5,7 +5,7 @@ Class {
 		'eventHandlers',
 		'shortcuts'
 	],
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #initialization }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorMode,
 	#superclass : #Object,
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #comparing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #'instance creation' }

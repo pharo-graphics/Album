@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorEditableCodeMode,
 	#superclass : #AlbTextEditorEditableMode,
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #defaults }

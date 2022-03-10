@@ -5,7 +5,7 @@ Class {
 		'hasFocus',
 		'textStyleHandler'
 	],
-	#category : #'Album-Editor-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #conversion }

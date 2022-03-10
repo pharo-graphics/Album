@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorShortcut,
 	#superclass : #BlBasicShortcut,
-	#category : #'Album-Editor-Shortcuts'
+	#category : #'Album-Shortcuts'
 }
 
 { #category : #evaluation }

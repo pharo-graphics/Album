@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'selection'
 	],
-	#category : #'Album-Editor-Model - Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #accessing }

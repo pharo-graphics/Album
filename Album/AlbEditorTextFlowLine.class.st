@@ -20,18 +20,19 @@ AlbEditorTextFlowLine >> add: anElement [
 	"Try to assign a given element to this line (if possible) or create a new line.
 	Return a line to which next element should be tried to added"
 	<return: #AlbEditorTextFlowLine>
-	| currentLine |
-	
-	anElement constraints textFlow shouldPushLine
+	| currentLine textFlow |
+
+	textFlow := 	anElement constraints at: AlbEditorTextFlowLayout.
+	textFlow shouldPushLine
 		ifTrue: [
 			pushedQueue addLast: anElement.
 			^ self ].
 	
-	currentLine := ((self hasSpaceFor: anElement) and: [ anElement constraints textFlow shouldBreakLineBefore not ])
+	currentLine := ((self hasSpaceFor: anElement) and: [ textFlow shouldBreakLineBefore not ])
 		ifTrue: [ self push: anElement ]
 		ifFalse: [ self nextLine push: anElement ].
 		
-	^ anElement constraints textFlow shouldBreakLineAfter
+	^ textFlow shouldBreakLineAfter
 		ifTrue: [ currentLine nextLine ]
 		ifFalse: [ currentLine ]
 ]
@@ -226,8 +227,10 @@ AlbEditorTextFlowLine >> push: anElement [
 	"Push pushes given element to the end of element's collection
 	and update my geometry properties taking new element into account "
 
+	| textFlow |
 	elements addLast: anElement.
-	anElement constraints textFlow assignToLine: self.
+	textFlow := anElement constraints at: AlbEditorTextFlowLayout.
+	textFlow assignToLine: self.
 
 	width := width + (anElement measuredWidth + anElement margin width).
 	height := height max: (anElement measuredHeight + anElement margin height).

@@ -88,7 +88,7 @@ AlbTextEditorLineSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in: an
 	"Is sent when a cursor is added to a given piece element within provided editor element"
 
 	aPieceElement dispatchEvent:
-		(BrTextEditorShowCursorRequest new
+		(AlbTextEditorShowCursorRequest new
 			editorElement: anEditorElement;
 			hasFocus: anEditorElement isFocused;
 			cursorPosition: aCursor position)
@@ -99,7 +99,7 @@ AlbTextEditorLineSegmentPiece >> onCursorRemoved: aCursor from: aPieceElement in
 	"Is sent when a cursor is removed from a given piece element within provided editor element"
 	
 	aPieceElement dispatchEvent:
-		(BrTextEditorHideCursorRequest new
+		(AlbTextEditorHideCursorRequest new
 			editorElement: anEditorElement;
 			cursorPosition: aCursor position)
 ]
@@ -117,7 +117,7 @@ AlbTextEditorLineSegmentPiece >> printOn: aStream [
 AlbTextEditorLineSegmentPiece >> screenToCursor: aTransformation of: anEditorElement in: aPieceElement [
 
 	aPieceElement dispatchEvent:
-		(BrTextEditorScreenToCursorRequest new
+		(AlbTextEditorScreenToCursorRequest new
 			transformation: aTransformation;
 			editorElement: anEditorElement)
 ]
@@ -196,7 +196,7 @@ AlbTextEditorLineSegmentPiece >> updateSelection: aTextElement of: aLineSegment 
 
 	aTextEditor := anEditorElement editor.
 
-	aTextElement dispatchEvent: (BrTextEditorDeselectRequest new
+	aTextElement dispatchEvent: (AlbTextEditorDeselectRequest new
 		editorElement: anEditorElement;
 		fromIndex: 0;
 		toIndex: self textLength).
@@ -211,7 +211,7 @@ AlbTextEditorLineSegmentPiece >> updateSelection: aTextElement of: aLineSegment 
 				localFrom := (aSelectionInterval first - self textStart) max: 0.
 				localTo := (aSelectionInterval last - self textStart) min: self textLength + 1.
 
-				aTextElement dispatchEvent: (BrTextEditorSelectRequest new
+				aTextElement dispatchEvent: (AlbTextEditorSelectRequest new
 					editorElement: anEditorElement;
 					fromIndex: localFrom;
 					toIndex: localTo) ] ]
@@ -219,7 +219,7 @@ AlbTextEditorLineSegmentPiece >> updateSelection: aTextElement of: aLineSegment 
 
 { #category : #updating }
 AlbTextEditorLineSegmentPiece >> updateText: aTextElement of: aLineSegment in: anEditorElement [
-	aTextElement dispatchEvent: (BrTextEditorTextChangedRequest new
+	aTextElement dispatchEvent: (AlbTextEditorTextChangedRequest new
 		editorElement: anEditorElement;
 		segmentPiece: self;
 		text: self text;

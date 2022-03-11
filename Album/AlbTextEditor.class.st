@@ -224,7 +224,7 @@ AlbTextEditor >> defaultStylerEventHandler [
 
 { #category : #initialization }
 AlbTextEditor >> defaultStylerStrategy [
-	^ BrTextStylerSyncStrategy new
+	^ AlbTextStylerSyncStrategy new
 ]
 
 { #category : #initialization }

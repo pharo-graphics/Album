@@ -137,11 +137,11 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 
 	lines do: [ :aLine |
 		aLine elements ifNotEmpty: [ :theElements |
-			| theLastElement |
+			| theLastElement textFlow |
 			
 			theLastElement := theElements last.
-			
-			((theLastElement isKindOf: AlbTextElementWithCursors) and: [ theLastElement constraints textFlow shouldFillLine ])
+			textFlow := theLastElement constraints at: AlbEditorTextFlowLayout.
+			((theLastElement isKindOf: AlbTextElementWithCursors) and: [ textFlow shouldFillLine ])
 				ifTrue: [
 					theLastElement measure: (BlExtentMeasurementSpec exact:
 						theLastElement measuredExtent + (((anElement measuredWidth - aLine width) max: 0.0) @ theLastElement padding height negated)) ] ] ].

@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 AlbTextWordPieceHideCursorHandler >> eventClass [
-	^ BrTextEditorHideCursorRequest
+	^ AlbTextEditorHideCursorRequest
 ]
 
 { #category : #'api - event managing' }
@@ -19,5 +19,5 @@ AlbTextWordPieceHideCursorHandler >> handleEvent: anEvent [
 		ifFalse: [ ^ self ].
 
 	aCursorElement := aTextElement removeCursorAt: anEvent cursorPosition.
-	anEvent editorElement dispatchEvent: (BrTextEditorCursorElementRemovedEvent new cursorElement: aCursorElement)
+	anEvent editorElement dispatchEvent: (AlbTextEditorCursorElementRemovedEvent new cursorElement: aCursorElement)
 ]

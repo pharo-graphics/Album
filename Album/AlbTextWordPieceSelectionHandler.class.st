@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 AlbTextWordPieceSelectionHandler >> eventClass [
-	^ BrTextEditorSelectRequest
+	^ AlbTextEditorSelectRequest
 ]
 
 { #category : #'api - event managing' }

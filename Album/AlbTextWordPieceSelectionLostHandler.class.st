@@ -15,7 +15,7 @@ AlbTextWordPieceSelectionLostHandler >> handleEvent: anEvent [
 	
 	"To not create an instance of me for each tiny text element"
 	anEditorElement := anEvent currentTarget
-		allParentsDetect: [ :anElement | (anElement isKindOf: BrEditorElement) or: [anElement isKindOf: AlbEditorElement] ]
+		allParentsDetect: [ :anElement | (anElement isKindOf: AlbEditorElement) or: [anElement isKindOf: AlbEditorElement] ]
 		ifFound: #yourself
 		ifNone: [ ^ self ].
 

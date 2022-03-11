@@ -21,7 +21,7 @@ AlbCursorStencil class >> uniqueInstance [
 
 { #category : #'api - instantiation' }
 AlbCursorStencil >> create [
-	^ BrCursorElement new
+	^ AlbCursorElement new
 		constraintsDo: [ :c |
 			c horizontal exact: 1.
 			c vertical matchParent ];

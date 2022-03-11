@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 AlbTextWordPieceScreenToCursorHandler >> eventClass [
-	^ BrTextEditorScreenToCursorRequest
+	^ AlbTextEditorScreenToCursorRequest
 ]
 
 { #category : #geometry }

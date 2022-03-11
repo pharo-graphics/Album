@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 AlbTextWordPieceFocusHandler >> eventClass [
-	^ BrTextEditorFocusRequest
+	^ AlbTextEditorFocusRequest
 ]
 
 { #category : #'api - event managing' }

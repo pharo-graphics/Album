@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 AlbTextWordPieceShowCursorHandler >> eventClass [
-	^ BrTextEditorShowCursorRequest
+	^ AlbTextEditorShowCursorRequest
 ]
 
 { #category : #'api - event managing' }
@@ -14,7 +14,7 @@ AlbTextWordPieceShowCursorHandler >> handleEvent: anEvent [
 	| aCursorElement |
 
 	aCursorElement := anEvent currentTarget addCursorAt: anEvent cursorPosition.
-	anEvent editorElement dispatchEvent: (BrTextEditorCursorElementAddedEvent new cursorElement: aCursorElement).
+	anEvent editorElement dispatchEvent: (AlbTextEditorCursorElementAddedEvent new cursorElement: aCursorElement).
 
 	anEvent hasFocus
 		ifTrue: [ anEvent currentTarget showCursors ]

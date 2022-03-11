@@ -1,6 +1,6 @@
 Trait {
 	#name : #TAlbLayoutResizable,
-	#category : #'Album-Brick-Layout Resizer'
+	#category : #'Album-Brick-Core-Layout Resizer'
 }
 
 { #category : #'api - layout resizeable' }
@@ -32,7 +32,7 @@ TAlbLayoutResizable >> hExact: aNumber [
 		and: [ self constraints horizontal resizer size = aNumber ])
 			ifFalse: [ self constraintsDo: [ :c | c horizontal exact: aNumber ] ].
 
-	self states addState: BrLayoutHorizontalResizerState exact
+	self states addState: AlbLayoutHorizontalResizerState exact
 ]
 
 { #category : #'api - layout resizeable' }
@@ -40,7 +40,7 @@ TAlbLayoutResizable >> hFitContent [
 	(self constraints horizontal resizer isFitContent)
 		ifFalse: [ self constraintsDo: [ :c | c horizontal fitContent ] ].
 
-	self states addState: BrLayoutHorizontalResizerState fitContent
+	self states addState: AlbLayoutHorizontalResizerState fitContent
 ]
 
 { #category : #'api - layout resizeable' }
@@ -48,12 +48,12 @@ TAlbLayoutResizable >> hFitContentLimited [
 	(self constraints horizontal resizer isFitContentLimited)
 		ifFalse: [ self constraintsDo: [ :c | c horizontal fitContentLimited ] ].
 
-	self states addState: BrLayoutHorizontalResizerState fitContentLimited
+	self states addState: AlbLayoutHorizontalResizerState fitContentLimited
 ]
 
 { #category : #'api - layout resizeable' }
 TAlbLayoutResizable >> hLocal [
-	self states addState: BrLayoutHorizontalResizerState local
+	self states addState: AlbLayoutHorizontalResizerState local
 ]
 
 { #category : #'api - layout resizeable' }
@@ -61,7 +61,7 @@ TAlbLayoutResizable >> hMatchParent [
 	(self constraints horizontal resizer isMatchParent)
 		ifFalse: [ self constraintsDo: [ :c | c horizontal matchParent ] ].
 
-	self states addState: BrLayoutHorizontalResizerState matchParent
+	self states addState: AlbLayoutHorizontalResizerState matchParent
 ]
 
 { #category : #'api - layout resizeable' }
@@ -79,7 +79,7 @@ TAlbLayoutResizable >> vExact: aNumber [
 			ifFalse: [
 				self constraintsDo: [ :c | c vertical exact: aNumber ] ].
 
-	self states addState: BrLayoutVerticalResizerState exact
+	self states addState: AlbLayoutVerticalResizerState exact
 ]
 
 { #category : #'api - layout resizeable' }
@@ -87,7 +87,7 @@ TAlbLayoutResizable >> vFitContent [
 	(self constraints vertical resizer isFitContent)
 		ifFalse: [ self constraintsDo: [ :c | c vertical fitContent ] ].
 
-	self states addState: BrLayoutVerticalResizerState fitContent
+	self states addState: AlbLayoutVerticalResizerState fitContent
 ]
 
 { #category : #'api - layout resizeable' }
@@ -95,12 +95,12 @@ TAlbLayoutResizable >> vFitContentLimited [
 	(self constraints vertical resizer isFitContentLimited)
 		ifFalse: [ self constraintsDo: [ :c | c vertical fitContentLimited ] ].
 
-	self states addState: BrLayoutVerticalResizerState fitContentLimited
+	self states addState: AlbLayoutVerticalResizerState fitContentLimited
 ]
 
 { #category : #'api - layout resizeable' }
 TAlbLayoutResizable >> vLocal [
-	self states addState: BrLayoutVerticalResizerState local
+	self states addState: AlbLayoutVerticalResizerState local
 ]
 
 { #category : #'api - layout resizeable' }
@@ -108,5 +108,5 @@ TAlbLayoutResizable >> vMatchParent [
 	(self constraints vertical resizer isMatchParent)
 		ifFalse: [ self constraintsDo: [ :c | c vertical matchParent ] ].
 
-	self states addState: BrLayoutVerticalResizerState matchParent
+	self states addState: AlbLayoutVerticalResizerState matchParent
 ]

@@ -4,19 +4,19 @@ Class {
 	#instVars : [
 		'element'
 	],
-	#category : #'Album-Core-Layout Resizer'
+	#category : #'Album-Brick-Core-Layout Resizer'
 }
 
 { #category : #'adding / removing' }
-AlbLayoutResizerElementPropagations >> addPropagation: aBrLayoutResizerPropagation [
-	super addPropagation: aBrLayoutResizerPropagation.
+AlbLayoutResizerElementPropagations >> addPropagation: aAlbLayoutResizerPropagation [
+	super addPropagation: aAlbLayoutResizerPropagation.
 	
 	self element requestStyle
 ]
 
 { #category : #'adding / removing' }
-AlbLayoutResizerElementPropagations >> addPropagations: aBrLayoutResizerPropagations [
-	super addPropagations: aBrLayoutResizerPropagations.
+AlbLayoutResizerElementPropagations >> addPropagations: aAlbLayoutResizerPropagations [
+	super addPropagations: aAlbLayoutResizerPropagations.
 	
 	self element requestStyle
 ]
@@ -32,15 +32,15 @@ AlbLayoutResizerElementPropagations >> element: anObject [
 ]
 
 { #category : #'adding / removing' }
-AlbLayoutResizerElementPropagations >> removePropagation: aBrLayoutResizerPropagation [
-	super removePropagation: aBrLayoutResizerPropagation.
+AlbLayoutResizerElementPropagations >> removePropagation: aAlbLayoutResizerPropagation [
+	super removePropagation: aAlbLayoutResizerPropagation.
 	
 	self element requestStyle
 ]
 
 { #category : #'adding / removing' }
-AlbLayoutResizerElementPropagations >> removePropagations: aBrLayoutResizerPropagations [
-	super removePropagations: aBrLayoutResizerPropagations.
+AlbLayoutResizerElementPropagations >> removePropagations: aAlbLayoutResizerPropagations [
+	super removePropagations: aAlbLayoutResizerPropagations.
 	
 	self element requestStyle
 ]

@@ -5,7 +5,7 @@ Class {
 		'initialized',
 		'changes'
 	],
-	#category : #'Album-Core-Changes'
+	#category : #'Album-Brick-Core-Changes'
 }
 
 { #category : #adding }

@@ -7,7 +7,7 @@ Class {
 		'down',
 		'source'
 	],
-	#category : #'Album-Core-Changes'
+	#category : #'Album-Brick-Core-Changes'
 }
 
 { #category : #accessing }

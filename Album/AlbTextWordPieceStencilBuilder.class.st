@@ -85,14 +85,14 @@ AlbTextWordPieceStencilBuilder >> reset [
 
 { #category : #accessing }
 AlbTextWordPieceStencilBuilder >> segmentPiece [
-	<return: #TBrTextEditorTextualPiece>
+	<return: #TAlbTextEditorTextualPiece>
 
 	^ segmentPiece
 ]
 
 { #category : #accessing }
-AlbTextWordPieceStencilBuilder >> segmentPiece: aTBrTextEditorTextualPiece [
-	segmentPiece := aTBrTextEditorTextualPiece
+AlbTextWordPieceStencilBuilder >> segmentPiece: aTAlbTextEditorTextualPiece [
+	segmentPiece := aTAlbTextEditorTextualPiece
 ]
 
 { #category : #accessing }

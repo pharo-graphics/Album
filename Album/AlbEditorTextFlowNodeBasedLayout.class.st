@@ -131,7 +131,7 @@ AlbEditorTextFlowNodeBasedLayout >> measure: aParentLayoutNode [
 
 	"lines do: [ :aLine |
 		aLine elements ifNotEmpty: [ :theElements |
-			(theElements last isKindOf: BrTextElementWithCursors)
+			(theElements last isKindOf: AlbTextElementWithCursors)
 				ifTrue: [
 					theElements last measure: (BlExtentMeasurementSpec exact:
 						theElements last measuredExtent + (((anElement measuredWidth - aLine width) max: 0.0) @ theElements last padding height negated)) ] ] ]."

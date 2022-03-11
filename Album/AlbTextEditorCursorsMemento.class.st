@@ -16,7 +16,7 @@ AlbTextEditorCursorsMemento >> cursors: anObject [
 AlbTextEditorCursorsMemento >> initialize [
 	super initialize.
 	
-	cursors := BrTextEditorMultipleCursor new
+	cursors := AlbTextEditorMultipleCursor new
 ]
 
 { #category : #evaluating }

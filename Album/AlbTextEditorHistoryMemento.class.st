@@ -11,7 +11,7 @@ Class {
 AlbTextEditorHistoryMemento >> initialize [
 	super initialize.
 	
-	history := BrTextEditorHistory new
+	history := AlbTextEditorHistory new
 ]
 
 { #category : #evaluating }

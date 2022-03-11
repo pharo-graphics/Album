@@ -93,13 +93,13 @@ AlbTextEditorHistory >> insertedStrings: aCollectionOfStrings undo: aCollectionO
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistory >> redoOn: aBrTextEditor [
+AlbTextEditorHistory >> redoOn: aTextEditor [
 	redoCommands ifNotEmpty: [ :theCommands |
-		self disableDuring: [ undoCommands add: (theCommands removeLast redoOn: aBrTextEditor) ] ]
+		self disableDuring: [ undoCommands add: (theCommands removeLast redoOn: aTextEditor) ] ]
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistory >> undoOn: aBrTextEditor [
+AlbTextEditorHistory >> undoOn: aTextEditor [
 	undoCommands ifNotEmpty: [ :theCommands |
-		self disableDuring: [ redoCommands add: (theCommands removeLast undoOn: aBrTextEditor) ] ]
+		self disableDuring: [ redoCommands add: (theCommands removeLast undoOn: aTextEditor) ] ]
 ]

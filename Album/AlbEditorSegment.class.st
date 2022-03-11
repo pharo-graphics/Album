@@ -16,7 +16,7 @@ AlbEditorSegment >> clearCache [
 
 { #category : #accessing }
 AlbEditorSegment >> index [
-	"Return segment index within BrEditor.
+	"Return segment index within Editor.
 	Note: index can not be nil"
 	<return: #Number>
 	

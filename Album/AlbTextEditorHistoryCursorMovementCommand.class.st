@@ -19,10 +19,10 @@ AlbTextEditorHistoryCursorMovementCommand >> fromIndices: anObject [
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryCursorMovementCommand >> redoOn: aBrTextEditor [
+AlbTextEditorHistoryCursorMovementCommand >> redoOn: aTextEditor [
 	| aNavigator |
 	
-	aNavigator := aBrTextEditor navigator.
+	aNavigator := aTextEditor navigator.
 	fromIndices do: [ :eachIndex | aNavigator removeAt: eachIndex ].
 	toIndices do: [ :eachIndex | aNavigator addAt: eachIndex ].
 	aNavigator apply
@@ -39,10 +39,10 @@ AlbTextEditorHistoryCursorMovementCommand >> toIndices: anObject [
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryCursorMovementCommand >> undoOn: aBrTextEditor [
+AlbTextEditorHistoryCursorMovementCommand >> undoOn: aTextEditor [
 	| aNavigator |
 	
-	aNavigator := aBrTextEditor navigator.
+	aNavigator := aTextEditor navigator.
 	toIndices do: [ :eachIndex | aNavigator removeAt: eachIndex ].
 	fromIndices do: [ :eachIndex | aNavigator addAt: eachIndex ].
 	aNavigator apply

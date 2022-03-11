@@ -11,7 +11,7 @@ Class {
 AlbTextEditorShortcutsMemento >> initialize [
 	super initialize.
 	
-	shortcuts := BrTextEditorShortcuts new
+	shortcuts := AlbTextEditorShortcuts new
 ]
 
 { #category : #evaluating }

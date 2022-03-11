@@ -10,22 +10,22 @@ Class {
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceCollectionMap >> allPieces [
 	"Return all current line segment pieces"
-	<return: #Collection of: #BrTextEditorLineSegmentPiece>
+	<return: #Collection of: #AlbTextEditorLineSegmentPiece>
 
 	^ map collect: [ :eachAssociation | eachAssociation key ]
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceCollectionMap >> at: aBrTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
+AlbTextEditorLineSegmentPieceCollectionMap >> at: aTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
 	^ map
-		detect: [ :eachAssociation | eachAssociation key = aBrTextEditorLineSegmentPiece ]
+		detect: [ :eachAssociation | eachAssociation key = aTextEditorLineSegmentPiece ]
 		ifFound: [ :eachAssociation | thePieceAndElementsBlock value: eachAssociation key value: eachAssociation value ]
 		ifNone: anAbsentBlock
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceCollectionMap >> atPiece: aBrTextEditorLineSegmentPiece putElements: aCollectionOfElements [
-	map add: (aBrTextEditorLineSegmentPiece -> aCollectionOfElements)
+AlbTextEditorLineSegmentPieceCollectionMap >> atPiece: aTextEditorLineSegmentPiece putElements: aCollectionOfElements [
+	map add: (aTextEditorLineSegmentPiece -> aCollectionOfElements)
 ]
 
 { #category : #initialization }

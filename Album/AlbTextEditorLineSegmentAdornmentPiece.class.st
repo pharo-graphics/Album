@@ -27,13 +27,13 @@ AlbTextEditorLineSegmentAdornmentPiece >> adornmentAttribute [
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentAdornmentPiece >> adornmentAttribute: aBrTextAdornmentAttribute [
+AlbTextEditorLineSegmentAdornmentPiece >> adornmentAttribute: aTextAdornmentAttribute [
 
 	self
-		assert: [ aBrTextAdornmentAttribute isNotNil ]
+		assert: [ aTextAdornmentAttribute isNotNil ]
 		description: [ 'Adornment attribute must not be nil' ].
 
-	adornmentAttribute := aBrTextAdornmentAttribute
+	adornmentAttribute := aTextAdornmentAttribute
 ]
 
 { #category : #'instance creation' }

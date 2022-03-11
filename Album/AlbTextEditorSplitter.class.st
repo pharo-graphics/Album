@@ -5,14 +5,14 @@ Class {
 }
 
 { #category : #'api - splitting' }
-AlbTextEditorSplitter >> split: aBlText in: aBrEditorSegmentStream [
+AlbTextEditorSplitter >> split: aBlText in: aEditorSegmentStream [
 	self
 		split: (aBlText from: 1 to: aBlText size)
-		in: aBrEditorSegmentStream
+		in: aEditorSegmentStream
 		offset: 0
 ]
 
 { #category : #'api - splitting' }
-AlbTextEditorSplitter >> split: aBrText in: aBrEditorSegmentStream offset: anOffset [
+AlbTextEditorSplitter >> split: aText in: aEditorSegmentStream offset: anOffset [
 	self subclassResponsibility
 ]

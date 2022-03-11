@@ -35,11 +35,11 @@ AlbTextEditorHistoryInsertionCommand >> redoIndices: anObject [
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryInsertionCommand >> redoOn: aBrTextEditor [
+AlbTextEditorHistoryInsertionCommand >> redoOn: aTextEditor [
 	| anInserter |
-	aBrTextEditor deselecter all deselect.
+	aTextEditor deselecter all deselect.
 	
-	anInserter := aBrTextEditor inserter.
+	anInserter := aTextEditor inserter.
 	strings
 		with: redoIndices
 		do: [ :eachString :eachIndex | anInserter text: eachString; at: eachIndex ].
@@ -67,10 +67,10 @@ AlbTextEditorHistoryInsertionCommand >> undoIndices: anObject [
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryInsertionCommand >> undoOn: aBrTextEditor [
+AlbTextEditorHistoryInsertionCommand >> undoOn: aTextEditor [
 	| aDeleter |
-	aBrTextEditor deselecter all deselect.
-	aDeleter := aBrTextEditor deleter.
+	aTextEditor deselecter all deselect.
+	aDeleter := aTextEditor deleter.
 	strings with: undoIndices do: [ :eachString :eachIndex | 
 		aDeleter from: eachIndex to: eachIndex + eachString size ].
 	aDeleter delete

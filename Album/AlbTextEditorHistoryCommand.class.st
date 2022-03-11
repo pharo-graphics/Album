@@ -10,11 +10,11 @@ AlbTextEditorHistoryCommand >> isGroup [
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryCommand >> redoOn: aBrTextEditor [
+AlbTextEditorHistoryCommand >> redoOn: aTextEditor [
 	self subclassResponsibility
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryCommand >> undoOn: aBrTextEditor [
+AlbTextEditorHistoryCommand >> undoOn: aTextEditor [
 	self subclassResponsibility
 ]

@@ -53,16 +53,16 @@ AlbTextEditor class >> isDebug: aBoolean [
 ]
 
 { #category : #'api - shortcuts' }
-AlbTextEditor >> addEditorShortcut: aBrTextEditorShortcut [
+AlbTextEditor >> addEditorShortcut: aTextEditorShortcut [
 	self editorShortcuts
-		add: aBrTextEditorShortcut
+		add: aTextEditorShortcut
 		ifAdded: [ :aNewEditorShortcut | self onShortcutAdded: aNewEditorShortcut ]
 		ifReplaced: [ :aPreviousEditorShortcut | self onShortcutRemoved: aPreviousEditorShortcut ]
 ]
 
 { #category : #'api - shortcuts' }
-AlbTextEditor >> addEditorShortcuts: aCollectionOfBrTextEditorShortcut [
-	aCollectionOfBrTextEditorShortcut
+AlbTextEditor >> addEditorShortcuts: aCollectionOfTextEditorShortcut [
+	aCollectionOfTextEditorShortcut
 		do: [ :eachShortcut | self addEditorShortcut: eachShortcut ]
 ]
 
@@ -291,19 +291,19 @@ AlbTextEditor >> editorMode [
 ]
 
 { #category : #'api - mode' }
-AlbTextEditor >> editorMode: aBrTextEditorMode [
+AlbTextEditor >> editorMode: aTextEditorMode [
 	self
-		assert: [ aBrTextEditorMode isNotNil ]
+		assert: [ aTextEditorMode isNotNil ]
 		description: [ 'Mode must not be nil' ].
 
-	mode = aBrTextEditorMode
+	mode = aTextEditorMode
 		ifTrue: [ ^ self ].
 
 	"Uninstall existing mode"
 	mode uninstallFromEditor: self.
 	attachedElements do: [ :eachElement | mode uninstallFromEditorElement: eachElement ].
 
-	mode := aBrTextEditorMode.
+	mode := aTextEditorMode.
 	mode installOnEditor: self.
 	attachedElements do: [ :eachElement | mode installOnEditorElement: eachElement ].
 	
@@ -367,8 +367,8 @@ AlbTextEditor >> history [
 ]
 
 { #category : #accessing }
-AlbTextEditor >> history: aBrTextEditorHistory [
-	history := aBrTextEditorHistory
+AlbTextEditor >> history: aTextEditorHistory [
+	history := aTextEditorHistory
 ]
 
 { #category : #initialization }
@@ -408,11 +408,11 @@ AlbTextEditor >> initialize [
 ]
 
 { #category : #initialization }
-AlbTextEditor >> initializeText: aBrText [
-	aBrText when: BlTextStringsInserted send: #onStringsInserted: to: self.
-	aBrText when: BlTextsDeleted send: #onTextsDeleted: to: self.
-	aBrText when: BlTextAttributeAdded send: #onTextAttributeAdded: to: self.
-	aBrText when: BlTextAttributesRemoved send: #onTextAttributesRemoved: to: self.
+AlbTextEditor >> initializeText: aText [
+	aText when: BlTextStringsInserted send: #onStringsInserted: to: self.
+	aText when: BlTextsDeleted send: #onTextsDeleted: to: self.
+	aText when: BlTextAttributeAdded send: #onTextAttributeAdded: to: self.
+	aText when: BlTextAttributesRemoved send: #onTextAttributesRemoved: to: self.
 ]
 
 { #category : #'api - filter' }
@@ -423,8 +423,8 @@ AlbTextEditor >> inputFilter [
 ]
 
 { #category : #'api - filter' }
-AlbTextEditor >> inputFilter: aBrTextEditorInputFilter [
-	filter := aBrTextEditorInputFilter
+AlbTextEditor >> inputFilter: aTextEditorInputFilter [
+	filter := aTextEditorInputFilter
 ]
 
 { #category : #'private - text' }
@@ -916,22 +916,22 @@ AlbTextEditor >> removeAllEditorShortcuts [
 ]
 
 { #category : #'api - shortcuts' }
-AlbTextEditor >> removeEditorShortcut: aBrTextEditorShortcut [
+AlbTextEditor >> removeEditorShortcut: aTextEditorShortcut [
 	self editorShortcuts
-		remove: aBrTextEditorShortcut
+		remove: aTextEditorShortcut
 		ifFound: [ :aPreviousShortcut | self onShortcutRemoved: aPreviousShortcut ]
 ]
 
 { #category : #'api - shortcuts' }
-AlbTextEditor >> removeEditorShortcuts: aCollectionOfBrTextEditorShortcut [
-	aCollectionOfBrTextEditorShortcut do: [ :eachShortcut | self removeEditorShortcut: eachShortcut ]
+AlbTextEditor >> removeEditorShortcuts: aCollectionOfTextEditorShortcut [
+	aCollectionOfTextEditorShortcut do: [ :eachShortcut | self removeEditorShortcut: eachShortcut ]
 ]
 
 { #category : #'api - save state' }
-AlbTextEditor >> restoreState: aBrTextEditorMemento [
+AlbTextEditor >> restoreState: aTextEditorMemento [
 	self assertUIProcess.
 
-	aBrTextEditorMemento restoreStateOf: self
+	aTextEditorMemento restoreStateOf: self
 ]
 
 { #category : #accessing }
@@ -967,11 +967,11 @@ AlbTextEditor >> saveState [
 ]
 
 { #category : #'api - save state' }
-AlbTextEditor >> saveState: aBrTextEditorMemento [
+AlbTextEditor >> saveState: aTextEditorMemento [
 	<return: #AlbTextEditorMemento>
 	self assertUIProcess.
 	
-	^ aBrTextEditorMemento saveStateOf: self
+	^ aTextEditorMemento saveStateOf: self
 ]
 
 { #category : #accessing }
@@ -1071,14 +1071,14 @@ AlbTextEditor >> selectionRecorder [
 ]
 
 { #category : #'api - shortcuts' }
-AlbTextEditor >> setEditorShortcuts: aToTextEditorShortcuts [
+AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 	self
-		assert: [ aToTextEditorShortcuts isKindOf: AlbTextEditorShortcuts ]
+		assert: [ aTextEditorShortcuts isKindOf: AlbTextEditorShortcuts ]
 		description: [ 'Must be an editor shortcuts object' ].
 	
 	self removeAllEditorShortcuts.
 	
-	shortcuts := aToTextEditorShortcuts.
+	shortcuts := aTextEditorShortcuts.
 	shortcuts do: [ :aNewEditorShortcut | self onShortcutAdded: aNewEditorShortcut ]
 ]
 
@@ -1161,20 +1161,20 @@ AlbTextEditor >> text [
 ]
 
 { #category : #accessing }
-AlbTextEditor >> text: aBrText [
+AlbTextEditor >> text: aText [
 	
 	"when reducing the text size we should update the selection and cursor positions"
-	(aBrText size < text size)
+	(aText size < text size)
 		ifTrue: [
 			self navigator
-				moveWithin: (0 to: aBrText size);
+				moveWithin: (0 to: aText size);
 				apply.
 			
 			self deselecter
-				from: aBrText size to: text size;
+				from: aText size to: text size;
 				deselect ].
 
-	self restoreText: aBrText
+	self restoreText: aText
 ]
 
 { #category : #accessing }

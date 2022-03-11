@@ -17,7 +17,7 @@ AlbEditorSegmentHolder >> createSegmentElement [
 AlbEditorSegmentHolder >> editor [
 	"Return the attached text editor instance.
 	Editor can not be nil"
-	<return: #BrTextEditor>
+	<return: #AlbTextEditor>
 
 	^ self infiniteElement editor
 ]
@@ -34,6 +34,6 @@ AlbEditorSegmentHolder >> onRecycled [
 ]
 
 { #category : #accessing }
-AlbEditorSegmentHolder >> segment: aBrEditorSegment [
+AlbEditorSegmentHolder >> segment: aEditorSegment [
 	^ self subclassResponsibility
 ]

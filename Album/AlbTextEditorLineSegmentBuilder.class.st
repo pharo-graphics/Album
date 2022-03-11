@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'text - modifications' }
-AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex to: aToIndex in: aBrTextEditor [
+AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex to: aToIndex in: aTextEditor [
 	"Is sent after an attribute was added in provided text editor"
 	| aFromSegment aToSegment |
 
@@ -17,12 +17,12 @@ AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex 
 		assert: [ aFromIndex <= (aToIndex + 1) ]
 		description: [ '`From` index must be less or equal to `to` index' ].
 
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		cachedSegmentAt: aFromIndex
 		ifFound: [ :aSegment | aFromSegment := aSegment ]
 		ifNotFound: [ ].
 
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		cachedSegmentAt: aToIndex
 		ifFound: [ :aSegment | aToSegment := aSegment ]
 		ifNotFound: [ ].
@@ -33,7 +33,7 @@ AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex 
 			self flag: #TODO.
 			^ self ].
 
-	aBrTextEditor updater
+	aTextEditor updater
 		from: aFromSegment textStart to: aToSegment textEnd;
 		update
 ]
@@ -54,17 +54,17 @@ AlbTextEditorLineSegmentBuilder >> defaultSplitter [
 ]
 
 { #category : #'private - deletion' }
-AlbTextEditorLineSegmentBuilder >> deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aBrTextEditor [
+AlbTextEditorLineSegmentBuilder >> deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aTextEditor [
 	"I do the hard work of updating segment structure after deleting a piece of text within provided interval and segments"
 	| shouldMergeWithPrevious aTargetSegment removedLength aNewEnd aNewStart |
 	
 	shouldMergeWithPrevious := self
 		shouldMergeDeletingFrom: aFromIndex
 		segment: aFromSegment
-		in: aBrTextEditor.
+		in: aTextEditor.
 
 	aTargetSegment := shouldMergeWithPrevious
-		ifTrue: [ aBrTextEditor segmentCollector segments at: (aFromSegment index - 1) ]
+		ifTrue: [ aTextEditor segmentCollector segments at: (aFromSegment index - 1) ]
 		ifFalse: [ aFromSegment ].
 
 	removedLength := aToIndex - aFromIndex + 1.
@@ -86,10 +86,10 @@ AlbTextEditorLineSegmentBuilder >> deleteFrom: aFromIndex segment: aFromSegment 
 				ifFalse: [ (aFromSegment index + 1) min: aToSegment index ].
 			removeSegmentEnd := aToSegment index.
 
-			aBrTextEditor segmentCollector removeSegmentInterval: (removeSegmentStart to: removeSegmentEnd) ].
+			aTextEditor segmentCollector removeSegmentInterval: (removeSegmentStart to: removeSegmentEnd) ].
 	
 	aTargetSegment moveTextPiecesBy: removedLength negated at: aFromIndex.
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		moveTextBy: removedLength negated
 		after: aTargetSegment.
 		
@@ -97,19 +97,19 @@ AlbTextEditorLineSegmentBuilder >> deleteFrom: aFromIndex segment: aFromSegment 
 ]
 
 { #category : #'text - modifications' }
-AlbTextEditorLineSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aBrTextEditor [
+AlbTextEditorLineSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aTextEditor [
 	| aFromSegment aToSegment aTargetSegment |
 
 	self
 		assert: [ aFromIndex <= aToIndex ]
 		description: [ '`From` index must be less or equal to `to` index' ].
 
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		cachedSegmentAt: aFromIndex
 		ifFound: [ :aSegment | aFromSegment := aSegment ]
 		ifNotFound: [ ].
 
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		cachedSegmentAt: aToIndex
 		ifFound: [ :aSegment | aToSegment := aSegment ]
 		ifNotFound: [ ].
@@ -118,14 +118,14 @@ AlbTextEditorLineSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aBrT
 			"Either aFromIndex or aToIndex are outside the segment collector's cache.
 			It looks like the text editor's text has already been updated, 
 			simply reset the cache and notify the editor"
-			interval := aBrTextEditor segmentCollector cachedInterval.
-			aBrTextEditor segmentCollector resetCache.
-			aBrTextEditor notifyItemsRemoved: interval.
+			interval := aTextEditor segmentCollector cachedInterval.
+			aTextEditor segmentCollector resetCache.
+			aTextEditor notifyItemsRemoved: interval.
 			^ self ].
 
-	aTargetSegment := self deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aBrTextEditor.
+	aTargetSegment := self deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aTextEditor.
 
-	aBrTextEditor updater
+	aTextEditor updater
 		from: aTargetSegment textStart to: aTargetSegment textEnd;
 		update
 ]
@@ -138,14 +138,14 @@ AlbTextEditorLineSegmentBuilder >> initialize [
 ]
 
 { #category : #'text - modifications' }
-AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aBrTextEditor [
+AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aTextEditor [
 	"I am doing a hard work updating editor's segment cache due to inserted string.
 	Note: This is an *algorithm* that should be very performant, that is why we don't see
 	a point in doing it in OOP style, procedural way fits quite well"
 	| aCurrentSegment aStream theNewSegments |
 
 	self
-		assert: [ aBrTextEditor text isNotEmpty ]
+		assert: [ aTextEditor text isNotEmpty ]
 		description: [ 'Text can not be empty here' ].
 	self
 		assert: [ aString isNotEmpty ]
@@ -155,23 +155,23 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aB
 	aStream limit: Float infinity.
 
 	self
-		split: (aBrTextEditor text from: aTextIndex + 1 to: aTextIndex + aString size)
+		split: (aTextEditor text from: aTextIndex + 1 to: aTextIndex + aString size)
 		in: aStream
 		offset: aTextIndex.
 
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		cachedSegmentAt: aTextIndex
 		ifFound: [ :aSegment | aCurrentSegment := aSegment ]
 		ifNotFound: [ ^ self ].
 
 	theNewSegments := aCurrentSegment insert: aStream segments.
 	theNewSegments size > 1
-		ifTrue: [ aBrTextEditor segmentCollector addSegments: theNewSegments allButFirst after: aCurrentSegment ].
+		ifTrue: [ aTextEditor segmentCollector addSegments: theNewSegments allButFirst after: aCurrentSegment ].
 
 	aCurrentSegment moveTextPiecesBy: aString size at: aTextIndex.
-	aBrTextEditor segmentCollector moveTextBy: aString size after: theNewSegments last.
+	aTextEditor segmentCollector moveTextBy: aString size after: theNewSegments last.
 	
-	aBrTextEditor updater
+	aTextEditor updater
 		from: aCurrentSegment textStart to: aCurrentSegment textEnd;
 		update
 ]
@@ -187,7 +187,7 @@ AlbTextEditorLineSegmentBuilder >> lineStencilBuilder [
 ]
 
 { #category : #'text - modifications' }
-AlbTextEditorLineSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToIndex in: aBrTextEditor [
+AlbTextEditorLineSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToIndex in: aTextEditor [
 	"Is sent after an attributes were removed in provided text editor"
 
 	| aFromSegment aToSegment |
@@ -196,12 +196,12 @@ AlbTextEditorLineSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToInde
 		assert: [ aFromIndex <= (aToIndex + 1) ]
 		description: [ '`From` index must be less or equal to `to` index' ].
 
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		cachedSegmentAt: aFromIndex
 		ifFound: [ :aSegment | aFromSegment := aSegment ]
 		ifNotFound: [ ].
 
-	aBrTextEditor segmentCollector
+	aTextEditor segmentCollector
 		cachedSegmentAt: aToIndex
 		ifFound: [ :aSegment | aToSegment := aSegment ]
 		ifNotFound: [ ].
@@ -212,13 +212,13 @@ AlbTextEditorLineSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToInde
 			self flag: #TODO.
 			^ self ].
 
-	aBrTextEditor updater
+	aTextEditor updater
 		from: aFromSegment textStart to: aToSegment textEnd;
 		update
 ]
 
 { #category : #'private - deletion' }
-AlbTextEditorLineSegmentBuilder >> shouldMergeDeletingFrom: aFromIndex segment: aFromSegment in: aBrTextEditor [
+AlbTextEditorLineSegmentBuilder >> shouldMergeDeletingFrom: aFromIndex segment: aFromSegment in: aTextEditor [
 	"Return true if we should merge a given segment with the previous if we delete a piece of
 	text in a given editor starting from a provided index, false otherwise"
 	<return: #Boolean>
@@ -232,7 +232,7 @@ AlbTextEditorLineSegmentBuilder >> shouldMergeDeletingFrom: aFromIndex segment: 
 	(aFromIndex < aFromSegment textStart)
 		ifTrue: [ ^ true ].
 
-	aPreviousSegment := aBrTextEditor segmentCollector segments at: (aFromSegment index - 1).
+	aPreviousSegment := aTextEditor segmentCollector segments at: (aFromSegment index - 1).
 	
 	"if the difference between the end of the previous segment and the start of
 	our deletion interval is 1 it means that we are trying to delete a line break symbol

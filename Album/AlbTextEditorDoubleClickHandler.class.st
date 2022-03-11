@@ -25,7 +25,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	
 	"To not create an instance of me for each tiny text element"
 	anEditorElement := anEvent currentTarget
-		withAllParentsDetect: [ :anElement | (anElement isKindOf: BrEditorElement) or: [anElement isKindOf: AlbEditorElement]]
+		withAllParentsDetect: [ :anElement | anElement isKindOf: AlbEditorElement]
 		ifFound: #yourself
 		ifNone: [ ^ self ].
 		

@@ -11,7 +11,7 @@ Class {
 AlbTextEditorInputFilterMemento >> initialize [
 	super initialize.
 	
-	inputFilter := BrTextEditorNoInputFilter new
+	inputFilter := AlbTextEditorNoInputFilter new
 ]
 
 { #category : #evaluating }

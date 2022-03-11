@@ -12,8 +12,8 @@ Class {
 }
 
 { #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> assignToLine: aBrEditorTextFlowLine [
-	assignedLine := aBrEditorTextFlowLine
+AlbEditorTextFlowLayoutConstraints >> assignToLine: aEditorTextFlowLine [
+	assignedLine := aEditorTextFlowLine
 ]
 
 { #category : #accessing }

@@ -14,12 +14,12 @@ AlbTextEditorCursorRemovedEvent class >> cursor: aCursor [
 
 { #category : #accessing }
 AlbTextEditorCursorRemovedEvent >> cursor [
-	<return: #BrTextEditorSingleCursor>
+	<return: #AlbTextEditorSingleCursor>
 
 	^ cursor
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorRemovedEvent >> cursor: aBrTextEditorSingleCursor [
-	cursor := aBrTextEditorSingleCursor
+AlbTextEditorCursorRemovedEvent >> cursor: aTextEditorSingleCursor [
+	cursor := aTextEditorSingleCursor
 ]

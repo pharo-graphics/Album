@@ -34,11 +34,11 @@ AlbWidgetModel class >> withAllSuperclassModels [
 	
 	theModels := OrderedCollection with: self.
 	
-	self = BrWidgetModel
+	self = AlbWidgetModel
 		ifTrue: [ ^ theModels ].
 
 	theModels
-		addAll: (self allSuperclassesIncluding: BrWidgetModel);
+		addAll: (self allSuperclassesIncluding: AlbWidgetModel);
 		yourself.
 		
 	^ theModels
@@ -50,13 +50,13 @@ AlbWidgetModel >> + anotherModel [
 ]
 
 { #category : #'api - composition' }
-AlbWidgetModel >> add: aBrWidgetModel [
+AlbWidgetModel >> add: aWidgetModel [
 
 	self isAttachedToWidget and: [ self widget aptitudeDo: [ :aLook |
 		self error: 'Can not add a view model if there is a look'	] ].
 
-	actors := actors copyWith: aBrWidgetModel.
-	self widgetDo: [ :anElement | aBrWidgetModel onInstalledIn: anElement ]
+	actors := actors copyWith: aWidgetModel.
+	self widgetDo: [ :anElement | aWidgetModel onInstalledIn: anElement ]
 ]
 
 { #category : #'api - composition' }
@@ -170,7 +170,7 @@ AlbWidgetModel >> whenAttachedDo: aBlockClosure [
 
 { #category : #accessing }
 AlbWidgetModel >> widgetModels [
-	<return: #Collection of: #BrWidgetModel>
+	<return: #Collection of: #AlbWidgetModel>
 
 	^ self children
 ]

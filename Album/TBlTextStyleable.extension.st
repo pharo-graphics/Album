@@ -1,21 +1,21 @@
 Extension { #name : #TBlTextStyleable }
 
 { #category : #'*Album' }
-TBlTextStyleable >> appendingAdornment: aBrTextAdornmentStencilBuilder [
+TBlTextStyleable >> appendingAdornment: aTextAdornmentStencilBuilder [
 	"Append a visual element defined by a given stencil builder right after a text on which I am applied.
 	A stencil builder can also be a block in the following form:
-	[ :aTBrTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
+	[ :aTTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
 
 	self attributesBuilder attribute: (AlbTextAdornmentDynamicAttribute new
 		beAppend;
-		stencil: aBrTextAdornmentStencilBuilder)
+		stencil: aTextAdornmentStencilBuilder)
 ]
 
 { #category : #'*Album' }
-TBlTextStyleable >> expanded: aBoolean adornment: aBrTextAdornmentStencilBuilder [
+TBlTextStyleable >> expanded: aBoolean adornment: aTextAdornmentStencilBuilder [
 	"Append a visual element defined by a given stencil builder right after a text on which I am applied.
 	A stencil builder can also be a block in the following form:
-	[ :aTBrTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
+	[ :aTTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
 
 	self attributesBuilder attribute: (
 		BrGlamorousTrangleExpanderTextAttribute new 
@@ -23,16 +23,16 @@ TBlTextStyleable >> expanded: aBoolean adornment: aBrTextAdornmentStencilBuilder
 			attributesCreatingBlock: [
 				AlbTextAdornmentDynamicAttribute new 	
 					beAppend;
-					stencil: aBrTextAdornmentStencilBuilder ])
+					stencil: aTextAdornmentStencilBuilder ])
 ]
 
 { #category : #'*Album' }
-TBlTextStyleable >> expandingAdornment: aBrTextAdornmentStencilBuilder [
+TBlTextStyleable >> expandingAdornment: aTextAdornmentStencilBuilder [
 	"Append a visual element defined by a given stencil builder right after a text on which I am applied.
 	A stencil builder can also be a block in the following form:
-	[ :aTBrTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
+	[ :aTTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
 
-	self expanded: false adornment: aBrTextAdornmentStencilBuilder
+	self expanded: false adornment: aTextAdornmentStencilBuilder
 ]
 
 { #category : #'*Album' }
@@ -50,7 +50,7 @@ TBlTextStyleable >> lineSpacing: aNumber [
 { #category : #'*Album' }
 TBlTextStyleable >> onClick: aClickAction [
 	"Perform actions when a user clicks on a piece of text.
-	The click action is a block in the following form: [ :aTBrTextEditorTextualPiece :aWorldElement :anEditorElement :anEvent | ]"
+	The click action is a block in the following form: [ :aTTextEditorTextualPiece :aWorldElement :anEditorElement :anEvent | ]"
 
 	self attributesBuilder attribute: (AlbTextClickAttribute new action: aClickAction)
 ]
@@ -58,8 +58,8 @@ TBlTextStyleable >> onClick: aClickAction [
 { #category : #'*Album' }
 TBlTextStyleable >> onCursorEnter: anEnterAction leave: aLeaveAction [
 	"Perform actions when a cursor enters and leaves a piece of text.
-	The enter action is a block in the following form: [ :aTextEditor :aBrTextEditorCursorAddedEvent :anAttributeStart :anAttributeEnd | ]
-	The leave action is a block in the following form: [ :aTextEditor :aBrTextEditorCursorRemovedEvent :anAttributeStart :anAttributeEnd | ]"
+	The enter action is a block in the following form: [ :aTextEditor :aTextEditorCursorAddedEvent :anAttributeStart :anAttributeEnd | ]
+	The leave action is a block in the following form: [ :aTextEditor :aTextEditorCursorRemovedEvent :anAttributeStart :anAttributeEnd | ]"
 
 	self attributesBuilder attribute: (AlbTextCursorAttribute new
 			enterAction: anEnterAction;
@@ -72,14 +72,14 @@ TBlTextStyleable >> paragraphMargin: anInsets [
 ]
 
 { #category : #'*Album' }
-TBlTextStyleable >> replacingAdornment: aBrTextAdornmentStencilBuilder [
+TBlTextStyleable >> replacingAdornment: aTextAdornmentStencilBuilder [
 	"Visually replace a piece of text with an element defined by a given stencil builder.
 	A stencil builder can also be a block in the following form:
-	[ :aTBrTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text that should be replaced"
+	[ :aTTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text that should be replaced"
 
 	self attributesBuilder attribute: (AlbTextAdornmentDynamicAttribute new
 		beReplace;
-		stencil: aBrTextAdornmentStencilBuilder)
+		stencil: aTextAdornmentStencilBuilder)
 ]
 
 { #category : #'*Album' }

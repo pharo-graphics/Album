@@ -7,24 +7,24 @@ Class {
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> allPieces [
 	"Return all current line segment pieces"
-	<return: #Collection of: #BrTextEditorLineSegmentPiece>
+	<return: #Collection of: #AlbTextEditorLineSegmentPiece>
 	
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceMap >> at: aBrTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
+AlbTextEditorLineSegmentPieceMap >> at: aTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceMap >> atPiece: aBrTextEditorLineSegmentPiece putElements: aCollectionOfElements [
+AlbTextEditorLineSegmentPieceMap >> atPiece: aTextEditorLineSegmentPiece putElements: aCollectionOfElements [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
-	<return: #BrTextEditorLineSegmentPiece or: #Object>
+	<return: #AlbTextEditorLineSegmentPiece or: #Object>
 	
 	^ self subclassResponsibility
 ]

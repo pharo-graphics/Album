@@ -1,10 +1,10 @@
 "
-I am a text styler strategy used by ${class:BrTextEditor}$.
+I am a text styler strategy used by ${class:AlbTextEditor}$.
 I style a text in a TaskIt background process using ${class:BlTktWorkerProvider}$.
 
-See ${class:BrTextStylerStrategy}$ for futher explanation.
+See ${class:AlbTextStylerStrategy}$ for futher explanation.
 
-Example: ${example:BrTextStylerExamples>>#editorWithTaskItStylerStrategy|codeExpanded=false|previewExpanded=true}$
+Example: ${example:AlbTextStylerExamples>>#editorWithTaskItStylerStrategy|codeExpanded=false|previewExpanded=true}$
 
 
 "

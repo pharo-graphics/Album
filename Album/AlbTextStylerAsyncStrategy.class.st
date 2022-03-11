@@ -1,10 +1,10 @@
 "
-I am a text styler strategy used by ${class:BrTextEditor}$.
+I am a text styler strategy used by ${class:AlbTextEditor}$.
 I style a text in a bacground process using ${method:BlockClosure>>#forkAt:named:}$.
 
-See ${class:BrTextStylerStrategy}$ for futher explanation.
+See ${class:AlbTextStylerStrategy}$ for futher explanation.
 
-Example: ${example:BrTextStylerExamples>>#editorWithAsyncStylerStrategy|codeExpanded=false|previewExpanded=true}$
+Example: ${example:AlbTextStylerExamples>>#editorWithAsyncStylerStrategy|codeExpanded=false|previewExpanded=true}$
 
 
 "
@@ -40,7 +40,7 @@ AlbTextStylerAsyncStrategy >> doStyle: aEditorElement afterDo: aBlock [
 
 { #category : #private }
 AlbTextStylerAsyncStrategy >> enqueueTaskOn: aEditorElement afterDo: aBlock [
-	"Enqueue a task into a editor element to style its text. This will dispatch a BrTextStyledEvent with the after block closure."
+	"Enqueue a task into a editor element to style its text. This will dispatch a AlbTextStyledEvent with the after block closure."
 
 	| aStyledText |
 	aEditorElement enqueueTask: (BlTaskAction new action: [

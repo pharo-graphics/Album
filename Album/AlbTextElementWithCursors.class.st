@@ -11,7 +11,7 @@ Class {
 
 { #category : #'cursor - management' }
 AlbTextElementWithCursors >> addCursorAt: aTextPosition [
-	<return: #BrCursorElement>
+	<return: #AlbCursorElement>
 	
 	^ self
 		cursorAt: aTextPosition
@@ -51,7 +51,7 @@ AlbTextElementWithCursors >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone
 
 { #category : #accessing }
 AlbTextElementWithCursors >> cursorElements [
-	<return: #Collection of: #BrCursorElement>
+	<return: #Collection of: #AlbCursorElement>
 
 	^ cursorElements
 ]
@@ -181,7 +181,7 @@ AlbTextElementWithCursors >> removeSegmentPiece [
 
 { #category : #accessing }
 AlbTextElementWithCursors >> segmentPiece [
-	<return: #TBrTextEditorTextualPiece>
+	<return: #TAlbTextEditorTextualPiece>
 
 	^ segmentPiece
 ]

@@ -17,14 +17,14 @@ AlbTextAdornmentStencilBuilder >> buildDefault [
 
 { #category : #accessing }
 AlbTextAdornmentStencilBuilder >> editor [
-	<return: #BrEditorElement>
+	<return: #AlbEditorElement>
 
 	^ editorElement
 ]
 
 { #category : #accessing }
-AlbTextAdornmentStencilBuilder >> editor: aBrEditorElement [
-	editorElement := aBrEditorElement
+AlbTextAdornmentStencilBuilder >> editor: aEditorElement [
+	editorElement := aEditorElement
 ]
 
 { #category : #'api - instantiation' }
@@ -36,12 +36,12 @@ AlbTextAdornmentStencilBuilder >> paramsOn: aStencilExecutor [
 
 { #category : #accessing }
 AlbTextAdornmentStencilBuilder >> segmentPiece [
-	<return: #TBrTextEditorTextualPiece>
+	<return: #TAlbTextEditorTextualPiece>
 	
 	^ segmentPiece
 ]
 
 { #category : #accessing }
-AlbTextAdornmentStencilBuilder >> segmentPiece: aTBrTextEditorTextualPiece [
-	segmentPiece := aTBrTextEditorTextualPiece
+AlbTextAdornmentStencilBuilder >> segmentPiece: aTTextEditorTextualPiece [
+	segmentPiece := aTTextEditorTextualPiece
 ]

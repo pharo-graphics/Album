@@ -74,15 +74,15 @@ BlElement >> viewModel [
 ]
 
 { #category : #'*Album' }
-BlElement >> viewModel: aBrViewModel [
+BlElement >> viewModel: aViewModel [
 	self aptitudeDo: [ :aLook | self error: 'View model must be added before look' ].
 
 	self viewModelDo: [ :aCurrentModel |
 		aCurrentModel onUninstalledIn: self.
 		self userData at: #brickViewModel put: nil ].
 
-	self userData at: #brickViewModel put: aBrViewModel.
-	aBrViewModel onInstalledIn: self
+	self userData at: #brickViewModel put: aViewModel.
+	aViewModel onInstalledIn: self
 ]
 
 { #category : #'*Album' }

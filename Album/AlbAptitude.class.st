@@ -40,11 +40,11 @@ AlbAptitude >> - aLookClass [
 ]
 
 { #category : #'api - composition' }
-AlbAptitude >> add: aBrLook [
+AlbAptitude >> add: aLook [
 	"Add a given look instance if it does not exist already"
 	| aLookInstance |
 
-	aLookInstance := aBrLook asLook.
+	aLookInstance := aLook asLook.
 	
 	(actors includes: aLookInstance)
 		ifTrue: [ ^ self ].
@@ -185,11 +185,11 @@ AlbAptitude >> onUninstalledIn: anElement [
 ]
 
 { #category : #'api - composition' }
-AlbAptitude >> remove: aBrLook [
+AlbAptitude >> remove: aLook [
 	"Remove a given look if it exists"
 	| aLookInstance |
 
-	aLookInstance := aBrLook asLook.
+	aLookInstance := aLook asLook.
 	
 	(actors includes: aLookInstance)
 		ifFalse: [ ^ self ].

@@ -29,7 +29,7 @@ AlbEditorAptitude >> initialize [
 	attributesBuilder beNotOverwritableByStyler.
 	"attributesBuilder whenAdded: [  ].
 	
-	self add: BrLayoutResizerAptitude inherit"
+	self add: AlbLayoutResizerAptitude inherit"
 ]
 
 { #category : #initialization }

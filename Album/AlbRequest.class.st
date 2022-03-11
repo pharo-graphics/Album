@@ -54,7 +54,7 @@ AlbRequest >> response: anObject [
 AlbRequest >> responseClass [
 	<return: #'AlbResponse class'>
 
-	^ BrNoResponse
+	^ AlbNoResponse
 ]
 
 { #category : #accessing }

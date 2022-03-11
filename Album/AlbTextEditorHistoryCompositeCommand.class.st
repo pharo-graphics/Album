@@ -32,11 +32,11 @@ AlbTextEditorHistoryCompositeCommand >> isGroup [
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryCompositeCommand >> redoOn: aBrTextEditor [
-	commands do: [ :eachCommand | eachCommand redoOn: aBrTextEditor ]
+AlbTextEditorHistoryCompositeCommand >> redoOn: aTextEditor [
+	commands do: [ :eachCommand | eachCommand redoOn: aTextEditor ]
 ]
 
 { #category : #'api - undo/redo' }
-AlbTextEditorHistoryCompositeCommand >> undoOn: aBrTextEditor [
-	commands reverseDo: [ :eachCommand | eachCommand undoOn: aBrTextEditor ]
+AlbTextEditorHistoryCompositeCommand >> undoOn: aTextEditor [
+	commands reverseDo: [ :eachCommand | eachCommand undoOn: aTextEditor ]
 ]

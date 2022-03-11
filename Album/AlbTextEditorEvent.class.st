@@ -9,12 +9,12 @@ Class {
 
 { #category : #accessing }
 AlbTextEditorEvent >> editor [
-	<return: #BrTextEditor>
+	<return: #AlbTextEditor>
 
 	^ editor
 ]
 
 { #category : #accessing }
-AlbTextEditorEvent >> editor: aBrTextEditor [
-	editor := aBrTextEditor
+AlbTextEditorEvent >> editor: aTextEditor [
+	editor := aTextEditor
 ]

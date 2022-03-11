@@ -20,7 +20,7 @@ AlbTextEditorLineSegmentSplitter >> adornmentPiece: aBlText with: anAdornmentAtt
 { #category : #accessing }
 AlbTextEditorLineSegmentSplitter >> adornmentPieceClass [
 	"Create and return a segment piece with adornment"
-	<return: #TBrTextEditorTextualPiece>
+	<return: #TAlbTextEditorTextualPiece>
 
 	^ AlbTextEditorLineSegmentAdornmentPiece
 ]

@@ -33,14 +33,14 @@ AlbTextEditorCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNew
 
 { #category : #accessing }
 AlbTextEditorCursorMovedEvent >> cursor [
-	<return: #BrTextEditorSingleCursor>
+	<return: #AlbTextEditorSingleCursor>
 
 	^ cursor
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> cursor: aBrTextEditorSingleCursor [
-	cursor := aBrTextEditorSingleCursor
+AlbTextEditorCursorMovedEvent >> cursor: aTextEditorSingleCursor [
+	cursor := aTextEditorSingleCursor
 ]
 
 { #category : #accessing }

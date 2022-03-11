@@ -53,7 +53,7 @@ AlbTextEditorParagraphSegmentPiece >> updateFocus: hasFocus of: aTextPieceElemen
 
 { #category : #updating }
 AlbTextEditorParagraphSegmentPiece >> updateText: aTextElement of: aLineSegment in: anEditorElement [
-	aTextElement dispatchEvent: (BrTextEditorTextChangedRequest new
+	aTextElement dispatchEvent: (AlbTextEditorTextChangedRequest new
 		editorElement: anEditorElement;
 		segmentPiece: self;
 		text: self text;

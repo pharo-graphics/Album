@@ -1,10 +1,10 @@
 "
-I am a text styler strategy used by ${class:BrTextEditor}$.
+I am a text styler strategy used by ${class:AlbTextEditor}$.
 I style a text in the same active process, which should be a Bloc UI process to display the styled text properly to a user.
 
-See ${class:BrTextStylerStrategy}$ for futher explanation.
+See ${class:AlbTextStylerStrategy}$ for futher explanation.
 
-Example: ${example:BrTextStylerExamples>>#editorWithSyncStylerStrategy|codeExpanded=false|previewExpanded=true}$
+Example: ${example:AlbTextStylerExamples>>#editorWithSyncStylerStrategy|codeExpanded=false|previewExpanded=true}$
 
 
 "

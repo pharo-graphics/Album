@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'text - modifications' }
-AlbTextEditorSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex to: aToIndex in: aBrTextEditor [
+AlbTextEditorSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex to: aToIndex in: aTextEditor [
 	"Is sent after an attribute was added in provided text editor"
 
 	self subclassResponsibility
@@ -34,7 +34,7 @@ AlbTextEditorSegmentBuilder >> defaultSplitter [
 ]
 
 { #category : #'text - modifications' }
-AlbTextEditorSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aBrTextEditor [
+AlbTextEditorSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aTextEditor [
 	"Is sent after a piece of text is deleted within from and to index interval in provided text editor"
 
 	self subclassResponsibility
@@ -48,41 +48,41 @@ AlbTextEditorSegmentBuilder >> initialize [
 ]
 
 { #category : #'text - modifications' }
-AlbTextEditorSegmentBuilder >> insertedString: aString at: aTextIndex in: aBrTextEditor [
+AlbTextEditorSegmentBuilder >> insertedString: aString at: aTextIndex in: aTextEditor [
 	"Is sent after a String was inserted at a given index in provided text editor"
 
 	self subclassResponsibility
 ]
 
 { #category : #'text - modifications' }
-AlbTextEditorSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToIndex in: aBrTextEditor [
+AlbTextEditorSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToIndex in: aTextEditor [
 	"Is sent after an attributes were removed in provided text editor"
 
 	self subclassResponsibility
 ]
 
 { #category : #splitting }
-AlbTextEditorSegmentBuilder >> split: aBrText in: aStream [
-	self splitter split: aBrText in: aStream
+AlbTextEditorSegmentBuilder >> split: aText in: aStream [
+	self splitter split: aText in: aStream
 ]
 
 { #category : #splitting }
-AlbTextEditorSegmentBuilder >> split: aBrText in: aBrEditorSegmentStream offset: anOffset [
-	self splitter split: aBrText in: aBrEditorSegmentStream offset: anOffset
+AlbTextEditorSegmentBuilder >> split: aText in: aEditorSegmentStream offset: anOffset [
+	self splitter split: aText in: aEditorSegmentStream offset: anOffset
 ]
 
 { #category : #accessing }
 AlbTextEditorSegmentBuilder >> splitter [
-	<return: #BrTextEditorSplitter>
+	<return: #AlbTextEditorSplitter>
 
 	^ lineSplitter
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentBuilder >> splitter: aBrTextEditorSplitter [
+AlbTextEditorSegmentBuilder >> splitter: aTextEditorSplitter [
 	self
-		assert: [ aBrTextEditorSplitter isNotNil ]
+		assert: [ aTextEditorSplitter isNotNil ]
 		description: [ 'Splitter must not be nil' ].
 
-	lineSplitter := aBrTextEditorSplitter
+	lineSplitter := aTextEditorSplitter
 ]

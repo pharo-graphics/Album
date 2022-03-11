@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : #'api - editor' }
-AlbEditor >> addEditorShortcut: aBrTextEditorInteraction [
-	self editor addEditorShortcut: aBrTextEditorInteraction
+AlbEditor >> addEditorShortcut: aTextEditorInteraction [
+	self editor addEditorShortcut: aTextEditorInteraction
 ]
 
 { #category : #'api - editor' }
@@ -80,8 +80,8 @@ AlbEditor >> initialize [
 ]
 
 { #category : #'api - editor' }
-AlbEditor >> inputFilter: aBrTextEditorInputFilter [
-	self editor inputFilter: aBrTextEditorInputFilter
+AlbEditor >> inputFilter: aTextEditorInputFilter [
+	self editor inputFilter: aTextEditorInputFilter
 ]
 
 { #category : #'editor - operations' }

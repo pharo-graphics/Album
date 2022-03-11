@@ -33,6 +33,6 @@ AlbTextEditorInsertedEvent >> text [
 ]
 
 { #category : #accessing }
-AlbTextEditorInsertedEvent >> text: aBrText [
-	text := aBrText
+AlbTextEditorInsertedEvent >> text: aText [
+	text := aText
 ]

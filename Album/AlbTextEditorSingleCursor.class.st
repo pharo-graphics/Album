@@ -72,13 +72,13 @@ AlbTextEditorSingleCursor >> insideSegment: aSegment [
 ]
 
 { #category : #testing }
-AlbTextEditorSingleCursor >> insideSubText: aBrTextEditorSegmentPiece of: aSegment [
+AlbTextEditorSingleCursor >> insideSubText: aTextEditorSegmentPiece of: aSegment [
 	"Return true if I am inside a given subtext, false otherwise"
 	<return: #Boolean>
 	
 	^ (self position
-		between: aBrTextEditorSegmentPiece textStart
-		and: aBrTextEditorSegmentPiece textEnd - (aSegment isLastTextPiece: aBrTextEditorSegmentPiece) not asBit)
+		between: aTextEditorSegmentPiece textStart
+		and: aTextEditorSegmentPiece textEnd - (aSegment isLastTextPiece: aTextEditorSegmentPiece) not asBit)
 			and: [ self position between: aSegment textStart and: aSegment textEnd ]
 ]
 

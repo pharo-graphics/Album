@@ -357,18 +357,18 @@ AlbTextEditorSegmentCollector >> computedSegmentsCount [
 
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> editor [
-	<return: #BrTextEditor>
+	<return: #AlbTextEditor>
 
 	^ editor
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentCollector >> editor: aBrTextEditor [
+AlbTextEditorSegmentCollector >> editor: aTextEditor [
 	self
 		assert: [ editor isNil ]
 		description: [ 'Can only be attached once' ].
 	
-	editor := aBrTextEditor
+	editor := aTextEditor
 ]
 
 { #category : #'cache - accessing' }
@@ -572,6 +572,6 @@ AlbTextEditorSegmentCollector >> text [
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentCollector >> text: aBrText [
-	text := aBrText
+AlbTextEditorSegmentCollector >> text: aText [
+	text := aText
 ]

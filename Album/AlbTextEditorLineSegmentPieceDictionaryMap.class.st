@@ -10,22 +10,22 @@ Class {
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceDictionaryMap >> allPieces [
 	"Return all current line segment pieces"
-	<return: #Collection of: #BrTextEditorLineSegmentPiece>
+	<return: #Collection of: #AlbTextEditorLineSegmentPiece>
 	
 	^ map keys
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceDictionaryMap >> at: aBrTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
+AlbTextEditorLineSegmentPieceDictionaryMap >> at: aTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
 	^ map
-		associationAt: aBrTextEditorLineSegmentPiece
+		associationAt: aTextEditorLineSegmentPiece
 		ifPresent: [ :anAssociation | thePieceAndElementsBlock value: anAssociation key value: anAssociation value ]
 		ifAbsent: anAbsentBlock
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceDictionaryMap >> atPiece: aBrTextEditorLineSegmentPiece putElements: aCollectionOfElements [
-	map at: aBrTextEditorLineSegmentPiece put: aCollectionOfElements
+AlbTextEditorLineSegmentPieceDictionaryMap >> atPiece: aTextEditorLineSegmentPiece putElements: aCollectionOfElements [
+	map at: aTextEditorLineSegmentPiece put: aCollectionOfElements
 ]
 
 { #category : #initialization }
@@ -37,7 +37,7 @@ AlbTextEditorLineSegmentPieceDictionaryMap >> initialize [
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceDictionaryMap >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
-	<return: #BrTextEditorLineSegmentPiece or: #Object>
+	<return: #AlbTextEditorLineSegmentPiece or: #Object>
 
 	map associations do: [ :eachAssociation |
 		(eachAssociation value includes: aBlElement) 

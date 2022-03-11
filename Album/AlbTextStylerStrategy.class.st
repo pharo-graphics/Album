@@ -1,11 +1,11 @@
 "
-I am an abstract text styler strategy used by ${class:BrTextEditor}$.
+I am an abstract text styler strategy used by ${class:AlbTextEditor}$.
 My subclasses are responsible for the text style request executions.
 For example, one strategy could perform styling in a background process, another in a UI process (and being therefore blocking).
 
-The common methods are ${method:BrTextStylerStrategy>>#style:}$ and ${method:BrTextStylerStrategy>>#style:afterDo:}$.
+The common methods are ${method:AlbTextStylerStrategy>>#style:}$ and ${method:AlbTextStylerStrategy>>#style:afterDo:}$.
 
-See my subclasses for concrete strategies: ${class:BrTextStylerStrategy|expanded=true|show=gtSubclassesFor:}$
+See my subclasses for concrete strategies: ${class:AlbTextStylerStrategy|expanded=true|show=gtSubclassesFor:}$
 
 
 "

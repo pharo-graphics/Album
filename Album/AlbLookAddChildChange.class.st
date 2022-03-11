@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'child'
 	],
-	#category : #'Album-Core-Changes'
+	#category : #'Album-Brick-Core-Changes'
 }
 
 { #category : #initialization }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorSelectLetterAfterCursorShortcut,
 	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Editor-Shortcuts'
+	#category : #'Album-Shortcuts'
 }
 
 { #category : #accessing }

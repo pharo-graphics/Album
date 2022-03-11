@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'character'
 	],
-	#category : #'Album-Editor-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #accessing }

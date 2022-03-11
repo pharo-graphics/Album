@@ -5,7 +5,7 @@ Class {
 		'resultBlock',
 		'resultIndex'
 	],
-	#category : #'Album-Editor-Model - Cursor'
+	#category : #'Album-Model-Cursor'
 }
 
 { #category : #dispatching }

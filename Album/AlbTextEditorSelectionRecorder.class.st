@@ -1,39 +1,39 @@
 Class {
-	#name : #AblTextEditorSelectionRecorder,
+	#name : #AlbTextEditorSelectionRecorder,
 	#superclass : #Object,
-	#category : #'Album-Editor-Model - Selection'
+	#category : #'Album-Model-Selection'
 }
 
 { #category : #selection }
-AblTextEditorSelectionRecorder >> commit: aTextEditor [
+AlbTextEditorSelectionRecorder >> commit: aTextEditor [
 	"Commit recorded selection intervals in a given text editor"
 	
 	self subclassResponsibility
 ]
 
 { #category : #selection }
-AblTextEditorSelectionRecorder >> deselect: aMonotoneTextSelection in: aTextEditor [
+AlbTextEditorSelectionRecorder >> deselect: aMonotoneTextSelection in: aTextEditor [
 	"Remove a given selection from recorded selections"
 	
 	self subclassResponsibility
 ]
 
 { #category : #selection }
-AblTextEditorSelectionRecorder >> prepare: aTextEditor [
+AlbTextEditorSelectionRecorder >> prepare: aTextEditor [
 	"Prepare recorder for accepting selection intervals"
 	
 	^ self subclassResponsibility
 ]
 
 { #category : #selection }
-AblTextEditorSelectionRecorder >> select: aMonotoneTextSelection in: aTextEditor [
+AlbTextEditorSelectionRecorder >> select: aMonotoneTextSelection in: aTextEditor [
 	"Add a given selection to the list of recorded selections"
 	
 	self subclassResponsibility
 ]
 
 { #category : #selection }
-AblTextEditorSelectionRecorder >> selection [
+AlbTextEditorSelectionRecorder >> selection [
 	"Return current recorded selection"
 	<return: #BlSelection>
 

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'textPosition'
 	],
-	#category : #'Album-Editor-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }

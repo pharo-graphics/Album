@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbChangeEvent,
 	#superclass : #BlEvent,
-	#category : #'Album-Core-Events'
+	#category : #'Album-Brick-Core-Events'
 }

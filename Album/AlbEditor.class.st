@@ -1,12 +1,12 @@
 Class {
 	#name : #AlbEditor,
 	#superclass : #AlbEditorElement,
-	#traits : 'TBrLayoutResizable',
-	#classTraits : 'TBrLayoutResizable classTrait',
+	#traits : 'TAlbLayoutResizable',
+	#classTraits : 'TAlbLayoutResizable classTrait',
 	#instVars : [
 		'textReplacedHandler'
 	],
-	#category : #'Album-Editor-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #'api - editor' }

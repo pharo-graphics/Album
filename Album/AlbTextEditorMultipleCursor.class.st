@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cursors'
 	],
-	#category : #'Album-Editor-Model - Cursor'
+	#category : #'Album-Model-Cursor'
 }
 
 { #category : #comparing }

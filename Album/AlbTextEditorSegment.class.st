@@ -1,9 +1,9 @@
 Class {
 	#name : #AlbTextEditorSegment,
 	#superclass : #AlbEditorSegment,
-	#traits : 'TAblTextEditorTextualPiece',
-	#classTraits : 'TAblTextEditorTextualPiece classTrait',
-	#category : #'Album-Editor-Model - Segment-Text'
+	#traits : 'TAlbTextEditorTextualPiece',
+	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #initialization }

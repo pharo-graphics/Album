@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cachePool'
 	],
-	#category : #'Album-Editor-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #'private - cache' }

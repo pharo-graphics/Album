@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorWrongThreadError,
 	#superclass : #Error,
-	#category : #'Album-Editor-Errors'
+	#category : #'Album-Errors'
 }

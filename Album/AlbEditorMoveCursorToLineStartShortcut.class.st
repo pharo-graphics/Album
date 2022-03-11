@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorMoveCursorToLineStartShortcut,
 	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Editor-Shortcuts'
+	#category : #'Album-Shortcuts'
 }
 
 { #category : #accessing }

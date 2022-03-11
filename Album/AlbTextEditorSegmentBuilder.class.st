@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'lineSplitter'
 	],
-	#category : #'Album-Editor-Model - Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #'text - modifications' }

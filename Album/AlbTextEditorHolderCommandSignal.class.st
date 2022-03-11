@@ -5,7 +5,7 @@ Class {
 		'command',
 		'interval'
 	],
-	#category : #'Album-Editor-Signals'
+	#category : #'Album-Signals'
 }
 
 { #category : #accessing }

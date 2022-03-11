@@ -8,7 +8,7 @@ Class {
 		'breakLineAfter',
 		'assignedLine'
 	],
-	#category : #'Album-Editor-Layout'
+	#category : #'Album-Layout'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorParagraphSegmentType,
 	#superclass : #AlbEditorSegmentType,
-	#category : #'Album-Editor-Model - Segment-Text-Paragraph'
+	#category : #'Album-Model-Segment-Text-Paragraph'
 }
 
 { #category : #accessing }

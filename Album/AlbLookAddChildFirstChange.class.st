@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbLookAddChildFirstChange,
 	#superclass : #AlbLookAddChildChange,
-	#category : #'Album-Core-Changes'
+	#category : #'Album-Brick-Core-Changes'
 }
 
 { #category : #initialization }

@@ -5,7 +5,7 @@ Class {
 		'text',
 		'index'
 	],
-	#category : #'Album-Editor-Model - Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #'instance creation' }

@@ -16,7 +16,7 @@ Class {
 		'monitor',
 		'isStylingRequested'
 	],
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #testing }

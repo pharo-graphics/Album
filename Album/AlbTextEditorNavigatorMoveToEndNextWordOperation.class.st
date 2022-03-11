@@ -4,7 +4,7 @@ I move a cursor to the end of the current word when in the middle of a word, or 
 Class {
 	#name : #AlbTextEditorNavigatorMoveToEndNextWordOperation,
 	#superclass : #AlbTextEditorNavigatorOperation,
-	#category : #'Album-Editor-Model - Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #matching }

@@ -1,15 +1,15 @@
 Class {
-	#name : #AblTextLineMap,
+	#name : #AlbTextLineMap,
 	#superclass : #Object,
 	#instVars : [
 		'map',
 		'minEntrySpacing'
 	],
-	#category : #'Album-Editor-Model - Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #adding }
-AblTextLineMap >> addLine: lineNumber offset: offsetNumber [
+AlbTextLineMap >> addLine: lineNumber offset: offsetNumber [
 	"Add the supplied known index."
 	| closestMapEntry |
 
@@ -21,14 +21,14 @@ AblTextLineMap >> addLine: lineNumber offset: offsetNumber [
 ]
 
 { #category : #accessing }
-AblTextLineMap >> cacheLimit: aNumber [
+AlbTextLineMap >> cacheLimit: aNumber [
 
 	minEntrySpacing := (aNumber * 0.25) rounded.
 	self assert: minEntrySpacing >= 10.
 ]
 
 { #category : #initialization }
-AblTextLineMap >> initialize [ 
+AlbTextLineMap >> initialize [ 
 
 	super initialize.
 	map := SortedCollection sortBlock: [ :a :b | a key < b key ].
@@ -37,7 +37,7 @@ AblTextLineMap >> initialize [
 ]
 
 { #category : #private }
-AblTextLineMap >> mapEntryFor: anInteger [
+AlbTextLineMap >> mapEntryFor: anInteger [
 	"Answer the map entry with largest line number less than or equal to anInteger"
 	| left right mid midVal |
 

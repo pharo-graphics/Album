@@ -1,13 +1,13 @@
 Class {
 	#name : #AlbTextEditorLineSegmentPiece,
 	#superclass : #Object,
-	#traits : 'TBrTextEditorTextualPiece',
-	#classTraits : 'TBrTextEditorTextualPiece classTrait',
+	#traits : 'TAlbTextEditorTextualPiece',
+	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
 	#instVars : [
 		'segment',
 		'currentCursors'
 	],
-	#category : #'Album-Editor-Model - Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #'instance creation' }
@@ -147,8 +147,8 @@ AlbTextEditorLineSegmentPiece >> setCursor: aPieceElement of: aLineSegment in: a
 	theUpdatedCursors
 		do: [ :aCursor | self onCursorAdded: aCursor to: aPieceElement in: anEditorElement ].
 	aFocusRequest := anEditorElement isFocused
-		ifTrue: [ BrTextEditorFocusRequest new ]
-		ifFalse: [ BrTextEditorBlurRequest new ].
+		ifTrue: [ AlbTextEditorFocusRequest new ]
+		ifFalse: [ AlbTextEditorBlurRequest new ].
 	aPieceElement
 		dispatchEvent: (aFocusRequest editorElement: anEditorElement)
 ]
@@ -184,8 +184,8 @@ AlbTextEditorLineSegmentPiece >> updateFocus: hasFocus of: aTextPieceElement in:
 	| aRequest |
 
 	aRequest := hasFocus
-		ifTrue: [ BrTextEditorFocusRequest new ]
-		ifFalse: [ BrTextEditorBlurRequest new ].
+		ifTrue: [ AlbTextEditorFocusRequest new ]
+		ifFalse: [ AlbTextEditorBlurRequest new ].
 
 	aTextPieceElement dispatchEvent: (aRequest editorElement: anEditorElement)
 ]

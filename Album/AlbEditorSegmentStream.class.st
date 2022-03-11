@@ -8,7 +8,7 @@ Class {
 		'collection',
 		'skip'
 	],
-	#category : #'Album-Editor-Model - Segment'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #accessing }

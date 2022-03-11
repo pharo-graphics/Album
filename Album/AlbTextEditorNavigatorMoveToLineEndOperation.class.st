@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorNavigatorMoveToLineEndOperation,
 	#superclass : #AlbTextEditorNavigatorOperation,
-	#category : #'Album-Editor-Model - Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #matching }

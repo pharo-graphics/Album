@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorShiftLeftShortcut,
 	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Editor-Shortcuts'
+	#category : #'Album-Shortcuts'
 }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'changes'
 	],
-	#category : #'Album-Core'
+	#category : #'Album-Brick-Core'
 }
 
 { #category : #'api - composition' }
@@ -91,16 +91,6 @@ AlbAptitude >> addChangeAddChildFirst: aCollection with: aBlock [
 	self
 		addChange:
 			(AlbLookAddChildFirstChange new
-				path: aCollection;
-				value: aBlock;
-				yourself)
-]
-
-{ #category : #'api - changes' }
-AlbAptitude >> addChangeProperty2: aCollection with: aBlock [
-	self
-		addChange:
-			(AlbLookPropertyChange2 new
 				path: aCollection;
 				value: aBlock;
 				yourself)
@@ -208,7 +198,7 @@ AlbAptitude >> remove: aBrLook [
 	aLookInstance widgetDo: [ :anElement | aLookInstance onUninstalledIn: anElement ]
 ]
 
-{ #category : #'*Album-Theme' }
+{ #category : #'as yet unclassified' }
 AlbAptitude >> theme [
 	^ widget ifNil: [ AlbTheme default ] ifNotNil: #theme
 ]

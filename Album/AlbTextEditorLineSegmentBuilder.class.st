@@ -1,11 +1,11 @@
 Class {
 	#name : #AlbTextEditorLineSegmentBuilder,
-	#superclass : #BrTextEditorSegmentBuilder,
+	#superclass : #AlbTextEditorSegmentBuilder,
 	#instVars : [
 		'lineStencilBuilder',
 		'wordStencilBuilder'
 	],
-	#category : #'Album-Editor-Model - Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #'text - modifications' }
@@ -40,12 +40,12 @@ AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex 
 
 { #category : #'api - accessing' }
 AlbTextEditorLineSegmentBuilder >> beEditable [
-	self wordStencil: BrTextEditableWordPieceStencilBuilder new
+	self wordStencil: AlbTextEditableWordPieceStencilBuilder new
 ]
 
 { #category : #'api - accessing' }
 AlbTextEditorLineSegmentBuilder >> beReadOnly [
-	self wordStencil: BrTextReadonlyWordPieceStencilBuilder new
+	self wordStencil: AlbTextReadonlyWordPieceStencilBuilder new
 ]
 
 { #category : #initialization }
@@ -134,7 +134,7 @@ AlbTextEditorLineSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aBrT
 AlbTextEditorLineSegmentBuilder >> initialize [
 	super initialize.
 
-	wordStencilBuilder := BrTextEditableWordPieceStencilBuilder new
+	wordStencilBuilder := AlbTextEditableWordPieceStencilBuilder new
 ]
 
 { #category : #'text - modifications' }
@@ -178,7 +178,7 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aB
 
 { #category : #'api - accessing' }
 AlbTextEditorLineSegmentBuilder >> lineStencil: aLineStencilBuilder [
-	lineStencilBuilder := aLineStencilBuilder asStencilBuilder: BrTextEditableWordPieceStencilBuilder
+	lineStencilBuilder := aLineStencilBuilder asStencilBuilder: AlbTextEditableWordPieceStencilBuilder
 ]
 
 { #category : #accessing }
@@ -332,12 +332,12 @@ AlbTextEditorLineSegmentBuilder >> validateTextPieceUniquenessIn: aTextEditor [
 
 { #category : #'api - accessing' }
 AlbTextEditorLineSegmentBuilder >> wordStencil: aWordStencilBuilder [
-	wordStencilBuilder := aWordStencilBuilder asStencilBuilder: BrTextEditableWordPieceStencilBuilder
+	wordStencilBuilder := aWordStencilBuilder asStencilBuilder: AlbTextEditableWordPieceStencilBuilder
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentBuilder >> wordStencilBuilder [
-	<return: #BrTextEditableWordPieceStencilBuilder>
+	<return: #AlbTextEditableWordPieceStencilBuilder>
 
 	^ wordStencilBuilder
 ]

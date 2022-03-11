@@ -14,7 +14,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #testing }

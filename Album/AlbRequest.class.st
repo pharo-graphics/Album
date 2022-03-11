@@ -5,7 +5,7 @@ Class {
 		'response',
 		'isOneWay'
 	],
-	#category : #'Album-Core-Events'
+	#category : #'Album-Brick-Core-Events'
 }
 
 { #category : #'instance creation' }
@@ -18,7 +18,7 @@ AlbRequest >> canRespond [
 	"Not all requests support responses, return true if I am one of them"
 	<return: #Boolean>
 
-	^ self responseClass = BrNoResponse
+	^ self responseClass = AlbNoResponse
 ]
 
 { #category : #initialization }
@@ -52,7 +52,7 @@ AlbRequest >> response: anObject [
 
 { #category : #initialization }
 AlbRequest >> responseClass [
-	<return: #'BrResponse class'>
+	<return: #'AlbResponse class'>
 
 	^ BrNoResponse
 ]

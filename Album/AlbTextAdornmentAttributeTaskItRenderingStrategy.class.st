@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextAdornmentAttributeTaskItRenderingStrategy,
 	#superclass : #AlbTextAdornmentAttributeRenderingStrategy,
-	#category : #'Album-Editor-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #accessing }

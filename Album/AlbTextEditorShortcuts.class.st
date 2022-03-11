@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shortcuts'
 	],
-	#category : #'Album-Editor-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #'adding / removing' }

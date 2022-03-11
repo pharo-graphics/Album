@@ -1,14 +1,14 @@
 Class {
-	#name : #AblTextEditorSelectionOverwriteRecorder,
-	#superclass : #AblTextEditorSelectionRecorder,
+	#name : #AlbTextEditorSelectionOverwriteRecorder,
+	#superclass : #AlbTextEditorSelectionRecorder,
 	#instVars : [
 		'compositeSelection'
 	],
-	#category : #'Album-Editor-Model - Selection'
+	#category : #'Album-Model-Selection'
 }
 
 { #category : #selection }
-AblTextEditorSelectionOverwriteRecorder >> commit: aTextEditor [
+AlbTextEditorSelectionOverwriteRecorder >> commit: aTextEditor [
 	"Commit recorded selection intervals in a given text editor"
 	
 	aTextEditor selection: (BlCompositeSelection new add: self selection).
@@ -18,23 +18,23 @@ AblTextEditorSelectionOverwriteRecorder >> commit: aTextEditor [
 ]
 
 { #category : #selection }
-AblTextEditorSelectionOverwriteRecorder >> deselect: aMonotoneTextSelection in: aTextEditor [
+AlbTextEditorSelectionOverwriteRecorder >> deselect: aMonotoneTextSelection in: aTextEditor [
 
-	(AblTextEditorRecordDeselectionSignal new selection: aMonotoneTextSelection) emit.
+	(AlbTextEditorRecordDeselectionSignal new selection: aMonotoneTextSelection) emit.
 
 	compositeSelection remove: aMonotoneTextSelection.
 	aTextEditor updateSelection: aMonotoneTextSelection from to: aMonotoneTextSelection to
 ]
 
 { #category : #initialization }
-AblTextEditorSelectionOverwriteRecorder >> initialize [
+AlbTextEditorSelectionOverwriteRecorder >> initialize [
 	super initialize.
 	
 	compositeSelection := BlCompositeSelection new
 ]
 
 { #category : #selection }
-AblTextEditorSelectionOverwriteRecorder >> prepare: aTextEditor [
+AlbTextEditorSelectionOverwriteRecorder >> prepare: aTextEditor [
 	
 	compositeSelection := BlCompositeSelection new.
 
@@ -42,17 +42,17 @@ AblTextEditorSelectionOverwriteRecorder >> prepare: aTextEditor [
 ]
 
 { #category : #selection }
-AblTextEditorSelectionOverwriteRecorder >> select: aMonotoneTextSelection in: aTextEditor [
+AlbTextEditorSelectionOverwriteRecorder >> select: aMonotoneTextSelection in: aTextEditor [
 	"Add a given selection to the list of recorded selections"
 	
-	(AblTextEditorRecordSelectionSignal new selection: aMonotoneTextSelection) emit.
+	(AlbTextEditorRecordSelectionSignal new selection: aMonotoneTextSelection) emit.
 
 	compositeSelection add: aMonotoneTextSelection.
 	aTextEditor updateSelection: aMonotoneTextSelection from to: aMonotoneTextSelection to
 ]
 
 { #category : #selection }
-AblTextEditorSelectionOverwriteRecorder >> selection [
+AlbTextEditorSelectionOverwriteRecorder >> selection [
 	<return: #BlSelection>
 
 	^ compositeSelection isEmpty

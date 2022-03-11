@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorTextChangedHolderCommand,
 	#superclass : #AlbTextEditorHolderCommand,
-	#category : #'Album-Editor-Commands-Holder'
+	#category : #'Album-Commands-Holder'
 }
 
 { #category : #executing }

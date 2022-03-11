@@ -1,13 +1,13 @@
 Class {
 	#name : #AlbTextEditorParagraphSegment,
-	#superclass : #BrTextEditorSegment,
+	#superclass : #AlbTextEditorSegment,
 	#instVars : [
 		'pieces',
 		'lineSpacing',
 		'wordPadding',
 		'paragraphMargin'
 	],
-	#category : #'Album-Editor-Model - Segment-Text-Paragraph'
+	#category : #'Album-Model-Segment-Text-Paragraph'
 }
 
 { #category : #'pieces - computation' }

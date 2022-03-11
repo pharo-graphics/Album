@@ -12,7 +12,7 @@ Class {
 		'origin',
 		'baseline'
 	],
-	#category : #'Album-Editor-Layout'
+	#category : #'Album-Layout'
 }
 
 { #category : #adding }

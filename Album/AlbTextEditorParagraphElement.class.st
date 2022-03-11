@@ -14,7 +14,7 @@ Class {
 		'Slants',
 		'Stretches'
 	],
-	#category : #'Album-Editor-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #'instance creation' }
@@ -243,7 +243,7 @@ AlbTextEditorParagraphElement >> initialize [
 	super initialize.
 
 	cursorElements := OrderedCollection new.
-	cursorStencil := BrCursorStencil uniqueInstance.
+	cursorStencil := AlbCursorStencil uniqueInstance.
 	text := BlText empty.
 	selection := BlSelection empty
 ]

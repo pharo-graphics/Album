@@ -9,7 +9,7 @@ Class {
 		'originalString',
 		'replacementString'
 	],
-	#category : #'Album-Editor-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }
@@ -24,7 +24,7 @@ AlbTextReplacingAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 		shouldUsePool: false;
 		segmentPiece: (self replaceTextInPiece: aTTextEditorTextualPiece)) asElement.
 
-	aReplacementTextElement removeEventHandler: BrTextWordPieceTextChangeHandler uniqueInstance.
+	aReplacementTextElement removeEventHandler: AlbTextWordPieceTextChangeHandler uniqueInstance.
 	aReplacementTextElement when: BrTextEditorTextChangedRequest do: [ :anEvent |
 		| aHiddenSegmentPiece |
 		aHiddenSegmentPiece := self replaceTextInPiece: anEvent segmentPiece.

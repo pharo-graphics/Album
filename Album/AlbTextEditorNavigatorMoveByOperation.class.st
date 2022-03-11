@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'delta'
 	],
-	#category : #'Album-Editor-Model - Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'duration'
 	],
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #accessing }

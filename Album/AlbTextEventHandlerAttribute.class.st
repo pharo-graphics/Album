@@ -5,7 +5,7 @@ Is the superclass of all attributes with the ability to handle some text events 
 Class {
 	#name : #AlbTextEventHandlerAttribute,
 	#superclass : #BlTextAttribute,
-	#category : #'Album-Editor-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #events }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'transformation'
 	],
-	#category : #'Album-Editor-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #executing }

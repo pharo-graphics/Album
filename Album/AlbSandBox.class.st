@@ -1,10 +1,10 @@
 Class {
 	#name : #AlbSandBox,
 	#superclass : #Object,
-	#category : #'Album-Editor-SandBox'
+	#category : #'Album-SandBox'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 AlbSandBox class >> example_EditorAsTextArea1 [
 
 	| ed space propagations |
@@ -43,7 +43,7 @@ self halt.
 	^ ed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 AlbSandBox class >> example_EditorAsTextAreaWithAptitude [
 
 	| ed space |
@@ -57,7 +57,7 @@ AlbSandBox class >> example_EditorAsTextAreaWithAptitude [
 	^ ed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 AlbSandBox class >> example_EditorAsTextArea_with_glamAptitude [
 
 
@@ -94,7 +94,7 @@ self halt.
 	^ ed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 AlbSandBox class >> example_EditorAsTextFieldWithAptitude [
 
 	| ed space |

@@ -5,7 +5,7 @@ Class {
 		'adornmentAttribute',
 		'isVirtual'
 	],
-	#category : #'Album-Editor-Model - Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #comparing }

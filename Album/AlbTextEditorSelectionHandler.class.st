@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'startIndex'
 	],
-	#category : #'Album-Editor-UI - Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'dnd handlers' }

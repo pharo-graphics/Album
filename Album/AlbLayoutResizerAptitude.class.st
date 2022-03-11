@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'propagations'
 	],
-	#category : #'Album-Core-Layout Resizer'
+	#category : #'Album-Brick-Core-Layout Resizer'
 }
 
 { #category : #'api - style' }
@@ -30,7 +30,7 @@ AlbLayoutResizerAptitude >> anyToFitContent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> exactDo: aBlock [
-	aBlock value: (self styleFor: (BrLayoutHorizontalResizerState exact and: BrLayoutVerticalResizerState exact))
+	aBlock value: (self styleFor: (AlbLayoutHorizontalResizerState exact and: AlbLayoutVerticalResizerState exact))
 ]
 
 { #category : #'api - to fit content' }
@@ -46,7 +46,7 @@ AlbLayoutResizerAptitude >> exactToMatchParent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> fitContentDo: aBlock [
-	aBlock value: (self styleFor: (BrLayoutHorizontalResizerState fitContent and: BrLayoutVerticalResizerState fitContent))
+	aBlock value: (self styleFor: (AlbLayoutHorizontalResizerState fitContent and: AlbLayoutVerticalResizerState fitContent))
 ]
 
 { #category : #'api - to fit content limited element' }
@@ -71,7 +71,7 @@ AlbLayoutResizerAptitude >> fitContentToFitContent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> hAny [
-	^ self styleFor: BrLayoutHorizontalResizerState any
+	^ self styleFor: AlbLayoutHorizontalResizerState any
 ]
 
 { #category : #'api - to fit content' }
@@ -104,7 +104,7 @@ AlbLayoutResizerAptitude >> hAnyToMatchParent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> hExact [
-	^ self styleFor: BrLayoutHorizontalResizerState exact
+	^ self styleFor: AlbLayoutHorizontalResizerState exact
 ]
 
 { #category : #'api - style' }
@@ -142,12 +142,12 @@ AlbLayoutResizerAptitude >> hExactToMatchParent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> hFitContent [
-	^ self styleFor: BrLayoutHorizontalResizerState fitContent
+	^ self styleFor: AlbLayoutHorizontalResizerState fitContent
 ]
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> hFitContentLimited [
-	^ self styleFor: BrLayoutHorizontalResizerState fitContentLimited
+	^ self styleFor: AlbLayoutHorizontalResizerState fitContentLimited
 ]
 
 { #category : #'api - to fit content' }
@@ -207,7 +207,7 @@ AlbLayoutResizerAptitude >> hInherit: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> hMatchParent [
-	^ self styleFor: BrLayoutHorizontalResizerState matchParent
+	^ self styleFor: AlbLayoutHorizontalResizerState matchParent
 ]
 
 { #category : #'api - to fit content' }
@@ -242,6 +242,7 @@ AlbLayoutResizerAptitude >> hMatchParentToMatchParent: aChildElementOrBlock [
 AlbLayoutResizerAptitude >> inherit [
 	self hInherit.
 	self vInherit.
+
 ]
 
 { #category : #'api - inherit' }
@@ -264,7 +265,7 @@ AlbLayoutResizerAptitude >> initialize [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> matchParentDo: aBlock [
-	aBlock value: (self styleFor: (BrLayoutHorizontalResizerState matchParent and: BrLayoutVerticalResizerState matchParent))
+	aBlock value: (self styleFor: (AlbLayoutHorizontalResizerState matchParent and: AlbLayoutVerticalResizerState matchParent))
 ]
 
 { #category : #'api - to match parent element' }
@@ -276,7 +277,7 @@ AlbLayoutResizerAptitude >> matchParentToMatchParent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> vAny [
-	^ self styleFor: BrLayoutVerticalResizerState any
+	^ self styleFor: AlbLayoutVerticalResizerState any
 ]
 
 { #category : #'api - to fit content' }
@@ -295,7 +296,7 @@ AlbLayoutResizerAptitude >> vAnyToFitContent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> vExact [
-	^ self styleFor: BrLayoutVerticalResizerState exact
+	^ self styleFor: AlbLayoutVerticalResizerState exact
 ]
 
 { #category : #'api - style' }
@@ -333,12 +334,12 @@ AlbLayoutResizerAptitude >> vExactToMatchParent: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> vFitContent [
-	^ self styleFor: BrLayoutVerticalResizerState fitContent
+	^ self styleFor: AlbLayoutVerticalResizerState fitContent
 ]
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> vFitContentLimited [
-	^ self styleFor: BrLayoutVerticalResizerState fitContentLimited
+	^ self styleFor: AlbLayoutVerticalResizerState fitContentLimited
 ]
 
 { #category : #'api - to fit content' }
@@ -398,7 +399,7 @@ AlbLayoutResizerAptitude >> vInherit: aChildElementOrBlock [
 
 { #category : #'api - style' }
 AlbLayoutResizerAptitude >> vMatchParent [
-	^ self styleFor: BrLayoutVerticalResizerState matchParent
+	^ self styleFor: AlbLayoutVerticalResizerState matchParent
 ]
 
 { #category : #'api - to fit content' }

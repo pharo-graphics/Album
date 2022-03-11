@@ -1,12 +1,12 @@
 Class {
 	#name : #AlbTextEditorParagraphSegmentPiece,
 	#superclass : #Object,
-	#traits : 'TAblTextEditorTextualPiece',
-	#classTraits : 'TAblTextEditorTextualPiece classTrait',
+	#traits : 'TAlbTextEditorTextualPiece',
+	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
 	#instVars : [
 		'segment'
 	],
-	#category : #'Album-Editor-Model - Segment-Text-Paragraph'
+	#category : #'Album-Model-Segment-Text-Paragraph'
 }
 
 { #category : #'instance creation' }
@@ -45,8 +45,8 @@ AlbTextEditorParagraphSegmentPiece >> updateFocus: hasFocus of: aTextPieceElemen
 	| aRequest |
 
 	aRequest := hasFocus
-		ifTrue: [ BrTextEditorFocusRequest new ]
-		ifFalse: [ BrTextEditorBlurRequest new ].
+		ifTrue: [ AlbTextEditorFocusRequest new ]
+		ifFalse: [ AlbTextEditorBlurRequest new ].
 
 	aTextPieceElement dispatchEvent: (aRequest editorElement: anEditorElement)
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorSignalLogger,
 	#superclass : #MemoryLogger,
-	#category : #'Album-Editor-Signals'
+	#category : #'Album-Signals'
 }
 
 { #category : #initialization }

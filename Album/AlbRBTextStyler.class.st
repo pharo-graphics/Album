@@ -29,7 +29,7 @@ Class {
 		'parentheseLevel',
 		'bracketLevel'
 	],
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #formatting }

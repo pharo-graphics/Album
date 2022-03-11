@@ -9,7 +9,7 @@ Class {
 		'fromIndex',
 		'toIndex'
 	],
-	#category : #'Album-Editor-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #executing }

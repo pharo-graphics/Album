@@ -10,7 +10,7 @@ Class {
 		'shouldDeselectExisting',
 		'commands'
 	],
-	#category : #'Album-Editor-Model - Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'api - configuration' }

@@ -5,7 +5,7 @@ Class {
 		'propagations',
 		'propagationMap'
 	],
-	#category : #'Album-Core-Layout Resizer'
+	#category : #'Album-Brick-Core-Layout Resizer'
 }
 
 { #category : #'api - layout resizeable' }
@@ -15,27 +15,27 @@ AlbLayoutResizerPropagations class >> hAll [
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> hExact [
-	^ BrLayoutHorizontalResizerState exact
+	^ AlbLayoutHorizontalResizerState exact
 ]
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> hExact: aWidth [
-	^ BrLayoutHorizontalExactResizerPropagatedState new width: aWidth
+	^ AlbLayoutHorizontalExactResizerPropagatedState new width: aWidth
 ]
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> hFitContent [
-	^ BrLayoutHorizontalResizerState fitContent
+	^ AlbLayoutHorizontalResizerState fitContent
 ]
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> hFitContentLimited [
-	^ BrLayoutHorizontalResizerState fitContentLimited
+	^ AlbLayoutHorizontalResizerState fitContentLimited
 ]
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> hMatchParent [
-	^ BrLayoutHorizontalResizerState matchParent
+	^ AlbLayoutHorizontalResizerState matchParent
 ]
 
 { #category : #'api - layout resizeable' }
@@ -45,32 +45,32 @@ AlbLayoutResizerPropagations class >> vAll [
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> vExact [
-	^ BrLayoutVerticalResizerState exact
+	^ AlbLayoutVerticalResizerState exact
 ]
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> vFitContent [
-	^ BrLayoutVerticalResizerState fitContent
+	^ AlbLayoutVerticalResizerState fitContent
 ]
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> vFitContentLimited [
-	^ BrLayoutVerticalResizerState fitContentLimited
+	^ AlbLayoutVerticalResizerState fitContentLimited
 ]
 
 { #category : #'api - layout resizeable' }
 AlbLayoutResizerPropagations class >> vMatchParent [
-	^ BrLayoutVerticalResizerState matchParent
+	^ AlbLayoutVerticalResizerState matchParent
 ]
 
 { #category : #'adding / removing' }
-AlbLayoutResizerPropagations >> addPropagation: aBrLayoutResizerPropagation [
-	propagations add: aBrLayoutResizerPropagation
+AlbLayoutResizerPropagations >> addPropagation: aAlbLayoutResizerPropagation [
+	propagations add: aAlbLayoutResizerPropagation
 ]
 
 { #category : #'private - insance creation' }
 AlbLayoutResizerPropagations >> addPropagationFor: aChildOrCollectionOrBlock [
-	<return: #BrLayoutResizerPropagation>
+	<return: #AlbLayoutResizerPropagation>
 	| aPropagation |
 
 	self addPropagation: (aPropagation := self newPropagationFor: aChildOrCollectionOrBlock).
@@ -78,8 +78,8 @@ AlbLayoutResizerPropagations >> addPropagationFor: aChildOrCollectionOrBlock [
 ]
 
 { #category : #'adding / removing' }
-AlbLayoutResizerPropagations >> addPropagations: aBrLayoutResizerPropagations [
-	propagations addAll: aBrLayoutResizerPropagations
+AlbLayoutResizerPropagations >> addPropagations: aAlbLayoutResizerPropagations [
+	propagations addAll: aAlbLayoutResizerPropagations
 ]
 
 { #category : #'api - to fit content' }
@@ -300,18 +300,18 @@ AlbLayoutResizerPropagations >> matchParentToMatchParent: aChildElementOrBlock [
 
 { #category : #'private - insance creation' }
 AlbLayoutResizerPropagations >> newPropagationFor: aChildOrCollectionOrBlock [
-	<return: #BrLayoutResizerPropagation>
+	<return: #AlbLayoutResizerPropagation>
 
 	aChildOrCollectionOrBlock isBlock
-		ifTrue: [ ^ BrLayoutResizerDynamicPropagation new childrenBlock: aChildOrCollectionOrBlock ].
+		ifTrue: [ ^ AlbLayoutResizerDynamicPropagation new childrenBlock: aChildOrCollectionOrBlock ].
 
 	aChildOrCollectionOrBlock isCollection
-		ifTrue: [ ^ BrLayoutResizerChildrenPropagation new childrenElements: aChildOrCollectionOrBlock ].
+		ifTrue: [ ^ AlbLayoutResizerChildrenPropagation new childrenElements: aChildOrCollectionOrBlock ].
 
 	(aChildOrCollectionOrBlock respondsTo: #asBlocElementId)
-		ifTrue: [ ^ BrLayoutResizerChildByIdPropagation new childId: aChildOrCollectionOrBlock ].
+		ifTrue: [ ^ AlbLayoutResizerChildByIdPropagation new childId: aChildOrCollectionOrBlock ].
 
-	^ BrLayoutResizerChildPropagation new childElement: aChildOrCollectionOrBlock
+	^ AlbLayoutResizerChildPropagation new childElement: aChildOrCollectionOrBlock
 ]
 
 { #category : #accessing }
@@ -336,26 +336,26 @@ AlbLayoutResizerPropagations >> precomputePropagationRules: aParentElement [
 ]
 
 { #category : #accessing }
-AlbLayoutResizerPropagations >> propagateState: aBrLayoutResizerState from: aParentElement to: aChildElement [
+AlbLayoutResizerPropagations >> propagateState: aAlbLayoutResizerState from: aParentElement to: aChildElement [
 
 	^ propagationMap
 		at: aChildElement
 		ifPresent: [ :aPropagationMap |
 			aPropagationMap
-				at: aBrLayoutResizerState asNotPropagated
+				at: aAlbLayoutResizerState asNotPropagated
 				ifPresent: [ :aMappedState | aMappedState asPropagated ]
-				ifAbsent: [ aBrLayoutResizerState asNotPropagated ] ]
-		ifAbsent: [ aBrLayoutResizerState asNotPropagated ]
+				ifAbsent: [ aAlbLayoutResizerState asNotPropagated ] ]
+		ifAbsent: [ aAlbLayoutResizerState asNotPropagated ]
 ]
 
 { #category : #'adding / removing' }
-AlbLayoutResizerPropagations >> removePropagation: aBrLayoutResizerPropagation [
-	propagations remove: aBrLayoutResizerPropagation ifAbsent: [  ]
+AlbLayoutResizerPropagations >> removePropagation: aAlbLayoutResizerPropagation [
+	propagations remove: aAlbLayoutResizerPropagation ifAbsent: [  ]
 ]
 
 { #category : #'adding / removing' }
-AlbLayoutResizerPropagations >> removePropagations: aBrLayoutResizerPropagations [
-	propagations removeAll: aBrLayoutResizerPropagations
+AlbLayoutResizerPropagations >> removePropagations: aAlbLayoutResizerPropagations [
+	propagations removeAll: aAlbLayoutResizerPropagations
 ]
 
 { #category : #'api - to fit content' }

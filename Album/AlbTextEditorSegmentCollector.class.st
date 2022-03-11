@@ -12,7 +12,7 @@ Class {
 		'segmentsInterval',
 		'map'
 	],
-	#category : #'Album-Editor-Model - Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #'cache - adding / removing' }
@@ -533,7 +533,7 @@ AlbTextEditorSegmentCollector >> resetCache [
 
 	segmentsInterval := 0 to: 0.
 	segments := OrderedCollection new.
-	map := AblTextLineMap new.
+	map := AlbTextLineMap new.
 	map cacheLimit: limit.
 ]
 

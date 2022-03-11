@@ -13,7 +13,7 @@ Class {
 		'textAttributesByPixelHeight',
 		'textAttributes'
 	],
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #private }

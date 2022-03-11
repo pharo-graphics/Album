@@ -1,0 +1,22 @@
+Class {
+	#name : #AlbTextWordPieceShowCursorHandler,
+	#superclass : #AlbTextWordPieceUniqueHandler,
+	#category : #'Album-UI-Word'
+}
+
+{ #category : #accessing }
+AlbTextWordPieceShowCursorHandler >> eventClass [
+	^ BrTextEditorShowCursorRequest
+]
+
+{ #category : #'api - event managing' }
+AlbTextWordPieceShowCursorHandler >> handleEvent: anEvent [
+	| aCursorElement |
+
+	aCursorElement := anEvent currentTarget addCursorAt: anEvent cursorPosition.
+	anEvent editorElement dispatchEvent: (BrTextEditorCursorElementAddedEvent new cursorElement: aCursorElement).
+
+	anEvent hasFocus
+		ifTrue: [ anEvent currentTarget showCursors ]
+		ifFalse: [ anEvent currentTarget hideCursors ]
+]

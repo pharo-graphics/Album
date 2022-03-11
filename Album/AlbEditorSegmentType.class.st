@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Album-Editor-Model - Segment'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #cleanup }

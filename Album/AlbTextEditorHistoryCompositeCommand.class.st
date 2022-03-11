@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'commands'
 	],
-	#category : #'Album-Editor-History'
+	#category : #'Album-History'
 }
 
 { #category : #initialization }

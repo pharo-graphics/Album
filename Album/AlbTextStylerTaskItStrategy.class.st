@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : #'Album-Editor-Styler'
+	#category : #'Album-Styler'
 }
 
 { #category : #private }

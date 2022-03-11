@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbTextEditorLineSegmentPiecesUpdate,
 	#superclass : #Object,
-	#category : #'Album-Editor-Model - Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }

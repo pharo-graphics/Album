@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'textEditor'
 	],
-	#category : #'Album-Editor-Signals'
+	#category : #'Album-Signals'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextAdornmentAttributeCache,
 	#superclass : #Object,
-	#category : #'Album-Editor-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #'api - cache' }

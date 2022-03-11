@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorLineSegmentBuilder,
-	#superclass : #BrTextEditorSegmentBuilder,
+	#superclass : #AlbTextEditorSegmentBuilder,
 	#instVars : [
 		'lineStencilBuilder',
 		'wordStencilBuilder'

@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorParagraphSegment,
-	#superclass : #BrTextEditorSegment,
+	#superclass : #AlbTextEditorSegment,
 	#instVars : [
 		'pieces',
 		'lineSpacing',

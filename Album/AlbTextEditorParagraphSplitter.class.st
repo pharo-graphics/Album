@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorParagraphSplitter,
-	#superclass : #BrTextEditorLineSplitter,
+	#superclass : #AlbTextEditorLineSplitter,
 	#category : #'Album-Model-Segment-Text-Paragraph'
 }
 

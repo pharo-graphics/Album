@@ -12,7 +12,7 @@ Class {
 
 { #category : #'private - pool' }
 AlbTextWordPieceStencilBuilder >> acquire [
-	<return: #BrTextElementWithCursors or: nil>
+	<return: #AlbTextElementWithCursors or: nil>
 	
 	shouldUsePool
 		ifFalse: [ ^ nil ].
@@ -38,7 +38,7 @@ AlbTextWordPieceStencilBuilder >> buildDefault [
 
 { #category : #'api - instantiation' }
 AlbTextWordPieceStencilBuilder >> createWordElement [
-	<return: #BrTextElementWithCursors>
+	<return: #AlbTextElementWithCursors>
 
 	^ self subclassResponsibility
 ]

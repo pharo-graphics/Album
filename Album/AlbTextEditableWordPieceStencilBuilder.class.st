@@ -22,38 +22,38 @@ AlbTextEditableWordPieceStencilBuilder class >> initialize [
 AlbTextEditableWordPieceStencilBuilder >> createWordElement [
 	<return: #AlbTextElementWithCursors>
 
-	^ BrTextElementWithCursors new
+	^ AlbTextElementWithCursors new
 			editorMeasurement;
 
 			"to support event-handling attributes"
-			addEventHandler: BrTextEditorLineSegmentTextListener uniqueInstance;
+			addEventHandler: AlbTextEditorLineSegmentTextListener uniqueInstance;
 
 			"editor requests to show a cursor as a result of its position change"
-			addEventHandler: BrTextWordPieceShowCursorHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceShowCursorHandler uniqueInstance;
 
 			"editor requests to remove a cursor as a result of its position change"
-			addEventHandler: BrTextWordPieceHideCursorHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceHideCursorHandler uniqueInstance;
 			
 			"for screen position to cursor index transformation"
-			addEventHandler: BrTextWordPieceScreenToCursorHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceScreenToCursorHandler uniqueInstance;
 
-			addEventHandler: BrTextWordPieceFocusHandler uniqueInstance;
-			addEventHandler: BrTextWordPieceBlurHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceFocusHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceBlurHandler uniqueInstance;
 			
 			"selection changed in the editor, select a given interval"
-			addEventHandler: BrTextWordPieceSelectionHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceSelectionHandler uniqueInstance;
 			
 			"selection changed in the editor, deselect a given interval"
-			addEventHandler: BrTextWordPieceDeselectionHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceDeselectionHandler uniqueInstance;
 			
 			"text changed in the editor"
-			addEventHandler: BrTextWordPieceTextChangeHandler uniqueInstance;		
+			addEventHandler: AlbTextWordPieceTextChangeHandler uniqueInstance;		
 
 			"text piece got inside of selected area"
-			addEventHandler: BrTextWordPieceSelectionAcquiredHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceSelectionAcquiredHandler uniqueInstance;
 
 			"text piece got outside of then selected area"
-			addEventHandler: BrTextWordPieceSelectionLostHandler uniqueInstance;
+			addEventHandler: AlbTextWordPieceSelectionLostHandler uniqueInstance;
 
 			yourself
 ]

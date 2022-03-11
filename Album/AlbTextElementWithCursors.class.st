@@ -99,7 +99,7 @@ AlbTextElementWithCursors >> initialize [
 	super initialize.
 
 	cursorElements := OrderedCollection new.
-	cursorStencil := BrCursorStencil uniqueInstance
+	cursorStencil := AlbCursorStencil uniqueInstance
 ]
 
 { #category : #layout }

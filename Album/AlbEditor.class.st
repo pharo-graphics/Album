@@ -1,8 +1,8 @@
 Class {
 	#name : #AlbEditor,
 	#superclass : #AlbEditorElement,
-	#traits : 'TBrLayoutResizable',
-	#classTraits : 'TBrLayoutResizable classTrait',
+	#traits : 'TAlbLayoutResizable',
+	#classTraits : 'TAlbLayoutResizable classTrait',
 	#instVars : [
 		'textReplacedHandler'
 	],

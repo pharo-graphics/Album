@@ -10,7 +10,7 @@ Class {
 
 { #category : #constraints }
 AlbEditorTextFlowLayout class >> constraints [
-	^ BrEditorTextFlowLayoutConstraints new
+	^ AlbEditorTextFlowLayoutConstraints new
 ]
 
 { #category : #geometry }
@@ -24,7 +24,7 @@ AlbEditorTextFlowLayout >> findClosestChildOf: anElement to: aPoint [
 
 { #category : #geometry }
 AlbEditorTextFlowLayout >> findClosestLineTo: aPoint [
-	<return: #BrEditorTextFlowLine>
+	<return: #AlbEditorTextFlowLine>
 	| aClosestLine aClosestDistance |
 	
 	aClosestLine := lines.
@@ -116,7 +116,7 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 		ifFalse: [ anExtentSpec heightSpec size ]) - anElement padding height.
 
 	"Actually a linked list of lines"
-	lines := BrEditorTextFlowLine new maxWidth: maxWidth.
+	lines := AlbEditorTextFlowLine new maxWidth: maxWidth.
 	
 	"measure children and distribute them in lines"
 	aCurrentLine := lines.

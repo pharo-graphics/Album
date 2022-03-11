@@ -19,7 +19,7 @@ Class {
 AlbEditorTextFlowLine >> add: anElement [
 	"Try to assign a given element to this line (if possible) or create a new line.
 	Return a line to which next element should be tried to added"
-	<return: #BrEditorTextFlowLine>
+	<return: #AlbEditorTextFlowLine>
 	| currentLine |
 	
 	anElement constraints textFlow shouldPushLine
@@ -200,10 +200,10 @@ AlbEditorTextFlowLine >> maxWidth: aNumber [
 { #category : #accessing }
 AlbEditorTextFlowLine >> nextLine [
 	"Return or create a new next line to which we should continue adding elements"
-	<return: #BrEditorTextFlowLine>
+	<return: #AlbEditorTextFlowLine>
 
 	^ nextLine ifNil: [
-		nextLine := BrEditorTextFlowLine new
+		nextLine := AlbEditorTextFlowLine new
 			maxWidth: maxWidth;
 			pushedQueue: pushedQueue;
 			yourself ]

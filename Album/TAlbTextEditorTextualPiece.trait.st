@@ -1,5 +1,5 @@
 Trait {
-	#name : #TAblTextEditorTextualPiece,
+	#name : #TAlbTextEditorTextualPiece,
 	#instVars : [
 		'text',
 		'textStart',
@@ -10,7 +10,7 @@ Trait {
 }
 
 { #category : #'text - copying' }
-TAblTextEditorTextualPiece >> copyWithText: aBlText [
+TAlbTextEditorTextualPiece >> copyWithText: aBlText [
 	^ self copy
 		initializeWith: aBlText
 		from: self textStart
@@ -19,12 +19,12 @@ TAblTextEditorTextualPiece >> copyWithText: aBlText [
 ]
 
 { #category : #'text - accessing' }
-TAblTextEditorTextualPiece >> delimiterLength [
+TAlbTextEditorTextualPiece >> delimiterLength [
 	^ delimiterLength
 ]
 
 { #category : #initialization }
-TAblTextEditorTextualPiece >> initializeWith: aBlText from: aTextStart to: aTextEnd [
+TAlbTextEditorTextualPiece >> initializeWith: aBlText from: aTextStart to: aTextEnd [
 	self
 		initializeWith: aBlText
 		from: aTextStart
@@ -33,7 +33,7 @@ TAblTextEditorTextualPiece >> initializeWith: aBlText from: aTextStart to: aText
 ]
 
 { #category : #initialization }
-TAblTextEditorTextualPiece >> initializeWith: aBlText from: aTextStart to: aTextEnd delimiter: aDelimiterLength [
+TAlbTextEditorTextualPiece >> initializeWith: aBlText from: aTextStart to: aTextEnd delimiter: aDelimiterLength [
 	text := aBlText.
 	
 	textStart := aTextStart.
@@ -42,7 +42,7 @@ TAblTextEditorTextualPiece >> initializeWith: aBlText from: aTextStart to: aText
 ]
 
 { #category : #'text - testing' }
-TAblTextEditorTextualPiece >> isEmpty [
+TAlbTextEditorTextualPiece >> isEmpty [
 	"Return true if my text is empty, false otherwise"
 	<return: #Boolean>
 
@@ -50,12 +50,12 @@ TAblTextEditorTextualPiece >> isEmpty [
 ]
 
 { #category : #'text - modifications' }
-TAblTextEditorTextualPiece >> scopeText: aStartIndex end: anEndIndex [
+TAlbTextEditorTextualPiece >> scopeText: aStartIndex end: anEndIndex [
 	self start: aStartIndex end: anEndIndex
 ]
 
 { #category : #'private - text' }
-TAblTextEditorTextualPiece >> start: aStartIndex end: anEndIndex [
+TAlbTextEditorTextualPiece >> start: aStartIndex end: anEndIndex [
 	"aStartIndex and anEndIndex are given in cursor coordinates"
 	| aDelta |
 	
@@ -75,7 +75,7 @@ TAblTextEditorTextualPiece >> start: aStartIndex end: anEndIndex [
 ]
 
 { #category : #'text - accessing' }
-TAblTextEditorTextualPiece >> text [
+TAlbTextEditorTextualPiece >> text [
 	"Return a sub-text that I represent"
 	<return: #BlSubText>
 
@@ -83,7 +83,7 @@ TAblTextEditorTextualPiece >> text [
 ]
 
 { #category : #'text - accessing' }
-TAblTextEditorTextualPiece >> textEnd [
+TAlbTextEditorTextualPiece >> textEnd [
 	"Return an index of the last character of a subtext that I represent"
 	<return: #Number>
 	
@@ -91,7 +91,7 @@ TAblTextEditorTextualPiece >> textEnd [
 ]
 
 { #category : #'text - accessing' }
-TAblTextEditorTextualPiece >> textEndDelimited [
+TAlbTextEditorTextualPiece >> textEndDelimited [
 	"Return an index of the last character of a subtext that I represent including the possible delimiter"
 	<return: #Number>
 	
@@ -99,7 +99,7 @@ TAblTextEditorTextualPiece >> textEndDelimited [
 ]
 
 { #category : #'text - accessing' }
-TAblTextEditorTextualPiece >> textInterval [
+TAlbTextEditorTextualPiece >> textInterval [
 	"Return both #textStart and #textEnd in a form of Interval"
 	<return: #Interval>
 	
@@ -107,7 +107,7 @@ TAblTextEditorTextualPiece >> textInterval [
 ]
 
 { #category : #'text - accessing' }
-TAblTextEditorTextualPiece >> textLength [
+TAlbTextEditorTextualPiece >> textLength [
 	"Return an index of the last character of a subtext that I represent"
 	<return: #Number>
 	
@@ -115,7 +115,7 @@ TAblTextEditorTextualPiece >> textLength [
 ]
 
 { #category : #'text - accessing' }
-TAblTextEditorTextualPiece >> textStart [
+TAlbTextEditorTextualPiece >> textStart [
 	"Return an index of the first character of a subtext that I represent"
 	<return: #Number>
 	

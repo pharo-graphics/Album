@@ -205,9 +205,9 @@ AlbTextEditor >> defaultSelection [
 
 { #category : #initialization }
 AlbTextEditor >> defaultSelectionRecorder [
-	<return: #AblTextEditorSelectionRecorder>
+	<return: #AlbTextEditorSelectionRecorder>
 
-	^ AblTextEditorSelectionOverwriteRecorder new
+	^ AlbTextEditorSelectionOverwriteRecorder new
 ]
 
 { #category : #initialization }
@@ -1061,7 +1061,7 @@ AlbTextEditor >> selection: aTextSelection [
 
 { #category : #accessing }
 AlbTextEditor >> selectionRecorder [
-	<return: #AblTextEditorSelectionRecorder>
+	<return: #AlbTextEditorSelectionRecorder>
 
 	self
 		assert: [ selectionRecorder isNotNil ]

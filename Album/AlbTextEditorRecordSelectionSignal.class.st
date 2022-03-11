@@ -1,5 +1,5 @@
 Class {
-	#name : #AblTextEditorRecordDeselectionSignal,
+	#name : #AlbTextEditorRecordSelectionSignal,
 	#superclass : #Announcement,
 	#instVars : [
 		'selection'
@@ -8,16 +8,16 @@ Class {
 }
 
 { #category : #printing }
-AblTextEditorRecordDeselectionSignal >> printOneLineContentsOn: stream [
+AlbTextEditorRecordSelectionSignal >> printOneLineContentsOn: stream [
 	self selection printOn: stream 
 ]
 
 { #category : #accessing }
-AblTextEditorRecordDeselectionSignal >> selection [
+AlbTextEditorRecordSelectionSignal >> selection [
 	^ selection
 ]
 
 { #category : #accessing }
-AblTextEditorRecordDeselectionSignal >> selection: anObject [
+AlbTextEditorRecordSelectionSignal >> selection: anObject [
 	selection := anObject
 ]

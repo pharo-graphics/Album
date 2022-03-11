@@ -1,8 +1,8 @@
 Class {
 	#name : #AlbTextEditorParagraphSegmentPiece,
 	#superclass : #Object,
-	#traits : 'TAblTextEditorTextualPiece',
-	#classTraits : 'TAblTextEditorTextualPiece classTrait',
+	#traits : 'TAlbTextEditorTextualPiece',
+	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
 	#instVars : [
 		'segment'
 	],

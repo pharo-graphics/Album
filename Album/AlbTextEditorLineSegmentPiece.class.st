@@ -1,8 +1,8 @@
 Class {
 	#name : #AlbTextEditorLineSegmentPiece,
 	#superclass : #Object,
-	#traits : 'TBrTextEditorTextualPiece',
-	#classTraits : 'TBrTextEditorTextualPiece classTrait',
+	#traits : 'TAlbTextEditorTextualPiece',
+	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
 	#instVars : [
 		'segment',
 		'currentCursors'

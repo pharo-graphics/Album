@@ -1,8 +1,8 @@
 Class {
 	#name : #AlbTextEditorSegment,
 	#superclass : #AlbEditorSegment,
-	#traits : 'TAblTextEditorTextualPiece',
-	#classTraits : 'TAblTextEditorTextualPiece classTrait',
+	#traits : 'TAlbTextEditorTextualPiece',
+	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
 	#category : #'Album-Model-Segment-Text'
 }
 

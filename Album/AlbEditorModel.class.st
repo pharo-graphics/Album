@@ -50,17 +50,17 @@ AlbEditorModel >> mode: aTextEditorMode [
 
 { #category : #notifying }
 AlbEditorModel >> notifyModeChanged [
-	self dispatchEvent: (BrEditorModeChanged new mode: self mode)
+	self dispatchEvent: (AlbEditorModeChanged new mode: self mode)
 ]
 
 { #category : #notifying }
 AlbEditorModel >> notifyStylerChanged [
-	self dispatchEvent: (BrEditorStylerChanged styler: self styler)
+	self dispatchEvent: (AlbEditorStylerChanged styler: self styler)
 ]
 
 { #category : #notifying }
 AlbEditorModel >> notifyTextChanged [
-	self dispatchEvent: (BrEditorTextChanged text: self text)
+	self dispatchEvent: (AlbEditorTextChanged text: self text)
 ]
 
 { #category : #accessing }

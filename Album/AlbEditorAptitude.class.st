@@ -36,9 +36,9 @@ AlbEditorAptitude >> initialize [
 AlbEditorAptitude >> initializeListeners [
 	super initializeListeners.
 	
-	self when: BrEditorStylerChanged do: [ :anEvent | self styler: anEvent styler ].
-	self when: BrEditorTextChanged do: [ :anEvent | self text: anEvent text ].
-	self when: BrEditorModeChanged do: [ :anEvent | self mode: anEvent mode ]
+	self when: AlbEditorStylerChanged do: [ :anEvent | self styler: anEvent styler ].
+	self when: AlbEditorTextChanged do: [ :anEvent | self text: anEvent text ].
+	self when: AlbEditorModeChanged do: [ :anEvent | self mode: anEvent mode ]
 ]
 
 { #category : #initialization }

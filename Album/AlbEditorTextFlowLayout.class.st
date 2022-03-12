@@ -140,7 +140,7 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 			| theLastElement textFlow |
 			
 			theLastElement := theElements last.
-			textFlow := theLastElement constraints at: AlbEditorTextFlowLayout.
+			textFlow := theLastElement constraints textFlow.
 			((theLastElement isKindOf: AlbTextElementWithCursors) and: [ textFlow shouldFillLine ])
 				ifTrue: [
 					theLastElement measure: (BlExtentMeasurementSpec exact:

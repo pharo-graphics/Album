@@ -22,7 +22,7 @@ AlbEditorTextFlowLine >> add: anElement [
 	<return: #AlbEditorTextFlowLine>
 	| currentLine textFlow |
 
-	textFlow := 	anElement constraints at: AlbEditorTextFlowLayout.
+	textFlow := 	anElement constraints textFlow.
 	textFlow shouldPushLine
 		ifTrue: [
 			pushedQueue addLast: anElement.
@@ -229,7 +229,7 @@ AlbEditorTextFlowLine >> push: anElement [
 
 	| textFlow |
 	elements addLast: anElement.
-	textFlow := anElement constraints at: AlbEditorTextFlowLayout.
+	textFlow := anElement constraints textFlow.
 	textFlow assignToLine: self.
 
 	width := width + (anElement measuredWidth + anElement margin width).

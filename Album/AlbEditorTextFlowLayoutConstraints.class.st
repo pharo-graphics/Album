@@ -43,7 +43,6 @@ AlbEditorTextFlowLayoutConstraints >> doNotFillLine [
 { #category : #initialization }
 AlbEditorTextFlowLayoutConstraints >> initialize [
 	super initialize.
-	
 	breakLineBefore := false.
 	breakLineAfter := false.
 	pushLine := false.

@@ -23,7 +23,7 @@ AlbCursorStencil class >> uniqueInstance [
 AlbCursorStencil >> create [
 	^ AlbCursorElement new
 		constraintsDo: [ :c |
-			c horizontal exact: 1.
+			c horizontal exact: 2.
 			c vertical matchParent ];
 		background: Color black
 ]

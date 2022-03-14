@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 AlbTextWordPieceShowCursorHandler >> eventClass [
-	^ BrTextEditorShowCursorRequest
+	^ AlbTextEditorShowCursorRequest
 ]
 
 { #category : #'api - event managing' }

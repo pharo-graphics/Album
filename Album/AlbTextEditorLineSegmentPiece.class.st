@@ -88,7 +88,7 @@ AlbTextEditorLineSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in: an
 	"Is sent when a cursor is added to a given piece element within provided editor element"
 
 	aPieceElement dispatchEvent:
-		(BrTextEditorShowCursorRequest new
+		(AlbTextEditorShowCursorRequest new
 			editorElement: anEditorElement;
 			hasFocus: anEditorElement isFocused;
 			cursorPosition: aCursor position)

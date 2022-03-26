@@ -1230,7 +1230,7 @@ AlbTextEditor >> updater [
 
 { #category : #initialization }
 AlbTextEditor >> useAsyncStylerStrategy [
-	self stylerStrategy: BrTextStylerAsyncStrategy new
+	self stylerStrategy: AlbTextStylerAsyncStrategy new
 ]
 
 { #category : #initialization }
@@ -1240,10 +1240,10 @@ AlbTextEditor >> useDefaultStylerStrategy [
 
 { #category : #initialization }
 AlbTextEditor >> useSyncStylerStrategy [
-	self stylerStrategy: BrTextStylerSyncStrategy new
+	self stylerStrategy: AlbTextStylerSyncStrategy new
 ]
 
 { #category : #initialization }
 AlbTextEditor >> useTaskItStylerStrategy [
-	self stylerStrategy: BrTextStylerTaskItStrategy new
+	self stylerStrategy: AlbTextStylerTaskItStrategy new
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbExamplesClassSide,
+	#name : #AlbExamplesSeeClassSide,
 	#superclass : #Object,
 	#classInstVars : [
 		'ed'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #examples }
-AlbExamplesClassSide class >> example_CodeEditorWithRBStyler [
+AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStyler [
 
 	| text styler editorElement space |
 
@@ -36,7 +36,7 @@ AlbExamplesClassSide class >> example_CodeEditorWithRBStyler [
 ]
 
 { #category : #examples }
-AlbExamplesClassSide class >> example_EditorAsTextArea1 [
+AlbExamplesSeeClassSide class >> example_EditorAsTextArea1 [
 
 	| ed space propagations |
 	ed := AlbEditor new.
@@ -75,7 +75,7 @@ self halt.
 ]
 
 { #category : #examples }
-AlbExamplesClassSide class >> example_EditorAsTextAreaWithAptitude [
+AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithAptitude [
 
 	| ed space |
 	ed := AlbEditor new aptitude: AlbTextAreaAptitude.
@@ -89,7 +89,7 @@ AlbExamplesClassSide class >> example_EditorAsTextAreaWithAptitude [
 ]
 
 { #category : #examples }
-AlbExamplesClassSide class >> example_EditorAsTextArea_with_glamAptitude [
+AlbExamplesSeeClassSide class >> example_EditorAsTextArea_with_glamAptitude [
 
 
 	| ed space propagations |
@@ -126,7 +126,7 @@ self halt.
 ]
 
 { #category : #examples }
-AlbExamplesClassSide class >> example_EditorAsTextFieldWithAptitude [
+AlbExamplesSeeClassSide class >> example_EditorAsTextFieldWithAptitude [
 
 	| ed space |
 	self halt.
@@ -142,6 +142,6 @@ AlbExamplesClassSide class >> example_EditorAsTextFieldWithAptitude [
 ]
 
 { #category : #accessing }
-AlbExamplesClassSide class >> methodText [
+AlbExamplesSeeClassSide class >> methodText [
 	^ self  class sourceCodeAt: #example_CodeEditorWithRBStyler
 ]

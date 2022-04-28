@@ -21,7 +21,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStyler [
 		aptitude: AlbTextAreaAptitude;
 		styler: styler;
 		text: text.
-
+	editorElement editor useTaskItStylerStrategy.
 	editorElement editor
 		addEditorShortcut:
 			(BlShortcutWithAction new

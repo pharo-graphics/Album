@@ -1,11 +1,42 @@
 Class {
-	#name : #AlbSandBox,
+	#name : #AlbExamplesClassSide,
 	#superclass : #Object,
+	#classInstVars : [
+		'ed'
+	],
 	#category : #'Album-SandBox'
 }
 
 { #category : #examples }
-AlbSandBox class >> example_EditorAsTextArea1 [
+AlbExamplesClassSide class >> example_CodeEditorWithRBStyler [
+
+	| text styler editorElement space |
+
+	text := self methodText asRopedText.
+
+	styler := AlbRBTextStyler new.
+	styler classOrMetaClass: self class.
+
+	editorElement := AlbEditor new 
+		aptitude: AlbTextAreaAptitude;
+		styler: styler;
+		text: text.
+
+	editorElement editor
+		addEditorShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination primaryR;
+				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
+
+	space := BlSpace new.
+	space root addChild: editorElement.
+	space title: 'editor'.
+	space show.
+	
+]
+
+{ #category : #examples }
+AlbExamplesClassSide class >> example_EditorAsTextArea1 [
 
 	| ed space propagations |
 	ed := AlbEditor new.
@@ -44,7 +75,7 @@ self halt.
 ]
 
 { #category : #examples }
-AlbSandBox class >> example_EditorAsTextAreaWithAptitude [
+AlbExamplesClassSide class >> example_EditorAsTextAreaWithAptitude [
 
 	| ed space |
 	ed := AlbEditor new aptitude: AlbTextAreaAptitude.
@@ -58,7 +89,7 @@ AlbSandBox class >> example_EditorAsTextAreaWithAptitude [
 ]
 
 { #category : #examples }
-AlbSandBox class >> example_EditorAsTextArea_with_glamAptitude [
+AlbExamplesClassSide class >> example_EditorAsTextArea_with_glamAptitude [
 
 
 	| ed space propagations |
@@ -95,7 +126,7 @@ self halt.
 ]
 
 { #category : #examples }
-AlbSandBox class >> example_EditorAsTextFieldWithAptitude [
+AlbExamplesClassSide class >> example_EditorAsTextFieldWithAptitude [
 
 	| ed space |
 	self halt.
@@ -108,4 +139,9 @@ AlbSandBox class >> example_EditorAsTextFieldWithAptitude [
 	space title: 'editor'.
 	space show.
 	ed
+]
+
+{ #category : #accessing }
+AlbExamplesClassSide class >> methodText [
+	^ self  class sourceCodeAt: #example_CodeEditorWithRBStyler
 ]

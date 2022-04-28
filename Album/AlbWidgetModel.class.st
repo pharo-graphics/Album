@@ -38,8 +38,7 @@ AlbWidgetModel class >> withAllSuperclassModels [
 		ifTrue: [ ^ theModels ].
 
 	theModels
-		addAll: (self allSuperclassesIncluding: AlbWidgetModel);
-		yourself.
+		addAll: (self allSuperclassesIncluding: AlbWidgetModel).
 		
 	^ theModels
 ]

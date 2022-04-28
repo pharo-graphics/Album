@@ -13,11 +13,6 @@ AlbWidgetModel class >> + anotherModel [
 	^ self asModel + anotherModel
 ]
 
-{ #category : #'as yet unclassified' }
-AlbWidgetModel class >> allRelatedViewModels [
-	^ { }
-]
-
 { #category : #'api - composition' }
 AlbWidgetModel class >> asModel [
 	^ self new
@@ -26,21 +21,6 @@ AlbWidgetModel class >> asModel [
 { #category : #printing }
 AlbWidgetModel class >> modelName [
 	^ self name
-]
-
-{ #category : #'as yet unclassified' }
-AlbWidgetModel class >> withAllSuperclassModels [
-	| theModels |
-	
-	theModels := OrderedCollection with: self.
-	
-	self = AlbWidgetModel
-		ifTrue: [ ^ theModels ].
-
-	theModels
-		addAll: (self allSuperclassesIncluding: AlbWidgetModel).
-		
-	^ theModels
 ]
 
 { #category : #'api - composition' }

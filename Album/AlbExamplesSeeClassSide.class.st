@@ -1,9 +1,6 @@
 Class {
 	#name : #AlbExamplesSeeClassSide,
 	#superclass : #Object,
-	#classInstVars : [
-		'ed'
-	],
 	#category : #'Album-SandBox'
 }
 

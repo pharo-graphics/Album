@@ -9,7 +9,7 @@ AlbTextWordPieceSelectionAcquiredHandler >> eventClass [
 	^ BlElementSelectionAcquiredEvent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'api - event managing' }
 AlbTextWordPieceSelectionAcquiredHandler >> handleEvent: anEvent [
 	| anEditorElement aTextElement aGlobalFrom aGlobalTo |
 

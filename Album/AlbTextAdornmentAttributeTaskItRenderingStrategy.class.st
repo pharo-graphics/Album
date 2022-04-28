@@ -9,8 +9,9 @@ AlbTextAdornmentAttributeTaskItRenderingStrategy >> affect: aTTextEditorTextualP
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #BlElement>
 
+self flag: 'TODO: understand withGlamorousPreview.'.
 	^ BlLazyElement new
-		withGlamorousPreview;
+		"withGlamorousPreview;"
 		in: [ :theElement | self attribute initializeLazyElement: theElement ];
 		elementBuilder: [ self attribute doAffect: aTTextEditorTextualPiece in: anEditorElement ]
 ]

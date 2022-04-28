@@ -198,7 +198,7 @@ AlbAptitude >> remove: aLook [
 	aLookInstance widgetDo: [ :anElement | aLookInstance onUninstalledIn: anElement ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AlbAptitude >> theme [
 	^ widget ifNil: [ AlbTheme default ] ifNotNil: #theme
 ]

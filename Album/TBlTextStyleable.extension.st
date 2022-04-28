@@ -16,23 +16,14 @@ TBlTextStyleable >> expanded: aBoolean adornment: aTextAdornmentStencilBuilder [
 	"Append a visual element defined by a given stencil builder right after a text on which I am applied.
 	A stencil builder can also be a block in the following form:
 	[ :aTTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
-
-	self attributesBuilder attribute: (
-		AlbGlamorousTrangleExpanderTextAttribute new 
+self flag: 'TODO: understand how it works (buttons inside text)'.
+	"self attributesBuilder attribute: (
+		BrGlamorousTrangleExpanderTextAttribute new 
 			isExpanded: aBoolean;
 			attributesCreatingBlock: [
 				AlbTextAdornmentDynamicAttribute new 	
 					beAppend;
-					stencil: aTextAdornmentStencilBuilder ])
-]
-
-{ #category : #'*Album' }
-TBlTextStyleable >> expandingAdornment: aTextAdornmentStencilBuilder [
-	"Append a visual element defined by a given stencil builder right after a text on which I am applied.
-	A stencil builder can also be a block in the following form:
-	[ :aTTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
-
-	self expanded: false adornment: aTextAdornmentStencilBuilder
+					stencil: aTextAdornmentStencilBuilder ])"
 ]
 
 { #category : #'*Album' }

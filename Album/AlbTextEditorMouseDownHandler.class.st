@@ -24,7 +24,7 @@ AlbTextEditorMouseDownHandler >> eventsToHandle [
 	^ { BlMouseDownEvent }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mouse handlers' }
 AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 	| aNavigator aScreenPosition anEditorElement |
 	

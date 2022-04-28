@@ -9,7 +9,7 @@ AlbTextWordPieceSelectionLostHandler >> eventClass [
 	^ BlElementSelectionLostEvent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'api - event managing' }
 AlbTextWordPieceSelectionLostHandler >> handleEvent: anEvent [
 	| aTextEditElement anEditorElement |
 	

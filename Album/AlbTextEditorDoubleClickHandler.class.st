@@ -19,7 +19,7 @@ AlbTextEditorDoubleClickHandler class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mouse handlers' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	| aScreenPosition aGlobalTextIndex aSelecter anEditorElement |
 	

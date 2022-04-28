@@ -12,16 +12,11 @@ AlbTextEditorLineSegmentTextListener class >> cleanUp [
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentTextListener class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
-]
-
-{ #category : #accessing }
 AlbTextEditorLineSegmentTextListener >> eventClass [
 	^ BlMouseEvent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'api - event managing' }
 AlbTextEditorLineSegmentTextListener >> handleEvent: aBlMouseEvent [
 	| aTextElement anEditorElement aLocalPosition aTextIndex anIterator theAttributes |
 

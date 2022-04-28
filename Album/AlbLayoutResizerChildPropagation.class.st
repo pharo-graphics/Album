@@ -17,7 +17,7 @@ AlbLayoutResizerChildPropagation >> childElement: anObject [
 	childElement := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AlbLayoutResizerChildPropagation >> childrenToPropagateFrom: aParentElement do: aBlockClosure [
 	aBlockClosure value: self childElement
 ]

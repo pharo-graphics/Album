@@ -11,7 +11,10 @@ Class {
 AlbTextEditorSelectionOverwriteRecorder >> commit: aTextEditor [
 	"Commit recorded selection intervals in a given text editor"
 	
-	aTextEditor selection: (BlCompositeSelection new add: self selection).
+	| compSel |
+	compSel := BlCompositeSelection new.
+	compSel add: self selection.
+	aTextEditor selection: compSel.
 	aTextEditor updateSelection: 1 to: aTextEditor text size.
 
 	compositeSelection := BlCompositeSelection new

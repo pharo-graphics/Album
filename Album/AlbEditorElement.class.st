@@ -8,7 +8,7 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #conversion }
+{ #category : #converting }
 AlbEditorElement >> asScrollableElement [
 	^ self
 ]

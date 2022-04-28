@@ -29,7 +29,7 @@ AlbEditorSegmentHolder >> initialize [
 	itemElement := self createSegmentElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 AlbEditorSegmentHolder >> onRecycled [
 ]
 

@@ -1,9 +1,6 @@
 Class {
 	#name : #AlbEditorSelectLineAfterCursorShortcut,
 	#superclass : #AlbEditorShortcut,
-	#instVars : [
-		'combinationForUnix'
-	],
 	#category : #'Album-Shortcuts'
 }
 

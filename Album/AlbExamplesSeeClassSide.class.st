@@ -15,10 +15,10 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStyler [
 	styler classOrMetaClass: self class.
 
 	editorElement := AlbEditor new 
-		aptitude: AlbTextAreaAptitude;
+		dresser: AlbTextAreaDresser;
 		styler: styler;
 		text: text.
-	editorElement editor useTaskItStylerStrategy.
+	"editorElement editor useTaskItStylerStrategy."
 	editorElement editor
 		addEditorShortcut:
 			(BlShortcutWithAction new
@@ -38,13 +38,24 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextArea1 [
 	| ed space propagations |
 	ed := AlbEditor new.
 	
-	"propagations := AlbLayoutResizerPropagations new."
-	"ed layoutResizerPropagations addPropagations: propagations."
-	"ed styles markDirty."
+	propagations := AlbLayoutResizerPropagations new.
+	ed layoutResizerPropagations addPropagations: propagations.
+	ed styles markDirty.
+	
+
 self halt.
-	"ToLayoutResizerAptitude inherit onInstalledIn: ed."
+	"AlbLayoutResizerAptitude inherit onInstalledIn: ed."
 	ed aptitude: AlbTextAreaAptitude.
-	"ed layoutResizerPropagations addPropagations: propagations."
+	ed when: AlbEditorStylerChanged do: [ :anEvent | ed styler: anEvent styler ].
+	ed when: AlbEditorTextChanged do: [ :anEvent | ed text: anEvent text ].
+	ed when: AlbEditorModeChanged do: [ :anEvent | ed mode: anEvent mode ].
+	ed text: String loremIpsum.
+	ed fireEvent: AlbEditorTextRequest new.
+	ed constraintsDo: [ :c | 
+		c vertical resizer: BlLayoutResizer fitContent.
+		c horizontal resizer: BlLayoutResizer matchParent ].
+	
+	ed layoutResizerPropagations addPropagations: propagations.
 	"ed layoutResizerPropagations addPropagations: BrLayoutResizerPropagations new."
 	"ed userData at: #brickLook put: nil."
 	"ed when: BrEditorStylerChanged do: [ :anEvent | ed styler: anEvent styler ]."
@@ -59,15 +70,15 @@ self halt.
 	"ed constraints vertical resizer: BlLayoutResizer fitContent.
 	ed constraints horizontal resizer: BlLayoutResizer fitContent."
 	"ed aptitude: ToTextAreaAptitude2."
-	ed text: String loremIpsum.
+	
 	"ed vFitContent."
 	"ed fitContent."
 	"ed text: String loremIpsum."
-
 	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
+
 	^ ed
 ]
 
@@ -82,6 +93,21 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithAptitude [
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
+	^ ed
+]
+
+{ #category : #examples }
+AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
+
+	| ed space |
+
+	ed := AlbEditor new dresser: AlbTextAreaDresser.
+	ed text: String loremIpsum.
+	space := BlSpace new.
+	space root addChild: ed.
+	space title: 'editor'.
+	space show.
+	ed inspect.
 	^ ed
 ]
 

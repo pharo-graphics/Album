@@ -15,7 +15,35 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStyler [
 	styler classOrMetaClass: self class.
 
 	editorElement := AlbEditor new 
-		dresser: AlbTextAreaDresser;
+		aptitude: AlbTextAreaAptitude new;
+		styler: styler;
+		text: text.
+	"editorElement editor useTaskItStylerStrategy."
+	editorElement editor
+		addEditorShortcut:
+			(BlShortcutWithAction new
+				combination: BlKeyCombination primaryR;
+				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
+
+	space := BlSpace new.
+	space root addChild: editorElement.
+	space title: 'editor'.
+	space show.
+	
+]
+
+{ #category : #examples }
+AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
+
+	| text styler editorElement space |
+
+	text := self methodText asRopedText.
+
+	styler := AlbRBTextStyler new.
+	styler classOrMetaClass: self class.
+
+	editorElement := AlbEditor new 
+		dresser: AlbTextAreaDresser new;
 		styler: styler;
 		text: text.
 	"editorElement editor useTaskItStylerStrategy."
@@ -101,13 +129,28 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
 	| ed space |
 
-	ed := AlbEditor new dresser: AlbTextAreaDresser.
+	ed := AlbEditor new dresser: AlbTextAreaDresser new.
 	ed text: String loremIpsum.
 	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
-	ed inspect.
+	"ed inspect."
+	^ ed
+]
+
+{ #category : #examples }
+AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
+
+	| ed space |
+
+	ed := AlbEditor new.
+	ed text: String loremIpsum.
+	space := BlSpace new.
+	space root addChild: ed.
+	space title: 'editor'.
+	space show.
+	"ed inspect."
 	^ ed
 ]
 

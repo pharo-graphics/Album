@@ -7,7 +7,7 @@ Class {
 		'styles',
 		'target'
 	],
-	#category : #'Album-Brick-Core'
+	#category : #'Album-Brick-Core-not-used'
 }
 
 { #category : #'private - adding' }

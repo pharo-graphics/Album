@@ -16,7 +16,7 @@ TBlTextStyleable >> expanded: aBoolean adornment: aTextAdornmentStencilBuilder [
 	"Append a visual element defined by a given stencil builder right after a text on which I am applied.
 	A stencil builder can also be a block in the following form:
 	[ :aTTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
-self flag: 'TODO: understand how it works (buttons inside text)'.
+self flag: 'TODO: let to understand how it works (buttons inside text)'.
 	"self attributesBuilder attribute: (
 		BrGlamorousTrangleExpanderTextAttribute new 
 			isExpanded: aBoolean;

@@ -1,41 +1,19 @@
 Class {
 	#name : #AlbTextAreaDresser,
-	#superclass : #AlbEditorDresser,
+	#superclass : #AlbDresser,
 	#category : #'Album-Look'
 }
 
-{ #category : #'focus handlers' }
-AlbTextAreaDresser >> blurEvent: anEvent [
-	anEvent target widgetContent
-		border: (BlBorder paint: self theme editor borderColor width: 1)
-]
-
-{ #category : #'focus handlers' }
-AlbTextAreaDresser >> focusEvent: anEvent [
-	anEvent target widgetContent
-		border: (BlBorder paint: self theme editor focusedBorderColor width: 1)
-]
-
-{ #category : #initialization }
-AlbTextAreaDresser >> initializeListeners [
-	super initializeListeners.
-	
-	self when: BlBlurEvent do: [ :anEvent | self blurEvent: anEvent ].
-	self when: BlFocusEvent do: [ :anEvent | self focusEvent: anEvent ]
-]
-
-{ #category : #initialization }
-AlbTextAreaDresser >> initializeListenersFrom: anElement [
-	super initializeListenersFrom: anElement.
-	
-	self when: BlBlurEvent do: [ :anEvent | self blurEvent: anEvent ].
-	self when: BlFocusEvent do: [ :anEvent | self focusEvent: anEvent ]
-]
-
 { #category : #'api - hooks' }
-AlbTextAreaDresser >> onAttachedTo: anElement [
+AlbTextAreaDresser >> onInstalledIn: anElement [
 
-	super onAttachedTo: anElement.
+	super onInstalledIn: anElement.
+	
+	anElement when: BlBlurEvent do: [ :anEvent | anElement widgetContent
+		border: (BlBorder paint: anElement theme editor borderColor width: 1) ].
+	anElement when: BlFocusEvent do: [ :anEvent | anElement widgetContent
+		border: (BlBorder paint: anElement theme editor focusedBorderColor width: 1) ].
+	
 	anElement constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent.
 		c horizontal resizer: BlLayoutResizer matchParent ].

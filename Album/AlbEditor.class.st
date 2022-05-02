@@ -76,7 +76,18 @@ AlbEditor >> initialize [
 		do: [ :anEvent | self viewModel text: anEvent text ].
 
 	self editor: AlbTextEditor new.
-	self viewModel: AlbEditorModel new
+	self viewModel: AlbEditorModel new.
+	
+	self when: AlbEditorStylerChanged do: [ :anEvent | self editor styler: anEvent styler ].
+	self when: AlbEditorTextChanged do: [ :anEvent | self editor text: anEvent text ].
+	self when: AlbEditorModeChanged do: [ :anEvent | self mode: anEvent mode ].
+	
+	
+
+	
+	
+	
+
 ]
 
 { #category : #'api - editor' }
@@ -105,11 +116,27 @@ AlbEditor >> isReadOnly [
 	^ self viewModel mode isReadOnly
 ]
 
+{ #category : #'api - editor' }
+AlbEditor >> mode: aTextEditorMode [
+	self editor editorMode: aTextEditorMode.
+	self states addState: (AlbEditorModeState mode: aTextEditorMode class)
+]
+
 { #category : #'editor - operations' }
 AlbEditor >> navigator [
 	<return: #AlbTextEditorNavigator>
 
 	^ self editor navigator
+]
+
+{ #category : #accessing }
+AlbEditor >> request: aRequest [
+
+	aRequest canBePropagated
+		ifTrue: [ self fireEvent: aRequest ]
+		ifFalse: [ self dispatchEvent: aRequest ].
+
+	^ aRequest response
 ]
 
 { #category : #'editor - operations' }

@@ -9,14 +9,21 @@ BlElement >> actors [
 
 { #category : #'*Album' }
 BlElement >> aptitude [
+
+	self
+		deprecated: 'Use #dresser instead'
+		on: '29 April 2022'
+		in:
+		'Pharo-11.0.0+build.16.sha.5766e3132f1a6901f113e15c63dd95ddfab5fadb (64 Bit)'.
 	^ self userData at: #aptitude ifAbsent: nil
 ]
 
 { #category : #'*Album' }
 BlElement >> aptitude: aLook [
+
 	| aLookInstance |
-	
-	self aptitudeDo: [ :aCurrentLook |
+
+	self aptitudeDo: [ :aCurrentLook | 
 		aCurrentLook onUninstalledIn: self.
 		self userData at: #aptitude put: nil ].
 
@@ -28,7 +35,37 @@ BlElement >> aptitude: aLook [
 
 { #category : #'*Album' }
 BlElement >> aptitudeDo: aBlock [
-	self aptitude ifNotNil: aBlock
+
+	"self
+		deprecated: 'Use #dresserDo: instead'
+		on: '29 April 2022'
+		in:
+		'Pharo-11.0.0+build.16.sha.5766e3132f1a6901f113e15c63dd95ddfab5fadb (64 Bit)'."
+	self dresser ifNotNil: aBlock
+]
+
+{ #category : #'*Album' }
+BlElement >> dresser [
+	^ self userData at: #dresser ifAbsent: nil
+]
+
+{ #category : #'*Album' }
+BlElement >> dresser: aDresser [
+	| installed |
+	
+	self dresserDo: [ :currDresser |
+		currDresser onUninstalledIn: self.
+		self userData at: #dresser put: nil ].
+
+	installed := aDresser asLook.
+
+	self userData at: #dresser put: installed.
+	installed onInstalledIn: self
+]
+
+{ #category : #'*Album' }
+BlElement >> dresserDo: aBlock [
+	self dresser ifNotNil: aBlock
 ]
 
 { #category : #'*Album' }
@@ -36,17 +73,6 @@ BlElement >> layoutResizerPropagations [
 	^ self userData
 		at: #layoutResizerPropagations
 		ifAbsentPut: [ AlbLayoutResizerElementPropagations new element: self ]
-]
-
-{ #category : #'*Album' }
-BlElement >> removeAptitude: aLook [
-	self aptitude
-		ifNotNil: [
-			self aptitude = aLook
-				ifTrue: [
-					self aptitude onUninstalledIn: self.
-					self userData at: #aptitude put: nil ]
-				ifFalse: [ self aptitude remove: aLook ] ]
 ]
 
 { #category : #'*Album-Theme' }
@@ -88,4 +114,13 @@ BlElement >> viewModel: aViewModel [
 { #category : #'*Album' }
 BlElement >> viewModelDo: aBlock [
 	self userData at: #brickViewModel ifPresent: aBlock
+]
+
+{ #category : #'*Album' }
+BlElement >> widgetContent [
+
+	^ self
+		  directChildNamed: #content
+		  ifFound: [ :anElement | anElement ]
+		  ifNone: [ self ]
 ]

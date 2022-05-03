@@ -9,11 +9,12 @@ BaselineOfAlbum >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec 
-			baseline: 'NewBlocPac' with: [
-				spec repository: 'github://pharo-graphics/bloc-pac/src' ].
+			baseline: 'BlocPac' with: [
+				spec repository: 'github://pharo-graphics/bloc-pac:dev-1.0/src' ].
 
 		spec 
 			package: #'Album' with: [
-				spec requires: #(#'NewBlocPac') ]
+				spec repository: 'github://plantec/Album:dresser/src'.
+				spec requires: #(#'BlocPac') ]
 			 ].
 ]

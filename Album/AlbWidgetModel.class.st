@@ -10,6 +10,7 @@ Class {
 
 { #category : #'api - composition' }
 AlbWidgetModel class >> + anotherModel [
+	self deprecated: 'use #add: instead'.
 	^ self asModel + anotherModel
 ]
 
@@ -25,6 +26,7 @@ AlbWidgetModel class >> modelName [
 
 { #category : #'api - composition' }
 AlbWidgetModel >> + anotherModel [
+	self deprecated: 'use #add: instead'.
 	self add: anotherModel asModel
 ]
 

@@ -16,7 +16,7 @@ BaselineOfAlbum >> baseline: spec [
 
 		spec 
 			package: #'Album' with: [
-				spec repository: 'github://plantec/Album:dresser/src'.
+				spec repository: 'github://plantec/Album/src'.
 				spec requires: #(#'Bloc' #'BlocPac') ]
 			 ].
 ]

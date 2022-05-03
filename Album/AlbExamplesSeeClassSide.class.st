@@ -135,6 +135,9 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
+	
+	self halt.
+	ed dresser: AlbNullDresser.
 	"ed inspect."
 	^ ed
 ]

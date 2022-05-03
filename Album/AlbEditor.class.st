@@ -65,6 +65,7 @@ AlbEditor >> editor: aTextEditor [
 
 { #category : #initialization }
 AlbEditor >> initialize [
+
 	super initialize.
 	
 	self matchParent.
@@ -78,9 +79,9 @@ AlbEditor >> initialize [
 	self editor: AlbTextEditor new.
 	self viewModel: AlbEditorModel new.
 	
-	self when: AlbEditorStylerChanged do: [ :anEvent | self editor styler: anEvent styler ].
-	self when: AlbEditorTextChanged do: [ :anEvent | self editor text: anEvent text ].
-	self when: AlbEditorModeChanged do: [ :anEvent | self mode: anEvent mode ].
+	self when: AlbEditorStylerChanged do: [ :anEvent | self stylerChanged: anEvent styler ].
+	self when: AlbEditorTextChanged do: [ :anEvent | self textChanged: anEvent text ].
+	self when: AlbEditorModeChanged do: [ :anEvent | self modeChanged: anEvent mode ].
 	
 	
 
@@ -116,8 +117,8 @@ AlbEditor >> isReadOnly [
 	^ self viewModel mode isReadOnly
 ]
 
-{ #category : #'api - editor' }
-AlbEditor >> mode: aTextEditorMode [
+{ #category : #'model - events' }
+AlbEditor >> modeChanged: aTextEditorMode [
 	self editor editorMode: aTextEditorMode.
 	self states addState: (AlbEditorModeState mode: aTextEditorMode class)
 ]
@@ -163,6 +164,12 @@ AlbEditor >> styler: aStyler [
 	self viewModel styler: aStyler
 ]
 
+{ #category : #'model - events' }
+AlbEditor >> stylerChanged: aStyler [
+
+	self editor styler: aStyler
+]
+
 { #category : #'editor - accessing' }
 AlbEditor >> text [
 	"Return a text I work with. All modifications to a text must be done from UI thread"
@@ -174,4 +181,10 @@ AlbEditor >> text [
 { #category : #'editor - accessing' }
 AlbEditor >> text: aBlText [
 	self viewModel text: aBlText asRopedText
+]
+
+{ #category : #'model - events' }
+AlbEditor >> textChanged: aText [
+
+	self editor text: aText
 ]

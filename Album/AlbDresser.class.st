@@ -29,6 +29,7 @@ AlbDresser >> onUninstalledIn: anElement [
 { #category : #'private - event management' }
 AlbDresser >> removeEventHandlersFromWidget: anElement [
 	anElement removeEventHandlersSuchThat: [ :eachEventHandler | 
-		self flag: 'how to remove my eventHandler ? '
+		self flag: 'how to remove my eventHandler ? '.
+		true
 		"eachEventHandler eventTarget == anElement" ]
 ]

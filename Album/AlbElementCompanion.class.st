@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbElementCompanion,
 	#superclass : #Object,
-	#category : #'Album-Brick-Core'
+	#category : #'Album-Core'
 }
 
 { #category : #converting }

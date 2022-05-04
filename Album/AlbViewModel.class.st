@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'eventDispatcher'
 	],
-	#category : #'Album-Brick-Core'
+	#category : #'Album-Core'
 }
 
 { #category : #'event management accessing' }

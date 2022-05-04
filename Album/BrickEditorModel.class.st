@@ -6,7 +6,7 @@ Class {
 		'text',
 		'mode'
 	],
-	#category : #'Album-Model'
+	#category : #'Album-Model - not used'
 }
 
 { #category : #accessing }

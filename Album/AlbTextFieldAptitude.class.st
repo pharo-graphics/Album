@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextFieldAptitude,
 	#superclass : #AlbEditorAptitude,
-	#category : #'Album-Look'
+	#category : #'Album-Look - not used'
 }
 
 { #category : #initialization }

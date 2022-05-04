@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'any'
 	],
-	#category : #'Album-Brick-Core-Layout Resizer'
+	#category : #'Album-Brick-Core-Layout Resizer - I dnu'
 }
 
 { #category : #'instance creation' }

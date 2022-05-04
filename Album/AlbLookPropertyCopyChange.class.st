@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbLookPropertyCopyChange,
 	#superclass : #AlbLookPropertyChange,
-	#category : #'Album-Brick-Core-Changes'
+	#category : #'Album-Brick-Core-Changes - not used'
 }
 
 { #category : #initialization }

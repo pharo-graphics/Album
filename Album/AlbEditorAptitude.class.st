@@ -8,7 +8,7 @@ Class {
 		'text',
 		'styler'
 	],
-	#category : #'Album-Look'
+	#category : #'Album-Look - not used'
 }
 
 { #category : #accessing }

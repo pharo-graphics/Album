@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbLayoutVerticalFitContentResizerState,
 	#superclass : #AlbLayoutVerticalResizerState,
-	#category : #'Album-Brick-Core-Layout Resizer'
+	#category : #'Album-Brick-Core-Layout Resizer - I dnu'
 }
 
 { #category : #comparing }

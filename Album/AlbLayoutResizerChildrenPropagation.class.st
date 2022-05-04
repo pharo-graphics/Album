@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'childrenElements'
 	],
-	#category : #'Album-Brick-Core-Layout Resizer'
+	#category : #'Album-Brick-Core-Layout Resizer - I dnu'
 }
 
 { #category : #accessing }

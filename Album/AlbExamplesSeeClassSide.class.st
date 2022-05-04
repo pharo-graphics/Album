@@ -210,7 +210,25 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextFieldWithAptitude [
 	ed
 ]
 
+{ #category : #examples }
+AlbExamplesSeeClassSide class >> example_elements_sandbox [
+
+	| sp root child1 child2 |
+	root := BlElement new background: Color cyan.
+	child1 := BlElement new background: Color yellow.
+	child2 := BlElement new background: Color gray.
+	root layout: BlFlowLayout new.
+	root addChild: child1.
+	root addChild: child2.
+	root constraintsDo: [ :c |
+			c horizontal matchParent.
+			c vertical matchParent ].
+	sp := BlSpace new.
+	sp addChild: root.
+	sp show
+]
+
 { #category : #accessing }
 AlbExamplesSeeClassSide class >> methodText [
-	^ self  class sourceCodeAt: #example_CodeEditorWithRBStyler
+	^ self  class sourceCodeAt: #example_CodeEditorWithRBStylerWithDresser
 ]

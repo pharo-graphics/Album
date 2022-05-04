@@ -47,12 +47,3 @@ AlbLayoutHorizontalResizerState >> printOn: aStream [
 	aStream
 		nextPutAll: 'horizontal resizer - '
 ]
-
-{ #category : #accessing }
-AlbLayoutHorizontalResizerState >> type [
-	"Return an object used to compare two states when adding to the collection of states in order to prevent
-	elements from having duplicated states"
-	<return: #Object>
-
-	^ AlbLayoutHorizontalResizerState
-]

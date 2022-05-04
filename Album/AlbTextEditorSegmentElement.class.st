@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbTextEditorSegmentElement,
 	#superclass : #BlElement,
-	#category : #'Album-UI'
+	#category : #'Album-Not-used'
 }

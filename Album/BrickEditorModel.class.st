@@ -1,5 +1,5 @@
 Class {
-	#name : #BrEditorModel,
+	#name : #BrickEditorModel,
 	#superclass : #AlbWidgetModel,
 	#instVars : [
 		'styler',
@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : #accessing }
-BrEditorModel >> beEditable [
+BrickEditorModel >> beEditable [
 	self mode: AlbTextEditorEditableMode new
 ]
 
 { #category : #initialization }
-BrEditorModel >> initialize [
+BrickEditorModel >> initialize [
 	super initialize.
 	
 	styler := BlTextNullStyler new.
@@ -24,7 +24,7 @@ BrEditorModel >> initialize [
 ]
 
 { #category : #initialization }
-BrEditorModel >> initializeListeners [
+BrickEditorModel >> initializeListeners [
 	super initializeListeners.
 	
 	self when: AlbEditorStylerRequest reply: [ :aResponse | aResponse styler: self styler ].
@@ -33,14 +33,14 @@ BrEditorModel >> initializeListeners [
 ]
 
 { #category : #accessing }
-BrEditorModel >> mode [
+BrickEditorModel >> mode [
 	<return: #AlbTextEditorMode>
 
 	^ mode
 ]
 
 { #category : #accessing }
-BrEditorModel >> mode: aTextEditorMode [
+BrickEditorModel >> mode: aTextEditorMode [
 	mode = aTextEditorMode
 		ifTrue: [ ^ self ].
 
@@ -49,27 +49,27 @@ BrEditorModel >> mode: aTextEditorMode [
 ]
 
 { #category : #notifying }
-BrEditorModel >> notifyModeChanged [
+BrickEditorModel >> notifyModeChanged [
 	self dispatchEvent: (AlbEditorModeChanged new mode: self mode)
 ]
 
 { #category : #notifying }
-BrEditorModel >> notifyStylerChanged [
+BrickEditorModel >> notifyStylerChanged [
 	self dispatchEvent: (AlbEditorStylerChanged styler: self styler)
 ]
 
 { #category : #notifying }
-BrEditorModel >> notifyTextChanged [
+BrickEditorModel >> notifyTextChanged [
 	self dispatchEvent: (AlbEditorTextChanged text: self text)
 ]
 
 { #category : #accessing }
-BrEditorModel >> styler [
+BrickEditorModel >> styler [
 	^ styler
 ]
 
 { #category : #accessing }
-BrEditorModel >> styler: aStyler [
+BrickEditorModel >> styler: aStyler [
 	styler = aStyler
 		ifTrue: [ ^ self ].
 
@@ -78,12 +78,12 @@ BrEditorModel >> styler: aStyler [
 ]
 
 { #category : #accessing }
-BrEditorModel >> text [
+BrickEditorModel >> text [
 	^ text
 ]
 
 { #category : #accessing }
-BrEditorModel >> text: aText [
+BrickEditorModel >> text: aText [
 	text == aText
 		ifTrue: [ ^ self ].
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorParagraphElement,
-	#superclass : #AlbTextEditorSegmentElement,
+	#superclass : #BlElement,
 	#instVars : [
 		'paragraph',
 		'text',

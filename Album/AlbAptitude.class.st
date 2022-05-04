@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'changes'
 	],
-	#category : #'Album-Brick-Core'
+	#category : #'Album-Not-used'
 }
 
 { #category : #'api - composition' }

@@ -5,7 +5,7 @@ Class {
 		'model',
 		'whenAttachedActions'
 	],
-	#category : #'Album-Brick-Core'
+	#category : #'Album-Not-used'
 }
 
 { #category : #'api - composition' }

@@ -8,7 +8,7 @@ Class {
 		'actors',
 		'eventDispatcher'
 	],
-	#category : #'Album-Brick-Core'
+	#category : #'Album-Not-used'
 }
 
 { #category : #accessing }

@@ -66,11 +66,6 @@ AlbStyleAptitude >> styleForState: aState ifFound: aFoundBlock ifNone: aNoneBloc
 		ifNone: aNoneBlock
 ]
 
-{ #category : #accessing }
-AlbStyleAptitude >> target: aSelectorPath [	
-	self deprecated: 'Use Element Query Api instead'.
-]
-
 { #category : #'private - adding' }
 AlbStyleAptitude >> when: aStateBlock style: aStyleBlock [
 	| aTargetState |

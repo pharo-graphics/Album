@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbNullDresser,
-	#superclass : #AlbDresser,
+	#superclass : #AlbElementCompanion,
 	#category : #'Album-Brick-Core'
 }

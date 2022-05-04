@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbEditorModel,
-	#superclass : #AlbViewModel,
+	#name : #BrEditorModel,
+	#superclass : #AlbWidgetModel,
 	#instVars : [
 		'styler',
 		'text',
@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : #accessing }
-AlbEditorModel >> beEditable [
+BrEditorModel >> beEditable [
 	self mode: AlbTextEditorEditableMode new
 ]
 
 { #category : #initialization }
-AlbEditorModel >> initialize [
+BrEditorModel >> initialize [
 	super initialize.
 	
 	styler := BlTextNullStyler new.
@@ -23,15 +23,24 @@ AlbEditorModel >> initialize [
 	mode := AlbTextEditorEditableMode new
 ]
 
+{ #category : #initialization }
+BrEditorModel >> initializeListeners [
+	super initializeListeners.
+	
+	self when: AlbEditorStylerRequest reply: [ :aResponse | aResponse styler: self styler ].
+	self when: AlbEditorTextRequest reply: [ :aResponse | aResponse text: self text ].
+	self when: AlbEditorModeRequest reply: [ :aResponse | aResponse mode: self mode ].
+]
+
 { #category : #accessing }
-AlbEditorModel >> mode [
+BrEditorModel >> mode [
 	<return: #AlbTextEditorMode>
 
 	^ mode
 ]
 
 { #category : #accessing }
-AlbEditorModel >> mode: aTextEditorMode [
+BrEditorModel >> mode: aTextEditorMode [
 	mode = aTextEditorMode
 		ifTrue: [ ^ self ].
 
@@ -40,35 +49,27 @@ AlbEditorModel >> mode: aTextEditorMode [
 ]
 
 { #category : #notifying }
-AlbEditorModel >> notifyModeChanged [
+BrEditorModel >> notifyModeChanged [
 	self dispatchEvent: (AlbEditorModeChanged new mode: self mode)
 ]
 
 { #category : #notifying }
-AlbEditorModel >> notifyStylerChanged [
+BrEditorModel >> notifyStylerChanged [
 	self dispatchEvent: (AlbEditorStylerChanged styler: self styler)
 ]
 
 { #category : #notifying }
-AlbEditorModel >> notifyTextChanged [
+BrEditorModel >> notifyTextChanged [
 	self dispatchEvent: (AlbEditorTextChanged text: self text)
 ]
 
-{ #category : #'api - hooks' }
-AlbEditorModel >> onInstalledIn: anElement [
-	super onInstalledIn: anElement.
-	self when: AlbEditorStylerRequest reply: [ :aResponse | aResponse styler: self styler ].
-	self when: AlbEditorTextRequest reply: [ :aResponse | aResponse text: self text ].
-	self when: AlbEditorModeRequest reply: [ :aResponse | aResponse mode: self mode ].
-]
-
 { #category : #accessing }
-AlbEditorModel >> styler [
+BrEditorModel >> styler [
 	^ styler
 ]
 
 { #category : #accessing }
-AlbEditorModel >> styler: aStyler [
+BrEditorModel >> styler: aStyler [
 	styler = aStyler
 		ifTrue: [ ^ self ].
 
@@ -77,12 +78,12 @@ AlbEditorModel >> styler: aStyler [
 ]
 
 { #category : #accessing }
-AlbEditorModel >> text [
+BrEditorModel >> text [
 	^ text
 ]
 
 { #category : #accessing }
-AlbEditorModel >> text: aText [
+BrEditorModel >> text: aText [
 	text == aText
 		ifTrue: [ ^ self ].
 

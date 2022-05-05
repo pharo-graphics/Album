@@ -45,6 +45,11 @@ BlElement >> aptitudeDo: aBlock [
 ]
 
 { #category : #'*Album' }
+BlElement >> asStencil [
+	^ self
+]
+
+{ #category : #'*Album' }
 BlElement >> dresser [
 	^ self userData at: #dresser ifAbsent: nil
 ]

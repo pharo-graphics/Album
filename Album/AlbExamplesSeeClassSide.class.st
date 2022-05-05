@@ -4,7 +4,7 @@ Class {
 	#category : #'Album-SandBox'
 }
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStyler [
 
 	| text styler editorElement space |
@@ -32,7 +32,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStyler [
 	
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
@@ -60,7 +60,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextArea1 [
 
 	| ed space propagations |
@@ -110,7 +110,7 @@ self halt.
 	^ ed
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithAptitude [
 
 	| ed space |
@@ -124,7 +124,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithAptitude [
 	^ ed
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
 	| ed space |
@@ -142,7 +142,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	^ ed
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |
@@ -157,7 +157,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	^ ed
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextArea_with_glamAptitude [
 
 
@@ -194,7 +194,7 @@ self halt.
 	^ ed
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextFieldWithAptitude [
 
 	| ed space |
@@ -210,7 +210,37 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextFieldWithAptitude [
 	ed
 ]
 
-{ #category : #examples }
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
+	<gtExample>
+	| cache attribute text ed space |
+
+	cache := Dictionary new.
+	
+	attribute := AlbTextAdornmentDynamicAttribute new
+		beAppend;
+		withCache: cache key: #key;
+		stencil: [
+			BlElement new
+				background: (Color gray alpha: 0.4);
+				size: 200@100 ].
+
+	text := 'Hello' asRopedText attribute: attribute.
+	ed := AlbEditor new dresser: AlbTextAreaDresser new.
+	ed text: text.
+	ed matchParent.
+	space := BlSpace new.
+	space root addChild: ed.
+	space title: 'editor'.
+	space show.
+
+	
+	
+			
+	^ text
+]
+
+{ #category : #elements }
 AlbExamplesSeeClassSide class >> example_elements_sandbox [
 
 	| sp root child1 child2 |

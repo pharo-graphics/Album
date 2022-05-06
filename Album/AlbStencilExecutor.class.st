@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbStencilExecutor,
 	#superclass : #Object,
-	#category : #'Album-Basic-Stencil'
+	#category : #'Album-Attributes-Stencil'
 }
 
 { #category : #'api - running' }

@@ -39,7 +39,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
-	#category : #'Album-Basic-Stencil'
+	#category : #'Album-Attributes-Stencil'
 }
 
 { #category : #'instance creation' }

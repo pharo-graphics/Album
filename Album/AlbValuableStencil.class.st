@@ -11,7 +11,7 @@ Class {
 		'valuable',
 		'arguments'
 	],
-	#category : #'Album-Basic-Stencil'
+	#category : #'Album-Attributes-Stencil'
 }
 
 { #category : #'instance creation' }

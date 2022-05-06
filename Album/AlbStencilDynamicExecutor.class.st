@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'valuable'
 	],
-	#category : #'Album-Basic-Stencil'
+	#category : #'Album-Attributes-Stencil'
 }
 
 { #category : #running }

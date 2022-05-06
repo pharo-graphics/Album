@@ -28,17 +28,6 @@ BlElement >> aptitude: aLook [
 ]
 
 { #category : #'*Album-Brick-NU' }
-BlElement >> aptitudeDo: aBlock [
-
-	"self
-		deprecated: 'Use #dresserDo: instead'
-		on: '29 April 2022'
-		in:
-		'Pharo-11.0.0+build.16.sha.5766e3132f1a6901f113e15c63dd95ddfab5fadb (64 Bit)'."
-	self dresser ifNotNil: aBlock
-]
-
-{ #category : #'*Album-Brick-NU' }
 BlElement >> layoutResizerPropagations [
 
 	^ self userData

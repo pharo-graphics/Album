@@ -32,10 +32,6 @@ AlbWidgetModel >> + anotherModel [
 
 { #category : #'api - composition' }
 AlbWidgetModel >> add: aWidgetModel [
-
-	self isAttachedToWidget and: [ self widget aptitudeDo: [ :aLook |
-		self error: 'Can not add a view model if there is a look'	] ].
-
 	actors := actors copyWith: aWidgetModel.
 	self widgetDo: [ :anElement | aWidgetModel onInstalledIn: anElement ]
 ]

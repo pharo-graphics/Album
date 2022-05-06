@@ -9,11 +9,6 @@ AlbLayoutVerticalMatchParentResizerState >> = anotherState [
 	^ anotherState isKindOf: AlbLayoutVerticalMatchParentResizerState
 ]
 
-{ #category : #converting }
-AlbLayoutVerticalMatchParentResizerState >> asPropagated [
-	^ AlbLayoutVerticalMatchParentResizerPropagatedState uniqueInstance
-]
-
 { #category : #comparing }
 AlbLayoutVerticalMatchParentResizerState >> hash [
 	^ AlbLayoutVerticalMatchParentResizerState hash

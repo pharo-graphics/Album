@@ -4,11 +4,6 @@ Class {
 	#category : #'Album-Resizer'
 }
 
-{ #category : #converting }
-AlbLayoutHorizontalLocalResizerState >> asPropagated [
-	^ self shouldNotImplement
-]
-
 { #category : #printing }
 AlbLayoutHorizontalLocalResizerState >> printOn: aStream [
 	super printOn: aStream.

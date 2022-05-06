@@ -121,6 +121,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithAptitude [
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
+	space doStyle: ed.
 	^ ed
 ]
 
@@ -129,7 +130,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
 	| ed space |
 
-	ed := AlbEditor new dresser: AlbTextAreaDresser new.
+	ed := AlbEditor new dresser: AlbTextAreaDresser.
 	ed text: String loremIpsum.
 	space := BlSpace new.
 	space root addChild: ed.
@@ -138,6 +139,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	
 	self halt.
 	ed dresser: AlbNullDresser.
+	ed dresser: AlbTextAreaDresser.
 	"ed inspect."
 	^ ed
 ]

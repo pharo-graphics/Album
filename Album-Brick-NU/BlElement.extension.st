@@ -40,7 +40,8 @@ BlElement >> aptitudeDo: aBlock [
 
 { #category : #'*Album-Brick-NU' }
 BlElement >> layoutResizerPropagations [
+
 	^ self userData
 		at: #layoutResizerPropagations
-		ifAbsentPut: [ AlbLayoutResizerElementPropagations new element: self ]
+		ifAbsentPut: [ AlbNullLayoutResizerPropagations new element: self ]
 ]

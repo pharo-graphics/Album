@@ -9,11 +9,6 @@ AlbLayoutHorizontalFitContentResizerState >> = anotherState [
 	^ anotherState isKindOf: AlbLayoutHorizontalFitContentResizerState
 ]
 
-{ #category : #converting }
-AlbLayoutHorizontalFitContentResizerState >> asPropagated [
-	^ AlbLayoutHorizontalFitContentResizerPropagatedState uniqueInstance
-]
-
 { #category : #comparing }
 AlbLayoutHorizontalFitContentResizerState >> hash [
 	^ AlbLayoutHorizontalFitContentResizerState hash

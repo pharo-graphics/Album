@@ -96,16 +96,16 @@ AlbTextEditorParagraphSegmentHolder >> buildSegment: anEditorSegment [
 { #category : #initialization }
 AlbTextEditorParagraphSegmentHolder >> createSegmentElement [
 	<return: #BlElement>
-
+self flag: 'AlbLayoutResizerAptitude stuff removed until I understand it'.
 	^ AlbTextEditorParagraphElement new
 		beInSeparateCompositionLayer;
 		focusability: BlFocusability block;
 		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical fitContent ];
-		aptitude: (AlbLayoutResizerAptitude new
+		"aptitude: (AlbLayoutResizerAptitude new
 			hInherit;
-			vAnyToFitContent);
+			vAnyToFitContent)"
 		yourself
 ]
 

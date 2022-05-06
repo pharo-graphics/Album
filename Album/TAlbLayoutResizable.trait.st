@@ -1,6 +1,6 @@
 Trait {
 	#name : #TAlbLayoutResizable,
-	#category : #'Album-Brick-NU-Layout Resizer'
+	#category : #'Album-Resizable'
 }
 
 { #category : #'api - layout resizeable' }

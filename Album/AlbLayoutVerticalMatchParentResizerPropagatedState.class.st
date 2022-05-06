@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbLayoutVerticalMatchParentResizerPropagatedState,
 	#superclass : #AlbLayoutVerticalMatchParentResizerState,
-	#category : #'Album-Brick-NU-Layout Resizer'
+	#category : #'Album-Resizer'
 }
 
 { #category : #converting }

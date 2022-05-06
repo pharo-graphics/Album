@@ -1,6 +1,6 @@
 Trait {
 	#name : #TAlbLayoutResizable,
-	#category : #'Album-Resizable'
+	#category : #'Album-Resizer'
 }
 
 { #category : #'api - layout resizeable' }

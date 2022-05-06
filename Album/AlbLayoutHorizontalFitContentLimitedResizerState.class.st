@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbLayoutHorizontalFitContentLimitedResizerState,
 	#superclass : #AlbLayoutHorizontalResizerState,
-	#category : #'Album-Brick-NU-Layout Resizer'
+	#category : #'Album-Resizer'
 }
 
 { #category : #comparing }

@@ -12,7 +12,7 @@ BaselineOfAlbum >> baseline: spec [
 			baseline: 'Bloc' with: [
 				spec repository: 'github://plantec/bloc:dev-1.0/src' ];
 			baseline: 'BlocPac' with: [
-				spec repository: 'github://plantec/bloc-pac:dev-1.0/src' ].
+				spec repository: 'github://plantec/bloc-pac:dev-1.0/src' ];
 			baseline: 'Toplo' with: [
 				spec repository: 'github://plantec/Toplo/src' ].
 

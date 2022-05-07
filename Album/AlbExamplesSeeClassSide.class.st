@@ -53,7 +53,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
 
-	space := BlSpace new.
+	space := TopSpace new.
 	space root addChild: editorElement.
 	space title: 'editor'.
 	space show.
@@ -132,7 +132,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
 	ed := AlbEditor new dresser: AlbTextAreaDresser.
 	ed text: String loremIpsum.
-	space := BlSpace new.
+	space := TopSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.

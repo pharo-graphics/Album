@@ -37,18 +37,18 @@ BlElement >> dresserDo: aBlock [
 { #category : #'*Album-Theme' }
 BlElement >> theme [
 	^ self userData
-		at: #AlbTheme
+		at: #OblTheme
 		ifAbsent: [ self hasParent
 				ifTrue: [ self parent theme ]
-				ifFalse: [ AlbTheme default ] ]
+				ifFalse: [ OblTheme default ] ]
 ]
 
 { #category : #'*Album-Theme' }
 BlElement >> theme: aTheme [
-	self userData at: #AlbTheme put: aTheme.
+	self userData at: #OblTheme put: aTheme.
 	self properties
 		addProperty:
-			(AlbThemeElementProperty new
+			(OblThemeElementProperty new
 				theme: aTheme;
 				yourself)
 ]

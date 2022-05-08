@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextAreaDresser,
-	#superclass : #AlbElementCompanion,
+	#superclass : #OblElementCompanion,
 	#category : #'Album-Look'
 }
 

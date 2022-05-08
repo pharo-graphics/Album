@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbEditorModel,
-	#superclass : #AlbViewModel,
+	#superclass : #OblViewModel,
 	#instVars : [
 		'styler',
 		'text',

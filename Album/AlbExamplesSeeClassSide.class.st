@@ -25,7 +25,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStyler [
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
 
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: editorElement.
 	space title: 'editor'.
 	space show.
@@ -53,7 +53,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
 
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: editorElement.
 	space title: 'editor'.
 	space show.
@@ -102,7 +102,7 @@ self halt.
 	"ed vFitContent."
 	"ed fitContent."
 	"ed text: String loremIpsum."
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -117,7 +117,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithAptitude [
 	ed := AlbEditor new aptitude: AlbTextAreaAptitude.
 	"ed vFitContent."
 	ed text: String loremIpsum.
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -132,13 +132,13 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
 	ed := AlbEditor new dresser: AlbTextAreaDresser.
 	ed text: String loremIpsum.
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
 	
 	self halt.
-	ed dresser: AlbNullDresser.
+	ed dresser: OblNullDresser.
 	ed dresser: AlbTextAreaDresser.
 	"ed inspect."
 	^ ed
@@ -151,7 +151,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	ed := AlbEditor new.
 	ed text: String loremIpsum.
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -189,7 +189,7 @@ self halt.
 	"ed fitContent."
 	"ed text: String loremIpsum."
 
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -205,7 +205,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextFieldWithAptitude [
 		      aptitude: "BrEditorAptitude +" AlbTextFieldAptitude;
 		      text: 'edit me'.
 
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -231,7 +231,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 	ed := AlbEditor new dresser: AlbTextAreaDresser new.
 	ed text: text.
 	ed matchParent.
-	space := ToSpace new.
+	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -255,7 +255,7 @@ AlbExamplesSeeClassSide class >> example_elements_sandbox [
 	root constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical matchParent ].
-	sp := ToSpace new.
+	sp := OblSpace new.
 	sp addChild: root.
 	sp show
 ]

@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorChangedEvent,
-	#superclass : #AlbChangeEvent,
+	#superclass : #OblChangeEvent,
 	#category : #'Album-Events'
 }

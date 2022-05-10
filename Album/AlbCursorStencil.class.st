@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbCursorStencil,
-	#superclass : #AlbStencil,
+	#superclass : #OblStencil,
 	#classInstVars : [
 		'uniqueInstance'
 	],

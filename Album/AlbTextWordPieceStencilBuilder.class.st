@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextWordPieceStencilBuilder,
-	#superclass : #AlbStencilBuilder,
+	#superclass : #OblStencilBuilder,
 	#instVars : [
 		'wordPadding',
 		'wordMargin',

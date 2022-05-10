@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbStyleTextViewIsAttachedSignal,
 	#superclass : #AlbTextStylerSignal,
-	#category : #'Album-Signals'
+	#category : #'Album-Brick-NU-signals'
 }

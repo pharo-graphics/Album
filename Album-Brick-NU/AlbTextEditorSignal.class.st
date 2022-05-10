@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'textEditor'
 	],
-	#category : #'Album-Signals'
+	#category : #'Album-Brick-NU-signals'
 }
 
 { #category : #'instance creation' }

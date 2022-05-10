@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbLayoutVerticalFitContentResizerPropagatedState,
 	#superclass : #AlbLayoutVerticalFitContentResizerState,
-	#category : #'Album-Brick-NU'
+	#category : #'Album-Brick-NU-Layout Resizer'
 }
 
 { #category : #converting }

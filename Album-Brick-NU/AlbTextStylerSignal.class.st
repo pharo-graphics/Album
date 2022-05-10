@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbTextStylerSignal,
 	#superclass : #BeaconSignal,
-	#category : #'Album-Signals'
+	#category : #'Album-Brick-NU-signals'
 }

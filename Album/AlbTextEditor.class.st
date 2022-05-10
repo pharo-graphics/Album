@@ -324,23 +324,13 @@ AlbTextEditor >> enableStyleTextWhenModified [
 
 { #category : #'commands - processing' }
 AlbTextEditor >> enqueueCommand: aTextEditorCommand [
-	(AlbTextEditorCommandSignal textEditor: self)
-		command: aTextEditorCommand;
-		emit.
-
 	aTextEditorCommand executeOn: self
 ]
 
 { #category : #'commands - processing' }
 AlbTextEditor >> enqueueHolderCommand: aTextEditorHolderCommand interval: aTextInterval [
-	(AlbTextEditorHolderCommandSignal textEditor: self)
-		command: aTextEditorHolderCommand;
-		interval: aTextInterval;
-		emit.
 
-	self
-		notifyItems: aTextInterval
-		event: aTextEditorHolderCommand
+	self notifyItems: aTextInterval event: aTextEditorHolderCommand
 ]
 
 { #category : #'text - selection' }

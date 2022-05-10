@@ -5,7 +5,7 @@ Class {
 		'command',
 		'interval'
 	],
-	#category : #'Album-Signals'
+	#category : #'Album-Brick-NU-signals'
 }
 
 { #category : #accessing }

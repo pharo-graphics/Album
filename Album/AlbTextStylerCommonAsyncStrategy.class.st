@@ -54,25 +54,21 @@ AlbTextStylerCommonAsyncStrategy >> scheduleStyleTextInEditorElement: aEditorEle
 
 { #category : #styling }
 AlbTextStylerCommonAsyncStrategy >> styleTextInEditorElement: aEditorElement thenDo: aBlock [
-	AlbStyleTextStartSignal new emit.
-	
-	monitor critical: [
-		self isStylingRequested
-			ifTrue: [
-				AlbStyleTextStylingAlreadyRequestedSignal new emit.
-				^ self ].
+
+	monitor critical: [ 
+		self isStylingRequested ifTrue: [ ^ self ].
 
 		aEditorElement isAttachedToSceneGraph
-			"if the editor is already attached to the scene graph we can style it directly"
-			ifTrue: [
-				AlbStyleTextViewIsAttachedSignal new emit.
-				self scheduleStyleTextInEditorElement: aEditorElement thenDo: aBlock ]
-			ifFalse: [
-				AlbStyleTextViewIsNotAttachedSignal new emit.
+			ifTrue: [ 
+				self
+					scheduleStyleTextInEditorElement: aEditorElement
+					thenDo: aBlock ]
+			ifFalse: [ 
 				self isStylingRequested: true.
 				"othrewise we should defer the styling until some time in the future when the element appears in the scene"
 				aEditorElement enqueueTask: (AlbTextStylerDeferringTask new
-					stylerAsyncStrategy: self;
-					textEditor: aEditorElement;
-					afterBlock: aBlock) ] ]
+						 stylerAsyncStrategy: self;
+						 textEditor: aEditorElement;
+						 afterBlock: aBlock) ]
+		"if the editor is already attached to the scene graph we can style it directly" ]
 ]

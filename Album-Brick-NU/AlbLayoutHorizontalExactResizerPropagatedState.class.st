@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'width'
 	],
-	#category : #'Album-Brick-NU'
+	#category : #'Album-Brick-NU-Layout Resizer'
 }
 
 { #category : #converting }

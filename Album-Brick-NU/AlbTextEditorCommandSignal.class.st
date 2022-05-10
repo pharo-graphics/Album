@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : #'Album-Signals'
+	#category : #'Album-Brick-NU-signals'
 }
 
 { #category : #accessing }

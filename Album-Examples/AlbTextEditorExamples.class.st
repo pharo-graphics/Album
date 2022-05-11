@@ -1,33 +1,33 @@
 "
-! Today we will learn how to compose an editor 🙊
+# Today we will learn how to compose an editor
 
-==It is as simple as computing a factorial, a piece of cake! == 🍰
+##It is as simple as computing a factorial, a piece of cake!
 
-[[[show=gtPrintIn:
+```
 	10 factorial
-]]]
+```
 
-!!! 🔹 First create the text 💁
+### First create the text 
 
-[[[example=AlbTextEditorExamples>>#newText]]]
+`AlbTextEditorExamples>>#newText`
 
-!!! 🔸 Next, we build the editor 👷
+### Next, we build the editor
 
-[[[example=AlbTextEditorExamples>>#newEditor]]]
+`AlbTextEditorExamples>>#newEditor`
 
-!!! 🔹 Then, we attach text to the enditor. 💡
+### Then, we attach text to the editor.
 
-[[[example=AlbTextEditorExamples>>#editor:text:]]]
+`AlbTextEditorExamples>>#editor:text:`
 
-!!! 🔸 Next, we create an editor element. 🤘
+### Next, we create an editor element.
 
-[[[example=AlbTextEditorExamples>>#newElement|show=gtLiveIn:]]]
+`AlbTextEditorExamples>>#newElement`
 
-!!! 🔹 And finally, build everything together 💪
+### And finally, build everything together
 
-[[[example=AlbTextEditorExamples>>#element:editorText:|show=gtLiveIn:]]]
+`AlbTextEditorExamples>>#element:editorText:`
 
-! Done 😎
+# Done 
 
 "
 Class {

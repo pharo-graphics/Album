@@ -43,7 +43,7 @@ AlbTextEditorMementoExamples >> textEditorWithState [
 	| aTextEditor |
 
 	aTextEditor := AlbTextEditor new
-		text: 'Hello world' asRopedText glamorousCodeFontAndSize.
+		text: 'Hello world' asRopedText.
 	
 	aTextEditor navigator
 		addAt: 1;

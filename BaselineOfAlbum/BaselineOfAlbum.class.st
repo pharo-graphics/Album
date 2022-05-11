@@ -10,7 +10,7 @@ BaselineOfAlbum >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'OnBloc' with: [
-				spec repository: 'github://plantec/onbloc/src' ].
+				spec repository: 'github://plantec/OnBloc/src' ].
 
 		spec 
 			package: #'Album' with: [

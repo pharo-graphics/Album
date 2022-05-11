@@ -14,7 +14,7 @@ Class {
 		'Slants',
 		'Stretches'
 	],
-	#category : #'Album-UI'
+	#category : #'Album-Brick-NU-UI'
 }
 
 { #category : #'instance creation' }

@@ -5,7 +5,7 @@ Class {
 		'lines',
 		'lineSpacing'
 	],
-	#category : #'Album-Layout'
+	#category : #'Album-Brick-NU-Layout'
 }
 
 { #category : #constraints }

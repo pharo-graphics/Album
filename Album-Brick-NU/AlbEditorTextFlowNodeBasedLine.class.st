@@ -12,7 +12,7 @@ Class {
 		'origin',
 		'baseline'
 	],
-	#category : #'Album-Layout'
+	#category : #'Album-Brick-NU-Layout'
 }
 
 { #category : #adding }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'map'
 	],
-	#category : #'Album-Model-Segment-Text-Line'
+	#category : #'Album-Brick-NU-Model-Segment-Text-Line'
 }
 
 { #category : #accessing }

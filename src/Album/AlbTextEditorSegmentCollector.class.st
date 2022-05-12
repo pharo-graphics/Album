@@ -1,3 +1,25 @@
+"
+I collect and cache text line segments for fast access by index.
+
+##Internal Representation and Key Implementation Points.
+
+###Instance Variables
+
+	editor 				<BrTextEditor>	The editor that owns this cache
+	limit 					<Integer> The (soft) maximum number of segments in the cache, see below.
+	map 					<BrTextLineMap> 	The line number to character index map
+	segments 				<OrderedCollection of BrTextEditorLineSegment>		The cached segments
+	segmentsInterval 	<Interval> 	The interval of line numbers cached in segments
+	subText 				<BlSubText>
+	text      			<BlText>		The text being edited
+
+###Implementation Points
+
+To facilitate jumping backwards quickly the the manager builds a map of line number to charcter offset of the string being edited.  When the target line number is earlier than the cache start the map can be used as a known point to start parsing forward from.
+
+
+The limit represents the maximum number of items held by the receiver when an uncached segment is requested (`BrTextEditorSegmentCollector>>#segmentAt:}`).  If segments are added via `BrTextEditorSegmentCollector>>#addSegments:after:}` or `BrTextEditorSegmentCollector>>#addSegments:before:}` the limit may be safely exceeded.
+"
 Class {
 	#name : #AlbTextEditorSegmentCollector,
 	#superclass : #Object,
@@ -213,7 +235,7 @@ AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 	mapEntry := map mapEntryFor: anIndex.
 	cachedInterval := self computeInterval: anIndex.
 	newSubText := text from: mapEntry value to: text size.
-	newSegments := OrderedCollection new.
+	newSegments := self newSegments.
 
 	overlap := cachedInterval last - segmentsInterval first + 1.
 	streamLimit := overlap > 0
@@ -355,6 +377,11 @@ AlbTextEditorSegmentCollector >> computedSegmentsCount [
 	^ self lastIndex
 ]
 
+{ #category : #initialization }
+AlbTextEditorSegmentCollector >> defaultCacheLimit [
+	^ 500
+]
+
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> editor [
 	<return: #AlbTextEditor>
@@ -431,7 +458,7 @@ AlbTextEditorSegmentCollector >> hasCached [
 AlbTextEditorSegmentCollector >> initialize [
 
 	super initialize.	
-	limit := 500.
+	limit := self defaultCacheLimit.
 	subText := BlSubText text: '' asRopedText from: 1 to: 0.
 	self resetCache.
 
@@ -532,7 +559,7 @@ AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval [
 AlbTextEditorSegmentCollector >> resetCache [
 
 	segmentsInterval := 0 to: 0.
-	segments := OrderedCollection new.
+	segments := self newSegments.
 	map := AlbTextLineMap new.
 	map cacheLimit: limit.
 ]

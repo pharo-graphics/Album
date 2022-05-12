@@ -38,16 +38,14 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	| ed space |
 
 	ed := AlbEditor new dresser: AlbTextAreaDresser.
+	ed constraintsDo: [ :c | 
+		c vertical resizer: BlLayoutResizer fitContent. 
+		c horizontal resizer: BlLayoutResizer matchParent].
 	ed text: String loremIpsum.
 	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
-	
-	self halt.
-	ed dresser: OblNullDresser.
-	ed dresser: AlbTextAreaDresser.
-	"ed inspect."
 	^ ed
 ]
 

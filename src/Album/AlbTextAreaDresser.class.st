@@ -14,9 +14,6 @@ AlbTextAreaDresser >> onInstalledIn: anElement [
 	anElement when: BlFocusEvent do: [ :anEvent | anElement widgetContent
 		border: (BlBorder paint: anElement theme editor focusedBorderColor width: 1) ].
 	
-	anElement constraintsDo: [ :c | 
-		c vertical resizer: BlLayoutResizer fitContent.
-		c horizontal resizer: BlLayoutResizer matchParent ].
 	anElement border: (BlBorder paint: Color blue width: 2).
 	anElement widgetContent background: Color veryLightGray.
 	anElement padding: (BlInsets

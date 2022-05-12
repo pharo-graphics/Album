@@ -5,28 +5,29 @@ Class {
 	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
 		'limit',
-		'collection',
-		'skip'
+		'skip',
+		'stream'
 	],
 	#category : #'Album-Model-Segment'
 }
 
 { #category : #accessing }
 AlbEditorSegmentStream >> collection [
-	^ collection
+	^ stream contents 
 ]
 
 { #category : #accessing }
 AlbEditorSegmentStream >> collection: anObject [
-	collection := anObject
+	stream reset.
+	stream nextPutAll: anObject
 ]
 
 { #category : #initialization }
 AlbEditorSegmentStream >> initialize [
 	super initialize.
 	
-	collection := OrderedCollection new.
-	limit := 100.
+	stream := WriteStream on: (Array new: 50).
+	limit := 500.
 	skip := 0
 ]
 
@@ -51,7 +52,7 @@ AlbEditorSegmentStream >> nextPut: aTextEditorSegment [
 		description: [ 'Skip count must not be negative' ].
 	
 	skip isZero
-		ifTrue: [ collection add: aTextEditorSegment ]
+		ifTrue: [ stream nextPut: aTextEditorSegment ]
 		ifFalse: [ skip := skip - 1 ]
 ]
 
@@ -66,7 +67,7 @@ AlbEditorSegmentStream >> segments [
 
 { #category : #accessing }
 AlbEditorSegmentStream >> size [
-	^ collection size
+	^ stream size
 ]
 
 { #category : #accessing }

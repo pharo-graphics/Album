@@ -1,35 +1,56 @@
 Class {
 	#name : #AlbTextEditorLineSegmentPieceMap,
 	#superclass : #Object,
+	#instVars : [
+		'map'
+	],
 	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> allPieces [
 	"Return all current line segment pieces"
-	<return: #Collection of: #AlbTextEditorLineSegmentPiece>
+	<return: #Collection of: #BrTextEditorLineSegmentPiece>
 	
-	^ self subclassResponsibility
+	^ map keys
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceMap >> at: aTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
-	^ self subclassResponsibility
+AlbTextEditorLineSegmentPieceMap >> at: aBrTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
+	^ map
+		associationAt: aBrTextEditorLineSegmentPiece
+		ifPresent: [ :anAssociation | thePieceAndElementsBlock value: anAssociation key value: anAssociation value ]
+		ifAbsent: anAbsentBlock
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceMap >> atPiece: aTextEditorLineSegmentPiece putElements: aCollectionOfElements [
-	self subclassResponsibility
+AlbTextEditorLineSegmentPieceMap >> atPiece: aBrTextEditorLineSegmentPiece putElements: aCollectionOfElements [
+	map at: aBrTextEditorLineSegmentPiece put: aCollectionOfElements
+]
+
+{ #category : #initialization }
+AlbTextEditorLineSegmentPieceMap >> initialize [
+	super initialize.
+	
+	map := IdentityDictionary new
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
-	<return: #AlbTextEditorLineSegmentPiece or: #Object>
-	
-	^ self subclassResponsibility
+	<return: #BrTextEditorLineSegmentPiece or: #Object>
+
+	map associations do: [ :eachAssociation |
+		(eachAssociation value includes: aBlElement) 
+			ifTrue: [ ^ eachAssociation key ] ].
+
+	^ anAbsentBlock value
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> piecesAndTheirElementsDo: aBlock [
-	self subclassResponsibility
+	map associations do: [ :eachAssociation |
+		| aPiece thePieceElements |
+		aPiece := eachAssociation key.
+		thePieceElements := eachAssociation value.
+		thePieceElements do: [ :aPieceElement | aBlock value: aPiece value: aPieceElement ] ]
 ]

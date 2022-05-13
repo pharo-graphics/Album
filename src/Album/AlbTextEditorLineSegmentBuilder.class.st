@@ -1,8 +1,12 @@
+"
+I am a simple line-based segment builder and do not take text attributes into account.
+
+Note: I do not support embedded elements
+"
 Class {
 	#name : #AlbTextEditorLineSegmentBuilder,
 	#superclass : #AlbTextEditorSegmentBuilder,
 	#instVars : [
-		'lineStencilBuilder',
 		'wordStencilBuilder'
 	],
 	#category : #'Album-Model-Segment-Text-Line'
@@ -174,16 +178,6 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aT
 	aTextEditor updater
 		from: aCurrentSegment textStart to: aCurrentSegment textEnd;
 		update
-]
-
-{ #category : #'api - accessing' }
-AlbTextEditorLineSegmentBuilder >> lineStencil: aLineStencilBuilder [
-	lineStencilBuilder := aLineStencilBuilder asStencilBuilder: AlbTextEditableWordPieceStencilBuilder
-]
-
-{ #category : #accessing }
-AlbTextEditorLineSegmentBuilder >> lineStencilBuilder [
-	^ lineStencilBuilder
 ]
 
 { #category : #'text - modifications' }

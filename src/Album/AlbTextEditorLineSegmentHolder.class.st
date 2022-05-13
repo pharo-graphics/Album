@@ -1,3 +1,6 @@
+"
+I am a line segment holder and is responsible for binding `BrTextEditorLineSegment` with corresponding visual element
+"
 Class {
 	#name : #AlbTextEditorLineSegmentHolder,
 	#superclass : #AlbTextEditorSegmentHolder,
@@ -160,13 +163,12 @@ AlbTextEditorLineSegmentHolder >> explicitScreenToCursor: aTransformation [
 
 { #category : #'private - testing' }
 AlbTextEditorLineSegmentHolder >> hasCursor [
+
 	| aTextEditor |
 	aTextEditor := self infiniteElement editor.
-	aTextEditor cursors
-		do: [ :aCursor | 
-			(aCursor insideSegment: segment)
-				ifTrue: [ ^ true ] ].
-	^ false
+	^ (aTextEditor cursors
+		   detect: [ :aCursor | aCursor insideSegment: segment ]
+		   ifNone: [  ]) notNil
 ]
 
 { #category : #'private - testing' }
@@ -185,7 +187,7 @@ AlbTextEditorLineSegmentHolder >> hasSelection [
 
 { #category : #'private - segment' }
 AlbTextEditorLineSegmentHolder >> newPiecesMap [
-	^ AlbTextEditorLineSegmentPieceCollectionMap new
+	^ AlbTextEditorLineSegmentPieceMap new
 ]
 
 { #category : #updating }

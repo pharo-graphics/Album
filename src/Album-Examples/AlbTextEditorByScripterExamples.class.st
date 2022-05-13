@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #'click - adornment element' }
-AlbTextEditorByScripterExamples >> click_adornment_element [
-	<gtExample>
+AlbTextEditorByScripterExamples class >> click_adornment_element [
+	<script>
 	| aScripter |
 
 	aScripter := self scripterWithElement.
@@ -33,8 +33,8 @@ AlbTextEditorByScripterExamples >> click_adornment_element [
 ]
 
 { #category : #'click - empty' }
-AlbTextEditorByScripterExamples >> click_empty [
-	<gtExample>
+AlbTextEditorByScripterExamples class >> click_empty [
+	<script>
 	| aScripter |
 
 	aScripter := self scripterWithElement.
@@ -54,26 +54,21 @@ AlbTextEditorByScripterExamples >> click_empty [
 	^ aScripter
 ]
 
-{ #category : #'instance creation' }
-AlbTextEditorByScripterExamples >> scripter [
-	<gtExample>
+{ #category : #'api - accessing' }
+AlbTextEditorByScripterExamples class >> scripter [
 	
 	^ BlDevScripter new
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorByScripterExamples >> scripterElement [
-	<gtExample>
+AlbTextEditorByScripterExamples class >> scripterElement [
 
 	^ AlbEditor new
-		aptitude: AlbGlamorousRegularEditorAptitude + AlbGlamorousTextAreaSpacingAptitude;
-		matchParent;
 		text: '' asRopedText
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorByScripterExamples >> scripterWithElement [
-	<gtExample>
+AlbTextEditorByScripterExamples class >> scripterWithElement [
 	| aScripter |
 
 	aScripter := self scripter.
@@ -93,8 +88,7 @@ AlbTextEditorByScripterExamples >> scripterWithElement [
 ]
 
 { #category : #'click - adornment element' }
-AlbTextEditorByScripterExamples >> textWithAdornment [
-	<gtExample>
+AlbTextEditorByScripterExamples class >> textWithAdornment [
 
 	^ 'Hello world
 Next line with ' asRopedText, ('adornment' asRopedText appendingAdornment: [

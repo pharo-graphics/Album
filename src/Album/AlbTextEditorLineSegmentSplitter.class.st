@@ -202,6 +202,18 @@ AlbTextEditorLineSegmentSplitter >> split: aText from: aStartIndex to: anEndInde
 	^ thePieces
 ]
 
+{ #category : #splitting }
+AlbTextEditorLineSegmentSplitter >> splitSegment: aTextEditorSegment [ 
+	| thePieces |
+
+	thePieces := self
+		split: aTextEditorSegment text
+		from: aTextEditorSegment textStart
+		to: aTextEditorSegment textEnd.
+	thePieces do: [ :eachPiece | eachPiece segment: aTextEditorSegment ].
+	^ thePieces
+]
+
 { #category : #'instance creation' }
 AlbTextEditorLineSegmentSplitter >> textPiece: aBlText from: aTextStart to: aTextEnd [
 	"Create and return a text segment piece"

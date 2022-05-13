@@ -14,7 +14,6 @@ AlbEmbeddedEditorExamples >> editorFor: aText [
 	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
 
 	anEditor := AlbEditor new.
-	anEditor aptitude: AlbEditorAptitude new.
 	anEditor padding: BlInsets empty.
 	anEditor fitContent.
 	anEditor text: aRopedText.
@@ -102,7 +101,7 @@ AlbEmbeddedEditorExamples >> makeFixedMeasurement: aSegmentBuilder [
 
 { #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
-	<gtExample>
+	<script: 'self new textWithEmbeddedEditor'>
 	| aText |
 
 	aText := self mainEditorText.
@@ -120,5 +119,5 @@ AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
 				self makeFixedMeasurement: anEditorElement editor segmentBuilder.
 				anEditorElement ]).
 
-	^ aText
+	^ aText onAlbTextEditor openInOblSpace 
 ]

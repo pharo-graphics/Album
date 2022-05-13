@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #public }
-AlbTextCursorAttributeExamples >> changingForeground [
-	<gtExample>
+AlbTextCursorAttributeExamples class >> changingForeground [
+	<script>
 	| text |
 	text := 'Hello World
 - click here
@@ -18,5 +18,5 @@ AlbTextCursorAttributeExamples >> changingForeground [
 		leave: [ :aTextEditor :anEvent :aFromIndex :aToIndex |
 			(aTextEditor text from: aFromIndex to: aToIndex) foreground: Color blue ].
 
-	^ text
+	^ text onAlbTextEditor openInOblSpace 
 ]

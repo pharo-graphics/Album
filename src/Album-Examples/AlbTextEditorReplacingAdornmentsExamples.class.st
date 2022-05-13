@@ -24,8 +24,8 @@ Class {
 }
 
 { #category : #'examples - replacements' }
-AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithMultipleOverlappingReplacements [
-	<gtExample>
+AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleOverlappingReplacements [
+	<script>
 	<description: 'Multiple replacements can overlapp. In this case the order of the added elements is defined by the end index of the intervals of the attributes'>
 	| aText |
 
@@ -43,12 +43,12 @@ AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithMultipleOverlappin
 				size: 20@20;
 				background: Color red ].
 
-	^ aText
+	^ (AlbEditor new text: aText) openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
-AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithMultipleReplacementsOnTopEachOther [
-	<gtExample>
+AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleReplacementsOnTopEachOther [
+	<script>
 	<description: 'Multiple replacements can stack up. The order of added elements is defined by the order in which the attributes are added'>
 	| aText |
 
@@ -65,12 +65,12 @@ AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithMultipleReplacemen
 				size: 20@20;
 				background: Color blue ].
 
-	^ aText
+	^ aText onAlbTextEditor openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
-AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementAll [
-	<gtExample>
+AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementAll [
+	<script>
 	<description: 'Even the whole line of text can be replaced'>
 	| aText |
 
@@ -81,12 +81,12 @@ AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementAll [
 				size: 20@20;
 				background: Color gray ].
 
-	^ aText
+	^ aText onAlbTextEditor openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
-AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementFirst [
-	<gtExample>
+AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementFirst [
+	<script>
 	<description: 'We can replace the first word in a sentence'>
 	| aText |
 
@@ -98,12 +98,12 @@ AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementFirst [
 				size: 20@20;
 				background: Color blue ].
 			
-	^ aText
+	^ aText onAlbTextEditor openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
-AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementLast [
-	<gtExample>
+AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementLast [
+	<script>
 	<description: 'We can replace the last word in a sentence'>
 	| aText |
 
@@ -115,12 +115,12 @@ AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementLast [
 				size: 20@20;
 				background: Color gray ].
 			
-	^ aText
+	^ aText onAlbTextEditor openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
-AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementMiddle [
-	<gtExample>
+AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementMiddle [
+	<script>
 	<description: 'We can replace a word in the middle of a sentence'>
 	| aText |
 
@@ -132,5 +132,5 @@ AlbTextEditorReplacingAdornmentsExamples >> singleLineTextWithReplacementMiddle 
 				size: 20@20;
 				background: Color red ].
 
-	^ aText
+	^ aText onAlbTextEditor openInOblSpace 
 ]

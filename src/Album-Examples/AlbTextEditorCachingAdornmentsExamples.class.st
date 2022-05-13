@@ -5,8 +5,8 @@ Class {
 }
 
 { #category : #example }
-AlbTextEditorCachingAdornmentsExamples >> cacheDictionaryExample [
-	<gtExample>
+AlbTextEditorCachingAdornmentsExamples class >> cacheDictionaryExample [
+	<script>
 	| cache attribute text |
 
 	cache := Dictionary new.
@@ -21,12 +21,12 @@ AlbTextEditorCachingAdornmentsExamples >> cacheDictionaryExample [
 
 	text := 'Hello' asRopedText attribute: attribute.
 			
-	^ text
+	^ text onAlbTextEditor openInOblSpace 
 ]
 
 { #category : #example }
-AlbTextEditorCachingAdornmentsExamples >> cacheValueHolderExample [
-	<gtExample>
+AlbTextEditorCachingAdornmentsExamples class >> cacheValueHolderExample [
+	<script>
 	| cache attribute text |
 
 	cache := ValueHolder new.
@@ -41,5 +41,5 @@ AlbTextEditorCachingAdornmentsExamples >> cacheValueHolderExample [
 
 	text := 'Hello' asRopedText attribute: attribute.
 
-	^ text
+	^ text onAlbTextEditor openInOblSpace 
 ]

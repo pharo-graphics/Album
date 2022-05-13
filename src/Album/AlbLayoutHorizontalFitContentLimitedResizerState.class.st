@@ -13,10 +13,3 @@ AlbLayoutHorizontalFitContentLimitedResizerState >> = anotherState [
 AlbLayoutHorizontalFitContentLimitedResizerState >> hash [
 	^ AlbLayoutHorizontalFitContentLimitedResizerState hash
 ]
-
-{ #category : #printing }
-AlbLayoutHorizontalFitContentLimitedResizerState >> printOn: aStream [
-	super printOn: aStream.
-	aStream
-		nextPutAll: 'fit content limited'
-]

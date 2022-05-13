@@ -19,6 +19,18 @@ AlbTextEditorParagraphSegmentSplitter >> itemValueType: anObject [
 	^ #char
 ]
 
+{ #category : #'private - pieces computation' }
+AlbTextEditorParagraphSegmentSplitter >> splitSegment: aTextEditorSegment [ 
+	| thePieces |
+
+	thePieces := self
+		split: aTextEditorSegment text
+		from: aTextEditorSegment textStart
+		to: aTextEditorSegment textEnd.
+	thePieces do: [ :eachPiece | eachPiece segment: aTextEditorSegment ].
+	^ thePieces
+]
+
 { #category : #accessing }
 AlbTextEditorParagraphSegmentSplitter >> textPieceClass [
 	^ AlbTextEditorParagraphSegmentTextPiece

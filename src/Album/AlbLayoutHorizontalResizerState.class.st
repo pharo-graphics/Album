@@ -41,9 +41,3 @@ AlbLayoutHorizontalResizerState class >> local [
 AlbLayoutHorizontalResizerState class >> matchParent [
 	^ AlbLayoutHorizontalMatchParentResizerState uniqueInstance
 ]
-
-{ #category : #printing }
-AlbLayoutHorizontalResizerState >> printOn: aStream [
-	aStream
-		nextPutAll: 'horizontal resizer - '
-]

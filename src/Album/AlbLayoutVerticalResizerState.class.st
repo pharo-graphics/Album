@@ -42,12 +42,6 @@ AlbLayoutVerticalResizerState class >> matchParent [
 	^ AlbLayoutVerticalMatchParentResizerState uniqueInstance
 ]
 
-{ #category : #printing }
-AlbLayoutVerticalResizerState >> printOn: aStream [
-	aStream
-		nextPutAll: 'vertical resizer - '
-]
-
 { #category : #accessing }
 AlbLayoutVerticalResizerState >> type [
 	"Return an object used to compare two states when adding to the collection of states in order to prevent

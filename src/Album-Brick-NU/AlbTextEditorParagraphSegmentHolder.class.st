@@ -164,7 +164,7 @@ AlbTextEditorParagraphSegmentHolder >> hasSelection [
 
 { #category : #'private - segment' }
 AlbTextEditorParagraphSegmentHolder >> newPiecesMap [
-	^ AlbTextEditorLineSegmentPieceCollectionMap new
+	^ AlbTextEditorLineSegmentPieceMap new
 ]
 
 { #category : #updating }

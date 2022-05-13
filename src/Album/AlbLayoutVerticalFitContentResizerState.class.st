@@ -13,10 +13,3 @@ AlbLayoutVerticalFitContentResizerState >> = anotherState [
 AlbLayoutVerticalFitContentResizerState >> hash [
 	^ AlbLayoutVerticalFitContentResizerState hash
 ]
-
-{ #category : #printing }
-AlbLayoutVerticalFitContentResizerState >> printOn: aStream [
-	super printOn: aStream.
-	aStream
-		nextPutAll: 'fit content'
-]

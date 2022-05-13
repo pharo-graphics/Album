@@ -21,15 +21,8 @@ AlbTextEditorParagraphSegment >> clearCache [
 { #category : #'pieces - computation' }
 AlbTextEditorParagraphSegment >> computedPieces [
 	<return: #SequenceableCollection of: #AlbTextEditorLineSegmentPiece>
-	| thePieces |
+	^ AlbTextEditorParagraphSegmentSplitter new splitSegment: self.
 
-	thePieces := AlbTextEditorParagraphSegmentSplitter new
-		split: self text
-		from: self textStart
-		to: self textEnd.
-	thePieces do: [ :eachPiece | eachPiece segment: self ].
-
-	^ thePieces
 ]
 
 { #category : #testing }

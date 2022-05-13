@@ -13,10 +13,3 @@ AlbLayoutVerticalMatchParentResizerState >> = anotherState [
 AlbLayoutVerticalMatchParentResizerState >> hash [
 	^ AlbLayoutVerticalMatchParentResizerState hash
 ]
-
-{ #category : #printing }
-AlbLayoutVerticalMatchParentResizerState >> printOn: aStream [
-	super printOn: aStream.
-	aStream
-		nextPutAll: 'match parent'
-]

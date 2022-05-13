@@ -79,10 +79,13 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 				background: (Color gray alpha: 0.4);
 				size: 200@100 ].
 
-	text := 'Hello' asRopedText attribute: attribute.
+	text := 'Hello >' asRopedText attribute: attribute.
 	ed := AlbEditor new dresser: AlbTextAreaDresser new.
+	ed constraintsDo: [ :c | 
+		c vertical resizer: BlLayoutResizer fitContent. 
+		c horizontal resizer: BlLayoutResizer matchParent].
+
 	ed text: text.
-	ed matchParent.
 	space := OblSpace new.
 	space root addChild: ed.
 	space title: 'editor'.

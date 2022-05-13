@@ -62,13 +62,13 @@ AlbTextEditorSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToIndex in
 ]
 
 { #category : #splitting }
-AlbTextEditorSegmentBuilder >> split: aText in: aStream [
-	self splitter split: aText in: aStream
+AlbTextEditorSegmentBuilder >> split: aText in: anEditorSegmentStream [
+	self splitter split: aText in: anEditorSegmentStream
 ]
 
 { #category : #splitting }
-AlbTextEditorSegmentBuilder >> split: aText in: aEditorSegmentStream offset: anOffset [
-	self splitter split: aText in: aEditorSegmentStream offset: anOffset
+AlbTextEditorSegmentBuilder >> split: aText in: anEditorSegmentStream offset: anOffset [
+	self splitter split: aText in: anEditorSegmentStream offset: anOffset
 ]
 
 { #category : #accessing }

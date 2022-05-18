@@ -25,7 +25,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
 
-	space := OblSpace new.
+	space := OBlSpace new.
 	space root addChild: editorElement.
 	space title: 'editor'.
 	space show.
@@ -42,7 +42,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer matchParent].
 	ed text: String loremIpsum.
-	space := OblSpace new.
+	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -56,7 +56,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	ed := AlbEditor new.
 	ed text: String loremIpsum.
-	space := OblSpace new.
+	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -86,7 +86,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 		c horizontal resizer: BlLayoutResizer matchParent].
 
 	ed text: text.
-	space := OblSpace new.
+	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -110,7 +110,7 @@ AlbExamplesSeeClassSide class >> example_elements_sandbox [
 	root constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical matchParent ].
-	sp := OblSpace new.
+	sp := OBlSpace new.
 	sp addChild: root.
 	sp show
 ]

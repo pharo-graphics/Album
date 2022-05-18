@@ -1,3 +1,6 @@
+"
+Sometimes multiple commands should be grouped in one undo/redo sequence
+"
 Class {
 	#name : #AlbTextEditorHistoryCompositeCommand,
 	#superclass : #AlbTextEditorHistoryCommand,

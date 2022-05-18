@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextAdornmentStencilBuilder,
-	#superclass : #OblStencilBuilder,
+	#superclass : #OBlStencilBuilder,
 	#instVars : [
 		'editorElement',
 		'segmentPiece'

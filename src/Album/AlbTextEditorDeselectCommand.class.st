@@ -1,5 +1,5 @@
 "
-I deselect an interval of text from ===fromIndex=== to ===toIndex===
+I deselect an interval of text from `fromIndex` to `toIndex`
 "
 Class {
 	#name : #AlbTextEditorDeselectCommand,

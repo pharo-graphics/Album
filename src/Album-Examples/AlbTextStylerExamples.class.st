@@ -39,7 +39,7 @@ AlbTextStylerExamples >> editorWithAsyncStylerStrategy [
 	"since an element was not attached to the space it has one task pending"
 	self assert: anElement taskQueue tasks size equals: 0.
 	
-	aSpace := OblSpace new.
+	aSpace := OBlSpace new.
 	aSpace host: BlMockedHost new.
 	aSpace addChild: anElement.
 	"We simulate the task execution that triggers styling"

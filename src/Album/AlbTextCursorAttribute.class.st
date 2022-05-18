@@ -1,7 +1,6 @@
 "
-!Cursor attribute
 Allows users to react to the cursor movement within the editor. 
-${example:AlbTextCursorAttributeExamples>>#changingForeground|previewExpanded=true|previewShow=#gtTextFor:|previewHeight=100}$
+`AlbTextCursorAttributeExamples>>#changingForeground`
 "
 Class {
 	#name : #AlbTextCursorAttribute,

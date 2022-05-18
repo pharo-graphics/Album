@@ -241,7 +241,7 @@ AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 	streamLimit := overlap > 0
 		ifTrue: [ overlap ]
 		ifFalse: [ self cacheLimit ].
-	stream := AlbEditorSegmentStream new.
+	stream := self newSegmentStream.
 	stream limit: streamLimit.
 	builder := self editor segmentBuilder.
 	
@@ -279,7 +279,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	"the collection in which we will cache segments"
 	segments := self forwardSegments: cachedInterval.
 
-	stream := AlbEditorSegmentStream new.
+	stream := self newSegmentStream.
 	stream skip: skip.
 	stream limit: self cacheLimit - segments size.
 	builder := self editor segmentBuilder.
@@ -289,7 +289,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 		in: stream
 		offset: ((forwardText start - text textOffset - 1) max: 0).
 	
-	segments addAll: stream collection.
+	segments addAll: stream contents.
 	segmentsInterval := cachedInterval first to: cachedInterval first + segments size - 1.
 	
 	self computeSegmentIndices.
@@ -503,6 +503,11 @@ AlbTextEditorSegmentCollector >> moveTextBy: aNumber after: aSegment [
 		eachSegment moveTextBy: aNumber ].
 	
 	self computeSubText
+]
+
+{ #category : #accessing }
+AlbTextEditorSegmentCollector >> newSegmentStream [
+	^ LimitedWriteStream on: (Array new: 10).
 ]
 
 { #category : #'instance creation' }

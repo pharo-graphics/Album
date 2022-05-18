@@ -651,5 +651,5 @@ AlbTextEditorLineSplitterExamples >> textLineSplitter [
 AlbTextEditorLineSplitterExamples >> textSegmentStream [
 	<gtExample>
 
-	^ AlbEditorSegmentStream new
+	^ LimitedWriteStream on: (Array new: 50).
 ]

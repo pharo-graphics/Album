@@ -13,7 +13,7 @@ AlbTextEditorOperatorExamples >> editorCreatesOneCursorOnFocus [
 	
 	anEditor := self editorHasNoFocusByDefault.
 	
-	aSpace := OblSpace new.
+	aSpace := OBlSpace new.
 	aSpace host: BlHeadlessHost new.
 	aSpace addChild: anEditor.
 	

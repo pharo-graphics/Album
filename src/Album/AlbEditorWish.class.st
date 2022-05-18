@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorWish,
-	#superclass : #OblWish,
+	#superclass : #OBlWish,
 	#category : #'Album-Events'
 }

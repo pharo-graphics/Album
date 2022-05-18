@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> allPieces [
 	"Return all current line segment pieces"
-	<return: #Collection of: #BrTextEditorLineSegmentPiece>
+	<return: #Collection of: #AlbTextEditorLineSegmentPiece>
 	
 	^ map keys
 ]
@@ -32,12 +32,12 @@ AlbTextEditorLineSegmentPieceMap >> atPiece: aBrTextEditorLineSegmentPiece putEl
 AlbTextEditorLineSegmentPieceMap >> initialize [
 	super initialize.
 	
-	map := IdentityDictionary new
+	map := WeakIdentityKeyDictionary new
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
-	<return: #BrTextEditorLineSegmentPiece or: #Object>
+	<return: #AlbTextEditorLineSegmentPiece or: #Object>
 
 	map associations do: [ :eachAssociation |
 		(eachAssociation value includes: aBlElement) 
@@ -48,9 +48,6 @@ AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbse
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> piecesAndTheirElementsDo: aBlock [
-	map associations do: [ :eachAssociation |
-		| aPiece thePieceElements |
-		aPiece := eachAssociation key.
-		thePieceElements := eachAssociation value.
+	map keysAndValuesDo: [ :aPiece :thePieceElements |
 		thePieceElements do: [ :aPieceElement | aBlock value: aPiece value: aPieceElement ] ]
 ]

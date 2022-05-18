@@ -2658,7 +2658,7 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_6_to_11_to_be
 AlbTextEditorLineSegmentExamples >> segmentStream [
 	<gtExample>
 	
-	^ AlbEditorSegmentStream new limit: Float infinity
+	^ (LimitedWriteStream on: (Array new: 50)) unlimited
 ]
 
 { #category : #'instance creation - segment' }

@@ -65,6 +65,11 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorWithBigText [
+	(String loremIpsum: 10000000) onAlbum openInOblSpace
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 	<gtExample>
 	| cache attribute text ed space |

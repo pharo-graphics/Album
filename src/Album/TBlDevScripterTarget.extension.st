@@ -1,11 +1,11 @@
 Extension { #name : #TBlDevScripterTarget }
 
 { #category : #'*Album' }
-TBlDevScripterTarget >> onAlbTextEditor [
-	^ self onChildFromMessage: #editor
+TBlDevScripterTarget >> onAlbTextEditorText [
+	self onChildFromMessage: #text
 ]
 
 { #category : #'*Album' }
-TBlDevScripterTarget >> onAlbTextEditorText [
-	self onChildFromMessage: #text
+TBlDevScripterTarget >> onAlbum [
+	^ self onChildFromMessage: #editor
 ]

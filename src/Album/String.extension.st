@@ -1,6 +1,6 @@
 Extension { #name : #String }
 
 { #category : #'*Album' }
-String >> onAlbTextEditor [
+String >> onAlbum [
 	^ AlbEditor new text: self 
 ]

@@ -18,6 +18,16 @@ AlbEditorElement >> defaultLayout [
 	^ BlInfiniteLinearLayout vertical
 ]
 
+{ #category : #initialization }
+AlbEditorElement >> defaultRecycler [
+	^ OBlInfiniteRecycler new
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultRecyclerController [
+	^ OBlInfiniteRecyclerController new
+]
+
 { #category : #accessing }
 AlbEditorElement >> editor [
 	<return: #AlbTextEditor>

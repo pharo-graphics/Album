@@ -97,11 +97,6 @@ AlbTextEditor >> beLineBased [
 	segmentBuilder := AlbTextEditorLineSegmentBuilder new splitter: AlbTextEditorLineSplitter new
 ]
 
-{ #category : #accessing }
-AlbTextEditor >> beParagraphBased [
-	segmentBuilder := AlbTextEditorLineSegmentBuilder new splitter: AlbTextEditorParagraphSplitter new
-]
-
 { #category : #'api - mode' }
 AlbTextEditor >> beReadOnlyWithSelection [
 	self editorMode: AlbTextEditorReadonlyWithSelectionMode new

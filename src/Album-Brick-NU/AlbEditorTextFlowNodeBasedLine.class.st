@@ -22,16 +22,16 @@ AlbEditorTextFlowNodeBasedLine >> add: aLayoutNode [
 	<return: #AlbEditorTextFlowLine>
 	| currentLine |
 	
-	aLayoutNode constraints textFlow shouldPushLine
+	aLayoutNode constraints albTextFlow shouldPushLine
 		ifTrue: [
 			pushedQueue addLast: aLayoutNode.
 			^ self ].
 	
-	currentLine := ((self hasSpaceFor: aLayoutNode) and: [ aLayoutNode constraints textFlow shouldBreakLineBefore not ])
+	currentLine := ((self hasSpaceFor: aLayoutNode) and: [ aLayoutNode constraints albTextFlow shouldBreakLineBefore not ])
 		ifTrue: [ self push: aLayoutNode ]
 		ifFalse: [ self nextLine push: aLayoutNode ].
 		
-	^ aLayoutNode constraints textFlow shouldBreakLineAfter
+	^ aLayoutNode constraints albTextFlow shouldBreakLineAfter
 		ifTrue: [ currentLine nextLine ]
 		ifFalse: [ currentLine ]
 ]
@@ -86,7 +86,7 @@ AlbEditorTextFlowNodeBasedLine >> findClosestChildOf: anElement to: aPoint [
 	"otherwise compute based on the assigned line"
 	^ self
 		findClosestElementTo: aPoint
-		in: (anElement children select: [ :eachChild | eachChild constraints textFlow assignedLine = self ])
+		in: (anElement children select: [ :eachChild | eachChild constraints albTextFlow assignedLine = self ])
 ]
 
 { #category : #geometry }
@@ -215,7 +215,7 @@ AlbEditorTextFlowNodeBasedLine >> push: aLayoutNode [
 	and update my geometry properties taking new element into account "
 
 	nodes addLast: aLayoutNode.
-	aLayoutNode constraints textFlow assignToLine: self.
+	aLayoutNode constraints albTextFlow assignToLine: self.
 
 	width := width + (aLayoutNode width + aLayoutNode margin width).
 	height := height max: (aLayoutNode height + aLayoutNode margin height).

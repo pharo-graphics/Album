@@ -27,7 +27,7 @@ AlbEditorTextFlowLine >> add: anElement [
 	<return: #AlbEditorTextFlowLine>
 	| currentLine textFlow |
 
-	textFlow := 	anElement constraints textFlow.
+	textFlow := 	anElement constraints albTextFlow.
 	textFlow shouldPushLine
 		ifTrue: [
 			pushedQueue addLast: anElement.
@@ -90,7 +90,7 @@ AlbEditorTextFlowLine >> elementsIn: anElement [
 	"Return a collection of all elements assigned to this line"
 	<return: #OrderedCollection>
 
-	^ elements ifNil: [ elements := anElement children select: [ :eachChild | eachChild constraints textFlow assignedLine = self ] ]
+	^ elements ifNil: [ elements := anElement children select: [ :eachChild | eachChild constraints albTextFlow assignedLine = self ] ]
 ]
 
 { #category : #geometry }
@@ -104,7 +104,7 @@ AlbEditorTextFlowLine >> findClosestChildOf: anElement to: aPoint [
 	"otherwise compute based on the assigned line"
 	^ self
 		findClosestElementTo: aPoint
-		in: (anElement children select: [ :eachChild | eachChild constraints textFlow assignedLine = self ])
+		in: (anElement children select: [ :eachChild | eachChild constraints albTextFlow assignedLine = self ])
 ]
 
 { #category : #geometry }
@@ -234,7 +234,7 @@ AlbEditorTextFlowLine >> push: anElement [
 
 	| textFlow |
 	elements addLast: anElement.
-	textFlow := anElement constraints textFlow.
+	textFlow := anElement constraints albTextFlow.
 	textFlow assignToLine: self.
 
 	width := width + (anElement measuredWidth + anElement margin width).

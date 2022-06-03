@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorModeRequest,
 	#superclass : #AlbEditorRequest,
-	#category : #'Album-Events'
+	#category : #'Album-Brick-NU'
 }
 
 { #category : #initialization }

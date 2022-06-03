@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'mode'
 	],
-	#category : #'Album-Events'
+	#category : #'Album-Brick-NU'
 }
 
 { #category : #'instance creation' }

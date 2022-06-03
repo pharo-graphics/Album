@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'text'
 	],
-	#category : #'Album-Events'
+	#category : #'Album-Brick-NU'
 }
 
 { #category : #accessing }

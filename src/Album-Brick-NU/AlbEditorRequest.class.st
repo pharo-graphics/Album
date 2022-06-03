@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorRequest,
 	#superclass : #OBlRequest,
-	#category : #'Album-Events'
+	#category : #'Album-Brick-NU'
 }

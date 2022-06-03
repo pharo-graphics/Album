@@ -32,34 +32,16 @@ AlbEditorModel >> mode [
 
 { #category : #accessing }
 AlbEditorModel >> mode: aTextEditorMode [
-	mode = aTextEditorMode
-		ifTrue: [ ^ self ].
 
+	mode = aTextEditorMode ifTrue: [ ^ self ].
 	mode := aTextEditorMode.
-	self notifyModeChanged
-]
-
-{ #category : #notifying }
-AlbEditorModel >> notifyModeChanged [
 	self dispatchEvent: (AlbEditorModeChanged new mode: self mode)
-]
-
-{ #category : #notifying }
-AlbEditorModel >> notifyStylerChanged [
-	self dispatchEvent: (AlbEditorStylerChanged styler: self styler)
-]
-
-{ #category : #notifying }
-AlbEditorModel >> notifyTextChanged [
-	self dispatchEvent: (AlbEditorTextChanged text: self text)
 ]
 
 { #category : #'api - hooks' }
 AlbEditorModel >> onInstalledIn: anElement [
 	super onInstalledIn: anElement.
-	self when: AlbEditorStylerRequest reply: [ :aResponse | aResponse styler: self styler ].
-	self when: AlbEditorTextRequest reply: [ :aResponse | aResponse text: self text ].
-	self when: AlbEditorModeRequest reply: [ :aResponse | aResponse mode: self mode ].
+
 ]
 
 { #category : #accessing }
@@ -73,7 +55,7 @@ AlbEditorModel >> styler: aStyler [
 		ifTrue: [ ^ self ].
 
 	styler := aStyler.
-	self notifyStylerChanged
+	self dispatchEvent: (AlbEditorStylerChanged styler: self styler)
 ]
 
 { #category : #accessing }
@@ -83,9 +65,9 @@ AlbEditorModel >> text [
 
 { #category : #accessing }
 AlbEditorModel >> text: aText [
-	text == aText
-		ifTrue: [ ^ self ].
+
+	text == aText ifTrue: [ ^ self ].
 
 	text := aText.
-	self notifyTextChanged
+	self dispatchEvent: (AlbEditorTextChanged text: self text)
 ]

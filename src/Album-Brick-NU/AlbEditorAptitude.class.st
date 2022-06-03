@@ -20,16 +20,15 @@ AlbEditorAptitude >> attributesBuilder [
 
 { #category : #initialization }
 AlbEditorAptitude >> initialize [
+
 	super initialize.
-	
+
 	styler := BlTextNullStyler new.
 	text := '' asRopedText.
-	
-	attributesBuilder := BlTextDelegatedAttributesBuilder new attributesTarget: text.
-	attributesBuilder beNotOverwritableByStyler.
-	"attributesBuilder whenAdded: [  ].
-	
-	self add: AlbLayoutResizerAptitude inherit"
+
+	attributesBuilder := BlTextDelegatedAttributesBuilder new 
+		                     attributesTarget: text.
+	attributesBuilder beNotOverwritableByStyler
 ]
 
 { #category : #initialization }

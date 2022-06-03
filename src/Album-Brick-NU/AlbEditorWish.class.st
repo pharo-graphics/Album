@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorWish,
 	#superclass : #OBlWish,
-	#category : #'Album-Events'
+	#category : #'Album-Brick-NU'
 }

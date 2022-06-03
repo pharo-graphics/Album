@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorCancelWish,
 	#superclass : #AlbEditorWish,
-	#category : #'Album-Events'
+	#category : #'Album-Brick-NU'
 }

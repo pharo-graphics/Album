@@ -5,7 +5,7 @@ Class {
 		'response',
 		'isOneWay'
 	],
-	#category : #'Album-Brick-NU'
+	#category : #'Album-Brick-NU-Events'
 }
 
 { #category : #'instance creation' }

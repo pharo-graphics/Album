@@ -66,7 +66,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
-	(String loremIpsum: 10000000) onAlbum openInOBlSpace
+	(String loremIpsum: 1000000) onAlbum openInNewSpace
 ]
 
 { #category : #'editor examples' }

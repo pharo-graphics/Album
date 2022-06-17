@@ -1,9 +1,7 @@
 "
-! The Moldable Editor
-
 I edit text and provide high level abstractions of essential text editor functionality such as selection, cursor, text insertions and deletions.
 
-I make use of ${class:AlbTextAdornmentAttribute}$ to augment text with visual elements. 
+I make use of `AlbTextAdornmentAttribute` to augment text with visual elements. 
 
 I subclass infinite data source in order to be able to smoothly display practically infinite amounts of text.
 "
@@ -361,7 +359,7 @@ AlbTextEditor >> initialize [
 	
 	mode := AlbTextEditorNullMode new.
 	
-	attachedElements := Set new.
+	attachedElements := WeakSet new.
 	
 	filter := AlbTextEditorNoInputFilter new.
 	cursors := self defaultCursors.
@@ -386,7 +384,6 @@ AlbTextEditor >> initialize [
 	shouldStyleWhenTextModified := true.
 
 	self beEditable.
-	"self beParagraphBased"
 ]
 
 { #category : #initialization }
@@ -574,6 +571,8 @@ AlbTextEditor >> notifyTextStyled: aText [
 
 { #category : #hooks }
 AlbTextEditor >> onAttached: anEditorElement [
+	"sent by the element (from dataSource: )"
+	
 	super onAttached: anEditorElement.
 
 	attachedElements := attachedElements copyWith: anEditorElement.
@@ -1059,10 +1058,6 @@ AlbTextEditor >> selection: aTextSelection [
 AlbTextEditor >> selectionRecorder [
 	<return: #AlbTextEditorSelectionRecorder>
 
-	self
-		assert: [ selectionRecorder isNotNil ]
-		description: [ 'Selection recorder can not be nil' ].
-
 	^ selectionRecorder
 ]
 
@@ -1118,9 +1113,6 @@ AlbTextEditor >> stylerStrategy [
 
 { #category : #accessing }
 AlbTextEditor >> stylerStrategy: aToTextStylerStrategy [
-	self 
-		assert: [ aToTextStylerStrategy isNotNil ] 
-		description: [ 'Text styler strategy must be non-nil' ].
 
 	stylerStrategy := aToTextStylerStrategy
 ]

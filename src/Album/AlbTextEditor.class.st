@@ -16,7 +16,6 @@ Class {
 		'text',
 		'selection',
 		'selectionRecorder',
-		'segmentBuilder',
 		'segmentCollector',
 		'styler',
 		'stylerStrategy',
@@ -94,7 +93,7 @@ AlbTextEditor >> beEditableCode [
 
 { #category : #accessing }
 AlbTextEditor >> beLineBased [
-	segmentBuilder := AlbTextEditorLineSegmentBuilder new splitter: AlbTextEditorLineSplitter new
+	self segmentBuilder: (AlbTextEditorLineSegmentBuilder new splitter: AlbTextEditorLineSplitter new)
 ]
 
 { #category : #'api - mode' }
@@ -188,7 +187,7 @@ AlbTextEditor >> defaultSegmentBuilder [
 
 { #category : #initialization }
 AlbTextEditor >> defaultSegmentCollector [
-	^ AlbTextEditorSegmentCollector new
+	^ AlbTextEditorSegmentCollector new 
 ]
 
 { #category : #initialization }
@@ -372,11 +371,9 @@ AlbTextEditor >> initialize [
 	text := self defaultText.
 	self initializeText: text.
 	
-	segmentCollector := self defaultSegmentCollector.
-	segmentCollector editor: self.
+	segmentCollector := self newSegmentCollector.
 	segmentCollector text: text.
-	segmentBuilder := self defaultSegmentBuilder.
-
+	
 	styler := self defaultStyler.
 	stylerEventHandler := self defaultStylerEventHandler.
 	self addEventHandler: stylerEventHandler.
@@ -487,6 +484,11 @@ AlbTextEditor >> newFocusChangedCommand [
 { #category : #'commands - creation' }
 AlbTextEditor >> newInvalidateCommand [
 	^ AlbTextEditorInvalidateCommand new
+]
+
+{ #category : #initialization }
+AlbTextEditor >> newSegmentCollector [
+	^ AlbTextEditorSegmentCollector new segmentBuilder: self defaultSegmentBuilder; yourself
 ]
 
 { #category : #'commands - creation' }
@@ -869,6 +871,14 @@ AlbTextEditor >> processCursorAttributes [
 
 ]
 
+{ #category : #accessing }
+AlbTextEditor >> rawSegmentBuilder: aTextSegmentBuilder [
+	"Change current segment builder to a new one and completely invalidate the structure"
+	
+	self segmentCollector segmentBuilder: aTextSegmentBuilder.
+
+]
+
 { #category : #'private - selection' }
 AlbTextEditor >> recordDeselection: aMonotoneTextSelection [
 	self selectionRecorder deselect: aMonotoneTextSelection in: self.
@@ -929,8 +939,9 @@ AlbTextEditor >> restoreText: aToText [
 
 	"Replacing text instance means that we can not guarantee structural integrity
 	of existing cache and have to rebuild it invalidating the whole underlying model structure"
-	segmentCollector := self defaultSegmentCollector.
-	segmentCollector editor: self.
+	self segmentBuilderDo: [ :sb | 
+		segmentCollector := self defaultSegmentCollector.
+		segmentCollector segmentBuilder: sb].
 	segmentCollector text: text.
 
 	self onTextReplaced.
@@ -963,20 +974,20 @@ AlbTextEditor >> saveState: aTextEditorMemento [
 AlbTextEditor >> segmentBuilder [
 	<return: #AlbTextEditorSegmentBuilder>
 
-	^ segmentBuilder
+	^ self segmentCollector segmentBuilder
 ]
 
 { #category : #accessing }
 AlbTextEditor >> segmentBuilder: aTextSegmentBuilder [
 	"Change current segment builder to a new one and completely invalidate the structure"
 	
-	segmentBuilder := aTextSegmentBuilder.
+	self rawSegmentBuilder: aTextSegmentBuilder.
 	self notifyChanged
 ]
 
 { #category : #accessing }
 AlbTextEditor >> segmentBuilderDo: aBlock [
-	aBlock value: segmentBuilder
+	aBlock value: self segmentBuilder
 ]
 
 { #category : #accessing }
@@ -1147,19 +1158,20 @@ AlbTextEditor >> text [
 
 { #category : #accessing }
 AlbTextEditor >> text: aText [
-	
+	| t |
+	t := aText asRopedText.
 	"when reducing the text size we should update the selection and cursor positions"
-	(aText size < text size)
+	(t size < text size)
 		ifTrue: [
 			self navigator
-				moveWithin: (0 to: aText size);
+				moveWithin: (0 to: t size);
 				apply.
 			
 			self deselecter
-				from: aText size to: text size;
+				from: t size to: text size;
 				deselect ].
 
-	self restoreText: aText
+	self restoreText: t
 ]
 
 { #category : #accessing }

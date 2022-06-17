@@ -18,7 +18,6 @@ AlbTextEmbellishmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditor
 	aReplacementTextElement := (anEditorElement editor segmentBuilder wordStencilBuilder
 		wordPadding: padding + aTTextEditorTextualPiece wordPadding;
 		wordMargin: margin + aTTextEditorTextualPiece wordMargin;
-		shouldUsePool: false;
 		segmentPiece: aTTextEditorTextualPiece) asElement.
 
 	embellishment cull: aReplacementTextElement cull: aTTextEditorTextualPiece.

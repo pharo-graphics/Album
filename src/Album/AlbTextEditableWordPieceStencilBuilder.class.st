@@ -1,22 +1,8 @@
 Class {
 	#name : #AlbTextEditableWordPieceStencilBuilder,
 	#superclass : #AlbTextWordPieceStencilBuilder,
-	#classVars : [
-		'TextPiecePool'
-	],
 	#category : #'Album-UI-Stencils'
 }
-
-{ #category : #'class initialization' }
-AlbTextEditableWordPieceStencilBuilder class >> cleanUp [
-	self initialize
-]
-
-{ #category : #'class initialization' }
-AlbTextEditableWordPieceStencilBuilder class >> initialize [
-	"self initialize "
-	TextPiecePool := BlSynchronizedObjectPool pool: (BlBagObjectPool new: 1000)
-]
 
 { #category : #'api - instantiation' }
 AlbTextEditableWordPieceStencilBuilder >> createWordElement [
@@ -56,9 +42,4 @@ AlbTextEditableWordPieceStencilBuilder >> createWordElement [
 			addEventHandler: AlbTextWordPieceSelectionLostHandler uniqueInstance;
 
 			yourself
-]
-
-{ #category : #'private - pool' }
-AlbTextEditableWordPieceStencilBuilder >> pool [
-	^ TextPiecePool
 ]

@@ -66,7 +66,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
-	(String loremIpsum: 1000000) onAlbum openInNewSpace
+	(String loremIpsum: 10000000) onAlbum openInNewSpace
 ]
 
 { #category : #'editor examples' }
@@ -79,10 +79,13 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 	attribute := AlbTextAdornmentDynamicAttribute new
 		beAppend;
 		withCache: cache key: #key;
-		stencil: [
+		stencil: [  {  
 			BlElement new
 				background: (Color gray alpha: 0.4);
-				size: 200@100 ].
+				size: 20@100.
+				BlElement new
+				background: (Color red alpha: 0.4);
+				size: 20@10. } ].
 
 	text := 'Hello >' asRopedText attribute: attribute.
 	ed := AlbEditor new dresser: AlbTextAreaDresser new.

@@ -27,7 +27,7 @@ AlbTextEditorLineSegmentTextListener >> handleEvent: aBlMouseEvent [
 
 	"To not create an instance of me for each tiny text element"
 	anEditorElement := aTextElement
-		allParentsDetect: [ :anElement | (anElement isKindOf: AlbEditorElement) or: [anElement isKindOf: AlbEditorElement] ]
+		allParentsDetect: [ :anElement | anElement isKindOf: AlbEditorElement ]
 		ifFound: #yourself
 		ifNone: [ ^ self ].
 	

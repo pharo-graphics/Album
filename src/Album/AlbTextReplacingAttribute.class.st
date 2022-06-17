@@ -21,7 +21,6 @@ AlbTextReplacingAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 	aReplacementTextElement := (anEditorElement editor segmentBuilder wordStencilBuilder
 		wordPadding: padding + aTTextEditorTextualPiece wordPadding;
 		wordMargin: margin + aTTextEditorTextualPiece wordMargin;
-		shouldUsePool: false;
 		segmentPiece: (self replaceTextInPiece: aTTextEditorTextualPiece)) asElement.
 
 	aReplacementTextElement removeEventHandler: AlbTextWordPieceTextChangeHandler uniqueInstance.

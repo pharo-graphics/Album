@@ -29,10 +29,8 @@ Class {
 		'text',
 		'subText',
 		'segments',
-		'limit',
-		'editor',
-		'segmentsInterval',
-		'map'
+		'segmentBuilder',
+		'segmentsInterval'
 	],
 	#category : #'Album-Model-Segment-Text'
 }
@@ -78,9 +76,7 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments after: aSegm
 			self segments with: segmentsInterval do: [ :eachSegment :anExpectedIndex |
 				satisfy := satisfy and: [ eachSegment index = anExpectedIndex ]	].
 			satisfy ]
-		description: [ 'Segment indices must correspond to the interval' ].
-
-	self editor notifyItemsInserted: (aCollectionOfSegments first index to: aCollectionOfSegments last index).
+		description: [ 'Segment indices must correspond to the interval' ]
 	
 ]
 
@@ -114,8 +110,6 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSeg
 	
 	self offsetSegmentIndicesBy: aCollectionOfSegments size after: aCollectionOfSegments last index.
 
-	self editor notifyItemsInserted: (aCollectionOfSegments first index to: aCollectionOfSegments last index).
-	
 	self
 		assert: [ self segments size = segmentsInterval size ]
 		description: [ 'Amount of segments must correspond to the interval' ].
@@ -132,19 +126,7 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSeg
 
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> cacheLimit [
-	"Answer the maximum number of segments that will be loaded by #segmentAt:.
-	Explicitly adding segments via #addSegments:after: or #addSegments:before: may safely exceed this limit."
-	<return: #Number>
-	
-	^ limit
-]
-
-{ #category : #accessing }
-AlbTextEditorSegmentCollector >> cacheLimit: aNumber [
-	"Set the soft maximum number of segments to cache.
-	See the class comments for further information."
-
-	limit := aNumber
+	^ self defaultCacheLimit 
 ]
 
 { #category : #'cache - accessing' }
@@ -228,13 +210,12 @@ AlbTextEditorSegmentCollector >> cachedSegmentIndexAt: aTextIndex [
 { #category : #'cache - computation' }
 AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 	"Populate the cache at anIndex, which is prior to the start of the currently cached segments."
-	| mapEntry cachedInterval stream builder newSubText newSegments overlap streamLimit |
+	| cachedInterval stream newSubText newSegments overlap streamLimit |
 
 	"Look for the map entry just earlier than anIndex
 	(removing the need to parse the text from the beginning of the string to the found mapEntry"
-	mapEntry := map mapEntryFor: anIndex.
 	cachedInterval := self computeInterval: anIndex.
-	newSubText := text from: mapEntry value to: text size.
+	newSubText := text from: 1 to: text size.
 	newSegments := self newSegments.
 
 	overlap := cachedInterval last - segmentsInterval first + 1.
@@ -243,14 +224,13 @@ AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 		ifFalse: [ self cacheLimit ].
 	stream := self newSegmentStream.
 	stream limit: streamLimit.
-	builder := self editor segmentBuilder.
 	
-	builder
+	segmentBuilder
 		split: newSubText
 		in: stream
 		offset: ((newSubText start - text textOffset - 1) max: 0).
 	
-	newSegments addAll: stream collection.
+	newSegments addAll: stream contents.
 	overlap > 0 ifTrue:
 		[ newSegments addAll: (segments copyFrom: 1 to: overlap) ].
 	segmentsInterval := cachedInterval first to: cachedInterval first + newSegments size - 1.
@@ -262,8 +242,9 @@ AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 
 { #category : #'cache - computation' }
 AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
-	| intervalEnd cachedInterval actualStart skip forwardText stream builder  |
+	| intervalEnd cachedInterval actualStart skip forwardText stream |
 
+	"the index of the last already cached segment"
 	"the index of the last already cached segment"
 	intervalEnd := segmentsInterval last.
 
@@ -282,9 +263,8 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	stream := self newSegmentStream.
 	stream skip: skip.
 	stream limit: self cacheLimit - segments size.
-	builder := self editor segmentBuilder.
 	
-	builder
+	segmentBuilder
 		split: forwardText
 		in: stream
 		offset: ((forwardText start - text textOffset - 1) max: 0).
@@ -294,7 +274,6 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	
 	self computeSegmentIndices.
 	self computeSubText.
-	map addLine: segmentsInterval first offset: subText start.
 ]
 
 { #category : #'cache - computation' }
@@ -313,9 +292,9 @@ AlbTextEditorSegmentCollector >> computeInterval: anIndex [
 AlbTextEditorSegmentCollector >> computeSegmentAt: anIndex [
 	<return: #AlbEditorSegment>
 
-	self
+	"self
 		assert: [ (self isCachedAt: anIndex) not ]
-		description: [ 'Computing of already cached segment is wasteful' ].
+		description: [ 'Computing of already cached segment is wasteful' ]."
 
 	anIndex > self lastIndex
 		ifTrue: [ self computeForwardAt: anIndex ]
@@ -382,22 +361,6 @@ AlbTextEditorSegmentCollector >> defaultCacheLimit [
 	^ 500
 ]
 
-{ #category : #accessing }
-AlbTextEditorSegmentCollector >> editor [
-	<return: #AlbTextEditor>
-
-	^ editor
-]
-
-{ #category : #accessing }
-AlbTextEditorSegmentCollector >> editor: aTextEditor [
-	self
-		assert: [ editor isNil ]
-		description: [ 'Can only be attached once' ].
-	
-	editor := aTextEditor
-]
-
 { #category : #'cache - accessing' }
 AlbTextEditorSegmentCollector >> end [
 	"Return the index of the last cached item in the text or 0 if nothing is cached"
@@ -458,7 +421,6 @@ AlbTextEditorSegmentCollector >> hasCached [
 AlbTextEditorSegmentCollector >> initialize [
 
 	super initialize.	
-	limit := self defaultCacheLimit.
 	subText := BlSubText text: '' asRopedText from: 1 to: 0.
 	self resetCache.
 
@@ -512,10 +474,13 @@ AlbTextEditorSegmentCollector >> newSegmentStream [
 
 { #category : #'instance creation' }
 AlbTextEditorSegmentCollector >> newSegments [
-	"Return a new empty collection that will be used to store segments"
-	<return: #SequenceableCollection>
 
-	^ OrderedCollection new
+	"Return a new empty collection that will be used to store segments"
+
+	<return: #SequenceableCollection>
+	^ segments
+		  ifNotNil: [ segments reset ]
+		  ifNil: [ OrderedCollection new ]
 ]
 
 { #category : #'text - modifications' }
@@ -557,7 +522,6 @@ AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval [
 	
 	segmentsInterval := (segments first index to: segments last index).
 
-	self editor notifyItemsRemoved: anInterval
 ]
 
 { #category : #initialization }
@@ -565,8 +529,7 @@ AlbTextEditorSegmentCollector >> resetCache [
 
 	segmentsInterval := 0 to: 0.
 	segments := self newSegments.
-	map := AlbTextLineMap new.
-	map cacheLimit: limit.
+
 ]
 
 { #category : #accessing }
@@ -577,6 +540,18 @@ AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 	^ (self isCachedAt: anIndex)
 		ifTrue: [ self cachedAt: anIndex ]
 		ifFalse: [ self computeSegmentAt: anIndex ]
+]
+
+{ #category : #accessing }
+AlbTextEditorSegmentCollector >> segmentBuilder [
+
+	^ segmentBuilder
+]
+
+{ #category : #accessing }
+AlbTextEditorSegmentCollector >> segmentBuilder: aSegmentBuilder [
+
+	segmentBuilder := aSegmentBuilder
 ]
 
 { #category : #accessing }

@@ -1,13 +1,19 @@
 Class {
-	#name : #AlbTextEditorNavigatorExamples,
-	#superclass : #AlbTextEditorOperatorExamples,
-	#category : #'Album-Examples-Operators'
+	#name : #AlbTextEditorNavigatorTest,
+	#superclass : #AlbTextEditorOperatorTest,
+	#category : #'Album-Tests-Operators'
 }
 
 { #category : #'examples - showroom' }
-AlbTextEditorNavigatorExamples >> cursor_addAt0_moveNextWord_in_something [
+AlbTextEditorNavigatorTest >> editorOnSomeThing [
 
-	<gtExample>
+	^ self editorFor: 'SomeThing todo here'
+]
+
+{ #category : #'examples - showroom' }
+AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_in_something [
+
+	
 	| anEditor |
 	anEditor := self editorOnSomeThing.
 	anEditor navigator
@@ -24,15 +30,15 @@ AlbTextEditorNavigatorExamples >> cursor_addAt0_moveNextWord_in_something [
 
 	self
 		assert: anEditor cursors allCursors
-		equals: { (AlbTextEditorSingleCursor new position: 4) }.
+		equals: { (AlbTextEditorSingleCursor new position: 9) }.
 	^ anEditor
 ]
 
 { #category : #'examples - showroom' }
-AlbTextEditorNavigatorExamples >> cursor_addAt0_moveNextWord_twice_in_something [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_twice_in_something [
+	
 	| anEditor |
-	anEditor := self cursor_addAt0_moveNextWord_in_something.
+	anEditor := self test_cursor_addAt0_moveNextWord_in_something.
 		
 	anEditor navigator
 		moveToEndNextWord;
@@ -46,9 +52,9 @@ AlbTextEditorNavigatorExamples >> cursor_addAt0_moveNextWord_twice_in_something 
 ]
 
 { #category : #'examples - showroom' }
-AlbTextEditorNavigatorExamples >> cursor_addAt9_movePreviousWord_in_something [
+AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_in_something [
 
-	<gtExample>
+	
 	| anEditor |
 	anEditor := self editorOnSomeThing.
 	anEditor navigator
@@ -65,16 +71,16 @@ AlbTextEditorNavigatorExamples >> cursor_addAt9_movePreviousWord_in_something [
 
 	self
 		assert: anEditor cursors allCursors
-		equals: { (AlbTextEditorSingleCursor new position: 4) }.
+		equals: { (AlbTextEditorSingleCursor new position: 0) }.
 	^ anEditor
 ]
 
 { #category : #'examples - showroom' }
-AlbTextEditorNavigatorExamples >> cursor_addAt9_movePreviousWord_twice_in_something [
+AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_twice_in_something [
 
-	<gtExample>
+	
 	| anEditor |
-	anEditor := self cursor_addAt9_movePreviousWord_in_something.
+	anEditor := self test_cursor_addAt9_movePreviousWord_in_something.
 
 	anEditor navigator
 		moveToStartPreviousWord;
@@ -87,11 +93,11 @@ AlbTextEditorNavigatorExamples >> cursor_addAt9_movePreviousWord_twice_in_someth
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_0_and_0_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_0_and_0_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -120,11 +126,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_0_and_0_in_empty [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_0_and_1_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_0_and_1_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -156,11 +162,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_0_and_1_in_empty [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_0_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -201,11 +207,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_0_in_empty [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_1_and_0_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_1_and_0_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -237,11 +243,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_1_and_0_in_empty [
 ]
 
 { #category : #'examples - performance' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_1_does_not_rebuild_editor [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_1_does_not_rebuild_editor [
+	
 	| anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	thePreviousSegments := anEditor children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
@@ -272,11 +278,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_1_does_not_rebuild_editor [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_1_in_cursors_at_0 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_cursors_at_0 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -307,11 +313,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_1_in_cursors_at_0 [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_1_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -352,11 +358,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_1_in_empty [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_2_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -397,11 +403,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_2_in_empty [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_68_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -442,11 +448,11 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_68_in_empty [
 ]
 
 { #category : #'examples - add' }
-AlbTextEditorNavigatorExamples >> cursor_add_at_8_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -477,8 +483,8 @@ AlbTextEditorNavigatorExamples >> cursor_add_at_8_in_empty [
 ]
 
 { #category : #'examples - no duplication' }
-AlbTextEditorNavigatorExamples >> cursor_is_not_duplicated [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated [
+	
 	| anEditor thePiecesWithCursor |
 	
 	anEditor := self editorFor: 'Hello World'.
@@ -515,8 +521,8 @@ AlbTextEditorNavigatorExamples >> cursor_is_not_duplicated [
 ]
 
 { #category : #'examples - no duplication' }
-AlbTextEditorNavigatorExamples >> cursor_is_not_duplicated_bulk [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated_bulk [
+	
 	| anEditor thePiecesWithCursor |
 	
 	anEditor := self editorFor: 'Hello World'.
@@ -548,8 +554,8 @@ AlbTextEditorNavigatorExamples >> cursor_is_not_duplicated_bulk [
 ]
 
 { #category : #'examples - no duplication' }
-AlbTextEditorNavigatorExamples >> cursor_is_not_duplicated_bulk_full [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated_bulk_full [
+	
 	| anEditor thePiecesWithCursor |
 	
 	anEditor := self editorFor: 'Hello World'.
@@ -576,10 +582,10 @@ AlbTextEditorNavigatorExamples >> cursor_is_not_duplicated_bulk_full [
 ]
 
 { #category : #accessing }
-AlbTextEditorNavigatorExamples >> cursor_is_not_on_last_line [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_is_not_on_last_line [
+	
 	| anEditor aNavigator |
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	aNavigator := anEditor editor navigator 
 		moveTo: 186; 
 		apply;
@@ -589,10 +595,10 @@ AlbTextEditorNavigatorExamples >> cursor_is_not_on_last_line [
 ]
 
 { #category : #accessing }
-AlbTextEditorNavigatorExamples >> cursor_is_on_last_line_when_at_the_end [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_is_on_last_line_when_at_the_end [
+	
 	| anEditor aNavigator |
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	aNavigator := anEditor editor navigator 
 		moveTo: 202; 
 		apply;
@@ -602,10 +608,10 @@ AlbTextEditorNavigatorExamples >> cursor_is_on_last_line_when_at_the_end [
 ]
 
 { #category : #accessing }
-AlbTextEditorNavigatorExamples >> cursor_is_on_last_line_when_before_the_first_character [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_is_on_last_line_when_before_the_first_character [
+	
 	| anEditor aNavigator |
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	aNavigator := anEditor editor navigator 
 		moveTo: 187; 
 		apply;
@@ -615,11 +621,11 @@ AlbTextEditorNavigatorExamples >> cursor_is_on_last_line_when_before_the_first_c
 ]
 
 { #category : #'examples - move down' }
-AlbTextEditorNavigatorExamples >> cursor_moveDown_in_cursors_at_190 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents theReachBoudnaryEvents |
 	
-	anEditor := self cursor_moveTo_190_in_empty.
+	anEditor := self test_cursor_moveTo_190_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -652,12 +658,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveDown_in_cursors_at_190 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_0 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
+	
 	<label: 'Cursor before the first character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -685,12 +691,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_0 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
+	
 	<label: 'Cursor after the first character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 1;
 		apply.
@@ -721,12 +727,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_1 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_201 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_201 [
+	
 	<label: 'Cursor before the last character of the whole text should not move'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 201;
 		apply.
@@ -757,12 +763,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_201 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_202 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_202 [
+	
 	<label: 'Cursor after the last character of the whole text should not move'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 202;
 		apply.
@@ -790,12 +796,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_202 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_27 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_27 [
+	
 	<label: 'Cursor before the last character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 27;
 		apply.
@@ -826,12 +832,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_27 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_28 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_28 [
+	
 	<label: 'Cursor after the last character of the line should not move'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 28;
 		apply.
@@ -859,11 +865,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_cursors_at_28 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -887,12 +893,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineEnd_in_empty [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_0 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_0 [
+	
 	<label: 'Cursor before the first character should not be moved'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -917,12 +923,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_0 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_1 [
+	
 	<label: 'Cursor after the first character moves before the start of the text'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_moveTo_1_in_cursors_at_0.
+	anEditor := self test_cursor_moveTo_1_in_cursors_at_0.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -950,12 +956,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_1 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_27 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_27 [
+	
 	<label: 'Cursor before the last character of the line should move to the start'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 27;
 		apply.
@@ -986,12 +992,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_27 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_28 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_28 [
+	
 	<label: 'Cursor after the last character of the line should move to to the start'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 28;
 		apply.
@@ -1022,12 +1028,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_28 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_29 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_29 [
+	
 	<label: 'Cursor before the first character of the line should not move'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 29;
 		apply.
@@ -1055,12 +1061,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_29 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_30 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_30 [
+	
 	<label: 'Cursor after the first character of the line should move to the start of that line'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 30;
 		apply.
@@ -1091,12 +1097,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_30 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_40 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_40 [
+	
 	<label: 'Cursor before the last character of the line should move to the start of that line'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 40;
 		apply.
@@ -1127,12 +1133,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_40 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_41 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_41 [
+	
 	<label: 'Cursor after the last character of the line should move to the start of that line'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	anEditor navigator
 		moveTo: 41;
 		apply.
@@ -1163,11 +1169,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_cursors_at_41 [
 ]
 
 { #category : #'examples - move to line start' }
-AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1191,12 +1197,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToLineStart_in_empty [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToNextWord_in_cursors_at_0 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_0 [
+	
 	<label: 'Cursor before the first character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1224,12 +1230,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToNextWord_in_cursors_at_0 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToNextWord_in_cursors_at_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_1 [
+	
 	<label: 'Cursor before the first character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_1_in_empty.
+	anEditor := self test_cursor_add_at_1_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1257,12 +1263,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToNextWord_in_cursors_at_1 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToPreviousWord_in_cursors_at_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_1 [
+	
 	<label: 'Cursor before the first character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_1_in_empty.
+	anEditor := self test_cursor_add_at_1_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1290,12 +1296,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToPreviousWord_in_cursors_at_1 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToPreviousWord_in_cursors_at_2 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_2 [
+	
 	<label: 'Cursor before the first character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_2_in_empty.
+	anEditor := self test_cursor_add_at_2_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1323,12 +1329,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToPreviousWord_in_cursors_at_2 [
 ]
 
 { #category : #'examples - move to line end' }
-AlbTextEditorNavigatorExamples >> cursor_moveToPreviousWord_in_cursors_at_8 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_8 [
+	
 	<label: 'Cursor before the first character of the line should move to the end'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_8_in_empty.
+	anEditor := self test_cursor_add_at_8_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1359,12 +1365,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToPreviousWord_in_cursors_at_8 [
 ]
 
 { #category : #'examples - move to screen' }
-AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_left_half_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_half_in_empty [
+	
 	<label: 'Click on the left half of the first character'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1390,12 +1396,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_left_half_in_empty [
 ]
 
 { #category : #'examples - move to screen' }
-AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_left_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_in_empty [
+	
 	<label: 'Click on a whitespace to the left from the first character'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1421,12 +1427,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_left_in_empty [
 ]
 
 { #category : #'examples - move to screen' }
-AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_middle_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_middle_in_empty [
+	
 	<label: 'Click right in the middle of the first character'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1452,12 +1458,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_middle_in_empty [
 ]
 
 { #category : #'examples - move to screen' }
-AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_right_half_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_empty [
+	
 	<label: 'Click on the right half of the first character'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1483,12 +1489,12 @@ AlbTextEditorNavigatorExamples >> cursor_moveToScreen_1_right_half_in_empty [
 ]
 
 { #category : #'examples - move to screen' }
-AlbTextEditorNavigatorExamples >> cursor_moveToScreen_41_right_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_41_right_in_empty [
+	
 	<label: 'Click on the right half of the 41th character'>
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1514,11 +1520,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveToScreen_41_right_in_empty [
 ]
 
 { #category : #'examples - move to' }
-AlbTextEditorNavigatorExamples >> cursor_moveTo_0_in_cursors_at_0_and_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_cursors_at_0_and_1 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_and_1_in_empty.
+	anEditor := self test_cursor_add_at_0_and_1_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1547,11 +1553,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveTo_0_in_cursors_at_0_and_1 [
 ]
 
 { #category : #'examples - move to' }
-AlbTextEditorNavigatorExamples >> cursor_moveTo_0_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1579,11 +1585,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveTo_0_in_empty [
 ]
 
 { #category : #'examples - move to' }
-AlbTextEditorNavigatorExamples >> cursor_moveTo_190_in_empty [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveTo_190_in_empty [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1611,11 +1617,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveTo_190_in_empty [
 ]
 
 { #category : #'examples - move to' }
-AlbTextEditorNavigatorExamples >> cursor_moveTo_1_in_cursors_at_0 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveTo_1_in_cursors_at_0 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1643,11 +1649,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveTo_1_in_cursors_at_0 [
 ]
 
 { #category : #'examples - move to' }
-AlbTextEditorNavigatorExamples >> cursor_moveTo_2_in_cursors_at_0_and_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveTo_2_in_cursors_at_0_and_1 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 
-	anEditor := self cursor_add_at_0_and_1_in_empty.
+	anEditor := self test_cursor_add_at_0_and_1_in_empty.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1678,11 +1684,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveTo_2_in_cursors_at_0_and_1 [
 ]
 
 { #category : #'examples - move to' }
-AlbTextEditorNavigatorExamples >> cursor_moveTo_67_in_cursors_at_68 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
 	
-	anEditor := self cursor_add_at_68_in_empty.
+	anEditor := self test_cursor_add_at_68_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1725,11 +1731,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveTo_67_in_cursors_at_68 [
 ]
 
 { #category : #'examples - move up' }
-AlbTextEditorNavigatorExamples >> cursor_moveUp_in_cursors_at_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_moveUp_in_cursors_at_1 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents theReachBoudnaryEvents |
 	
-	anEditor := self cursor_add_at_1_in_empty.
+	anEditor := self test_cursor_add_at_1_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1762,11 +1768,11 @@ AlbTextEditorNavigatorExamples >> cursor_moveUp_in_cursors_at_1 [
 ]
 
 { #category : #'examples - performance' }
-AlbTextEditorNavigatorExamples >> cursor_move_from_1_to_2_does_not_rebuild_editor [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_move_from_1_to_2_does_not_rebuild_editor [
+	
 	| anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces |
 
-	anEditor := self cursor_add_at_1_does_not_rebuild_editor.
+	anEditor := self test_cursor_add_at_1_does_not_rebuild_editor.
 
 	thePreviousSegments := anEditor children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
@@ -1797,11 +1803,11 @@ AlbTextEditorNavigatorExamples >> cursor_move_from_1_to_2_does_not_rebuild_edito
 ]
 
 { #category : #'examples - remove' }
-AlbTextEditorNavigatorExamples >> cursor_removeAll_in_cursors_at_0_and_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_removeAll_in_cursors_at_0_and_1 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_and_1_in_empty.
+	anEditor := self test_cursor_add_at_0_and_1_in_empty.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1829,11 +1835,11 @@ AlbTextEditorNavigatorExamples >> cursor_removeAll_in_cursors_at_0_and_1 [
 ]
 
 { #category : #'examples - remove' }
-AlbTextEditorNavigatorExamples >> cursor_remove_at_0_in_cursors_at_0 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_remove_at_0_in_cursors_at_0 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_in_empty.
+	anEditor := self test_cursor_add_at_0_in_empty.
 	
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1860,11 +1866,11 @@ AlbTextEditorNavigatorExamples >> cursor_remove_at_0_in_cursors_at_0 [
 ]
 
 { #category : #'examples - remove' }
-AlbTextEditorNavigatorExamples >> cursor_remove_at_1_and_0_in_cursors_at_0_and_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_remove_at_1_and_0_in_cursors_at_0_and_1 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_and_1_in_empty.
+	anEditor := self test_cursor_add_at_0_and_1_in_empty.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
@@ -1893,11 +1899,11 @@ AlbTextEditorNavigatorExamples >> cursor_remove_at_1_and_0_in_cursors_at_0_and_1
 ]
 
 { #category : #'examples - remove' }
-AlbTextEditorNavigatorExamples >> cursor_remove_at_1_in_cursors_at_0_and_1 [
-	<gtExample>
+AlbTextEditorNavigatorTest >> test_cursor_remove_at_1_in_cursors_at_0_and_1 [
+	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
-	anEditor := self cursor_add_at_0_and_1_in_empty.
+	anEditor := self test_cursor_add_at_0_and_1_in_empty.
 
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.

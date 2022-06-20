@@ -1,39 +1,14 @@
 Class {
-	#name : #AlbTextEditorOperatorExamples,
-	#superclass : #Object,
+	#name : #AlbTextEditorOperatorTest,
+	#superclass : #TestCase,
 	#traits : 'TAlbTextEditorFixedMeasurerExamples',
 	#classTraits : 'TAlbTextEditorFixedMeasurerExamples classTrait',
-	#category : #'Album-Examples-Operators'
+	#category : #'Album-Tests-Operators'
 }
 
-{ #category : #'focus - examples' }
-AlbTextEditorOperatorExamples >> editorCreatesOneCursorOnFocus [
-	<gtExample>
-	| anEditor aSpace |
-	
-	anEditor := self editorHasNoFocusByDefault.
-	
-	aSpace := OBlSpace new.
-	aSpace host: BlHeadlessHost new.
-	aSpace addChild: anEditor.
-	
-	self assert: anEditor cursors isEmpty.
-	
-	anEditor requestFocus.
-	aSpace pulse.
-	
-	self assert: anEditor isFocused.
-	self assert: anEditor hasFocus.
-	self assert: anEditor cursors allCursors equals: { AlbTextEditorSingleCursor new position: 0 }.
-	
-	aSpace removeChild: anEditor.
-	
-	^ anEditor
-]
-
 { #category : #'instance creation' }
-AlbTextEditorOperatorExamples >> editorFor: aText [
-	<return: #AlbEditor>
+AlbTextEditorOperatorTest >> editorFor: aText [
+	
 	| anEditor aRopedText |
 
 	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
@@ -61,391 +36,9 @@ AlbTextEditorOperatorExamples >> editorFor: aText [
 	^ anEditor
 ]
 
-{ #category : #'focus - examples' }
-AlbTextEditorOperatorExamples >> editorHasNoFocusByDefault [
-	<gtExample>
-	| anEditor |
-	
-	anEditor := AlbEditor new.
-	self assert: anEditor isFocused not.
-	self assert: anEditor hasFocus not.
-	
-	^ anEditor
-]
-
 { #category : #'instance creation' }
-AlbTextEditorOperatorExamples >> editorOnEmptyText [
-	<gtExample>
-	| anEditor anEditorElement |
+AlbTextEditorOperatorTest >> multilineText [
 	
-	anEditorElement := self editorFor: '' asRopedText.
-	anEditor := anEditorElement editor.
-	
-	self assert: anEditor cursors isEmpty.
-	self assert: anEditor selection isEmpty.
-	
-	^ anEditorElement
-]
-
-{ #category : #'instance creation' }
-AlbTextEditorOperatorExamples >> editorOnMultilineText [
-	<gtExample>
-	| anEditor anEditorElement |
-	
-	anEditorElement := self editorFor: self multilineText.
-	anEditor := anEditorElement editor.
-	
-	self assert: anEditor cursors isEmpty.
-	self assert: anEditor selection isEmpty.
-	
-	^ anEditorElement
-]
-
-{ #category : #'examples - showroom' }
-AlbTextEditorOperatorExamples >> editorOnSomeThing [
-
-	^ self editorFor: 'SomeThing'
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceInEmptyAt_0 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := '' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_at_0 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := 'Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_at_1 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := 'Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
-
-	self assert: whitespace = ''.
-
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_at_2 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := 'Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
-
-	self assert: whitespace = ''.
-
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_at_3 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := 'Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 3.
-
-	self assert: whitespace = ''.
-
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_at_4 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := 'Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 4.
-
-	self assert: whitespace = ''.
-
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_at_5 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := 'Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 5.
-
-	self assert: whitespace = ''.
-
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_cr_World_at_6 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ('Hello', String cr, 'World') asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 6.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_cr_World_at_7 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ('Hello', String cr, 'World') asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 7.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_cr_World_at_8 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ('Hello', String cr, 'World') asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 8.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_cr_space_World_at_6 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ('Hello', String cr, ' World') asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 6.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_cr_space_World_at_7 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ('Hello', String cr, ' World') asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 7.
-	
-	self assert: whitespace = ' '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_Hello_cr_space_World_at_8 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ('Hello', String cr, ' World') asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 8.
-	
-	self assert: whitespace = ' '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_Hello_at_0 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ' Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_Hello_at_1 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ' Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
-	
-	self assert: whitespace = ' '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_Hello_at_2 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ' Hello' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
-	
-	self assert: whitespace = ' '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_at_0 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ' ' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_at_1 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := ' ' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
-	
-	self assert: whitespace = ' '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_space_at_0 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := '  ' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_space_at_1 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := '  ' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
-	
-	self assert: whitespace = ' '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_space_at_2 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := '  ' asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
-	
-	self assert: whitespace = '  '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_tab_at_0 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := (' ', String tab) asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
-	
-	self assert: whitespace = ''.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_tab_at_1 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := (' ', String tab) asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
-	
-	self assert: whitespace = ' '.
-	
-	^ whitespace
-]
-
-{ #category : #'utility - examples' }
-AlbTextEditorOperatorExamples >> findWhitespaceIn_space_tab_at_2 [
-	<gtExample>
-	| text editor whitespace |
-	
-	text := (' ', String tab) asRopedText.
-	editor := AlbTextEditor new text: text.
-	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
-	
-	self assert: whitespace = (' ', String tab).
-	
-	^ whitespace
-]
-
-{ #category : #'instance creation' }
-AlbTextEditorOperatorExamples >> multilineText [
-	<gtExample>
 	
 	^ 'A summer river being crossed
 how pleasing
@@ -461,18 +54,419 @@ Seems far away.' asRopedText
 ]
 
 { #category : #'private - utility' }
-AlbTextEditorOperatorExamples >> piecesWithCursorIn: anEditorElement [
-	^ anEditorElement withAllChildrenAlbeadthFirst
+AlbTextEditorOperatorTest >> piecesWithCursorIn: anEditorElement [
+	^ anEditorElement withAllChildrenBreadthFirst 
 		select: [ :eachChild | eachChild isKindOf: AlbCursorElement ]
 		thenCollect: [ :eachCursor | eachCursor parent ]
 ]
 
 { #category : #'private - events' }
-AlbTextEditorOperatorExamples >> subscribe: anEventClass do: aBlock for: anElement [
+AlbTextEditorOperatorTest >> subscribe: anEventClass do: aBlock for: anElement [
 	anElement when: anEventClass do: aBlock
 ]
 
+{ #category : #'focus - examples' }
+AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
+	
+	| anEditor aSpace |
+	
+	anEditor := self test_editorHasNoFocusByDefault.
+	
+	aSpace := OBlSpace new.
+	aSpace host: BlHeadlessHost new.
+	aSpace addChild: anEditor.
+	
+	self assert: anEditor cursors isEmpty.
+	
+	anEditor requestFocus.
+	aSpace pulse.
+	
+	self assert: anEditor isFocused.
+	self assert: anEditor hasFocus.
+	self assert: anEditor cursors allCursors equals: { AlbTextEditorSingleCursor new position: 0 }.
+	
+	aSpace removeChild: anEditor.
+	
+	^ anEditor
+]
+
+{ #category : #'focus - examples' }
+AlbTextEditorOperatorTest >> test_editorHasNoFocusByDefault [
+	
+	| anEditor |
+	
+	anEditor := AlbEditor new.
+	self assert: anEditor isFocused not.
+	self assert: anEditor hasFocus not.
+	
+	^ anEditor
+]
+
+{ #category : #'instance creation' }
+AlbTextEditorOperatorTest >> test_editorOnEmptyText [
+	
+	| anEditor anEditorElement |
+	
+	anEditorElement := self editorFor: '' asRopedText.
+	anEditor := anEditorElement editor.
+	
+	self assert: anEditor cursors isEmpty.
+	self assert: anEditor selection isEmpty.
+	
+	^ anEditorElement
+]
+
+{ #category : #'instance creation' }
+AlbTextEditorOperatorTest >> test_editorOnMultilineText [
+	
+	| anEditor anEditorElement |
+	
+	anEditorElement := self editorFor: self multilineText.
+	anEditor := anEditorElement editor.
+	
+	self assert: anEditor cursors isEmpty.
+	self assert: anEditor selection isEmpty.
+	
+	^ anEditorElement
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceInEmptyAt_0 [
+	
+	| text editor whitespace |
+	
+	text := '' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
+	
+	self assert: whitespace equals: ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_0 [
+	
+	| text editor whitespace |
+	
+	text := 'Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_1 [
+	
+	| text editor whitespace |
+	
+	text := 'Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
+
+	self assert: whitespace = ''.
+
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_2 [
+	
+	| text editor whitespace |
+	
+	text := 'Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
+
+	self assert: whitespace = ''.
+
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_3 [
+	
+	| text editor whitespace |
+	
+	text := 'Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 3.
+
+	self assert: whitespace = ''.
+
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_4 [
+	
+	| text editor whitespace |
+	
+	text := 'Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 4.
+
+	self assert: whitespace = ''.
+
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_5 [
+	
+	| text editor whitespace |
+	
+	text := 'Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 5.
+
+	self assert: whitespace = ''.
+
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_6 [
+	
+	| text editor whitespace |
+	
+	text := ('Hello', String cr, 'World') asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 6.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_7 [
+	
+	| text editor whitespace |
+	
+	text := ('Hello', String cr, 'World') asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 7.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_8 [
+	
+	| text editor whitespace |
+	
+	text := ('Hello', String cr, 'World') asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 8.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_6 [
+	
+	| text editor whitespace |
+	
+	text := ('Hello', String cr, ' World') asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 6.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_7 [
+	
+	| text editor whitespace |
+	
+	text := ('Hello', String cr, ' World') asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 7.
+	
+	self assert: whitespace = ' '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_8 [
+	
+	| text editor whitespace |
+	
+	text := ('Hello', String cr, ' World') asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 8.
+	
+	self assert: whitespace = ' '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_0 [
+	
+	| text editor whitespace |
+	
+	text := ' Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_1 [
+	
+	| text editor whitespace |
+	
+	text := ' Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
+	
+	self assert: whitespace = ' '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_2 [
+	
+	| text editor whitespace |
+	
+	text := ' Hello' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
+	
+	self assert: whitespace = ' '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_0 [
+	
+	| text editor whitespace |
+	
+	text := ' ' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_1 [
+	
+	| text editor whitespace |
+	
+	text := ' ' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
+	
+	self assert: whitespace = ' '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_0 [
+	
+	| text editor whitespace |
+	
+	text := '  ' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_1 [
+	
+	| text editor whitespace |
+	
+	text := '  ' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
+	
+	self assert: whitespace = ' '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_2 [
+	
+	| text editor whitespace |
+	
+	text := '  ' asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
+	
+	self assert: whitespace = '  '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_0 [
+	
+	| text editor whitespace |
+	
+	text := (' ', String tab) asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
+	
+	self assert: whitespace = ''.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_1 [
+	
+	| text editor whitespace |
+	
+	text := (' ', String tab) asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
+	
+	self assert: whitespace = ' '.
+	
+	^ whitespace
+]
+
+{ #category : #'utility - examples' }
+AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_2 [
+	
+	| text editor whitespace |
+	
+	text := (' ', String tab) asRopedText.
+	editor := AlbTextEditor new text: text.
+	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
+	
+	self assert: whitespace = (' ', String tab).
+	
+	^ whitespace
+]
+
 { #category : #'private - events' }
-AlbTextEditorOperatorExamples >> unsubscribe: anEventClass from: anElement [
+AlbTextEditorOperatorTest >> unsubscribe: anEventClass from: anElement [
 	anElement removeEventHandlersSuchThat: [ :anEventHandler | (anEventHandler isKindOf: BlEventHandler) and: [ anEventHandler eventClass = anEventClass ] ]
 ]

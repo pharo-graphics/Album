@@ -9,7 +9,7 @@ AlbEditorShortcutExamples >> deleteOneLetterAfterCursorWithSelection [
 	<gtExample>
 	| anEditorElement anEditor |
 	
-	anEditorElement := AlbTextEditorOperatorExamples new editorOnMultilineText.
+	anEditorElement := AlbTextEditorOperatorTest new test_editorOnMultilineText.
 	anEditor := anEditorElement editor.
 	
 	anEditor selecter
@@ -37,7 +37,7 @@ AlbEditorShortcutExamples >> deleteOneLetterAfterCursorWithSelectionBeforeCursor
 	<gtExample>
 	| anEditorElement anEditor |
 	
-	anEditorElement := AlbTextEditorOperatorExamples new editorOnMultilineText.
+	anEditorElement := AlbTextEditorOperatorTest new test_editorOnMultilineText.
 	anEditor := anEditorElement editor.
 	
 	anEditor selecter
@@ -62,7 +62,7 @@ AlbEditorShortcutExamples >> deleteOneLetterBeforeCursorWithSelection [
 	<gtExample>
 	| anEditorElement anEditor |
 	
-	anEditorElement := AlbTextEditorOperatorExamples new editorOnMultilineText.
+	anEditorElement := AlbTextEditorOperatorTest new test_editorOnMultilineText.
 	anEditor := anEditorElement editor.
 	
 	anEditor selecter
@@ -87,7 +87,7 @@ AlbEditorShortcutExamples >> deleteOneLetterBeforeCursorWithSelectionAfterCursor
 	<gtExample>
 	| anEditorElement anEditor |
 	
-	anEditorElement := AlbTextEditorOperatorExamples new editorOnMultilineText.
+	anEditorElement := AlbTextEditorOperatorTest new test_editorOnMultilineText.
 	anEditor := anEditorElement editor.
 	
 	anEditor selecter

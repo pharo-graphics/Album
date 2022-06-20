@@ -24,6 +24,18 @@ AlbTextEditorTest >> test_emptyEditor [
 ]
 
 { #category : #tests }
+AlbTextEditorTest >> test_insertString1 [
+
+	textEditor insertString: 'Z' at: textEditor text size.
+	textEditor insertString: 'A' at: 0.
+	self assert: textEditor text asString equals: 'AZ'.
+	self should: [textEditor insertString: 'A' at: -1] raise: Error.
+	self should: [textEditor insertString: 'A' at: 3] raise: Error.
+
+
+]
+
+{ #category : #tests }
 AlbTextEditorTest >> test_oneCharacter [
 	textEditor text: 'A' asRopedText.
 	self assert: textEditor text asString equals: 'A'.

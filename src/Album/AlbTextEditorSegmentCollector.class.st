@@ -337,7 +337,6 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	| intervalEnd cachedInterval actualStart skip forwardText stream |
 
 	"the index of the last already cached segment"
-	"the index of the last already cached segment"
 	intervalEnd := segmentsInterval last.
 
 	"indices interval of segments that we expect to cache in the end"
@@ -361,7 +360,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 		in: stream
 		offset: ((forwardText start - text textOffset - 1) max: 0).
 	
-	segments addAll: stream contents.
+	segments addAll: stream segments.
 	segmentsInterval := cachedInterval first to: cachedInterval first + segments size - 1.
 	
 	self computeSegmentIndices.
@@ -561,7 +560,7 @@ AlbTextEditorSegmentCollector >> moveTextBy: aNumber after: aSegment [
 
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> newSegmentStream [
-	^ LimitedWriteStream on: (Array new: 15).
+	^ AlbEditorSegmentStream new
 ]
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorLineSplitterTest,
 	#superclass : #TestCase,
-	#category : #'Album-Tests-TextEditor'
+	#category : #'Album-Tests-Model-Segment'
 }
 
 { #category : #accessing }
@@ -79,12 +79,12 @@ AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtributeReturningEmpty
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream contents size equals: 2.
-	self assert: aStream contents first textStart equals: 0.
-	self assert: aStream contents first textEnd equals: 5.
+	self assert: aStream segments size equals: 2.
+	self assert: aStream segments first textStart equals: 0.
+	self assert: aStream segments first textEnd equals: 5.
 	
-	self assert: aStream contents second textStart equals: 6.
-	self assert: aStream contents second textEnd equals: 6.
+	self assert: aStream segments second textStart equals: 6.
+	self assert: aStream segments second textEnd equals: 6.
 
 	^ aStream
 ]
@@ -112,12 +112,12 @@ AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtributeReturningTwoEl
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream contents size equals: 2.
-	self assert: aStream contents first textStart equals: 0.
-	self assert: aStream contents first textEnd equals: 5.
+	self assert: aStream segments size equals: 2.
+	self assert: aStream segments first textStart equals: 0.
+	self assert: aStream segments first textEnd equals: 5.
 	
-	self assert: aStream contents second textStart equals: 6.
-	self assert: aStream contents second textEnd equals: 6.
+	self assert: aStream segments second textStart equals: 6.
+	self assert: aStream segments second textEnd equals: 6.
 
 	^ aStream
 ]
@@ -145,12 +145,12 @@ AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtribute_FollowedByLf 
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream contents size equals: 2.
-	self assert: aStream contents first textStart equals: 0.
-	self assert: aStream contents first textEnd equals: 5.
+	self assert: aStream segments size equals: 2.
+	self assert: aStream segments first textStart equals: 0.
+	self assert: aStream segments first textEnd equals: 5.
 	
-	self assert: aStream contents second textStart equals: 6.
-	self assert: aStream contents second textEnd equals: 6.
+	self assert: aStream segments second textStart equals: 6.
+	self assert: aStream segments second textEnd equals: 6.
 
 	^ aStream
 ]
@@ -165,9 +165,9 @@ AlbTextEditorLineSplitterTest >> test_split_Cr [
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream contents size equals: 2.
+	self assert: aStream segments size equals: 2.
 
-	aSegment := aStream contents first.
+	aSegment := aStream segments first.
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment textEndDelimited equals: 1.
@@ -194,19 +194,19 @@ AlbTextEditorLineSplitterTest >> test_split_CrCr [
 
 	self assert: aStream segments size equals: 3.
 	
-	aSegment := aStream contents first.
+	aSegment := aStream segments first.
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment textEndDelimited equals: 1.
 	self assert: aSegment text asString equals: ''.
 	
-	aSegment := aStream contents second.
+	aSegment := aStream segments second.
 	self assert: aSegment textStart equals: 1.
 	self assert: aSegment textEnd equals: 1.
 	self assert: aSegment textEndDelimited equals: 2.
 	self assert: aSegment text asString equals: ''.
 	
-	aSegment := aStream contents third.
+	aSegment := aStream segments third.
 	self assert: aSegment textStart equals: 2.
 	self assert: aSegment textEnd equals: 2.
 	self assert: aSegment textEndDelimited equals: 2.
@@ -633,5 +633,5 @@ AlbTextEditorLineSplitterTest >> textLineSplitter [
 AlbTextEditorLineSplitterTest >> textSegmentStream [
 
 
-	^ LimitedWriteStream on: (Array new: 50).
+	^ AlbEditorSegmentStream new
 ]

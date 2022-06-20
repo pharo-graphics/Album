@@ -153,7 +153,6 @@ AlbTextEditorSegmentCollectorExamples >> textEditor [
 	| aTextEditor |
 
 	aTextEditor := AlbTextEditor new text: self largeFileRope.
-	aTextEditor segmentCollector cacheLimit: 500.
 		
 	^ aTextEditor
 ]

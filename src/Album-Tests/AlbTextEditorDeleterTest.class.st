@@ -1,15 +1,15 @@
 Class {
-	#name : #AlbTextEditorDeleterExamples,
-	#superclass : #AlbTextEditorOperatorExamples,
-	#category : #'Album-Examples-Operators'
+	#name : #AlbTextEditorDeleterTest,
+	#superclass : #AlbTextEditorOperatorTest,
+	#category : #'Album-Tests-Operators'
 }
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_0_cursorAt_0_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 0.
 
@@ -25,11 +25,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_0_cursorAt_0_selection_0_to_0 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_0_cursorAt_0_selection_0_to_10 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_10 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 10.
 	
@@ -45,11 +45,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_0_cursorAt_0_selection_0_to_10 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_1_cursorAt_0_selection_0_to_10 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_1_cursorAt_0_selection_0_to_10 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 10.
 	
@@ -65,11 +65,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_1_cursorAt_0_selection_0_to_10 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_10 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_10 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 10.
 	
@@ -85,11 +85,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_10 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_28 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_28 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 28.
 	
@@ -105,11 +105,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_28 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_29 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_29 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 29.
 	
@@ -125,11 +125,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_29 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_38 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 38.
 
@@ -145,11 +145,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_38 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_38_and_48_to_50 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38_and_48_to_50 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 38.
 	anEditor editor select: 48 to: 50.
@@ -166,11 +166,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_0_selection_0_to_38_and_
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_10_selection_0_to_10 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_10_selection_0_to_10 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 10.
 	anEditor editor select: 0 to: 10.
 	
@@ -186,11 +186,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_10_selection_0_to_10 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_28_selection_0_to_10 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_28_selection_0_to_10 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 28.
 	anEditor editor select: 0 to: 10.
 	
@@ -206,11 +206,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_28_selection_0_to_10 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_29_selection_0_to_10 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_29_selection_0_to_10 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 29.
 	anEditor editor select: 0 to: 10.
 
@@ -226,11 +226,11 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_29_selection_0_to_10 [
 ]
 
 { #category : #'examples - deletion' }
-AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_38_selection_0_to_10 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_38_selection_0_to_10 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 38.
 	anEditor editor select: 0 to: 10.
 
@@ -246,8 +246,8 @@ AlbTextEditorDeleterExamples >> delete_0_to_28_cursorAt_38_selection_0_to_10 [
 ]
 
 { #category : #'examples - deletion special' }
-AlbTextEditorDeleterExamples >> delete_0_to_5_from_HelloCr [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_delete_0_to_5_from_HelloCr [
+	
 	| anEditor |
 	
 	anEditor := self editorFor: 'hello', String cr.
@@ -262,8 +262,8 @@ AlbTextEditorDeleterExamples >> delete_0_to_5_from_HelloCr [
 ]
 
 { #category : #'examples - deletion special' }
-AlbTextEditorDeleterExamples >> surroundings_delete_at_0_from_parenthesis_open_close [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_surroundings_delete_at_0_from_parenthesis_open_close [
+	
 	| anEditor |
 	
 	anEditor := self editorFor: '()'.
@@ -282,8 +282,8 @@ AlbTextEditorDeleterExamples >> surroundings_delete_at_0_from_parenthesis_open_c
 ]
 
 { #category : #'examples - deletion special' }
-AlbTextEditorDeleterExamples >> surroundings_delete_at_1_from_parenthesis_open_close [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_close [
+	
 	| anEditor |
 	
 	anEditor := self editorFor: '()'.
@@ -302,8 +302,8 @@ AlbTextEditorDeleterExamples >> surroundings_delete_at_1_from_parenthesis_open_c
 ]
 
 { #category : #'examples - deletion special' }
-AlbTextEditorDeleterExamples >> surroundings_delete_at_1_from_parenthesis_open_close_close [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_close_close [
+	
 	| anEditor |
 	
 	anEditor := self editorFor: '())'.
@@ -322,8 +322,8 @@ AlbTextEditorDeleterExamples >> surroundings_delete_at_1_from_parenthesis_open_c
 ]
 
 { #category : #'examples - deletion special' }
-AlbTextEditorDeleterExamples >> surroundings_delete_at_2_from_parenthesis_open_close [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_close [
+	
 	| anEditor |
 	
 	anEditor := self editorFor: '()'.
@@ -342,8 +342,8 @@ AlbTextEditorDeleterExamples >> surroundings_delete_at_2_from_parenthesis_open_c
 ]
 
 { #category : #'examples - deletion special' }
-AlbTextEditorDeleterExamples >> surroundings_delete_at_2_from_parenthesis_open_close_selected_1_to_2 [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_close_selected_1_to_2 [
+	
 	| anEditor |
 	
 	anEditor := self editorFor: '()'.
@@ -367,8 +367,8 @@ AlbTextEditorDeleterExamples >> surroundings_delete_at_2_from_parenthesis_open_c
 ]
 
 { #category : #'examples - deletion special' }
-AlbTextEditorDeleterExamples >> surroundings_delete_at_2_from_parenthesis_open_open_close [
-	<gtExample>
+AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_open_close [
+	
 	| anEditor |
 	
 	anEditor := self editorFor: '(()'.

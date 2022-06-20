@@ -1,15 +1,15 @@
 Class {
-	#name : #AlbTextEditorSelecterExamples,
-	#superclass : #AlbTextEditorOperatorExamples,
-	#category : #'Album-Examples-Operators'
+	#name : #AlbTextEditorSelecterTest,
+	#superclass : #AlbTextEditorOperatorTest,
+	#category : #'Album-Tests-Operators'
 }
 
 { #category : #'examples - all' }
-AlbTextEditorSelecterExamples >> select_all_in_empty [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_all_in_empty [
+	
 	| anEditor |
 
-	anEditor := self editorOnEmptyText.
+	anEditor := self test_editorOnEmptyText.
 
 	anEditor selecter all select.
 
@@ -20,11 +20,11 @@ AlbTextEditorSelecterExamples >> select_all_in_empty [
 ]
 
 { #category : #'examples - all' }
-AlbTextEditorSelecterExamples >> select_all_in_empty_with_curor [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_all_in_empty_with_curor [
+	
 	| anEditor |
 
-	anEditor := self editorOnEmptyText.
+	anEditor := self test_editorOnEmptyText.
 
 	anEditor navigator
 		addAt: 0;
@@ -44,12 +44,12 @@ AlbTextEditorSelecterExamples >> select_all_in_empty_with_curor [
 ]
 
 { #category : #'examples - all' }
-AlbTextEditorSelecterExamples >> select_all_reduced [
+AlbTextEditorSelecterTest >> test_select_all_reduced [
 	"There was a bug, that if a new text is smaller than the existing selection, then things can go wrong"
-	<gtExample>
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		all
 		select.
@@ -75,11 +75,11 @@ AlbTextEditorSelecterExamples >> select_all_reduced [
 ]
 
 { #category : #'examples - from to' }
-AlbTextEditorSelecterExamples >> select_from_0_to_5 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_from_0_to_5 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	anEditor selecter
 		from: 0 to: 5;
@@ -92,11 +92,11 @@ AlbTextEditorSelecterExamples >> select_from_0_to_5 [
 ]
 
 { #category : #'examples - from to' }
-AlbTextEditorSelecterExamples >> select_from_0_to_5_in_steps [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_from_0_to_5_in_steps [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 
 	anEditor selecter
 		from: 0 to: 1;
@@ -117,11 +117,11 @@ AlbTextEditorSelecterExamples >> select_from_0_to_5_in_steps [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneDown_at_6 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 6.
 	
 	anEditor selecter
@@ -138,11 +138,11 @@ AlbTextEditorSelecterExamples >> select_moveOneDown_at_6 [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneDown_at_6_thenUp [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6_thenUp [
+	
 	| anEditor |
 
-	anEditor := self select_moveOneDown_at_6.
+	anEditor := self test_select_moveOneDown_at_6.
 	
 	anEditor selecter
 		moveOneUp;
@@ -157,11 +157,11 @@ AlbTextEditorSelecterExamples >> select_moveOneDown_at_6_thenUp [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneLeft_at_0 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_0 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor selecter moveOneToLeft; select.
 	self 
@@ -175,11 +175,11 @@ AlbTextEditorSelecterExamples >> select_moveOneLeft_at_0 [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneLeft_at_4 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 4.
 	
 	anEditor selecter
@@ -199,10 +199,10 @@ AlbTextEditorSelecterExamples >> select_moveOneLeft_at_4 [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneLeft_at_4_extendToNextWordEnd [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4_extendToNextWordEnd [
+	
 	| anEditor |
-	anEditor := self select_moveOneLeft_at_4.
+	anEditor := self test_select_moveOneLeft_at_4.
 
 	anEditor selecter
 		extendToNextWordEnd;
@@ -219,11 +219,11 @@ AlbTextEditorSelecterExamples >> select_moveOneLeft_at_4_extendToNextWordEnd [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneRight_at_6 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 6.
 	
 	anEditor selecter
@@ -243,11 +243,11 @@ AlbTextEditorSelecterExamples >> select_moveOneRight_at_6 [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToNextWordEnd [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd [
+	
 	| anEditor |
 
-	anEditor := self select_moveOneRight_at_6.
+	anEditor := self test_select_moveOneRight_at_6.
 
 	anEditor selecter
 		extendToNextWordEnd;
@@ -266,11 +266,11 @@ AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToNextWordEnd [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToNextWordEnd_twice [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd_twice [
+	
 	| anEditor |
 	
-	anEditor := self select_moveOneRight_at_6_extendToNextWordEnd.
+	anEditor := self test_select_moveOneRight_at_6_extendToNextWordEnd.
 	anEditor selecter
 		extendToNextWordEnd;
 		select.
@@ -288,11 +288,11 @@ AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToNextWordEnd_tw
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToPreviousWordStart [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordStart [
+	
 	| anEditor |
 	
-	anEditor := self select_moveOneRight_at_6.
+	anEditor := self test_select_moveOneRight_at_6.
 	anEditor selecter
 		extendToPreviousWordStart;
 		select.
@@ -310,11 +310,11 @@ AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToPreviousWordSt
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToPreviousWordStart_twice [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordStart_twice [
+	
 	| anEditor |
 	
-	anEditor := self select_moveOneRight_at_6_extendToPreviousWordStart.
+	anEditor := self test_select_moveOneRight_at_6_extendToPreviousWordStart.
 	anEditor selecter
 		extendToPreviousWordStart;
 		select.
@@ -332,11 +332,11 @@ AlbTextEditorSelecterExamples >> select_moveOneRight_at_6_extendToPreviousWordSt
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneRight_at_End [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneRight_at_End [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: anEditor text size.
 	anEditor selecter moveOneToRight; select.
 	self 
@@ -350,11 +350,11 @@ AlbTextEditorSelecterExamples >> select_moveOneRight_at_End [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneUp_at_35 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 35.
 	
 	anEditor selecter
@@ -371,11 +371,11 @@ AlbTextEditorSelecterExamples >> select_moveOneUp_at_35 [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveOneUp_at_35_thenDown [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35_thenDown [
+	
 	| anEditor |
 
-	anEditor := self select_moveOneUp_at_35.
+	anEditor := self test_select_moveOneUp_at_35.
 	
 	anEditor selecter
 		moveOneDown;
@@ -390,11 +390,11 @@ AlbTextEditorSelecterExamples >> select_moveOneUp_at_35_thenDown [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveTwiceLeft_at_1 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveTwiceLeft_at_1 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 1.
 	
 	anEditor selecter
@@ -418,11 +418,11 @@ AlbTextEditorSelecterExamples >> select_moveTwiceLeft_at_1 [
 ]
 
 { #category : #'examples - move' }
-AlbTextEditorSelecterExamples >> select_moveTwiceRight_at_End [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_moveTwiceRight_at_End [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: anEditor text size - 1.
 	anEditor selecter moveOneToRight; select.
 	anEditor editor moveCursorTo: anEditor text size.
@@ -444,11 +444,11 @@ AlbTextEditorSelecterExamples >> select_moveTwiceRight_at_End [
 ]
 
 { #category : #'examples - word' }
-AlbTextEditorSelecterExamples >> select_word_at_0 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_word_at_0 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		wordAt: 0;
 		select.
@@ -462,11 +462,11 @@ AlbTextEditorSelecterExamples >> select_word_at_0 [
 ]
 
 { #category : #'examples - word' }
-AlbTextEditorSelecterExamples >> select_word_at_1 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_word_at_1 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		wordAt: 1;
 		select.
@@ -480,11 +480,11 @@ AlbTextEditorSelecterExamples >> select_word_at_1 [
 ]
 
 { #category : #'examples - word' }
-AlbTextEditorSelecterExamples >> select_word_at_2 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_word_at_2 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		wordAt: 2;
 		select.
@@ -498,11 +498,11 @@ AlbTextEditorSelecterExamples >> select_word_at_2 [
 ]
 
 { #category : #'examples - word' }
-AlbTextEditorSelecterExamples >> select_word_at_2_and_10 [
-	<gtExample>
+AlbTextEditorSelecterTest >> test_select_word_at_2_and_10 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		wordAt: 2;
 		wordAt: 10;

@@ -155,7 +155,7 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aT
 		assert: [ aString isNotEmpty ]
 		description: [ 'String must not be empty' ].
 
-	aStream := aTextEditor segmentCollector newSegmentStream unlimited.
+	aStream := aTextEditor segmentCollector newSegmentStream .
 
 	self
 		split: (aTextEditor text from: aTextIndex + 1 to: aTextIndex + aString size)
@@ -167,7 +167,7 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aT
 		ifFound: [ :aSegment | aCurrentSegment := aSegment ]
 		ifNotFound: [ ^ self ].
 
-	theNewSegments := aCurrentSegment insert: aStream contents.
+	theNewSegments := aCurrentSegment insert: aStream segments.
 	theNewSegments size > 1
 		ifTrue: [ aTextEditor segmentCollector addSegments: theNewSegments allButFirst after: aCurrentSegment in: aTextEditor ].
 

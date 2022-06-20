@@ -1,15 +1,15 @@
 Class {
-	#name : #AlbTextEditorInserterExamples,
-	#superclass : #AlbTextEditorOperatorExamples,
-	#category : #'Album-Examples-Operators'
+	#name : #AlbTextEditorInserterTest,
+	#superclass : #AlbTextEditorOperatorTest,
+	#category : #'Album-Tests-Operators'
 }
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> filter_insert_Hello123Symbols_onlyAlphaNumeric [
-	<gtExample>
+AlbTextEditorInserterTest >> test_filter_insert_Hello123Symbols_onlyAlphaNumeric [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.	
+	anEditor := self test_editorOnMultilineText.	
 	anEditor editor moveCursorTo: 0.
 
 	anEditor inserter
@@ -26,11 +26,11 @@ AlbTextEditorInserterExamples >> filter_insert_Hello123Symbols_onlyAlphaNumeric 
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> filter_insert_Hello123_onlyDigits [
-	<gtExample>
+AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyDigits [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.	
+	anEditor := self test_editorOnMultilineText.	
 	anEditor editor moveCursorTo: 0.
 
 	anEditor inserter
@@ -47,11 +47,11 @@ AlbTextEditorInserterExamples >> filter_insert_Hello123_onlyDigits [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> filter_insert_Hello123_onlyLetters [
-	<gtExample>
+AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.	
+	anEditor := self test_editorOnMultilineText.	
 	anEditor editor moveCursorTo: 0.
 
 	anEditor inserter
@@ -68,12 +68,12 @@ AlbTextEditorInserterExamples >> filter_insert_Hello123_onlyLetters [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_atCursorAt_0_and_1_selection_no [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
+	
 	<description: '"Insertion at multiple cursors'>
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor navigator
 		addAt: 0;
 		addAt: 1;
@@ -94,11 +94,11 @@ AlbTextEditorInserterExamples >> insert_Hello_atCursorAt_0_and_1_selection_no [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_0_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 0.
 	
@@ -115,11 +115,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_0_selection_0_to_0 [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_0_selection_0_to_1 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_1 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 1.
 
@@ -136,11 +136,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_0_selection_0_to_1 [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 10.
 	
 	anEditor editor select: 0 to: 1. "A"
@@ -159,11 +159,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 10.
 	anEditor editor select: 0 to: 1. "A"
 	anEditor editor select: 8 to: 14. " river"
@@ -185,11 +185,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 10.
 	anEditor editor select: 0 to: 1. "A"
 	anEditor editor select: 8 to: 14. " river"
@@ -212,11 +212,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection_no_cursor [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection_no_cursor [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 10.
 	anEditor editor select: 0 to: 1. "A"
 	anEditor editor select: 8 to: 14. " river"
@@ -240,11 +240,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_10_selection_0_to_1_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_5_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_5_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 5.
 	anEditor editor select: 0 to: 0.
 
@@ -261,11 +261,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_0_cursorAt_5_selection_0_to_0 [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_1_cursorAt_0_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_0_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 0.
 	
@@ -282,11 +282,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_1_cursorAt_0_selection_0_to_0 [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_Hello_at_1_cursorAt_1_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_1_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 1.
 	anEditor editor select: 0 to: 0.
 
@@ -303,11 +303,11 @@ AlbTextEditorInserterExamples >> insert_Hello_at_1_cursorAt_1_selection_0_to_0 [
 ]
 
 { #category : #'examples - indentation' }
-AlbTextEditorInserterExamples >> insert_indentation_selection_0_to_1 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_1 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		from: 0 to: 1;
 		select.
@@ -327,11 +327,11 @@ AlbTextEditorInserterExamples >> insert_indentation_selection_0_to_1 [
 ]
 
 { #category : #'examples - indentation' }
-AlbTextEditorInserterExamples >> insert_indentation_selection_0_to_41 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_41 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		from: 0 to: 41;
 		select.
@@ -351,11 +351,11 @@ AlbTextEditorInserterExamples >> insert_indentation_selection_0_to_41 [
 ]
 
 { #category : #'examples - indentation' }
-AlbTextEditorInserterExamples >> insert_indentation_selection_1_to_2 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_indentation_selection_1_to_2 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		from: 1 to: 2;
 		select.
@@ -375,11 +375,11 @@ AlbTextEditorInserterExamples >> insert_indentation_selection_1_to_2 [
 ]
 
 { #category : #'examples - indentation' }
-AlbTextEditorInserterExamples >> insert_indentation_selection_29_to_67 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_indentation_selection_29_to_67 [
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor selecter
 		from: 29 to: 67;
 		select.
@@ -402,11 +402,11 @@ AlbTextEditorInserterExamples >> insert_indentation_selection_29_to_67 [
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_and_1_and_3_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_and_3_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 0.
 	
@@ -433,11 +433,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_and_1_and_3_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_and_1_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 0.
 	
@@ -459,11 +459,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_and_1_select
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_and_3_selection_0_to_1_withoutSelectionDelete [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_3_selection_0_to_1_withoutSelectionDelete [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 1.
 	
@@ -494,11 +494,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_and_3_select
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 0.
 	
@@ -516,11 +516,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_0_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_0_to_1 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_1 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 1.
 	
@@ -538,11 +538,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_0_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_0_to_1_withoutSelectionDelete [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_1_withoutSelectionDelete [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 1.
 	
@@ -564,11 +564,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_0_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_2_to_8_withoutSelectionDelete [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_2_to_8_withoutSelectionDelete [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 2 to: 8.
 	
@@ -591,11 +591,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_0_selection_2_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_10_selection_2_to_8_withoutSelectionDelete [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_10_selection_2_to_8_withoutSelectionDelete [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 10.
 	anEditor editor select: 2 to: 8.
 	
@@ -621,12 +621,12 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_10_selection_2
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorAccountingSelection_withoutSelectionDelete [
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorAccountingSelection_withoutSelectionDelete [
 	"I make sure that selected text gets surrounded if it is described in condition"
-	<gtExample>
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 1.
 	anEditor editor select: 1 to: 2.
 	
@@ -651,12 +651,12 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_1_selection_1_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorNotAccountingSelection_withoutSelectionDelete [
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorNotAccountingSelection_withoutSelectionDelete [
 	"I make sure that selected text is not surrounded if it is selected and when it is not described in operator"
-	<gtExample>
+	
 	| anEditor |
 
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 1.
 	anEditor editor select: 1 to: 2.
 	
@@ -681,11 +681,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_1_selection_1_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_2_selection_2_to_8_withoutSelectionDelete [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_2_selection_2_to_8_withoutSelectionDelete [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 2.
 	anEditor editor select: 2 to: 8.
 	
@@ -711,11 +711,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_2_selection_2_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_8_selection_2_to_8_withoutSelectionDelete [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_8_selection_2_to_8_withoutSelectionDelete [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 8.
 	anEditor editor select: 2 to: 8.
 	
@@ -741,11 +741,11 @@ AlbTextEditorInserterExamples >> insert_openParentheses_at_cursor_8_selection_2_
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_open_close_parentheses_at_cursor_0_selection_0_to_0 [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_open_close_parentheses_at_cursor_0_selection_0_to_0 [
+	
 	| anEditor |
 	
-	anEditor := self editorOnMultilineText.
+	anEditor := self test_editorOnMultilineText.
 	anEditor editor moveCursorTo: 0.
 	anEditor editor select: 0 to: 0.
 
@@ -769,11 +769,11 @@ AlbTextEditorInserterExamples >> insert_open_close_parentheses_at_cursor_0_selec
 ]
 
 { #category : #'examples - insertion' }
-AlbTextEditorInserterExamples >> insert_open_close_parentheses_with_selection_and_undo [
-	<gtExample>
+AlbTextEditorInserterTest >> test_insert_open_close_parentheses_with_selection_and_undo [
+	
 	
 	| editorElement editor |
-	editorElement := self editorOnEmptyText.
+	editorElement := self test_editorOnEmptyText.
 	editor := editorElement editor.
 	(editor inserter)
 		at: 0;

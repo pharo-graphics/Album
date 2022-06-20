@@ -4,7 +4,7 @@ I contain examples-tests of the editor backed up by line based segments
 Class {
 	#name : #AlbTextEditorLineSegmentTest,
 	#superclass : #TestCase,
-	#category : #'Album-Tests-TextEditor'
+	#category : #'Album-Tests-Model-Segment'
 }
 
 { #category : #accessing }
@@ -17,7 +17,7 @@ AlbTextEditorLineSegmentTest >> lineSegmentBuilder [
 AlbTextEditorLineSegmentTest >> segmentStream [
 
 	
-	^ (LimitedWriteStream on: (Array new: 50)) unlimited
+	^ AlbEditorSegmentStream new
 ]
 
 { #category : #cursor }
@@ -79,7 +79,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_1 [
 
 { #category : #cursor }
 AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_2 [
-	<gtExample>
+
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
@@ -108,7 +108,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_2 [
 
 { #category : #cursor }
 AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_3 [
-	<gtExample>
+
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
@@ -138,7 +138,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_3 [
 { #category : #cursor }
 AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_4 [
 	"In this example cursor is nowhere to be found in UI(in fact it is between Cr and Lf)"
-	<gtExample>
+
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
@@ -167,7 +167,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_4 [
 
 { #category : #cursor }
 AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_5 [
-	<gtExample>
+
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
@@ -196,7 +196,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_5 [
 
 { #category : #cursor }
 AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_6 [
-	<gtExample>
+
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
@@ -225,7 +225,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_6 [
 
 { #category : #cursor }
 AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_7 [
-	<gtExample>
+
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
@@ -254,7 +254,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_7 [
 
 { #category : #cursor }
 AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_8 [
-	<gtExample>
+
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
@@ -283,7 +283,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_8 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_ACrCr_in_HACrCrBA_at_2_4 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
@@ -299,7 +299,7 @@ AlbTextEditorLineSegmentTest >> test_delete_ACrCr_in_HACrCrBA_at_2_4 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_A_in_A_at_1_1 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_A_inEmptyAt_0.
 
@@ -315,7 +315,7 @@ AlbTextEditorLineSegmentTest >> test_delete_A_in_A_at_1_1 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_A_in_BA_at_2_2 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_B_in_A_at_0.
 	
@@ -331,7 +331,7 @@ AlbTextEditorLineSegmentTest >> test_delete_A_in_BA_at_2_2 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_A_in_BCrA_at_3_3 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_BA_At_1.
 
@@ -348,7 +348,7 @@ AlbTextEditorLineSegmentTest >> test_delete_A_in_BCrA_at_3_3 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_BA_in_BA_at_1_2 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_B_in_A_at_0.
 
@@ -364,7 +364,7 @@ AlbTextEditorLineSegmentTest >> test_delete_BA_in_BA_at_1_2 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_B_in_BA_at_1_1 [
-	<gtExample>
+
 	| aTextEditor theOldPieces theNewPieces |
 	aTextEditor := self test_insert_B_in_A_at_0.
 	
@@ -385,7 +385,7 @@ AlbTextEditorLineSegmentTest >> test_delete_B_in_BA_at_1_1 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrB_in_HACrCrBA_at_4_5 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
@@ -401,7 +401,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrB_in_HACrCrBA_at_4_5 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_1 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -419,7 +419,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_1 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_2 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -436,7 +436,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_2 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_3 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -453,7 +453,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_3 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_4 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -470,7 +470,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_4 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_5 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -486,7 +486,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_5 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_6 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -502,7 +502,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_6 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -518,7 +518,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_1_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -535,7 +535,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_1_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_2_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -553,7 +553,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_2_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_3_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -571,7 +571,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_3_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_4_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -589,7 +589,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_4_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_5_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -608,7 +608,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_5_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_6_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -627,7 +627,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_6_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_7_7 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
@@ -646,7 +646,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_7_7 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_CrCr_in_HACrCrBA_at_3_4 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
@@ -662,7 +662,7 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCr_in_HACrCrBA_at_3_4 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BACr_at_3_3 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_BA_At_2.
 
@@ -678,7 +678,7 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BACr_at_3_3 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BCrA_at_2_2 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_BA_At_1.
 
@@ -694,7 +694,7 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BCrA_at_2_2 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_Cr_in_Cr_at_1_1 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_inEmptyAt_0.
 	
@@ -710,7 +710,7 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_Cr_at_1_1 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_3_3 [
-	<gtExample>
+
 	| aTextEditor aRemovedListener aRemovedEvent |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 	
@@ -735,7 +735,7 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_3_3 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_4_4 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
@@ -752,7 +752,7 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_4_4 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_HACrCrBA_in_HACrCrBA_at_1_6 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
@@ -768,7 +768,7 @@ AlbTextEditorLineSegmentTest >> test_delete_HACrCrBA_in_HACrCrBA_at_1_6 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_HACrCrB_in_HACrCrBA_at_1_5 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
@@ -784,7 +784,7 @@ AlbTextEditorLineSegmentTest >> test_delete_HACrCrB_in_HACrCrBA_at_1_5 [
 
 { #category : #deletion }
 AlbTextEditorLineSegmentTest >> test_delete_HACrCr_in_HACrCrBA_at_1_4 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
@@ -827,7 +827,7 @@ AlbTextEditorLineSegmentTest >> test_emptyEditor [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_000_in_HABA_at_2 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 	
@@ -844,7 +844,7 @@ AlbTextEditorLineSegmentTest >> test_insert_000_in_HABA_at_2 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_A_inEmptyAt_0 [
-	<gtExample>
+
 	| aTextEditor |
 	
 	aTextEditor := self test_emptyEditor.
@@ -862,7 +862,7 @@ AlbTextEditorLineSegmentTest >> test_insert_A_inEmptyAt_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrBA_At_3 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
@@ -881,7 +881,7 @@ AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrBA_At_3 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrCrBA_At_3 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HACrBA_At_3.
 
@@ -902,7 +902,7 @@ AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrCrBA_At_3 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_B_in_A_at_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_A_inEmptyAt_0.
 	
@@ -919,7 +919,7 @@ AlbTextEditorLineSegmentTest >> test_insert_B_in_A_at_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_C_in_CrBA_At_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_BA_At_0.
 
@@ -938,7 +938,7 @@ AlbTextEditorLineSegmentTest >> test_insert_C_in_CrBA_At_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_CrLf_in_Hello_At_5 [
-	<gtExample>
+
 	| aTextEditor aSegment |
 	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 
@@ -963,7 +963,7 @@ AlbTextEditorLineSegmentTest >> test_insert_CrLf_in_Hello_At_5 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_D_in_CCrBA_At_1 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_C_in_CrBA_At_0.
 
@@ -982,7 +982,7 @@ AlbTextEditorLineSegmentTest >> test_insert_D_in_CCrBA_At_1 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_E_in_Hello_World_at_2 [
-	<gtExample>
+
 	| aTextEditor thePiecesBeforeInsertion |
 	aTextEditor := self test_insert_Hello_World_inEmptyAt_0.
 	
@@ -1019,7 +1019,7 @@ AlbTextEditorLineSegmentTest >> test_insert_E_in_Hello_World_at_2 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
-	<gtExample>
+
 	| aTextEditor aSegment |
 	aTextEditor := self test_emptyEditor.
 	
@@ -1039,7 +1039,7 @@ AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_Hello_World_inEmptyAt_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_emptyEditor.
 
@@ -1055,7 +1055,7 @@ AlbTextEditorLineSegmentTest >> test_insert_Hello_World_inEmptyAt_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_emptyEditor.
 
@@ -1071,7 +1071,7 @@ AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLineCrLf_in_HACrBA_At_3 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
@@ -1093,7 +1093,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLineCrLf_in_HACrBA_At_3 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_inCrAt_1 [
-	<gtExample>
+
 	| aTextEditor anInsertedListener anInsertedEvent |
 	aTextEditor := self test_insert_NewLine_inEmptyAt_0.
 
@@ -1119,7 +1119,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_inCrAt_1 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_inEmptyAt_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_emptyEditor.
 	
@@ -1136,7 +1136,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_inEmptyAt_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_B_in_A_at_0.
 	
@@ -1155,7 +1155,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_1 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_B_in_A_at_0.
 	
@@ -1174,7 +1174,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_1 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_2 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_B_in_A_at_0.
 	
@@ -1193,7 +1193,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_2 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CDCrBA_At_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_D_in_CCrBA_At_1.
 
@@ -1214,7 +1214,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CDCrBA_At_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CrCDCrBA_At_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CDCrBA_At_0.
 
@@ -1237,7 +1237,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CrCDCrBA_At_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CrCDCrBA_At_1 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_CDCrBA_At_0.
 
@@ -1260,7 +1260,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CrCDCrBA_At_1 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_0 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
@@ -1279,7 +1279,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_0 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_1 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
@@ -1298,7 +1298,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_1 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_2 [
-	<gtExample>
+
 	| aTextEditor aSegment |
 	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
@@ -1323,7 +1323,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_2 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_3 [
-	<gtExample>
+
 	| aTextEditor |
 	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
@@ -1342,7 +1342,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_3 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_4 [
-	<gtExample>
+	
 	| aTextEditor |
 	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
@@ -1361,7 +1361,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_4 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HACrBA_At_2 [
-	<gtExample>
+	
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
@@ -1382,7 +1382,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HACrBA_At_2 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HACrBA_At_3 [
-	<gtExample>
+	
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
@@ -1403,7 +1403,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HACrBA_At_3 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HeCrllo_At_3 [
-	<gtExample>
+	
 	| aTextEditor |
 	aTextEditor := self test_insert_NewLine_in_Hello_At_2.
 
@@ -1424,7 +1424,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HeCrllo_At_3 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloCrWorldCr_WithAppendingAfterWorld_at_5 [
-	<gtExample>
+	
 	| aTextEditor aSegment thePieces |
 	aTextEditor := self test_pieces_HelloCrWorldCr_WithAppendingAfterWorld.
 	
@@ -1498,7 +1498,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloCrWorldCr_WithAppend
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacementAndAppendingOfWorld_at_0 [
-	<gtExample>
+	
 	| aTextEditor aSegment thePieces |
 	aTextEditor := self test_pieces_Hello_World_WithReplacementAndAppendingOfWorld.
 	
@@ -1556,7 +1556,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacemen
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacementOfWorld_at_0 [
-	<gtExample>
+	
 	| aTextEditor aSegment thePieces |
 	aTextEditor := self test_pieces_Hello_World_WithReplacementOfWorld.
 	
@@ -1609,7 +1609,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacemen
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacementOfWorld_at_5 [
-	<gtExample>
+	
 	| aTextEditor aSegment thePieces |
 	aTextEditor := self test_pieces_Hello_World_WithReplacementOfWorld.
 	
@@ -1662,7 +1662,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacemen
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_Hello_At_2 [
-	<gtExample>
+	
 	| aTextEditor |
 	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 
@@ -1681,7 +1681,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_Hello_At_2 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_Hello_At_5 [
-	<gtExample>
+	
 	| aTextEditor |
 	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 
@@ -1700,7 +1700,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_Hello_At_5 [
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_haCrCrbaCr_inHelloAt_2 [
-	<gtExample>
+	
 	| aTextEditor |
 	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 

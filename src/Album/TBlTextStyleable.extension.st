@@ -6,7 +6,7 @@ TBlTextStyleable >> appendingAdornment: aBrTextAdornmentStencilBuilder [
 	A stencil builder can also be a block in the following form:
 	[ :aTBrTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text after which an element should be append"
 
-	self attributesBuilder attribute: (BrTextAdornmentDynamicAttribute new
+	self attributesBuilder attribute: (AlbTextAdornmentDynamicAttribute new
 		beAppend;
 		stencil: aBrTextAdornmentStencilBuilder)
 ]
@@ -15,12 +15,12 @@ TBlTextStyleable >> appendingAdornment: aBrTextAdornmentStencilBuilder [
 TBlTextStyleable >> hideText [
 	"Visually replace a piece of text with a repeating aCharacter"
 
-	self attributesBuilder attribute: BrTextHideAttribute new
+	self attributesBuilder attribute: AlbTextHideAttribute new
 ]
 
 { #category : #'*Album' }
 TBlTextStyleable >> lineSpacing: aNumber [
-	self attributesBuilder attribute: (BrTextParagraphLineSpacingAttribute lineSpacing: aNumber)
+	self attributesBuilder attribute: (AlbTextParagraphLineSpacingAttribute lineSpacing: aNumber)
 ]
 
 { #category : #'*Album' }
@@ -28,7 +28,7 @@ TBlTextStyleable >> onClick: aClickAction [
 	"Perform actions when a user clicks on a piece of text.
 	The click action is a block in the following form: [ :aTBrTextEditorTextualPiece :aWorldElement :anEditorElement :anEvent | ]"
 
-	self attributesBuilder attribute: (BrTextClickAttribute new action: aClickAction)
+	self attributesBuilder attribute: (AlbTextClickAttribute new action: aClickAction)
 ]
 
 { #category : #'*Album' }
@@ -37,14 +37,14 @@ TBlTextStyleable >> onCursorEnter: anEnterAction leave: aLeaveAction [
 	The enter action is a block in the following form: [ :aTextEditor :aBrTextEditorCursorAddedEvent :anAttributeStart :anAttributeEnd | ]
 	The leave action is a block in the following form: [ :aTextEditor :aBrTextEditorCursorRemovedEvent :anAttributeStart :anAttributeEnd | ]"
 
-	self attributesBuilder attribute: (BrTextCursorAttribute new
+	self attributesBuilder attribute: (AlbTextCursorAttribute new
 			enterAction: anEnterAction;
 			leaveAction: aLeaveAction)
 ]
 
 { #category : #'*Album' }
 TBlTextStyleable >> paragraphMargin: anInsets [
-	self attributesBuilder attribute: (BrTextParagraphMarginAttribute paragraphMargin: anInsets)
+	self attributesBuilder attribute: (AlbTextParagraphMarginAttribute paragraphMargin: anInsets)
 ]
 
 { #category : #'*Album' }
@@ -53,7 +53,7 @@ TBlTextStyleable >> replacingAdornment: aBrTextAdornmentStencilBuilder [
 	A stencil builder can also be a block in the following form:
 	[ :aTBrTextEditorTextualPiece :anEditorElement | ] - where aText represents a piece of text that should be replaced"
 
-	self attributesBuilder attribute: (BrTextAdornmentDynamicAttribute new
+	self attributesBuilder attribute: (AlbTextAdornmentDynamicAttribute new
 		beReplace;
 		stencil: aBrTextAdornmentStencilBuilder)
 ]
@@ -62,15 +62,15 @@ TBlTextStyleable >> replacingAdornment: aBrTextAdornmentStencilBuilder [
 TBlTextStyleable >> replacingText: aCharacter [
 	"Visually replace a piece of text with a repeating aCharacter"
 
-	self attributesBuilder attribute: (BrTextReplacingAttribute new withCharacter: aCharacter)
+	self attributesBuilder attribute: (AlbTextReplacingAttribute new withCharacter: aCharacter)
 ]
 
 { #category : #'*Album' }
 TBlTextStyleable >> roundedBackground: aPaint [
-	self attributesBuilder attribute: (BrTextEmbellishmentAttribute new roundedBackground: aPaint)
+	self attributesBuilder attribute: (AlbTextEmbellishmentAttribute new roundedBackground: aPaint)
 ]
 
 { #category : #'*Album' }
 TBlTextStyleable >> wordPadding: anInsets [
-	self attributesBuilder attribute: (BrTextParagraphWordPaddingAttribute wordPadding: anInsets)
+	self attributesBuilder attribute: (AlbTextParagraphWordPaddingAttribute wordPadding: anInsets)
 ]

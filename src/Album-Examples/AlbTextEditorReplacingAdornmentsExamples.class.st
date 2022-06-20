@@ -65,7 +65,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleRepl
 				size: 20@20;
 				background: Color blue ].
 
-	^ aText onAlbTextEditor openInOblSpace 
+	^ aText onAlbum openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -81,7 +81,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementA
 				size: 20@20;
 				background: Color gray ].
 
-	^ aText onAlbTextEditor openInOblSpace 
+	^ aText onAlbum openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -98,7 +98,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementF
 				size: 20@20;
 				background: Color blue ].
 			
-	^ aText onAlbTextEditor openInOblSpace 
+	^ aText onAlbum openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -115,7 +115,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementL
 				size: 20@20;
 				background: Color gray ].
 			
-	^ aText onAlbTextEditor openInOblSpace 
+	^ aText onAlbum openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -132,5 +132,5 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementM
 				size: 20@20;
 				background: Color red ].
 
-	^ aText onAlbTextEditor openInOblSpace 
+	^ aText onAlbum openInOblSpace 
 ]

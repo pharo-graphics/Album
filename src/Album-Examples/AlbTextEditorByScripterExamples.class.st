@@ -21,7 +21,7 @@ AlbTextEditorByScripterExamples class >> click_adornment_element [
 
 	aScripter check
 		value: [ :aAlbTextEditor | aAlbTextEditor cursors positions ] equals: #();
-		onAlbTextEditor;
+		onAlbum;
 		play.
 
 	aScripter check
@@ -43,7 +43,7 @@ AlbTextEditorByScripterExamples class >> click_empty [
 
 	aScripter check
 		value: [ :aAlbTextEditor | aAlbTextEditor cursors positions ] equals: #(0);
-		onAlbTextEditor;
+		onAlbum;
 		play.
 
 	aScripter check
@@ -76,7 +76,7 @@ AlbTextEditorByScripterExamples class >> scripterWithElement [
 	
 	aScripter check
 		value: [ :aAlbTextEditor | aAlbTextEditor cursors positions ] equals: #();
-		onAlbTextEditor;
+		onAlbum;
 		play.
 
 	aScripter check

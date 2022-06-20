@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'textEditor'
 	],
-	#category : #'Album-Tests-Model'
+	#category : #'Album-Tests-TextEditor'
 }
 
 { #category : #initialization }

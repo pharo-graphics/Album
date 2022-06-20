@@ -1,12 +1,12 @@
 Class {
-	#name : #AlbTextEditorLineSplitterExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-Editor'
+	#name : #AlbTextEditorLineSplitterTest,
+	#superclass : #TestCase,
+	#category : #'Album-Tests-TextEditor'
 }
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> beReplaceTextAttribute [
-	<gtExample>
+{ #category : #accessing }
+AlbTextEditorLineSplitterTest >> beReplaceTextAttribute [
+
 	^ AlbTextAdornmentDynamicAttribute new
 		beReplace;
 		stencil: [ BlElement new 
@@ -14,17 +14,17 @@ AlbTextEditorLineSplitterExamples >> beReplaceTextAttribute [
 			background: Color lightGray ]
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> beReplaceTextAttributeReturningEmptyCollection [
-	<gtExample>
+{ #category : #accessing }
+AlbTextEditorLineSplitterTest >> beReplaceTextAttributeReturningEmptyCollection [
+
 	^ AlbTextAdornmentDynamicAttribute new
 		beReplace;
 		stencil: [ #() ]
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> beReplaceTextAttributeReturningTwoElements [
-	<gtExample>
+{ #category : #accessing }
+AlbTextEditorLineSplitterTest >> beReplaceTextAttributeReturningTwoElements [
+
 	^ AlbTextAdornmentDynamicAttribute new
 		beReplace;
 		stencil: [ 
@@ -36,9 +36,8 @@ AlbTextEditorLineSplitterExamples >> beReplaceTextAttributeReturningTwoElements 
 				background: Color gray } ]
 ]
 
-{ #category : #'examples - split subtext' }
-AlbTextEditorLineSplitterExamples >> splitSub_Hello_from_HabaHelloFoo [
-	<gtExample>
+{ #category : #'split subtext' }
+AlbTextEditorLineSplitterTest >> test_splitSub_Hello_from_HabaHelloFoo [
 	| aText aSubText aSplitter aStream |
 
 	aText := 'HabaHelloFoo' asRopedText.
@@ -56,9 +55,9 @@ AlbTextEditorLineSplitterExamples >> splitSub_Hello_from_HabaHelloFoo [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_BeReplacedTextAtributeReturningEmptyCollection_FollowedByLf [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtributeReturningEmptyCollection_FollowedByLf [
+
 	| aText aSplitter aStream aTextAttribute theAttributes |
 
 	aTextAttribute := self beReplaceTextAttributeReturningEmptyCollection.
@@ -80,19 +79,18 @@ AlbTextEditorLineSplitterExamples >> split_BeReplacedTextAtributeReturningEmptyC
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream segments size equals: 2.
-	self assert: aStream segments first textStart equals: 0.
-	self assert: aStream segments first textEnd equals: 5.
+	self assert: aStream contents size equals: 2.
+	self assert: aStream contents first textStart equals: 0.
+	self assert: aStream contents first textEnd equals: 5.
 	
-	self assert: aStream segments second textStart equals: 6.
-	self assert: aStream segments second textEnd equals: 6.
+	self assert: aStream contents second textStart equals: 6.
+	self assert: aStream contents second textEnd equals: 6.
 
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_BeReplacedTextAtributeReturningTwoElements_FollowedByLf [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtributeReturningTwoElements_FollowedByLf [
 	| aText aSplitter aStream aTextAttribute theAttributes |
 
 	aTextAttribute := self beReplaceTextAttributeReturningTwoElements.
@@ -114,19 +112,18 @@ AlbTextEditorLineSplitterExamples >> split_BeReplacedTextAtributeReturningTwoEle
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream segments size equals: 2.
-	self assert: aStream segments first textStart equals: 0.
-	self assert: aStream segments first textEnd equals: 5.
+	self assert: aStream contents size equals: 2.
+	self assert: aStream contents first textStart equals: 0.
+	self assert: aStream contents first textEnd equals: 5.
 	
-	self assert: aStream segments second textStart equals: 6.
-	self assert: aStream segments second textEnd equals: 6.
+	self assert: aStream contents second textStart equals: 6.
+	self assert: aStream contents second textEnd equals: 6.
 
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_BeReplacedTextAtribute_FollowedByLf [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtribute_FollowedByLf [
 	| aText aSplitter aStream aTextAttribute theAttributes |
 
 	aTextAttribute := self beReplaceTextAttribute.
@@ -148,19 +145,18 @@ AlbTextEditorLineSplitterExamples >> split_BeReplacedTextAtribute_FollowedByLf [
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream segments size equals: 2.
-	self assert: aStream segments first textStart equals: 0.
-	self assert: aStream segments first textEnd equals: 5.
+	self assert: aStream contents size equals: 2.
+	self assert: aStream contents first textStart equals: 0.
+	self assert: aStream contents first textEnd equals: 5.
 	
-	self assert: aStream segments second textStart equals: 6.
-	self assert: aStream segments second textEnd equals: 6.
+	self assert: aStream contents second textStart equals: 6.
+	self assert: aStream contents second textEnd equals: 6.
 
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_Cr [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_Cr [
 	| aText aSplitter aStream aSegment |
 
 	aText := String cr asRopedText.
@@ -169,9 +165,9 @@ AlbTextEditorLineSplitterExamples >> split_Cr [
 
 	aSplitter split: aText in: aStream.
 
-	self assert: aStream segments size equals: 2.
+	self assert: aStream contents size equals: 2.
 
-	aSegment := aStream segments first.
+	aSegment := aStream contents first.
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment textEndDelimited equals: 1.
@@ -186,9 +182,8 @@ AlbTextEditorLineSplitterExamples >> split_Cr [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_CrCr [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_CrCr [
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, String cr) asRopedText.
@@ -199,19 +194,19 @@ AlbTextEditorLineSplitterExamples >> split_CrCr [
 
 	self assert: aStream segments size equals: 3.
 	
-	aSegment := aStream segments first.
+	aSegment := aStream contents first.
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment textEndDelimited equals: 1.
 	self assert: aSegment text asString equals: ''.
 	
-	aSegment := aStream segments second.
+	aSegment := aStream contents second.
 	self assert: aSegment textStart equals: 1.
 	self assert: aSegment textEnd equals: 1.
 	self assert: aSegment textEndDelimited equals: 2.
 	self assert: aSegment text asString equals: ''.
 	
-	aSegment := aStream segments third.
+	aSegment := aStream contents third.
 	self assert: aSegment textStart equals: 2.
 	self assert: aSegment textEnd equals: 2.
 	self assert: aSegment textEndDelimited equals: 2.
@@ -220,9 +215,8 @@ AlbTextEditorLineSplitterExamples >> split_CrCr [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_CrLf [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_CrLf [
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, String lf) asRopedText.
@@ -248,9 +242,9 @@ AlbTextEditorLineSplitterExamples >> split_CrLf [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_CrLfCrLf [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_CrLfCrLf [
+
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, String lf, String cr, String lf) asRopedText.
@@ -282,9 +276,9 @@ AlbTextEditorLineSplitterExamples >> split_CrLfCrLf [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_Cra [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_Cra [
+
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, 'a') asRopedText.
@@ -308,9 +302,8 @@ AlbTextEditorLineSplitterExamples >> split_Cra [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_CraCr [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_CraCr [
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, 'a', String cr) asRopedText.
@@ -339,9 +332,8 @@ AlbTextEditorLineSplitterExamples >> split_CraCr [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_CraCrLf [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_CraCrLf [
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, 'a', String cr, String lf) asRopedText.
@@ -370,9 +362,8 @@ AlbTextEditorLineSplitterExamples >> split_CraCrLf [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_CraCrLfb [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_CraCrLfb [
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, 'a', String cr, String lf, 'b') asRopedText.
@@ -401,9 +392,8 @@ AlbTextEditorLineSplitterExamples >> split_CraCrLfb [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_CraCrLfbLf [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_CraCrLfbLf [
 	| aText aSplitter aStream aSegment |
 
 	aText := (String cr, 'a', String cr, String lf, 'b', String lf) asRopedText.
@@ -440,9 +430,8 @@ AlbTextEditorLineSplitterExamples >> split_CraCrLfbLf [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_Hello [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_Hello [
 	| aText aSplitter aStream aSegment |
 
 	aText := 'Hello' asRopedText.
@@ -461,9 +450,8 @@ AlbTextEditorLineSplitterExamples >> split_Hello [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_HelloCrBeautifulCrWorldWithReplacement [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_HelloCrBeautifulCrWorldWithReplacement [
 	| aText aSplitter aStream |
 
 	aText := ('Hello', String cr, 'World') asRopedText.
@@ -481,9 +469,9 @@ AlbTextEditorLineSplitterExamples >> split_HelloCrBeautifulCrWorldWithReplacemen
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_HelloCrBeautifulCrWorldWithReplacementAndAppending [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_HelloCrBeautifulCrWorldWithReplacementAndAppending [
+
 	| aText aSplitter aStream |
 
 	aText := ('Hello', String cr, 'World') asRopedText.
@@ -503,9 +491,8 @@ AlbTextEditorLineSplitterExamples >> split_HelloCrBeautifulCrWorldWithReplacemen
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_HelloCrWorldWithReplacement [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_HelloCrWorldWithReplacement [
 	| aText aSplitter aStream |
 
 	aText := ('Hello', String cr, 'World') asRopedText.
@@ -523,9 +510,8 @@ AlbTextEditorLineSplitterExamples >> split_HelloCrWorldWithReplacement [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_HelloSpaceWorldWithReplacementOfSpace [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_HelloSpaceWorldWithReplacementOfSpace [
 	| aText aSplitter aStream |
 
 	aText := ('Hello World') asRopedText.
@@ -543,9 +529,8 @@ AlbTextEditorLineSplitterExamples >> split_HelloSpaceWorldWithReplacementOfSpace
 	^ aStream
 ]
 
-{ #category : #'examples - split subtext' }
-AlbTextEditorLineSplitterExamples >> split_Hello_from_HabaHelloFoo [
-	<gtExample>
+{ #category : #'split subtext' }
+AlbTextEditorLineSplitterTest >> test_split_Hello_from_HabaHelloFoo [
 	| aText aSplitter aStream |
 
 	aText := 'HabaHelloFoo' asRopedText.
@@ -562,9 +547,8 @@ AlbTextEditorLineSplitterExamples >> split_Hello_from_HabaHelloFoo [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_a [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_a [
 	| aText aSplitter aStream aSegment |
 
 	aText := ('a') asRopedText.
@@ -583,9 +567,8 @@ AlbTextEditorLineSplitterExamples >> split_a [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_empty [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_empty [
 	| aText aSplitter aStream aSegment |
 
 	aText := '' asRopedText.
@@ -604,9 +587,8 @@ AlbTextEditorLineSplitterExamples >> split_empty [
 	^ aStream
 ]
 
-{ #category : #'examples - split' }
-AlbTextEditorLineSplitterExamples >> split_haCrCrbaCr [
-	<gtExample>
+{ #category : #split }
+AlbTextEditorLineSplitterTest >> test_split_haCrCrbaCr [
 	| aText aSplitter aStream aSegment |
 
 	aText := ('ha', String cr, String cr, 'ba', String cr) asRopedText.
@@ -640,16 +622,16 @@ AlbTextEditorLineSplitterExamples >> split_haCrCrbaCr [
 	^ aStream
 ]
 
-{ #category : #'examples - instance creation' }
-AlbTextEditorLineSplitterExamples >> textLineSplitter [
-	<gtExample>
+{ #category : #accessing }
+AlbTextEditorLineSplitterTest >> textLineSplitter [
+
 
 	^ AlbTextEditorLineSplitter new
 ]
 
-{ #category : #'examples - instance creation' }
-AlbTextEditorLineSplitterExamples >> textSegmentStream [
-	<gtExample>
+{ #category : #accessing }
+AlbTextEditorLineSplitterTest >> textSegmentStream [
+
 
 	^ LimitedWriteStream on: (Array new: 50).
 ]

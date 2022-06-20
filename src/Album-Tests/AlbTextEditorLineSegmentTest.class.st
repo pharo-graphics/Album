@@ -2,17 +2,29 @@
 I contain examples-tests of the editor backed up by line based segments
 "
 Class {
-	#name : #AlbTextEditorLineSegmentExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-Editor'
+	#name : #AlbTextEditorLineSegmentTest,
+	#superclass : #TestCase,
+	#category : #'Album-Tests-TextEditor'
 }
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_0 [
-	<gtExample>
+{ #category : #accessing }
+AlbTextEditorLineSegmentTest >> lineSegmentBuilder [
+	
+	^ AlbTextEditorLineSegmentBuilder new
+]
+
+{ #category : #accessing }
+AlbTextEditorLineSegmentTest >> segmentStream [
+
+	
+	^ (LimitedWriteStream on: (Array new: 50)) unlimited
+]
+
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_0 [
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 0.
 	
 	"cursor is in the first segment"
@@ -36,12 +48,12 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_1 [
-	<gtExample>
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_1 [
+
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 1.
 	
 	"cursor is in the first segment"
@@ -65,12 +77,12 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_2 [
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_2 [
 	<gtExample>
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 2.
 	
 	"cursor is in the first segment"
@@ -94,12 +106,12 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_3 [
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_3 [
 	<gtExample>
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 3.
 
 	"cursor is not in the first segment"
@@ -123,13 +135,13 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_4 [
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_4 [
 	"In this example cursor is nowhere to be found in UI(in fact it is between Cr and Lf)"
 	<gtExample>
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 4.
 
 	"cursor is not in the first segment"
@@ -153,12 +165,12 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_5 [
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_5 [
 	<gtExample>
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 5.
 
 	"cursor is not in the first segment"
@@ -182,12 +194,12 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_5 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_6 [
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_6 [
 	<gtExample>
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 6.
 
 	"cursor is not in the first segment"
@@ -211,12 +223,12 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_6 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_7 [
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_7 [
 	<gtExample>
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 7.
 
 	"cursor is not in the first segment"
@@ -240,12 +252,12 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - cursor' }
-AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_8 [
+{ #category : #cursor }
+AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_8 [
 	<gtExample>
 	| aTextEditor aSegment aCursor |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	aCursor := AlbTextEditorSingleCursor new position: 8.
 
 	"cursor is not in the first segment"
@@ -269,11 +281,11 @@ AlbTextEditorLineSegmentExamples >> cursor_in_HACrCrLfBA_at_8 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_ACrCr_in_HACrCrBA_at_2_4 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_ACrCr_in_HACrCrBA_at_2_4 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
 	aTextEditor delete: 1 to: 4.
 
@@ -285,11 +297,11 @@ AlbTextEditorLineSegmentExamples >> delete_ACrCr_in_HACrCrBA_at_2_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_A_in_A_at_1_1 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_A_in_A_at_1_1 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_A_inEmptyAt_0.
+	aTextEditor := self test_insert_A_inEmptyAt_0.
 
 	aTextEditor delete: 0 to: 1.
 
@@ -301,11 +313,11 @@ AlbTextEditorLineSegmentExamples >> delete_A_in_A_at_1_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_A_in_BA_at_2_2 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_A_in_BA_at_2_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_B_in_A_at_0.
+	aTextEditor := self test_insert_B_in_A_at_0.
 	
 	aTextEditor delete: 1 to: 2.
 
@@ -317,11 +329,11 @@ AlbTextEditorLineSegmentExamples >> delete_A_in_BA_at_2_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_A_in_BCrA_at_3_3 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_A_in_BCrA_at_3_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_BA_At_1.
+	aTextEditor := self test_insert_NewLine_in_BA_At_1.
 
 	aTextEditor delete: 2 to: 3.
 
@@ -334,11 +346,11 @@ AlbTextEditorLineSegmentExamples >> delete_A_in_BCrA_at_3_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_BA_in_BA_at_1_2 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_BA_in_BA_at_1_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_B_in_A_at_0.
+	aTextEditor := self test_insert_B_in_A_at_0.
 
 	aTextEditor delete: 0 to: 2.
 
@@ -350,11 +362,11 @@ AlbTextEditorLineSegmentExamples >> delete_BA_in_BA_at_1_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_B_in_BA_at_1_1 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_B_in_BA_at_1_1 [
 	<gtExample>
 	| aTextEditor theOldPieces theNewPieces |
-	aTextEditor := self insert_B_in_A_at_0.
+	aTextEditor := self test_insert_B_in_A_at_0.
 	
 	theOldPieces := aTextEditor segmentCollector segments first pieces.
 
@@ -371,11 +383,11 @@ AlbTextEditorLineSegmentExamples >> delete_B_in_BA_at_1_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrB_in_HACrCrBA_at_4_5 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrB_in_HACrCrBA_at_4_5 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
 	aTextEditor delete: 3 to: 5.
 
@@ -387,11 +399,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrB_in_HACrCrBA_at_4_5 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_1 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_1 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 0 to: 1.
 
@@ -405,11 +417,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_2 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 0 to: 2.
 
@@ -422,11 +434,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_3 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 0 to: 3.
 
@@ -439,11 +451,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_4 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_4 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 0 to: 4.
 
@@ -456,11 +468,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_5 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_5 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 0 to: 5.
 
@@ -472,11 +484,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_5 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_6 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_6 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 0 to: 6.
 
@@ -488,11 +500,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_6 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 0 to: 7.
 
@@ -504,11 +516,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_1_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_1_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 1 to: 7.
 
@@ -521,11 +533,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_1_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_2_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_2_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 2 to: 7.
 
@@ -539,11 +551,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_2_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_3_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_3_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 3 to: 7.
 
@@ -557,11 +569,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_3_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_4_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_4_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 4 to: 7.
 
@@ -575,11 +587,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_4_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_5_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_5_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 5 to: 7.
 
@@ -594,11 +606,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_5_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_6_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_6_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 6 to: 7.
 
@@ -613,11 +625,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_6_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_7_7 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_7_7 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CrCDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CrCDCrBA_At_0.
 
 	aTextEditor delete: 7 to: 7.
 
@@ -632,11 +644,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCrCDCrBA_in_CrCrCDCrBA_at_7_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_CrCr_in_HACrCrBA_at_3_4 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_CrCr_in_HACrCrBA_at_3_4 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
 	aTextEditor delete: 2 to: 4.
 
@@ -648,11 +660,11 @@ AlbTextEditorLineSegmentExamples >> delete_CrCr_in_HACrCrBA_at_3_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_Cr_in_BACr_at_3_3 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BACr_at_3_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_BA_At_2.
+	aTextEditor := self test_insert_NewLine_in_BA_At_2.
 
 	aTextEditor delete: 2 to: 3.
 
@@ -664,11 +676,11 @@ AlbTextEditorLineSegmentExamples >> delete_Cr_in_BACr_at_3_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_Cr_in_BCrA_at_2_2 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BCrA_at_2_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_BA_At_1.
+	aTextEditor := self test_insert_NewLine_in_BA_At_1.
 
 	aTextEditor delete: 1 to: 2.
 
@@ -680,11 +692,11 @@ AlbTextEditorLineSegmentExamples >> delete_Cr_in_BCrA_at_2_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_Cr_in_Cr_at_1_1 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_Cr_in_Cr_at_1_1 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_inEmptyAt_0.
+	aTextEditor := self test_insert_NewLine_inEmptyAt_0.
 	
 	aTextEditor delete: 0 to: 1.
 
@@ -696,11 +708,11 @@ AlbTextEditorLineSegmentExamples >> delete_Cr_in_Cr_at_1_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_Cr_in_HACrCrBA_at_3_3 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_3_3 [
 	<gtExample>
 	| aTextEditor aRemovedListener aRemovedEvent |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 	
 	aRemovedListener := BlEventHandler on: BlInfiniteDataSourceItemRangeRemoved do: [ :anEvent | aRemovedEvent := anEvent ].
 	aTextEditor addEventHandler: aRemovedListener.
@@ -721,11 +733,11 @@ AlbTextEditorLineSegmentExamples >> delete_Cr_in_HACrCrBA_at_3_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_Cr_in_HACrCrBA_at_4_4 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_4_4 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
 	aTextEditor delete: 3 to: 4.
 
@@ -738,11 +750,11 @@ AlbTextEditorLineSegmentExamples >> delete_Cr_in_HACrCrBA_at_4_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_HACrCrBA_in_HACrCrBA_at_1_6 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_HACrCrBA_in_HACrCrBA_at_1_6 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
 	aTextEditor delete: 0 to: 6.
 
@@ -754,11 +766,11 @@ AlbTextEditorLineSegmentExamples >> delete_HACrCrBA_in_HACrCrBA_at_1_6 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_HACrCrB_in_HACrCrBA_at_1_5 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_HACrCrB_in_HACrCrBA_at_1_5 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
 	aTextEditor delete: 0 to: 5.
 
@@ -770,11 +782,11 @@ AlbTextEditorLineSegmentExamples >> delete_HACrCrB_in_HACrCrBA_at_1_5 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - deletion' }
-AlbTextEditorLineSegmentExamples >> delete_HACrCr_in_HACrCrBA_at_1_4 [
+{ #category : #deletion }
+AlbTextEditorLineSegmentTest >> test_delete_HACrCr_in_HACrCrBA_at_1_4 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_2.
 
 	aTextEditor delete: 0 to: 4.
 
@@ -786,9 +798,9 @@ AlbTextEditorLineSegmentExamples >> delete_HACrCr_in_HACrCrBA_at_1_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'instance creation' }
-AlbTextEditorLineSegmentExamples >> emptyEditor [
-	<gtExample>
+{ #category : #accessing }
+AlbTextEditorLineSegmentTest >> test_emptyEditor [
+
 	| aTextEditor aTextEditorElement aSegmentElement aPieceElement |
 	
 	aTextEditor := AlbTextEditor new segmentBuilder: self lineSegmentBuilder.
@@ -813,11 +825,11 @@ AlbTextEditorLineSegmentExamples >> emptyEditor [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_000_in_HABA_at_2 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_000_in_HABA_at_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_HABA_inEmptyAt_0.
+	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 	
 	aTextEditor insertString: '000' at: 2.
 
@@ -830,12 +842,12 @@ AlbTextEditorLineSegmentExamples >> insert_000_in_HABA_at_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_A_inEmptyAt_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_A_inEmptyAt_0 [
 	<gtExample>
 	| aTextEditor |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	
 	aTextEditor insertString: 'A' at: 0.
 	
@@ -848,11 +860,11 @@ AlbTextEditorLineSegmentExamples >> insert_A_inEmptyAt_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_A_in_HACrBA_At_3 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrBA_At_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HABA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
 	aTextEditor insertString: 'A' at: 3.
 
@@ -867,11 +879,11 @@ AlbTextEditorLineSegmentExamples >> insert_A_in_HACrBA_At_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_A_in_HACrCrBA_At_3 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrCrBA_At_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLine_in_HACrBA_At_3.
 
 	aTextEditor insertString: 'A' at: 3.
 
@@ -888,11 +900,11 @@ AlbTextEditorLineSegmentExamples >> insert_A_in_HACrCrBA_At_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_B_in_A_at_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_B_in_A_at_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_A_inEmptyAt_0.
+	aTextEditor := self test_insert_A_inEmptyAt_0.
 	
 	aTextEditor insertString: 'B' at: 0.
 
@@ -905,11 +917,11 @@ AlbTextEditorLineSegmentExamples >> insert_B_in_A_at_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_C_in_CrBA_At_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_C_in_CrBA_At_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_BA_At_0.
+	aTextEditor := self test_insert_NewLine_in_BA_At_0.
 
 	aTextEditor insertString: 'C' at: 0.
 
@@ -924,11 +936,11 @@ AlbTextEditorLineSegmentExamples >> insert_C_in_CrBA_At_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_CrLf_in_Hello_At_5 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_CrLf_in_Hello_At_5 [
 	<gtExample>
 	| aTextEditor aSegment |
-	aTextEditor := self insert_Hello_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 
 	aTextEditor insertString: String crlf at: 5.
 
@@ -949,11 +961,11 @@ AlbTextEditorLineSegmentExamples >> insert_CrLf_in_Hello_At_5 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_D_in_CCrBA_At_1 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_D_in_CCrBA_At_1 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_C_in_CrBA_At_0.
+	aTextEditor := self test_insert_C_in_CrBA_At_0.
 
 	aTextEditor insertString: 'D' at: 1.
 
@@ -968,11 +980,11 @@ AlbTextEditorLineSegmentExamples >> insert_D_in_CCrBA_At_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_E_in_Hello_World_at_2 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_E_in_Hello_World_at_2 [
 	<gtExample>
 	| aTextEditor thePiecesBeforeInsertion |
-	aTextEditor := self insert_Hello_World_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_World_inEmptyAt_0.
 	
 	thePiecesBeforeInsertion := aTextEditor segmentCollector segments first pieces.
 	self assert: thePiecesBeforeInsertion size equals: 3.
@@ -1005,11 +1017,11 @@ AlbTextEditorLineSegmentExamples >> insert_E_in_Hello_World_at_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_HABA_inEmptyAt_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
 	<gtExample>
 	| aTextEditor aSegment |
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	
 	aTextEditor insertString: 'HABA' at: 0.
 	
@@ -1025,11 +1037,11 @@ AlbTextEditorLineSegmentExamples >> insert_HABA_inEmptyAt_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_Hello_World_inEmptyAt_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_Hello_World_inEmptyAt_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 
 	aTextEditor insertString: 'Hello World' at: 0.
 
@@ -1041,11 +1053,11 @@ AlbTextEditorLineSegmentExamples >> insert_Hello_World_inEmptyAt_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_Hello_inEmptyAt_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 
 	aTextEditor insertString: 'Hello' at: 0.
 
@@ -1057,11 +1069,11 @@ AlbTextEditorLineSegmentExamples >> insert_Hello_inEmptyAt_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLineCrLf_in_HACrBA_At_3 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLineCrLf_in_HACrBA_At_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HABA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
 	aTextEditor insertString: String cr, String lf at: 3.
 
@@ -1079,11 +1091,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLineCrLf_in_HACrBA_At_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_inCrAt_1 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_inCrAt_1 [
 	<gtExample>
 	| aTextEditor anInsertedListener anInsertedEvent |
-	aTextEditor := self insert_NewLine_inEmptyAt_0.
+	aTextEditor := self test_insert_NewLine_inEmptyAt_0.
 
 	anInsertedListener := BlEventHandler on: BlInfiniteDataSourceItemRangeInserted do: [ :anEvent | anInsertedEvent := anEvent ].
 	aTextEditor addEventHandler: anInsertedListener.
@@ -1105,11 +1117,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_inCrAt_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_inEmptyAt_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_inEmptyAt_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	
 	aTextEditor insertString: String cr at: 0.
 
@@ -1122,11 +1134,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_inEmptyAt_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_BA_At_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_B_in_A_at_0.
+	aTextEditor := self test_insert_B_in_A_at_0.
 	
 	aTextEditor insertString: String cr at: 0.
 
@@ -1141,11 +1153,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_BA_At_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_BA_At_1 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_1 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_B_in_A_at_0.
+	aTextEditor := self test_insert_B_in_A_at_0.
 	
 	aTextEditor insertString: String cr at: 1.
 
@@ -1160,11 +1172,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_BA_At_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_BA_At_2 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_BA_At_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_B_in_A_at_0.
+	aTextEditor := self test_insert_B_in_A_at_0.
 	
 	aTextEditor insertString: String cr at: 2.
 
@@ -1179,11 +1191,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_BA_At_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_CDCrBA_At_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CDCrBA_At_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_D_in_CCrBA_At_1.
+	aTextEditor := self test_insert_D_in_CCrBA_At_1.
 
 	aTextEditor insertString: String cr at: 0.
 
@@ -1200,11 +1212,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_CDCrBA_At_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_CrCDCrBA_At_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CrCDCrBA_At_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CDCrBA_At_0.
 
 	aTextEditor insertString: String cr at: 0.
 
@@ -1223,11 +1235,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_CrCDCrBA_At_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_CrCDCrBA_At_1 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CrCDCrBA_At_1 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_CDCrBA_At_0.
+	aTextEditor := self test_insert_NewLine_in_CDCrBA_At_0.
 
 	aTextEditor insertString: String cr at: 1.
 
@@ -1246,11 +1258,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_CrCDCrBA_At_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_0 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_HABA_inEmptyAt_0.
+	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
 	aTextEditor insertString: String cr at: 0.
 
@@ -1265,11 +1277,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_1 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_1 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_HABA_inEmptyAt_0.
+	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
 	aTextEditor insertString: String cr at: 1.
 
@@ -1284,11 +1296,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_2 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_2 [
 	<gtExample>
 	| aTextEditor aSegment |
-	aTextEditor := self insert_HABA_inEmptyAt_0.
+	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
 	aTextEditor insertString: String cr at: 2.
 
@@ -1309,11 +1321,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_3 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_HABA_inEmptyAt_0.
+	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
 	aTextEditor insertString: String cr at: 3.
 
@@ -1328,11 +1340,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_4 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_4 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_HABA_inEmptyAt_0.
+	aTextEditor := self test_insert_HABA_inEmptyAt_0.
 
 	aTextEditor insertString: String cr at: 4.
 
@@ -1347,11 +1359,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HABA_At_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HACrBA_At_2 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HACrBA_At_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HABA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
 	aTextEditor insertString: String cr at: 2.
 
@@ -1368,11 +1380,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HACrBA_At_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HACrBA_At_3 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HACrBA_At_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_HABA_At_2.
+	aTextEditor := self test_insert_NewLine_in_HABA_At_2.
 
 	aTextEditor insertString: String cr at: 3.
 
@@ -1389,11 +1401,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HACrBA_At_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HeCrllo_At_3 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HeCrllo_At_3 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_NewLine_in_Hello_At_2.
+	aTextEditor := self test_insert_NewLine_in_Hello_At_2.
 
 	aTextEditor insertString: String cr at: 3.
 
@@ -1410,11 +1422,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HeCrllo_At_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloCrWorldCr_WithAppendingAfterWorld_at_5 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloCrWorldCr_WithAppendingAfterWorld_at_5 [
 	<gtExample>
 	| aTextEditor aSegment thePieces |
-	aTextEditor := self pieces_HelloCrWorldCr_WithAppendingAfterWorld.
+	aTextEditor := self test_pieces_HelloCrWorldCr_WithAppendingAfterWorld.
 	
 	aTextEditor insertString: String cr at: 5.
 
@@ -1484,11 +1496,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloCrWorldCr_WithAppendi
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloWorld_WithReplacementAndAppendingOfWorld_at_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacementAndAppendingOfWorld_at_0 [
 	<gtExample>
 	| aTextEditor aSegment thePieces |
-	aTextEditor := self pieces_Hello_World_WithReplacementAndAppendingOfWorld.
+	aTextEditor := self test_pieces_Hello_World_WithReplacementAndAppendingOfWorld.
 	
 	aTextEditor insertString: String cr at: 0.
 
@@ -1542,11 +1554,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloWorld_WithReplacement
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloWorld_WithReplacementOfWorld_at_0 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacementOfWorld_at_0 [
 	<gtExample>
 	| aTextEditor aSegment thePieces |
-	aTextEditor := self pieces_Hello_World_WithReplacementOfWorld.
+	aTextEditor := self test_pieces_Hello_World_WithReplacementOfWorld.
 	
 	aTextEditor insertString: String cr at: 0.
 
@@ -1595,11 +1607,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloWorld_WithReplacement
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloWorld_WithReplacementOfWorld_at_5 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HelloWorld_WithReplacementOfWorld_at_5 [
 	<gtExample>
 	| aTextEditor aSegment thePieces |
-	aTextEditor := self pieces_Hello_World_WithReplacementOfWorld.
+	aTextEditor := self test_pieces_Hello_World_WithReplacementOfWorld.
 	
 	aTextEditor insertString: String cr at: 5.
 
@@ -1648,11 +1660,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_HelloWorld_WithReplacement
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_Hello_At_2 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_Hello_At_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_Hello_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 
 	aTextEditor insertString: String cr at: 2.
 
@@ -1667,11 +1679,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_Hello_At_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_NewLine_in_Hello_At_5 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_Hello_At_5 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_Hello_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 
 	aTextEditor insertString: String cr at: 5.
 
@@ -1686,11 +1698,11 @@ AlbTextEditorLineSegmentExamples >> insert_NewLine_in_Hello_At_5 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - insertion' }
-AlbTextEditorLineSegmentExamples >> insert_haCrCrbaCr_inHelloAt_2 [
+{ #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_haCrCrbaCr_inHelloAt_2 [
 	<gtExample>
 	| aTextEditor |
-	aTextEditor := self insert_Hello_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_inEmptyAt_0.
 
 	aTextEditor insertString: ('ha', String cr, String cr, 'ba', String cr) at: 2.
 
@@ -1711,18 +1723,11 @@ AlbTextEditorLineSegmentExamples >> insert_haCrCrbaCr_inHelloAt_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'instance creation' }
-AlbTextEditorLineSegmentExamples >> lineSegmentBuilder [
-	<gtExample>
-	
-	^ AlbTextEditorLineSegmentBuilder new
-]
+{ #category : #overwrite }
+AlbTextEditorLineSegmentTest >> test_overwrite_Hello_World_with_S_in_Hello_World [
 
-{ #category : #'examples - overwrite' }
-AlbTextEditorLineSegmentExamples >> overwrite_Hello_World_with_S_in_Hello_World [
-	<gtExample>
 	| aTextEditor aSegment theOldPieces theNewPieces |
-	aTextEditor := self insert_Hello_World_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_World_inEmptyAt_0.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	
@@ -1787,11 +1792,11 @@ AlbTextEditorLineSegmentExamples >> overwrite_Hello_World_with_S_in_Hello_World 
 	^ aTextEditor
 ]
 
-{ #category : #'examples - overwrite' }
-AlbTextEditorLineSegmentExamples >> overwrite_World_with_S_in_Hello_World [
-	<gtExample>
+{ #category : #overwrite }
+AlbTextEditorLineSegmentTest >> test_overwrite_World_with_S_in_Hello_World [
+
 	| aTextEditor aSegment theOldPieces theNewPieces |
-	aTextEditor := self insert_Hello_World_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_World_inEmptyAt_0.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	
@@ -1864,11 +1869,11 @@ AlbTextEditorLineSegmentExamples >> overwrite_World_with_S_in_Hello_World [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - overwrite' }
-AlbTextEditorLineSegmentExamples >> overwrite_d_with_S_in_Hello_World [
-	<gtExample>
+{ #category : #overwrite }
+AlbTextEditorLineSegmentTest >> test_overwrite_d_with_S_in_Hello_World [
+
 	| aTextEditor aSegment theOldPieces theNewPieces |
-	aTextEditor := self insert_Hello_World_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_World_inEmptyAt_0.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	
@@ -1941,11 +1946,11 @@ AlbTextEditorLineSegmentExamples >> overwrite_d_with_S_in_Hello_World [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - overwrite' }
-AlbTextEditorLineSegmentExamples >> overwrite_llo_World_with_S_in_Hello_World [
-	<gtExample>
+{ #category : #overwrite }
+AlbTextEditorLineSegmentTest >> test_overwrite_llo_World_with_S_in_Hello_World [
+
 	| aTextEditor aSegment theOldPieces theNewPieces |
-	aTextEditor := self insert_Hello_World_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_World_inEmptyAt_0.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	
@@ -2010,12 +2015,12 @@ AlbTextEditorLineSegmentExamples >> overwrite_llo_World_with_S_in_Hello_World [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_HelloCr [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_HelloCr [
+
 	| aTextEditor theFirstPieces theSecondPieces aPiece |
 	
-	aTextEditor := self insert_NewLine_in_Hello_At_5.
+	aTextEditor := self test_insert_NewLine_in_Hello_At_5.
 	
 	theFirstPieces := aTextEditor segmentCollector segments first pieces.
 	self assert: theFirstPieces size equals: 1.
@@ -2043,12 +2048,12 @@ AlbTextEditorLineSegmentExamples >> pieces_HelloCr [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_HelloCrLf [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_HelloCrLf [
+
 	| aTextEditor theFirstPieces theSecondPieces aPiece |
 	
-	aTextEditor := self insert_CrLf_in_Hello_At_5.
+	aTextEditor := self test_insert_CrLf_in_Hello_At_5.
 	
 	theFirstPieces := aTextEditor segmentCollector segments first pieces.
 	self assert: theFirstPieces size equals: 1.
@@ -2076,12 +2081,12 @@ AlbTextEditorLineSegmentExamples >> pieces_HelloCrLf [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_HelloCrWorldCr_WithAppendingAfterWorld [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_HelloCrWorldCr_WithAppendingAfterWorld [
+
 	| aTextEditor aSegment thePieces |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	aTextEditor text: self text_HelloCrWorldCr_WithAppendingAfterWorld.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 3.
@@ -2140,12 +2145,12 @@ AlbTextEditorLineSegmentExamples >> pieces_HelloCrWorldCr_WithAppendingAfterWorl
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_Hello_1_WithAppending [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_1_WithAppending [
+
 	| aTextEditor thePieces |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	aTextEditor text: self text_Hello_1_WithAppending.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
@@ -2172,12 +2177,12 @@ AlbTextEditorLineSegmentExamples >> pieces_Hello_1_WithAppending [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_Hello_Smart_World_WithAppending [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_Smart_World_WithAppending [
+
 	| aTextEditor thePieces |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	aTextEditor text: self text_Hello_Smart_World_WithAppending.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
@@ -2226,12 +2231,12 @@ AlbTextEditorLineSegmentExamples >> pieces_Hello_Smart_World_WithAppending [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_Hello_World [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_World [
+
 	| aTextEditor thePieces |
 	
-	aTextEditor := self insert_Hello_World_inEmptyAt_0.
+	aTextEditor := self test_insert_Hello_World_inEmptyAt_0.
 	
 	thePieces := aTextEditor segmentCollector segments first pieces.
 	self assert: thePieces size equals: 3.
@@ -2265,12 +2270,12 @@ AlbTextEditorLineSegmentExamples >> pieces_Hello_World [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementAndAppendingOfWorld [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_World_WithReplacementAndAppendingOfWorld [
+
 	| aTextEditor thePieces aSegment |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	aTextEditor text: self text_HelloCrWorld_WithReplacementAndAppendingOfWorld.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 2.
@@ -2313,12 +2318,12 @@ AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementAndAppendi
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementOf [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_World_WithReplacementOf [
+
 	| aTextEditor aSegment thePieces |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	aTextEditor text: self text_HelloSpaceWorld_WithReplacementOfSpace.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
@@ -2348,12 +2353,12 @@ AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementOf [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementOfLineAlbeak [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_World_WithReplacementOfLineAlbeak [
+
 	| aTextEditor thePieces |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	aTextEditor text: self text_Hello_World_WithReplacementOfLineAlbeak.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
@@ -2376,12 +2381,12 @@ AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementOfLineAlbe
 	^ aTextEditor
 ]
 
-{ #category : #'examples - pieces' }
-AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementOfWorld [
-	<gtExample>
+{ #category : #pieces }
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_World_WithReplacementOfWorld [
+
 	| aTextEditor aSegment thePieces |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	aTextEditor text: self text_HelloCrWorld_WithReplacementOfWorld.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 2.
@@ -2416,12 +2421,12 @@ AlbTextEditorLineSegmentExamples >> pieces_Hello_World_WithReplacementOfWorld [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_0_to_11 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_0_to_11 [
+
 	| aSegment |
 	
-	aSegment := self segment_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_HelloCrWorld_0_to_5.
 	aSegment scopeText: 0 end: 11.
 	
 	self assert: aSegment textStart equals: 0.
@@ -2433,12 +2438,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_0_to
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_0_to_5 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_0_to_5 [
+
 	| aSegment |
 	
-	aSegment := self segment_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_HelloCrWorld_0_to_5.
 	aSegment scopeText: 0 end: 5.
 	
 	self assert: aSegment textStart equals: 0.
@@ -2450,12 +2455,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_0_to
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_0_to_6 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_0_to_6 [
+
 	| aSegment |
 	
-	aSegment := self segment_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_HelloCrWorld_0_to_5.
 	aSegment scopeText: 0 end: 6.
 	
 	self assert: aSegment textStart equals: 0.
@@ -2467,12 +2472,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_0_to
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_1_to_5 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_1_to_5 [
+
 	| aSegment |
 	
-	aSegment := self segment_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_HelloCrWorld_0_to_5.
 	aSegment scopeText: 1 end: 5.
 	
 	self assert: aSegment textStart equals: 1.
@@ -2484,12 +2489,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_1_to
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_3_to_5 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_3_to_5 [
+
 	| aSegment |
 	
-	aSegment := self segment_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_HelloCrWorld_0_to_5.
 	aSegment scopeText: 3 end: 5.
 	
 	self assert: aSegment textStart equals: 3.
@@ -2501,12 +2506,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_0_to_5_to_be_3_to
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_6_to_11_to_be_0_to_11 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_6_to_11_to_be_0_to_11 [
+
 	| aSegment |
 	
-	aSegment := self segment_HelloCrWorld_6_to_11.
+	aSegment := self test_segment_HelloCrWorld_6_to_11.
 	aSegment scopeText: 0 end: 11.
 	
 	self assert: aSegment textStart equals: 0.
@@ -2518,12 +2523,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_6_to_11_to_be_0_t
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_6_to_11_to_be_6_to_11 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_6_to_11_to_be_6_to_11 [
+
 	| aSegment |
 	
-	aSegment := self segment_HelloCrWorld_6_to_11.
+	aSegment := self test_segment_HelloCrWorld_6_to_11.
 	aSegment scopeText: 6 end: 11.
 	
 	self assert: aSegment textStart equals: 6.
@@ -2535,12 +2540,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_HelloCrWorld_6_to_11_to_be_6_t
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_0_to_11 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be_0_to_11 [
+
 	| aSegment |
 	
-	aSegment := self segment_sub_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_sub_HelloCrWorld_0_to_5.
 	aSegment scopeText: 0 end: 11.
 	
 	self assert: aSegment textStart equals: 0.
@@ -2552,12 +2557,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_0_to_5 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be_0_to_5 [
+
 	| aSegment |
 	
-	aSegment := self segment_sub_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_sub_HelloCrWorld_0_to_5.
 	aSegment scopeText: 0 end: 5.
 	
 	self assert: aSegment textStart equals: 0.
@@ -2569,12 +2574,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_0_to_6 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be_0_to_6 [
+
 	| aSegment |
 	
-	aSegment := self segment_sub_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_sub_HelloCrWorld_0_to_5.
 	aSegment scopeText: 0 end: 6.
 	
 	self assert: aSegment textStart equals: 0.
@@ -2586,12 +2591,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_1_to_5 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be_1_to_5 [
+
 	| aSegment |
 	
-	aSegment := self segment_sub_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_sub_HelloCrWorld_0_to_5.
 	aSegment scopeText: 1 end: 5.
 	
 	self assert: aSegment textStart equals: 1.
@@ -2603,12 +2608,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_3_to_5 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be_3_to_5 [
+
 	| aSegment |
 	
-	aSegment := self segment_sub_HelloCrWorld_0_to_5.
+	aSegment := self test_segment_sub_HelloCrWorld_0_to_5.
 	aSegment scopeText: 3 end: 5.
 	
 	self assert: aSegment textStart equals: 3.
@@ -2620,12 +2625,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_0_to_5_to_be_
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_6_to_11_to_be_0_to_11 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_6_to_11_to_be_0_to_11 [
+
 	| aSegment |
 
-	aSegment := self segment_sub_HelloCrWorld_6_to_11.
+	aSegment := self test_segment_sub_HelloCrWorld_6_to_11.
 	aSegment scopeText: 0 end: 11.
 
 	self assert: aSegment textStart equals: 0.
@@ -2637,12 +2642,12 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_6_to_11_to_be
 	^ aSegment
 ]
 
-{ #category : #'examples - scope' }
-AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_6_to_11_to_be_6_to_11 [
-	<gtExample>
+{ #category : #scope }
+AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_6_to_11_to_be_6_to_11 [
+
 	| aSegment |
 	
-	aSegment := self segment_sub_HelloCrWorld_6_to_11.
+	aSegment := self test_segment_sub_HelloCrWorld_6_to_11.
 	aSegment scopeText: 6 end: 11.
 	
 	self assert: aSegment textStart equals: 6.
@@ -2654,16 +2659,8 @@ AlbTextEditorLineSegmentExamples >> scope_segment_sub_HelloCrWorld_6_to_11_to_be
 	^ aSegment
 ]
 
-{ #category : #'instance creation' }
-AlbTextEditorLineSegmentExamples >> segmentStream [
-	<gtExample>
-	
-	^ (LimitedWriteStream on: (Array new: 50)) unlimited
-]
-
-{ #category : #'instance creation - segment' }
-AlbTextEditorLineSegmentExamples >> segment_HelloCrWorld_0_to_5 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_HelloCrWorld_0_to_5 [
 	| aSegment |
 	
 	aSegment := AlbTextEditorLineSegment new.
@@ -2678,9 +2675,9 @@ AlbTextEditorLineSegmentExamples >> segment_HelloCrWorld_0_to_5 [
 	^ aSegment
 ]
 
-{ #category : #'instance creation - segment' }
-AlbTextEditorLineSegmentExamples >> segment_HelloCrWorld_6_to_11 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_HelloCrWorld_6_to_11 [
+
 	| aSegment |
 
 	aSegment := AlbTextEditorLineSegment new.
@@ -2695,12 +2692,12 @@ AlbTextEditorLineSegmentExamples >> segment_HelloCrWorld_6_to_11 [
 	^ aSegment
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_Empty_at_0 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_Empty_at_0 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self emptyEditor.
+	aTextEditor := self test_emptyEditor.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 0
@@ -2712,12 +2709,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_Empty_at_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_0 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_0 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 0
@@ -2729,12 +2726,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_0 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_1 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_1 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 1
@@ -2746,12 +2743,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_1 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_2 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_2 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 2
@@ -2763,12 +2760,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_2 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_3 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_3 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 3
@@ -2780,12 +2777,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_3 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_4 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_4 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 4
@@ -2797,12 +2794,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_4 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_5 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_5 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 5
@@ -2814,12 +2811,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_5 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_6 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_6 [
+
 	| aTextEditor aSegment |
 	
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 6
@@ -2831,12 +2828,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_6 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_7 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_7 [
+
 	| aTextEditor aSegment |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	self assert: aTextEditor text size equals: 7.
 
 	aTextEditor segmentCollector
@@ -2849,12 +2846,12 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_7 [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - segments' }
-AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_8 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_8 [
+
 	| aTextEditor notFoundFlag |
 
-	aTextEditor := self insert_NewLineCrLf_in_HACrBA_At_3.
+	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
 	self assert: aTextEditor text size equals: 7.
 
 	notFoundFlag := false.	
@@ -2868,9 +2865,9 @@ AlbTextEditorLineSegmentExamples >> segment_in_HACrCrLfBA_at_8 [
 	^ aTextEditor
 ]
 
-{ #category : #'instance creation - segment' }
-AlbTextEditorLineSegmentExamples >> segment_sub_HelloCrWorld_0_to_5 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_sub_HelloCrWorld_0_to_5 [
+
 	| aSegment |
 	
 	aSegment := AlbTextEditorLineSegment new.
@@ -2885,9 +2882,9 @@ AlbTextEditorLineSegmentExamples >> segment_sub_HelloCrWorld_0_to_5 [
 	^ aSegment
 ]
 
-{ #category : #'instance creation - segment' }
-AlbTextEditorLineSegmentExamples >> segment_sub_HelloCrWorld_6_to_11 [
-	<gtExample>
+{ #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_sub_HelloCrWorld_6_to_11 [
+
 	| aSegment |
 
 	aSegment := AlbTextEditorLineSegment new.
@@ -2902,107 +2899,106 @@ AlbTextEditorLineSegmentExamples >> segment_sub_HelloCrWorld_6_to_11 [
 	^ aSegment
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_1234506789 [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_1234506789 [
 	
 	^ BlSubText text: '1234506789' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_A [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_A [
+
 	
 	^ BlSubText text: 'A' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_ACr [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_ACr [
+
 	
 	^ BlSubText text: ('A' , String cr) asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_ACrB [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_ACrB [
+
 	
 	^ BlSubText text: ('A' , String cr , 'B') asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_ACrBCrC [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_ACrBCrC [
+
 	
 	^ BlSubText text: ('A' , String cr , 'B' , String cr , 'C') asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_ACrCr [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_ACrCr [
+
 	
 	^ BlSubText text: ('A' , String cr , String cr) asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_ACrCrB [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_ACrCrB [
+
 	
 	^ BlSubText text: ('A' , String cr , String cr , 'B') asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_BA [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_BA [
+
 	
 	^ BlSubText text: 'BA' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_BCA [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_BCA [
+
 	
 	^ BlSubText text: 'BCA' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Cr [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Cr [
+
 	
 	^ BlSubText text: String cr asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_CrA [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_CrA [
+
 	
 	^ BlSubText text: (String cr , 'A') asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_HABA [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_HABA [
+
 	
 	^ BlSubText text: 'HABA' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Hello [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Hello [
+
 	
 	^ BlSubText text: 'Hello' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_HelloCrWorld [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_HelloCrWorld [
+
 
 	^ ('Hello', String cr, 'World') asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_HelloCrWorldCr_WithAppendingAfterWorld [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_HelloCrWorldCr_WithAppendingAfterWorld [
+
 	| aText |
 
 	aText := ('Hello', String cr, 'World', String cr) asRopedText fontSize: 20.
@@ -3012,9 +3008,9 @@ AlbTextEditorLineSegmentExamples >> text_HelloCrWorldCr_WithAppendingAfterWorld 
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_HelloCrWorldCr_WithReplacementOfWorld [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_HelloCrWorldCr_WithReplacementOfWorld [
+
 	| aText |
 
 	aText := ('Hello', String cr, 'World', String cr) asRopedText fontSize: 20.
@@ -3024,9 +3020,9 @@ AlbTextEditorLineSegmentExamples >> text_HelloCrWorldCr_WithReplacementOfWorld [
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_HelloCrWorld_WithReplacementAndAppendingOfWorld [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_HelloCrWorld_WithReplacementAndAppendingOfWorld [
+
 	| aText |
 
 	aText := self text_HelloCrWorld_WithReplacementOfWorld.
@@ -3036,9 +3032,9 @@ AlbTextEditorLineSegmentExamples >> text_HelloCrWorld_WithReplacementAndAppendin
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_HelloCrWorld_WithReplacementOfWorld [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_HelloCrWorld_WithReplacementOfWorld [
+
 	| aText |
 
 	aText := ('Hello', String cr, 'World') asRopedText fontSize: 20.
@@ -3048,9 +3044,9 @@ AlbTextEditorLineSegmentExamples >> text_HelloCrWorld_WithReplacementOfWorld [
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_HelloSpaceWorld_WithReplacementOfSpace [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_HelloSpaceWorld_WithReplacementOfSpace [
+
 	| aText |
 
 	aText := ('Hello World') asRopedText fontSize: 20.
@@ -3060,9 +3056,9 @@ AlbTextEditorLineSegmentExamples >> text_HelloSpaceWorld_WithReplacementOfSpace 
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Hello_1_WithAppending [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Hello_1_WithAppending [
+
 	| aText |
 
 	aText := 'Hello 1' asRopedText.
@@ -3083,9 +3079,9 @@ AlbTextEditorLineSegmentExamples >> text_Hello_1_WithAppending [
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Hello_Smart_World_WithAppending [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Hello_Smart_World_WithAppending [
+
 	| aText |
 
 	aText := 'Hello Smart World' asRopedText.
@@ -3124,16 +3120,16 @@ AlbTextEditorLineSegmentExamples >> text_Hello_Smart_World_WithAppending [
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Hello_World [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Hello_World [
+
 	
 	^ BlSubText text: 'Hello World' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Hello_World_Cr_WithReplacement [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Hello_World_Cr_WithReplacement [
+
 	| aText |
 
 	aText := ('Hello', String cr, String cr, 'World', String cr) asRopedText fontSize: 20.
@@ -3143,9 +3139,9 @@ AlbTextEditorLineSegmentExamples >> text_Hello_World_Cr_WithReplacement [
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Hello_World_WithReplacementAndAppendingOfLineAlbeak [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementAndAppendingOfLineAlbeak [
+
 	| aText |
 
 	aText := self text_Hello_World_WithReplacementOfLineAlbeak.
@@ -3155,9 +3151,9 @@ AlbTextEditorLineSegmentExamples >> text_Hello_World_WithReplacementAndAppending
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_Hello_World_WithReplacementOfLineAlbeak [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementOfLineAlbeak [
+
 	| aText |
 
 	aText := ('Hello', String cr, 'World') asRopedText fontSize: 20.
@@ -3167,16 +3163,14 @@ AlbTextEditorLineSegmentExamples >> text_Hello_World_WithReplacementOfLineAlbeak
 	^ aText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_empty [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_empty [
 	
 	^ '' asRopedText
 ]
 
-{ #category : #'instance creation - text' }
-AlbTextEditorLineSegmentExamples >> text_sub_HelloCrWorld [
-	<gtExample>
+{ #category : #'accessing - text' }
+AlbTextEditorLineSegmentTest >> text_sub_HelloCrWorld [
 
 	^ ('How are you', String cr, 'Hello', String cr, 'World') asRopedText from: 13 to: 23
 ]

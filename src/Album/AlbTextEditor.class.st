@@ -67,7 +67,7 @@ AlbTextEditor >> addEditorShortcuts: aCollectionOfTextEditorShortcut [
 AlbTextEditor >> assertUIProcess [
 	"I check if the current process is a UI process of all attached editor elements"
 	| aCurrentProcess allUIProcesses |
-	
+	Bloc debugModeEnabled ifFalse: [ ^self ].
 	aCurrentProcess := Processor activeProcess.	
 	allUIProcesses := self uiProcesses.
 	
@@ -646,6 +646,7 @@ AlbTextEditor >> onDetached: anEditorElement [
 
 { #category : #hooks }
 AlbTextEditor >> onElementRecycled: anElementHolder [
+
 	super onElementRecycled: anElementHolder.
 	
 	anElementHolder onRecycled

@@ -21,7 +21,7 @@ AlbTextEditorCachingAdornmentsExamples class >> cacheDictionaryExample [
 
 	text := 'Hello' asRopedText attribute: attribute.
 			
-	^ text onAlbTextEditor openInOblSpace 
+	^ text onAlbum openInOblSpace 
 ]
 
 { #category : #example }
@@ -41,5 +41,5 @@ AlbTextEditorCachingAdornmentsExamples class >> cacheValueHolderExample [
 
 	text := 'Hello' asRopedText attribute: attribute.
 
-	^ text onAlbTextEditor openInOblSpace 
+	^ text onAlbum openInOblSpace 
 ]

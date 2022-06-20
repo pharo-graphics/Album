@@ -4,6 +4,46 @@ Class {
 	#category : #'Album-SandBox'
 }
 
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> ascent [
+	^ -20
+]
+
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> descent [
+	^ 20
+]
+
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> editorFor: aText [
+	<return: #AlbEditor>
+	| anEditor aRopedText |
+
+	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
+
+	anEditor := AlbEditor new.
+	anEditor padding: BlInsets empty.
+	anEditor fitContent.
+	anEditor text: aRopedText.
+	
+	BlDevCrossover on: anEditor.
+	
+	anEditor editor segmentBuilder
+		wordStencil: [ :aTAlbTextEditorTextualPiece |
+			| aTextElement |
+			aTextElement := AlbTextEditableWordPieceStencilBuilder new
+				segmentPiece: aTAlbTextEditorTextualPiece;
+				asElement.
+			aTextElement measurer: self fixedMeasurer.
+			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
+			aTextElement ].
+	
+	anEditor requestFocus.
+	anEditor forceLayout.
+
+	^ anEditor
+]
+
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
@@ -66,7 +106,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
-	(String loremIpsum: 10000000) onAlbum openInNewSpace
+	(String loremIpsum: 10000000) onAlbum openInOblSpace
 ]
 
 { #category : #'editor examples' }
@@ -105,6 +145,24 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 	^ text
 ]
 
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> example_FixedMeasurer [
+	" have to understand this ..."
+	| anEditor |
+	anEditor := self editorFor: 'Hello'.
+	anEditor openInOBlSpace 
+
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
+
+	<gtExample>
+	((' trux ' asRopedText
+		  fontSize: 40;
+		  monospace) , ' Machinx' asRopedText) onAlbum openInOblSpace
+]
+
 { #category : #elements }
 AlbExamplesSeeClassSide class >> example_elements_sandbox [
 
@@ -123,7 +181,41 @@ AlbExamplesSeeClassSide class >> example_elements_sandbox [
 	sp show
 ]
 
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> fixedMeasurer [
+	^ BlTextElementMockedMeasurer new
+		ascent: self ascent;
+		descent: self descent;
+		glyphWidth: self glyphWidth;
+		glyphHeight: self glyphHeight
+]
+
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> glyphHeight [
+	^ self ascent abs + self descent
+]
+
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> glyphWidth [
+	^ 30
+]
+
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> lineSpacing [
+	^ 5
+]
+
 { #category : #accessing }
 AlbExamplesSeeClassSide class >> methodText [
 	^ self  class sourceCodeAt: #example_CodeEditorWithRBStylerWithDresser
+]
+
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> paragraphMargin [
+	^ BlInsets all: 15
+]
+
+{ #category : #'instance creation' }
+AlbExamplesSeeClassSide class >> wordPadding [
+	^ BlInsets top: 3 bottom: 3
 ]

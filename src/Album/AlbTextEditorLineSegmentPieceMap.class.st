@@ -24,21 +24,21 @@ AlbTextEditorLineSegmentPieceMap >> at: aBrTextEditorLineSegmentPiece pieceAndEl
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPieceMap >> atPiece: aBrTextEditorLineSegmentPiece putElements: aCollectionOfElements [
-	map at: aBrTextEditorLineSegmentPiece put: aCollectionOfElements
+AlbTextEditorLineSegmentPieceMap >> atPiece: aTextEditorLineSegmentPiece putElements: aCollectionOfElements [
+
+	map at: aTextEditorLineSegmentPiece put: aCollectionOfElements
 ]
 
 { #category : #initialization }
 AlbTextEditorLineSegmentPieceMap >> initialize [
 	super initialize.
 	
-	map := WeakIdentityKeyDictionary new
+	map := Dictionary new
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
 	<return: #AlbTextEditorLineSegmentPiece or: #Object>
-
 	map associations do: [ :eachAssociation |
 		(eachAssociation value includes: aBlElement) 
 			ifTrue: [ ^ eachAssociation key ] ].

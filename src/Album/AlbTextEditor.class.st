@@ -1,9 +1,7 @@
 "
-! The Moldable Editor
-
 I edit text and provide high level abstractions of essential text editor functionality such as selection, cursor, text insertions and deletions.
 
-I make use of ${class:AlbTextAdornmentAttribute}$ to augment text with visual elements. 
+I make use of `AlbTextAdornmentAttribute` to augment text with visual elements. 
 
 I subclass infinite data source in order to be able to smoothly display practically infinite amounts of text.
 "
@@ -16,7 +14,6 @@ Class {
 		'text',
 		'selection',
 		'selectionRecorder',
-		'segmentBuilder',
 		'segmentCollector',
 		'styler',
 		'stylerStrategy',
@@ -94,7 +91,7 @@ AlbTextEditor >> beEditableCode [
 
 { #category : #accessing }
 AlbTextEditor >> beLineBased [
-	segmentBuilder := AlbTextEditorLineSegmentBuilder new splitter: AlbTextEditorLineSplitter new
+	self segmentBuilder: (AlbTextEditorLineSegmentBuilder new splitter: AlbTextEditorLineSplitter new)
 ]
 
 { #category : #'api - mode' }
@@ -188,7 +185,7 @@ AlbTextEditor >> defaultSegmentBuilder [
 
 { #category : #initialization }
 AlbTextEditor >> defaultSegmentCollector [
-	^ AlbTextEditorSegmentCollector new
+	^ AlbTextEditorSegmentCollector new 
 ]
 
 { #category : #initialization }
@@ -362,7 +359,7 @@ AlbTextEditor >> initialize [
 	
 	mode := AlbTextEditorNullMode new.
 	
-	attachedElements := Set new.
+	attachedElements := WeakSet new.
 	
 	filter := AlbTextEditorNoInputFilter new.
 	cursors := self defaultCursors.
@@ -372,11 +369,9 @@ AlbTextEditor >> initialize [
 	text := self defaultText.
 	self initializeText: text.
 	
-	segmentCollector := self defaultSegmentCollector.
-	segmentCollector editor: self.
+	segmentCollector := self newSegmentCollector.
 	segmentCollector text: text.
-	segmentBuilder := self defaultSegmentBuilder.
-
+	
 	styler := self defaultStyler.
 	stylerEventHandler := self defaultStylerEventHandler.
 	self addEventHandler: stylerEventHandler.
@@ -389,7 +384,6 @@ AlbTextEditor >> initialize [
 	shouldStyleWhenTextModified := true.
 
 	self beEditable.
-	"self beParagraphBased"
 ]
 
 { #category : #initialization }
@@ -489,6 +483,11 @@ AlbTextEditor >> newInvalidateCommand [
 	^ AlbTextEditorInvalidateCommand new
 ]
 
+{ #category : #initialization }
+AlbTextEditor >> newSegmentCollector [
+	^ AlbTextEditorSegmentCollector new segmentBuilder: self defaultSegmentBuilder; yourself
+]
+
 { #category : #'commands - creation' }
 AlbTextEditor >> newSelectCommand [
 	^ AlbTextEditorSelectCommand new
@@ -572,6 +571,8 @@ AlbTextEditor >> notifyTextStyled: aText [
 
 { #category : #hooks }
 AlbTextEditor >> onAttached: anEditorElement [
+	"sent by the element (from dataSource: )"
+	
 	super onAttached: anEditorElement.
 
 	attachedElements := attachedElements copyWith: anEditorElement.
@@ -869,6 +870,14 @@ AlbTextEditor >> processCursorAttributes [
 
 ]
 
+{ #category : #accessing }
+AlbTextEditor >> rawSegmentBuilder: aTextSegmentBuilder [
+	"Change current segment builder to a new one and completely invalidate the structure"
+	
+	self segmentCollector segmentBuilder: aTextSegmentBuilder.
+
+]
+
 { #category : #'private - selection' }
 AlbTextEditor >> recordDeselection: aMonotoneTextSelection [
 	self selectionRecorder deselect: aMonotoneTextSelection in: self.
@@ -929,8 +938,9 @@ AlbTextEditor >> restoreText: aToText [
 
 	"Replacing text instance means that we can not guarantee structural integrity
 	of existing cache and have to rebuild it invalidating the whole underlying model structure"
-	segmentCollector := self defaultSegmentCollector.
-	segmentCollector editor: self.
+	self segmentBuilderDo: [ :sb | 
+		segmentCollector := self defaultSegmentCollector.
+		segmentCollector segmentBuilder: sb].
 	segmentCollector text: text.
 
 	self onTextReplaced.
@@ -963,20 +973,20 @@ AlbTextEditor >> saveState: aTextEditorMemento [
 AlbTextEditor >> segmentBuilder [
 	<return: #AlbTextEditorSegmentBuilder>
 
-	^ segmentBuilder
+	^ self segmentCollector segmentBuilder
 ]
 
 { #category : #accessing }
 AlbTextEditor >> segmentBuilder: aTextSegmentBuilder [
 	"Change current segment builder to a new one and completely invalidate the structure"
 	
-	segmentBuilder := aTextSegmentBuilder.
+	self rawSegmentBuilder: aTextSegmentBuilder.
 	self notifyChanged
 ]
 
 { #category : #accessing }
 AlbTextEditor >> segmentBuilderDo: aBlock [
-	aBlock value: segmentBuilder
+	aBlock value: self segmentBuilder
 ]
 
 { #category : #accessing }
@@ -1048,10 +1058,6 @@ AlbTextEditor >> selection: aTextSelection [
 AlbTextEditor >> selectionRecorder [
 	<return: #AlbTextEditorSelectionRecorder>
 
-	self
-		assert: [ selectionRecorder isNotNil ]
-		description: [ 'Selection recorder can not be nil' ].
-
 	^ selectionRecorder
 ]
 
@@ -1107,9 +1113,6 @@ AlbTextEditor >> stylerStrategy [
 
 { #category : #accessing }
 AlbTextEditor >> stylerStrategy: aToTextStylerStrategy [
-	self 
-		assert: [ aToTextStylerStrategy isNotNil ] 
-		description: [ 'Text styler strategy must be non-nil' ].
 
 	stylerStrategy := aToTextStylerStrategy
 ]
@@ -1147,19 +1150,20 @@ AlbTextEditor >> text [
 
 { #category : #accessing }
 AlbTextEditor >> text: aText [
-	
+	| t |
+	t := aText asRopedText.
 	"when reducing the text size we should update the selection and cursor positions"
-	(aText size < text size)
+	(t size < text size)
 		ifTrue: [
 			self navigator
-				moveWithin: (0 to: aText size);
+				moveWithin: (0 to: t size);
 				apply.
 			
 			self deselecter
-				from: aText size to: text size;
+				from: t size to: text size;
 				deselect ].
 
-	self restoreText: aText
+	self restoreText: t
 ]
 
 { #category : #accessing }

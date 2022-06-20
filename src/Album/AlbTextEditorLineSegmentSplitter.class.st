@@ -1,3 +1,6 @@
+"
+I split a piece of text behind a `BrTextEditorLineSegment` into pieces `BrTextEditorLineSegmentPiece`
+"
 Class {
 	#name : #AlbTextEditorLineSegmentSplitter,
 	#superclass : #Object,

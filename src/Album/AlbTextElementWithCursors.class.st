@@ -1,3 +1,6 @@
+"
+I am extended version of the ${class:BlTextElement}$ with support of multiple cursors.
+"
 Class {
 	#name : #AlbTextElementWithCursors,
 	#superclass : #BlTextElement,

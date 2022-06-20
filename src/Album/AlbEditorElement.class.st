@@ -1,3 +1,6 @@
+"
+I represent a scrollable editor element. I support scrolling, selection and other various features.
+"
 Class {
 	#name : #AlbEditorElement,
 	#superclass : #BlInfiniteElement,

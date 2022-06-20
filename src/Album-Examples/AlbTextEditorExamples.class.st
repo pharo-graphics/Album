@@ -89,7 +89,7 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningEmptyC
 
 { #category : #examples }
 AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningTwoElements [
-	<gtExample>
+	<script>
 	| editor text |
 	text := self newThreeLineText.
 	editor := self newEditor text: text.
@@ -106,8 +106,8 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningTwoEle
 						margin: (BlInsets all: 5);
 						background: Color green } ] }
 		from: 1
-		to: text size.
-	^ editor
+		to: 2.
+	^ editor inspect
 ]
 
 { #category : #'examples - editing' }

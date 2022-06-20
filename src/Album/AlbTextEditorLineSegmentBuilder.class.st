@@ -90,7 +90,7 @@ AlbTextEditorLineSegmentBuilder >> deleteFrom: aFromIndex segment: aFromSegment 
 				ifFalse: [ (aFromSegment index + 1) min: aToSegment index ].
 			removeSegmentEnd := aToSegment index.
 
-			aTextEditor segmentCollector removeSegmentInterval: (removeSegmentStart to: removeSegmentEnd) ].
+			aTextEditor segmentCollector removeSegmentInterval: (removeSegmentStart to: removeSegmentEnd) in: aTextEditor ].
 	
 	aTargetSegment moveTextPiecesBy: removedLength negated at: aFromIndex.
 	aTextEditor segmentCollector
@@ -169,7 +169,7 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aT
 
 	theNewSegments := aCurrentSegment insert: aStream contents.
 	theNewSegments size > 1
-		ifTrue: [ aTextEditor segmentCollector addSegments: theNewSegments allButFirst after: aCurrentSegment ].
+		ifTrue: [ aTextEditor segmentCollector addSegments: theNewSegments allButFirst after: aCurrentSegment in: aTextEditor ].
 
 	aCurrentSegment moveTextPiecesBy: aString size at: aTextIndex.
 	aTextEditor segmentCollector moveTextBy: aString size after: theNewSegments last.

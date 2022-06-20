@@ -37,6 +37,7 @@ Class {
 
 { #category : #'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments after: aSegment [
+	self deprecated: 'use addSegments:after:in:'.
 	"Add the supplied collection of segments to the receiver after aSegment.
 	This may safely cause the number of cached segments to exceed limit."
 
@@ -81,7 +82,97 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments after: aSegm
 ]
 
 { #category : #'cache - adding / removing' }
+AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments after: aSegment in: aTextEditor [
+	"Add the supplied collection of segments to the receiver after aSegment.
+	This may safely cause the number of cached segments to exceed limit."
+
+	self
+		assert: [ aCollectionOfSegments isNotEmpty ]
+		description: [ 'Can not add a collection of empty segments!' ].
+	
+	self
+		assert: [ self segments size = segmentsInterval size ]
+		description: [ 'Amount of segments must correspond to the interval' ].
+
+	self
+		assert: [
+			| satisfy |
+			satisfy := true.
+			self segments with: segmentsInterval do: [ :eachSegment :anExpectedIndex |
+				satisfy := satisfy and: [ eachSegment index = anExpectedIndex ]	].
+			satisfy ]
+		description: [ 'Segment indices must correspond to the interval' ].
+
+	aCollectionOfSegments withIndexDo: [ :aNewSegment :anIndex |
+		aNewSegment index: anIndex + aSegment index.
+		self segments
+			add: aNewSegment
+			afterIndex: aSegment index - self firstIndex + anIndex ].
+	
+	self offsetSegmentIndicesBy: aCollectionOfSegments size after: aCollectionOfSegments last index.
+
+	self
+		assert: [ self segments size = segmentsInterval size ]
+		description: [ 'Amount of segments must correspond to the interval' ].
+		
+	self
+		assert: [
+			| satisfy |
+			satisfy := true.
+			self segments with: segmentsInterval do: [ :eachSegment :anExpectedIndex |
+				satisfy := satisfy and: [ eachSegment index = anExpectedIndex ]	].
+			satisfy ]
+		description: [ 'Segment indices must correspond to the interval' ].
+		
+	aTextEditor notifyItemsInserted: (aCollectionOfSegments first index to: aCollectionOfSegments last index).
+]
+
+{ #category : #'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSegment [
+	"Add the supplied collection of segments to the receiver before aSegment.
+	This may safely cause the number of cached segments to exceed limit."
+	self deprecated: 'use addSegments:before:in:'.
+	self
+		assert: [ aCollectionOfSegments isNotEmpty ]
+		description: [ 'Can not add a collection of empty segments!' ].
+	
+	self
+		assert: [ self segments size = segmentsInterval size ]
+		description: [ 'Amount of segments must correspond to the interval' ].
+
+	self
+		assert: [
+			| satisfy |
+			satisfy := true.
+			self segments with: segmentsInterval do: [ :eachSegment :anExpectedIndex |
+				satisfy := satisfy and: [ eachSegment index = anExpectedIndex ]	].
+			satisfy ]
+		description: [ 'Segment indices must correspond to the interval' ].
+
+	aCollectionOfSegments withIndexDo: [ :aNewSegment :anIndex |
+		aNewSegment index: (aSegment index - aCollectionOfSegments size) + anIndex.
+		self segments
+			add: aNewSegment
+			afterIndex: aNewSegment index - 1 ].
+	
+	self offsetSegmentIndicesBy: aCollectionOfSegments size after: aCollectionOfSegments last index.
+
+	self
+		assert: [ self segments size = segmentsInterval size ]
+		description: [ 'Amount of segments must correspond to the interval' ].
+		
+	self
+		assert: [
+			| satisfy |
+			satisfy := true.
+			self segments with: segmentsInterval do: [ :eachSegment :anExpectedIndex |
+				satisfy := satisfy and: [ eachSegment index = anExpectedIndex ]	].
+			satisfy ]
+		description: [ 'Segment indices must correspond to the interval' ].
+]
+
+{ #category : #'cache - adding / removing' }
+AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSegment in: aTextEditor [
 	"Add the supplied collection of segments to the receiver before aSegment.
 	This may safely cause the number of cached segments to exceed limit."
 
@@ -109,7 +200,8 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSeg
 			afterIndex: aNewSegment index - 1 ].
 	
 	self offsetSegmentIndicesBy: aCollectionOfSegments size after: aCollectionOfSegments last index.
-
+	aTextEditor notifyItemsInserted: (aCollectionOfSegments first index to: aCollectionOfSegments last index).
+	
 	self
 		assert: [ self segments size = segmentsInterval size ]
 		description: [ 'Amount of segments must correspond to the interval' ].
@@ -469,7 +561,7 @@ AlbTextEditorSegmentCollector >> moveTextBy: aNumber after: aSegment [
 
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> newSegmentStream [
-	^ LimitedWriteStream on: (Array new: 10).
+	^ LimitedWriteStream on: (Array new: 15).
 ]
 
 { #category : #'instance creation' }
@@ -514,6 +606,19 @@ AlbTextEditorSegmentCollector >> offsetSegmentIndicesBy: anOffset after: aSegmen
 { #category : #'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval [
 	"Remove all segments within index interval"
+	self deprecated: 'use removeSegmentInterval: in: '.
+	anInterval reverseDo: [ :anIndex | self segments removeAt: anIndex ].
+	
+	self segments
+		withIndexDo: [ :eachSegment :anIndex | eachSegment index: anIndex ].
+	
+	segmentsInterval := (segments first index to: segments last index).
+
+]
+
+{ #category : #'cache - adding / removing' }
+AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval in: aTextEditor [
+	"Remove all segments within index interval"
 
 	anInterval reverseDo: [ :anIndex | self segments removeAt: anIndex ].
 	
@@ -522,6 +627,7 @@ AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval [
 	
 	segmentsInterval := (segments first index to: segments last index).
 
+	aTextEditor notifyItemsRemoved: anInterval
 ]
 
 { #category : #initialization }

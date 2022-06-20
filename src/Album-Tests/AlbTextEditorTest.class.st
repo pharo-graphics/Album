@@ -1,0 +1,43 @@
+"
+An AlbTextEditorTest is a test class for testing the behavior of AlbTextEditor
+"
+Class {
+	#name : #AlbTextEditorTest,
+	#superclass : #TestCase,
+	#instVars : [
+		'textEditor'
+	],
+	#category : #'Album-Tests-Model'
+}
+
+{ #category : #initialization }
+AlbTextEditorTest >> setUp [
+	textEditor := AlbTextEditor new.
+]
+
+{ #category : #tests }
+AlbTextEditorTest >> test_emptyEditor [
+	self assert: textEditor segmentBuilder class equals: textEditor defaultSegmentBuilder class.
+	self assert: textEditor text asString equals: ''.
+	self assert: textEditor segmentCollector computedSegmentsCount equals: 1.
+	self assert: textEditor segmentCollector segments first textInterval equals: (0 to: 0).
+]
+
+{ #category : #tests }
+AlbTextEditorTest >> test_oneCharacter [
+	textEditor text: 'A' asRopedText.
+	self assert: textEditor text asString equals: 'A'.
+	self assert: textEditor segmentCollector computedSegmentsCount equals: 1.
+	self assert: textEditor segmentCollector segments first textInterval equals: (0 to: 1).
+]
+
+{ #category : #tests }
+AlbTextEditorTest >> test_textFromString [
+
+	"the editor text can be initialized from a string"
+
+	textEditor text: 'a string'.
+	self assert: textEditor text asString equals: 'a string'.
+	"#textSnapshot return a copy of the editor text (to be used in application thread - non-UI process)"
+	self assert: textEditor textSnapshot asString equals: 'a string'
+]

@@ -4,6 +4,40 @@ Class {
 	#category : #'Album-Tests-Operators'
 }
 
+{ #category : #'examples - move to line end' }
+AlbTextEditorNavigatorTest >> cursor_moveToNextWord_in_cursors_at_0 [
+
+	<label: 'Cursor before the first character of the line should move to the end'>
+	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
+	
+	anEditor := self test_cursor_add_at_0_in_empty.
+	anEditor openInOBlSpace.
+	true ifTrue: [ ^self ].
+	theAddedEvents := OrderedCollection new.
+	theMovedEvents := OrderedCollection new.
+	theRemovedEvents := OrderedCollection new.
+
+	anEditor navigator
+		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
+		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
+		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
+		moveToEndNextWord;
+		apply;
+		unsubscribe.
+		
+	self assert: anEditor cursors isNotEmpty.
+	self assert: anEditor cursors allCursors equals: { AlbTextEditorSingleCursor new position: 8 }.
+	
+	self assert: theAddedEvents isEmpty.
+	self assert: theMovedEvents size equals: 1.
+	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 8).
+	self assert: theMovedEvents first oldIndex equals: 0.
+	self assert: theMovedEvents first newIndex equals: 8.
+	self assert: theRemovedEvents isEmpty.
+	
+	^ anEditor
+]
+
 { #category : #'examples - showroom' }
 AlbTextEditorNavigatorTest >> editorOnSomeThing [
 
@@ -46,7 +80,7 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_twice_in_something
 
 	self
 		assert: anEditor cursors allCursors
-		equals: { (AlbTextEditorSingleCursor new position: 9) }.
+		equals: { (AlbTextEditorSingleCursor new position: 14) }.
 		
 	^ anEditor
 ]
@@ -1199,7 +1233,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_empty [
 { #category : #'examples - move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_0 [
 	
-	<label: 'Cursor before the first character of the line should move to the end'>
+	"Differs from Brick version but : this nextWord behavior seems ok and its implementation remains simple, so keep it"
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
 	anEditor := self test_cursor_add_at_0_in_empty.
@@ -1217,13 +1251,13 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_0 [
 		unsubscribe.
 		
 	self assert: anEditor cursors isNotEmpty.
-	self assert: anEditor cursors allCursors equals: { AlbTextEditorSingleCursor new position: 8 }.
+	self assert: anEditor cursors allCursors equals: { AlbTextEditorSingleCursor new position: 1 }.
 	
 	self assert: theAddedEvents isEmpty.
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 8).
+	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 1).
 	self assert: theMovedEvents first oldIndex equals: 0.
-	self assert: theMovedEvents first newIndex equals: 8.
+	self assert: theMovedEvents first newIndex equals: 1.
 	self assert: theRemovedEvents isEmpty.
 	
 	^ anEditor

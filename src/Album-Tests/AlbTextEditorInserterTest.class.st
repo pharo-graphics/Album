@@ -4,7 +4,7 @@ Class {
 	#category : #'Album-Tests-Operators'
 }
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_filter_insert_Hello123Symbols_onlyAlphaNumeric [
 	
 	| anEditor |
@@ -25,7 +25,7 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123Symbols_onlyAlphaNumeric
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyDigits [
 	
 	| anEditor |
@@ -46,7 +46,7 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyDigits [
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
 	
 	| anEditor |
@@ -67,7 +67,7 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 	
 	<description: '"Insertion at multiple cursors'>
@@ -93,7 +93,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_0 [
 	
 	| anEditor |
@@ -114,7 +114,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_0 
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_1 [
 	
 	| anEditor |
@@ -135,7 +135,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_1 
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14 [
 	
 	| anEditor |
@@ -158,7 +158,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete [
 	
 	| anEditor |
@@ -184,7 +184,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection [
 	
 	| anEditor |
@@ -211,7 +211,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection_no_cursor [
 	
 	| anEditor |
@@ -239,7 +239,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_5_selection_0_to_0 [
 	
 	| anEditor |
@@ -260,7 +260,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_5_selection_0_to_0 
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_0_selection_0_to_0 [
 	
 	| anEditor |
@@ -281,7 +281,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_0_selection_0_to_0 
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_1_selection_0_to_0 [
 	
 	| anEditor |
@@ -302,7 +302,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_1_selection_0_to_0 
 	^ anEditor
 ]
 
-{ #category : #'examples - indentation' }
+{ #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_1 [
 	
 	| anEditor |
@@ -326,7 +326,7 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - indentation' }
+{ #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_41 [
 	
 	| anEditor |
@@ -350,7 +350,7 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_41 [
 	^ anEditor
 ]
 
-{ #category : #'examples - indentation' }
+{ #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_1_to_2 [
 	
 	| anEditor |
@@ -374,7 +374,7 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_1_to_2 [
 	^ anEditor
 ]
 
-{ #category : #'examples - indentation' }
+{ #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_29_to_67 [
 	
 	| anEditor |
@@ -401,7 +401,7 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_29_to_67 [
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_and_3_selection_0_to_0 [
 	
 	| anEditor |
@@ -432,7 +432,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_and_3
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_selection_0_to_0 [
 	
 	| anEditor |
@@ -458,7 +458,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_selec
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_3_selection_0_to_1_withoutSelectionDelete [
 	
 	| anEditor |
@@ -493,7 +493,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_3_selec
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_0 [
 	
 	| anEditor |
@@ -515,7 +515,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_1 [
 	
 	| anEditor |
@@ -537,7 +537,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_1_withoutSelectionDelete [
 	
 	| anEditor |
@@ -563,7 +563,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_2_to_8_withoutSelectionDelete [
 	
 	| anEditor |
@@ -590,7 +590,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_2
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_10_selection_2_to_8_withoutSelectionDelete [
 	
 	| anEditor |
@@ -620,7 +620,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_10_selection_
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorAccountingSelection_withoutSelectionDelete [
 	"I make sure that selected text gets surrounded if it is described in condition"
 	
@@ -650,7 +650,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorNotAccountingSelection_withoutSelectionDelete [
 	"I make sure that selected text is not surrounded if it is selected and when it is not described in operator"
 	
@@ -680,7 +680,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_2_selection_2_to_8_withoutSelectionDelete [
 	
 	| anEditor |
@@ -710,7 +710,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_2_selection_2
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_8_selection_2_to_8_withoutSelectionDelete [
 	
 	| anEditor |
@@ -740,7 +740,7 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_8_selection_2
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_open_close_parentheses_at_cursor_0_selection_0_to_0 [
 	
 	| anEditor |
@@ -768,7 +768,7 @@ AlbTextEditorInserterTest >> test_insert_open_close_parentheses_at_cursor_0_sele
 	^ anEditor
 ]
 
-{ #category : #'examples - insertion' }
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_open_close_parentheses_with_selection_and_undo [
 	
 	

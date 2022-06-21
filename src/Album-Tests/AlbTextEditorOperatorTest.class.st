@@ -1,10 +1,18 @@
 Class {
 	#name : #AlbTextEditorOperatorTest,
 	#superclass : #TestCase,
-	#traits : 'TAlbTextEditorFixedMeasurerExamples',
-	#classTraits : 'TAlbTextEditorFixedMeasurerExamples classTrait',
 	#category : #'Album-Tests-Operators'
 }
+
+{ #category : #'private - font metrics' }
+AlbTextEditorOperatorTest >> ascent [
+	^ -20 
+]
+
+{ #category : #'private - font metrics' }
+AlbTextEditorOperatorTest >> descent [ 
+	^ 20
+]
 
 { #category : #'instance creation' }
 AlbTextEditorOperatorTest >> editorFor: aText [
@@ -37,6 +45,30 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 ]
 
 { #category : #'instance creation' }
+AlbTextEditorOperatorTest >> fixedMeasurer [
+	^ BlTextElementMockedMeasurer new
+		ascent: self ascent;
+		descent: self descent;
+		glyphWidth: self glyphWidth;
+		glyphHeight: self glyphHeight
+]
+
+{ #category : #'private - font metrics' }
+AlbTextEditorOperatorTest >> glyphHeight [
+	^ self ascent abs + self descent 
+]
+
+{ #category : #'private - font metrics' }
+AlbTextEditorOperatorTest >> glyphWidth [
+	^ 30 
+]
+
+{ #category : #'private - font metrics' }
+AlbTextEditorOperatorTest >> lineSpacing [
+	^ 5 
+]
+
+{ #category : #'instance creation' }
 AlbTextEditorOperatorTest >> multilineText [
 	
 	
@@ -51,6 +83,11 @@ Creep eastward.
 In the moonlight,
 The color and scent of the wisteria
 Seems far away.' asRopedText
+]
+
+{ #category : #'private - font metrics' }
+AlbTextEditorOperatorTest >> paragraphMargin [
+	^ BlInsets all: 15 
 ]
 
 { #category : #'private - utility' }
@@ -130,7 +167,7 @@ AlbTextEditorOperatorTest >> test_editorOnMultilineText [
 	^ anEditorElement
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceInEmptyAt_0 [
 	
 	| text editor whitespace |
@@ -144,7 +181,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceInEmptyAt_0 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_0 [
 	
 	| text editor whitespace |
@@ -158,7 +195,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_0 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_1 [
 	
 	| text editor whitespace |
@@ -172,7 +209,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_1 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_2 [
 	
 	| text editor whitespace |
@@ -186,7 +223,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_2 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_3 [
 	
 	| text editor whitespace |
@@ -200,7 +237,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_3 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_4 [
 	
 	| text editor whitespace |
@@ -214,7 +251,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_4 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_5 [
 	
 	| text editor whitespace |
@@ -228,7 +265,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_5 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_6 [
 	
 	| text editor whitespace |
@@ -242,7 +279,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_6 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_7 [
 	
 	| text editor whitespace |
@@ -256,7 +293,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_7 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_8 [
 	
 	| text editor whitespace |
@@ -270,7 +307,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_8 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_6 [
 	
 	| text editor whitespace |
@@ -284,7 +321,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_6 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_7 [
 	
 	| text editor whitespace |
@@ -298,7 +335,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_7 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_8 [
 	
 	| text editor whitespace |
@@ -312,7 +349,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_8 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_0 [
 	
 	| text editor whitespace |
@@ -326,7 +363,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_0 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_1 [
 	
 	| text editor whitespace |
@@ -340,7 +377,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_1 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_2 [
 	
 	| text editor whitespace |
@@ -354,7 +391,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_2 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_0 [
 	
 	| text editor whitespace |
@@ -368,7 +405,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_0 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_1 [
 	
 	| text editor whitespace |
@@ -382,7 +419,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_1 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_0 [
 	
 	| text editor whitespace |
@@ -396,7 +433,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_0 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_1 [
 	
 	| text editor whitespace |
@@ -410,7 +447,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_1 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_2 [
 	
 	| text editor whitespace |
@@ -424,7 +461,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_2 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_0 [
 	
 	| text editor whitespace |
@@ -438,7 +475,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_0 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_1 [
 	
 	| text editor whitespace |
@@ -452,7 +489,7 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_1 [
 	^ whitespace
 ]
 
-{ #category : #'utility - examples' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_2 [
 	
 	| text editor whitespace |
@@ -469,4 +506,9 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_2 [
 { #category : #'private - events' }
 AlbTextEditorOperatorTest >> unsubscribe: anEventClass from: anElement [
 	anElement removeEventHandlersSuchThat: [ :anEventHandler | (anEventHandler isKindOf: BlEventHandler) and: [ anEventHandler eventClass = anEventClass ] ]
+]
+
+{ #category : #'private - font metrics' }
+AlbTextEditorOperatorTest >> wordPadding [  
+	^ BlInsets top: 3 bottom: 3
 ]

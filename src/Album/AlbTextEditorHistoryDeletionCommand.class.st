@@ -41,7 +41,7 @@ AlbTextEditorHistoryDeletionCommand >> redoOn: aTextEditor [
 	aDeleter := aTextEditor deleter.
 	texts
 		with: redoIndices
-		do: [ :eachText :eachIndex | aDeleter from: eachIndex to: eachIndex + eachText size ].
+		do: [ :eachText :eachIndex | aDeleter from: eachIndex -1 to: eachIndex + eachText size -1].
 	
 	aDeleter delete
 ]

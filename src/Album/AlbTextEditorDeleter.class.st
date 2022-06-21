@@ -79,7 +79,7 @@ AlbTextEditorDeleter >> delete [
 	shouldUpdateSelection
 		ifTrue: [ self updateSelection ].
 
-	deletionIntervals reverseDo: [ :aMonotoneSelection | self privateDelete: aMonotoneSelection from to: aMonotoneSelection to ]
+	deletionIntervals reverseDo: [ :aMonotoneSelection | self privateDelete: aMonotoneSelection from to: aMonotoneSelection to]
 ]
 
 { #category : #'api - configuration' }

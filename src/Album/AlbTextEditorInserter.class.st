@@ -155,7 +155,9 @@ AlbTextEditorInserter >> insert [
 	theFilteredTextMap := Dictionary new.
 	theInsertions := OrderedCollection new.
 	theCursorMovements := OrderedCollection new.
-
+	
+	insertionIndices ifEmpty: [ self atCursor ].
+	
 	insertionIndices do: [ :eachAssociation |
 		| anIndex aFilteredText |
 		

@@ -21,24 +21,37 @@ AlbTextEditorDoubleClickHandler class >> uniqueInstance [
 
 { #category : #'mouse handlers' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
+
 	| aScreenPosition aGlobalTextIndex aSelecter anEditorElement |
-	
 	"To not create an instance of me for each tiny text element"
 	anEditorElement := anEvent currentTarget
-		withAllParentsDetect: [ :anElement | anElement isKindOf: AlbEditorElement]
-		ifFound: #yourself
-		ifNone: [ ^ self ].
-		
-	aScreenPosition := (anEditorElement localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0@0.0) fromChild: anEvent currentTarget) center.
+		                   withAllParentsDetect: [ :anElement | 
+		                   anElement isKindOf: AlbEditorElement ]
+		                   ifFound: #yourself
+		                   ifNone: [ ^ self ].
+
+	aScreenPosition := (anEditorElement
+		                    localBoundsToMine:
+		                    (BlBounds
+			                     origin: anEvent localPosition
+			                     extent: 0.0 @ 0.0)
+		                    fromChild: anEvent currentTarget) center.
 
 	aGlobalTextIndex := anEditorElement editor navigator
-		findTextIndexAtScreenPosition: aScreenPosition
-		ifAbsent: [ ^ self ].
-	
+		                    findTextIndexAtScreenPosition: aScreenPosition
+		                    ifAbsent: [ ^ self ].
+
 	aSelecter := anEditorElement editor selecter.
 
-	anEvent modifiers isPrimaryModifier
-		ifTrue: [ aSelecter withoutCursorUpdate ].
+	(aGlobalTextIndex isZero or: [ 
+		 aGlobalTextIndex = anEditorElement editor text size ]) ifTrue: [ 
+		aSelecter
+			all;
+			apply.
+		^ self ].
+
+	anEvent modifiers isPrimaryModifier ifTrue: [ 
+		aSelecter withoutCursorUpdate ].
 
 	aSelecter
 		wordAt: aGlobalTextIndex;

@@ -5,6 +5,32 @@ Class {
 }
 
 { #category : #insertion }
+AlbTextEditorInserterTest >> test_big_text_insert_cr_twice_at_0 [
+	
+	| anEditor bigText size |
+	size := 10000000.
+	bigText := (String loremIpsum: size) asRopedText.
+	anEditor := AlbEditor new.
+	anEditor text: bigText.
+	anEditor forceLayout.
+	anEditor requestFocus.
+	anEditor inserter
+		at: 0;
+		string: String cr;
+		insert.
+	anEditor forceLayout.
+	self assert: anEditor text size equals: size + 1.
+	anEditor inserter
+		at: 0;
+		string: String cr;
+		insert.
+	anEditor forceLayout.
+	self assert: anEditor text size equals: size + 2.
+
+	^ anEditor
+]
+
+{ #category : #insertion }
 AlbTextEditorInserterTest >> test_filter_insert_Hello123Symbols_onlyAlphaNumeric [
 	
 	| anEditor |

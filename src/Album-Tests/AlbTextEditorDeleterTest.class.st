@@ -4,7 +4,7 @@ Class {
 	#category : #'Album-Tests-Operators'
 }
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_0 [
 	
 	| anEditor |
@@ -24,7 +24,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_10 [
 	
 	| anEditor |
@@ -44,7 +44,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_10 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_1_cursorAt_0_selection_0_to_10 [
 	
 	| anEditor |
@@ -64,7 +64,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_1_cursorAt_0_selection_0_to_10 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_10 [
 	
 	| anEditor |
@@ -84,7 +84,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_10 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_28 [
 	
 	| anEditor |
@@ -104,7 +104,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_28 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_29 [
 	
 	| anEditor |
@@ -124,7 +124,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_29 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38 [
 	
 	| anEditor |
@@ -144,7 +144,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38_and_48_to_50 [
 	
 	| anEditor |
@@ -165,7 +165,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38_and
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_10_selection_0_to_10 [
 	
 	| anEditor |
@@ -185,7 +185,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_10_selection_0_to_10 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_28_selection_0_to_10 [
 	
 	| anEditor |
@@ -205,7 +205,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_28_selection_0_to_10 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_29_selection_0_to_10 [
 	
 	| anEditor |
@@ -225,7 +225,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_29_selection_0_to_10 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion' }
+{ #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_38_selection_0_to_10 [
 	
 	| anEditor |
@@ -245,7 +245,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_38_selection_0_to_10 [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion special' }
+{ #category : #'deletion special' }
 AlbTextEditorDeleterTest >> test_delete_0_to_5_from_HelloCr [
 	
 	| anEditor |
@@ -261,7 +261,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_5_from_HelloCr [
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion special' }
+{ #category : #'deletion special' }
 AlbTextEditorDeleterTest >> test_surroundings_delete_at_0_from_parenthesis_open_close [
 	
 	| anEditor |
@@ -281,7 +281,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_0_from_parenthesis_open_
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion special' }
+{ #category : #'deletion special' }
 AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_close [
 	
 	| anEditor |
@@ -301,7 +301,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion special' }
+{ #category : #'deletion special' }
 AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_close_close [
 	
 	| anEditor |
@@ -321,7 +321,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion special' }
+{ #category : #'deletion special' }
 AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_close [
 	
 	| anEditor |
@@ -341,7 +341,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion special' }
+{ #category : #'deletion special' }
 AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_close_selected_1_to_2 [
 	
 	| anEditor |
@@ -366,7 +366,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 	^ anEditor
 ]
 
-{ #category : #'examples - deletion special' }
+{ #category : #'deletion special' }
 AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_open_close [
 	
 	| anEditor |

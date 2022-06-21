@@ -25,11 +25,6 @@ AlbTextEditorParagraphSegmentPiece >> isText [
 AlbTextEditorParagraphSegmentPiece >> onRecycled: aPieceElement in: anEditorElement [
 ]
 
-{ #category : #printing }
-AlbTextEditorParagraphSegmentPiece >> printOn: aStream [
-	self text printOn: aStream
-]
-
 { #category : #accessing }
 AlbTextEditorParagraphSegmentPiece >> segment [
 	^ segment

@@ -4,7 +4,7 @@ Class {
 	#category : #'Album-Tests-Operators'
 }
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> cursor_moveToNextWord_in_cursors_at_0 [
 
 	<label: 'Cursor before the first character of the line should move to the end'>
@@ -38,13 +38,13 @@ AlbTextEditorNavigatorTest >> cursor_moveToNextWord_in_cursors_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - showroom' }
+{ #category : #showroom }
 AlbTextEditorNavigatorTest >> editorOnSomeThing [
 
 	^ self editorFor: 'SomeThing todo here'
 ]
 
-{ #category : #'examples - showroom' }
+{ #category : #showroom }
 AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_in_something [
 
 	
@@ -68,7 +68,7 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_in_something [
 	^ anEditor
 ]
 
-{ #category : #'examples - showroom' }
+{ #category : #showroom }
 AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_twice_in_something [
 	
 	| anEditor |
@@ -85,7 +85,7 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_twice_in_something
 	^ anEditor
 ]
 
-{ #category : #'examples - showroom' }
+{ #category : #showroom }
 AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_in_something [
 
 	
@@ -109,7 +109,7 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_in_something [
 	^ anEditor
 ]
 
-{ #category : #'examples - showroom' }
+{ #category : #showroom }
 AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_twice_in_something [
 
 	
@@ -126,7 +126,7 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_twice_in_somet
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_0_and_0_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -159,7 +159,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_0_and_0_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_0_and_1_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -195,7 +195,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_0_and_1_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
@@ -240,7 +240,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_and_0_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -276,7 +276,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_and_0_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - performance' }
+{ #category : #performance }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_does_not_rebuild_editor [
 	
 	| anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces |
@@ -311,7 +311,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_does_not_rebuild_editor [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_cursors_at_0 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -346,7 +346,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_cursors_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
@@ -391,7 +391,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
@@ -436,7 +436,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
@@ -481,7 +481,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - add' }
+{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -516,7 +516,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - no duplication' }
+{ #category : #'no duplication' }
 AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated [
 	
 	| anEditor thePiecesWithCursor |
@@ -554,7 +554,7 @@ AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated [
 	^ anEditor
 ]
 
-{ #category : #'examples - no duplication' }
+{ #category : #'no duplication' }
 AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated_bulk [
 	
 	| anEditor thePiecesWithCursor |
@@ -587,7 +587,7 @@ AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated_bulk [
 	^ anEditor
 ]
 
-{ #category : #'examples - no duplication' }
+{ #category : #'no duplication' }
 AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated_bulk_full [
 	
 	| anEditor thePiecesWithCursor |
@@ -654,7 +654,7 @@ AlbTextEditorNavigatorTest >> test_cursor_is_on_last_line_when_before_the_first_
 	^ anEditor
 ]
 
-{ #category : #'examples - move down' }
+{ #category : #'move down' }
 AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents theReachBoudnaryEvents |
@@ -691,7 +691,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 	
 	<label: 'Cursor before the first character of the line should move to the end'>
@@ -724,7 +724,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 	
 	<label: 'Cursor after the first character of the line should move to the end'>
@@ -760,7 +760,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_201 [
 	
 	<label: 'Cursor before the last character of the whole text should not move'>
@@ -796,7 +796,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_201 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_202 [
 	
 	<label: 'Cursor after the last character of the whole text should not move'>
@@ -829,7 +829,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_202 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_27 [
 	
 	<label: 'Cursor before the last character of the line should move to the end'>
@@ -865,7 +865,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_27 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_28 [
 	
 	<label: 'Cursor after the last character of the line should not move'>
@@ -898,7 +898,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_28 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -926,7 +926,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_0 [
 	
 	<label: 'Cursor before the first character should not be moved'>
@@ -956,7 +956,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_1 [
 	
 	<label: 'Cursor after the first character moves before the start of the text'>
@@ -989,7 +989,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_27 [
 	
 	<label: 'Cursor before the last character of the line should move to the start'>
@@ -1025,7 +1025,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_27 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_28 [
 	
 	<label: 'Cursor after the last character of the line should move to to the start'>
@@ -1061,7 +1061,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_28 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_29 [
 	
 	<label: 'Cursor before the first character of the line should not move'>
@@ -1094,7 +1094,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_29 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_30 [
 	
 	<label: 'Cursor after the first character of the line should move to the start of that line'>
@@ -1130,7 +1130,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_30 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_40 [
 	
 	<label: 'Cursor before the last character of the line should move to the start of that line'>
@@ -1166,7 +1166,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_40 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_41 [
 	
 	<label: 'Cursor after the last character of the line should move to the start of that line'>
@@ -1202,7 +1202,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_41 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line start' }
+{ #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1230,7 +1230,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_0 [
 	
 	"Differs from Brick version but : this nextWord behavior seems ok and its implementation remains simple, so keep it"
@@ -1263,7 +1263,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_1 [
 	
 	<label: 'Cursor before the first character of the line should move to the end'>
@@ -1296,7 +1296,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_1 [
 	
 	<label: 'Cursor before the first character of the line should move to the end'>
@@ -1329,7 +1329,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_2 [
 	
 	<label: 'Cursor before the first character of the line should move to the end'>
@@ -1362,7 +1362,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_2 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to line end' }
+{ #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_8 [
 	
 	<label: 'Cursor before the first character of the line should move to the end'>
@@ -1398,7 +1398,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_8 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to screen' }
+{ #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_half_in_empty [
 	
 	<label: 'Click on the left half of the first character'>
@@ -1429,7 +1429,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_half_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to screen' }
+{ #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_in_empty [
 	
 	<label: 'Click on a whitespace to the left from the first character'>
@@ -1460,7 +1460,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to screen' }
+{ #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_middle_in_empty [
 	
 	<label: 'Click right in the middle of the first character'>
@@ -1491,7 +1491,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_middle_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to screen' }
+{ #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_empty [
 	
 	<label: 'Click on the right half of the first character'>
@@ -1522,7 +1522,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to screen' }
+{ #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_41_right_in_empty [
 	
 	<label: 'Click on the right half of the 41th character'>
@@ -1553,7 +1553,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_41_right_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to' }
+{ #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_cursors_at_0_and_1 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1586,7 +1586,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_cursors_at_0_and_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to' }
+{ #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1618,7 +1618,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to' }
+{ #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_190_in_empty [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1650,7 +1650,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_190_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to' }
+{ #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_1_in_cursors_at_0 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1682,7 +1682,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_1_in_cursors_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to' }
+{ #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_2_in_cursors_at_0_and_1 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1717,7 +1717,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_2_in_cursors_at_0_and_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move to' }
+{ #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
@@ -1764,7 +1764,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move up' }
+{ #category : #'move up' }
 AlbTextEditorNavigatorTest >> test_cursor_moveUp_in_cursors_at_1 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents theReachBoudnaryEvents |
@@ -1801,7 +1801,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveUp_in_cursors_at_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - performance' }
+{ #category : #performance }
 AlbTextEditorNavigatorTest >> test_cursor_move_from_1_to_2_does_not_rebuild_editor [
 	
 	| anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces |
@@ -1836,7 +1836,7 @@ AlbTextEditorNavigatorTest >> test_cursor_move_from_1_to_2_does_not_rebuild_edit
 	^ anEditor
 ]
 
-{ #category : #'examples - remove' }
+{ #category : #remove }
 AlbTextEditorNavigatorTest >> test_cursor_removeAll_in_cursors_at_0_and_1 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1868,7 +1868,7 @@ AlbTextEditorNavigatorTest >> test_cursor_removeAll_in_cursors_at_0_and_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - remove' }
+{ #category : #remove }
 AlbTextEditorNavigatorTest >> test_cursor_remove_at_0_in_cursors_at_0 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1899,7 +1899,7 @@ AlbTextEditorNavigatorTest >> test_cursor_remove_at_0_in_cursors_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - remove' }
+{ #category : #remove }
 AlbTextEditorNavigatorTest >> test_cursor_remove_at_1_and_0_in_cursors_at_0_and_1 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
@@ -1932,7 +1932,7 @@ AlbTextEditorNavigatorTest >> test_cursor_remove_at_1_and_0_in_cursors_at_0_and_
 	^ anEditor
 ]
 
-{ #category : #'examples - remove' }
+{ #category : #remove }
 AlbTextEditorNavigatorTest >> test_cursor_remove_at_1_in_cursors_at_0_and_1 [
 	
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |

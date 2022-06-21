@@ -108,11 +108,6 @@ AlbTextEditorLineSegmentPiece >> onCursorRemoved: aCursor from: aPieceElement in
 AlbTextEditorLineSegmentPiece >> onRecycled: aPieceElement in: anEditorElement [
 ]
 
-{ #category : #printing }
-AlbTextEditorLineSegmentPiece >> printOn: aStream [
-	self text printOn: aStream
-]
-
 { #category : #'api - cursor' }
 AlbTextEditorLineSegmentPiece >> screenToCursor: aTransformation of: anEditorElement in: aPieceElement [
 

@@ -4,7 +4,7 @@ Class {
 	#category : #'Album-Tests-Operators'
 }
 
-{ #category : #'examples - all' }
+{ #category : #all }
 AlbTextEditorSelecterTest >> test_select_all_in_empty [
 	
 	| anEditor |
@@ -19,7 +19,7 @@ AlbTextEditorSelecterTest >> test_select_all_in_empty [
 	^ anEditor
 ]
 
-{ #category : #'examples - all' }
+{ #category : #all }
 AlbTextEditorSelecterTest >> test_select_all_in_empty_with_curor [
 	
 	| anEditor |
@@ -43,7 +43,7 @@ AlbTextEditorSelecterTest >> test_select_all_in_empty_with_curor [
 	^ anEditor
 ]
 
-{ #category : #'examples - all' }
+{ #category : #all }
 AlbTextEditorSelecterTest >> test_select_all_reduced [
 	"There was a bug, that if a new text is smaller than the existing selection, then things can go wrong"
 	
@@ -74,7 +74,7 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 	^ anEditor
 ]
 
-{ #category : #'examples - from to' }
+{ #category : #'from to' }
 AlbTextEditorSelecterTest >> test_select_from_0_to_5 [
 	
 	| anEditor |
@@ -91,7 +91,7 @@ AlbTextEditorSelecterTest >> test_select_from_0_to_5 [
 	^ anEditor
 ]
 
-{ #category : #'examples - from to' }
+{ #category : #'from to' }
 AlbTextEditorSelecterTest >> test_select_from_0_to_5_in_steps [
 	
 	| anEditor |
@@ -116,7 +116,7 @@ AlbTextEditorSelecterTest >> test_select_from_0_to_5_in_steps [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 	
 	| anEditor |
@@ -137,7 +137,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6_thenUp [
 	
 	| anEditor |
@@ -156,7 +156,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6_thenUp [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_0 [
 	
 	| anEditor |
@@ -174,7 +174,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4 [
 	
 	| anEditor |
@@ -198,7 +198,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4_extendToNextWordEnd [
 	
 	| anEditor |
@@ -218,7 +218,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4_extendToNextWordEnd [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6 [
 	
 	| anEditor |
@@ -242,7 +242,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd [
 	
 	| anEditor |
@@ -265,7 +265,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd_twice [
 	
 	| anEditor |
@@ -287,7 +287,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd_t
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordStart [
 	
 	| anEditor |
@@ -309,7 +309,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordS
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordStart_twice [
 	
 	| anEditor |
@@ -331,7 +331,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordS
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_End [
 	
 	| anEditor |
@@ -349,7 +349,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_End [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
 	
 	| anEditor |
@@ -370,7 +370,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35_thenDown [
 	
 	| anEditor |
@@ -389,7 +389,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35_thenDown [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveTwiceLeft_at_1 [
 	
 	| anEditor |
@@ -417,7 +417,7 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceLeft_at_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - move' }
+{ #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveTwiceRight_at_End [
 	
 	| anEditor |
@@ -443,7 +443,7 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceRight_at_End [
 	^ anEditor
 ]
 
-{ #category : #'examples - word' }
+{ #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_0 [
 	
 	| anEditor |
@@ -461,7 +461,7 @@ AlbTextEditorSelecterTest >> test_select_word_at_0 [
 	^ anEditor
 ]
 
-{ #category : #'examples - word' }
+{ #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_1 [
 	
 	| anEditor |
@@ -479,7 +479,7 @@ AlbTextEditorSelecterTest >> test_select_word_at_1 [
 	^ anEditor
 ]
 
-{ #category : #'examples - word' }
+{ #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_2 [
 	
 	| anEditor |
@@ -497,7 +497,7 @@ AlbTextEditorSelecterTest >> test_select_word_at_2 [
 	^ anEditor
 ]
 
-{ #category : #'examples - word' }
+{ #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_2_and_10 [
 	
 	| anEditor |

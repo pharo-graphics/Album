@@ -141,20 +141,6 @@ AlbTextElementWithCursors >> onLayout: aBounds context: aBlElementBoundsUpdateCo
 	self layoutCursors: aBounds context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #printing }
-AlbTextElementWithCursors >> printOn: aStream [
-	segmentPiece
-		ifNil: [ ^ aStream nextPutAll: 'Uknown segment' ].
-	
-	aStream
-		nextPut: $(;
-		nextPutAll: segmentPiece textStart asString;
-		nextPutAll: ' - ';
-		nextPutAll: segmentPiece textEnd asString;
-		nextPut: $);
-		print: segmentPiece text
-]
-
 { #category : #'cursor - management' }
 AlbTextElementWithCursors >> removeCursorAt: aTextIndex [
 	"Remove cursor at a goven position"

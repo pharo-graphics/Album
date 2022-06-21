@@ -26,19 +26,6 @@ AlbTextEditorInsertStringsCommand >> indices: anObject [
 	indices := anObject
 ]
 
-{ #category : #printing }
-AlbTextEditorInsertStringsCommand >> printOn: aStream [
-	aStream
-		nextPutAll: 'Inserted'.
-	
-	self strings with: self indices do: [ :aString :anIndex |
-		aStream
-			space;
-			print: aString;
-			nextPutAll: ' at ';
-			print: anIndex ]
-]
-
 { #category : #accessing }
 AlbTextEditorInsertStringsCommand >> strings [
 	^ strings

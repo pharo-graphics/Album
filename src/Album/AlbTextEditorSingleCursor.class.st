@@ -112,14 +112,6 @@ AlbTextEditorSingleCursor >> position: anIndex [
 	position := anIndex
 ]
 
-{ #category : #printing }
-AlbTextEditorSingleCursor >> printOn: aStream [
-	aStream
-		nextPutAll: 'Cursor (';
-		nextPutAll: self position asString;
-		nextPutAll: ')'
-]
-
 { #category : #accessing }
 AlbTextEditorSingleCursor >> resetDesiredCoordinate [
 	desiredCoordinate := nil

@@ -59,13 +59,6 @@ AlbTextEditorCursorChangeCommand >> position: anObject [
 	position := anObject
 ]
 
-{ #category : #printing }
-AlbTextEditorCursorChangeCommand >> printOn: aStream [
-	aStream
-		nextPutAll: 'Cursor changed at ';
-		print: self position
-]
-
 { #category : #executing }
 AlbTextEditorCursorChangeCommand >> processAttributesOn: aTextEditor [
 	| anEditorText thePotentialHandlerTextInterval theEventHandlingAttributes eventHandlingAttributesOutside eventHandlingAttributesInside |

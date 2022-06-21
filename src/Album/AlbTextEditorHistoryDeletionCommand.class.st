@@ -9,20 +9,6 @@ Class {
 	#category : #'Album-History'
 }
 
-{ #category : #printing }
-AlbTextEditorHistoryDeletionCommand >> printOn: aStream [
-	aStream nextPutAll: 'Delete'.
-	texts
-		with: undoIndices
-		do: [ :eachString :eachIndex |
-			aStream
-				space;
-				print: eachString; space;
-				nextPutAll: 'at'; space;
-				print: eachIndex;
-				nextPut: $, ].
-]
-
 { #category : #accessing }
 AlbTextEditorHistoryDeletionCommand >> redoIndices [
 	^ redoIndices

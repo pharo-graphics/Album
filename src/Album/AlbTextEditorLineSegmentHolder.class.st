@@ -1,5 +1,5 @@
 "
-I am a line segment holder and is responsible for binding `BrTextEditorLineSegment` with corresponding visual element
+I am a line segment holder and is responsible for binding `AlbTextEditorLineSegment` with corresponding visual element
 "
 Class {
 	#name : #AlbTextEditorLineSegmentHolder,

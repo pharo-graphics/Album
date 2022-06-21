@@ -23,11 +23,17 @@ AlbEditorSegmentStream >> collection: anObject [
 ]
 
 { #category : #initialization }
+AlbEditorSegmentStream >> defaultLimit [ 
+	^500
+
+]
+
+{ #category : #initialization }
 AlbEditorSegmentStream >> initialize [
 	super initialize.
 	
 	stream := WriteStream on: (Array new: 50).
-	limit := 500.
+	limit := self defaultLimit.
 	skip := 0
 ]
 
@@ -46,11 +52,7 @@ AlbEditorSegmentStream >> nextPut: aTextEditorSegment [
 	self
 		assert: [ self wantsMore ]
 		description: [ 'Stream is full, can not add more!' ].
-	
-	self
-		assert: [ skip >= 0 ]
-		description: [ 'Skip count must not be negative' ].
-	
+		
 	skip isZero
 		ifTrue: [ stream nextPut: aTextEditorSegment ]
 		ifFalse: [ skip := skip - 1 ]
@@ -81,6 +83,9 @@ AlbEditorSegmentStream >> skip: aNumber [
 	self
 		assert: [ aNumber isInteger ]
 		description: [ 'Skip count must be integer' ].
+	self
+		assert: [ skip >= 0 ]
+		description: [ 'Skip count must not be negative' ].
 
 	skip := aNumber
 ]

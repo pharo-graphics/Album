@@ -47,14 +47,3 @@ AlbTextEditorCursorReachedBoundaryEvent >> isBottom [
 AlbTextEditorCursorReachedBoundaryEvent >> isTop [
 	^ boundary = Top
 ]
-
-{ #category : #printing }
-AlbTextEditorCursorReachedBoundaryEvent >> printOn: aStream [
-
-	aStream
-		<< 'ReachedBoundaryEvent(';
-		print: boundary;
-		<< ', ';
-		print: cursor;
-		<< ')'
-]

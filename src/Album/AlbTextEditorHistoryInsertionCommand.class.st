@@ -9,21 +9,6 @@ Class {
 	#category : #'Album-History'
 }
 
-{ #category : #printing }
-AlbTextEditorHistoryInsertionCommand >> printOn: aStream [
-	
-	aStream nextPutAll: 'Insert'.
-	strings
-		with: undoIndices
-		do: [ :eachString :eachIndex |
-			aStream
-				space;
-				print: eachString; space;
-				nextPutAll: 'at'; space;
-				print: eachIndex;
-				nextPut: $, ].
-]
-
 { #category : #accessing }
 AlbTextEditorHistoryInsertionCommand >> redoIndices [
 	^ redoIndices

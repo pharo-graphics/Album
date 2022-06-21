@@ -41,15 +41,6 @@ AlbTextEditorUpdateCommand >> fromIndex: aFromTextIndex [
 	fromIndex := aFromTextIndex
 ]
 
-{ #category : #printing }
-AlbTextEditorUpdateCommand >> printOn: aStream [
-	aStream
-		nextPutAll: 'Text changed from ';
-		print: self fromIndex;
-		nextPutAll: ' to ';
-		print: self toIndex
-]
-
 { #category : #accessing }
 AlbTextEditorUpdateCommand >> toIndex [
 	^ toIndex

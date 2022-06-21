@@ -58,14 +58,6 @@ AlbTextEditorMultipleCursor >> postCopy [
 	cursors := cursors collect: [ :cursor | cursor copy ]
 ]
 
-{ #category : #printing }
-AlbTextEditorMultipleCursor >> printOn: aStream [
-
-	self isEmpty
-		ifTrue: [ aStream nextPutAll: 'Empty' ]
-		ifFalse: [ aStream nextPutAll: ($, join: self cursors) ]
-]
-
 { #category : #adding }
 AlbTextEditorMultipleCursor >> remove: aSingleCursor [
 	self cursors remove: aSingleCursor

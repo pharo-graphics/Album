@@ -101,21 +101,6 @@ AlbWidgetModel >> onUninstalledIn: anElement [
 	self initializeListeners
 ]
 
-{ #category : #printing }
-AlbWidgetModel >> printOn: aStream [
-
-	aStream nextPutAll: self modelName.
-	aStream space.
-	aStream nextPut: ${.
-	self widgetModels withIndexDo: [ :aWidgetModel :anIndex |
-		anIndex = 1 ifTrue: [ aStream cr ].
-		aStream tab.
-		aStream print: aWidgetModel.
-		aStream cr.
-	].
-	aStream nextPut: $}.
-]
-
 { #category : #'event management' }
 AlbWidgetModel >> when: aRequestClass reply: aBlock [
 	self when: aRequestClass do: [ :aRequest |

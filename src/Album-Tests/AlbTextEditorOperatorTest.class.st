@@ -102,7 +102,7 @@ AlbTextEditorOperatorTest >> subscribe: anEventClass do: aBlock for: anElement [
 	anElement when: anEventClass do: aBlock
 ]
 
-{ #category : #'focus - examples' }
+{ #category : #focus }
 AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	
 	| anEditor aSpace |
@@ -127,7 +127,7 @@ AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	^ anEditor
 ]
 
-{ #category : #'focus - examples' }
+{ #category : #focus }
 AlbTextEditorOperatorTest >> test_editorHasNoFocusByDefault [
 	
 	| anEditor |

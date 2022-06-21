@@ -82,11 +82,6 @@ AlbTextEditorSegment >> moveTextBy: aNumber [
 AlbTextEditorSegment >> moveTextPiecesBy: aNumber at: aTextIndex [
 ]
 
-{ #category : #printing }
-AlbTextEditorSegment >> printOn: aStream [
-	self text printOn: aStream
-]
-
 { #category : #accessing }
 AlbTextEditorSegment >> segmentType [
 	"Return a type of this segment responsible for creation

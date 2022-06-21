@@ -20,8 +20,9 @@ AlbEditorSegmentStreamTest >> test_basic_nextPut [
 
 	self assert: stream size isZero.
 	stream nextPut: $A.
-	self assert: stream size = 1.
-	self assert: stream size < stream limit
+	self assert: stream size equals: 1.
+	self assert: stream size < stream limit.
+	self assert: stream wantsMore
 	
 ]
 

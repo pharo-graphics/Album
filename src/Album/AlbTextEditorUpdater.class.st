@@ -14,6 +14,11 @@ AlbTextEditorUpdater >> all [
 	self from: 1 to: self text size
 ]
 
+{ #category : #'api - processing' }
+AlbTextEditorUpdater >> apply [
+	^ self update 
+]
+
 { #category : #'api - configuration' }
 AlbTextEditorUpdater >> from: aFromTextIndex to: aToTextIndex [
 	"Both from and to indices must be given in text coordinates"

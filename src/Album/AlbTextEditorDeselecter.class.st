@@ -15,8 +15,17 @@ AlbTextEditorDeselecter >> all [
 ]
 
 { #category : #'api - processing' }
+AlbTextEditorDeselecter >> apply [
+	^ self deselect
+]
+
+{ #category : #'api - processing' }
 AlbTextEditorDeselecter >> deselect [
-	selection do: [ :aMonotoneSelection | self privateDeselect: aMonotoneSelection from to: aMonotoneSelection to ]
+
+	selection do: [ :aMonotoneSelection | 
+		self
+			privateDeselect: aMonotoneSelection from
+			to: aMonotoneSelection to ]
 ]
 
 { #category : #'api - configuration' }

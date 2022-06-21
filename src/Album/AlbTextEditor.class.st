@@ -104,6 +104,15 @@ AlbTextEditor >> beReadOnlyWithoutSelection [
 	self editorMode: AlbTextEditorReadonlyWithoutSelectionMode new
 ]
 
+{ #category : #'text checking' }
+AlbTextEditor >> checkText: aText [
+
+	(aText allSatisfy: [ :aCharacter | 
+		 (Unicode isPrintable: aCharacter) or: [ 
+			 aCharacter isLineBreak or: [ aCharacter = Character tab ] ] ]) 
+		ifFalse: [ ^ self error: 'Non printable character in text' ]
+]
+
 { #category : #'private - selection' }
 AlbTextEditor >> commitSelection [
 	self selectionRecorder commit: self
@@ -1151,18 +1160,19 @@ AlbTextEditor >> text [
 
 { #category : #accessing }
 AlbTextEditor >> text: aText [
+
 	| t |
+	self checkText: aText.
 	t := aText asRopedText.
 	"when reducing the text size we should update the selection and cursor positions"
-	(t size < text size)
-		ifTrue: [
-			self navigator
-				moveWithin: (0 to: t size);
-				apply.
-			
-			self deselecter
-				from: t size to: text size;
-				deselect ].
+	t size < text size ifTrue: [ 
+		self navigator
+			moveWithin: (0 to: t size);
+			apply.
+
+		self deselecter
+			from: t size to: text size;
+			deselect ].
 
 	self restoreText: t
 ]

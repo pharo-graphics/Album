@@ -65,29 +65,6 @@ AlbTextEditorHistoryTest >> test_insert_open_close_parentheses_with_selection_an
 ]
 
 { #category : #tests }
-AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo [
-	
-	| editorElement editor s |
-	s := 'to be selected and removed'.
-	editorElement := s asRopedText onAlbum.
-	editor := editorElement editor.
-	self assert: editor text asString equals: s.
-	(editor selecter)
-		all;
-		select.
-	(editor inserter)
-		string: Character backspace asString;
-		insert.
-	self flag: 'the editor text become invalid here because $backspace is not a valid character for a text. Have to see if invalid character should be forbidden in inserter (filter ?). see AlbEditorDeleteOneLetterBeforeCursorShortcut, it implements the valid backspace treatement'.
-	self assert: editor text asString equals: ''.
-	editor undo.
-	self assert: editor text asString equals: s.
-	editor redo.
-	self assert: editor text asString equals: ''.
-	^ editorElement
-]
-
-{ #category : #tests }
 AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo2 [
 	
 	| editorElement editor s |

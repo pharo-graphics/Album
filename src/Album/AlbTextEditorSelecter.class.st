@@ -29,6 +29,11 @@ AlbTextEditorSelecter >> all: aCompositeSelection [
 		self from: eachMonotoneSelection from to: eachMonotoneSelection to ]
 ]
 
+{ #category : #'api - processing' }
+AlbTextEditorSelecter >> apply [
+	^ self select
+]
+
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToLineEnd [
 	"Extend selection to the end of the line"

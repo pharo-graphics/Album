@@ -36,6 +36,25 @@ AlbTextEditorTest >> test_insertString1 [
 ]
 
 { #category : #tests }
+AlbTextEditorTest >> test_insertString2 [
+
+	self should: [textEditor insertString: Character backspace asString at: 0] raise: Error.
+
+
+]
+
+{ #category : #tests }
+AlbTextEditorTest >> test_insertString3 [
+
+	self
+		should: [ 
+			textEditor inserter
+				string: Character backspace asString;
+				insert ]
+		raise: Error
+]
+
+{ #category : #tests }
 AlbTextEditorTest >> test_oneCharacter [
 	textEditor text: 'A' asRopedText.
 	self assert: textEditor text asString equals: 'A'.
@@ -52,4 +71,11 @@ AlbTextEditorTest >> test_textFromString [
 	self assert: textEditor text asString equals: 'a string'.
 	"#textSnapshot return a copy of the editor text (to be used in application thread - non-UI process)"
 	self assert: textEditor textSnapshot asString equals: 'a string'
+]
+
+{ #category : #tests }
+AlbTextEditorTest >> test_textFromStringWithNonPrintableCharacter [
+	"non printable character test"
+	self should: [textEditor text: Character backspace asString] raise: Error.
+
 ]

@@ -26,6 +26,11 @@ Class {
 	#category : #'Album-Model-Operators'
 }
 
+{ #category : #'api - processing' }
+AlbTextEditorInserter >> apply [
+	^ self insert
+]
+
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> at: anIndex [
 	"Add a given index as another text insertion location"
@@ -477,8 +482,11 @@ AlbTextEditorInserter >> surroundings: aSurroundMap [
 
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> text: aBlText [
+
+	self editor checkText: aBlText.
 	text := aBlText asString.
-	insertionIndices do: [ :eachAssociation | eachAssociation value ifNil: [ eachAssociation value: text ] ]
+	insertionIndices do: [ :eachAssociation | 
+		eachAssociation value ifNil: [ eachAssociation value: text ] ]
 ]
 
 { #category : #private }

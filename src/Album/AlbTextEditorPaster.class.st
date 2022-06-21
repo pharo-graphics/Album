@@ -12,6 +12,11 @@ Class {
 	#category : #'Album-Model-Operators'
 }
 
+{ #category : #'api - processing' }
+AlbTextEditorPaster >> apply [
+	^ self paste
+]
+
 { #category : #'api - configuration' }
 AlbTextEditorPaster >> at: anIndex [
 	"Add a given index as another text paste location"

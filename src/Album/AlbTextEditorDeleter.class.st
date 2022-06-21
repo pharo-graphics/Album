@@ -19,6 +19,11 @@ AlbTextEditorDeleter >> afterCursor [
 			to: self text size ]
 ]
 
+{ #category : #'api - processing' }
+AlbTextEditorDeleter >> apply [
+	^ self delete
+]
+
 { #category : #'api - configuration' }
 AlbTextEditorDeleter >> beforeCursor [
 	"Delete all text before the cursors"

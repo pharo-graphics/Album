@@ -9,6 +9,11 @@ Class {
 	#category : #'Album-Model-Operators'
 }
 
+{ #category : #'api - processing' }
+AlbTextEditorOperator >> apply [
+	^ self subclassResponsibility 
+]
+
 { #category : #'private - asserting' }
 AlbTextEditorOperator >> assertUIProcess [
 	self editor assertUIProcess

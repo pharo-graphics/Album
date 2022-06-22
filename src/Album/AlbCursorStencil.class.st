@@ -23,7 +23,9 @@ AlbCursorStencil class >> uniqueInstance [
 AlbCursorStencil >> create [
 	^ AlbCursorElement new
 		constraintsDo: [ :c |
-			c horizontal exact: 2.
+			c horizontal exact: 1.
 			c vertical matchParent ];
-		background: Color black
+		background: Color red;
+		addAnimation: AlbBlinkAnimation new;
+		yourself
 ]

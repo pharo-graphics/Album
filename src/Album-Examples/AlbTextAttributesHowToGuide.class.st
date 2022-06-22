@@ -25,11 +25,11 @@ AlbTextAttributesHowToGuide class >> hideMarkupInText [
 	(text from: 15 to: 18) bold.
 
 	(text from: 13 to: 14)
-		foreground: Color gray;
+		foreground: Color red;
 		attribute: (leftMarker := AlbTextInvisibleMarkerAttribute new).
 
 	(text from: 19 to: 20)
-		foreground: Color gray;
+		foreground: Color red;
 		attribute: (rightMarker := AlbTextInvisibleMarkerAttribute new).
 
 	(text from: 11 to: 22)

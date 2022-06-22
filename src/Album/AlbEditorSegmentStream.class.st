@@ -13,6 +13,7 @@ Class {
 
 { #category : #accessing }
 AlbEditorSegmentStream >> collection [
+
 	^ stream contents 
 ]
 

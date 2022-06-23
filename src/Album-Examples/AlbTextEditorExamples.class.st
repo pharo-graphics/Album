@@ -214,7 +214,7 @@ AlbTextEditorExamples class >> exampleEditor [
 AlbTextEditorExamples class >> exampleMethodTextOpen [
 	| space editorElement |
 
-	editorElement := (self >> #elementOnMethodWithSyntaxHighlighting) returnValue.
+	editorElement :=  self elementOnMethodWithSyntaxHighlighting.
 	editorElement editor text attributes: {
 		(BlFontSizeAttribute size: 18) beNotOverwritableByStyler.
 	}.

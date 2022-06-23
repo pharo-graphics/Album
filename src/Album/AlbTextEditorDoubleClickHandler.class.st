@@ -50,6 +50,27 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 			apply.
 		^ self ].
 
+	anEditorElement cursors do: [ :aCursor | 
+		| delta lineIdx |
+		lineIdx := anEditorElement editor navigator 
+			           findTextIndexAtLineStart: aCursor.
+		delta := lineIdx - aGlobalTextIndex.
+		delta isZero ifTrue: [ 
+			aSelecter
+				extendToLineStart;
+				extendToLineEnd;
+				apply.
+			^ self ].
+		lineIdx := anEditorElement editor navigator findTextIndexAtLineEnd:
+			           aCursor.
+		delta := aGlobalTextIndex - lineIdx.
+		delta isZero ifTrue: [ 
+			aSelecter
+				extendToLineStart;
+				extendToLineEnd;
+				apply.
+			^ self ] ].
+
 	anEvent modifiers isPrimaryModifier ifTrue: [ 
 		aSelecter withoutCursorUpdate ].
 

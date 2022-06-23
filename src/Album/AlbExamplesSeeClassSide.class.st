@@ -111,7 +111,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
-	<gtExample>
+
 	| cache attribute text ed space |
 
 	cache := Dictionary new.
@@ -157,10 +157,10 @@ AlbExamplesSeeClassSide class >> example_FixedMeasurer [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
-	<gtExample>
+
 	((' trux ' asRopedText
 		  fontSize: 40;
-		  monospace) , ' Machinx' asRopedText) onAlbum openInOblSpace
+		  monospace) , (' Machinx' asRopedText attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )})) onAlbum openInOblSpace
 ]
 
 { #category : #elements }

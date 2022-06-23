@@ -495,7 +495,6 @@ AlbTextEditorSelecter >> select [
 	shouldDeselectExisting
 		ifTrue: [
 			| toBeDeselected |
-			
 			toBeDeselected := self selection copy.
 			selection do: [ :aMonotoneSelection | toBeDeselected deselect: aMonotoneSelection from to: aMonotoneSelection to ].			
 			self privateDeselectExisting: toBeDeselected ].

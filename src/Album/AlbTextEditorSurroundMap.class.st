@@ -103,32 +103,32 @@ AlbTextEditorSurroundMap >> initialize [
 ]
 
 { #category : #accessing }
-AlbTextEditorSurroundMap >> intervalBetweenDelimitersIn: aString at: aPosition ifPresent: aBlockWithIntervalArg ifAbsent: anAbsentBlock [
+AlbTextEditorSurroundMap >> intervalBetweenDelimitersIn: aText at: aPosition ifPresent: aBlockWithIntervalArg ifAbsent: anAbsentBlock [
 
 	" if aString at aPosition is just after of just before a delimiter, then look for the opposite delimiter. If found, then aBlockWithIntervalArg is runned with the interval between delimiters as argument else, anAbsentBlock is runned "
 
-	| string here foundOpposite op |
-	string := aString asString.
-	here := (string at: aPosition) asString.
+	| here foundOpposite op |
+
+	here := (aText at: aPosition) asSymbol.
 	foundOpposite := self
 		                 closingFor: here
 		                 ifPresent: [ :aSurroundSymbol | 
 			                 op := self
 				                       positionOfClosingDelimiter: aSurroundSymbol
 				                       startingAt: aPosition
-				                       in: string.
+				                       in: aText.
 			                 op > 0 ifTrue: [ 
 				                 ^ aBlockWithIntervalArg value:
 					                   (aPosition to: op - 1) ] ]
 		                 ifAbsent: [ 
-			                 here := (string at: aPosition + 1) asString.
+			                 here := (aText at: aPosition + 1) asSymbol.
 			                 foundOpposite := self
 				                                  openingFor: here
 				                                  ifPresent: [ :aSurroundSymbol | 
 					                                  op := self
 						                                        positionOfOpeningDelimiter: aSurroundSymbol
 						                                        startingAt: aPosition
-						                                        in: string.
+						                                        in: aText.
 					                                  op > 0 ifTrue: [ 
 						                                  ^ aBlockWithIntervalArg 
 							                                    value: (op to: aPosition) ] ]
@@ -148,20 +148,19 @@ AlbTextEditorSurroundMap >> openingFor: aCharacter ifPresent: presentBlock ifAbs
 ]
 
 { #category : #'private - accessing' }
-AlbTextEditorSurroundMap >> positionOf: aDelim from: startDelim startingAt: aPosition in: aString forward: aBoolean [
-	" scan into aString, forward or backward, to search the position of aDelim which is the opposite delim of startDelim."
-	| string level here hereChar incr |
-	string := aString asString.
+AlbTextEditorSurroundMap >> positionOf: aDelim from: startDelim startingAt: aPosition in: aText forward: aBoolean [
+	" scan into a text aText, forward or backward, to search the position of aDelim which is the opposite delim of startDelim."
+	| level here hereChar incr |
 	incr := aBoolean
 		        ifTrue: [ 1 ]
 		        ifFalse: [ -1 ].
 	here := aPosition + 1.
 	level := 1.
-	[ level > 0 and: [ here > 1 and: [ here <= string size ] ] ] 
+	[ level > 0 and: [ here > 1 and: [ here <= aText size ] ] ] 
 		whileTrue: [ 
 			here := here + incr.
-			here > string size ifTrue: [ ^ 0 ].
-			hereChar := (string at: here) asSymbol.
+			here > aText size ifTrue: [ ^ 0 ].
+			hereChar := (aText at: here) asSymbol.
 			hereChar = aDelim
 				ifTrue: [ 
 					level := level - 1.
@@ -171,34 +170,32 @@ AlbTextEditorSurroundMap >> positionOf: aDelim from: startDelim startingAt: aPos
 ]
 
 { #category : #'private - accessing' }
-AlbTextEditorSurroundMap >> positionOfClosingDelimiter: aDelim startingAt: aPosition in: aString [
+AlbTextEditorSurroundMap >> positionOfClosingDelimiter: aDelim startingAt: aPosition in: aText [
 
 	" return the position of the closing delim aDelim "
 
-	| string oppositeDelim |
-	string := aString asString.
-	oppositeDelim := (aString at: aPosition) asSymbol.
+	| oppositeDelim |
+	oppositeDelim := (aText at: aPosition) asSymbol.
 	^ self
 		  positionOf: aDelim
 		  from: oppositeDelim
 		  startingAt: aPosition
-		  in: string
+		  in: aText
 		  forward: true
 ]
 
 { #category : #'private - accessing' }
-AlbTextEditorSurroundMap >> positionOfOpeningDelimiter: aDelim startingAt: aPosition in: aString [
+AlbTextEditorSurroundMap >> positionOfOpeningDelimiter: aDelim startingAt: aPosition in: aText [
 
 	" return the position of the opening delim aDelim "
 
-	| string oppositeDelim |
-	string := aString asString.
-	oppositeDelim := (aString at: aPosition + 1) asSymbol.
+	| oppositeDelim |
+	oppositeDelim := (aText at: aPosition + 1) asSymbol.
 
 	^ self
 		  positionOf: aDelim
 		  from: oppositeDelim
 		  startingAt: aPosition
-		  in: string
+		  in: aText
 		  forward: false
 ]

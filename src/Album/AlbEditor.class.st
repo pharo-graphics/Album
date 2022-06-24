@@ -67,28 +67,28 @@ AlbEditor >> editor: aTextEditor [
 AlbEditor >> initialize [
 
 	super initialize.
-	
+
 	self matchParent.
 
 	textReplacedHandler := BlEventHandler
-		on: AlbTextEditorTextReplacedEvent
-		"we intentionally set text directly to the viewModel
+		                       on: AlbTextEditorTextReplacedEvent
+		                       do: [ :anEvent | 
+		                       self viewModel text: anEvent text ].
+	"we intentionally set text directly to the viewModel
 		to prevent any possible #asRopedText convertion"
-		do: [ :anEvent | self viewModel text: anEvent text ].
 
 	self editor: AlbTextEditor new.
 	self viewModel: AlbEditorModel new.
-	
-	self when: AlbEditorStylerChanged do: [ :anEvent | self stylerChanged: anEvent styler ].
-	self when: AlbEditorTextChanged do: [ :anEvent | self textChanged: anEvent text ].
-	self when: AlbEditorModeChanged do: [ :anEvent | self modeChanged: anEvent mode ].
-	
-	
-
-	
-	
-	
-
+	self padding: (BlInsets all: 6).
+	self
+		when: AlbEditorStylerChanged
+		do: [ :anEvent | self stylerChanged: anEvent styler ].
+	self
+		when: AlbEditorTextChanged
+		do: [ :anEvent | self textChanged: anEvent text ].
+	self
+		when: AlbEditorModeChanged
+		do: [ :anEvent | self modeChanged: anEvent mode ]
 ]
 
 { #category : #'api - editor' }

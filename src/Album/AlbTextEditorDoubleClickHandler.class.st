@@ -22,61 +22,74 @@ AlbTextEditorDoubleClickHandler class >> uniqueInstance [
 { #category : #'mouse handlers' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
-	| aScreenPosition aGlobalTextIndex aSelecter anEditorElement |
+	| screenPosition globalTextIndex selecter editorElement navigator editor selection  |
 	"To not create an instance of me for each tiny text element"
-	anEditorElement := anEvent currentTarget
-		                   withAllParentsDetect: [ :anElement | 
-		                   anElement isKindOf: AlbEditorElement ]
-		                   ifFound: #yourself
-		                   ifNone: [ ^ self ].
+	editorElement := anEvent currentTarget
+		                 withAllParentsDetect: [ :anElement | 
+		                 anElement isKindOf: AlbEditorElement ]
+		                 ifFound: #yourself
+		                 ifNone: [ ^ self ].
 
-	aScreenPosition := (anEditorElement
-		                    localBoundsToMine:
-		                    (BlBounds
-			                     origin: anEvent localPosition
-			                     extent: 0.0 @ 0.0)
-		                    fromChild: anEvent currentTarget) center.
+	screenPosition := (editorElement
+		                   localBoundsToMine:
+		                   (BlBounds
+			                    origin: anEvent localPosition
+			                    extent: 0.0 @ 0.0)
+		                   fromChild: anEvent currentTarget) center.
 
-	aGlobalTextIndex := anEditorElement editor navigator
-		                    findTextIndexAtScreenPosition: aScreenPosition
-		                    ifAbsent: [ ^ self ].
+	editor := editorElement editor.
+	navigator := editor navigator.
+	selecter := editor selecter.
 
-	aSelecter := anEditorElement editor selecter.
+	globalTextIndex := navigator
+		                   findTextIndexAtScreenPosition: screenPosition
+		                   ifAbsent: [ ^ self ].
 
-	(aGlobalTextIndex isZero or: [ 
-		 aGlobalTextIndex = anEditorElement editor text size ]) ifTrue: [ 
-		aSelecter
-			all;
-			apply.
-		^ self ].
 
-	anEditorElement cursors do: [ :aCursor | 
-		| delta lineIdx |
-		lineIdx := anEditorElement editor navigator 
-			           findTextIndexAtLineStart: aCursor.
-		delta := lineIdx - aGlobalTextIndex.
-		delta isZero ifTrue: [ 
-			aSelecter
-				extendToLineStart;
-				extendToLineEnd;
+	(globalTextIndex isZero or: [ globalTextIndex = editor text size ]) 
+		ifTrue: [ 
+			selecter
+				all;
 				apply.
 			^ self ].
-		lineIdx := anEditorElement editor navigator findTextIndexAtLineEnd:
-			           aCursor.
-		delta := aGlobalTextIndex - lineIdx.
+
+	selection := selecter selection.
+
+	"Try to select between delimiters () [] etc"
+	editor surroundMap
+		intervalBetweenDelimitersIn: editor text
+		at: globalTextIndex
+		ifPresent: [ :interval | 
+			selecter
+				from: interval first to: interval last;
+				apply.
+			^ self ]
+		ifAbsent: [].
+
+	" try to select the whole line "
+	editorElement cursors do: [ :aCursor | 
+		| delta lineIdx |
+		lineIdx := navigator findTextIndexAtLineStart: aCursor.
+		delta := lineIdx - globalTextIndex.
 		delta isZero ifTrue: [ 
-			aSelecter
-				extendToLineStart;
-				extendToLineEnd;
+			selecter
+				extendToWholeLine;
+				apply.
+			^ self ].
+		lineIdx := navigator findTextIndexAtLineEnd: aCursor.
+		delta := globalTextIndex - lineIdx.
+		delta isZero ifTrue: [ 
+			selecter
+				extendToWholeLine;
 				apply.
 			^ self ] ].
 
 	anEvent modifiers isPrimaryModifier ifTrue: [ 
-		aSelecter withoutCursorUpdate ].
+		selecter withoutCursorUpdate ].
 
-	aSelecter
-		wordAt: aGlobalTextIndex;
-		select
+	selecter
+		wordAt: globalTextIndex;
+		apply
 ]
 
 { #category : #accessing }

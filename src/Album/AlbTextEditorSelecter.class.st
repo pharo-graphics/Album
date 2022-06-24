@@ -106,6 +106,16 @@ AlbTextEditorSelecter >> extendToPreviousWordStart [
 	commands addAll: theCommands
 ]
 
+{ #category : #'api - configuration' }
+AlbTextEditorSelecter >> extendToWholeLine [
+
+	"Extend selection to the line"
+
+	self
+		extendToLineStart;
+		extendToLineEnd
+]
+
 { #category : #private }
 AlbTextEditorSelecter >> findExistingSelectionEndAfter: aTextIndex within: aTextInterval [
 	| anEndIndex |
@@ -489,7 +499,7 @@ AlbTextEditorSelecter >> select [
 	self privatePerformSelectAndDeselectCommands: commands.
 	commands removeAll.
 
-	selection isEmpty
+	selection isEmpty 
 		ifTrue: [ ^ self ].
 
 	shouldDeselectExisting

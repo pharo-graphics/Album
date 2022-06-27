@@ -128,7 +128,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 				size: 20@10. } ].
 
 	text := 'Hello >' asRopedText attribute: attribute.
-	ed := AlbEditor new dresser: AlbTextAreaDresser new.
+	ed := AlbEditor new "dresser: AlbTextAreaDresser new".
 	ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer matchParent].
@@ -138,10 +138,6 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
-
-	
-	
-			
 	^ text
 ]
 
@@ -158,9 +154,9 @@ AlbExamplesSeeClassSide class >> example_FixedMeasurer [
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 
-	((' trux ' asRopedText
+	((' Monospace 40 ' asRopedText
 		  fontSize: 40;
-		  monospace) , (' Machinx' asRopedText attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )})) onAlbum openInOblSpace
+		  monospace) , (' Default font and size' asRopedText "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}")) onAlbum inspect "openInOblSpace"
 ]
 
 { #category : #elements }

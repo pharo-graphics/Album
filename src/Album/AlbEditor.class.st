@@ -14,6 +14,31 @@ AlbEditor >> addEditorShortcut: aTextEditorInteraction [
 	self editor addEditorShortcut: aTextEditorInteraction
 ]
 
+{ #category : #sparta }
+AlbEditor >> allLineSelectionBounds [
+	| segs lines prec |
+	
+	segs := self allSegmentsSelectionBounds asOrderedCollection.
+	segs ifEmpty: [ ^ #( ) ].
+	lines := OrderedCollection new.
+	prec := segs removeFirst.
+	[ segs isEmpty ] whileFalse: [ | curr |
+		curr := segs removeFirst.
+		curr origin x <= prec origin x
+			ifTrue: [ lines add: prec. prec := curr ]
+			ifFalse: [ prec := prec merge: curr ] ].
+	lines add: prec.
+	^ lines
+]
+
+{ #category : #sparta }
+AlbEditor >> allSegmentsSelectionBounds [
+
+	^ Array streamContents: [ :stream | 
+		self children sortedByElevation do: [ :anElement | 
+			stream nextPutAll: anElement allSelectionBounds ] ]
+]
+
 { #category : #'api - editor' }
 AlbEditor >> beEditable [
 	self beMode: AlbTextEditorEditableMode new
@@ -54,6 +79,12 @@ AlbEditor >> deselecter [
 	^ self editor deselecter
 ]
 
+{ #category : #sparta }
+AlbEditor >> drawMeAndChildrenOnSpartaCanvas: aCanvas [
+	super drawMeAndChildrenOnSpartaCanvas: aCanvas.
+	self frameAllSelectionsOnSpartaCanvas: aCanvas
+]
+
 { #category : #accessing }
 AlbEditor >> editor: aTextEditor [
 	self editor removeEventHandler: textReplacedHandler.
@@ -61,6 +92,16 @@ AlbEditor >> editor: aTextEditor [
 	super editor: aTextEditor.
 
 	aTextEditor addEventHandler: textReplacedHandler
+]
+
+{ #category : #sparta }
+AlbEditor >> frameAllSelectionsOnSpartaCanvas: aCanvas [ 
+
+	(self allLineSelectionBounds) do: [ :bnds |
+		aCanvas fill
+			paint: ((Color orange) alpha: 0.35);
+			path: bnds;
+			draw ]
 ]
 
 { #category : #initialization }

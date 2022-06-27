@@ -28,6 +28,34 @@ AlbTextElementWithCursors >> addCursorAt: aTextPosition [
 			aCursorElement ]
 ]
 
+{ #category : #'private - selection' }
+AlbTextElementWithCursors >> allSelectionBounds [
+
+	self selection isEmpty ifTrue: [ ^ #(  ) ].
+	paragraph ifNil: [ ^ #(  ) ].
+	paragraph containerExtent: self extent.
+	paragraph selection: self selection.
+
+	^ Array streamContents: [ :stream | 
+		  self selection do: [ :currSel | 
+			  | start selStartSpan  selStartPos selRect |
+			  start := currSel from min: self text size.
+			  selStartSpan := paragraph spanAtIndex: start.
+			  selStartPos := (selStartSpan positionAt: start) + (self padding left @ 0).
+
+			  selRect := currSel to > self text size
+				               ifTrue: [ selStartPos x @ 0 corner: self extent ]
+				               ifFalse: [ 
+					               | selEndPos selEndSpan end |
+										end := currSel to min: self text size.
+										selEndSpan := paragraph spanAtIndex: end.
+					               selEndPos := (selEndSpan positionAt: end) + (self padding left @ 0).
+					               selStartPos x @ 0 corner: selEndPos x @ self extent y ].
+
+			  "self extent includes padding"
+			  stream nextPut: (self localBoundsToParent: (BlBounds fromRectangle: selRect)) ] ]
+]
+
 { #category : #asserting }
 AlbTextElementWithCursors >> assertCursor: aCursorElement [
 	self assertCursorPosition: aCursorElement textPosition
@@ -69,16 +97,27 @@ AlbTextElementWithCursors >> cursorStencil: aStencil [
 	cursorStencil := aStencil
 ]
 
-{ #category : #'geometry bounds' }
-AlbTextElementWithCursors >> focusedBounds: aBlBounds [
-	"My focused bounds should be focused bounds of a cursor if it exists or my own otherwise"
-	<return: #BlBounds>
+{ #category : #drawing }
+AlbTextElementWithCursors >> drawOnSpartaCanvas: aCanvas [
 
-	^ super focusedBounds: aBlBounds
+	paragraph ifNil: [ ^ self ].
+	paragraph containerExtent: self extent.
+	paragraph selection: self selection.
 
-	"^ (self cursorExists and: [ self hasFocus ])
-		ifFalse: [ super focusedBounds: aBlBounds ]
-		ifTrue: [ self cursorElement localBoundsToParent: (self cursorElement focusedBounds: aBlBounds) ]"
+	aCanvas clip
+		by: (self geometry
+				 pathOnSpartaCanvas: aCanvas
+				 of: self)
+		during: [ 
+			paragraph
+				drawHighlightsOnSpartaCanvas: aCanvas
+				padding: self padding.
+
+			aCanvas transform
+				by: [ :t | t translateBy: self padding topLeft ]
+				during: [ paragraph drawOn: aCanvas ]].
+
+		
 ]
 
 { #category : #testing }

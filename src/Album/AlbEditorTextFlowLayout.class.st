@@ -146,7 +146,7 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 			
 			theLastElement := theElements last.
 			textFlow := theLastElement constraints albTextFlow.
-			((theLastElement isKindOf: AlbTextElementWithCursors) and: [ textFlow shouldFillLine ])
+			((theLastElement isKindOf: AlbTextElement ) and: [ textFlow shouldFillLine ])
 				ifTrue: [
 					theLastElement measure: (BlExtentMeasurementSpec exact:
 						theLastElement measuredExtent + (((anElement measuredWidth - aLine width) max: 0.0) @ theLastElement padding height negated)) ] ] ].

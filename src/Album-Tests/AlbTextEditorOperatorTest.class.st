@@ -31,7 +31,7 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 	anEditor editor segmentBuilder
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
-			aTextElement := AlbTextEditableWordPieceStencilBuilder new
+			aTextElement := AlbTextWordPieceStencilBuilder editable
 				segmentPiece: aTAlbTextEditorTextualPiece;
 				asElement.
 			aTextElement measurer: self fixedMeasurer.

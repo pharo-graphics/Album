@@ -27,7 +27,7 @@ AlbTextEditorCursorChangeCommand >> cursor: anObject [
 
 { #category : #executing }
 AlbTextEditorCursorChangeCommand >> executeOn: aTextEditor [
-	
+
 	self telemetry
 		timeSync: [ 'Process attributes' ]
 		during: [ self processAttributesOn: aTextEditor ].

@@ -1,11 +1,11 @@
 Class {
-	#name : #AlbTextEditableWordPieceStencilBuilder,
+	#name : #AlbTextReadonlyWordPieceStencilBuilder,
 	#superclass : #AlbTextWordPieceStencilBuilder,
-	#category : #'Album-UI-Stencils'
+	#category : #'Album-Brick-NU-UI-Stencils'
 }
 
 { #category : #'api - instantiation' }
-AlbTextEditableWordPieceStencilBuilder >> createWordElement [
+AlbTextReadonlyWordPieceStencilBuilder >> createWordElement [
 	<return: #AlbTextElementWithCursors>
 
 	^ AlbTextElementWithCursors new
@@ -13,12 +13,6 @@ AlbTextEditableWordPieceStencilBuilder >> createWordElement [
 
 			"to support event-handling attributes"
 			addEventHandler: AlbTextEditorLineSegmentTextListener uniqueInstance;
-
-			"editor requests to show a cursor as a result of its position change"
-			addEventHandler: AlbTextWordPieceShowCursorHandler uniqueInstance;
-
-			"editor requests to remove a cursor as a result of its position change"
-			addEventHandler: AlbTextWordPieceHideCursorHandler uniqueInstance;
 			
 			"for screen position to cursor index transformation"
 			addEventHandler: AlbTextWordPieceScreenToCursorHandler uniqueInstance;

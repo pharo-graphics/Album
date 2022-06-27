@@ -11,5 +11,5 @@ AlbTextWordPieceFocusHandler >> eventClass [
 
 { #category : #'api - event managing' }
 AlbTextWordPieceFocusHandler >> handleEvent: anEvent [
-	anEvent currentTarget showCursors
+	anEvent currentTarget showCursor
 ]

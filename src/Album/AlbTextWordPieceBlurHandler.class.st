@@ -11,5 +11,5 @@ AlbTextWordPieceBlurHandler >> eventClass [
 
 { #category : #'api - event managing' }
 AlbTextWordPieceBlurHandler >> handleEvent: anEvent [
-	anEvent currentTarget hideCursors
+	anEvent currentTarget hideCursor
 ]

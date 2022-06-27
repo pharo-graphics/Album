@@ -44,12 +44,12 @@ AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex 
 
 { #category : #'api - accessing' }
 AlbTextEditorLineSegmentBuilder >> beEditable [
-	self wordStencil: AlbTextEditableWordPieceStencilBuilder new
+	self wordStencil: AlbTextWordPieceStencilBuilder editable
 ]
 
 { #category : #'api - accessing' }
 AlbTextEditorLineSegmentBuilder >> beReadOnly [
-	self wordStencil: AlbTextReadonlyWordPieceStencilBuilder new
+	self wordStencil: AlbTextWordPieceStencilBuilder readOnly 
 ]
 
 { #category : #initialization }

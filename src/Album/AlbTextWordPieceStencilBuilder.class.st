@@ -4,10 +4,39 @@ Class {
 	#instVars : [
 		'wordPadding',
 		'wordMargin',
-		'segmentPiece'
+		'segmentPiece',
+		'readOnly'
 	],
 	#category : #'Album-UI-Stencils'
 }
+
+{ #category : #'instance creation' }
+AlbTextWordPieceStencilBuilder class >> editable [
+	^ self new beEditable 
+]
+
+{ #category : #'instance creation' }
+AlbTextWordPieceStencilBuilder class >> readOnly [
+	^ self new beReadOnly 
+]
+
+{ #category : #'api - instantiation' }
+AlbTextWordPieceStencilBuilder >> allEventHandlers [
+	readOnly ifTrue: [ ^ self readOnlyWordPieceEventHandlers ].
+	^ self editableWordPieceEventHandlers 
+]
+
+{ #category : #'api - instantiation' }
+AlbTextWordPieceStencilBuilder >> beEditable [
+
+	readOnly := false
+]
+
+{ #category : #'api - instantiation' }
+AlbTextWordPieceStencilBuilder >> beReadOnly [ 
+
+	readOnly := true
+]
 
 { #category : #'api - instantiation' }
 AlbTextWordPieceStencilBuilder >> buildDefault [
@@ -25,14 +54,55 @@ AlbTextWordPieceStencilBuilder >> buildDefault [
 
 { #category : #'api - instantiation' }
 AlbTextWordPieceStencilBuilder >> createWordElement [
-	<return: #AlbTextElementWithCursors>
+	<return: #AlbTextElements>
+	| wordElement |
+	wordElement := AlbTextElement new.
+	wordElement editorMeasurement.
+	self allEventHandlers do: [ :e |
+		wordElement addEventHandler: e ].
+	^ wordElement
+]
 
-	^ self subclassResponsibility
+{ #category : #'api - instantiation' }
+AlbTextWordPieceStencilBuilder >> editableWordPieceEventHandlers [
+
+	^ {  "to support event-handling attributes"
+			AlbTextEditorLineSegmentTextListener uniqueInstance.
+			
+		  "editor requests to show a cursor as a result of its position change"
+		  AlbTextWordPieceShowCursorHandler uniqueInstance.
+
+		  "editor requests to remove a cursor as a result of its position change"
+		  AlbTextWordPieceHideCursorHandler uniqueInstance.
+			
+			"for screen position to cursor index transformation"
+			AlbTextWordPieceScreenToCursorHandler uniqueInstance.
+
+			AlbTextWordPieceFocusHandler uniqueInstance.
+			AlbTextWordPieceBlurHandler uniqueInstance.
+			
+			"selection changed in the editor, select a given interval"
+			AlbTextWordPieceSelectionHandler uniqueInstance.
+			
+			"selection changed in the editor, deselect a given interval"
+			AlbTextWordPieceDeselectionHandler uniqueInstance.
+			
+			"text changed in the editor"
+			AlbTextWordPieceTextChangeHandler uniqueInstance.	
+
+			"text piece got inside of selected area"
+			AlbTextWordPieceSelectionAcquiredHandler uniqueInstance.
+
+			"text piece got outside of then selected area"
+			AlbTextWordPieceSelectionLostHandler uniqueInstance. }
+
+	
 ]
 
 { #category : #initialization }
 AlbTextWordPieceStencilBuilder >> initialize [
 	super initialize.
+	readOnly := false.
 	
 	self reset
 ]
@@ -42,15 +112,39 @@ AlbTextWordPieceStencilBuilder >> paramsOn: aStencilExecutor [
 	aStencilExecutor push: self segmentPiece
 ]
 
+{ #category : #'api - instantiation' }
+AlbTextWordPieceStencilBuilder >> readOnlyWordPieceEventHandlers [
+
+	^ {  "to support event-handling attributes"
+			AlbTextEditorLineSegmentTextListener uniqueInstance.
+			
+			"for screen position to cursor index transformation"
+			AlbTextWordPieceScreenToCursorHandler uniqueInstance.
+
+			AlbTextWordPieceFocusHandler uniqueInstance.
+			AlbTextWordPieceBlurHandler uniqueInstance.
+			
+			"selection changed in the editor, select a given interval"
+			AlbTextWordPieceSelectionHandler uniqueInstance.
+			
+			"selection changed in the editor, deselect a given interval"
+			AlbTextWordPieceDeselectionHandler uniqueInstance.
+			
+			"text changed in the editor"
+			AlbTextWordPieceTextChangeHandler uniqueInstance.	
+
+			"text piece got inside of selected area"
+			AlbTextWordPieceSelectionAcquiredHandler uniqueInstance.
+
+			"text piece got outside of then selected area"
+			AlbTextWordPieceSelectionLostHandler uniqueInstance. }
+
+	
+]
+
 { #category : #'private - pool' }
 AlbTextWordPieceStencilBuilder >> recycle: aPieceElement [
-	aPieceElement removeFromParent.
-	aPieceElement removeCursors.
-	aPieceElement selectNone.
-
-	"otherwise attributes may not be garbage collected
-	see https://github.com/feenkcom/gtoolkit/issues/537"
-	aPieceElement removeSegmentPiece.
+	aPieceElement recycledFrom: self
 ]
 
 { #category : #initialization }

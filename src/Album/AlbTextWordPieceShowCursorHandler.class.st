@@ -17,6 +17,6 @@ AlbTextWordPieceShowCursorHandler >> handleEvent: anEvent [
 	anEvent editorElement dispatchEvent: (AlbTextEditorCursorElementAddedEvent new cursorElement: aCursorElement).
 
 	anEvent hasFocus
-		ifTrue: [ anEvent currentTarget showCursors ]
-		ifFalse: [ anEvent currentTarget hideCursors ]
+		ifTrue: [ anEvent currentTarget showCursor ]
+		ifFalse: [ anEvent currentTarget hideCursor ]
 ]

@@ -27,7 +27,7 @@ AlbTextEditorHistoryDeletionCommand >> redoOn: aTextEditor [
 	aDeleter := aTextEditor deleter.
 	texts
 		with: redoIndices
-		do: [ :eachText :eachIndex | aDeleter from: eachIndex -1 to: eachIndex + eachText size -1].
+		do: [ :eachText :eachIndex | aDeleter from: eachIndex -1 to: eachIndex + eachText size -1 ].
 	
 	aDeleter delete
 ]
@@ -60,6 +60,6 @@ AlbTextEditorHistoryDeletionCommand >> undoOn: aTextEditor [
 	anInserter := aTextEditor inserter.
 	texts
 		with: undoIndices
-		do: [ :eachText :eachIndex | anInserter text: eachText characters asString; at: eachIndex - 1 ].
+		do: [ :eachText :eachIndex | anInserter text: eachText characters asString; at: eachIndex -1 ].
 	anInserter insert
 ]

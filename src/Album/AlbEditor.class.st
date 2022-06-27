@@ -60,9 +60,20 @@ AlbEditor >> beReadOnlyWithoutSelection [
 ]
 
 { #category : #'editor - accessing' }
+AlbEditor >> cursor [
+	<return: #AlbTextEditorCursor>
+	^ self editor cursor
+]
+
+{ #category : #'editor - accessing' }
 AlbEditor >> cursors [
 	<return: #AlbTextEditorCursor>
 	^ self editor cursors
+]
+
+{ #category : #accessing }
+AlbEditor >> defaultSelectionColor [ 
+	^ Color orange
 ]
 
 { #category : #'editor - operations' }
@@ -113,8 +124,7 @@ AlbEditor >> initialize [
 
 	textReplacedHandler := BlEventHandler
 		                       on: AlbTextEditorTextReplacedEvent
-		                       do: [ :anEvent | 
-		                       self viewModel text: anEvent text ].
+		                       do: [ :anEvent | self viewModel text: anEvent text ].
 	"we intentionally set text directly to the viewModel
 		to prevent any possible #asRopedText convertion"
 

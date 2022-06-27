@@ -26,20 +26,19 @@ AlbExamplesSeeClassSide class >> editorFor: aText [
 	anEditor fitContent.
 	anEditor text: aRopedText.
 	
-	BlDevCrossover on: anEditor.
+	"BlDevCrossover on: anEditor."
 	
+	anEditor editor  beLineBased.
 	anEditor editor segmentBuilder
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
-			aTextElement := AlbTextEditableWordPieceStencilBuilder new
+			aTextElement := AlbTextWordPieceStencilBuilder editable
 				segmentPiece: aTAlbTextEditorTextualPiece;
 				asElement.
 			aTextElement measurer: self fixedMeasurer.
 			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
 			aTextElement ].
 	
-	anEditor requestFocus.
-	anEditor forceLayout.
 
 	^ anEditor
 ]

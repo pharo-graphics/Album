@@ -100,6 +100,13 @@ AlbEmbeddedEditorExamples >> makeFixedMeasurement: aSegmentBuilder [
 ]
 
 { #category : #'examples - embedded' }
+AlbEmbeddedEditorExamples >> newThreeLineText [
+	<gtExample>
+	
+	^ ('first' , String cr , 'second' , String cr , 'third') asRopedText
+]
+
+{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
 	<script: 'self new textWithEmbeddedEditor'>
 	| aText |
@@ -119,5 +126,5 @@ AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
 				self makeFixedMeasurement: anEditorElement editor segmentBuilder.
 				anEditorElement ]).
 
-	^ aText onAlbTextEditor openInOblSpace 
+	^ aText
 ]

@@ -18,13 +18,13 @@ Class {
 		'styler',
 		'stylerStrategy',
 		'stylerEventHandler',
-		'cursors',
 		'attachedElements',
 		'history',
 		'filter',
 		'shortcuts',
 		'isFocused',
-		'shouldStyleWhenTextModified'
+		'shouldStyleWhenTextModified',
+		'cursor'
 	],
 	#classInstVars : [
 		'isDebug'
@@ -141,18 +141,14 @@ AlbTextEditor >> copySelected [
 AlbTextEditor >> cursor [
 	<return: #AlbTextEditorCursor>
 
-	self
-		deprecated: 'Use #cursors instead.'
-		transformWith: '`@receiver cursor' -> '`@receiver cursors'.
-
-	^ cursors
+	^ cursor
 ]
 
 { #category : #accessing }
 AlbTextEditor >> cursors [
 	<return: #AlbTextEditorCursor>
 
-	^ cursors
+	^ cursor
 ]
 
 { #category : #'text - copy/paste' }
@@ -181,7 +177,7 @@ AlbTextEditor >> cutSelected [
 ]
 
 { #category : #initialization }
-AlbTextEditor >> defaultCursors [
+AlbTextEditor >> defaultCursor [
 	<return: #AlbTextEditorCursor>
 
 	^ AlbTextEditorMultipleCursor new
@@ -371,7 +367,7 @@ AlbTextEditor >> initialize [
 	attachedElements := WeakSet new.
 	
 	filter := AlbTextEditorNoInputFilter new.
-	cursors := self defaultCursors.
+	cursor := self defaultCursor.
 	selection := self defaultSelection.
 	selectionRecorder := self defaultSelectionRecorder.
 	

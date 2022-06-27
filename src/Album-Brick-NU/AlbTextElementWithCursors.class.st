@@ -9,7 +9,7 @@ Class {
 		'cursorStencil',
 		'segmentPiece'
 	],
-	#category : #'Album-UI'
+	#category : #'Album-Brick-NU-UI'
 }
 
 { #category : #'cursor - management' }
@@ -38,21 +38,24 @@ AlbTextElementWithCursors >> allSelectionBounds [
 
 	^ Array streamContents: [ :stream | 
 		  self selection do: [ :currSel | 
-			  | start selStartSpan  selStartPos selRect |
+			  | start selStartSpan selStartPos selRect |
 			  start := currSel from min: self text size.
 			  selStartSpan := paragraph spanAtIndex: start.
 			  selStartPos := (selStartSpan positionAt: start) + (self padding left @ 0).
 
 			  selRect := currSel to > self text size
-				               ifTrue: [ selStartPos x @ 0 corner: self extent ]
-				               ifFalse: [ 
-					               | selEndPos selEndSpan end |
-										end := currSel to min: self text size.
-										selEndSpan := paragraph spanAtIndex: end.
-					               selEndPos := (selEndSpan positionAt: end) + (self padding left @ 0).
-					               selStartPos x @ 0 corner: selEndPos x @ self extent y ].
+				             ifTrue: [ selStartPos x @ 0 corner: self extent ]
+				             ifFalse: [ 
+					             | selEndPos selEndSpan end |
+					             end := currSel to min: self text size.
+					             selEndSpan := paragraph spanAtIndex: end.
+					             selEndPos := (selEndSpan positionAt: end) + (self padding left @ 0).
+					             selStartPos x @ 0 corner: selEndPos x @ self extent y ].
 
-			  "self extent includes padding"
+			  " - note that self extent includes padding "
+			  " - have to convert selRect to BlBounds because of #localBoundsToParent: "
+			  "   this is because Rectangle>>translateBy: answers a new Rectangle "
+			  "   whereas BlBounds>>translateBy: updates the receiver."
 			  stream nextPut: (self localBoundsToParent: (BlBounds fromRectangle: selRect)) ] ]
 ]
 
@@ -178,6 +181,17 @@ AlbTextElementWithCursors >> onLayout: aBounds context: aBlElementBoundsUpdateCo
 	super onLayout: aBounds context: aBlElementBoundsUpdateContext.
 	
 	self layoutCursors: aBounds context: aBlElementBoundsUpdateContext
+]
+
+{ #category : #'private - pool' }
+AlbTextElementWithCursors >> recycledFrom: aStencilBuilder [
+	self removeFromParent.
+	self removeCursors.
+	self selectNone.
+
+	"otherwise attributes may not be garbage collected
+	see https://github.com/feenkcom/gtoolkit/issues/537"
+	self removeSegmentPiece.
 ]
 
 { #category : #'cursor - management' }

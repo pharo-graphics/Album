@@ -409,3 +409,21 @@ AlbTextEditorExamples class >> simpleString [
 	<gtExample>
 	^ 'Album'
 ]
+
+{ #category : #'examples - embedded' }
+AlbTextEditorExamples >> newEditor [
+	<gtExample>
+
+	^ AlbTextEditor new "beLineBased"
+]
+
+{ #category : #'examples - embedded' }
+AlbTextEditorExamples >> newElement [
+	<gtExample>
+	
+	^ AlbEditorElement new
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical matchParent ];
+		yourself
+]

@@ -47,6 +47,7 @@ AlbExtendSelectionCommand >> toAddCursorDo: aBlock [
 
 { #category : #accessing }
 AlbExtendSelectionCommand >> toDeselect [
+
 	^ toDeselect
 ]
 
@@ -69,21 +70,6 @@ AlbExtendSelectionCommand >> toMoveCursor: aCursor by: anAmount [
 AlbExtendSelectionCommand >> toMoveCursorDo: aBlock [
 	toMoveCursor ifNotNil: [ :anAssociation |
 		aBlock value: anAssociation key value: anAssociation value ]
-]
-
-{ #category : #'accessing - cursor' }
-AlbExtendSelectionCommand >> toRemoveCursor: aCursor [
-	toRemoveCursors add: aCursor
-]
-
-{ #category : #'accessing - cursor' }
-AlbExtendSelectionCommand >> toRemoveCursors: aCollectionOfCursors [
-	toRemoveCursors addAll: aCollectionOfCursors
-]
-
-{ #category : #'accessing - cursor' }
-AlbExtendSelectionCommand >> toRemoveCursorsDo: aBlock [
-	toRemoveCursors do: aBlock
 ]
 
 { #category : #accessing }

@@ -13,5 +13,5 @@ AlbTextEditorNavigatorMoveToStartPreviousWordOperation >> performOn: aNavigator 
 	
 	aNavigator
 		privateRegisterForMove: self cursor
-		by: (aNavigator findWordStartBefore: self cursor position) - self cursor position
+		to: (aNavigator findWordStartBefore: self cursor position) 
 ]

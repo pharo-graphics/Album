@@ -11,12 +11,15 @@ AlbTextWordPieceShowCursorHandler >> eventClass [
 
 { #category : #'api - event managing' }
 AlbTextWordPieceShowCursorHandler >> handleEvent: anEvent [
-	| aCursorElement |
 
+	| aCursorElement |
 	aCursorElement := anEvent currentTarget addCursorAt: anEvent cursorPosition.
 	anEvent editorElement dispatchEvent: (AlbTextEditorCursorElementAddedEvent new cursorElement: aCursorElement).
-
 	anEvent hasFocus
 		ifTrue: [ anEvent currentTarget showCursor ]
-		ifFalse: [ anEvent currentTarget hideCursor ]
+		ifFalse: [ anEvent currentTarget hideCursor ].
+	
+
+
+
 ]

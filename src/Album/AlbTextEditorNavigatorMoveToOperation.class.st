@@ -9,7 +9,7 @@ Class {
 
 { #category : #matching }
 AlbTextEditorNavigatorMoveToOperation >> performOn: aNavigator [
-	aNavigator privateRegisterForMove: self cursor by: (self position - self cursor position)
+	aNavigator privateRegisterForMove: self cursor to: self position 
 ]
 
 { #category : #accessing }

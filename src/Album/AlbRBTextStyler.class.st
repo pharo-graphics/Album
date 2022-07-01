@@ -1223,12 +1223,12 @@ aMethodNode comments do: [ :comment|
 		self 
 			addStyle: #patternArg
 			forNode: argument ].
-		
-	aMethodNode selectorParts with: aMethodNode keywordsPositions do:  [ :keyword :position |
-		self 
-			addStyle: #patternKeyword
-			from: position
-			to: position + keyword size - 1 ].
+	(aMethodNode selectorParts includes: #faulty) ifFalse: [ 
+		aMethodNode selectorParts with: aMethodNode keywordsPositions do:  [ :keyword :position |
+			self 
+				addStyle: #patternKeyword
+				from: position
+				to: position + keyword size - 1 ] ].
 	
 	aMethodNode pragmas
 		do: [ :each | self visitNode: each ].

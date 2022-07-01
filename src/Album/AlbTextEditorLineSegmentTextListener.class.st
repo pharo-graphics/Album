@@ -49,5 +49,5 @@ AlbTextEditorLineSegmentTextListener >> handleEvent: aBlMouseEvent [
 				anAttribute
 					handleEvent: aBlMouseEvent
 					in: anEditorElement editor
-					on: aTextElement segmentPiece ] ]
+					on: aTextElement segmentPiece ] ].
 ]

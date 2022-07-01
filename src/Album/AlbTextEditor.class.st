@@ -145,10 +145,15 @@ AlbTextEditor >> cursor [
 ]
 
 { #category : #accessing }
-AlbTextEditor >> cursors [
+AlbTextEditor >> cursor: aCursor [
 	<return: #AlbTextEditorCursor>
 
-	^ cursor
+	cursor := aCursor
+]
+
+{ #category : #accessing }
+AlbTextEditor >> cursors [
+	^  { self cursor } 
 ]
 
 { #category : #'text - copy/paste' }
@@ -180,7 +185,7 @@ AlbTextEditor >> cutSelected [
 AlbTextEditor >> defaultCursor [
 	<return: #AlbTextEditorCursor>
 
-	^ AlbTextEditorMultipleCursor new
+	^ AlbTextEditorSingleCursor new
 ]
 
 { #category : #initialization }
@@ -330,6 +335,19 @@ AlbTextEditor >> enqueueHolderCommand: aTextEditorHolderCommand interval: aTextI
 	self notifyItems: aTextInterval event: aTextEditorHolderCommand
 ]
 
+{ #category : #accessing }
+AlbTextEditor >> globalTextIndexToLocal: aTextIndex [
+
+	self segmentCollector
+		  cachedSegmentAt: aTextIndex
+		  ifFound: [ :aSegment | 
+			  | piece |
+			  piece := aSegment pieces detect: [ :p | p textInterval includes: aTextIndex ].
+			  ^ piece globalTextIndexToLocal: aTextIndex ]
+		  ifNotFound: [  ].
+	^ nil
+]
+
 { #category : #'text - selection' }
 AlbTextEditor >> hasCursors [
 	"Return true of there is at least one cursor, false otherwise"
@@ -451,6 +469,23 @@ AlbTextEditor >> itemTypeAt: aPosition [
 	<return: #AlbEditorSegmentType>
 	
 	^ (segmentCollector segmentAt: aPosition) segmentType
+]
+
+{ #category : #'api - shortcuts' }
+AlbTextEditor >> limitedSurroundMap [
+	"When inserting some special symbols a text editor should surround a cursor or selection with that symbol"
+
+	| spaceBlock |
+	spaceBlock := [ :anOperator :anIndex | 
+		(anOperator hasSpaceAroundIndex: anIndex)
+			or: [ anOperator selection contains: anIndex ] ].
+
+	^ AlbTextEditorSurroundMap newFromArrays:
+		{ 
+			{ #'('. #')'. nil. }.
+			{ #'['. #']'. nil. }.
+			{ #'{'. #'}'. nil. }
+		}
 ]
 
 { #category : #accessing }
@@ -661,8 +696,8 @@ AlbTextEditor >> onElementRecycled: anElementHolder [
 AlbTextEditor >> onGotFocus [
 	isFocused := true.
 	
-	self cursors isEmpty
-		ifTrue: [ self navigator moveTo: 0; apply ].
+	"self cursor isNotNil
+		ifTrue: [ self navigator moveTo: 0; apply ]."
 
 	self processCursorAttributes.
 	self enqueueCommand: (self newFocusChangedCommand hasFocus: true)
@@ -1128,9 +1163,9 @@ AlbTextEditor >> surroundMap [
 	"When inserting some special symbols a text editor should surround a cursor or selection with that symbol"
 
 	| spaceBlock |
-	spaceBlock := [ :anOperator :anIndex |
-		(anOperator hasSpaceAroundIndex: anIndex)
-			or: [ anOperator selection contains: anIndex ] ].
+	spaceBlock := [ :anOperator :anIndex | true
+		"(anOperator hasSpaceAroundIndex: anIndex)
+			or: [ anOperator selection contains: anIndex ]" ].
 
 	^ AlbTextEditorSurroundMap newFromArrays:
 		{ 

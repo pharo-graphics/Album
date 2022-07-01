@@ -108,7 +108,6 @@ AlbTextEditorSurroundMap >> intervalBetweenDelimitersIn: aText at: aPosition ifP
 	" if aString at aPosition is just after of just before a delimiter, then look for the opposite delimiter. If found, then aBlockWithIntervalArg is runned with the interval between delimiters as argument else, anAbsentBlock is runned "
 
 	| here foundOpposite op |
-
 	here := (aText at: aPosition) asSymbol.
 	foundOpposite := self
 		                 closingFor: here
@@ -117,23 +116,19 @@ AlbTextEditorSurroundMap >> intervalBetweenDelimitersIn: aText at: aPosition ifP
 				                       positionOfClosingDelimiter: aSurroundSymbol
 				                       startingAt: aPosition
 				                       in: aText.
-			                 op > 0 ifTrue: [ 
-				                 ^ aBlockWithIntervalArg value:
-					                   (aPosition to: op - 1) ] ]
+			                 ^ op > 0 ifTrue: [ aBlockWithIntervalArg value: (aPosition to: op - 1) ] ifFalse: [] ]
 		                 ifAbsent: [ 
+								  aPosition >= aText size ifTrue: [ ^ nil ].
 			                 here := (aText at: aPosition + 1) asSymbol.
 			                 foundOpposite := self
 				                                  openingFor: here
 				                                  ifPresent: [ :aSurroundSymbol | 
 					                                  op := self
 						                                        positionOfOpeningDelimiter: aSurroundSymbol
-						                                        startingAt: aPosition
+						                                        startingAt: aPosition 
 						                                        in: aText.
-					                                  op > 0 ifTrue: [ 
-						                                  ^ aBlockWithIntervalArg 
-							                                    value: (op to: aPosition) ] ]
-				                                  ifAbsent: [ 
-				                                  ^ anAbsentBlock value ] ]
+					                                  ^ op > 0 ifTrue: [ aBlockWithIntervalArg value: (op to: aPosition) ] ifFalse: []]
+				                                  ifAbsent: [ ^ anAbsentBlock value ] ]
 ]
 
 { #category : #accessing }
@@ -154,12 +149,13 @@ AlbTextEditorSurroundMap >> positionOf: aDelim from: startDelim startingAt: aPos
 	incr := aBoolean
 		        ifTrue: [ 1 ]
 		        ifFalse: [ -1 ].
-	here := aPosition + 1.
+	here := aPosition.
+	aBoolean ifFalse: [ here := here + 1].
 	level := 1.
-	[ level > 0 and: [ here > 1 and: [ here <= aText size ] ] ] 
+	[ level > 0 and: [ here >= 1 and: [ here <= aText size ] ] ] 
 		whileTrue: [ 
 			here := here + incr.
-			here > aText size ifTrue: [ ^ 0 ].
+			(here > aText size or: [here = 0]) ifTrue: [ ^ 0 ].
 			hereChar := (aText at: here) asSymbol.
 			hereChar = aDelim
 				ifTrue: [ 
@@ -195,7 +191,7 @@ AlbTextEditorSurroundMap >> positionOfOpeningDelimiter: aDelim startingAt: aPosi
 	^ self
 		  positionOf: aDelim
 		  from: oppositeDelim
-		  startingAt: aPosition
+		  startingAt: aPosition 
 		  in: aText
 		  forward: false
 ]

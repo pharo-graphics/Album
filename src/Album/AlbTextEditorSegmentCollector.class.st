@@ -322,7 +322,7 @@ AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 		in: stream
 		offset: ((newSubText start - text textOffset - 1) max: 0).
 	
-	newSegments addAll: stream contents.
+	newSegments addAll: stream segments.
 	overlap > 0 ifTrue:
 		[ newSegments addAll: (segments copyFrom: 1 to: overlap) ].
 	segmentsInterval := cachedInterval first to: cachedInterval first + newSegments size - 1.
@@ -449,7 +449,10 @@ AlbTextEditorSegmentCollector >> computedSegmentsCount [
 
 { #category : #initialization }
 AlbTextEditorSegmentCollector >> defaultCacheLimit [
-	^ 500
+	" be careful, this limit must be set according to the maximum line number of text that can be drawn. 
+	It depends on the minimum font size and the maximum editor height.
+	If the editor height is to large and this limit is to low, then the layouting will fail"
+	^ 200
 ]
 
 { #category : #'cache - accessing' }
@@ -674,6 +677,11 @@ AlbTextEditorSegmentCollector >> start [
 	^ self hasCached
 		ifTrue: [ subText start ]
 		ifFalse: [ 0 ]
+]
+
+{ #category : #accessing }
+AlbTextEditorSegmentCollector >> subText [
+	^ subText 
 ]
 
 { #category : #accessing }

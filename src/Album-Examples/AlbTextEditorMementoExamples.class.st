@@ -46,8 +46,8 @@ AlbTextEditorMementoExamples >> textEditorWithState [
 		text: 'Hello world' asRopedText.
 	
 	aTextEditor navigator
-		addAt: 1;
-		addAt: 9;
+		moveTo: 1;
+		moveTo: 9;
 		apply.	
 
 	aTextEditor selecter

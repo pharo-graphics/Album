@@ -37,35 +37,33 @@ AlbTextEditorSelecter >> apply [
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToLineEnd [
 	"Extend selection to the end of the line"
-	|  theCommands |
+	|  cmd globalCursor delta |
 	self assertUIProcess.
 
-	theCommands := self cursors collect: [ :aCursor |
-		| aDelta |
-		aDelta := (self findTextIndexAtLineEnd: aCursor) - aCursor position.
-		(self
-			privateExtendSelectionRightAt: aCursor position
-			by: aDelta) toMoveCursor: aCursor by: aDelta ].
+	globalCursor := self cursor.
+	delta := (self findTextIndexAtLineEnd: globalCursor) - globalCursor position.
+	cmd := (self
+			privateExtendSelectionRightAt: globalCursor position
+			by: delta) toMoveCursor: globalCursor by: delta.
 	
-	commands addAll: theCommands
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToLineStart [
 	"Extend selection to the start of the line"
-	|  theCommands |
+	|  cmd delta globalCursor |
 	self assertUIProcess.
 
-	theCommands := self cursors collect: [ :aCursor |
-		| aDelta |
-		aDelta := aCursor position - (self findTextIndexAtLineStart: aCursor).
-		(self
-			privateExtendSelectionLeftAt: aCursor position
-			by: aDelta)
-				toMoveCursor: aCursor
-				by: aDelta negated ].
+	globalCursor := self cursor.
+		delta := globalCursor position - (self findTextIndexAtLineStart: globalCursor).
+	cmd := (self
+			privateExtendSelectionLeftAt: globalCursor position
+			by: delta)
+				toMoveCursor: globalCursor
+				by: delta negated.
 
-	commands addAll: theCommands
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }
@@ -158,8 +156,7 @@ AlbTextEditorSelecter >> from: aFromIndex to: aToIndex [
 	commands add: (AlbExtendSelectionCommand new 
 		editor: editor;
 		toSelect: { BlSelection from: aFromIndex to: aToIndex };
-		toAddCursor: aToIndex;
-		toRemoveCursors: self cursors allCursors)
+		toAddCursor: aToIndex)
 ]
 
 { #category : #initialization }
@@ -460,9 +457,9 @@ AlbTextEditorSelecter >> privatePerformSelectAndDeselectCommands: theCommands [
 		aCommand toMoveCursorDo: [ :eachCursor :anAmount |
 			aNavigator move: eachCursor by: anAmount ].
 		aCommand toAddCursorDo: [ :aCursorPosition |
-			aNavigator addAt: aCursorPosition ].
-		aCommand toRemoveCursorsDo: [ :aCursor |
-			aNavigator remove: aCursor ].
+			aNavigator moveTo: aCursorPosition ].
+		"aCommand toRemoveCursorsDo: [ :aCursor |
+			aNavigator remove: aCursor ]".
 		aNavigator apply ].
 ]
 
@@ -514,7 +511,8 @@ AlbTextEditorSelecter >> select [
 
 	toBeSelected do: [ :aMonotoneSelection |
 		(aMonotoneSelection interval size > 1)
-			ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ] ]
+			ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ] ].
+	" do not send updateCursors to self here otherwise, navigator moveUp is broken "
 ]
 
 { #category : #private }
@@ -523,7 +521,6 @@ AlbTextEditorSelecter >> updateCursors [
 	
 	aNavigator := self editor navigator.
 	aNavigator dueTo: self.
-	aNavigator removeAll.
 	self selection do: [ :aMonotoneSelection | aNavigator addAt: aMonotoneSelection to ].
 	aNavigator apply
 ]

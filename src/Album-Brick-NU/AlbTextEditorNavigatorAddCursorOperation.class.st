@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorNavigatorAddCursorOperation,
 	#superclass : #AlbTextEditorNavigatorOperation,
-	#category : #'Album-Model-Operators'
+	#category : #'Album-Brick-NU-Model-Operators'
 }
 
 { #category : #matching }

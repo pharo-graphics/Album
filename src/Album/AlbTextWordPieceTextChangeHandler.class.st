@@ -11,5 +11,8 @@ AlbTextWordPieceTextChangeHandler >> eventClass [
 
 { #category : #'api - event managing' }
 AlbTextWordPieceTextChangeHandler >> handleEvent: anEvent [
-	anEvent currentTarget segmentPiece: anEvent segmentPiece
+	anEvent currentTarget segmentPiece: anEvent segmentPiece.
+	
+	
+	
 ]

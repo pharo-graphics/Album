@@ -46,9 +46,8 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 	anEditorElement editor deselecter all deselect.
 	
 	aNavigator := anEditorElement editor navigator.
-	anEvent modifiers isPrimaryModifier
-		ifTrue: [ aNavigator addAtScreenPosition: aScreenPosition ]
-		ifFalse: [ aNavigator moveToScreenPosition: aScreenPosition ].
+	aNavigator moveToScreenPosition: aScreenPosition.
+	"aNavigator addAtScreenPosition: aScreenPosition."
 	aNavigator apply.
 
 	"it is important to request focus *after* we add a cursor, otherwise it would jump to the 0 position when

@@ -151,9 +151,7 @@ AlbTextEditorLineSegmentHolder >> hasCursor [
 
 	| aTextEditor |
 	aTextEditor := self infiniteElement editor.
-	^ (aTextEditor cursors
-		   detect: [ :aCursor | aCursor insideSegment: segment ]
-		   ifNone: [  ]) notNil
+	^ aTextEditor cursor insideSegment: segment
 ]
 
 { #category : #'private - testing' }
@@ -177,15 +175,18 @@ AlbTextEditorLineSegmentHolder >> newPiecesMap [
 
 { #category : #updating }
 AlbTextEditorLineSegmentHolder >> onCursorChanged [
+
 	"Is sent when text editor's cursor changes.
 	Segment holder should update text elements accordingly"
 
 	self
 		assert: [ segment isNotNil ]
 		description: [ 'Segment must be bound!' ].
-
-	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement |
-		aPiece updateCursor: aPieceElement of: segment in: self infiniteElement ]
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+		aPiece
+			updateCursor: aPieceElement
+			of: segment
+			in: self infiniteElement]
 ]
 
 { #category : #updating }
@@ -225,6 +226,7 @@ AlbTextEditorLineSegmentHolder >> onSelectionChanged [
 
 { #category : #updating }
 AlbTextEditorLineSegmentHolder >> onTextChanged [
+
 	"Is sent when text changed in the editor (for example style attributes).
 	Segment holder should update text elements accordingly"
 
@@ -232,8 +234,21 @@ AlbTextEditorLineSegmentHolder >> onTextChanged [
 		assert: [ segment isNotNil ]
 		description: [ 'Segment must be bound!' ].
 
-	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement |
-		aPiece updateText: aPieceElement of: segment in: self infiniteElement ]
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+		aPiece
+			updateText: aPieceElement
+			of: segment
+			in: self infiniteElement ]
+]
+
+{ #category : #accessing }
+AlbTextEditorLineSegmentHolder >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
+	^ pieceElements pieceForElement: aBlElement ifAbsent: anAbsentBlock
+]
+
+{ #category : #accessing }
+AlbTextEditorLineSegmentHolder >> piecesAndTheirElementsDo: aBlock [
+	pieceElements piecesAndTheirElementsDo: aBlock
 ]
 
 { #category : #cursor }
@@ -283,11 +298,11 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 			                    at: eachSegmentPiece
 			                    pieceAndElementsDo: [ 
 				                    :eachPiece 
-				                    :theSegmentElements | "We should transfer the knowledge of the cursors to the new segment piece,
-						otherwise cursors may not be removed from the corresponding elements
+				                    :theSegmentElements | "We should transfer the knowledge of the cursor to the new segment piece,
+						otherwise the cursor may not be removed from the corresponding elements
 						https://github.com/feenkcom/gtoolkit/issues/892"
-				                    eachSegmentPiece currentCursors:
-					                    eachPiece currentCursors.
+				                    eachSegmentPiece currentCursor:
+					                    eachPiece currentCursor.
 
 				                    theSegmentElements do: [ :eachSegmentElement | 
 					                    eachPiece
@@ -317,7 +332,7 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 		aPiece
 			updateFocus: self infiniteElement isFocused
 			of: aPieceElement
-			in: self infiniteElement ].
+			in: self infiniteElement].
 
 	itemElement removeChildren.
 	itemElement addChildren: newPieceElements.

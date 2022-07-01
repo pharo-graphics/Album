@@ -24,7 +24,7 @@ AlbTextElement >> addCursorAt: aTextPosition [
 			cursorElement ]
 ]
 
-{ #category : #'private - selection' }
+{ #category : #drawing }
 AlbTextElement >> allSelectionBounds [
 
 	self selection isEmpty ifTrue: [ ^ #(  ) ].
@@ -70,6 +70,27 @@ AlbTextElement >> assertCursorPosition: anIndex [
 		description: [ 'Cursor must be within text bounds (0 is allowed)' ].
 ]
 
+{ #category : #drawing }
+AlbTextElement >> characterBoundsAtIndex: aLocalIndex [
+
+	| startSpan startPos start rect |
+	paragraph ifNil: [ ^ #(  ) ].
+	paragraph containerExtent: self extent.
+	start := (aLocalIndex - 1 max: 0) min: self text size.
+	startSpan := paragraph spanAtIndex: start.
+	startPos := startSpan positionAt: start. "+ (self padding left @ 0)"
+
+	rect := start > self text size
+		        ifTrue: [ startPos x @ 0 corner: self extent ]
+		        ifFalse: [ 
+			        | endPos endSpan end |
+			        end := start + 1 min: self text size.
+			        endSpan := paragraph spanAtIndex: end.
+			        endPos := endSpan positionAt: end. "+ (self padding left @ 0)"
+			        startPos x @ 0 corner: endPos x @ self extent y ].
+	^ self localPointToGlobal: (BlBounds fromRectangle: rect)
+]
+
 { #category : #private }
 AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBlock [
 
@@ -93,8 +114,7 @@ AlbTextElement >> drawOnSpartaCanvas: aCanvas [
 
 	paragraph ifNil: [ ^ self ].
 	paragraph containerExtent: self extent.
-	paragraph selection: self selection.
-
+	paragraph selection: self selection.	
 	aCanvas clip
 		by: (self geometry
 				 pathOnSpartaCanvas: aCanvas
@@ -109,6 +129,12 @@ AlbTextElement >> drawOnSpartaCanvas: aCanvas [
 				during: [ paragraph drawOn: aCanvas ]].
 
 		
+]
+
+{ #category : #private }
+AlbTextElement >> hasCursor [
+
+	^ cursorElement notNil
 ]
 
 { #category : #testing }

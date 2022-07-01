@@ -72,7 +72,7 @@ AlbTextEditorOperatorTest >> lineSpacing [
 AlbTextEditorOperatorTest >> multilineText [
 	
 	
-	^ 'A summer river being crossed
+	^ ' A summer river being crossed
 how pleasing
 with sandals in my hands!
 
@@ -113,14 +113,14 @@ AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	aSpace host: BlHeadlessHost new.
 	aSpace addChild: anEditor.
 	
-	self assert: anEditor cursors isEmpty.
+	self assert: anEditor cursor notNil.
 	
 	anEditor requestFocus.
 	aSpace pulse.
 	
 	self assert: anEditor isFocused.
 	self assert: anEditor hasFocus.
-	self assert: anEditor cursors allCursors equals: { AlbTextEditorSingleCursor new position: 0 }.
+	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0).
 	
 	aSpace removeChild: anEditor.
 	
@@ -140,6 +140,34 @@ AlbTextEditorOperatorTest >> test_editorHasNoFocusByDefault [
 ]
 
 { #category : #'instance creation' }
+AlbTextEditorOperatorTest >> test_editorOnAA [
+	
+	| anEditor anEditorElement |
+	
+	anEditorElement := self editorFor: 'AA' asRopedText.
+	anEditor := anEditorElement editor.
+	
+	self assert: anEditor cursor notNil.
+	self assert: anEditor selection isEmpty.
+	
+	^ anEditorElement
+]
+
+{ #category : #'instance creation' }
+AlbTextEditorOperatorTest >> test_editorOnAA_CR_BB [
+	
+	| anEditor anEditorElement |
+	
+	anEditorElement := self editorFor: ('AA', String cr, 'BB' ) asRopedText.
+	anEditor := anEditorElement editor.
+	
+	self assert: anEditor cursor notNil.
+	self assert: anEditor selection isEmpty.
+	
+	^ anEditorElement
+]
+
+{ #category : #'instance creation' }
 AlbTextEditorOperatorTest >> test_editorOnEmptyText [
 	
 	| anEditor anEditorElement |
@@ -147,7 +175,7 @@ AlbTextEditorOperatorTest >> test_editorOnEmptyText [
 	anEditorElement := self editorFor: '' asRopedText.
 	anEditor := anEditorElement editor.
 	
-	self assert: anEditor cursors isEmpty.
+	self assert: anEditor cursor notNil.
 	self assert: anEditor selection isEmpty.
 	
 	^ anEditorElement
@@ -161,7 +189,7 @@ AlbTextEditorOperatorTest >> test_editorOnMultilineText [
 	anEditorElement := self editorFor: self multilineText.
 	anEditor := anEditorElement editor.
 	
-	self assert: anEditor cursors isEmpty.
+	self assert: anEditor cursor notNil.
 	self assert: anEditor selection isEmpty.
 	
 	^ anEditorElement

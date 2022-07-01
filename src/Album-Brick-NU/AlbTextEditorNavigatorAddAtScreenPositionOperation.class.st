@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'screenPosition'
 	],
-	#category : #'Album-Model-Operators'
+	#category : #'Album-Brick-NU-Model-Operators'
 }
 
 { #category : #matching }
@@ -15,8 +15,7 @@ AlbTextEditorNavigatorAddAtScreenPositionOperation >> performOn: aNavigator [
 		findTextIndexAtScreenPosition: self screenPosition
 		ifAbsent: [ ^ self ].
 	
-	self cursor position: aGlobalTextIndex.
-	aNavigator privateRegisterForAdd: self cursor
+	aNavigator privateRegisterForMove: self cursor to: aGlobalTextIndex
 ]
 
 { #category : #accessing }

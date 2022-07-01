@@ -67,16 +67,16 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		ifAbsent: [].
 
 	" try to select the whole line "
-	editorElement cursors do: [ :aCursor | 
+	editorElement cursor ifNotNil: [ :globalCursor |
 		| delta lineIdx |
-		lineIdx := navigator findTextIndexAtLineStart: aCursor.
+		lineIdx := navigator findTextIndexAtLineStart: globalCursor.
 		delta := lineIdx - globalTextIndex.
 		delta isZero ifTrue: [ 
 			selecter
 				extendToWholeLine;
 				apply.
 			^ self ].
-		lineIdx := navigator findTextIndexAtLineEnd: aCursor.
+		lineIdx := navigator findTextIndexAtLineEnd: globalCursor.
 		delta := globalTextIndex - lineIdx.
 		delta isZero ifTrue: [ 
 			selecter
@@ -89,7 +89,8 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	selecter
 		wordAt: globalTextIndex;
-		apply
+		apply.
+	
 ]
 
 { #category : #accessing }

@@ -138,7 +138,7 @@ AlbTextEditorLineSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aTex
 AlbTextEditorLineSegmentBuilder >> initialize [
 	super initialize.
 
-	wordStencilBuilder := AlbTextEditableWordPieceStencilBuilder new
+	wordStencilBuilder := AlbTextWordPieceStencilBuilder editable
 ]
 
 { #category : #'text - modifications' }

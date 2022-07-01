@@ -11,16 +11,6 @@ AlbTextEditorCursor class >> at: aTextIndex [
 	^ AlbTextEditorSingleCursor at: aTextIndex
 ]
 
-{ #category : #'instance creation' }
-AlbTextEditorCursor class >> atAll: aCollectionOfTextIndices [
-	<return: #AlbTextEditorMultipleCursor>
-	| mcursor |
-	mcursor := AlbTextEditorMultipleCursor new.
-	mcursor addAll: (aCollectionOfTextIndices collect: [ :aTextIndex | AlbTextEditorSingleCursor at: aTextIndex ]).
-	^ mcursor 
-
-]
-
 { #category : #accessing }
 AlbTextEditorCursor >> allCursors [
 	^ Array streamContents: [ :aStream | self do: [ :aCursor | aStream nextPut: aCursor ] ]

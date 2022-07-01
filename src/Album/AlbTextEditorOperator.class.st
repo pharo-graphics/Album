@@ -45,12 +45,18 @@ AlbTextEditorOperator >> context: anObject [
 
 { #category : #accessing }
 AlbTextEditorOperator >> cursor [
-	^ self cursors
+	^ self editor cursor
+]
+
+{ #category : #accessing }
+AlbTextEditorOperator >> cursor: aCursor [
+	self editor cursor: aCursor
 ]
 
 { #category : #accessing }
 AlbTextEditorOperator >> cursors [
-	^ self editor cursors
+
+	^  { self cursor } asSet
 ]
 
 { #category : #accessing }
@@ -60,6 +66,7 @@ AlbTextEditorOperator >> editor [
 
 { #category : #accessing }
 AlbTextEditorOperator >> editor: aTextEditor [
+
 	editor := aTextEditor
 ]
 
@@ -138,6 +145,32 @@ AlbTextEditorOperator >> findTextIndexAboveCursor: aCursor ifAbsent: anException
 	^ aGlobalTextIndex
 		ifNotNil: [ aGlobalTextIndex ]
 		ifNil: anExceptionBlock
+]
+
+{ #category : #'api - utility' }
+AlbTextEditorOperator >> findTextIndexAtCursor: aCursor ifAbsent: anExceptionBlock [
+	"Find a text index one line below the given cursor"
+	<return: #Number>
+	| aTransformation aGlobalTextIndex |
+	
+	aGlobalTextIndex := nil.
+
+	aTransformation := AlbTextEditorRelativeScreenToCursorTransformation new
+		cursor: aCursor;
+		whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
+	
+	self editor enqueueCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	
+	aGlobalTextIndex
+		ifNotNil: [ ^ aGlobalTextIndex ]
+		ifNil: [ self flag: 'Until I figure out why it can be nil'. ^ anExceptionBlock value ].
+	
+	"could not find a text index for a given screen position"
+	self
+		assert: [ aGlobalTextIndex isNotNil ]
+		description: [ 'There must always be some text index found' ].
+		
+	^ aGlobalTextIndex
 ]
 
 { #category : #'api - utility' }

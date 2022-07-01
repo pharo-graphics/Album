@@ -105,7 +105,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
-	(String loremIpsum: 10000000) onAlbum openInOblSpace
+	(String loremIpsum: 10000000) onAlbum  inspect; openInOblSpace
 ]
 
 { #category : #'editor examples' }
@@ -133,6 +133,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 		c horizontal resizer: BlLayoutResizer matchParent].
 
 	ed text: text.
+	ed inspect.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
@@ -145,6 +146,7 @@ AlbExamplesSeeClassSide class >> example_FixedMeasurer [
 	" have to understand this ..."
 	| anEditor |
 	anEditor := self editorFor: 'Hello'.
+	anEditor inspect.
 	anEditor openInOBlSpace 
 
 ]
@@ -153,7 +155,7 @@ AlbExamplesSeeClassSide class >> example_FixedMeasurer [
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 
-	((' Monospace 40 ' asRopedText
+	((' ( Monospace 40 ) ' asRopedText
 		  fontSize: 40;
 		  monospace) , (' Default font and size' asRopedText "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}")) onAlbum inspect "openInOblSpace"
 ]

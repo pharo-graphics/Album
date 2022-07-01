@@ -24,7 +24,7 @@ AlbTextEditorHistoryCursorMovementCommand >> redoOn: aTextEditor [
 	
 	aNavigator := aTextEditor navigator.
 	fromIndices do: [ :eachIndex | aNavigator removeAt: eachIndex ].
-	toIndices do: [ :eachIndex | aNavigator addAt: eachIndex ].
+	toIndices do: [ :eachIndex | aNavigator moveTo: eachIndex ].
 	aNavigator apply
 ]
 
@@ -44,6 +44,6 @@ AlbTextEditorHistoryCursorMovementCommand >> undoOn: aTextEditor [
 	
 	aNavigator := aTextEditor navigator.
 	toIndices do: [ :eachIndex | aNavigator removeAt: eachIndex ].
-	fromIndices do: [ :eachIndex | aNavigator addAt: eachIndex ].
+	fromIndices do: [ :eachIndex | aNavigator moveTo: eachIndex ].
 	aNavigator apply
 ]

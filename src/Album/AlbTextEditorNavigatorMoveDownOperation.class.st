@@ -27,5 +27,5 @@ AlbTextEditorNavigatorMoveDownOperation >> performOn: aNavigator [
 
 	aNavigator
 		privateRegisterForMove: self cursor
-		by: (aGlobalTextIndex - self cursor position)
+		to: aGlobalTextIndex 
 ]

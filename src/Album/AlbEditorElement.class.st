@@ -16,6 +16,11 @@ AlbEditorElement >> asScrollableElement [
 	^ self
 ]
 
+{ #category : #accessing }
+AlbEditorElement >> cursor [
+	^ self editor cursor
+]
+
 { #category : #initialization }
 AlbEditorElement >> defaultLayout [
 	^ BlInfiniteLinearLayout vertical

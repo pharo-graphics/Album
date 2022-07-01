@@ -12,5 +12,5 @@ AlbTextEditorNavigatorMoveToEndNextWordOperation >> performOn: aNavigator [
 	
 	aNavigator
 		privateRegisterForMove: self cursor
-		by: (aNavigator findWordEndAfter: self cursor position) - self cursor position
+		to: (aNavigator findWordEndAfter: self cursor position) 
 ]

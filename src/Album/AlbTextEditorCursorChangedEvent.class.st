@@ -2,17 +2,18 @@ Class {
 	#name : #AlbTextEditorCursorChangedEvent,
 	#superclass : #AlbTextEditorEvent,
 	#instVars : [
-		'cursors'
+		'cursors',
+		'cursor'
 	],
 	#category : #'Album-Model-Events'
 }
 
 { #category : #accessing }
-AlbTextEditorCursorChangedEvent >> cursors [
-	^ cursors
+AlbTextEditorCursorChangedEvent >> cursor [
+	^ cursor
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorChangedEvent >> cursors: anObject [
-	cursors := anObject
+AlbTextEditorCursorChangedEvent >> cursor: anObject [
+	cursor := anObject
 ]

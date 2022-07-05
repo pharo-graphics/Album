@@ -8,23 +8,33 @@ Class {
 }
 
 { #category : #sparta }
-AlbOppositeDelimiterZone >> drawFrom: anElement onSpartaCanvas: aCanvas [
+AlbOppositeDelimiterZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElement [
 
 	self zone ifNil: [ ^ self ].
-	aCanvas figure
+	aSpartaCanvas figure
 		path: (self zone asRectangle expandBy: (Margin
-						  left: 2
-						  right: 2
+						  left: 1
+						  right: 1
 						  top: 0
-						  bottom: 6));
-		background: Color yellow;
-		backgroundAlpha: 0.2;
-		border: Color yellow;
+						  bottom: 0));
+		background: self frameColor;
+		backgroundAlpha: 0.4;
+		border: self frameColor;
 		borderAlpha: 1.0;
 		width: 1;
-		in: [ :aPainter | aPainter borderOutside ];
-		draw.
+		"in: [ :aPainter | aPainter borderOutside ];"
+		draw
+]
 
+{ #category : #sparta }
+AlbOppositeDelimiterZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
+
+	
+]
+
+{ #category : #sparta }
+AlbOppositeDelimiterZone >> frameColor [
+	^ AlbCursorSelectionZone selectionColor
 ]
 
 { #category : #updating }

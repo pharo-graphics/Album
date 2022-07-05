@@ -57,6 +57,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		dresser: AlbTextAreaDresser new;
 		styler: styler;
 		text: text.
+	editorElement withLineNumbers.
 	"editorElement editor useTaskItStylerStrategy."
 	editorElement editor
 		addEditorShortcut:
@@ -92,9 +93,11 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |
-
 	ed := AlbEditor new.
-	ed text: String loremIpsum.
+	ed withLineNumbers.
+	ed text: (String loremIpsum asRopedText
+			 fontSize: 16;
+			 fontName: 'Helvetica Neue').
 	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
@@ -105,7 +108,12 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
-	(String loremIpsum: 10000000) onAlbum  inspect; openInOblSpace
+
+	((String loremIpsum: 100000) asRopedText
+		 fontSize: 16;
+		 fontName: 'Helvetica Neue') onAlbum
+		inspect;
+		openInOblSpace
 ]
 
 { #category : #'editor examples' }

@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
 		'textReplacedHandler',
-		'oppositeDelimiterZone'
+		'zones',
+		'drawDecorator'
 	],
 	#category : #'Album-UI'
 }
@@ -55,18 +56,6 @@ AlbEditor >> beReadOnlyWithoutSelection [
 	self beMode: AlbTextEditorReadonlyWithoutSelectionMode new
 ]
 
-{ #category : #sparta }
-AlbEditor >> buildSelectionPathOnSpartaCanvas: aCanvas [
-	| aCollection pathBuilder |
-	aCollection := self selectionVertices2.
-	pathBuilder := aCanvas path
-		absolute;
-		moveTo: aCollection first.
-	aCollection allButFirstDo: [ :pt | pathBuilder lineTo: pt ].
-	pathBuilder close.
-	^ pathBuilder finish
-]
-
 { #category : #'editor - accessing' }
 AlbEditor >> cursors [
 	<return: #AlbTextEditorCursor>
@@ -92,31 +81,54 @@ AlbEditor >> deselecter [
 	^ self editor deselecter
 ]
 
+{ #category : #accessing }
+AlbEditor >> drawDecorator [
+	^ drawDecorator 
+]
+
 { #category : #sparta }
 AlbEditor >> drawMeAndChildrenOnSpartaCanvas: aCanvas [
 	super drawMeAndChildrenOnSpartaCanvas: aCanvas.
-	self drawSelectionOnSpartaCanvas: aCanvas.
-	self drawOppositeDelimiterOnSpartaCanvas: aCanvas.
+	zones do: [ :z | z drawOnSpartaCanvasOver: aCanvas in: self].
+	self childrenDo: [ :child | 
+		self itemDecorationsDo: [ :d | 
+			d
+				draw: child
+				onSpartaCanvasOver: aCanvas
+				in: self ] ]
 
 
 ]
 
 { #category : #sparta }
-AlbEditor >> drawOppositeDelimiterOnSpartaCanvas: aCanvas [
-	self selection isEmpty ifFalse: [ ^self ].
-	oppositeDelimiterZone
-		drawFrom: self
-		onSpartaCanvas: aCanvas
-]
+AlbEditor >> drawOnSpartaCanvas: aCanvas [
 
-{ #category : #sparta }
-AlbEditor >> drawSelectionOnSpartaCanvas: aCanvas [
-
-	self selectionRectangles do: [ :bnds | 
-		aCanvas fill
-			paint: (Color orange alpha: 0.35);
-			path: bnds;
-			draw ]
+	self shouldDrawBackgroundOrBorder ifTrue: [ 
+		aCanvas figure
+			path: (self geometry
+					 pathOnSpartaCanvas: aCanvas
+					 of: self);
+			background: self background;
+			backgroundAlpha: self background opacity;
+			border: self border paint;
+			borderAlpha: self border opacity;
+			width: self border width;
+			in: [ :aPainter | self border style applyOn: aPainter ];
+			in: [ :aPainter | 
+				self outskirts = BlOutskirts outside ifTrue: [ aPainter borderOutside ].
+				self outskirts = BlOutskirts centered ifTrue: [ aPainter borderCentered ].
+				self outskirts = BlOutskirts inside ifTrue: [ aPainter borderInside ] ];
+			draw ].
+	self childrenDo: [ :child | 
+		self itemDecorationsDo: [ :d | 
+			d
+				draw: child
+				onSpartaCanvas: aCanvas
+				in: self ] ].
+	zones do: [ :z | 
+		z
+			drawOnSpartaCanvas: aCanvas
+			in: self ]
 ]
 
 { #category : #accessing }
@@ -134,14 +146,15 @@ AlbEditor >> initialize [
 	super initialize.
 
 	self matchParent.
-
+drawDecorator := false.
 	textReplacedHandler := BlEventHandler
 		                       on: AlbTextEditorTextReplacedEvent
 		                       do: [ :anEvent | self viewModel text: anEvent text ].
 	"we intentionally set text directly to the viewModel
 		to prevent any possible #asRopedText convertion"
-	oppositeDelimiterZone := AlbOppositeDelimiterZone new.
-	
+	zones := OrderedCollection new.
+	zones add: AlbOppositeDelimiterZone new.
+	zones add: AlbCursorSelectionZone new.
 	self editor: AlbTextEditor new.
 	self viewModel: AlbEditorModel new.
 	self padding: (BlInsets all: 6).
@@ -198,7 +211,8 @@ AlbEditor >> navigator [
 { #category : #'hooks - layout' }
 AlbEditor >> onLayoutDone [
 	super onLayoutDone.
-	self updateOppositeDelimiterZone
+	drawDecorator := true
+	
 	
 ]
 
@@ -224,86 +238,6 @@ AlbEditor >> selection [
 	<return: #BlSelection>
 
 	^ self editor selection
-]
-
-{ #category : #sparta }
-AlbEditor >> selectionRectangles [
-	| segs lines prec |
-	
-	segs := Array streamContents: [ :stream | 
-		self children sortedByElevation do: [ :anElement | 
-			stream nextPutAll: anElement allSelectionBounds ] ].
-	segs ifEmpty: [ ^ #( ) ].
-	segs := segs asOrderedCollection.
-	lines := OrderedCollection new.
-	prec := segs removeFirst.
-	[ segs isEmpty ] whileFalse: [ | curr |
-		curr := segs removeFirst.
-		curr origin x <= prec origin x
-			ifTrue: [ lines add: prec. prec := curr ]
-			ifFalse: [ prec := prec merge: curr ] ].
-	lines add: prec.
-	^ lines
-]
-
-{ #category : #sparta }
-AlbEditor >> selectionVertices [
-
-	| lines vertices currLine |
-	lines := self allLineSelectionBounds.
-	vertices := OrderedCollection new.
-	lines ifEmpty: [ ^ vertices ].
-	currLine := lines first.
-	vertices add: currLine topLeft.
-	vertices add: currLine topRight.
-	lines size = 1 ifTrue: [ 
-		vertices add: currLine bottomRight.
-		vertices add: currLine bottomLeft.
-		vertices add: currLine topLeft.
-		^ vertices ].
-	currLine := lines at: lines size - 1.
-	vertices add: currLine bottomRight.
-	currLine := lines last.
-	vertices add: currLine topRight.
-	vertices add: currLine bottomRight.
-	vertices add: currLine bottomLeft.
-	
-		lines add: lines second topLeft.
-		lines add: lines first bottomLeft.
-	lines add: lines first topLeft.
-	^ vertices
-]
-
-{ #category : #sparta }
-AlbEditor >> selectionVertices2 [
-
-	| lines vertices currLine |
-	lines := self allLineSelectionBounds.
-	vertices := OrderedCollection new.
-	lines ifEmpty: [ ^ vertices ].
-	currLine := lines first.
-	vertices add: currLine topLeft.
-	vertices add: currLine topRight.
-	vertices add: currLine bottomRight.
-	lines size = 1 ifTrue: [ 
-		vertices add: currLine bottomRight.
-		vertices add: currLine bottomLeft.
-		vertices add: currLine topLeft.
-		^ vertices ].
-	lines size > 2 ifTrue: [ 
-		currLine := lines at: lines size - 1.
-		vertices add: currLine bottomRight].
-	currLine := lines last.
-	vertices add: currLine topRight.
-	vertices add: currLine bottomRight.
-	vertices add: currLine bottomLeft.
-	lines size > 2 ifTrue: [ 
-		currLine := lines at: 2.
-		vertices add: currLine topLeft].
-	currLine := lines first.
-	lines add: lines first bottomLeft.
-	lines add: lines first topLeft.
-	^ vertices
 ]
 
 { #category : #'editor - accessing' }
@@ -341,8 +275,23 @@ AlbEditor >> textChanged: aText [
 	self editor text: aText
 ]
 
-{ #category : #'hooks - layout' }
-AlbEditor >> updateOppositeDelimiterZone [
+{ #category : #'accessing - decoration' }
+AlbEditor >> withLineNumbers [
 
-	oppositeDelimiterZone updateFrom: self
+	self itemDecorations
+		detect: [ :d | d isKindOf: AlbLineNumberDecoration ]
+		ifNone: [ 
+			self itemDecorations add: AlbLineNumberDecoration new.
+			self invalidateItemDecorations ]
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditor >> withoutLineNumbers [
+
+	itemDecorations := self itemDecorations reject: [ :d | 
+		                   (d isKindOf: AlbLineNumberDecoration)
+			                   ifTrue: [ 
+				                   self invalidateItemDecorations.
+				                   true ]
+			                   ifFalse: [ false ] ]
 ]

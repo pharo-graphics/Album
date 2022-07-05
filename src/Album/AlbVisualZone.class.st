@@ -9,8 +9,22 @@ Class {
 }
 
 { #category : #sparta }
-AlbVisualZone >> drawFrom: anElement onSpartaCanvas: aCanvas [
+AlbVisualZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElement [
 	^ self subclassResponsibility  
+]
+
+{ #category : #sparta }
+AlbVisualZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
+	^ self subclassResponsibility  
+]
+
+{ #category : #accessing }
+AlbVisualZone >> itemOffset: anItemElement in: anInfiniteElement [
+	"Retrieve any offsets for the given item element.
+	If this ItemDecoration does not affect the positioning of item element, it should return empty insets"
+	<return: #BlInsets>
+	
+	^ BlInsets empty
 ]
 
 { #category : #accessing }

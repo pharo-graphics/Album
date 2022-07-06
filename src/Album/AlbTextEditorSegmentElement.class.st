@@ -14,9 +14,9 @@ Class {
 { #category : #sparta }
 AlbTextEditorSegmentElement >> drawOnSpartaCanvas: aCanvas [
 
-	self parent itemDecorationsDo: [ :d | 
-		d draw: self onSpartaCanvas: aCanvas in: self parent ].
+	self parent itemDecorationsDo: [ :decoration | 
+		decoration draw: self onSpartaCanvas: aCanvas in: self parent ].
 	super drawOnSpartaCanvas: aCanvas.
-	self parent itemDecorationsDo: [ :d | 
-		d draw: self onSpartaCanvasOver: aCanvas in: self parent ]
+	self parent itemDecorationsDo: [ :decoration | 
+		decoration draw: self onSpartaCanvasOver: aCanvas in: self parent ]
 ]

@@ -1,28 +1,8 @@
 Class {
 	#name : #AlbLineNumberDecoration,
 	#superclass : #BlInfiniteItemDecoration,
-	#instVars : [
-		'metricsProvider'
-	],
 	#category : #'Album-UI'
 }
-
-{ #category : #geometry }
-AlbLineNumberDecoration >> ascent [
-	^ self metricsProvider fontMetrics ascent
-]
-
-{ #category : #geometry }
-AlbLineNumberDecoration >> computeSize [
-
-	| canvas textPainter |
-	metricsProvider ifNotNil: [ ^ self ].
-	canvas := Bloc preferableSpartaCanvas offscreen.
-	textPainter := canvas text
-		               string: '9999999';
-		               font: (self fontFromCanvas: canvas).
-	metricsProvider := textPainter measure
-]
 
 { #category : #drawing }
 AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement [
@@ -45,8 +25,8 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: a
 			| h path |
 			h := anItemElement height.
 			path := Rectangle
-				        origin: (self width + (self rightGap // 2)) negated @ 0
-				        corner: self rightGap negated @ h.
+				        origin: (self totalWidth) negated @ 0
+				        corner: (self rightGap + 3) negated @ h.
 			aCanvas clip by: path during: [ 
 				aCanvas figure
 					path: path;
@@ -58,7 +38,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: a
 		               string: index asString;
 		               width: self width;
 		               font: (self fontFromCanvas: aCanvas);
-		               baseline: self width negated @ self ascent negated;
+		               baseline: self width negated @ ((self fontSize) );
 		               paint: Color black. "(anItemElement height // 2 max: self height // 2) + self underlineOffset"
 	textPainter draw
 ]
@@ -97,46 +77,20 @@ AlbLineNumberDecoration >> fontFromCanvas: aCanvas [
 
 
 	^ aCanvas font
-		  named: 'Source Code Pro';
-		  size: 12;
+"		  named: 'Source Code Pro';"
+		  size: self fontSize;
 		  build
 ]
 
 { #category : #geometry }
-AlbLineNumberDecoration >> fontHeight [
-
-	^ self metricsProvider fontMetrics height
-]
-
-{ #category : #geometry }
-AlbLineNumberDecoration >> height [
-
-	^ self metricsProvider textMetrics height
-]
-
-{ #category : #initialization }
-AlbLineNumberDecoration >> initialize [
-
-	super initialize
+AlbLineNumberDecoration >> fontSize [
+	^ 12
 ]
 
 { #category : #geometry }
 AlbLineNumberDecoration >> itemInsets: aBlInsets of: anItemElement in: anInfiniteElement [
 
-	^ (BlInsets left: self width + 2) + aBlInsets
-]
-
-{ #category : #geometry }
-AlbLineNumberDecoration >> maxCharacterWidth [
-
-	^ self metricsProvider fontMetrics maxCharacterWidth
-]
-
-{ #category : #geometry }
-AlbLineNumberDecoration >> metricsProvider [
-
-	metricsProvider ifNil: [ self computeSize ].
-	^ metricsProvider
+	^ (BlInsets left: self totalWidth) + aBlInsets
 ]
 
 { #category : #geometry }
@@ -146,25 +100,13 @@ AlbLineNumberDecoration >> rightGap [
 ]
 
 { #category : #geometry }
-AlbLineNumberDecoration >> strikeoutOffset [
-
-	^ self metricsProvider fontMetrics strikeoutOffset
-]
-
-{ #category : #geometry }
 AlbLineNumberDecoration >> totalWidth [
 
 	^ self width + self rightGap
 ]
 
 { #category : #geometry }
-AlbLineNumberDecoration >> underlineOffset [
-
-	^ self metricsProvider fontMetrics underlineOffset
-]
-
-{ #category : #geometry }
 AlbLineNumberDecoration >> width [
 
-	^ self metricsProvider textMetrics width
+	^ 40
 ]

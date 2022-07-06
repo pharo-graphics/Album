@@ -2,8 +2,7 @@ Class {
 	#name : #AlbLineNumberDecoration,
 	#superclass : #BlInfiniteItemDecoration,
 	#instVars : [
-		'metricsProvider',
-		'font'
+		'metricsProvider'
 	],
 	#category : #'Album-UI'
 }
@@ -19,13 +18,9 @@ AlbLineNumberDecoration >> computeSize [
 	| canvas textPainter |
 	metricsProvider ifNotNil: [ ^ self ].
 	canvas := Bloc preferableSpartaCanvas offscreen.
-	font := canvas font
-		        named: 'Source Code Pro';
-		        size: 12;
-		        build.
 	textPainter := canvas text
 		               string: '9999999';
-		               font: font.
+		               font: (self fontFromCanvas: canvas).
 	metricsProvider := textPainter measure
 ]
 
@@ -62,7 +57,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: a
 	textPainter := aCanvas text
 		               string: index asString;
 		               width: self width;
-		               font: self font;
+		               font: (self fontFromCanvas: aCanvas);
 		               baseline: self width negated @ self ascent negated;
 		               paint: Color black. "(anItemElement height // 2 max: self height // 2) + self underlineOffset"
 	textPainter draw
@@ -98,10 +93,13 @@ AlbLineNumberDecoration >> drawOnSpartaCanvasOver: aCanvas in: anInfiniteElement
 ]
 
 { #category : #geometry }
-AlbLineNumberDecoration >> font [
+AlbLineNumberDecoration >> fontFromCanvas: aCanvas [
 
-	self computeSize.
-	^ font
+
+	^ aCanvas font
+		  named: 'Source Code Pro';
+		  size: 12;
+		  build
 ]
 
 { #category : #geometry }

@@ -8,17 +8,22 @@ Class {
 AlbTextAreaDresser >> onInstalledIn: anElement [
 
 	super onInstalledIn: anElement.
-	
-	anElement when: BlBlurEvent do: [ :anEvent | anElement widgetContent
-		border: (BlBorder paint: anElement theme editor borderColor width: 1) ].
-	anElement when: BlFocusEvent do: [ :anEvent | anElement widgetContent
-		border: (BlBorder paint: anElement theme editor focusedBorderColor width: 1) ].
-	
-	anElement border: (BlBorder paint: Color blue width: 2).
-	anElement widgetContent background: Color white.
-	anElement padding: (BlInsets
-			 top: 10
-			 left: 5
-			 bottom: 10
-			 right: 5)
+
+	anElement
+		when: BlBlurEvent
+		do: [ :anEvent | 
+			anElement widgetContent border: (BlBorder
+					 paint: anElement theme editor borderColor
+					 width: 1) ].
+	anElement
+		when: BlFocusEvent
+		do: [ :anEvent | 
+			anElement widgetContent border: (BlBorder
+					 paint: anElement theme editor focusedBorderColor
+					 width: 1) ].
+
+	anElement border: (BlBorder
+			 paint: Color blue
+			 width: 2).
+	anElement widgetContent background: Color white
 ]

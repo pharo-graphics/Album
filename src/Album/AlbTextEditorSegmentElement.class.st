@@ -11,9 +11,12 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #drawing }
+{ #category : #sparta }
 AlbTextEditorSegmentElement >> drawOnSpartaCanvas: aCanvas [
-	self parent itemDecorationsDo: [ :d | d draw: self onSpartaCanvas: aCanvas in: self parent ].	
+
+	self parent itemDecorationsDo: [ :d | 
+		d draw: self onSpartaCanvas: aCanvas in: self parent ].
 	super drawOnSpartaCanvas: aCanvas.
-	self parent itemDecorationsDo: [ :d | d draw: self onSpartaCanvasOver: aCanvas in: self parent ].
+	self parent itemDecorationsDo: [ :d | 
+		d draw: self onSpartaCanvasOver: aCanvas in: self parent ]
 ]

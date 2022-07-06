@@ -62,9 +62,14 @@ AlbEditor >> cursors [
 	^ self editor cursors
 ]
 
-{ #category : #accessing }
-AlbEditor >> defaultSelectionColor [ 
-	^ Color orange
+{ #category : #initialization }
+AlbEditor >> defaultPaddings [
+
+	^ BlInsets
+		  top: 10
+		  left: 0
+		  bottom: 10
+		  right: 5
 ]
 
 { #category : #'editor - operations' }
@@ -82,56 +87,6 @@ AlbEditor >> deselecter [
 ]
 
 { #category : #accessing }
-AlbEditor >> drawDecorator [
-	^ drawDecorator 
-]
-
-{ #category : #sparta }
-AlbEditor >> drawMeAndChildrenOnSpartaCanvas: aCanvas [
-	super drawMeAndChildrenOnSpartaCanvas: aCanvas.
-	zones do: [ :z | z drawOnSpartaCanvasOver: aCanvas in: self].
-	self childrenDo: [ :child | 
-		self itemDecorationsDo: [ :d | 
-			d
-				draw: child
-				onSpartaCanvasOver: aCanvas
-				in: self ] ]
-
-
-]
-
-{ #category : #sparta }
-AlbEditor >> drawOnSpartaCanvas: aCanvas [
-
-	self shouldDrawBackgroundOrBorder ifTrue: [ 
-		aCanvas figure
-			path: (self geometry
-					 pathOnSpartaCanvas: aCanvas
-					 of: self);
-			background: self background;
-			backgroundAlpha: self background opacity;
-			border: self border paint;
-			borderAlpha: self border opacity;
-			width: self border width;
-			in: [ :aPainter | self border style applyOn: aPainter ];
-			in: [ :aPainter | 
-				self outskirts = BlOutskirts outside ifTrue: [ aPainter borderOutside ].
-				self outskirts = BlOutskirts centered ifTrue: [ aPainter borderCentered ].
-				self outskirts = BlOutskirts inside ifTrue: [ aPainter borderInside ] ];
-			draw ].
-	self childrenDo: [ :child | 
-		self itemDecorationsDo: [ :d | 
-			d
-				draw: child
-				onSpartaCanvas: aCanvas
-				in: self ] ].
-	zones do: [ :z | 
-		z
-			drawOnSpartaCanvas: aCanvas
-			in: self ]
-]
-
-{ #category : #accessing }
 AlbEditor >> editor: aTextEditor [
 	self editor removeEventHandler: textReplacedHandler.
 
@@ -146,18 +101,20 @@ AlbEditor >> initialize [
 	super initialize.
 
 	self matchParent.
-drawDecorator := false.
+
 	textReplacedHandler := BlEventHandler
 		                       on: AlbTextEditorTextReplacedEvent
-		                       do: [ :anEvent | self viewModel text: anEvent text ].
-	"we intentionally set text directly to the viewModel
-		to prevent any possible #asRopedText convertion"
-	zones := OrderedCollection new.
-	zones add: AlbOppositeDelimiterZone new.
-	zones add: AlbCursorSelectionZone new.
+		                       do: [ :anEvent | 
+		                       self viewModel text: anEvent text ].
+	"we intentionally set text directly to the viewModel to prevent any possible #asRopedText convertion"
+
+	self padding: self defaultPaddings.
+
+	self withDecoration: AlbOppositeDelimiterZone.
+	self withDecoration: AlbCursorSelectionZone.
+
 	self editor: AlbTextEditor new.
 	self viewModel: AlbEditorModel new.
-	self padding: (BlInsets all: 6).
 	self
 		when: AlbEditorStylerChanged
 		do: [ :anEvent | self stylerChanged: anEvent styler ].
@@ -206,14 +163,6 @@ AlbEditor >> navigator [
 	<return: #AlbTextEditorNavigator>
 
 	^ self editor navigator
-]
-
-{ #category : #'hooks - layout' }
-AlbEditor >> onLayoutDone [
-	super onLayoutDone.
-	drawDecorator := true
-	
-	
 ]
 
 { #category : #accessing }
@@ -278,20 +227,11 @@ AlbEditor >> textChanged: aText [
 { #category : #'accessing - decoration' }
 AlbEditor >> withLineNumbers [
 
-	self itemDecorations
-		detect: [ :d | d isKindOf: AlbLineNumberDecoration ]
-		ifNone: [ 
-			self itemDecorations add: AlbLineNumberDecoration new.
-			self invalidateItemDecorations ]
+	self withDecoration: AlbLineNumberDecoration
 ]
 
 { #category : #'accessing - decoration' }
 AlbEditor >> withoutLineNumbers [
 
-	itemDecorations := self itemDecorations reject: [ :d | 
-		                   (d isKindOf: AlbLineNumberDecoration)
-			                   ifTrue: [ 
-				                   self invalidateItemDecorations.
-				                   true ]
-			                   ifFalse: [ false ] ]
+	self withoutDecoration: AlbLineNumberDecoration
 ]

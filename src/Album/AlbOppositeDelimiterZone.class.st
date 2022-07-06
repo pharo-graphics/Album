@@ -10,7 +10,15 @@ Class {
 { #category : #sparta }
 AlbOppositeDelimiterZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElement [
 
+	
+]
+
+{ #category : #sparta }
+AlbOppositeDelimiterZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
+
 	self zone ifNil: [ ^ self ].
+	anInfiniteElement selection isEmpty ifFalse: [ ^ self ].
+
 	aSpartaCanvas figure
 		path: (self zone asRectangle expandBy: (Margin
 						  left: 1
@@ -22,18 +30,12 @@ AlbOppositeDelimiterZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElem
 		border: self frameColor;
 		borderAlpha: 1.0;
 		width: 1;
-		"in: [ :aPainter | aPainter borderOutside ];"
-		draw
-]
-
-{ #category : #sparta }
-AlbOppositeDelimiterZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
-
-	
+		"in: [ :aPainter | aPainter borderOutside ];"draw
 ]
 
 { #category : #sparta }
 AlbOppositeDelimiterZone >> frameColor [
+
 	^ AlbCursorSelectionZone selectionColor
 ]
 
@@ -43,7 +45,7 @@ AlbOppositeDelimiterZone >> updateFrom: anEditor [
 	| globalCursorPos subtext |
 	globalCursorPos := anEditor cursor position.
 	globalCursorPos isZero ifTrue: [ ^ self ].
-	
+
 	previousCursorPosition = globalCursorPos ifTrue: [ ^ self ].
 	" check on the actual cached subtex and use the global cursor "
 	subtext := anEditor editor segmentCollector subText.

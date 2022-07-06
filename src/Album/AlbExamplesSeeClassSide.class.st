@@ -28,7 +28,7 @@ AlbExamplesSeeClassSide class >> editorFor: aText [
 	
 	"BlDevCrossover on: anEditor."
 	
-	anEditor editor  beLineBased.
+	"anEditor editor  beLineBased."
 	anEditor editor segmentBuilder
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
@@ -48,7 +48,8 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
 
-	text := self methodText asRopedText.
+	text := self methodText asRopedText fontSize: 16;
+		 fontName: 'Source Code Pro'.
 
 	styler := AlbRBTextStyler new.
 	styler classOrMetaClass: self class.
@@ -69,6 +70,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	space root addChild: editorElement.
 	space title: 'editor'.
 	space show.
+	editorElement inspect.
 	
 ]
 
@@ -86,7 +88,8 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
-	^ ed
+	ed inspect.
+	^ed
 ]
 
 { #category : #'editor examples' }

@@ -2,102 +2,124 @@ Class {
 	#name : #AlbLineNumberDecoration,
 	#superclass : #BlInfiniteItemDecoration,
 	#instVars : [
-		'width',
-		'height',
-		'ascent',
-		'strikeoutOffset',
-		'underlineOffset'
+		'metricsProvider',
+		'font'
 	],
 	#category : #'Album-UI'
 }
 
 { #category : #geometry }
 AlbLineNumberDecoration >> ascent [
-
-	^ ascent ifNil: [ 
-		  self computeSize.
-		  ascent ]
+	^ self metricsProvider fontMetrics ascent
 ]
 
 { #category : #geometry }
 AlbLineNumberDecoration >> computeSize [
 
-	| canvas font textPainter metricsProvider |
+	| canvas textPainter |
+	metricsProvider ifNotNil: [ ^ self ].
 	canvas := Bloc preferableSpartaCanvas offscreen.
 	font := canvas font
-		        named: 'Arial';
-		        size: 10;
+		        named: 'Source Code Pro';
+		        size: 12;
 		        build.
-
 	textPainter := canvas text
-		               string: '99999';
+		               string: '9999999';
 		               font: font.
-	metricsProvider := textPainter measure.
-	width := metricsProvider textMetrics width + 2.
-	height :=  metricsProvider textMetrics height.
-	ascent := metricsProvider fontMetrics ascent.
-	strikeoutOffset := metricsProvider fontMetrics strikeoutOffset.
-	underlineOffset := metricsProvider fontMetrics underlineOffset.
+	metricsProvider := textPainter measure
 ]
 
 { #category : #drawing }
 AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement [
 
-	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element.
-	Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
+	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element for its child element anItemElement. Any content drawn by this method will be drawn before the item elements are drawn, and will thus appear underneath them"
 
-
+	
 ]
 
 { #category : #drawing }
 AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: anInfiniteElement [
 
-	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element.
-	Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
+	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element for its child element anItemElement.
+		Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
 
-	| textPainter holder index font |
+	| textPainter holder index |
 	holder := anInfiniteElement childHolderOf: anItemElement.
-	(holder hasCursor and: [ anInfiniteElement selection isEmpty ]) ifTrue: [ 
-		| h path |
-		h := anItemElement height.
-		path := Rectangle
-			        origin: self width negated + anInfiniteElement padding left negated @ 0
-			        corner: 2 negated @ h.
-		aCanvas clip
-			by: path
-			during: [ 
+	(holder hasCursor and: [ anInfiniteElement selection isEmpty ]) 
+		ifTrue: [ 
+			| h path |
+			h := anItemElement height.
+			path := Rectangle
+				        origin: (self width + (self rightGap // 2)) negated @ 0
+				        corner: self rightGap negated @ h.
+			aCanvas clip by: path during: [ 
 				aCanvas figure
 					path: path;
 					background: AlbCursorSelectionZone selectionColor;
-					"backgroundAlpha: 0.30;"
 					draw ] ].
 
 	index := holder layoutPosition.
-	font := aCanvas font
-		        named: 'Source Code Pro';
-		        size: 10;
-		        build.
 	textPainter := aCanvas text
 		               string: index asString;
 		               width: self width;
-		               font: font;
-		               baseline: self width negated @ (anItemElement height // 2 max: self height);
-		               paint: Color black.
+		               font: self font;
+		               baseline: self width negated @ self ascent negated;
+		               paint: Color black. "(anItemElement height // 2 max: self height // 2) + self underlineOffset"
 	textPainter draw
+]
+
+{ #category : #drawing }
+AlbLineNumberDecoration >> drawOnSpartaCanvas: aCanvas in: anInfiniteElement [
+
+	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element
+	Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear underneath them"
+
+
+]
+
+{ #category : #drawing }
+AlbLineNumberDecoration >> drawOnSpartaCanvasOver: aCanvas in: anInfiniteElement [
+
+	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element.
+		Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
+
+	| h w |
+	h := anInfiniteElement height.
+	w := self width - (self rightGap // 2).
+	aCanvas figure
+		path: (Rectangle encompassing: { 
+						 (0 @ 0).
+						 (w @ h) });
+		background: (Color veryLightGray alpha: 0.10);
+		draw.
+
+	anInfiniteElement childrenDo: [ :child | 
+		self draw: child onSpartaCanvasOver: aCanvas in: anInfiniteElement ]
+]
+
+{ #category : #geometry }
+AlbLineNumberDecoration >> font [
+
+	self computeSize.
+	^ font
+]
+
+{ #category : #geometry }
+AlbLineNumberDecoration >> fontHeight [
+
+	^ self metricsProvider fontMetrics height
 ]
 
 { #category : #geometry }
 AlbLineNumberDecoration >> height [
 
-	^ height ifNil: [ 
-		  self computeSize.
-		  height ]
+	^ self metricsProvider textMetrics height
 ]
 
 { #category : #initialization }
 AlbLineNumberDecoration >> initialize [
-	super initialize.
 
+	super initialize
 ]
 
 { #category : #geometry }
@@ -107,25 +129,44 @@ AlbLineNumberDecoration >> itemInsets: aBlInsets of: anItemElement in: anInfinit
 ]
 
 { #category : #geometry }
+AlbLineNumberDecoration >> maxCharacterWidth [
+
+	^ self metricsProvider fontMetrics maxCharacterWidth
+]
+
+{ #category : #geometry }
+AlbLineNumberDecoration >> metricsProvider [
+
+	metricsProvider ifNil: [ self computeSize ].
+	^ metricsProvider
+]
+
+{ #category : #geometry }
+AlbLineNumberDecoration >> rightGap [
+
+	^ 5
+]
+
+{ #category : #geometry }
 AlbLineNumberDecoration >> strikeoutOffset [
 
-	^ strikeoutOffset ifNil: [ 
-		  self computeSize.
-		  strikeoutOffset ]
+	^ self metricsProvider fontMetrics strikeoutOffset
+]
+
+{ #category : #geometry }
+AlbLineNumberDecoration >> totalWidth [
+
+	^ self width + self rightGap
 ]
 
 { #category : #geometry }
 AlbLineNumberDecoration >> underlineOffset [
 
-	^ underlineOffset ifNil: [ 
-		  self computeSize.
-		  underlineOffset ]
+	^ self metricsProvider fontMetrics underlineOffset
 ]
 
 { #category : #geometry }
 AlbLineNumberDecoration >> width [
 
-	^ width ifNil: [ 
-		  self computeSize.
-		  width ]
+	^ self metricsProvider textMetrics width
 ]

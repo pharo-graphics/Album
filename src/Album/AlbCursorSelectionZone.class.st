@@ -9,7 +9,12 @@ Class {
 
 { #category : #accessing }
 AlbCursorSelectionZone class >> selectionColor [
-	^ (Color r: 0.9530791788856305 g: 0.8084066471163245 b: 0.1906158357771261 alpha: 1.0)
+
+	^ Color
+		  r: 0.9530791788856305
+		  g: 0.8084066471163245
+		  b: 0.1906158357771261
+		  alpha: 1.0
 ]
 
 { #category : #updating }
@@ -27,17 +32,17 @@ AlbCursorSelectionZone >> buildSelectionPathFrom: anEditorElement onSpartaCanvas
 { #category : #sparta }
 AlbCursorSelectionZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElement [
 
-		(self selectionRectanglesFrom: anInfiniteElement) do: [ :bnds | 
+	(self selectionRectanglesFrom: anInfiniteElement) do: [ :bnds | 
 		aSpartaCanvas fill
-			paint: (self frameColor "alpha: 0.35");
+			paint: self frameColor;
 			path: bnds;
-			draw ]
+			"alpha: 0.35"draw ]
 ]
 
 { #category : #sparta }
 AlbCursorSelectionZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
 
-
+	
 ]
 
 { #category : #sparta }

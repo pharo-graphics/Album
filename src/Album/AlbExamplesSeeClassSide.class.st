@@ -70,7 +70,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	space root addChild: editorElement.
 	space title: 'editor'.
 	space show.
-	editorElement inspect.
+	
 	
 ]
 
@@ -88,7 +88,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
-	ed inspect.
+
 	^ed
 ]
 
@@ -115,7 +115,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	((String loremIpsum: 100000) asRopedText
 		 fontSize: 16;
 		 fontName: 'Helvetica Neue') onAlbum
-		inspect;
+
 		openInOblSpace
 ]
 
@@ -157,7 +157,6 @@ AlbExamplesSeeClassSide class >> example_FixedMeasurer [
 	" have to understand this ..."
 	| anEditor |
 	anEditor := self editorFor: 'Hello'.
-	anEditor inspect.
 	anEditor openInOBlSpace 
 
 ]

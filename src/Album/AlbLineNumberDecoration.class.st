@@ -1,6 +1,9 @@
 Class {
 	#name : #AlbLineNumberDecoration,
 	#superclass : #BlInfiniteItemDecoration,
+	#instVars : [
+		'metricsProvider'
+	],
 	#category : #'Album-UI'
 }
 
@@ -25,7 +28,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: a
 			| h path |
 			h := anItemElement height.
 			path := Rectangle
-				        origin: (self totalWidth) negated @ 0
+				        origin: self totalWidth negated @ 0
 				        corner: (self rightGap + 3) negated @ h.
 			aCanvas clip by: path during: [ 
 				aCanvas figure
@@ -38,7 +41,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: a
 		               string: index asString;
 		               width: self width;
 		               font: (self fontFromCanvas: aCanvas);
-		               baseline: self width negated @ ((self fontSize) );
+		               baseline: self width negated @ self fontSize;
 		               paint: Color black. "(anItemElement height // 2 max: self height // 2) + self underlineOffset"
 	textPainter draw
 ]
@@ -94,6 +97,21 @@ AlbLineNumberDecoration >> itemInsets: aBlInsets of: anItemElement in: anInfinit
 ]
 
 { #category : #geometry }
+AlbLineNumberDecoration >> metricsProvider [
+
+	^ metricsProvider ifNil: [ 
+		  | canvas textPainter font |
+		  canvas := Bloc preferableSpartaCanvas offscreen.
+		  font := canvas font
+			          size: 12;
+			          build.
+		  textPainter := canvas text
+			                 string: '9999999';
+			                 font: font.
+		  metricsProvider := textPainter measure ]
+]
+
+{ #category : #geometry }
 AlbLineNumberDecoration >> rightGap [
 
 	^ 5
@@ -108,5 +126,5 @@ AlbLineNumberDecoration >> totalWidth [
 { #category : #geometry }
 AlbLineNumberDecoration >> width [
 
-	^ 40
+	^ 45 "self metricsProvider textMetrics width"
 ]

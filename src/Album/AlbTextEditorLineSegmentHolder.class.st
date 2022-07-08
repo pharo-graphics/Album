@@ -274,6 +274,11 @@ AlbTextEditorLineSegmentHolder >> segment: anEditorSegment [
 	self buildSegment: anEditorSegment
 ]
 
+{ #category : #accessing }
+AlbTextEditorLineSegmentHolder >> textInterval [ 
+	^ (segment textStart + 1 min: segment textEnd) to: segment textEnd
+]
+
 { #category : #'private - segment' }
 AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 

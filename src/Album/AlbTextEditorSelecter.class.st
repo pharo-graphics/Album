@@ -51,17 +51,18 @@ AlbTextEditorSelecter >> extendToLineEnd [
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToLineStart [
+
 	"Extend selection to the start of the line"
-	|  cmd delta globalCursor |
+
+	| cmd delta globalCursor |
 	self assertUIProcess.
 
 	globalCursor := self cursor.
-		delta := globalCursor position - (self findTextIndexAtLineStart: globalCursor).
+	delta := globalCursor position
+	         - (self findTextIndexAtLineStart: globalCursor).
 	cmd := (self
-			privateExtendSelectionLeftAt: globalCursor position
-			by: delta)
-				toMoveCursor: globalCursor
-				by: delta negated.
+		        privateExtendSelectionLeftAt: globalCursor position
+		        by: delta) toMoveCursor: globalCursor by: delta negated.
 
 	commands add: cmd
 ]
@@ -511,7 +512,8 @@ AlbTextEditorSelecter >> select [
 
 	toBeSelected do: [ :aMonotoneSelection |
 		(aMonotoneSelection interval size > 1)
-			ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ] ].
+			ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ]].
+	
 	" do not send updateCursors to self here otherwise, navigator moveUp is broken "
 ]
 

@@ -34,25 +34,11 @@ AlbTextElement >> allSelectionBounds [
 
 	^ Array streamContents: [ :stream | 
 		  self selection do: [ :currSel | 
-			  | start selStartSpan selStartPos selRect |
-			  start := currSel from min: self text size.
-			  selStartSpan := paragraph spanAtIndex: start.
-			  selStartPos := (selStartSpan positionAt: start) + (self padding left @ 0).
-
-			  selRect := currSel to > self text size
-				             ifTrue: [ selStartPos x @ 0 corner: self extent ]
-				             ifFalse: [ 
-					             | selEndPos selEndSpan end |
-					             end := currSel to min: self text size.
-					             selEndSpan := paragraph spanAtIndex: end.
-					             selEndPos := (selEndSpan positionAt: end) + (self padding left @ 0).
-					             selStartPos x @ 0 corner: selEndPos x @ self extent y ].
-
-			  " - note that self extent includes padding "
-			  " - have to convert selRect to BlBounds because of #localBoundsToParent: "
-			  "   this is because Rectangle>>translateBy: answers a new Rectangle "
-			  "   whereas BlBounds>>translateBy: updates the receiver."
-			  stream nextPut: (self localBoundsToParent: (BlBounds fromRectangle: selRect)) ] ]
+"			Transcript show: 'selection: ', (currSel from -> currSel to) asString; cr."
+			  self
+				  boundsFrom: currSel from
+				  to: currSel to
+				  do: [ :bnds | stream nextPut: (self localBoundsToParent: bnds) ] ] ]
 ]
 
 { #category : #asserting }
@@ -71,10 +57,39 @@ AlbTextElement >> assertCursorPosition: anIndex [
 ]
 
 { #category : #drawing }
+AlbTextElement >> boundsFrom: aStartIndex to: aStopIndex do: aBlock [
+
+	| start selStartSpan selStartPos selRect |
+	paragraph ifNil: [ ^ self ].
+	paragraph containerExtent: self extent.
+	paragraph selection: self selection.
+
+	start := aStartIndex min: self text size.
+	selStartSpan := paragraph spanAtIndex: start.
+	selStartPos := (selStartSpan positionAt: start)
+	               + (self padding left @ 0).
+	selRect := aStopIndex > self text size
+		           ifTrue: [ selStartPos x @ 0 corner: self extent ]
+		           ifFalse: [ 
+			           | selEndPos selEndSpan end |
+			           end := aStopIndex min: self text size.
+			           selEndSpan := paragraph spanAtIndex: end.
+			           selEndPos := (selEndSpan positionAt: end)
+			                        + (self padding left @ 0).
+			           selStartPos x @ 0 corner: selEndPos x @ self extent y ].
+
+	" - note that self extent includes padding "
+	" - have to convert selRect to BlBounds because of #localBoundsToParent: "
+	"   this is because Rectangle>>translateBy: answers a new Rectangle "
+	"   whereas BlBounds>>translateBy: updates the receiver."
+	^ aBlock value: (BlBounds fromRectangle: selRect)
+]
+
+{ #category : #drawing }
 AlbTextElement >> characterBoundsAtIndex: aLocalIndex [
 
 	| startSpan startPos start rect |
-	paragraph ifNil: [ ^ #(  ) ].
+	paragraph ifNil: [ ^ nil ].
 	paragraph containerExtent: self extent.
 	start := (aLocalIndex - 1 max: 0) min: self text size.
 	startSpan := paragraph spanAtIndex: start.
@@ -88,7 +103,7 @@ AlbTextElement >> characterBoundsAtIndex: aLocalIndex [
 			        endSpan := paragraph spanAtIndex: end.
 			        endPos := endSpan positionAt: end. "+ (self padding left @ 0)"
 			        startPos x @ 0 corner: endPos x @ self extent y ].
-	^ self localPointToGlobal: (BlBounds fromRectangle: rect)
+	^ BlBounds fromRectangle: rect
 ]
 
 { #category : #private }
@@ -114,21 +129,14 @@ AlbTextElement >> drawOnSpartaCanvas: aCanvas [
 
 	paragraph ifNil: [ ^ self ].
 	paragraph containerExtent: self extent.
-	paragraph selection: self selection.	
-	aCanvas clip
-		by: (self geometry
-				 pathOnSpartaCanvas: aCanvas
-				 of: self)
-		during: [ 
-			paragraph
-				drawHighlightsOnSpartaCanvas: aCanvas
-				padding: self padding.
-
-			aCanvas transform
-				by: [ :t | t translateBy: self padding topLeft ]
-				during: [ paragraph drawOn: aCanvas ]].
-
-		
+	paragraph selection: self selection.
+	aCanvas clip by: (self geometry pathOnSpartaCanvas: aCanvas of: self) during: [ 
+		paragraph drawHighlightsOnSpartaCanvas: aCanvas padding: self padding.
+		paragraph drawSelectionOnSpartaCanvas: aCanvas padding: self padding.
+		aCanvas transform
+			by: [ :t | t translateBy: self padding topLeft ]
+			during: [ paragraph drawOn: aCanvas ].
+		 ]
 ]
 
 { #category : #private }
@@ -192,6 +200,14 @@ AlbTextElement >> newCursor [
 AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	super onLayout: aBounds context: aBlElementBoundsUpdateContext.	
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
+]
+
+{ #category : #drawing }
+AlbTextElement >> positionsAt: anIndex topBottomDo: aBlock [
+
+	| bnds |
+	bnds := self characterBoundsAtIndex: anIndex.
+	aBlock value: bnds origin value: bnds corner
 ]
 
 { #category : #'private - pool' }
@@ -260,6 +276,17 @@ AlbTextElement >> segmentPiece: aSegmentPiece [
 			self telemetry
 				timeSync: [ 'Set text `{1}`' format: { aTextCopy } ]
 				during: [ self text: aTextCopy ] ]
+]
+
+{ #category : #drawing }
+AlbTextElement >> selectionBoundsFrom: startIdx to: endIdx [
+
+	paragraph ifNil: [ ^ #(  ) ].
+	paragraph containerExtent: self extent.
+	paragraph selection: self selection.
+
+	^ Array streamContents: [ :stream | 
+		  self boundsFrom: startIdx to: endIdx do: [ :bnds | stream nextPut: bnds ] ]
 ]
 
 { #category : #'cursor - management' }

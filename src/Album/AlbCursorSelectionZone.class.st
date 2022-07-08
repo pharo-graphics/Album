@@ -2,7 +2,7 @@ Class {
 	#name : #AlbCursorSelectionZone,
 	#superclass : #AlbVisualZone,
 	#instVars : [
-		'previousCursorPosition'
+		'others'
 	],
 	#category : #'Album-UI'
 }
@@ -32,17 +32,28 @@ AlbCursorSelectionZone >> buildSelectionPathFrom: anEditorElement onSpartaCanvas
 { #category : #sparta }
 AlbCursorSelectionZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElement [
 
-	(self selectionRectanglesFrom: anInfiniteElement) do: [ :bnds | 
+	self zone do: [ :bnds | 
 		aSpartaCanvas fill
 			paint: self frameColor;
 			path: bnds;
-			"alpha: 0.35"draw ]
+			draw ].
+	others ifNil: [ ^ self ].
+	others do: [ :rect | 
+		aSpartaCanvas figure
+			path: (rect expandBy: (Margin
+							  left: 1
+							  right: 1
+							  top: 0
+							  bottom: 1));
+			background: self frameColor;
+			backgroundAlpha: 0.5;
+			draw ]
 ]
 
 { #category : #sparta }
 AlbCursorSelectionZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
 
-	
+
 ]
 
 { #category : #sparta }
@@ -51,9 +62,26 @@ AlbCursorSelectionZone >> frameColor [
 	^ self class selectionColor
 ]
 
+{ #category : #updating }
+AlbCursorSelectionZone >> otherSelectionRectanglesFrom: anEditorElement [
+
+	| subtext collector founds |
+	subtext := anEditorElement editor segmentCollector subText.
+	collector := BlIntervalCollector new text: subtext asString.
+	founds := collector searchAll: anEditorElement editor selectedText.
+	^ Array streamContents: [ :stream | 
+		          founds do: [ :interval | 
+			          (anEditorElement
+				           selectionBoundsFrom: interval first - 1
+				           to: interval last) do: [ :bnds | 
+				          (self zone anySatisfy: [ :z | z intersects: bnds ]) 
+					          ifFalse: [  stream nextPut: bnds asRectangle ] ] ] ]
+]
+
 { #category : #sparta }
 AlbCursorSelectionZone >> selectionRectanglesFrom: anEditorElement [
-	| segs lines prec |
+
+		| segs lines prec |
 		
 	segs := Array streamContents: [ :stream | 
 		anEditorElement children sortedByElevation do: [ :anElement | 
@@ -69,13 +97,19 @@ AlbCursorSelectionZone >> selectionRectanglesFrom: anEditorElement [
 			ifFalse: [ prec := prec merge: curr ] ].
 	lines add: prec.
 	^ lines
+
+	"anEditorElement selection isEmpty ifTrue: [ ^ #(  ) ].
+	^ Array streamContents: [ :stream | 
+		  (anEditorElement
+			   selectionBoundsFrom: anEditorElement selection from
+			   to: anEditorElement selection to) do: [ :bnds | stream nextPut: bnds asRectangle ] ]"
 ]
 
-{ #category : #sparta }
+{ #category : #updating }
 AlbCursorSelectionZone >> selectionVerticesFrom: anEditorElement [
 
 	| lines vertices currLine |
-	lines := self selectionRectanglesFrom: anEditorElement.
+	lines := self zone.
 	vertices := OrderedCollection new.
 	lines ifEmpty: [ ^ vertices ].
 	currLine := lines first.
@@ -106,5 +140,8 @@ AlbCursorSelectionZone >> selectionVerticesFrom: anEditorElement [
 { #category : #updating }
 AlbCursorSelectionZone >> updateFrom: anEditorElement [
 
-	"self zone: (self selectionRectanglesFrom: anEditorElement)"
+	self zone: (self selectionRectanglesFrom: anEditorElement).
+	others := nil.
+	self zone ifEmpty: [ ^ self ].
+	others := self otherSelectionRectanglesFrom: anEditorElement 
 ]

@@ -110,8 +110,8 @@ AlbEditor >> initialize [
 
 	self padding: self defaultPaddings.
 
-	self withDecoration: AlbOppositeDelimiterZone.
-	self withDecoration: AlbCursorSelectionZone.
+	"self withDecoration: AlbOppositeDelimiterZone."
+	"self withDecoration: AlbCursorSelectionZone."
 
 	self editor: AlbTextEditor new.
 	self viewModel: AlbEditorModel new.
@@ -165,6 +165,47 @@ AlbEditor >> navigator [
 	^ self editor navigator
 ]
 
+{ #category : #'editor - accessing' }
+AlbEditor >> otherSelectionRectangles [
+
+	| subtext collector founds |
+	subtext := self editor segmentCollector subText.
+	collector := BlIntervalCollector new text: subtext asString.
+	founds := collector searchAll: self editor selectedText.
+	^ Array streamContents: [ :stream | 
+		          founds do: [ :interval | 
+			          (self
+				           selectionBoundsFrom: interval first - 1
+				           to: interval last) ] ]
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> piecesAndTheirElementsDo: aBlock [
+
+	self childrenDo: [ :segmentElement | 
+		| holder |
+		holder := self elementHolderOf: segmentElement.
+		holder piecesAndTheirElementsDo: [ :piece :pieceElement | 
+			aBlock value: piece value: pieceElement ] ].
+	
+"self childrenDo: [ :segmentElement | 
+		| holder |
+		holder := self elementHolderOf: segmentElement.
+		segmentElement childrenDo: [ :element | 
+			""Use the holder here to find piece. needed for non text element element (instance of BlElement)""
+			(holder
+				 pieceForElement: element
+				 ifAbsent: [  ]) ifNotNil: [ :foundPiece | aBlock value: foundPiece value: element]]]"
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
+
+	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
+		(piece textEnd < anInterval first or: [ piece textStart > (anInterval last)]) ifFalse: [ 
+			aBlock value: piece value: pieceElement ] ]
+]
+
 { #category : #accessing }
 AlbEditor >> request: aRequest [
 
@@ -187,6 +228,50 @@ AlbEditor >> selection [
 	<return: #BlSelection>
 
 	^ self editor selection
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> selectionBounds [
+
+	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
+
+	^ Array streamContents: [ :stream | 
+		  self selection do: [ :currsel | 
+			  stream nextPutAll: (self selectionBoundsFrom: currsel from to: currsel to) ] ]
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> selectionBoundsFrom: startIdx to: endIdx [
+
+	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
+
+	^ Array streamContents: [ :stream | 
+		  self
+			  piecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
+			  do: [ :piece :pieceElement | 
+				  piece isText ifTrue: [ 
+					  | selBounds first last |
+					  ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
+						  ifTrue: [ 
+							  first := startIdx.
+							  last := endIdx ]
+						  ifFalse: [ 
+							  startIdx > piece textStart
+								  ifTrue: [ 
+									  first := startIdx.
+									  last := piece textEnd ]
+								  ifFalse: [ 
+									  first := piece textStart.
+									  last := endIdx < piece textEnd
+										          ifTrue: [ endIdx ]
+										          ifFalse: [ piece textEnd ] ] ].
+"Transcript show: 'editor ', ((piece globalTextIndexToLocal: first) -> (piece globalTextIndexToLocal: last) ) asString; cr."
+					  selBounds := pieceElement
+						               selectionBoundsFrom: (piece globalTextIndexToLocal: first)
+						               to: (piece globalTextIndexToLocal: last).
+					  selBounds := selBounds collect: [ :bnds | 
+						               self localBoundsToMine: bnds fromChild: pieceElement ].
+					  stream nextPutAll: selBounds ] ] ]
 ]
 
 { #category : #'editor - accessing' }
@@ -222,6 +307,48 @@ AlbEditor >> text: aBlText [
 AlbEditor >> textChanged: aText [
 
 	self editor text: aText
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> textElementsDo: aBlock [
+
+	self childrenDo: [ :segmentElement | 
+		| holder |
+		"Use the holder here to find piece. needed for non text element element (instance of BlElement)"
+		holder := self elementHolderOf: segmentElement.
+		segmentElement childrenDo: [ :textElement | 
+			(holder pieceForElement: textElement ifAbsent: [  ]) ifNotNil: [ 
+				:foundPiece | 
+				foundPiece isText ifTrue: [ aBlock value: textElement ] ] ] ]
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> textOnScreen [
+	
+	| interval |
+	interval := self textOnScreenInterval.
+	^ self text from: interval first to: interval last
+
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> textOnScreenInterval [
+	
+	| holder first last |
+	self text isEmpty ifTrue: [ ^ 0 to: -1 ].
+	holder := self elementHolderOf: self children first.
+	first := holder textInterval first.
+	holder := self elementHolderOf: self children last.
+	last := holder textInterval last.
+	^ first to: last
+
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> textPiecesAndTheirElementsDo: aBlock [
+
+	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
+		piece isText ifTrue: [ aBlock value: piece value: pieceElement ] ]
 ]
 
 { #category : #'accessing - decoration' }

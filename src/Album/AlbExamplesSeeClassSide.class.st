@@ -97,26 +97,29 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |
 	ed := AlbEditor new.
-	ed withLineNumbers.
+	"ed withLineNumbers."
 	ed text: (String loremIpsum asRopedText
-			 fontSize: 16;
-			 fontName: 'Helvetica Neue').
-	space := OBlSpace new.
+			 "fontSize: 16;
+			 fontName: 'Helvetica Neue'").
+	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
+		ed inspect.
+
 	space show.
-	"ed inspect."
 	^ ed
 ]
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
-	((String loremIpsum: 100000) asRopedText
-		 fontSize: 16;
-		 fontName: 'Helvetica Neue') onAlbum
+	| ed |
+	ed := ((String loremIpsum: 10000) asRopedText
+		       fontSize: 16;
+		       fontName: 'Helvetica Neue') onAlbum.
+	ed inspect.
 
-		openInOblSpace
+	ed openInOblSpace
 ]
 
 { #category : #'editor examples' }

@@ -15,9 +15,10 @@ AlbOppositeDelimiterZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElem
 
 { #category : #sparta }
 AlbOppositeDelimiterZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
-
+	"self updateFrom: anInfiniteElement.
+	
 	self zone ifNil: [ ^ self ].
-	anInfiniteElement selection isEmpty ifFalse: [ ^ self ].
+	""anInfiniteElement selection isEmpty ifFalse: [ ^ self ].""
 
 	aSpartaCanvas figure
 		path: (self zone asRectangle expandBy: (Margin
@@ -30,7 +31,7 @@ AlbOppositeDelimiterZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfinite
 		border: self frameColor;
 		borderAlpha: 1.0;
 		width: 1;
-		"in: [ :aPainter | aPainter borderOutside ];"draw
+		draw"
 ]
 
 { #category : #sparta }
@@ -45,10 +46,10 @@ AlbOppositeDelimiterZone >> updateFrom: anEditor [
 	| globalCursorPos subtext |
 	globalCursorPos := anEditor cursor position.
 	globalCursorPos isZero ifTrue: [ ^ self ].
-
-	previousCursorPosition = globalCursorPos ifTrue: [ ^ self ].
+self zone: nil.
+	"previousCursorPosition = globalCursorPos ifTrue: [ ^ self ]."
 	" check on the actual cached subtex and use the global cursor "
-	subtext := anEditor editor segmentCollector subText.
+	subtext := anEditor textOnScreen.
 	anEditor editor limitedSurroundMap
 		intervalBetweenDelimitersIn: subtext
 		at: globalCursorPos
@@ -58,15 +59,15 @@ AlbOppositeDelimiterZone >> updateFrom: anEditor [
 					atTextIndex: interval first + subtext start - 1
 					do: [ :opposite :localIdx | 
 						localIdx isZero ifFalse: [ 
-							previousCursorPosition := globalCursorPos.
-							^ self zone: (opposite characterBoundsAtIndex: localIdx) ] ] ].
+							(anEditor text from: interval first + subtext start + localIdx  to: interval first + subtext start + localIdx +1) attribute: (BlTextHighlightAttribute paint: Color orange).
+							^ self ] ] ].
 			interval last = globalCursorPos ifFalse: [ 
 				anEditor
 					atTextIndex: interval last + subtext start
 					do: [ :opposite :localIdx | 
 						localIdx isZero ifFalse: [ 
-							previousCursorPosition := globalCursorPos.
-							^ self zone: (opposite characterBoundsAtIndex: localIdx) ] ] ] ]
+							(anEditor text from: interval last + subtext start + localIdx -1 to: interval last + subtext start + localIdx) attribute: (BlTextHighlightAttribute paint: Color orange).
+							^ self ] ] ] ]
 		ifAbsent: [  ].
 	previousCursorPosition := globalCursorPos.
 	self zone: nil

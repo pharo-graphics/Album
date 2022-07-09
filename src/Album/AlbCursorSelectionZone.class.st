@@ -51,12 +51,6 @@ AlbCursorSelectionZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElemen
 ]
 
 { #category : #sparta }
-AlbCursorSelectionZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
-
-
-]
-
-{ #category : #sparta }
 AlbCursorSelectionZone >> frameColor [
 
 	^ self class selectionColor

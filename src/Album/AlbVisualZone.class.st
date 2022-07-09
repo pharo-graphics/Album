@@ -1,12 +1,17 @@
 Class {
 	#name : #AlbVisualZone,
-	#superclass : #BlInfiniteItemDecoration,
+	#superclass : #BlInfiniteDecoration,
 	#instVars : [
 		'zone',
 		'needRefresh'
 	],
 	#category : #'Album-UI'
 }
+
+{ #category : #testing }
+AlbVisualZone class >> isDeprecated [ 
+	^ true
+]
 
 { #category : #accessing }
 AlbVisualZone >> zone [

@@ -63,6 +63,18 @@ AlbEditor >> cursors [
 ]
 
 { #category : #initialization }
+AlbEditor >> defaulEditorModel [
+
+	^ AlbEditorModel new.
+]
+
+{ #category : #initialization }
+AlbEditor >> defaulTextEditor [
+
+	^ AlbTextEditor new.
+]
+
+{ #category : #initialization }
 AlbEditor >> defaultPaddings [
 
 	^ BlInsets
@@ -107,14 +119,9 @@ AlbEditor >> initialize [
 		                       do: [ :anEvent | 
 		                       self viewModel text: anEvent text ].
 	"we intentionally set text directly to the viewModel to prevent any possible #asRopedText convertion"
-
 	self padding: self defaultPaddings.
-
-	"self withDecoration: AlbOppositeDelimiterZone."
-	"self withDecoration: AlbCursorSelectionZone."
-
-	self editor: AlbTextEditor new.
-	self viewModel: AlbEditorModel new.
+	self editor: self defaulTextEditor.
+	self viewModel: self defaulEditorModel.
 	self
 		when: AlbEditorStylerChanged
 		do: [ :anEvent | self stylerChanged: anEvent styler ].

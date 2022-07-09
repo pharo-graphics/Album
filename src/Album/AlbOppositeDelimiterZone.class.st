@@ -8,12 +8,6 @@ Class {
 }
 
 { #category : #sparta }
-AlbOppositeDelimiterZone >> drawOnSpartaCanvas: aSpartaCanvas in: anInfiniteElement [
-
-	
-]
-
-{ #category : #sparta }
 AlbOppositeDelimiterZone >> drawOnSpartaCanvasOver: aSpartaCanvas in: anInfiniteElement [
 	"self updateFrom: anInfiniteElement.
 	

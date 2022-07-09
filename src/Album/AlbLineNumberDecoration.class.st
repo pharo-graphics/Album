@@ -1,20 +1,12 @@
 Class {
 	#name : #AlbLineNumberDecoration,
-	#superclass : #BlInfiniteItemDecoration,
+	#superclass : #BlInfiniteDecoration,
 	#instVars : [
 		'metricsProvider',
 		'dirty'
 	],
 	#category : #'Album-UI'
 }
-
-{ #category : #drawing }
-AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement [
-
-	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element for its child element anItemElement. Any content drawn by this method will be drawn before the item elements are drawn, and will thus appear underneath them"
-
-	
-]
 
 { #category : #drawing }
 AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: anInfiniteElement [
@@ -42,7 +34,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: a
 				               string: index asString;
 				               font: fontBuilder build;
 				               width: self width;
-				               baseline: 2 @ self fontSize + 4;
+				               baseline: 2 @ self fontSize + 1;
 				               paint: Color black. "(anItemElement height // 2 max: self height // 2) + self underlineOffset"
 			textPainter draw ]
 ]
@@ -63,17 +55,7 @@ AlbLineNumberDecoration >> drawOnSpartaCanvas: aCanvas in: anInfiniteElement [
 		path: (Rectangle origin: 0 @ 0 corner: w @ h);
 		background: (Color veryLightGray alpha: 0.20);
 		draw.
-
-	anInfiniteElement childrenDo: [ :child | 
-		self draw: child onSpartaCanvas: aCanvas in: anInfiniteElement ].
-
-]
-
-{ #category : #drawing }
-AlbLineNumberDecoration >> drawOnSpartaCanvasOver: aCanvas in: anInfiniteElement [
-
-	anInfiniteElement childrenDo: [ :child | 
-		self draw: child onSpartaCanvasOver: aCanvas in: anInfiniteElement ].
+	super drawOnSpartaCanvas: aCanvas in: anInfiniteElement
 
 ]
 

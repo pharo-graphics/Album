@@ -29,7 +29,6 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		                 anElement isKindOf: AlbEditorElement ]
 		                 ifFound: #yourself
 		                 ifNone: [ ^ self ].
-
 	self handleSelectionFromEvent: anEvent editorElement: editorElement.
 	editorElement updateExtendedSelectionFromEvent: anEvent.
 	

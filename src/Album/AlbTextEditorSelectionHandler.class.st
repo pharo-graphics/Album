@@ -65,7 +65,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
 { #category : #'dnd handlers' }
 AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
-	| anEditor |	
+	| anEditor anEditorElement |	
 	anEvent consumed: true.
 
 	anEditor := anEvent currentTarget editor.
@@ -74,6 +74,12 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	startIndex := anEditor navigator
 		findTextIndexAtScreenPosition: anEvent localPosition
 		ifAbsent: [ nil ].
+	anEditorElement := anEvent currentTarget
+		                   withAllParentsDetect: [ :anElement | 
+		                   anElement isKindOf: AlbEditorElement ]
+		                   ifFound: #yourself
+		                   ifNone: [ ^ self ].
+	anEditorElement updateExtendedSelectionFromEvent: anEvent.
 ]
 
 { #category : #'api - accessing' }

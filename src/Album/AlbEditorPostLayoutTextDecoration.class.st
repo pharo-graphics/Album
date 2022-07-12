@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'currentOppositeTextElement',
 		'currentExtendedSelectionList',
-		'prevSelectedText'
+		'shiftSelect'
 	],
 	#category : #'Album-UI'
 }
@@ -19,29 +19,22 @@ AlbEditorPostLayoutTextDecoration >> initialize [
 	super initialize.
 	
 	self flag: 'review to make it a model that keeps track of selection and of current text on screen'.
-	currentExtendedSelectionList := OrderedCollection new
-]
-
-{ #category : #updating }
-AlbEditorPostLayoutTextDecoration >> refreshExtendedSelectionFrom: anEditor [
-	| textOnScreen |
-	textOnScreen := self textOnScreenFrom: anEditor.
-	prevSelectedText = textOnScreen ifTrue: [ ^self ].
-	self updateExtendedSelectionFrom: anEditor.
-	prevSelectedText := textOnScreen
-
+	currentExtendedSelectionList := OrderedCollection new.
+	shiftSelect := false
+	
 ]
 
 { #category : #updating }
 AlbEditorPostLayoutTextDecoration >> resetCurrentExtendedSelection [
 
 	currentExtendedSelectionList do: [ :e | e resetExtendedSelectionInterval ].
-	currentExtendedSelectionList reset
+	currentExtendedSelectionList reset.
 ]
 
 { #category : #updating }
-AlbEditorPostLayoutTextDecoration >> selectionMaxSize [ 
-	^ 10000
+AlbEditorPostLayoutTextDecoration >> shiftSelectionFrom: anEditor event: anEvent [
+	shiftSelect := anEvent modifiers isShift.
+	self updateExtendedSelectionFrom: anEditor
 ]
 
 { #category : #'editor - accessing' }
@@ -53,7 +46,7 @@ AlbEditorPostLayoutTextDecoration >> textOnScreenFrom: anEditor [
 AlbEditorPostLayoutTextDecoration >> updateAfterLayoutFrom: anEditor [
 
 	self updateOppositeFrom: anEditor.
-	"self resetCurrentExtendedSelection"
+	self updateExtendedSelectionFrom: anEditor
 ]
 
 { #category : #updating }
@@ -89,18 +82,19 @@ AlbEditorPostLayoutTextDecoration >> updateExtendedSelection: anInterval from: a
 
 { #category : #updating }
 AlbEditorPostLayoutTextDecoration >> updateExtendedSelectionFrom: anEditor [
-
-	| subtext collector founds |
 	
-	anEditor selection isEmpty ifTrue: [ ^self ].
+	| collector founds currentSelectionInterval selectedString subTextOnScreen |
 	self resetCurrentExtendedSelection.
-	anEditor editor selectedText size > self selectionMaxSize ifTrue: [ ^ self ].
-	currentExtendedSelectionList reset.
-	subtext := self textOnScreenFrom: anEditor.
-	collector := BlIntervalCollector new text: subtext asString.
-	founds := collector searchAll: anEditor editor selectedText asString excluding: (anEditor selection from + 1 to: anEditor selection to).
+	shiftSelect ifFalse: [ ^ self  ].
+	anEditor selection ifEmpty: [ ^ self  ].
+	selectedString := anEditor editor selectedText asString.
+	subTextOnScreen := self textOnScreenFrom: anEditor.
+	selectedString size >= (subTextOnScreen size // 2) ifTrue: [ ^self ].
+	collector := BlIntervalCollector new text: subTextOnScreen asString.
+	currentSelectionInterval := anEditor selection from to: anEditor selection to.
+	founds := collector searchAll: selectedString excluding: currentSelectionInterval - subTextOnScreen textOffset.
 	founds do: [ :interval | 
-		self updateExtendedSelection: interval + subtext textOffset from: anEditor ].
+		self updateExtendedSelection: interval + subTextOnScreen textOffset from: anEditor ].
 
 ]
 

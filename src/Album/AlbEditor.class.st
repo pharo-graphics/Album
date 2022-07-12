@@ -221,12 +221,6 @@ AlbEditor >> request: aRequest [
 	^ aRequest response
 ]
 
-{ #category : #'ui - events managing' }
-AlbEditor >> resetExtendedSelectionFromEvent: anEvent [
-	anEvent modifiers isShift ifFalse: [ ^self ].
-	postLayoutTextDecoration resetCurrentExtendedSelection
-]
-
 { #category : #'editor - accessing' }
 AlbEditor >> segments [
 	^ self editor segmentCollector segments
@@ -335,8 +329,7 @@ AlbEditor >> textPiecesAndTheirElementsDo: aBlock [
 
 { #category : #'ui - events managing' }
 AlbEditor >> updateExtendedSelectionFromEvent: anEvent [
-	anEvent modifiers isShift ifFalse: [ ^self ].
-	postLayoutTextDecoration updateExtendedSelectionFrom: self
+	postLayoutTextDecoration shiftSelectionFrom: self event: anEvent
 ]
 
 { #category : #'accessing - decoration' }

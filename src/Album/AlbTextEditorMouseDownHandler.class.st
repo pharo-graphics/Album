@@ -55,7 +55,7 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 	aNavigator moveToScreenPosition: aScreenPosition.
 	aNavigator apply.
 	
-	anEditorElement resetExtendedSelectionFromEvent: anEvent.
+	anEditorElement updateExtendedSelectionFromEvent: anEvent.
 
 	"it is important to request focus *after* we add a cursor, otherwise it would jump to the 0 position when
 	handling focus event"

@@ -176,7 +176,7 @@ AlbEditor >> navigator [
 { #category : #'hooks - layout' }
 AlbEditor >> onLayoutDone [ 
 	super onLayoutDone.
-	postLayoutTextDecoration updateAfterLayoutFrom: self
+	postLayoutTextDecoration updateAfterLayoutFrom: self.
 ]
 
 { #category : #'private - accessing' }
@@ -219,6 +219,12 @@ AlbEditor >> request: aRequest [
 		ifFalse: [ self dispatchEvent: aRequest ].
 
 	^ aRequest response
+]
+
+{ #category : #'ui - events managing' }
+AlbEditor >> resetExtendedSelectionFromEvent: anEvent [
+	anEvent modifiers isShift ifFalse: [ ^self ].
+	postLayoutTextDecoration resetCurrentExtendedSelection
 ]
 
 { #category : #'editor - accessing' }
@@ -325,6 +331,12 @@ AlbEditor >> textPiecesAndTheirElementsDo: aBlock [
 
 	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
 		piece isText ifTrue: [ aBlock value: piece value: pieceElement ] ]
+]
+
+{ #category : #'ui - events managing' }
+AlbEditor >> updateExtendedSelectionFromEvent: anEvent [
+	anEvent modifiers isShift ifFalse: [ ^self ].
+	postLayoutTextDecoration updateExtendedSelectionFrom: self
 ]
 
 { #category : #'accessing - decoration' }

@@ -8,10 +8,31 @@ Class {
 }
 
 { #category : #'dnd handlers' }
+AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
+
+	| anEditorElement |
+	anEvent consumed: true.
+
+	anEditorElement := anEvent currentTarget
+		                   withAllParentsDetect: [ :anElement | 
+		                   anElement isKindOf: AlbEditorElement ]
+		                   ifFound: #yourself
+		                   ifNone: [ ^ self ].
+	anEditorElement updateExtendedSelectionFromEvent: anEvent.
+
+]
+
+{ #category : #'dnd handlers' }
 AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
-	| anEditor currentIndex from to |
+	| anEditor currentIndex from to anEditorElement |
 	anEvent consumed: true.
+
+	anEditorElement := anEvent currentTarget
+		                   withAllParentsDetect: [ :anElement | 
+		                   anElement isKindOf: AlbEditorElement ]
+		                   ifFound: #yourself
+		                   ifNone: [ ^ self ].
 
 	anEditor := anEvent currentTarget editor.
 
@@ -38,7 +59,8 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 	startIndex = anEditor cursor position ifTrue: [ 
 		anEditor navigator
 			moveTo: from;
-			apply ]
+			apply ].
+
 ]
 
 { #category : #'dnd handlers' }
@@ -56,5 +78,5 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 
 { #category : #'api - accessing' }
 AlbTextEditorSelectionHandler >> eventsToHandle [
-	^ { BlDragEvent . BlDragStartEvent }
+	^ { BlDragEvent . BlDragStartEvent. BlDragEndEvent}
 ]

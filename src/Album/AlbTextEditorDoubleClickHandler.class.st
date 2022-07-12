@@ -22,7 +22,7 @@ AlbTextEditorDoubleClickHandler class >> uniqueInstance [
 { #category : #'mouse handlers' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
-	| screenPosition globalTextIndex selecter editorElement navigator editor selection  |
+	| editorElement |
 	"To not create an instance of me for each tiny text element"
 	editorElement := anEvent currentTarget
 		                 withAllParentsDetect: [ :anElement | 
@@ -30,14 +30,29 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		                 ifFound: #yourself
 		                 ifNone: [ ^ self ].
 
-	screenPosition := (editorElement
+	self handleSelectionFromEvent: anEvent editorElement: editorElement.
+	editorElement updateExtendedSelectionFromEvent: anEvent.
+	
+]
+
+{ #category : #accessing }
+AlbTextEditorDoubleClickHandler >> eventsToHandle [
+	^ { BlDoubleClickEvent }
+]
+
+{ #category : #'mouse handlers' }
+AlbTextEditorDoubleClickHandler >> handleSelectionFromEvent: anEvent editorElement: anEditorElement [
+
+	| screenPosition globalTextIndex selecter navigator editor selection  |
+	"To not create an instance of me for each tiny text element"
+	screenPosition := (anEditorElement
 		                   localBoundsToMine:
 		                   (BlBounds
 			                    origin: anEvent localPosition
 			                    extent: 0.0 @ 0.0)
 		                   fromChild: anEvent currentTarget) center.
 
-	editor := editorElement editor.
+	editor := anEditorElement editor.
 	navigator := editor navigator.
 	selecter := editor selecter.
 
@@ -67,7 +82,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		ifAbsent: [].
 
 	" try to select the whole line "
-	editorElement cursor ifNotNil: [ :globalCursor |
+	anEditorElement cursor ifNotNil: [ :globalCursor |
 		| delta lineIdx |
 		lineIdx := navigator findTextIndexAtLineStart: globalCursor.
 		delta := lineIdx - globalTextIndex.
@@ -91,11 +106,6 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		wordAt: globalTextIndex;
 		apply.
 	
-]
-
-{ #category : #accessing }
-AlbTextEditorDoubleClickHandler >> eventsToHandle [
-	^ { BlDoubleClickEvent }
 ]
 
 { #category : #accessing }

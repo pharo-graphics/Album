@@ -58,6 +58,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		dresser: AlbTextAreaDresser new;
 		styler: styler;
 		text: text.
+	editorElement clipChildren: false.
 	editorElement withLineNumbers.
 	"editorElement editor useTaskItStylerStrategy."
 	editorElement editor
@@ -114,7 +115,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
-	ed := ((String loremIpsum: 10000) asRopedText
+	ed := ((String loremIpsum: 100000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed inspect.

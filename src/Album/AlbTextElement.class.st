@@ -4,10 +4,17 @@ Class {
 	#instVars : [
 		'cursorElement',
 		'cursorStencil',
-		'segmentPiece'
+		'segmentPiece',
+		'oppositeIndex',
+		'extendedSelection'
 	],
 	#category : #'Album-UI'
 }
+
+{ #category : #acccessing }
+AlbTextElement class >> oppositeDelimiterBackgroundColor [
+	^ Color yellow
+]
 
 { #category : #'cursor - management' }
 AlbTextElement >> addCursorAt: aTextPosition [
@@ -22,23 +29,6 @@ AlbTextElement >> addCursorAt: aTextPosition [
 			cursorElement textPosition: aTextPosition.
 			self addChild: cursorElement.
 			cursorElement ]
-]
-
-{ #category : #drawing }
-AlbTextElement >> allSelectionBounds [
-
-	self selection isEmpty ifTrue: [ ^ #(  ) ].
-	paragraph ifNil: [ ^ #(  ) ].
-	paragraph containerExtent: self extent.
-	paragraph selection: self selection.
-
-	^ Array streamContents: [ :stream | 
-		  self selection do: [ :currSel | 
-"			Transcript show: 'selection: ', (currSel from -> currSel to) asString; cr."
-			  self
-				  boundsFrom: currSel from
-				  to: currSel to
-				  do: [ :bnds | stream nextPut: (self localBoundsToParent: bnds) ] ] ]
 ]
 
 { #category : #asserting }
@@ -57,53 +47,25 @@ AlbTextElement >> assertCursorPosition: anIndex [
 ]
 
 { #category : #drawing }
-AlbTextElement >> boundsFrom: aStartIndex to: aStopIndex do: aBlock [
-
-	| start selStartSpan selStartPos selRect |
-	paragraph ifNil: [ ^ self ].
-	paragraph containerExtent: self extent.
-	paragraph selection: self selection.
-
-	start := aStartIndex min: self text size.
-	selStartSpan := paragraph spanAtIndex: start.
-	selStartPos := (selStartSpan positionAt: start)
-	               + (self padding left @ 0).
-	selRect := aStopIndex > self text size
-		           ifTrue: [ selStartPos x @ 0 corner: self extent ]
-		           ifFalse: [ 
-			           | selEndPos selEndSpan end |
-			           end := aStopIndex min: self text size.
-			           selEndSpan := paragraph spanAtIndex: end.
-			           selEndPos := (selEndSpan positionAt: end)
-			                        + (self padding left @ 0).
-			           selStartPos x @ 0 corner: selEndPos x @ self extent y ].
-
-	" - note that self extent includes padding "
-	" - have to convert selRect to BlBounds because of #localBoundsToParent: "
-	"   this is because Rectangle>>translateBy: answers a new Rectangle "
-	"   whereas BlBounds>>translateBy: updates the receiver."
-	^ aBlock value: (BlBounds fromRectangle: selRect)
-]
-
-{ #category : #drawing }
 AlbTextElement >> characterBoundsAtIndex: aLocalIndex [
 
-	| startSpan startPos start rect |
-	paragraph ifNil: [ ^ nil ].
-	paragraph containerExtent: self extent.
+	| startSpan startPos start rect endPos endSpan end |
 	start := (aLocalIndex - 1 max: 0) min: self text size.
 	startSpan := paragraph spanAtIndex: start.
-	startPos := startSpan positionAt: start. "+ (self padding left @ 0)"
+	startPos := startSpan positionAt: start. 
 
-	rect := start > self text size
-		        ifTrue: [ startPos x @ 0 corner: self extent ]
-		        ifFalse: [ 
-			        | endPos endSpan end |
-			        end := start + 1 min: self text size.
-			        endSpan := paragraph spanAtIndex: end.
-			        endPos := endSpan positionAt: end. "+ (self padding left @ 0)"
-			        startPos x @ 0 corner: endPos x @ self extent y ].
-	^ BlBounds fromRectangle: rect
+	end := start + 1 min: self text size.
+	endSpan := paragraph spanAtIndex: end.
+	endPos := endSpan positionAt: end. 
+	rect := startPos x @ 0 corner: endPos x @ self extent y.
+	^ rect
+]
+
+{ #category : #'private - paragraph' }
+AlbTextElement >> createTextParagraph [
+	"Create a text paragraph used to measure and render text"
+
+	^ AlbTextParagraph new
 ]
 
 { #category : #private }
@@ -130,13 +92,79 @@ AlbTextElement >> drawOnSpartaCanvas: aCanvas [
 	paragraph ifNil: [ ^ self ].
 	paragraph containerExtent: self extent.
 	paragraph selection: self selection.
-	aCanvas clip by: (self geometry pathOnSpartaCanvas: aCanvas of: self) during: [ 
-		paragraph drawHighlightsOnSpartaCanvas: aCanvas padding: self padding.
-		paragraph drawSelectionOnSpartaCanvas: aCanvas padding: self padding.
-		aCanvas transform
-			by: [ :t | t translateBy: self padding topLeft ]
-			during: [ paragraph drawOn: aCanvas ].
-		 ]
+	paragraph extendedSelection: self extendedSelection.
+	aCanvas clip
+		by: (self geometry pathOnSpartaCanvas: aCanvas of: self)
+		during: [ 
+			paragraph
+				drawHighlightsOnSpartaCanvas: aCanvas
+				padding: self padding.
+			paragraph
+				drawExtendedSelectionOnSpartaCanvas: aCanvas
+				padding: self padding.
+			paragraph 
+				drawSelectionOnSpartaCanvas: aCanvas
+				padding: self padding.
+
+			aCanvas transform
+				by: [ :t | t translateBy: self padding topLeft ]
+				during: [ 
+					self drawOppositeOnSpartaCanvas: aCanvas.
+					paragraph drawOn: aCanvas ] ]
+]
+
+{ #category : #drawing }
+AlbTextElement >> drawOppositeOnSpartaCanvas: aCanvas [
+
+	| bnds |
+	oppositeIndex < 0 ifTrue: [ ^ self ].
+	bnds := self characterBoundsAtIndex: oppositeIndex.
+	aCanvas fill
+			paint: (self class oppositeDelimiterBackgroundColor);
+			path: bnds;
+			draw. 
+	aCanvas figure
+		path:
+			(bnds expandBy: (Margin
+						  left: 1
+						  right: 1
+						  top: 0
+						  bottom: 0));
+		border: Color black;
+		borderAlpha: 1.0;
+		width: 1;
+		draw
+]
+
+{ #category : #'extended selection - management' }
+AlbTextElement >> extendedSelect: aFromIndex to: aToIndex [
+
+	self extendedSelection select: aFromIndex to: aToIndex.
+	self invalidate
+]
+
+{ #category : #'extended selection - management' }
+AlbTextElement >> extendedSelectNone [
+	self extendedSelection isEmpty
+		ifTrue: [ ^ self ].
+	self extendedSelection removeAll.
+	self invalidate
+]
+
+{ #category : #'extended selection - management' }
+AlbTextElement >> extendedSelection [
+	<return: #BlSelection>
+	
+	self
+		assert: [ extendedSelection isNotNil ]
+		description: [ 'Selection can not be nil' ].
+
+	^ extendedSelection
+]
+
+{ #category : #'extended selection - management' }
+AlbTextElement >> extendedSelectionInterval: anInterval [
+	self extendedSelect: anInterval first to: anInterval last
 ]
 
 { #category : #private }
@@ -165,8 +193,9 @@ AlbTextElement >> hideCursor [
 { #category : #initialization }
 AlbTextElement >> initialize [
 	super initialize.
-
-	cursorStencil := AlbCursorStencil uniqueInstance
+	extendedSelection := BlCompositeSelection new.
+	cursorStencil := AlbCursorStencil uniqueInstance.
+	oppositeIndex := -1.
 ]
 
 { #category : #layout }
@@ -202,12 +231,9 @@ AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #drawing }
-AlbTextElement >> positionsAt: anIndex topBottomDo: aBlock [
-
-	| bnds |
-	bnds := self characterBoundsAtIndex: anIndex.
-	aBlock value: bnds origin value: bnds corner
+{ #category : #'opposite index - management' }
+AlbTextElement >> oppositeIndex: anIndex [
+	oppositeIndex := anIndex
 ]
 
 { #category : #'private - pool' }
@@ -215,6 +241,8 @@ AlbTextElement >> recycledFrom: aStencilBuilder [
 	self removeFromParent.
 	self removeCursor.
 	self selectNone.
+	self resetExtendedSelectionInterval.
+	self resetOppositeIndex.
 
 	"otherwise attributes may not be garbage collected
 	see https://github.com/feenkcom/gtoolkit/issues/537"
@@ -249,6 +277,16 @@ AlbTextElement >> removeSegmentPiece [
 	self text: '' asRopedText
 ]
 
+{ #category : #'extended selection - management' }
+AlbTextElement >> resetExtendedSelectionInterval [
+	self extendedSelectNone
+]
+
+{ #category : #'opposite index - management' }
+AlbTextElement >> resetOppositeIndex [
+	oppositeIndex := -1
+]
+
 { #category : #accessing }
 AlbTextElement >> segmentPiece [
 	<return: #TAlbTextEditorTextualPiece>
@@ -276,17 +314,6 @@ AlbTextElement >> segmentPiece: aSegmentPiece [
 			self telemetry
 				timeSync: [ 'Set text `{1}`' format: { aTextCopy } ]
 				during: [ self text: aTextCopy ] ]
-]
-
-{ #category : #drawing }
-AlbTextElement >> selectionBoundsFrom: startIdx to: endIdx [
-
-	paragraph ifNil: [ ^ #(  ) ].
-	paragraph containerExtent: self extent.
-	paragraph selection: self selection.
-
-	^ Array streamContents: [ :stream | 
-		  self boundsFrom: startIdx to: endIdx do: [ :bnds | stream nextPut: bnds ] ]
 ]
 
 { #category : #'cursor - management' }

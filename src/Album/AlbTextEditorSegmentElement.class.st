@@ -10,13 +10,3 @@ Class {
 	#superclass : #BlElement,
 	#category : #'Album-UI'
 }
-
-{ #category : #sparta }
-AlbTextEditorSegmentElement >> drawOnSpartaCanvas: aCanvas [
-
-	"self parent itemDecorationsDo: [ :decoration | 
-		decoration draw: self onSpartaCanvas: aCanvas in: self parent ]."
-	super drawOnSpartaCanvas: aCanvas.
-	"self parent itemDecorationsDo: [ :decoration | 
-		decoration draw: self onSpartaCanvasOver: aCanvas in: self parent ]"
-]

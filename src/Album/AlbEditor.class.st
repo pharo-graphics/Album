@@ -5,8 +5,7 @@ Class {
 	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
 		'textReplacedHandler',
-		'zones',
-		'drawDecorator'
+		'postLayoutTextDecoration'
 	],
 	#category : #'Album-UI'
 }
@@ -122,6 +121,8 @@ AlbEditor >> initialize [
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
 	self viewModel: self defaulEditorModel.
+	postLayoutTextDecoration := AlbEditorPostLayoutTextDecoration new.
+	
 	self
 		when: AlbEditorStylerChanged
 		do: [ :anEvent | self stylerChanged: anEvent styler ].
@@ -172,18 +173,10 @@ AlbEditor >> navigator [
 	^ self editor navigator
 ]
 
-{ #category : #'editor - accessing' }
-AlbEditor >> otherSelectionRectangles [
-
-	| subtext collector founds |
-	subtext := self editor segmentCollector subText.
-	collector := BlIntervalCollector new text: subtext asString.
-	founds := collector searchAll: self editor selectedText.
-	^ Array streamContents: [ :stream | 
-		          founds do: [ :interval | 
-			          (self
-				           selectionBoundsFrom: interval first - 1
-				           to: interval last) ] ]
+{ #category : #'hooks - layout' }
+AlbEditor >> onLayoutDone [ 
+	super onLayoutDone.
+	postLayoutTextDecoration updateAfterLayoutFrom: self
 ]
 
 { #category : #'private - accessing' }
@@ -213,6 +206,11 @@ AlbEditor >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
 			aBlock value: piece value: pieceElement ] ]
 ]
 
+{ #category : #'private - accessing' }
+AlbEditor >> postLayoutTextDecoration [
+	^ postLayoutTextDecoration
+]
+
 { #category : #accessing }
 AlbEditor >> request: aRequest [
 
@@ -221,6 +219,11 @@ AlbEditor >> request: aRequest [
 		ifFalse: [ self dispatchEvent: aRequest ].
 
 	^ aRequest response
+]
+
+{ #category : #'editor - accessing' }
+AlbEditor >> segments [
+	^ self editor segmentCollector segments
 ]
 
 { #category : #'editor - operations' }
@@ -237,48 +240,14 @@ AlbEditor >> selection [
 	^ self editor selection
 ]
 
-{ #category : #'private - accessing' }
-AlbEditor >> selectionBounds [
+{ #category : #accessing }
+AlbEditor >> selectionColor [
 
-	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
-
-	^ Array streamContents: [ :stream | 
-		  self selection do: [ :currsel | 
-			  stream nextPutAll: (self selectionBoundsFrom: currsel from to: currsel to) ] ]
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> selectionBoundsFrom: startIdx to: endIdx [
-
-	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
-
-	^ Array streamContents: [ :stream | 
-		  self
-			  piecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
-			  do: [ :piece :pieceElement | 
-				  piece isText ifTrue: [ 
-					  | selBounds first last |
-					  ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
-						  ifTrue: [ 
-							  first := startIdx.
-							  last := endIdx ]
-						  ifFalse: [ 
-							  startIdx > piece textStart
-								  ifTrue: [ 
-									  first := startIdx.
-									  last := piece textEnd ]
-								  ifFalse: [ 
-									  first := piece textStart.
-									  last := endIdx < piece textEnd
-										          ifTrue: [ endIdx ]
-										          ifFalse: [ piece textEnd ] ] ].
-"Transcript show: 'editor ', ((piece globalTextIndexToLocal: first) -> (piece globalTextIndexToLocal: last) ) asString; cr."
-					  selBounds := pieceElement
-						               selectionBoundsFrom: (piece globalTextIndexToLocal: first)
-						               to: (piece globalTextIndexToLocal: last).
-					  selBounds := selBounds collect: [ :bnds | 
-						               self localBoundsToMine: bnds fromChild: pieceElement ].
-					  stream nextPutAll: selBounds ] ] ]
+	^ Color
+		  r: 0.9530791788856305
+		  g: 0.8084066471163245
+		  b: 0.1906158357771261
+		  alpha: 1.0
 ]
 
 { #category : #'editor - accessing' }
@@ -334,7 +303,7 @@ AlbEditor >> textOnScreen [
 	
 	| interval |
 	interval := self textOnScreenInterval.
-	^ self text from: interval first to: interval last
+	^ self text from: (interval first max: 1) to: interval last
 
 ]
 

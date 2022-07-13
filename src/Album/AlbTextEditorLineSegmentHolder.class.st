@@ -247,6 +247,11 @@ AlbTextEditorLineSegmentHolder >> pieceForElement: aBlElement ifAbsent: anAbsent
 ]
 
 { #category : #accessing }
+AlbTextEditorLineSegmentHolder >> pieceForElement: aBlElement ifPresent: aBlock ifAbsent: anAbsentBlock [
+	^ pieceElements pieceForElement: aBlElement ifPresent: aBlock ifAbsent: anAbsentBlock
+]
+
+{ #category : #accessing }
 AlbTextEditorLineSegmentHolder >> piecesAndTheirElementsDo: aBlock [
 	pieceElements piecesAndTheirElementsDo: aBlock
 ]

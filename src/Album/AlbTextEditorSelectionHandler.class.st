@@ -18,7 +18,8 @@ AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 		                   anElement isKindOf: AlbEditorElement ]
 		                   ifFound: #yourself
 		                   ifNone: [ ^ self ].
-	anEditorElement updateExtendedSelectionFromEvent: anEvent.
+	anEvent currentTarget: anEditorElement.
+	anEvent sendTo: anEditorElement.
 
 ]
 
@@ -79,7 +80,8 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 		                   anElement isKindOf: AlbEditorElement ]
 		                   ifFound: #yourself
 		                   ifNone: [ ^ self ].
-	anEditorElement updateExtendedSelectionFromEvent: anEvent.
+	anEvent currentTarget: anEditorElement.
+	anEvent sendTo: anEditorElement.
 ]
 
 { #category : #'api - accessing' }

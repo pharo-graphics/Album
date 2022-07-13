@@ -5,7 +5,7 @@ Class {
 	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
 		'textReplacedHandler',
-		'postLayoutTextDecoration'
+		'feltPens'
 	],
 	#category : #'Album-UI'
 }
@@ -25,14 +25,15 @@ AlbEditor >> atTextIndex: aTextIndex do: aBlock [
 		holder := self elementHolderOf: segmentElement.
 		segmentElement childrenDo: [ :element | 
 			"Use the holder here to find piece. needed for non text element element (instance of BlElement)"
-			(holder
+			holder
 				 pieceForElement: element
-				 ifAbsent: [  ]) ifNotNil: [ :foundPiece | 
-				(foundPiece isText and: [ element segmentPiece textInterval includes: aTextIndex ]) ifTrue: [ 
+				 ifPresent: [ :foundPiece | 
+					(foundPiece isText and: [ element segmentPiece textInterval includes: aTextIndex ]) ifTrue: [ 
 					"here, foundPiece can be ~~ element segmentPiece, it seems that the good one (uptodate) if found via children and not from the holder"
-					aBlock
-						value: element
-						value: (element segmentPiece globalTextIndexToLocal: aTextIndex) ] ] ] ]
+						aBlock
+							value: element
+							value: (element segmentPiece globalTextIndexToLocal: aTextIndex) ] ]
+				 ifAbsent: [ ] ] ]
 ]
 
 { #category : #'api - editor' }
@@ -97,6 +98,26 @@ AlbEditor >> deselecter [
 	^ self editor deselecter
 ]
 
+{ #category : #'ui - events managing' }
+AlbEditor >> doubleClickEvent: anEvent [
+	super doubleClickEvent: anEvent.
+	self feltPensDo: [ :fp | fp doubleClickEvent: anEvent ]
+]
+
+{ #category : #'ui - events managing' }
+AlbEditor >> dragEndEvent: anEvent [
+	super dragEndEvent: anEvent.
+	self feltPensDo: [ :fp | fp dragEndEvent: anEvent ]
+	
+]
+
+{ #category : #'ui - events managing' }
+AlbEditor >> dragStartEvent: anEvent [
+	super dragStartEvent: anEvent.
+	self feltPensDo: [ :fp | fp dragStartEvent: anEvent ]
+
+]
+
 { #category : #accessing }
 AlbEditor >> editor: aTextEditor [
 	self editor removeEventHandler: textReplacedHandler.
@@ -106,13 +127,26 @@ AlbEditor >> editor: aTextEditor [
 	aTextEditor addEventHandler: textReplacedHandler
 ]
 
+{ #category : #'hooks - scrolling' }
+AlbEditor >> ensureCursor [
+	self atTextIndex: self cursor position do: [  :textElement :localIdx | textElement addCursorAt: localIdx]
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> feltPensDo: aBlock [
+	feltPens ifNil: [ ^self ].
+	feltPens do: aBlock
+]
+
 { #category : #initialization }
 AlbEditor >> initialize [
 
 	super initialize.
-
+	feltPens := OrderedCollection new.
+	feltPens add: AlbEditorOppositePen new.
+	feltPens add: AlbEditorExtendedSelectionPen new.
+	
 	self matchParent.
-
 	textReplacedHandler := BlEventHandler
 		                       on: AlbTextEditorTextReplacedEvent
 		                       do: [ :anEvent | 
@@ -121,7 +155,7 @@ AlbEditor >> initialize [
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
 	self viewModel: self defaulEditorModel.
-	postLayoutTextDecoration := AlbEditorPostLayoutTextDecoration new.
+
 	
 	self
 		when: AlbEditorStylerChanged
@@ -166,6 +200,13 @@ AlbEditor >> modeChanged: aTextEditorMode [
 	self states addState: (AlbEditorModeState mode: aTextEditorMode class)
 ]
 
+{ #category : #'ui - events managing' }
+AlbEditor >> mouseDownEvent: anEvent [
+	super mouseDownEvent: anEvent.
+	self feltPensDo: [ :fp | fp mouseDownEvent: anEvent ]
+	
+]
+
 { #category : #'editor - operations' }
 AlbEditor >> navigator [
 	<return: #AlbTextEditorNavigator>
@@ -176,7 +217,14 @@ AlbEditor >> navigator [
 { #category : #'hooks - layout' }
 AlbEditor >> onLayoutDone [ 
 	super onLayoutDone.
-	postLayoutTextDecoration updateAfterLayoutFrom: self.
+	
+]
+
+{ #category : #'hooks - scrolling' }
+AlbEditor >> onScrolled: aPoint [
+	super onScrolled: aPoint.
+	self feltPensDo: [ :fp | fp updateFrom: self ].
+	"self ensureCursor"
 ]
 
 { #category : #'private - accessing' }
@@ -206,11 +254,6 @@ AlbEditor >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
 			aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'private - accessing' }
-AlbEditor >> postLayoutTextDecoration [
-	^ postLayoutTextDecoration
-]
-
 { #category : #accessing }
 AlbEditor >> request: aRequest [
 
@@ -224,6 +267,11 @@ AlbEditor >> request: aRequest [
 { #category : #'editor - accessing' }
 AlbEditor >> segments [
 	^ self editor segmentCollector segments
+]
+
+{ #category : #'editor - accessing' }
+AlbEditor >> selectedText [
+	^ self editor selectedText
 ]
 
 { #category : #'editor - operations' }
@@ -267,6 +315,28 @@ AlbEditor >> stylerChanged: aStyler [
 ]
 
 { #category : #'editor - accessing' }
+AlbEditor >> subTextOnScreen [
+	
+	| interval |
+	interval := self subTextOnScreenInterval.
+	^ self text from: (interval first max: 1) to: interval last
+
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> subTextOnScreenInterval [
+	
+	| holder first last |
+	self text isEmpty ifTrue: [ ^ 0 to: -1 ].
+	holder := self elementHolderOf: self children first.
+	first := holder textInterval first.
+	holder := self elementHolderOf: self children last.
+	last := holder textInterval last.
+	^ first to: last
+
+]
+
+{ #category : #'editor - accessing' }
 AlbEditor >> text [
 	"Return a text I work with. All modifications to a text must be done from UI thread"
 	<return: #BlText>
@@ -293,31 +363,11 @@ AlbEditor >> textElementsDo: aBlock [
 		"Use the holder here to find piece. needed for non text element element (instance of BlElement)"
 		holder := self elementHolderOf: segmentElement.
 		segmentElement childrenDo: [ :textElement | 
-			(holder pieceForElement: textElement ifAbsent: [  ]) ifNotNil: [ 
-				:foundPiece | 
-				foundPiece isText ifTrue: [ aBlock value: textElement ] ] ] ]
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> textOnScreen [
-	
-	| interval |
-	interval := self textOnScreenInterval.
-	^ self text from: (interval first max: 1) to: interval last
-
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> textOnScreenInterval [
-	
-	| holder first last |
-	self text isEmpty ifTrue: [ ^ 0 to: -1 ].
-	holder := self elementHolderOf: self children first.
-	first := holder textInterval first.
-	holder := self elementHolderOf: self children last.
-	last := holder textInterval last.
-	^ first to: last
-
+			holder
+				pieceForElement: textElement
+				ifPresent: [ :foundPiece | 
+					foundPiece isText ifTrue: [ aBlock value: textElement ] ]
+				ifAbsent: [  ] ] ]
 ]
 
 { #category : #'private - accessing' }
@@ -325,11 +375,6 @@ AlbEditor >> textPiecesAndTheirElementsDo: aBlock [
 
 	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
 		piece isText ifTrue: [ aBlock value: piece value: pieceElement ] ]
-]
-
-{ #category : #'ui - events managing' }
-AlbEditor >> updateExtendedSelectionFromEvent: anEvent [
-	postLayoutTextDecoration shiftSelectionFrom: self event: anEvent
 ]
 
 { #category : #'accessing - decoration' }

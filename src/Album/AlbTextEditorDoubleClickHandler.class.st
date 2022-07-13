@@ -30,7 +30,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		                 ifFound: #yourself
 		                 ifNone: [ ^ self ].
 	self handleSelectionFromEvent: anEvent editorElement: editorElement.
-	editorElement updateExtendedSelectionFromEvent: anEvent.
+	anEvent sendTo: editorElement
 	
 ]
 

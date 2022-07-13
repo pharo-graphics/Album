@@ -26,6 +26,21 @@ AlbEditorElement >> defaultLayout [
 	^ BlInfiniteLinearLayout vertical
 ]
 
+{ #category : #'ui - events managing' }
+AlbEditorElement >> doubleClickEvent: anEvent [
+	
+]
+
+{ #category : #'ui - events managing' }
+AlbEditorElement >> dragEndEvent: anEvent [
+	
+]
+
+{ #category : #'ui - events managing' }
+AlbEditorElement >> dragStartEvent: anEvent [
+	
+]
+
 { #category : #accessing }
 AlbEditorElement >> editor [
 	<return: #AlbTextEditor>
@@ -56,6 +71,11 @@ AlbEditorElement >> initialize [
 	textStyleHandler := BlEventHandler
 		on: AlbTextEditorTextStyleRequested
 		do: [ :anEvent | self editor stylerStrategy styleTextInEditorElement: self thenDo: anEvent afterAction ]
+]
+
+{ #category : #'ui - events managing' }
+AlbEditorElement >> mouseDownEvent: anEvent [
+	
 ]
 
 { #category : #scrolling }

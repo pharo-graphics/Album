@@ -28,7 +28,13 @@ AlbEditorFeltPen >> mouseDownEvent: anEvent [
 ]
 
 { #category : #updating }
-AlbEditorFeltPen >> updateFrom: anEditor [
+AlbEditorFeltPen >> onLayoutDoneIn: anEditor [ 
 
-	"after layout done text decoration. Typically sent from #onLayoutDone"
+	"after scroll done text decoration."
+]
+
+{ #category : #updating }
+AlbEditorFeltPen >> onScrollDoneIn: anEditor [ 
+
+	"after scroll done text decoration."
 ]

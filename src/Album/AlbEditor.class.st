@@ -127,9 +127,9 @@ AlbEditor >> editor: aTextEditor [
 	aTextEditor addEventHandler: textReplacedHandler
 ]
 
-{ #category : #'hooks - scrolling' }
-AlbEditor >> ensureCursor [
-	self atTextIndex: self cursor position do: [  :textElement :localIdx | textElement addCursorAt: localIdx]
+{ #category : #'private - accessing' }
+AlbEditor >> editorText [
+	^ self editor text
 ]
 
 { #category : #'private - accessing' }
@@ -215,16 +215,16 @@ AlbEditor >> navigator [
 ]
 
 { #category : #'hooks - layout' }
-AlbEditor >> onLayoutDone [ 
+AlbEditor >> onLayoutDone [
+
 	super onLayoutDone.
-	
+	self feltPensDo: [ :fp | fp onLayoutDoneIn: self ]
 ]
 
 { #category : #'hooks - scrolling' }
 AlbEditor >> onScrolled: aPoint [
 	super onScrolled: aPoint.
-	self feltPensDo: [ :fp | fp updateFrom: self ].
-	"self ensureCursor"
+	self feltPensDo: [ :fp | fp onScrollDoneIn: self ]
 ]
 
 { #category : #'private - accessing' }
@@ -319,7 +319,7 @@ AlbEditor >> subTextOnScreen [
 	
 	| interval |
 	interval := self subTextOnScreenInterval.
-	^ self text from: (interval first max: 1) to: interval last
+	^ self editorText from: (interval first max: 1) to: interval last
 
 ]
 
@@ -327,7 +327,7 @@ AlbEditor >> subTextOnScreen [
 AlbEditor >> subTextOnScreenInterval [
 	
 	| holder first last |
-	self text isEmpty ifTrue: [ ^ 0 to: -1 ].
+	self editorText isEmpty ifTrue: [ ^ 0 to: -1 ].
 	holder := self elementHolderOf: self children first.
 	first := holder textInterval first.
 	holder := self elementHolderOf: self children last.

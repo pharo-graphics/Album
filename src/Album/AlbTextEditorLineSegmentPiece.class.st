@@ -128,8 +128,6 @@ AlbTextEditorLineSegmentPiece >> setCursor: aPieceElement of: aLineSegment in: a
 	"if text editor cursor is currently within this segment piece then convert it to a local one"
 	(globalCursor insideSubText: self of: aLineSegment) ifTrue: [ localCursor := self globalCursorToLocal: globalCursor ].
 	
-	currentCursor = localCursor ifTrue: [ ^self ].
-	
 	"update current cursors"
 	currentCursor := localCursor.
 
@@ -149,11 +147,10 @@ AlbTextEditorLineSegmentPiece >> updateCursor: aPieceElement of: aLineSegment in
 	| globalCursor localCursor |
 self flag: 'to be checked because of failing tests AlbTextEditorNavigatorTest>>test_cursor_add_at_1_in_multiline'.
 	"if text editor cursor is currently within this segment piece then convert it to a local one"
+
 	globalCursor := anEditorElement cursor.
 
 	(globalCursor insideSubText: self of: aLineSegment) ifTrue: [ localCursor := self globalCursorToLocal: globalCursor ].
-
-	currentCursor = localCursor ifTrue: [ ^self ].
 	
 	"tell to remove the deleted cursor"
 	currentCursor ifNotNil: [ self onCursorRemoved: currentCursor from: aPieceElement in: anEditorElement ].

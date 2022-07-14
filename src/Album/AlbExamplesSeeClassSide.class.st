@@ -58,6 +58,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		dresser: AlbTextAreaDresser new;
 		styler: styler;
 		text: text.
+	editorElement inspect.
 	editorElement clipChildren: false.
 	editorElement withLineNumbers.
 	"editorElement editor useTaskItStylerStrategy."
@@ -66,7 +67,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 			(BlShortcutWithAction new
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
-
+"editorElement inspect."
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space title: 'editor'.
@@ -115,7 +116,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
-	ed := ((String loremIpsum: 1000000) asRopedText
+	ed := ((String loremIpsum: 100000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed inspect.

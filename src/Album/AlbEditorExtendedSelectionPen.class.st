@@ -41,6 +41,12 @@ AlbEditorExtendedSelectionPen >> mouseDownEvent: anEvent [
 ]
 
 { #category : #updating }
+AlbEditorExtendedSelectionPen >> onScrollDoneIn: anEditor [ 
+	super onScrollDoneIn: anEditor.
+	self updateExtendedSelectionFrom: anEditor
+]
+
+{ #category : #updating }
 AlbEditorExtendedSelectionPen >> resetCurrentExtendedSelection [
 
 	currentExtendedSelectionList do: [ :e | e resetExtendedSelectionInterval ].
@@ -115,10 +121,4 @@ AlbEditorExtendedSelectionPen >> updateExtendedSelectionFrom: anEditor withStrin
 	founds do: [ :interval | 
 		self updateExtendedSelection: interval + subTextOnScreen textOffset from: anEditor ].
 
-]
-
-{ #category : #updating }
-AlbEditorExtendedSelectionPen >> updateFrom: anEditor [
-	super updateFrom: anEditor.
-	self updateExtendedSelectionFrom: anEditor
 ]

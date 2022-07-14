@@ -38,7 +38,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 				               string: index asString;
 				               font: font;
 				               width: w;
-				               baseline: 2 @ font pointSize;
+				               baseline: 2 @ fontBuilder size;
 				               paint: Color black.
 			textPainter draw ]
 ]
@@ -52,12 +52,6 @@ AlbLineNumberDecoration >> invalidationBoundsIn: anEditorElement [
 AlbLineNumberDecoration >> itemInsets: aBlInsets of: anItemElement in: anInfiniteElement [
 
 	^ (BlInsets left: self width) + aBlInsets
-]
-
-{ #category : #updating }
-AlbLineNumberDecoration >> updateFrom: anEditorElement [
-	super updateFrom: anEditorElement.
-	"anEditorElement invalidRect: (self invalidationBoundsIn: anEditorElement)"
 ]
 
 { #category : #geometry }

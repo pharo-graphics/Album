@@ -200,7 +200,6 @@ AlbTextEditorNavigator >> privateAssertPosition: aTextPosition [
 AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
 	| anOldCursor  idx |
 	idx := self privateNormalizePosition: aTextIndex.
-	aCursor position = idx  ifTrue: [ ^ self ].
 	
 	anOldCursor := aCursor copy.
 	self flag: 'here, notifyCursorChanged: anOldCursor will not work. why ???????'. 

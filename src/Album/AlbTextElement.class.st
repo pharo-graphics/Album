@@ -19,10 +19,9 @@ AlbTextElement class >> oppositeDelimiterBackgroundColor [
 { #category : #'cursor - management' }
 AlbTextElement >> addCursorAt: aTextPosition [
 	<return: #AlbCursorElement>
-	
 	^ self
 		cursorAt: aTextPosition
-		ifFound: [:c | c ]
+		ifFound: #yourself
 		ifNone: [
 			cursorElement ifNotNil: [ cursorElement removeFromParent].
 			cursorElement := self newCursor.

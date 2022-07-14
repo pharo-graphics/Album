@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #updating }
-AlbEditorOppositePen >> updateFrom: anEditor [
-	super updateFrom: anEditor.
+AlbEditorOppositePen >> onLayoutDoneIn: anEditor [ 
+	super onLayoutDoneIn: anEditor.
 	self updateOppositeFrom: anEditor.
 
 ]

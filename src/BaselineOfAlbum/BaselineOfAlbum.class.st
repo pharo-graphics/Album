@@ -19,9 +19,6 @@ BaselineOfAlbum >> baseline: spec [
 			with: [ 
 			spec repository: 'github://pharo-graphics/Sparta:dev-1.0/src' ].
 		spec
-			package: #'Bloc-Sparta'
-			with: [ spec requires: #( 'Sparta' 'Bloc' ) ].
-		spec
 			baseline: 'Alexandrie'
 			with: [ 
 			spec repository: 'github://pharo-graphics/Alexandrie:master/src' ].
@@ -32,7 +29,7 @@ BaselineOfAlbum >> baseline: spec [
 
 		spec package: #'Album-Sparta' with: [ 
 			spec repository: 'github://plantec/Album/src'.
-			spec requires: #( #OnBloc #'Bloc-Sparta' ) ].
+			spec requires: #( #OnBloc ) ].
 		spec
 			package: #'#Album-Tests' with: [ spec requires: #( #Album ) ];
 			package: #'Album-Examples' with: [ spec requires: #( #Album ) ];

@@ -22,24 +22,22 @@ BaselineOfAlbum >> baseline: spec [
 			baseline: 'Alexandrie'
 			with: [ 
 			spec repository: 'github://pharo-graphics/Alexandrie:master/src' ].
-
-		spec package: #Album with: [ 
+		
+		spec baseline: #Album with: [ 
 			spec repository: 'github://plantec/Album/src'.
-			spec requires: #( #OnBloc #Alexandrie ) ].
+			spec package: #Album with: [spec requires: #( #OnBloc #Alexandrie )].
+			spec
+			package: #'#Album-Tests' with: [ 
+				spec requires: #( #Album ) ];
+			package: #'Album-Examples' with: [ 
+				spec requires: #( #Album ) ];
+			package: #'Album-Brick-NU' with: [ 
+				spec requires: #( #Album ) ] ].
+			].
 
 		spec package: #'Album-Sparta' with: [ 
 			spec repository: 'github://plantec/Album/src'.
-			spec requires: #( #OnBloc ) ].
-		spec
-			package: #'#Album-Tests' with: [ 
-				spec repository: 'github://plantec/Album/src'.
-				spec requires: #( #Album ) ];
-			package: #'Album-Examples' with: [ 
-				spec repository: 'github://plantec/Album/src'.
-				spec requires: #( #Album ) ];
-			package: #'Album-Brick-NU' with: [ 
-				spec repository: 'github://plantec/Album/src'.
-				spec requires: #( #Album ) ] ]
+			spec requires: #( #OnBloc )  ]
 ]
 
 { #category : #baselines }

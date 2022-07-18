@@ -696,9 +696,6 @@ AlbTextEditor >> onElementRecycled: anElementHolder [
 AlbTextEditor >> onGotFocus [
 	isFocused := true.
 	
-	"self cursor isNotNil
-		ifTrue: [ self navigator moveTo: 0; apply ]."
-
 	self processCursorAttributes.
 	self enqueueCommand: (self newFocusChangedCommand hasFocus: true)
 ]
@@ -890,6 +887,7 @@ AlbTextEditor >> processCursorAttributes [
 	eventHandlingAttributesOutside := OrderedDictionary new.
 	eventHandlingAttributesInside := OrderedDictionary new.
 
+	self flag: 'Removing this deep iteration ** speeds-up text editing a lot **'. 
 	self text
 		findAttributesSuchThat: [ :eachAttribute | eachAttribute isEventHandler ]
 		indicesDo: [ :aStart :anEnd :anAttribute |

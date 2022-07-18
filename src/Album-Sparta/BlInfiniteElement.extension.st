@@ -1,6 +1,6 @@
 Extension { #name : #BlInfiniteElement }
 
-{ #category : #'*Album' }
+{ #category : #'*Album-Sparta' }
 BlInfiniteElement >> drawChildrenOnSpartaCanvas: aCanvas [
 	" draw then decorate eventually (between the background and the childrens)"
 	super drawChildrenOnSpartaCanvas: aCanvas.
@@ -8,7 +8,7 @@ BlInfiniteElement >> drawChildrenOnSpartaCanvas: aCanvas [
 		d drawOnSpartaCanvasOver: aCanvas in: self ]
 ]
 
-{ #category : #'*Album' }
+{ #category : #'*Album-Sparta' }
 BlInfiniteElement >> drawOnSpartaCanvas: aCanvas [
 	" draw then decorate eventually (between the background and the childrens)"
 	super drawOnSpartaCanvas: aCanvas.

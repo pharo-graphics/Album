@@ -30,12 +30,12 @@ AlbTextElement >> addCursorAt: aTextPosition [
 			cursorElement ]
 ]
 
-{ #category : #asserting }
+{ #category : #'cursor - asserting' }
 AlbTextElement >> assertCursor: aCursorElement [
 	self assertCursorPosition: aCursorElement textPosition
 ]
 
-{ #category : #asserting }
+{ #category : #'cursor - asserting' }
 AlbTextElement >> assertCursorPosition: anIndex [
 	self
 		assert: [ self text isNotEmpty or: [ anIndex isZero ] ]
@@ -45,7 +45,7 @@ AlbTextElement >> assertCursorPosition: anIndex [
 		description: [ 'Cursor must be within text bounds (0 is allowed)' ].
 ]
 
-{ #category : #drawing }
+{ #category : #private }
 AlbTextElement >> characterBoundsAtIndex: aLocalIndex [
 
 	| startSpan startPos start rect endPos endSpan end |
@@ -67,7 +67,7 @@ AlbTextElement >> createTextParagraph [
 	^ AlbTextParagraph new
 ]
 
-{ #category : #private }
+{ #category : #'cursor - accessing' }
 AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBlock [
 
 	cursorElement ifNil: [ ^ aNoneBlock value ].
@@ -75,64 +75,14 @@ AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBloc
 	^ aFoundBlock value: cursorElement
 ]
 
-{ #category : #accessing }
+{ #category : #'cursor - management' }
 AlbTextElement >> cursorStencil [
 	^ cursorStencil
 ]
 
-{ #category : #accessing }
+{ #category : #'cursor - management' }
 AlbTextElement >> cursorStencil: aStencil [
 	cursorStencil := aStencil
-]
-
-{ #category : #drawing }
-AlbTextElement >> drawOnSpartaCanvas: aCanvas [
-
-	paragraph ifNil: [ ^ self ].
-	paragraph containerExtent: self extent.
-	paragraph selection: self selection.
-	paragraph extendedSelection: self extendedSelection.
-	aCanvas clip
-		by: (self geometry pathOnSpartaCanvas: aCanvas of: self)
-		during: [ 
-			paragraph
-				drawHighlightsOnSpartaCanvas: aCanvas
-				padding: self padding.
-			paragraph
-				drawExtendedSelectionOnSpartaCanvas: aCanvas
-				padding: self padding.
-			paragraph 
-				drawSelectionOnSpartaCanvas: aCanvas
-				padding: self padding.
-
-			aCanvas transform
-				by: [ :t | t translateBy: self padding topLeft ]
-				during: [ 
-					self drawOppositeOnSpartaCanvas: aCanvas.
-					paragraph drawOn: aCanvas ] ]
-]
-
-{ #category : #drawing }
-AlbTextElement >> drawOppositeOnSpartaCanvas: aCanvas [
-
-	| bnds |
-	oppositeIndex < 0 ifTrue: [ ^ self ].
-	bnds := self characterBoundsAtIndex: oppositeIndex.
-	aCanvas fill
-			paint: (self class oppositeDelimiterBackgroundColor);
-			path: bnds;
-			draw. 
-	aCanvas figure
-		path:
-			(bnds expandBy: (Margin
-						  left: 1
-						  right: 1
-						  top: 0
-						  bottom: 0));
-		border: Color black;
-		borderAlpha: 1.0;
-		width: 1;
-		draw
 ]
 
 { #category : #'extended selection - management' }
@@ -166,13 +116,13 @@ AlbTextElement >> extendedSelectionInterval: anInterval [
 	self extendedSelect: anInterval first to: anInterval last
 ]
 
-{ #category : #private }
+{ #category : #'cursor - accessing' }
 AlbTextElement >> hasCursor [
 
 	^ cursorElement notNil
 ]
 
-{ #category : #testing }
+{ #category : #'cursor - accessing' }
 AlbTextElement >> hasCursorAt: aTextPosition [
 	"Return true if cursor at a given position exists"
 	<return: #Boolean>
@@ -235,17 +185,17 @@ AlbTextElement >> oppositeIndex: anIndex [
 	oppositeIndex := anIndex
 ]
 
-{ #category : #'private - pool' }
+{ #category : #'cursor - management' }
 AlbTextElement >> recycledFrom: aStencilBuilder [
-	self removeFromParent.
+
+	super recycledFrom: aStencilBuilder.
 	self removeCursor.
-	self selectNone.
 	self resetExtendedSelectionInterval.
 	self resetOppositeIndex.
 
 	"otherwise attributes may not be garbage collected
 	see https://github.com/feenkcom/gtoolkit/issues/537"
-	self removeSegmentPiece.
+	self removeSegmentPiece
 ]
 
 { #category : #'cursor - management' }

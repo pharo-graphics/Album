@@ -9,11 +9,10 @@ BaselineOfAlbum >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [ 
-		self declareBlocOn: spec.
+
 		spec
 			baseline: 'OnBloc'
 			with: [ spec repository: 'github://plantec/OnBloc/src' ].
-		"Sparta"
 		spec
 			baseline: 'Sparta'
 			with: [ 
@@ -24,17 +23,14 @@ BaselineOfAlbum >> baseline: spec [
 			spec repository: 'github://pharo-graphics/Alexandrie:master/src' ].
 
 		spec
-			package: #'#Album' ;
-			package: #'#Album-Tests' ;
-			package: #'Album-Examples';
-			package: #'Album-Brick-NU';
-			package: #'Album-Sparta' ]
-]
-
-{ #category : #baselines }
-BaselineOfAlbum >> declareBlocOn: spec [
-
-	spec
-		baseline: 'Bloc'
-		with: [ spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ]
+			package: #Album with: [ 
+				spec requires: #( #OnBloc #Sparta #Alexandrie ) ];
+			package: #'#Album-Tests' with: [ 
+				spec requires: #( #OnBloc #Sparta #Alexandrie ) ];
+			package: #'Album-Examples' with: [ 
+				spec requires: #( #OnBloc #Sparta #Alexandrie ) ];
+			package: #'Album-Brick-NU' with: [ 
+				spec requires: #( #OnBloc #Sparta #Alexandrie ) ];
+			package: #'Album-Sparta' with: [ 
+				spec requires: #( #OnBloc #Sparta #Alexandrie ) ] ]
 ]

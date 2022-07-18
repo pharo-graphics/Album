@@ -11,11 +11,6 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #acccessing }
-AlbTextElement class >> oppositeDelimiterBackgroundColor [
-	^ Color yellow
-]
-
 { #category : #'cursor - management' }
 AlbTextElement >> addCursorAt: aTextPosition [
 	<return: #AlbCursorElement>
@@ -43,21 +38,6 @@ AlbTextElement >> assertCursorPosition: anIndex [
 	self
 		assert: [ anIndex between: 0 and: self text size ]
 		description: [ 'Cursor must be within text bounds (0 is allowed)' ].
-]
-
-{ #category : #private }
-AlbTextElement >> characterBoundsAtIndex: aLocalIndex [
-
-	| startSpan startPos start rect endPos endSpan end |
-	start := (aLocalIndex - 1 max: 0) min: self text size.
-	startSpan := paragraph spanAtIndex: start.
-	startPos := startSpan positionAt: start. 
-
-	end := start + 1 min: self text size.
-	endSpan := paragraph spanAtIndex: end.
-	endPos := endSpan positionAt: end. 
-	rect := startPos x @ 0 corner: endPos x @ self extent y.
-	^ rect
 ]
 
 { #category : #'private - paragraph' }
@@ -181,6 +161,11 @@ AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 ]
 
 { #category : #'opposite index - management' }
+AlbTextElement >> oppositeIndex [
+	^ oppositeIndex
+]
+
+{ #category : #'opposite index - management' }
 AlbTextElement >> oppositeIndex: anIndex [
 	oppositeIndex := anIndex
 ]
@@ -263,6 +248,14 @@ AlbTextElement >> segmentPiece: aSegmentPiece [
 			self telemetry
 				timeSync: [ 'Set text `{1}`' format: { aTextCopy } ]
 				during: [ self text: aTextCopy ] ]
+]
+
+{ #category : #'private - paragraph' }
+AlbTextElement >> setupParagraphBeforeDrawing [
+	super setupParagraphBeforeDrawing.
+	paragraph extendedSelection: self extendedSelection.
+	paragraph oppositeIndex: self oppositeIndex.
+
 ]
 
 { #category : #'cursor - management' }

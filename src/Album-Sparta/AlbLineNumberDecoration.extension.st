@@ -7,7 +7,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 		Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
 
 	| holder index fontBuilder textPainter w font |
-	w := anItemElement constraints infinite decorationInsets left.
+	w := anInfiniteElement layout leftDecorationWidth: anItemElement.
 	aCanvas transform
 		by: [ :aTransform | 
 			aTransform translateBy: 0 @ anItemElement bounds inParent top ]
@@ -34,7 +34,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 				               string: index asString;
 				               font: font;
 				               width: w;
-				               baseline: 2 @ fontBuilder size;
+				               baseline: (anInfiniteElement border width + 4) @ fontBuilder size;
 				               paint: Color black.
 			textPainter draw ]
 ]

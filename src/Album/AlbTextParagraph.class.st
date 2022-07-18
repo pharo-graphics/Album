@@ -2,7 +2,8 @@ Class {
 	#name : #AlbTextParagraph,
 	#superclass : #BlTextParagraph,
 	#instVars : [
-		'extendedSelection'
+		'extendedSelection',
+		'oppositeIndex'
 	],
 	#category : #'Album-UI'
 }
@@ -13,6 +14,11 @@ AlbTextParagraph class >> extendedSelectionColor [
 ]
 
 { #category : #accessing }
+AlbTextParagraph class >> oppositeDelimiterBackgroundColor [
+	^ Color yellow
+]
+
+{ #category : #accessing }
 AlbTextParagraph >> extendedSelection [
 	^ extendedSelection
 ]
@@ -20,4 +26,16 @@ AlbTextParagraph >> extendedSelection [
 { #category : #accessing }
 AlbTextParagraph >> extendedSelection: aSelection [
 	extendedSelection := aSelection
+]
+
+{ #category : #accessing }
+AlbTextParagraph >> oppositeIndex [
+
+	^ oppositeIndex 
+]
+
+{ #category : #accessing }
+AlbTextParagraph >> oppositeIndex: anInteger [
+
+	oppositeIndex := anInteger
 ]

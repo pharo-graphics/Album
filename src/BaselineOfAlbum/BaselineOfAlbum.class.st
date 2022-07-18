@@ -31,9 +31,15 @@ BaselineOfAlbum >> baseline: spec [
 			spec repository: 'github://plantec/Album/src'.
 			spec requires: #( #OnBloc ) ].
 		spec
-			package: #'#Album-Tests' with: [ spec requires: #( #Album ) ];
-			package: #'Album-Examples' with: [ spec requires: #( #Album ) ];
-			package: #'Album-Brick-NU' with: [ spec requires: #( #Album ) ] ]
+			package: #'#Album-Tests' with: [ 
+				spec repository: 'github://plantec/Album/src'.
+				spec requires: #( #Album ) ];
+			package: #'Album-Examples' with: [ 
+				spec repository: 'github://plantec/Album/src'.
+				spec requires: #( #Album ) ];
+			package: #'Album-Brick-NU' with: [ 
+				spec repository: 'github://plantec/Album/src'.
+				spec requires: #( #Album ) ] ]
 ]
 
 { #category : #baselines }

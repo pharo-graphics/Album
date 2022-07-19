@@ -116,7 +116,7 @@ AlbEditorExtendedSelectionPen >> updateExtendedSelectionFrom: anEditor withStrin
 	subTextOnScreen := anEditor subTextOnScreen.
 	aString size >= (subTextOnScreen size // 2) ifTrue: [ ^self ].
 	collector := BlIntervalCollector new text: subTextOnScreen asString.
-	currentSelectionInterval := anEditor selection from to: anEditor selection to.
+	currentSelectionInterval := anEditor selection from +1 to: anEditor selection to.
 	founds := collector searchAll: aString excluding: currentSelectionInterval - subTextOnScreen textOffset.
 	founds do: [ :interval | 
 		self updateExtendedSelection: interval + subTextOnScreen textOffset from: anEditor ].

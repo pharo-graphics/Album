@@ -19,7 +19,7 @@ AlbEditorOppositePen >> updateOppositeFrom: anEditor [
 
 	| globalCursorPos subtext localCursorPos |
 	currentOppositeTextElement ifNotNil: [ currentOppositeTextElement resetOppositeIndex ].
-	globalCursorPos := anEditor cursor position..
+	globalCursorPos := anEditor cursor position.
 	globalCursorPos isZero ifTrue: [ ^ self ].
 	subtext := anEditor subTextOnScreen.
 	((subtext start to: subtext end) includes: globalCursorPos) ifFalse: [ ^ self ].

@@ -69,7 +69,7 @@ AlbTextElement >> cursorStencil: aStencil [
 AlbTextElement >> extendedSelect: aFromIndex to: aToIndex [
 
 	self extendedSelection select: aFromIndex to: aToIndex.
-	self invalidate
+	self parent invalidate
 ]
 
 { #category : #'extended selection - management' }
@@ -77,7 +77,7 @@ AlbTextElement >> extendedSelectNone [
 	self extendedSelection isEmpty
 		ifTrue: [ ^ self ].
 	self extendedSelection removeAll.
-	self invalidate
+	self parent invalidate
 ]
 
 { #category : #'extended selection - management' }
@@ -213,7 +213,7 @@ AlbTextElement >> removeSegmentPiece [
 
 { #category : #'extended selection - management' }
 AlbTextElement >> resetExtendedSelectionInterval [
-	self extendedSelectNone
+	self isAttachedToSceneGraph ifTrue:[ self extendedSelectNone ]
 ]
 
 { #category : #'opposite index - management' }

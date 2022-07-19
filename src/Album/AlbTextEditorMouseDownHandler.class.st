@@ -59,6 +59,7 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 	"it is important to request focus *after* we add a cursor, otherwise it would jump to the 0 position when
 	handling focus event"
 	anEditorElement requestFocus.
+	anEvent sendTo: anEditorElement.
 	self flag: 'low level text input managing. Should be revised to use the right screen position'.
 	spacePosition := anEditorElement space position.
 	textInputPosition := aScreenPosition. "spacePosition + " "+ (12@25)"

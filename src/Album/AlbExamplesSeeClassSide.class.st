@@ -116,7 +116,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
-	ed := ((String loremIpsum: 100000) asRopedText
+	ed := ((String loremIpsum: 10000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	

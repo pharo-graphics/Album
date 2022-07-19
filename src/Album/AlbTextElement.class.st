@@ -125,14 +125,12 @@ AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #'cursor - management' }
+{ #category : #'private - pool' }
 AlbTextElement >> recycledFrom: aStencilBuilder [
 
 	super recycledFrom: aStencilBuilder.
 	self removeCursor.
-	self resetExtendedSelectionInterval.
-	self resetOppositeIndex.
-
+	self resetHighlights.
 	"otherwise attributes may not be garbage collected
 	see https://github.com/feenkcom/gtoolkit/issues/537"
 	self removeSegmentPiece

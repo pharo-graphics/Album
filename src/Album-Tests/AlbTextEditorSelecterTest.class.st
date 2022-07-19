@@ -120,7 +120,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 	
 	| anEditor |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditor := anEditor := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
 	anEditor editor moveCursorTo: 6.
 	
 	anEditor selecter
@@ -128,10 +128,10 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 		select.
 	
 	self 
-		assert: anEditor selection 
-		equals: (BlCompositeSelection new select: 6 to: 35).
+		assert: anEditor selection allSelections
+		equals: { BlSelection from: 1 to: 13 }.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 35).
+	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 12).
 	
 	^ anEditor
 ]
@@ -141,7 +141,12 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6_thenUp [
 	
 	| anEditor |
 
-	anEditor := self test_select_moveOneDown_at_6.
+	anEditor := self test_editorOnMultilineText.
+	anEditor editor moveCursorTo: 6.
+	
+	anEditor selecter
+		moveOneDown;
+		select.
 	
 	anEditor selecter
 		moveOneUp;

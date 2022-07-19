@@ -195,7 +195,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_multi_lines [
 
 	self assert: anEditor cursors  equals: { AlbTextEditorSingleCursor new position: 0 }.
 	
-	self assert: theMovedEvents size equals: 1..
+	self assert: theMovedEvents size equals: 1.
 	self assert: addedCursorElements size equals: 1.
 	self assert: addedCursorElements first textPosition equals: 0.
 	self assert: removedCursorElements size equals: 0.

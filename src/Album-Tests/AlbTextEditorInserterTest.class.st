@@ -96,9 +96,8 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 	
-	<description: '"Insertion at multiple cursors'>
 	| anEditor |
-
+	"Album is mono cursor, only last moveTo is actually done"
 	anEditor := self test_editorOnMultilineText.
 	anEditor navigator
 		moveTo: 0;
@@ -110,7 +109,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 		string: 'Hello';
 		insert.
 
-	self assert: anEditor text asString equals: ('AHello', (self multilineText from: 2 to: self multilineText size) asString).
+	self assert: anEditor text asString equals: (' Hello', (self multilineText from: 2 to: self multilineText size) asString).
 	self assert: anEditor cursor position equals: 6.
 	self assert: anEditor selection isEmpty.
 
@@ -327,6 +326,55 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_1_selection_0_to_0 
 ]
 
 { #category : #indentation }
+AlbTextEditorInserterTest >> test_insert_indentation [
+	
+	| anEditor |
+
+	anEditor := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
+	anEditor selecter
+		from: 0 to: 11;
+		select.
+
+	anEditor inserter
+		indentation;
+		beforeSelectedLines;
+		withoutSelectionDelete;
+		insert.
+
+	self assert: anEditor text asString equals: ('	AAAAA', String cr, '	BBBBB', String cr, 'CCCCC').
+	self assert: anEditor selection allSelections equals: {
+		BlSelection from: 1 to: 13.
+	}.
+
+	^ anEditor
+]
+
+{ #category : #indentation }
+AlbTextEditorInserterTest >> test_insert_indentation2 [
+	
+	| anEditor |
+
+	anEditor := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
+	anEditor selecter
+		from: 3 to: 13;
+		select.
+
+	self assert: anEditor selectedText asString equals: 'AA', String cr, 'BBBBB', String cr, 'C'.
+	self assert: anEditor selection allSelections equals: { BlSelection from: 3 to: 13 }.
+
+	anEditor inserter
+		indentation;
+		beforeSelectedLines;
+		withoutSelectionDelete;
+		insert.
+
+	self assert: anEditor text asString equals: ('	AAAAA', String cr, '	BBBBB', String cr, '	CCCCC').
+	self assert: anEditor selection allSelections equals: { BlSelection from: 4 to: 16 }.
+
+	^ anEditor
+]
+
+{ #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_1 [
 	
 	| anEditor |
@@ -351,30 +399,6 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_1 [
 ]
 
 { #category : #indentation }
-AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_41 [
-	
-	| anEditor |
-
-	anEditor := self test_editorOnMultilineText.
-	anEditor selecter
-		from: 0 to: 41;
-		select.
-
-	anEditor inserter
-		indentation;
-		beforeSelectedLines;
-		withoutSelectionDelete;
-		insert.
-
-	self assert: anEditor text asString equals: (String tab, (self multilineText from: 1 to: 29) asString, String tab, (self multilineText from: 30 to: self multilineText size) asString).
-	self assert: anEditor selection allSelections equals: {
-		BlSelection from: 1 to: 43.
-	}.
-
-	^ anEditor
-]
-
-{ #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_1_to_2 [
 	
 	| anEditor |
@@ -393,33 +417,6 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_1_to_2 [
 	self assert: anEditor text asString equals: (String tab, self multilineText asString).
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 2 to: 3.
-	}.
-
-	^ anEditor
-]
-
-{ #category : #indentation }
-AlbTextEditorInserterTest >> test_insert_indentation_selection_29_to_67 [
-	
-	| anEditor |
-
-	anEditor := self test_editorOnMultilineText.
-	anEditor selecter
-		from: 29 to: 67;
-		select.
-
-	anEditor inserter
-		indentation;
-		beforeSelectedLines;
-		withoutSelectionDelete;
-		insert.
-
-	self assert: anEditor text asString equals: (
-		(self multilineText from: 1 to: 29) asString,
-		String tab, (self multilineText from: 30 to: 42) asString,
-		String tab, (self multilineText from: 43 to: self multilineText size) asString).
-	self assert: anEditor selection allSelections equals: {
-		BlSelection from: 30 to: 69.
 	}.
 
 	^ anEditor

@@ -7,6 +7,11 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #accessing }
+AlbEditorOppositePen class >> oppositeDelimiterBackgroundColor [
+	^ Color brown alpha: 0.35
+]
+
 { #category : #updating }
 AlbEditorOppositePen >> onLayoutDoneIn: anEditor [ 
 	super onLayoutDoneIn: anEditor.
@@ -18,7 +23,7 @@ AlbEditorOppositePen >> onLayoutDoneIn: anEditor [
 AlbEditorOppositePen >> updateOppositeFrom: anEditor [
 
 	| globalCursorPos subtext localCursorPos |
-	currentOppositeTextElement ifNotNil: [ currentOppositeTextElement resetOppositeIndex ].
+	currentOppositeTextElement ifNotNil: [ currentOppositeTextElement resetHighlights ].
 	globalCursorPos := anEditor cursor position.
 	globalCursorPos isZero ifTrue: [ ^ self ].
 	subtext := anEditor subTextOnScreen.
@@ -34,7 +39,7 @@ AlbEditorOppositePen >> updateOppositeFrom: anEditor [
 					atTextIndex: interval first + subtext start - 1
 					do: [ :oppositeTextElement :localIdx | 
 						localIdx isZero ifFalse: [ 
-							oppositeTextElement oppositeIndex: localIdx.
+							oppositeTextElement highlightWith: (BlTextParagraphHighlight paint: self class oppositeDelimiterBackgroundColor from: localIdx -1 to: localIdx).
 							currentOppositeTextElement := oppositeTextElement.
 							^ self ] ] ].
 			"after open delimiter"
@@ -43,7 +48,7 @@ AlbEditorOppositePen >> updateOppositeFrom: anEditor [
 					atTextIndex: interval last + subtext start
 					do: [ :oppositeTextElement :localIdx | 
 						localIdx isZero ifFalse: [ 
-							oppositeTextElement oppositeIndex: localIdx.
+							oppositeTextElement highlightWith: (BlTextParagraphHighlight paint: self class oppositeDelimiterBackgroundColor from: localIdx -1 to: localIdx).
 							currentOppositeTextElement := oppositeTextElement.
 							^ self ] ] ] ]
 		ifAbsent: [  ].

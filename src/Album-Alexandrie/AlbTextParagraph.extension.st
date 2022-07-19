@@ -1,21 +1,10 @@
 Extension { #name : #AlbTextParagraph }
 
 { #category : #'*Album-Alexandrie' }
-AlbTextParagraph >> aeDrawExtendedSelectionOn: aCanvas [ 
-
-	self
-		aeDrawselection: self extendedSelection
-		on: aCanvas
-		color: self class extendedSelectionColor
-]
-
-{ #category : #'*Album-Alexandrie' }
-AlbTextParagraph >> aeDrawOppositeOn: aeCanvas [
-
+AlbTextParagraph >> aeDrawOppositeOn: aeCanvas at: oppositeIndex [
 	| bnds |
-	self oppositeIndex < 0 ifTrue: [ ^ self ].
-	bnds := self characterBoundsAtIndex: self oppositeIndex.
-	Transcript show: self padding asString; cr.
+	self flag: 'Not used but kept for the record for now'.
+	bnds := self characterBoundsAtIndex: oppositeIndex.
 	aeCanvas restoreContextAfter: [ 
 		aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: self class oppositeDelimiterBackgroundColor ] alpha: 0.3.
 				aeCanvas pathTranslate: self padding topLeft.

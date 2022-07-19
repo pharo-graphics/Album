@@ -95,6 +95,28 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
+
+	| ed space text |
+	ed := AlbEditor new.
+	text := 'ABCD' asRopedText.
+	text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1.
+	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2.
+	text attribute: (BlTextBackgroundAttribute paint: (Color red alpha: 0.3)) from: 3 to: 3.
+	text
+		fontSize: 24;
+		fontName: 'Helvetica Neue'.
+	ed text: text.
+	space := BlSpace new.
+	space root addChild: ed.
+	space title: 'editor'.
+	"ed inspect."
+
+	space show.
+	^ ed
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |

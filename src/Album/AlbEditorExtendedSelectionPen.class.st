@@ -7,6 +7,11 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #accessing }
+AlbEditorExtendedSelectionPen class >> extendedSelectionColor [
+	^ Color gray alpha: 0.35
+]
+
 { #category : #'mouse handlers' }
 AlbEditorExtendedSelectionPen >> doubleClickEvent: anEvent [
 	super doubleClickEvent: anEvent.
@@ -49,7 +54,7 @@ AlbEditorExtendedSelectionPen >> onScrollDoneIn: anEditor [
 { #category : #updating }
 AlbEditorExtendedSelectionPen >> resetCurrentExtendedSelection [
 
-	currentExtendedSelectionList do: [ :e | e resetExtendedSelectionInterval ].
+	currentExtendedSelectionList do: [ :e | e resetHighlights ].
 	currentExtendedSelectionList reset.
 ]
 
@@ -91,7 +96,7 @@ AlbEditorExtendedSelectionPen >> updateExtendedSelection: anInterval from: anEdi
 									        ifTrue: [ endIdx ]
 									        ifFalse: [ piece textEnd ] ] ].
 
-				pieceElement extendedSelectionInterval: (first - piece textStart - 1 to: last - piece textStart).
+				pieceElement highlightWith: (BlTextParagraphHighlight paint: (self class extendedSelectionColor ) from: (first - piece textStart - 1) to: (last - piece textStart)).
 				currentExtendedSelectionList add: pieceElement ] ]
 ]
 

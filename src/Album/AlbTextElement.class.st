@@ -4,9 +4,7 @@ Class {
 	#instVars : [
 		'cursorElement',
 		'cursorStencil',
-		'segmentPiece',
-		'oppositeIndex',
-		'extendedSelection'
+		'segmentPiece'
 	],
 	#category : #'Album-UI'
 }
@@ -65,37 +63,6 @@ AlbTextElement >> cursorStencil: aStencil [
 	cursorStencil := aStencil
 ]
 
-{ #category : #'extended selection - management' }
-AlbTextElement >> extendedSelect: aFromIndex to: aToIndex [
-
-	self extendedSelection select: aFromIndex to: aToIndex.
-	self parent invalidate
-]
-
-{ #category : #'extended selection - management' }
-AlbTextElement >> extendedSelectNone [
-	self extendedSelection isEmpty
-		ifTrue: [ ^ self ].
-	self extendedSelection removeAll.
-	self parent invalidate
-]
-
-{ #category : #'extended selection - management' }
-AlbTextElement >> extendedSelection [
-	<return: #BlSelection>
-	
-	self
-		assert: [ extendedSelection isNotNil ]
-		description: [ 'Selection can not be nil' ].
-
-	^ extendedSelection
-]
-
-{ #category : #'extended selection - management' }
-AlbTextElement >> extendedSelectionInterval: anInterval [
-	self extendedSelect: anInterval first to: anInterval last
-]
-
 { #category : #'cursor - accessing' }
 AlbTextElement >> hasCursor [
 
@@ -122,9 +89,7 @@ AlbTextElement >> hideCursor [
 { #category : #initialization }
 AlbTextElement >> initialize [
 	super initialize.
-	extendedSelection := BlCompositeSelection new.
-	cursorStencil := AlbCursorStencil uniqueInstance.
-	oppositeIndex := -1.
+	cursorStencil := AlbCursorStencil uniqueInstance
 ]
 
 { #category : #layout }
@@ -158,16 +123,6 @@ AlbTextElement >> newCursor [
 AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	super onLayout: aBounds context: aBlElementBoundsUpdateContext.	
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
-]
-
-{ #category : #'opposite index - management' }
-AlbTextElement >> oppositeIndex [
-	^ oppositeIndex
-]
-
-{ #category : #'opposite index - management' }
-AlbTextElement >> oppositeIndex: anIndex [
-	oppositeIndex := anIndex
 ]
 
 { #category : #'cursor - management' }
@@ -211,16 +166,6 @@ AlbTextElement >> removeSegmentPiece [
 	self text: '' asRopedText
 ]
 
-{ #category : #'extended selection - management' }
-AlbTextElement >> resetExtendedSelectionInterval [
-	self isAttachedToSceneGraph ifTrue:[ self extendedSelectNone ]
-]
-
-{ #category : #'opposite index - management' }
-AlbTextElement >> resetOppositeIndex [
-	oppositeIndex := -1
-]
-
 { #category : #accessing }
 AlbTextElement >> segmentPiece [
 	<return: #TAlbTextEditorTextualPiece>
@@ -248,14 +193,6 @@ AlbTextElement >> segmentPiece: aSegmentPiece [
 			self telemetry
 				timeSync: [ 'Set text `{1}`' format: { aTextCopy } ]
 				during: [ self text: aTextCopy ] ]
-]
-
-{ #category : #'private - paragraph' }
-AlbTextElement >> setupParagraphBeforeDrawing [
-	super setupParagraphBeforeDrawing.
-	paragraph extendedSelection: self extendedSelection.
-	paragraph oppositeIndex: self oppositeIndex.
-
 ]
 
 { #category : #'cursor - management' }

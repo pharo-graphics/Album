@@ -65,30 +65,30 @@ AlbTextCursorAttribute >> leaveAction: aBlock [
 
 { #category : #private }
 AlbTextCursorAttribute >> performEnterAction: anEvent in: aTextEditor [
-	isInside = true
-		ifTrue: [ ^ self ].
+
+	isInside = true ifTrue: [ ^ self ].
 
 	isInside := true.
-	
-	self enterAction glamourValueWithArgs: {
-		aTextEditor. "then the whole editor element"
-		anEvent. "the event itself"
-		anEvent attributeStart.
-		anEvent attributeEnd }
+
+	self enterAction
+		value: aTextEditor
+		value: anEvent
+		value: anEvent attributeStart
+		value: anEvent attributeEnd
 ]
 
 { #category : #private }
 AlbTextCursorAttribute >> performLeaveAction: anEvent in: aTextEditor [
-	isInside = false
-		ifTrue: [ ^ self ].
+
+	isInside = false ifTrue: [ ^ self ].
 
 	isInside := false.
 
-	self leaveAction glamourValueWithArgs: {
-		aTextEditor. "then the whole editor element"
-		anEvent. "the event itself"
-		anEvent attributeStart.
-		anEvent attributeEnd }
+	self leaveAction
+		value: aTextEditor
+		value: anEvent
+		value: anEvent attributeStart
+		value: anEvent attributeEnd
 ]
 
 { #category : #events }

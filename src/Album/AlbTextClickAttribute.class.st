@@ -35,12 +35,14 @@ AlbTextClickAttribute >> initialize [
 
 { #category : #private }
 AlbTextClickAttribute >> performAction: anEvent in: aTextEditor on: aTTextEditorTextualPiece [
-	self action glamourValueWithArgs: {
-		aTTextEditorTextualPiece. "first we pass text"
-		anEvent currentTarget. "then the text piece (word) element"
-		aTextEditor. "then the whole text editor"
-		anEvent "the event itself"
-	}
+
+	"first we pass text then the text piece (word) element then the whole text editor and the event itself "
+
+	self action
+		value: aTTextEditorTextualPiece
+		value: anEvent currentTarget
+		value: aTextEditor
+		value: anEvent
 ]
 
 { #category : #events }

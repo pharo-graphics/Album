@@ -168,42 +168,6 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_0_and_1_in_empty [
 ]
 
 { #category : #add }
-AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_multi_lines [
-	
-	| anEditor  theMovedEvents  addedCursorElements removedCursorElements |
-	
-	anEditor := self test_editorOnMultilineText.
-	
-	theMovedEvents := OrderedCollection new.
-	addedCursorElements := OrderedCollection new.
-	removedCursorElements := OrderedCollection new.
-	
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
-	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
-
-	anEditor navigator
-		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		" already at 0, so no effect"
-		moveTo: 0;
-		apply;
-		unsubscribe.
-		
-	anEditor forceLayout.
-		
-	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
-	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
-
-	self assert: anEditor cursors  equals: { AlbTextEditorSingleCursor new position: 0 }.
-	
-	self assert: theMovedEvents size equals: 1.
-	self assert: addedCursorElements size equals: 1.
-	self assert: addedCursorElements first textPosition equals: 0.
-	self assert: removedCursorElements size equals: 0.
-	
-	^ anEditor
-]
-
-{ #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_and_0_in_empty [
 	
 	| anEditor theMovedEvents |

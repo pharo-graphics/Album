@@ -55,32 +55,30 @@ AlbTextHoverAttribute >> leaveAction: aBlock [
 
 { #category : #private }
 AlbTextHoverAttribute >> performEnterAction: anEvent in: aTextEditor [
-	isHovered
-		ifTrue: [ ^ self ].
-		
+
+	isHovered ifTrue: [ ^ self ].
+
 	isHovered := true.
 
-	self enterAction glamourValueWithArgs: {
-		anEvent currentTarget text. "first we pass text"
-		anEvent currentTarget. "then the text piece (word) element"
-		aTextEditor. "then the whole editor element"
-		anEvent "the event itself"
-	}
+	self enterAction
+		value: anEvent currentTarget text
+		value: anEvent currentTarget
+		value: aTextEditor
+		value: anEvent
 ]
 
 { #category : #private }
-AlbTextHoverAttribute >> performLeaveAction: anEvent in: aTextEditor [	
-	isHovered
-		ifFalse: [ ^ self ].
+AlbTextHoverAttribute >> performLeaveAction: anEvent in: aTextEditor [
+
+	isHovered ifFalse: [ ^ self ].
 
 	isHovered := false.
-	
-	self leaveAction glamourValueWithArgs: {
-		anEvent currentTarget text. "first we pass text"
-		anEvent currentTarget. "then the text piece (word) element"
-		aTextEditor. "then the whole editor element"
-		anEvent "the event itself"
-	}
+
+	self leaveAction
+		value: anEvent currentTarget text
+		value: anEvent currentTarget
+		value: aTextEditor
+		value: anEvent
 ]
 
 { #category : #events }

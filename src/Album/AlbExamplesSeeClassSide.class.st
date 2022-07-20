@@ -44,6 +44,45 @@ AlbExamplesSeeClassSide class >> editorFor: aText [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithClickAndHoverAttributes [
+
+	| text styler editorElement space |
+	self flag: 'does not work, no change when cursor hover and click (even in GalmourousToolki)'.
+	text := self methodText asRopedText fontSize: 12;
+		 fontName: 'Source Code Pro'.
+
+	styler := AlbRBTextStyler new.
+	styler classOrMetaClass: self class.
+
+	editorElement := AlbEditor new 
+		dresser: AlbTextAreaDresser new;
+		styler: styler;
+		text: text.
+
+	editorElement withLineNumbers.
+
+	editorElement editor text attributes: {
+		(BlFontSizeAttribute size: 18) beNotOverwritableByStyler.
+	}.
+	
+	editorElement editorText attributes: {
+		AlbTextHoverStylableAttribute new attribute: (BlTextDecorationAttribute new underline color: Color blue); beNotOverwritableByStyler.
+		AlbTextClickAttribute new beNotOverwritableByStyler
+	} from: 9 to: 10.
+	
+	editorElement constraintsDo: [ :c |
+		c horizontal matchParent.
+		c vertical matchParent ].
+
+	space := OBlSpace new.
+	space extent: 800@400.
+	space root addChild: editorElement.
+	space show
+	
+	
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
@@ -138,7 +177,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
-	ed := ((String loremIpsum: 10000) asRopedText
+	ed := ((String loremIpsum: 1000000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	

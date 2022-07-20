@@ -878,35 +878,43 @@ AlbTextEditor >> prepareSelection [
 { #category : #'private - cursor' }
 AlbTextEditor >> processCursorAttributes [
 	"I search for the attributes within the whole text that contain (or not contain) any of the cursors and notify about it"
-
 	| anEnteredEvent aLeavedEvent eventHandlingAttributesOutside eventHandlingAttributesInside |
 
 	anEnteredEvent := AlbTextCursorAttributeEnterEvent new.
 	aLeavedEvent := AlbTextCursorAttributeLeaveEvent new.
 
-	eventHandlingAttributesOutside := OrderedDictionary new.
-	eventHandlingAttributesInside := OrderedDictionary new.
+	eventHandlingAttributesOutside := OrderedCollection new.
+	eventHandlingAttributesInside := OrderedCollection new.
 
 	self flag: 'Removing this deep iteration ** speeds-up text editing a lot **'. 
+
 	self text
 		findAttributesSuchThat: [ :eachAttribute | eachAttribute isEventHandler ]
 		indicesDo: [ :aStart :anEnd :anAttribute |
-			((self isFocused and: [ self cursors anySatisfy: [ :eachCursor |
-				eachCursor position between: aStart and: anEnd ] ])
-					ifTrue: [ eventHandlingAttributesInside ]
-					ifFalse: [ eventHandlingAttributesOutside ])
-						at: anAttribute put: (aStart to: anEnd) ].
+			(self isFocused and: [
+				self cursors anySatisfy: [ :eachCursor | eachCursor position between: aStart and: anEnd ] ])
+					ifTrue: [ eventHandlingAttributesInside add: anAttribute -> (aStart to: anEnd) ]
+					ifFalse: [ eventHandlingAttributesOutside add: anAttribute -> (aStart to: anEnd) ] ].
 
-	eventHandlingAttributesOutside keysAndValuesDo: [ :eachAttribute :eachInterval |
+	eventHandlingAttributesOutside do: [ :eachEventHandlerAttributeAndInterval |
+		| eachAttribute eachInterval |
+		
+		eachAttribute := eachEventHandlerAttributeAndInterval key.
+		eachInterval := eachEventHandlerAttributeAndInterval value.
 		aLeavedEvent interval: eachInterval.
-		(eachAttribute wantsEvent: aLeavedEvent in: self) ifTrue: [
-			eachAttribute handleEvent: aLeavedEvent in: self on: nil ] ].
+		
+		(eachAttribute wantsEvent: aLeavedEvent in: self)
+			ifTrue: [ eachAttribute handleEvent: aLeavedEvent in: self on: nil ] ].
 
-	eventHandlingAttributesInside keysAndValuesDo: [ :eachAttribute :eachInterval |
+	eventHandlingAttributesInside do: [ :eachEventHandlerAttributeAndInterval |
+		| eachAttribute eachInterval |
+		
+		eachAttribute := eachEventHandlerAttributeAndInterval key.
+		eachInterval := eachEventHandlerAttributeAndInterval value.
 		anEnteredEvent interval: eachInterval.
-		(eachAttribute wantsEvent: anEnteredEvent in: self) ifTrue: [
-			eachAttribute handleEvent: anEnteredEvent in: self on: nil ] ]
-
+		
+		(eachAttribute wantsEvent: anEnteredEvent in: self)
+			ifTrue: [ eachAttribute handleEvent: anEnteredEvent in: self on: nil ] ]
 ]
 
 { #category : #accessing }

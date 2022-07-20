@@ -17,5 +17,6 @@ AlbLineNumberDecoration >> itemInsets: aBlInsets of: anItemElement in: anInfinit
 
 { #category : #geometry }
 AlbLineNumberDecoration >> width [
+
 	^ 50
 ]

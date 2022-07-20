@@ -167,7 +167,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
-	ed inspect.
+	"ed inspect."
 
 	space show.
 	^ ed

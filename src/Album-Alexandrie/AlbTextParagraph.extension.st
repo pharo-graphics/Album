@@ -6,7 +6,7 @@ AlbTextParagraph >> aeDrawOppositeOn: aeCanvas at: oppositeIndex [
 	self flag: 'Not used but kept for the record for now'.
 	bnds := self characterBoundsAtIndex: oppositeIndex.
 	aeCanvas restoreContextAfter: [ 
-		aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: self class oppositeDelimiterBackgroundColor ] alpha: 0.3.
+		aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: Color random ] alpha: 0.3.
 				aeCanvas pathTranslate: self padding topLeft.
 
 		aeCanvas setOutskirtsCentered.

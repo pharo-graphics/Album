@@ -144,7 +144,7 @@ AlbEditor >> initialize [
 	super initialize.
 	feltPens := OrderedCollection new.
 	feltPens add: AlbEditorOppositePen new.
-	feltPens add: AlbEditorExtendedSelectionPen new.
+	feltPens add: AlbEditoSelectionEchoPen new.
 	
 	self matchParent.
 	textReplacedHandler := BlEventHandler
@@ -375,6 +375,14 @@ AlbEditor >> textPiecesAndTheirElementsDo: aBlock [
 
 	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
 		piece isText ifTrue: [ aBlock value: piece value: pieceElement ] ]
+]
+
+{ #category : #'private - accessing' }
+AlbEditor >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
+
+	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
+		(piece textEnd < anInterval first or: [ piece textStart > (anInterval last)]) ifFalse: [ 
+			aBlock value: piece value: pieceElement ] ]
 ]
 
 { #category : #'accessing - decoration' }

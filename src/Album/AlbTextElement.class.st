@@ -130,7 +130,7 @@ AlbTextElement >> recycledFrom: aStencilBuilder [
 
 	super recycledFrom: aStencilBuilder.
 	self removeCursor.
-	self resetHighlights.
+	self resetHighlightsMap.
 	"otherwise attributes may not be garbage collected
 	see https://github.com/feenkcom/gtoolkit/issues/537"
 	self removeSegmentPiece

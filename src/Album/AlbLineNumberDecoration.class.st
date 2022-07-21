@@ -1,12 +1,35 @@
 Class {
 	#name : #AlbLineNumberDecoration,
 	#superclass : #BlInfiniteDecoration,
+	#instVars : [
+		'actualWidth'
+	],
 	#category : #'Album-UI'
 }
 
 { #category : #geometry }
-AlbLineNumberDecoration >> invalidationBoundsIn: anEditorElement [
-	^ BlBounds origin: 0@0 extent: self width @ anEditorElement height
+AlbLineNumberDecoration >> backgroundRectangleIn: anInfiniteElement [
+
+	^(Rectangle origin: 0 @ 0 corner: self width @ anInfiniteElement height) 
+]
+
+{ #category : #geometry }
+AlbLineNumberDecoration >> cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement [
+
+	| w |
+	w := self width - anInfiniteElement border width.
+	^ Rectangle origin: anInfiniteElement border width @ 0 corner: w @ anItemElement height
+]
+
+{ #category : #initialization }
+AlbLineNumberDecoration >> defaultWidth [
+	^ 25
+]
+
+{ #category : #initialization }
+AlbLineNumberDecoration >> initialize [
+	super initialize.
+	actualWidth := self defaultWidth
 ]
 
 { #category : #geometry }
@@ -16,7 +39,15 @@ AlbLineNumberDecoration >> itemInsets: aBlInsets of: anItemElement in: anInfinit
 ]
 
 { #category : #geometry }
+AlbLineNumberDecoration >> onActualWidthChangeWith: anInteger do: aBlock [
+
+	anInteger <= actualWidth ifTrue: [ ^ self ].
+	actualWidth := anInteger.
+	aBlock value
+]
+
+{ #category : #geometry }
 AlbLineNumberDecoration >> width [
 
-	^ 50
+	^ actualWidth + 6
 ]

@@ -29,12 +29,3 @@ AlbTextEditorHolderCommand >> executeOn: aSegmentHolder [
 AlbTextEditorHolderCommand >> sendTo: aSegmentHolder [
 	self executeOn: aSegmentHolder
 ]
-
-{ #category : #accessing }
-AlbTextEditorHolderCommand >> telemetry [
-	<return: #BlTelemetry>
-
-	^ self context
-		ifNil: [ BlNullTelemetry uniqueInstance ]
-		ifNotNil: [ :aContext | aContext telemetry ]
-]

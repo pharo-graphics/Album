@@ -23,5 +23,6 @@ AlbCursorElement >> textPosition [
 
 { #category : #accessing }
 AlbCursorElement >> textPosition: aNumber [
-	textPosition := aNumber
+	textPosition := aNumber.
+	self requestLayout
 ]

@@ -28,20 +28,13 @@ AlbTextEditorCursorChangeCommand >> cursor: anObject [
 { #category : #executing }
 AlbTextEditorCursorChangeCommand >> executeOn: aTextEditor [
 
-	self telemetry
-		timeSync: [ 'Process attributes' ]
-		during: [ self processAttributesOn: aTextEditor ].
-
+	self processAttributesOn: aTextEditor.
 	aTextEditor segmentCollector
 		cachedSegmentAt: self position
 		ifFound: [ :aSegment |
-			self telemetry
-				timeSync: [ 'Enqueue cursor changed holder command {1}' format: { aSegment index to: aSegment index } ]
-				during: [
-					"Trying to understand why we have to enqueue a command here: Cursor change is to be handled by the editor (element) which is not directly accessible from here ??? this would be why we have to enqueue a command ??  "
 					aTextEditor
 						enqueueHolderCommand: self newHolderCommand
-						interval: (aSegment index to: aSegment index) ] ]
+						interval: (aSegment index to: aSegment index) ]
 		ifNotFound: [  ].
 ]
 

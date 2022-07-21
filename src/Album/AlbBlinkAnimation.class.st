@@ -18,6 +18,7 @@ AlbBlinkAnimation >> defaultBlinkingDelay [
 AlbBlinkAnimation >> doStep [
 
 	| now |
+	self target parent ifNil: [ ^ self stop ].
 	now := DateAndTime now.
 	(now - lastTime) asMilliSeconds >= self defaultBlinkingDelay ifFalse: [ ^ self ].
 	lastTime := now.
@@ -39,7 +40,7 @@ AlbBlinkAnimation >> run [
 	"workaround: cursors are added then removed many times while editing. Thus, blinking animation is not robust. Many situations can lead to stopping it while #doStep is executing especially when editing a big file. "
 	[ super run ]
 		on: Error
-		do: [ self stop ]
+		do: [ self isRunning ifTrue: [ self stop ] ]
 ]
 
 { #category : #accessing }

@@ -9,7 +9,5 @@ Class {
 
 { #category : #executing }
 AlbTextEditorCursorChangedHolderCommand >> executeOn: aSegmentHolder [
-	self telemetry
-		timeSync: [ 'Segment holder onCursorChanged' ]
-		during: [ aSegmentHolder onCursorChanged ]
+	aSegmentHolder onCursorChanged
 ]

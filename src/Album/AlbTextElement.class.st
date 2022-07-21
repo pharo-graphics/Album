@@ -116,7 +116,7 @@ AlbTextElement >> newCursor [
 	"Create and return a new instance of a cursor element"
 	<return: #BlElement>
 
-	^ self cursorStencil asElement constraintsDo: [ :c | c ignoreByLayout ]
+	^ self cursorStencil asElement
 ]
 
 { #category : #layout }

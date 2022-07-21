@@ -23,12 +23,3 @@ AlbTextEditorCommand >> context: anObject [
 AlbTextEditorCommand >> executeOn: aTextEditor [
 	self subclassResponsibility
 ]
-
-{ #category : #accessing }
-AlbTextEditorCommand >> telemetry [
-	<return: #BlTelemetry>
-
-	^ self context
-		ifNil: [ BlNullTelemetry uniqueInstance ]
-		ifNotNil: [ :aContext | aContext telemetry ]
-]

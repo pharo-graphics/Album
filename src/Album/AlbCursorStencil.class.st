@@ -50,5 +50,5 @@ AlbCursorStencil >> create [
 { #category : #initialization }
 AlbCursorStencil >> initialize [
 	super initialize.
-	blinking := false
+	blinking := true
 ]

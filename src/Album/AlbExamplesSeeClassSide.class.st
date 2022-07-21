@@ -76,7 +76,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithClickAndHover
 		c horizontal matchParent.
 		c vertical matchParent ].
 
-	space := OBlSpace new.
+	space := BlSpace new.
 	space extent: 800@400.
 	space root addChild: editorElement.
 	space show

@@ -185,8 +185,13 @@ AlbTextEditorNavigator >> notifyCursorChanged: aCursor [
 
 { #category : #notifying }
 AlbTextEditorNavigator >> notifyCursorMoved: aCursor from: aFromIndex to: aToIndex [
-	self editor dispatchEvent: (AlbTextEditorCursorMovedEvent cursor: aCursor from: aFromIndex to: aToIndex dueTo: (dueTo ifNil: [self])).
-	self notifyCursorChanged: aCursor
+
+	self editor dispatchEvent: (AlbTextEditorCursorMovedEvent
+			 cursor: aCursor
+			 from: aFromIndex
+			 to: aToIndex
+			 dueTo: (dueTo ifNil: [ self ])).
+	"self notifyCursorChanged: aCursor"
 ]
 
 { #category : #'private - accessing' }

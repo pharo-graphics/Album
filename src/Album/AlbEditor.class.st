@@ -78,7 +78,7 @@ AlbEditor >> defaulTextEditor [
 AlbEditor >> defaultPaddings [
 
 	^ BlInsets
-		  top: 10
+		  top: 5
 		  left: 0
 		  bottom: 10
 		  right: 5

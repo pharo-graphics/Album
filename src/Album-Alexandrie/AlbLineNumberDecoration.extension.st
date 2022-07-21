@@ -71,9 +71,8 @@ AlbLineNumberDecoration >> aeDrawOn: aeCanvas in: anInfiniteElement [
 
 	"Update the actual width and draw the background beneath "
 
-	aeCanvas restoreContextAfter: [ 
-		self aeMeasureActualWidthOn: aeCanvas in: anInfiniteElement.
-		self aeDrawBackgroundOn: aeCanvas in: anInfiniteElement ].
+	self aeMeasureActualWidthOn: aeCanvas in: anInfiniteElement.
+	self aeDrawBackgroundOn: aeCanvas in: anInfiniteElement.
 	"super sent ensure drawing for item elements"
 	super aeDrawOn: aeCanvas in: anInfiniteElement
 ]

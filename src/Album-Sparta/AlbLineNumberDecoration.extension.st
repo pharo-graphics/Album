@@ -10,6 +10,7 @@ AlbLineNumberDecoration >> cursorBackgroundDraw: anItemElement onSpartaCanvas: a
 	path := self cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement.
 	aCanvas figure
 		path: path;
+		borderOutside;
 		background: anInfiniteElement selectionColor;
 		draw
 ]
@@ -48,6 +49,7 @@ AlbLineNumberDecoration >> drawBackgroundOnSpartaCanvas: aCanvas in: anInfiniteE
 
 	aCanvas figure
 		path: (self backgroundRectangleIn: anInfiniteElement);
+		borderOutside;
 		background: (Color veryLightGray alpha: 0.20);
 		draw
 ]
@@ -57,9 +59,8 @@ AlbLineNumberDecoration >> drawOnSpartaCanvas: aCanvas in: anInfiniteElement [
 
 	"Update the actual width and draw the background beneath "
 
-	aCanvas transform by: [ :aTransform |  ] during: [ 
-		self measureActualWidthOnSpartaCanvas: aCanvas in: anInfiniteElement.
-		self drawBackgroundOnSpartaCanvas: aCanvas in: anInfiniteElement ].
+	self measureActualWidthOnSpartaCanvas: aCanvas in: anInfiniteElement.
+	self drawBackgroundOnSpartaCanvas: aCanvas in: anInfiniteElement.
 	"super sent ensure drawing for item elements"
 	super drawOnSpartaCanvas: aCanvas in: anInfiniteElement
 ]

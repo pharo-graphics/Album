@@ -19,3 +19,8 @@ AlbTextEditorFocusChangedHolderEvent >> hasFocus [
 AlbTextEditorFocusChangedHolderEvent >> hasFocus: aBoolean [
 	hasFocus := aBoolean
 ]
+
+{ #category : #sending }
+AlbTextEditorFocusChangedHolderEvent >> sendTo: aSegmentHolder [
+	aSegmentHolder onFocusChanged: self hasFocus
+]

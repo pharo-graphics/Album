@@ -11,3 +11,8 @@ Class {
 AlbTextEditorCursorChangedHolderEvent class >> isDeprecated [ 
 	^ true
 ]
+
+{ #category : #sending }
+AlbTextEditorCursorChangedHolderEvent >> sendTo: aSegmentHolder [
+	aSegmentHolder onCursorChanged
+]

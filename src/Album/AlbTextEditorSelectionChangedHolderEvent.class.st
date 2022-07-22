@@ -6,3 +6,8 @@ Class {
 	#superclass : #AlbTextEditorHolderEvent,
 	#category : #'Album-Commands-Holder'
 }
+
+{ #category : #sending }
+AlbTextEditorSelectionChangedHolderEvent >> sendTo: aSegmentHolder [
+	aSegmentHolder onSelectionChanged
+]

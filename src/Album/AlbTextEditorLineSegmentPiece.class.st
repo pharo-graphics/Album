@@ -10,6 +10,18 @@ Class {
 	#category : #'Album-Model-Segment-Text-Line'
 }
 
+{ #category : #updating }
+AlbTextEditorLineSegmentPiece >> addCursor: aPieceElement of: aLineSegment in: anEditorElement [
+	| globalCursor |
+	"if text editor cursor is currently within this segment piece then convert it to a local one"
+
+	globalCursor := anEditorElement cursor.
+	(globalCursor insideSubText: self of: aLineSegment) ifFalse: [^self ].
+	currentCursor := self globalCursorToLocal: globalCursor.
+	"tell to add the new cursor"
+	self onCursorAdded: currentCursor to: aPieceElement in: anEditorElement
+]
+
 { #category : #'instance creation' }
 AlbTextEditorLineSegmentPiece >> createElement: anEditorElement [
 	<return: #BlElement>
@@ -30,22 +42,6 @@ AlbTextEditorLineSegmentPiece >> currentCursor: aCursor [
 	"local cursor within this segment piece"
 	
 	currentCursor := aCursor
-]
-
-{ #category : #updating }
-AlbTextEditorLineSegmentPiece >> findAddedCursors: theUpdatedCursors to: theCurrentCursors [
-	"Find which cursors are new relative to the set of current cursors"
-	<return: #Set of: #BrTextEditorSingleCursor>
-	
-	^ theUpdatedCursors difference: theCurrentCursors
-]
-
-{ #category : #updating }
-AlbTextEditorLineSegmentPiece >> findRemovedCursors: theUpdatedCursors from: theCurrentCursors [
-	"Find which cursors were removed relative from the set of current cursors"
-	<return: #Set of: #BrTextEditorSingleCursor>
-	
-	^ theCurrentCursors difference: theUpdatedCursors
 ]
 
 { #category : #'api - cursor' }
@@ -99,6 +95,15 @@ AlbTextEditorLineSegmentPiece >> onCursorRemoved: aCursor from: aPieceElement in
 
 { #category : #updating }
 AlbTextEditorLineSegmentPiece >> onRecycled: aPieceElement in: anEditorElement [
+]
+
+{ #category : #updating }
+AlbTextEditorLineSegmentPiece >> removeCursor: aPieceElement of: aLineSegment in: anEditorElement [
+
+	currentCursor ifNil: [ ^ self ].
+	self onCursorRemoved: currentCursor from: aPieceElement in: anEditorElement.
+	"update the current cursor"
+	currentCursor := nil
 ]
 
 { #category : #'api - cursor' }

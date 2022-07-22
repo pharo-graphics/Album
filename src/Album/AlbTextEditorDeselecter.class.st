@@ -61,5 +61,5 @@ AlbTextEditorDeselecter >> privateDeselect: aFromTextIndex to: aToTextIndex [
 	aCommand := AlbTextEditorDeselectCommand new
 		fromIndex: aFromTextIndex;
 		toIndex: aToTextIndex.
-	self editor enqueueCommand: aCommand
+	self editor executeCommand: aCommand
 ]

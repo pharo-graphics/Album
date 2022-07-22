@@ -326,13 +326,19 @@ AlbTextEditor >> enableStyleTextWhenModified [
 
 { #category : #'commands - processing' }
 AlbTextEditor >> enqueueCommand: aTextEditorCommand [
-	aTextEditorCommand executeOn: self
+	self deprecated: 'Use #executeCommand since there is not queue management and that the command is directly executed'.
+	self executeCommand: aTextEditorCommand
 ]
 
 { #category : #'commands - processing' }
 AlbTextEditor >> enqueueHolderCommand: aTextEditorHolderCommand interval: aTextInterval [
+	self deprecated: 'use directly #notifyItems:event: instead'.
 
-	self notifyItems: aTextInterval event: aTextEditorHolderCommand
+]
+
+{ #category : #'commands - processing' }
+AlbTextEditor >> executeCommand: aTextEditorCommand [
+	aTextEditorCommand executeOn: self
 ]
 
 { #category : #accessing }
@@ -513,34 +519,9 @@ AlbTextEditor >> navigator [
 	^ AlbTextEditorNavigator new editor: self
 ]
 
-{ #category : #'commands - creation' }
-AlbTextEditor >> newFocusChangedCommand [
-	^ AlbTextEditorFocusChangedCommand new
-]
-
-{ #category : #'commands - creation' }
-AlbTextEditor >> newInvalidateCommand [
-	^ AlbTextEditorInvalidateCommand new
-]
-
 { #category : #initialization }
 AlbTextEditor >> newSegmentCollector [
 	^ AlbTextEditorSegmentCollector new segmentBuilder: self defaultSegmentBuilder; yourself
-]
-
-{ #category : #'commands - creation' }
-AlbTextEditor >> newSelectCommand [
-	^ AlbTextEditorSelectCommand new
-]
-
-{ #category : #'commands - creation' }
-AlbTextEditor >> newSelectionUpdateCommand [
-	^ AlbTextEditorSelectionUpdateCommand new
-]
-
-{ #category : #'commands - creation' }
-AlbTextEditor >> newUpdateCommand [
-	^ AlbTextEditorUpdateCommand new
 ]
 
 { #category : #'private - cursor' }
@@ -697,7 +678,7 @@ AlbTextEditor >> onGotFocus [
 	isFocused := true.
 	
 	self processCursorAttributes.
-	self enqueueCommand: (self newFocusChangedCommand hasFocus: true)
+	self executeCommand: (AlbTextEditorFocusChangedCommand new hasFocus: true)
 ]
 
 { #category : #hooks }
@@ -716,7 +697,7 @@ AlbTextEditor >> onLostFocus [
 	isFocused := false.
 
 	self processCursorAttributes.
-	self enqueueCommand: (self newFocusChangedCommand hasFocus: false).
+	self executeCommand: (AlbTextEditorFocusChangedCommand new hasFocus: false).
 ]
 
 { #category : #hooks }
@@ -1252,10 +1233,10 @@ AlbTextEditor >> updateSelection: aFromTextIndex to: aToTextIndex [
 	"Update text rendering within an interval defined by provided from and to indices."
 	| aCommand |
 	
-	aCommand := self newSelectionUpdateCommand
+	aCommand := AlbTextEditorSelectionUpdateCommand new
 		fromIndex: aFromTextIndex;
 		toIndex: aToTextIndex.
-	self enqueueCommand: aCommand
+	self executeCommand: aCommand
 ]
 
 { #category : #'api - modification' }

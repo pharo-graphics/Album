@@ -174,10 +174,24 @@ AlbTextEditorLineSegmentHolder >> newPiecesMap [
 ]
 
 { #category : #updating }
+AlbTextEditorLineSegmentHolder >> onCursorAdded [
+
+	"Is sent when text editor's cursor changes.
+	Segment holder should update text elements accordingly"
+
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+		aPiece
+			addCursor: aPieceElement
+			of: segment
+			in: self infiniteElement]
+]
+
+{ #category : #updating }
 AlbTextEditorLineSegmentHolder >> onCursorChanged [
 
 	"Is sent when text editor's cursor changes.
 	Segment holder should update text elements accordingly"
+	self deprecated: 'used #onCursorRemoved and #onCursorAdded'.
 
 	self
 		assert: [ segment isNotNil ]
@@ -185,6 +199,19 @@ AlbTextEditorLineSegmentHolder >> onCursorChanged [
 	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
 		aPiece
 			updateCursor: aPieceElement
+			of: segment
+			in: self infiniteElement]
+]
+
+{ #category : #updating }
+AlbTextEditorLineSegmentHolder >> onCursorRemoved [
+
+	"Is sent when text editor's cursor changes.
+	Segment holder should update text elements accordingly"
+
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+		aPiece
+			removeCursor: aPieceElement
 			of: segment
 			in: self infiniteElement]
 ]
@@ -288,6 +315,7 @@ AlbTextEditorLineSegmentHolder >> textInterval [
 AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 
 	| newPieceElements newPieceMap thePieces |
+
 	self
 		assert: [ segment == anEditorSegment ]
 		description: [ 'Can only update the same segment!' ].
@@ -313,7 +341,6 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 						https://github.com/feenkcom/gtoolkit/issues/892"
 				                    eachSegmentPiece currentCursor:
 					                    eachPiece currentCursor.
-
 				                    theSegmentElements do: [ :eachSegmentElement | 
 					                    eachPiece
 						                    updateText: eachSegmentElement
@@ -329,10 +356,16 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 
 	pieceElements := newPieceMap.
 
-
+	"first remove the cursor, else it can be added before being removed".
 	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
 		aPiece
-			updateCursor: aPieceElement
+			removeCursor: aPieceElement
+			of: anEditorSegment
+			in: self infiniteElement].
+		
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+		aPiece
+			addCursor: aPieceElement
 			of: anEditorSegment
 			in: self infiniteElement.
 		aPiece

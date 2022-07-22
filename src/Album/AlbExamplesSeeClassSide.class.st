@@ -179,7 +179,8 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
-	ed := ((String loremIpsum: 1000000) asRopedText
+	"The insertion bogue arise around 342225"
+	ed := ((String loremIpsum: 10000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed constraintsDo: [ :c | 

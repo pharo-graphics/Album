@@ -173,25 +173,23 @@ AlbTextEditorNavigator >> moveWithin: anInterval [
 ]
 
 { #category : #notifying }
-AlbTextEditorNavigator >> notifyCursorChanged: aCursor [
+AlbTextEditorNavigator >> notifyCursorAdded: aCursor [
 	| aCommand |
 
-	aCommand := AlbTextEditorCursorChangeCommand new
+	aCommand := AlbTextEditorCursorAddCommand new
 		context: self context;
-		cursor: aCursor;
-		position: aCursor position.
-	self editor enqueueCommand: aCommand
+		cursor: aCursor.
+	self editor executeCommand: aCommand
 ]
 
 { #category : #notifying }
-AlbTextEditorNavigator >> notifyCursorMoved: aCursor from: aFromIndex to: aToIndex [
+AlbTextEditorNavigator >> notifyCursorRemoved: aCursor [
+	| aCommand |
 
-	self editor dispatchEvent: (AlbTextEditorCursorMovedEvent
-			 cursor: aCursor
-			 from: aFromIndex
-			 to: aToIndex
-			 dueTo: (dueTo ifNil: [ self ])).
-	"self notifyCursorChanged: aCursor"
+	aCommand := AlbTextEditorCursorRemoveCommand new
+		context: self context;
+		cursor: aCursor.
+	self editor executeCommand: aCommand
 ]
 
 { #category : #'private - accessing' }
@@ -203,17 +201,30 @@ AlbTextEditorNavigator >> privateAssertPosition: aTextPosition [
 
 { #category : #private }
 AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
-	| anOldCursor  idx |
-	idx := self privateNormalizePosition: aTextIndex.
-	
-	anOldCursor := aCursor copy.
-	self flag: 'here, notifyCursorChanged: anOldCursor will not work. why ???????'. 
-	aCursor position: idx.
-	self privateUpdateDesiredCoordinate: aCursor.
 
-	self notifyCursorChanged: anOldCursor.
-	self notifyCursorChanged: aCursor.
-	self notifyCursorMoved: aCursor from: anOldCursor position to: idx.
+	| prevIndex nextIndex |
+	
+	prevIndex := aCursor position.
+	nextIndex := self privateNormalizePosition: aTextIndex.
+	
+	"Take care to not change if the text index stay unchanged"
+	"prevIndex = nextIndex ifTrue: [ ^self ]."
+	
+	"remove old one"
+	self notifyCursorRemoved: aCursor.
+
+	"update then add the new one"
+	aCursor position: nextIndex.
+
+	shouldResetDesiredCoordinate ifTrue: [ aCursor resetDesiredCoordinate ].
+	self notifyCursorAdded: aCursor.
+
+	"now tell everyone interested that the cursor has moved"
+	self editor dispatchEvent: (AlbTextEditorCursorMovedEvent
+			 cursor: aCursor
+			 from: prevIndex
+			 to: aCursor position
+			 dueTo: (dueTo ifNil: [ self ]))
 ]
 
 { #category : #'private - accessing' }
@@ -229,14 +240,6 @@ AlbTextEditorNavigator >> privateRegisterForMove: aCursor by: aDelta [
 { #category : #'private - registration' }
 AlbTextEditorNavigator >> privateRegisterForMove: aCursor to: aTextPosition [
 	nextTextPosition := aTextPosition
-]
-
-{ #category : #private }
-AlbTextEditorNavigator >> privateUpdateDesiredCoordinate: aCursor [
-	shouldResetDesiredCoordinate
-		ifFalse: [ ^ self ].
-
-	aCursor resetDesiredCoordinate
 ]
 
 { #category : #'api - events' }

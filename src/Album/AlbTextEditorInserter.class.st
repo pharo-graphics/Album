@@ -384,7 +384,7 @@ AlbTextEditorInserter >> privateInsertStrings: aCollectionOfString atAll: aColle
 		strings: aCollectionOfString;
 		indices: aCollectionOfIndices.
 
-	self editor enqueueCommand: aCommand
+	self editor executeCommand: aCommand
 ]
 
 { #category : #private }

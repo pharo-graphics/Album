@@ -8,7 +8,23 @@ Class {
 }
 
 { #category : #updating }
+AlbTextEditorSegmentHolder >> onCursorAdded [
+	"Is sent when text editor's cursor changes.
+	Segment holder should update text elements accordingly"
+	
+	self subclassResponsibility
+]
+
+{ #category : #updating }
 AlbTextEditorSegmentHolder >> onCursorChanged [
+	"Is sent when text editor's cursor changes.
+	Segment holder should update text elements accordingly"
+	self deprecated: 'not used anymore in Album'.
+
+]
+
+{ #category : #updating }
+AlbTextEditorSegmentHolder >> onCursorRemoved [
 	"Is sent when text editor's cursor changes.
 	Segment holder should update text elements accordingly"
 	

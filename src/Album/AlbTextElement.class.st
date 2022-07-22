@@ -11,16 +11,19 @@ Class {
 
 { #category : #'cursor - management' }
 AlbTextElement >> addCursorAt: aTextPosition [
+
 	<return: #AlbCursorElement>
 	^ self
-		cursorAt: aTextPosition
-		ifFound: #yourself
-		ifNone: [
-			cursorElement ifNotNil: [ cursorElement removeFromParent].
-			cursorElement := self newCursor.
-			cursorElement textPosition: aTextPosition.
-			self addChild: cursorElement.
-			cursorElement ]
+		  cursorAt: aTextPosition
+		  ifFound: #yourself
+		  ifNone: [ 
+			  cursorElement ifNil: [ 
+				  cursorElement := self newCursor.
+				self flag: 'Should not be removed with #removeFromParent but let it until the issue of adding a CursorElement whereas it is already a child of another element is fixed'.
+					cursorElement removeFromParent.
+				  self addChild: cursorElement ].
+			  cursorElement textPosition: aTextPosition.
+			  cursorElement ]
 ]
 
 { #category : #'cursor - asserting' }
@@ -50,6 +53,7 @@ AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBloc
 
 	cursorElement ifNil: [ ^ aNoneBlock value ].
 	cursorElement textPosition = aTextPosition ifFalse: [ ^ aNoneBlock value ].
+
 	^ aFoundBlock value: cursorElement
 ]
 
@@ -114,7 +118,6 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 { #category : #initialization }
 AlbTextElement >> newCursor [
 	"Create and return a new instance of a cursor element"
-	<return: #BlElement>
 
 	^ self cursorStencil asElement
 ]
@@ -139,7 +142,7 @@ AlbTextElement >> recycledFrom: aStencilBuilder [
 { #category : #'cursor - management' }
 AlbTextElement >> removeCursor [
 	"Remove all cursors"
-	cursorElement ifNil: [ ^self ].
+	cursorElement ifNil: [ ^ self ].
 	cursorElement removeFromParent.
 	cursorElement := nil
 

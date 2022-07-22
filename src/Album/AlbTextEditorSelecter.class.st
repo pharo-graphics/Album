@@ -486,7 +486,7 @@ AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 	aCommand := AlbTextEditorSelectCommand new
 		fromIndex: aFromTextIndex;
 		toIndex: aToTextIndex.
-	self editor enqueueCommand: aCommand
+	self editor executeCommand: aCommand
 ]
 
 { #category : #'api - processing' }

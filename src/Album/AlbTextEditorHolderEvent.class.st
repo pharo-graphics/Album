@@ -2,7 +2,7 @@
 I am a payload to trigger partial text update without re-creation of text pieces
 "
 Class {
-	#name : #AlbTextEditorHolderCommand,
+	#name : #AlbTextEditorHolderEvent,
 	#superclass : #BlEvent,
 	#instVars : [
 		'context'
@@ -11,21 +11,21 @@ Class {
 }
 
 { #category : #accessing }
-AlbTextEditorHolderCommand >> context [
+AlbTextEditorHolderEvent >> context [
 	^ context
 ]
 
 { #category : #accessing }
-AlbTextEditorHolderCommand >> context: anObject [
+AlbTextEditorHolderEvent >> context: anObject [
 	context := anObject
 ]
 
 { #category : #executing }
-AlbTextEditorHolderCommand >> executeOn: aSegmentHolder [
-	self subclassResponsibility
+AlbTextEditorHolderEvent >> executeOn: aSegmentHolder [
+	self deprecated: 'use #sendTo: instead since I''m an event'.
 ]
 
 { #category : #sending }
-AlbTextEditorHolderCommand >> sendTo: aSegmentHolder [
+AlbTextEditorHolderEvent >> sendTo: aSegmentHolder [
 	self executeOn: aSegmentHolder
 ]

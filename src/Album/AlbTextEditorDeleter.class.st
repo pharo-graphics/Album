@@ -177,7 +177,7 @@ AlbTextEditorDeleter >> privateDelete: aFromTextIndex to: aToTextIndex [
 	aCommand := AlbTextEditorDeleteCommand new
 		fromIndex: aFromTextIndex;
 		toIndex: aToTextIndex.
-	self editor enqueueCommand: aCommand
+	self editor executeCommand: aCommand
 ]
 
 { #category : #'api - configuration' }

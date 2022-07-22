@@ -140,7 +140,7 @@ AlbTextEditorOperator >> findTextIndexAboveCursor: aCursor ifAbsent: anException
 		beUp;
 		whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 
-	self editor enqueueCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	^ aGlobalTextIndex
 		ifNotNil: [ aGlobalTextIndex ]
@@ -159,7 +159,7 @@ AlbTextEditorOperator >> findTextIndexAtCursor: aCursor ifAbsent: anExceptionBlo
 		cursor: aCursor;
 		whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor enqueueCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	aGlobalTextIndex
 		ifNotNil: [ ^ aGlobalTextIndex ]
@@ -225,7 +225,7 @@ AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition [
 	aTransformation := AlbTextEditorExplicitScreenToCursorTransformation new screenPosition: aScreenPosition.
 	aTransformation whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor enqueueCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	"could not find a text index for a given screen position"
 	self
@@ -246,7 +246,7 @@ AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition ifAbsent
 	aTransformation := AlbTextEditorExplicitScreenToCursorTransformation new screenPosition: aScreenPosition.
 	aTransformation whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor enqueueCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	aGlobalTextIndex
 		ifNotNil: [ ^ aGlobalTextIndex ]
@@ -273,7 +273,7 @@ AlbTextEditorOperator >> findTextIndexBelowCursor: aCursor ifAbsent: anException
 		beDown;
 		whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor enqueueCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	aGlobalTextIndex
 		ifNotNil: [ ^ aGlobalTextIndex ]

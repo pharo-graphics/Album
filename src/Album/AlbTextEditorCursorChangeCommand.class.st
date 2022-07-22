@@ -13,6 +13,11 @@ Class {
 	#category : #'Album-Commands'
 }
 
+{ #category : #testing }
+AlbTextEditorCursorChangeCommand class >> isDeprecated [ 
+	^ true
+]
+
 { #category : #accessing }
 AlbTextEditorCursorChangeCommand >> cursor [
 	<return: #AlbTextEditorSingleCursor>
@@ -32,15 +37,13 @@ AlbTextEditorCursorChangeCommand >> executeOn: aTextEditor [
 	aTextEditor segmentCollector
 		cachedSegmentAt: self position
 		ifFound: [ :aSegment |
-					aTextEditor
-						enqueueHolderCommand: self newHolderCommand
-						interval: (aSegment index to: aSegment index) ]
+					aTextEditor notifyItems: (aSegment index to: aSegment index) event: self newHolderEvent]
 		ifNotFound: [  ].
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorCursorChangeCommand >> newHolderCommand [
-	^ AlbTextEditorCursorChangedHolderCommand new context: self context
+AlbTextEditorCursorChangeCommand >> newHolderEvent [
+	^ AlbTextEditorCursorChangedHolderEvent new context: self context
 ]
 
 { #category : #accessing }

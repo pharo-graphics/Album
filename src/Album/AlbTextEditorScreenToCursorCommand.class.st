@@ -16,14 +16,13 @@ AlbTextEditorScreenToCursorCommand >> executeOn: aTextEditor [
 AlbTextEditorScreenToCursorCommand >> explicitScreenToCursor: aTransformation for: aTextEditor [
 
 	"we convert a pure screen position, should send to all segment holders"
-	aTextEditor
-		enqueueHolderCommand: self newHolderCommand
-		interval: aTextEditor segmentCollector cachedInterval
+	aTextEditor notifyItems: aTextEditor segmentCollector cachedInterval event: self newHolderEvent.
+
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorScreenToCursorCommand >> newHolderCommand [
-	^ AlbTextEditorScreenToCursorHolderCommand new
+AlbTextEditorScreenToCursorCommand >> newHolderEvent [
+	^ AlbTextEditorScreenToCursorHolderEvent new
 		transformation: self transformation
 ]
 
@@ -31,13 +30,12 @@ AlbTextEditorScreenToCursorCommand >> newHolderCommand [
 AlbTextEditorScreenToCursorCommand >> relativeScreenToCursor: aTransformation for: aTextEditor [
 
 	"we convert a relative screen position, should send only to the segment at the cursor position"
+
 	aTextEditor segmentCollector
 		cachedSegmentAt: self transformation cursor position
-		ifFound: [ :aSegment |
-			aTextEditor
-				enqueueHolderCommand: self newHolderCommand
-				interval: (aSegment index to: aSegment index) ]
-		ifNotFound: [  ].
+		ifFound: [ :aSegment | 
+			aTextEditor notifyItems: (aSegment index to: aSegment index) event: self newHolderEvent ]
+		ifNotFound: [  ]
 ]
 
 { #category : #accessing }

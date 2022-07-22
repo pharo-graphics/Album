@@ -13,8 +13,8 @@ Class {
 
 { #category : #executing }
 AlbTextEditorSelectionUpdateCommand >> executeOn: aTextEditor [
+
 	| changedFrom changedTo |
-	
 	changedFrom := self fromIndex.
 
 	changedTo := self toIndex.
@@ -27,11 +27,8 @@ AlbTextEditorSelectionUpdateCommand >> executeOn: aTextEditor [
 	aTextEditor segmentCollector
 		cachedSegmentAt: changedTo
 		ifFound: [ :aSegment | changedTo := aSegment index ]
-		ifNotFound: [ changedTo := aTextEditor segmentCollector segments size ].	
-	
-	aTextEditor
-		enqueueHolderCommand: self newHolderCommand
-		interval: (changedFrom to: changedTo)
+		ifNotFound: [ changedTo := aTextEditor segmentCollector segments size ].
+	aTextEditor notifyItems: (changedFrom to: changedTo) event: self newHolderEvent
 ]
 
 { #category : #accessing }
@@ -45,8 +42,8 @@ AlbTextEditorSelectionUpdateCommand >> fromIndex: anObject [
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorSelectionUpdateCommand >> newHolderCommand [
-	^ AlbTextEditorSelectionChangedHolderCommand new
+AlbTextEditorSelectionUpdateCommand >> newHolderEvent [
+	^ AlbTextEditorSelectionChangedHolderEvent new
 ]
 
 { #category : #accessing }

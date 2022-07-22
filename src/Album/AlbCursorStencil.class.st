@@ -36,19 +36,19 @@ AlbCursorStencil >> blinking: anObject [
 
 { #category : #'api - instantiation' }
 AlbCursorStencil >> create [
-	| e |
-	e := AlbCursorElement new
-		constraintsDo: [ :c |
+	| current |
+	current := AlbCursorElement new
+		constraintsDo: [ :c | 
 			c horizontal exact: 2.
 			c vertical matchParent ];
 		background: Color red;
 		yourself.
-	blinking ifTrue: [e addAnimation: AlbBlinkAnimation new].
-	^ e
+	blinking ifTrue: [current addAnimation: AlbBlinkAnimation new].
+	^ current
 ]
 
 { #category : #initialization }
 AlbCursorStencil >> initialize [
 	super initialize.
-	blinking := true
+	blinking := false
 ]

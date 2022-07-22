@@ -10,9 +10,8 @@ Class {
 { #category : #executing }
 AlbTextEditorFocusChangedCommand >> executeOn: aTextEditor [
 	
-	aTextEditor
-		enqueueHolderCommand: self newHolderCommand
-		interval: aTextEditor segmentCollector cachedInterval
+	aTextEditor notifyItems: aTextEditor segmentCollector cachedInterval event: self newHolderEvent.
+
 ]
 
 { #category : #accessing }
@@ -26,7 +25,7 @@ AlbTextEditorFocusChangedCommand >> hasFocus: anObject [
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorFocusChangedCommand >> newHolderCommand [
-	^ AlbTextEditorFocusChangedHolderCommand new
+AlbTextEditorFocusChangedCommand >> newHolderEvent [
+	^ AlbTextEditorFocusChangedHolderEvent new
 		hasFocus: self hasFocus
 ]

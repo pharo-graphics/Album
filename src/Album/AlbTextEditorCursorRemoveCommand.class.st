@@ -25,7 +25,7 @@ AlbTextEditorCursorRemoveCommand >> executeOn: aTextEditor [
 	"Attribute handling: some attribute are eventHandlers."
 
 	self flag: 'We have to think about attributes later become this code is too crappy'.
-	"self processAttributesOn: aTextEditor."
+	self processAttributesOn: aTextEditor.
 
 	"Now move the cursor within the cached text segments"
 	aTextEditor segmentCollector
@@ -79,16 +79,16 @@ AlbTextEditorCursorRemoveCommand >> processAttributesOn: aTextEditor [
 		eachAttribute := eachEventHandlerAttributeAndInterval key.
 		eachInterval := eachEventHandlerAttributeAndInterval value.
 
-		anEvent := AlbTextCursorAttributeLeaveEvent new interval: eachInterval.
-		(eachAttribute wantsEvent: anEvent in: aTextEditor)
-			ifTrue: [ eachAttribute handleEvent: anEvent in: aTextEditor on: nil ] ].
+		anEvent := AlbTextCursorAttributeLeaveEvent new textEditor: aTextEditor; interval: eachInterval.
+		(eachAttribute wantsEvent: anEvent )
+			ifTrue: [ eachAttribute handleEvent: anEvent ] ].
 
 	eventHandlingAttributesInside do: [ :eachEventHandlerAttributeAndInterval |
 		| eachAttribute eachInterval anEvent |
 		
 		eachAttribute := eachEventHandlerAttributeAndInterval key.
 		eachInterval := eachEventHandlerAttributeAndInterval value.
-		anEvent := AlbTextCursorAttributeEnterEvent new interval: eachInterval.
-		(eachAttribute wantsEvent: anEvent in: aTextEditor)
-			ifTrue: [ eachAttribute handleEvent: anEvent in: aTextEditor on: nil ] ]
+		anEvent := AlbTextCursorAttributeEnterEvent new textEditor: aTextEditor; interval: eachInterval.
+		(eachAttribute wantsEvent: anEvent)
+			ifTrue: [ eachAttribute handleEvent: anEvent ] ]
 ]

@@ -532,8 +532,7 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 	self isFocused
 		ifFalse: [ ^ self ].
 
-	anEvent := AlbTextCursorAttributeEnterEvent new.
-	
+	anEvent := AlbTextCursorAttributeEnterEvent new textEditor: self.
 	theEventHandlingAttributes := (aCollectionOfAttributes select: [ :eachAttribute | eachAttribute isEventHandler ]) asSet.
 	
 	self text
@@ -543,8 +542,8 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 					eachCursor position between: aStart and: anEnd ])
 						ifTrue: [
 							anEvent interval: (aStart to: anEnd).
-							(eachAttribute wantsEvent: anEvent in: self)
-								ifTrue: [ eachAttribute handleEvent: anEvent in: self on: nil ] ] ]
+							(eachAttribute wantsEvent: anEvent)
+								ifTrue: [ eachAttribute handleEvent: anEvent ] ] ]
 ]
 
 { #category : #'event firing' }
@@ -861,8 +860,8 @@ AlbTextEditor >> processCursorAttributes [
 	"I search for the attributes within the whole text that contain (or not contain) any of the cursors and notify about it"
 	| anEnteredEvent aLeavedEvent eventHandlingAttributesOutside eventHandlingAttributesInside |
 
-	anEnteredEvent := AlbTextCursorAttributeEnterEvent new.
-	aLeavedEvent := AlbTextCursorAttributeLeaveEvent new.
+	anEnteredEvent := AlbTextCursorAttributeEnterEvent new textEditor: self.
+	aLeavedEvent := AlbTextCursorAttributeLeaveEvent new textEditor: self.
 
 	eventHandlingAttributesOutside := OrderedCollection new.
 	eventHandlingAttributesInside := OrderedCollection new.
@@ -884,8 +883,8 @@ AlbTextEditor >> processCursorAttributes [
 		eachInterval := eachEventHandlerAttributeAndInterval value.
 		aLeavedEvent interval: eachInterval.
 		
-		(eachAttribute wantsEvent: aLeavedEvent in: self)
-			ifTrue: [ eachAttribute handleEvent: aLeavedEvent in: self on: nil ] ].
+		(eachAttribute wantsEvent: aLeavedEvent)
+			ifTrue: [ eachAttribute handleEvent: aLeavedEvent ] ].
 
 	eventHandlingAttributesInside do: [ :eachEventHandlerAttributeAndInterval |
 		| eachAttribute eachInterval |
@@ -894,8 +893,8 @@ AlbTextEditor >> processCursorAttributes [
 		eachInterval := eachEventHandlerAttributeAndInterval value.
 		anEnteredEvent interval: eachInterval.
 		
-		(eachAttribute wantsEvent: anEnteredEvent in: self)
-			ifTrue: [ eachAttribute handleEvent: anEnteredEvent in: self on: nil ] ]
+		(eachAttribute wantsEvent: anEnteredEvent)
+			ifTrue: [ eachAttribute handleEvent: anEnteredEvent ] ]
 ]
 
 { #category : #accessing }

@@ -19,20 +19,18 @@ AlbTextEditorLineSegmentTextListener >> eventClass [
 { #category : #'api - event managing' }
 AlbTextEditorLineSegmentTextListener >> handleEvent: aBlMouseEvent [
 
-	| aTextElement anEditorElement aLocalPosition aTextIndex anIterator theAttributes |
+	| aTextElement anEditorElement aLocalPosition aTextIndex anIterator theAttributes attributeMouseEvent |
 	aTextElement := aBlMouseEvent currentTarget.
 	"If text element has no paragraph we can not find text index for mouse event"
 	aTextElement paragraph ifNil: [ ^ self ].
 
 	"To not create an instance of me for each tiny text element"
 	anEditorElement := aTextElement
-		                   allParentsDetect: [ :anElement | 
-		                   anElement isKindOf: AlbEditorElement ]
+		                   allParentsDetect: [ :anElement | anElement isKindOf: AlbEditorElement ]
 		                   ifFound: #yourself
 		                   ifNone: [ ^ self ].
 
-	aLocalPosition := aTextElement globalPointToLocal:
-		                  aBlMouseEvent position.
+	aLocalPosition := aTextElement globalPointToLocal: aBlMouseEvent position.
 
 	aTextIndex := aTextElement indexAtScreenPosition: aLocalPosition.
 
@@ -40,14 +38,11 @@ AlbTextEditorLineSegmentTextListener >> handleEvent: aBlMouseEvent [
 		              iterator: aTextIndex + 1
 		              to: (aTextIndex + 1 min: aTextElement text size).
 
-	theAttributes := anIterator selectAttributes: [ :anAttribute | 
-		                 anAttribute isEventHandler ].
-
+	theAttributes := anIterator selectAttributes: [ :anAttribute | anAttribute isEventHandler ].
+	attributeMouseEvent := AlbTextCursorAttributeMouseEvent new
+		                       textEditor: anEditorElement editor;
+		                       textualPiece: aTextElement segmentPiece;
+		                       wrappedEvent: aBlMouseEvent.
 	theAttributes do: [ :anAttribute | 
-		(anAttribute wantsEvent: aBlMouseEvent in: anEditorElement editor) 
-			ifTrue: [ 
-				anAttribute
-					handleEvent: aBlMouseEvent
-					in: anEditorElement editor
-					on: aTextElement segmentPiece ] ].
+		(anAttribute wantsEvent: attributeMouseEvent) ifTrue: [ anAttribute handleEvent: attributeMouseEvent ] ]
 ]

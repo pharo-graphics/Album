@@ -378,6 +378,8 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 			in: self infiniteElement].
 
 	itemElement removeChildren.
+	self flag: 'Until I understand why they can have parent'.
+	newPieceElements do: [ :e | e removeFromParent ].
 	itemElement addChildren: newPieceElements.
 
 	itemElement

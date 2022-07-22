@@ -95,16 +95,16 @@ AlbTextEditorCursorChangeCommand >> processAttributesOn: aTextEditor [
 		eachAttribute := eachEventHandlerAttributeAndInterval key.
 		eachInterval := eachEventHandlerAttributeAndInterval value.
 
-		anEvent := AlbTextCursorAttributeLeaveEvent new interval: eachInterval.
-		(eachAttribute wantsEvent: anEvent in: aTextEditor)
-			ifTrue: [ eachAttribute handleEvent: anEvent in: aTextEditor on: nil ] ].
+		anEvent := AlbTextCursorAttributeLeaveEvent new textEditor: aTextEditor; interval: eachInterval.
+		(eachAttribute wantsEvent: anEvent)
+			ifTrue: [ eachAttribute handleEvent: anEvent ] ].
 
 	eventHandlingAttributesInside do: [ :eachEventHandlerAttributeAndInterval |
 		| eachAttribute eachInterval anEvent |
 		
 		eachAttribute := eachEventHandlerAttributeAndInterval key.
 		eachInterval := eachEventHandlerAttributeAndInterval value.
-		anEvent := AlbTextCursorAttributeEnterEvent new interval: eachInterval.
-		(eachAttribute wantsEvent: anEvent in: aTextEditor)
-			ifTrue: [ eachAttribute handleEvent: anEvent in: aTextEditor on: nil ] ]
+		anEvent := AlbTextCursorAttributeEnterEvent new textEditor: aTextEditor; interval: eachInterval.
+		(eachAttribute wantsEvent: anEvent)
+			ifTrue: [ eachAttribute handleEvent: anEvent  ] ]
 ]

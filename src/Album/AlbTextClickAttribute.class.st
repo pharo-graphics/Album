@@ -22,8 +22,8 @@ AlbTextClickAttribute >> action: aValuable [
 ]
 
 { #category : #events }
-AlbTextClickAttribute >> handleEvent: anEvent in: aTextEditor on: aTTextEditorTextualPiece [
-	self performAction: anEvent in: aTextEditor on: aTTextEditorTextualPiece
+AlbTextClickAttribute >> handleEvent: anEvent [ 
+	self performAction: anEvent 
 ]
 
 { #category : #initialization }
@@ -34,18 +34,18 @@ AlbTextClickAttribute >> initialize [
 ]
 
 { #category : #private }
-AlbTextClickAttribute >> performAction: anEvent in: aTextEditor on: aTTextEditorTextualPiece [
+AlbTextClickAttribute >> performAction: anEvent [
 
 	"first we pass text then the text piece (word) element then the whole text editor and the event itself "
 
 	self action
-		value: aTTextEditorTextualPiece
-		value: anEvent currentTarget
-		value: aTextEditor
-		value: anEvent
+		value: anEvent textualPiece
+		value: anEvent wrappedEvent currentTarget
+		value: anEvent textEditor
+		value: anEvent wrappedEvent
 ]
 
 { #category : #events }
-AlbTextClickAttribute >> wantsEvent: anEvent in: aTextEditor [
-	^ anEvent isKindOf: BlClickEvent
+AlbTextClickAttribute >> wantsEvent: anEvent [ 
+	^ anEvent wrappedEvent isKindOf: BlClickEvent
 ]

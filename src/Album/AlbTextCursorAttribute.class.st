@@ -29,14 +29,14 @@ AlbTextCursorAttribute >> enterAction: aBlock [
 ]
 
 { #category : #events }
-AlbTextCursorAttribute >> handleEvent: anEvent in: aTextEditor on: aTTextEditorTextualPiece [
+AlbTextCursorAttribute >> handleEvent: anEvent [ 
 	"Handle a given event or dispatch it using #sendTo:"
 
 	(anEvent isKindOf: AlbTextCursorAttributeEnterEvent)
-		ifTrue: [ self performEnterAction: anEvent in: aTextEditor ].
+		ifTrue: [ self performEnterAction: anEvent ].
 
 	(anEvent isKindOf: AlbTextCursorAttributeLeaveEvent)
-		ifTrue: [ self performLeaveAction: anEvent in: aTextEditor ]
+		ifTrue: [ self performLeaveAction: anEvent ]
 ]
 
 { #category : #initialization }
@@ -64,35 +64,35 @@ AlbTextCursorAttribute >> leaveAction: aBlock [
 ]
 
 { #category : #private }
-AlbTextCursorAttribute >> performEnterAction: anEvent in: aTextEditor [
+AlbTextCursorAttribute >> performEnterAction: anEvent [
 
 	isInside = true ifTrue: [ ^ self ].
 
 	isInside := true.
 
 	self enterAction
-		value: aTextEditor
+		value: anEvent textEditor
 		value: anEvent
 		value: anEvent attributeStart
 		value: anEvent attributeEnd
 ]
 
 { #category : #private }
-AlbTextCursorAttribute >> performLeaveAction: anEvent in: aTextEditor [
+AlbTextCursorAttribute >> performLeaveAction: anEvent [ 
 
 	isInside = false ifTrue: [ ^ self ].
 
 	isInside := false.
 
 	self leaveAction
-		value: aTextEditor
+		value: anEvent textEditor
 		value: anEvent
 		value: anEvent attributeStart
 		value: anEvent attributeEnd
 ]
 
 { #category : #events }
-AlbTextCursorAttribute >> wantsEvent: anEvent in: aTextEditor [
+AlbTextCursorAttribute >> wantsEvent: anEvent [ 
 	"Return true if I am interested in a given event and want to handle it,
 	false otherwise"
 	<return: #Boolean>

@@ -20,14 +20,14 @@ AlbTextHoverAttribute >> enterAction: anObject [
 ]
 
 { #category : #events }
-AlbTextHoverAttribute >> handleEvent: anEvent in: aTextEditor on: aTTextEditorTextualPiece [
+AlbTextHoverAttribute >> handleEvent: anEvent [ 
 	"Handle a given event or dispatch it using #sendTo:"
 
-	(anEvent isKindOf: BlMouseEnterEvent)
-		ifTrue: [ self performEnterAction: anEvent in: aTextEditor ].
+	(anEvent wrappedEvent isKindOf: BlMouseEnterEvent)
+		ifTrue: [ self performEnterAction: anEvent ].
 
-	(anEvent isKindOf: BlMouseLeaveEvent)
-		ifTrue: [ self performLeaveAction: anEvent in: aTextEditor ].
+	(anEvent wrappedEvent isKindOf: BlMouseLeaveEvent)
+		ifTrue: [ self performLeaveAction: anEvent ].
 ]
 
 { #category : #initialization }
@@ -54,39 +54,39 @@ AlbTextHoverAttribute >> leaveAction: aBlock [
 ]
 
 { #category : #private }
-AlbTextHoverAttribute >> performEnterAction: anEvent in: aTextEditor [
+AlbTextHoverAttribute >> performEnterAction: anEvent [ 
 
 	isHovered ifTrue: [ ^ self ].
 
 	isHovered := true.
 
 	self enterAction
-		value: anEvent currentTarget text
-		value: anEvent currentTarget
-		value: aTextEditor
-		value: anEvent
+		value: anEvent wrappedEvent currentTarget text
+		value: anEvent wrappedEvent currentTarget
+		value: anEvent textEditor
+		value: anEvent wrappedEvent
 ]
 
 { #category : #private }
-AlbTextHoverAttribute >> performLeaveAction: anEvent in: aTextEditor [
+AlbTextHoverAttribute >> performLeaveAction: anEvent [ 
 
 	isHovered ifFalse: [ ^ self ].
 
 	isHovered := false.
 
 	self leaveAction
-		value: anEvent currentTarget text
-		value: anEvent currentTarget
-		value: aTextEditor
-		value: anEvent
+		value: anEvent wrappedEvent currentTarget text
+		value: anEvent wrappedEvent currentTarget
+		value: anEvent textEditor
+		value: anEvent wrappedEvent
 ]
 
 { #category : #events }
-AlbTextHoverAttribute >> wantsEvent: anEvent in: aTextEditor [
+AlbTextHoverAttribute >> wantsEvent: anEvent [
 	"Return true if I am interested in a given event and want to handle it,
 	false otherwise"
 	<return: #Boolean>
 
-	^ (anEvent isKindOf: BlMouseEnterEvent)
-		or: [ anEvent isKindOf: BlMouseLeaveEvent ]
+	^ (anEvent wrappedEvent isKindOf: BlMouseEnterEvent)
+		or: [ anEvent wrappedEvent isKindOf: BlMouseLeaveEvent ]
 ]

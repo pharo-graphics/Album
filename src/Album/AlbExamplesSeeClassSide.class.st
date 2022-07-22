@@ -69,8 +69,8 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithClickAndHover
 	
 	editorElement editorText attributes: {
 		AlbTextHoverStylableAttribute new attribute: (BlTextDecorationAttribute new underline color: Color blue); beNotOverwritableByStyler.
-		AlbTextClickAttribute new beNotOverwritableByStyler
-	} from: 9 to: 10.
+		AlbTextClickAttribute new action: [:a :b :c :d | self inform: d asString]; beNotOverwritableByStyler
+	} from: 1 to: 10.
 	
 	editorElement constraintsDo: [ :c |
 		c horizontal matchParent.

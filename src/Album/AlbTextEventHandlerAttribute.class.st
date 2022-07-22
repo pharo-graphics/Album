@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #events }
-AlbTextEventHandlerAttribute >> handleEvent: anEvent in: aTextEditor on: aTTextEditorTextualPiece [
+AlbTextEventHandlerAttribute >> handleEvent: anEvent [ 
 	self subclassResponsibility
 ]
 
@@ -35,7 +35,7 @@ AlbTextEventHandlerAttribute >> type [
 ]
 
 { #category : #events }
-AlbTextEventHandlerAttribute >> wantsEvent: anEvent in: aTextEditor [
+AlbTextEventHandlerAttribute >> wantsEvent: anEvent [ 
 	"Return true if I am interested in a given event and want to handle it,
 	false otherwise"
 	<return: #Boolean>

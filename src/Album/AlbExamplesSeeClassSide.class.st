@@ -46,45 +46,6 @@ AlbExamplesSeeClassSide class >> editorFor: aText [
 ]
 
 { #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithClickAndHoverAttributes [
-
-	| text styler editorElement space |
-	self flag: 'does not work, no change when cursor hover and click (even in GalmourousToolki)'.
-	text := self methodText asRopedText fontSize: 12;
-		 fontName: 'Source Code Pro'.
-
-	styler := AlbRBTextStyler new.
-	styler classOrMetaClass: self class.
-
-	editorElement := AlbEditor new 
-		dresser: AlbTextAreaDresser new;
-		styler: styler;
-		text: text.
-
-	editorElement withLineNumbers.
-
-	editorElement editor text attributes: {
-		(BlFontSizeAttribute size: 18) beNotOverwritableByStyler.
-	}.
-	
-	editorElement editorText attributes: {
-		AlbTextHoverStylableAttribute new attribute: (BlTextDecorationAttribute new underline color: Color blue); beNotOverwritableByStyler.
-		AlbTextClickAttribute new action: [:a :b :c :d | self inform: d asString]; beNotOverwritableByStyler
-	} from: 1 to: 10.
-	
-	editorElement constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-
-	space := BlSpace new.
-	space extent: 800@400.
-	space root addChild: editorElement.
-	space show
-	
-	
-]
-
-{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
@@ -180,7 +141,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
 	"The insertion bogue arise around 342225"
-	ed := ((String loremIpsum: 10000) asRopedText
+	ed := ((String loremIpsum: 10000000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed constraintsDo: [ :c | 
@@ -251,6 +212,40 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 	((' ( Monospace 40 ) ' asRopedText
 		  fontSize: 40;
 		  monospace) , (' Default font and size' asRopedText "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}")) onAlbum withLineNumbers;"inspect" openInOblSpace
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
+
+	| text styler editorElement space clickText hoverText |
+	self flag: 'Works, but should be revised because the implementaion of these attributes in Album is really crappy'.
+	clickText := 'Clik here'.
+	hoverText := 'Mouse over here'.
+	text := (clickText , ' ' , hoverText) asRopedText.
+	editorElement := AlbEditor new text: text.
+
+	editorElement editorText
+		attributes: { 
+				(BlTextBackgroundAttribute new paint: Color lightBlue).
+				(AlbTextClickAttribute new action: [ :a :b :c :d | 
+					 self inform: a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString ]) }
+		from: 1
+		to: 9.
+
+	editorElement editorText
+		attributes: { 
+				(BlTextBackgroundAttribute new paint: Color yellow).
+				(AlbTextHoverAttribute new
+					 enterAction: [ :a :b :c :d | 
+						 self inform: 'ENTER : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString ];
+					 leaveAction: [ :a :b :c :d | 
+						 self inform: 'LEAVE : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString ]) }
+		from: 11
+		to: 25.
+
+	space := BlSpace new.
+	space root addChild: editorElement.
+	space show
 ]
 
 { #category : #elements }

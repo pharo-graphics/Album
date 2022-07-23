@@ -143,8 +143,8 @@ AlbEditor >> initialize [
 
 	super initialize.
 	feltPens := OrderedCollection new.
-	feltPens add: AlbEditorOppositePen new.
-	feltPens add: AlbEditoSelectionEchoPen new.
+	self withOppositeDelimiter.
+	self withSelectionEcho.
 	
 	self matchParent.
 	textReplacedHandler := BlEventHandler
@@ -351,7 +351,6 @@ AlbEditor >> text: aBlText [
 
 { #category : #'model - events' }
 AlbEditor >> textChanged: aText [
-
 	self editor text: aText
 ]
 
@@ -386,13 +385,45 @@ AlbEditor >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBloc
 ]
 
 { #category : #'accessing - decoration' }
+AlbEditor >> withFeltPen: aFeltPenClass [
+
+	feltPens detect: [ :d | d isKindOf: aFeltPenClass ] ifNone: [ feltPens add: aFeltPenClass new ]
+]
+
+{ #category : #'accessing - decoration' }
 AlbEditor >> withLineNumbers [
 
 	self withDecoration: AlbLineNumberDecoration
 ]
 
 { #category : #'accessing - decoration' }
+AlbEditor >> withOppositeDelimiter [
+	self withFeltPen: AlbEditorOppositePen
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditor >> withSelectionEcho [
+	self withFeltPen: AlbEditoSelectionEchoPen 
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditor >> withoutFeltPen: aFeltPenClass [
+
+	feltPens := feltPens reject: [ :d | d isKindOf: aFeltPenClass ]
+]
+
+{ #category : #'accessing - decoration' }
 AlbEditor >> withoutLineNumbers [
 
 	self withoutDecoration: AlbLineNumberDecoration
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditor >> withoutOppositeDelimiter [
+	self withoutFeltPen: AlbEditorOppositePen
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditor >> withoutSelectionEcho [
+	self withoutFeltPen: AlbEditoSelectionEchoPen 
 ]

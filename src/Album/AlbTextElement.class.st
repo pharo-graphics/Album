@@ -21,7 +21,7 @@ AlbTextElement >> addCursorAt: aTextPosition [
 				  cursorElement := self newCursor.
 				self flag: 'Should not be removed with #removeFromParent but let it until the issue of adding a CursorElement whereas it is already a child of another element is fixed'.
 					cursorElement removeFromParent.
-				  self addChild: cursorElement ].
+					self addChild: cursorElement ].
 			  cursorElement textPosition: aTextPosition.
 			  cursorElement ]
 ]

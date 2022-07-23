@@ -24,7 +24,8 @@ Class {
 		'shortcuts',
 		'isFocused',
 		'shouldStyleWhenTextModified',
-		'cursor'
+		'cursor',
+		'hasEventHandlerAttribute'
 	],
 	#classInstVars : [
 		'isDebug'
@@ -362,6 +363,11 @@ AlbTextEditor >> hasCursors [
 	^ self cursors isNotEmpty
 ]
 
+{ #category : #'event handler attributes' }
+AlbTextEditor >> hasEventHandlerAttribute [
+	^ hasEventHandlerAttribute 
+]
+
 { #category : #'text - selection' }
 AlbTextEditor >> hasSelection [
 	"Return true of there is at least one selected character, false otherwise"
@@ -385,7 +391,7 @@ AlbTextEditor >> history: aTextEditorHistory [
 { #category : #initialization }
 AlbTextEditor >> initialize [
 	super initialize.
-	
+	hasEventHandlerAttribute := false.
 	mode := AlbTextEditorNullMode new.
 	
 	attachedElements := WeakSet new.
@@ -744,6 +750,7 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextAttributeAdded: aBlTextAttributeAdded [
+
 	self assertUIProcess.
 
 	self segmentBuilder
@@ -752,17 +759,29 @@ AlbTextEditor >> onTextAttributeAdded: aBlTextAttributeAdded [
 		to: aBlTextAttributeAdded toIndex
 		in: self.
 
+	aBlTextAttributeAdded attribute isEventHandler ifTrue: [ 
+		self
+			registerEventHandlerAttribute: aBlTextAttributeAdded attribute
+			from: aBlTextAttributeAdded fromIndex
+			to: aBlTextAttributeAdded toIndex ].
+
 	self notifyAttributesWithinCursor: { aBlTextAttributeAdded attribute }
 ]
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextAttributesRemoved: aBlTextAttributesRemoved [
+
 	self assertUIProcess.
+
+
 
 	self segmentBuilder
 		removedAttributesFrom: aBlTextAttributesRemoved fromIndex
 		to: aBlTextAttributesRemoved toIndex
 		in: self.
+	self
+		unregisterEventHandlerAttributesFrom: aBlTextAttributesRemoved fromIndex
+		to: aBlTextAttributesRemoved toIndex
 ]
 
 { #category : #'hooks - text modifications' }
@@ -775,32 +794,19 @@ AlbTextEditor >> onTextReplaced [
 ]
 
 { #category : #'hooks - text modifications' }
-AlbTextEditor >> onTextStyled: aBlTextStyledEvent [
+AlbTextEditor >> onTextStyled: aTextStyledEvent [
+
 	self assertUIProcess.
-	
-	(aBlTextStyledEvent text isNextGenerationOf: self text)
-		ifTrue: [
-			self text rope: aBlTextStyledEvent text text rope.
-			
-			aBlTextStyledEvent editorElement telemetry
-				timeSync: [ 'Execute after-action: {1}' format: { aBlTextStyledEvent afterAction } ]
-				during: [ aBlTextStyledEvent afterAction value: self text. ].
-			
-			aBlTextStyledEvent editorElement telemetry
-				timeSync: [ 'notifyTextStyled' ]
-				during: [ self notifyTextStyled: self text ].
-			
-			aBlTextStyledEvent editorElement telemetry
-				timeSync: [ 'processCursorAttributes' ]
-				during: [ self processCursorAttributes ].
-			
-			aBlTextStyledEvent editorElement telemetry
-				timeSync: [ 'Invalidate the whole text editor due to text change' ]
-				during: [
-					self updater
-						all;
-						update ] ]
-		ifFalse: [ self styleTextAndAfterDo: aBlTextStyledEvent afterAction ]
+	(aTextStyledEvent text isNextGenerationOf: self text)
+		ifTrue: [ 
+			self text rope: aTextStyledEvent text text rope.
+			aTextStyledEvent afterAction value: self text.
+			self notifyTextStyled: self text.
+			self processCursorAttributes.
+			self updater
+				all;
+				update ]
+		ifFalse: [ self styleTextAndAfterDo: aTextStyledEvent afterAction ]
 ]
 
 { #category : #'hooks - text modifications' }
@@ -860,6 +866,7 @@ AlbTextEditor >> processCursorAttributes [
 	"I search for the attributes within the whole text that contain (or not contain) any of the cursors and notify about it"
 	| anEnteredEvent aLeavedEvent eventHandlingAttributesOutside eventHandlingAttributesInside |
 
+	self hasEventHandlerAttribute ifFalse: [ ^self ].
 	anEnteredEvent := AlbTextCursorAttributeEnterEvent new textEditor: self.
 	aLeavedEvent := AlbTextCursorAttributeLeaveEvent new textEditor: self.
 
@@ -928,6 +935,11 @@ AlbTextEditor >> recordSelection: aMonotoneTextSelection [
 { #category : #'text - undo/redo' }
 AlbTextEditor >> redo [
 	history redoOn: self
+]
+
+{ #category : #'event handler attributes' }
+AlbTextEditor >> registerEventHandlerAttribute: anEventHandlerattribute from: aFromIndex to: aToIndex [
+	hasEventHandlerAttribute := true
 ]
 
 { #category : #'api - shortcuts' }
@@ -1225,6 +1237,14 @@ AlbTextEditor >> uiProcesses [
 { #category : #'text - undo/redo' }
 AlbTextEditor >> undo [
 	history undoOn: self
+]
+
+{ #category : #'event handler attributes' }
+AlbTextEditor >> unregisterEventHandlerAttribute: anEventHandlerattribute from: aFromIndex to: aToIndex [
+]
+
+{ #category : #'event handler attributes' }
+AlbTextEditor >> unregisterEventHandlerAttributesFrom: aFromIndex to: aToIndex [
 ]
 
 { #category : #'private - updating' }

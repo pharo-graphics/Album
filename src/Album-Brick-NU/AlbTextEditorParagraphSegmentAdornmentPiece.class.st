@@ -45,7 +45,7 @@ AlbTextEditorParagraphSegmentAdornmentPiece >> createElement: anEditorElement [
 		theAdornmentElements := OrderedCollection with: (BlElement new size: 0@0) ]. 
 	theAdornmentElements do: [ :eachElement |
 		eachElement mouseCursor ifNil: [ eachElement mouseCursor: BlCursor default ].
-		eachElement userData at: #brickEditorAdornment put: true.
+		eachElement userData at: #editorAdornment put: true.
 		self adornmentAttribute isFocusable
 			ifFalse: [ eachElement focusability: BlFocusabilityNone new ] ].
 
@@ -63,8 +63,8 @@ AlbTextEditorParagraphSegmentAdornmentPiece >> createElement: anEditorElement [
 				ifTrue: [ self textLength ]
 				ifFalse: [ 0 ] ].
 		
-		eachAdornmentElement userData at: #brickEditorCharLength put: aCharLength.
-		eachAdornmentElement userData at: #brickEditorTextPiece put: self ].
+		eachAdornmentElement userData at: #editorCharLength put: aCharLength.
+		eachAdornmentElement userData at: #editorTextPiece put: self ].
 	
 	^ theAdornmentElements
 ]

@@ -24,7 +24,7 @@ AlbTextEditorLineSegmentTextPiece >> createElement: anEditorElement [
 		wordMargin: self wordMargin;
 		segmentPiece: self) asElement.
 		
-	anElement userData removeKey: #brickEditorAdornment ifAbsent: [  ].
+	anElement userData removeKey: #editorAdornment ifAbsent: [  ].
 	
 	^ anElement
 ]

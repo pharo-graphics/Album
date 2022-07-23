@@ -44,6 +44,7 @@ AlbTextEditorCursorRemoveCommand >> newHolderEvent [
 AlbTextEditorCursorRemoveCommand >> processAttributesOn: aTextEditor [
 	| anEditorText thePotentialHandlerTextInterval theEventHandlingAttributes eventHandlingAttributesOutside eventHandlingAttributesInside |
 	self flag: 'what a crap!'.
+	aTextEditor hasEventHandlerAttribute ifFalse: [ ^self ].
 	anEditorText := aTextEditor text.
 
 	self cursor position > anEditorText size

@@ -24,7 +24,7 @@ AlbTextEditorCursorAddCommand >> executeOn: aTextEditor [
 
 	"Attribute handling: some attribute are eventHandlers."
 
-	self flag: 'We have to think about attributes later become this code is too crappy'.
+	self flag: 'We have to think about attributes later because this code is too crappy'.
 	self processAttributesOn: aTextEditor.
 
 	"Now move the cursor within the cached text segments"
@@ -44,6 +44,7 @@ AlbTextEditorCursorAddCommand >> newHolderEvent [
 AlbTextEditorCursorAddCommand >> processAttributesOn: aTextEditor [
 	| anEditorText thePotentialHandlerTextInterval theEventHandlingAttributes eventHandlingAttributesOutside eventHandlingAttributesInside |
 	self flag: 'what a crap!'.
+	aTextEditor hasEventHandlerAttribute ifFalse: [ ^self ].
 	anEditorText := aTextEditor text.
 	self cursor position > anEditorText size
 		ifTrue: [ ^ self ].

@@ -38,7 +38,7 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 	anEvent target
 		withAllParentsUpTo: anEditorElement
 		detect: [ :anElement | 
-			anElement userData at: #brickEditorAdornment ifAbsent: [ false ] ]
+			anElement userData at: #editorAdornment ifAbsent: [ false ] ]
 		ifFound: [ :anAdornmentElement | ^ self ]
 		ifNone: #yourself.
 

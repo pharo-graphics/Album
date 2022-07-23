@@ -147,7 +147,7 @@ AlbTextEditorParagraphElement >> buildParagraph [
 					ifFalse: [
 						aBuilder
 							addPlaceholder: (SkiaParagraphPlaceholderStyle new alignMiddle extent: eachElement measuredExtent)
-							charLength: (eachElement userData at: #brickEditorCharLength ifAbsent: [ 0 ]) ] ] ].
+							charLength: (eachElement userData at: #editorCharLength ifAbsent: [ 0 ]) ] ] ].
 	^ aBuilder build
 ]
 

@@ -218,12 +218,12 @@ AlbTextEditorLineSegmentSplitter >> splitSegment: aTextEditorSegment [
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorLineSegmentSplitter >> textPiece: aBlText from: aTextStart to: aTextEnd [
+AlbTextEditorLineSegmentSplitter >> textPiece: aBlSubText from: aTextStart to: aTextEnd [
 	"Create and return a text segment piece"
 	<return: #AlbTextEditorLineSegmentPiece>
 
 	^ self textPieceClass new
-		initializeWith: aBlText
+		initializeWith: aBlSubText
 		from: aTextStart
 		to: aTextEnd
 		delimiter: 0

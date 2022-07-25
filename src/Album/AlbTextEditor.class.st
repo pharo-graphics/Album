@@ -365,7 +365,7 @@ AlbTextEditor >> hasCursors [
 
 { #category : #'event handler attributes' }
 AlbTextEditor >> hasEventHandlerAttribute [
-	^ hasEventHandlerAttribute 
+	^ hasEventHandlerAttribute ifNil: [ false ]
 ]
 
 { #category : #'text - selection' }

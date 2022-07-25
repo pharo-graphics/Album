@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : #initialization }
-AlbTextEditorSegment >> initializeWith: aBlText from: aTextStart to: aTextEnd delimiter: aDelimiterLength [
+AlbTextEditorSegment >> initializeWith: aBlSubText from: aTextStart to: aTextEnd delimiter: aDelimiterLength [
 	self
-		assert: [ aBlText isKindOf: BlSubText ]
+		assert: [ aBlSubText isKindOf: BlSubText ]
 		description: [ 'Must be sub-text' ].
 
-	text := aBlText.
+	text := aBlSubText.
 	
 	textStart := aTextStart.
 	textEnd := aTextEnd.

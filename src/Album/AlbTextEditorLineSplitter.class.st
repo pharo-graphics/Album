@@ -14,10 +14,10 @@ AlbTextEditorLineSplitter >> newSegment [
 
 { #category : #'instance creation' }
 AlbTextEditorLineSplitter >> newSegment: aBlText from: aStartIndex to: anEndIndex delimited: aDelimiterIndex offset: anOffset [
-	| aText anAbsoluteTextStart anAbsoluteTextEnd |
+	| aSubText anAbsoluteTextStart anAbsoluteTextEnd |
 	"aStartIndex and anEndIndex are given in text coordinates"
 
-	aText := aBlText
+	aSubText := aBlText
 		from: aStartIndex
 		to: anEndIndex.
 
@@ -25,7 +25,7 @@ AlbTextEditorLineSplitter >> newSegment: aBlText from: aStartIndex to: anEndInde
 	anAbsoluteTextEnd := anEndIndex.
 
 	^ self newSegment
-		initializeWith: aText
+		initializeWith: aSubText
 		from: anAbsoluteTextStart + anOffset
 		to: anAbsoluteTextEnd + anOffset
 		delimiter: aDelimiterIndex - anEndIndex

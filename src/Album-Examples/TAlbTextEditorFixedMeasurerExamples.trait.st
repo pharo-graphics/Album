@@ -49,7 +49,7 @@ TAlbTextEditorFixedMeasurerExamples >> editorFor: aText [
 
 { #category : #'private - instance creation' }
 TAlbTextEditorFixedMeasurerExamples >> fixedMeasurer [
-	^ BlTextElementMockedMeasurer new
+	^ BlSpartaTextElementMockedMeasurer new
 		ascent: self ascent;
 		descent: self descent;
 		glyphWidth: self glyphWidth;

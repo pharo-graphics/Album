@@ -46,7 +46,7 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 
 { #category : #'instance creation' }
 AlbTextEditorOperatorTest >> fixedMeasurer [
-	^ BlTextElementMockedMeasurer new
+	^ BlSpartaTextElementMockedMeasurer new
 		ascent: self ascent;
 		descent: self descent;
 		glyphWidth: self glyphWidth;

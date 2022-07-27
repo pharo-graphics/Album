@@ -70,6 +70,7 @@ AlbAlexandrieExamplesSeeClassSide class >> example_AlexandrieixedMeasurer [
 	" have to understand this ..."
 	| anEditor |
 	anEditor := self alexandrieEditorFor: 'Hello'.
+	anEditor withLineNumbers.
 	anEditor openInOBlSpace 
 
 ]

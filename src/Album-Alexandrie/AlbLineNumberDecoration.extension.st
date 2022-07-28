@@ -6,7 +6,7 @@ AlbLineNumberDecoration >> aeCairoScaledFontOn: aeCanvas [
 	| fontAndStyleBuilder freeTypeFont |
 	fontAndStyleBuilder := BlTextFontAndStyleBuilder new.
 	freeTypeFont := fontAndStyleBuilder font asLogicalFont asFreetypeFont.
-	^ aeCanvas scaledFontFor: freeTypeFont
+	^ aeCanvas scaledFontFor: freeTypeFont  scaleBy: 12
 ]
 
 { #category : #'*Album-Alexandrie' }
@@ -45,7 +45,7 @@ AlbLineNumberDecoration >> aeDraw: anItemElement on: aeCanvas in: anInfiniteElem
 		cairoScaledFont := self aeCairoScaledFontOn: aeCanvas.
 		fontExtents := cairoScaledFont extents.
 		aeCanvas pathTranslate: 4 @ fontExtents ascent.
-		aeCanvas setSourceColor: Color black.
+		aeCanvas setSourceColor: Color gray darker.
 		cairoGlyphsArray := cairoScaledFont glyphArrayFor: s length: s size.
 		aeCanvas drawText: cairoGlyphsArray font: cairoScaledFont ]
 ]
@@ -55,7 +55,7 @@ AlbLineNumberDecoration >> aeDrawBackgroundOn: aeCanvas in: anInfiniteElement [
 
 	"draw the background beneath "
 
-	aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ] alpha: 0.20.
+	aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ] alpha: 0.10.
 	aeCanvas setBorderOff.
 	aeCanvas
 		setPathKey: self

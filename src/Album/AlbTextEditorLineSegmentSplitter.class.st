@@ -4,6 +4,9 @@ I split a piece of text behind a `BrTextEditorLineSegment` into pieces `BrTextEd
 Class {
 	#name : #AlbTextEditorLineSegmentSplitter,
 	#superclass : #Object,
+	#instVars : [
+		'tabCount'
+	],
 	#category : #'Album-Model-Segment-Text-Line'
 }
 
@@ -30,16 +33,21 @@ AlbTextEditorLineSegmentSplitter >> adornmentPieceClass [
 
 { #category : #'private - pieces computation' }
 AlbTextEditorLineSegmentSplitter >> itemValueType: anObject [
+
 	"Return a type of an item within a segment.
 	Note: return value should be never used explicitely, it is only needed
 	for direct comparison, therefore can be any immutable object"
-	<return: #Symbol>
 
+	<return: #Symbol>
 	^ anObject isCharacter
-		ifTrue: [ anObject isSeparator
-			ifTrue: [ #separator ]
-			ifFalse: [ #letter ] ]
-		ifFalse: [ #object ]
+		  ifTrue: [ 
+			  anObject isSeparator
+				  ifTrue: [ 
+					  anObject = Character tab
+						  ifTrue: [ "each tab separately" tabCount := tabCount + 1 ]
+						  ifFalse: [ #separator ] ]
+				  ifFalse: [ #letter ] ]
+		  ifFalse: [ #object ]
 ]
 
 { #category : #'private - pieces computation' }
@@ -49,22 +57,23 @@ AlbTextEditorLineSegmentSplitter >> processAdornmentAttribute: anAdornmentAttrib
 
 { #category : #'private - pieces computation' }
 AlbTextEditorLineSegmentSplitter >> processPureWords: aTextIterator in: aStream offset: anOffset [
+
 	"Process a text within a scope of the given iterator as if it does not contain any adornment attributes
 	nor event handling attributes. At this point we should just split it in words based on the text separator
 	such as space or some other characters abnd create a text piece for each `word`"
-	
-	aTextIterator
-		nextSegment: [ :aCharacter | self itemValueType: aCharacter ]
-		indicesDo: [ :aStart :anEnd |
-			| aWord aTextStart aTextEnd |
-			aWord := aTextIterator text from: ((aStart + 1) min: anEnd) to: anEnd.
-			
-			aTextStart := aStart + anOffset.
-			aTextEnd := anEnd + anOffset.
-			(aWord allSatisfy: #isLineBreak)
-				ifTrue: [ aTextEnd := aTextStart ].
-			
-			aStream nextPut: (self textPiece: aWord from: aTextStart to: aTextEnd) ]
+
+	"tabCount is only used to separate each tab as a word with only the tab char"
+
+	tabCount := 0.
+	aTextIterator nextSegment: [ :aCharacter | self itemValueType: aCharacter ] indicesDo: [ :aStart :anEnd | 
+		| aWord aTextStart aTextEnd |
+		aWord := aTextIterator text from: (aStart + 1 min: anEnd) to: anEnd.
+
+		aTextStart := aStart + anOffset.
+		aTextEnd := anEnd + anOffset.
+		(aWord allSatisfy: #isLineBreak) ifTrue: [ aTextEnd := aTextStart ].
+
+		aStream nextPut: (self textPiece: aWord from: aTextStart to: aTextEnd) ]
 ]
 
 { #category : #'private - pieces computation' }

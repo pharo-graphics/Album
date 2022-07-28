@@ -4,74 +4,14 @@ Class {
 	#category : #'Album-SandBox'
 }
 
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> alexandrieEditorFor: aText [
-
-	<return: #AlbEditor>
-	| anEditor aRopedText |
-	aRopedText := aText asRopedText
-		              lineSpacing: self lineSpacing;
-		              paragraphMargin: self paragraphMargin;
-		              wordPadding: self wordPadding.
-
-	anEditor := AlbEditor new.
-	anEditor padding: BlInsets empty.
-	anEditor fitContent.
-	anEditor text: aRopedText.
-
-	"BlDevCrossover on: anEditor."
-
-	"anEditor editor  beLineBased."
-	anEditor editor segmentBuilder wordStencil: [ :aTAlbTextEditorTextualPiece | 
-		| aTextElement |
-		aTextElement := AlbTextWordPieceStencilBuilder editable
-			                segmentPiece: aTAlbTextEditorTextualPiece;
-			                asElement.
-		aTextElement measurer: self alexandrieFixedMeasurer.
-		aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-		aTextElement ].
-
-
-	^ anEditor
-]
-
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> alexandrieFixedMeasurer [
-	^ BATextElementMockedMeasurer new
-		ascent: self ascent;
-		descent: self descent;
-		glyphWidth: self glyphWidth;
-		glyphHeight: self glyphHeight
-]
-
-{ #category : #'instance creation' }
+{ #category : #accessing }
 AlbExamplesSeeClassSide class >> ascent [
 	^ -20
 ]
 
-{ #category : #'instance creation' }
+{ #category : #accessing }
 AlbExamplesSeeClassSide class >> descent [
 	^ 20
-]
-
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer0 [
-	| element text |
-	text := ('1234567890' asRopedText
-		       fontSize: 16;
-		       fontName: 'Helvetica Neue').
-	element := text asElement.
-	element measurer: self alexandrieFixedMeasurer.
-	element openInOblSpace
-]
-
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> example_AlexandrieixedMeasurer [
-	" have to understand this ..."
-	| anEditor |
-	anEditor := self alexandrieEditorFor: 'Hello'.
-	anEditor openInOBlSpace 
-
 ]
 
 { #category : #'editor examples' }
@@ -90,7 +30,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		styler: styler;
 		text: text.
 
-	editorElement clipChildren: false.
+
 	editorElement withLineNumbers.
 	"editorElement inspect."
 	editorElement editor
@@ -130,18 +70,20 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 
 	| ed space text |
 	ed := AlbEditor new.
-	text := 'ABCD' asRopedText.
-	text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1.
-	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2.
-	text attribute: (BlTextBackgroundAttribute paint: (Color red alpha: 0.3)) from: 3 to: 3.
+	text := ('AB', String tab, String tab, 'CD') asRopedText.
+	"text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1."
+	"text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 3 to: 6."
+	"text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2."
+	"text attribute: (BlTextBackgroundAttribute paint: (Color red alpha: 0.3)) from: 3 to: 3."
 	text
 		fontSize: 24;
 		fontName: 'Helvetica Neue'.
 	ed text: text.
+		ed inspect.
+
 	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
-	"ed inspect."
 
 	space show.
 	^ ed
@@ -223,26 +165,6 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 		  monospace) , (' Default font and size' asRopedText "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}")) onAlbum withLineNumbers;"inspect" openInOblSpace
 ]
 
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> example_SpartaFixedMeasurer [
-	" have to understand this ..."
-	| anEditor |
-	anEditor := self spartaEditorFor: 'Hello'.
-	anEditor openInOBlSpace 
-
-]
-
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> example_SpartaFixedMeasurer0 [
-	| element text |
-	text := ('1234567890' asRopedText
-		       fontSize: 16;
-		       fontName: 'Helvetica Neue').
-	element := text asElement.
-	element measurer: self spartaFixedMeasurer.
-	element openInOblSpace
-]
-
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 
@@ -318,46 +240,6 @@ AlbExamplesSeeClassSide class >> methodText [
 { #category : #'instance creation' }
 AlbExamplesSeeClassSide class >> paragraphMargin [
 	^ BlInsets all: 15
-]
-
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> spartaEditorFor: aText [
-
-	<return: #AlbEditor>
-	| anEditor aRopedText |
-	aRopedText := aText asRopedText
-		              lineSpacing: self lineSpacing;
-		              paragraphMargin: self paragraphMargin;
-		              wordPadding: self wordPadding.
-
-	anEditor := AlbEditor new.
-	anEditor padding: BlInsets empty.
-	anEditor fitContent.
-	anEditor text: aRopedText.
-
-	"BlDevCrossover on: anEditor."
-
-	"anEditor editor  beLineBased."
-	anEditor editor segmentBuilder wordStencil: [ :aTAlbTextEditorTextualPiece | 
-		| aTextElement |
-		aTextElement := AlbTextWordPieceStencilBuilder editable
-			                segmentPiece: aTAlbTextEditorTextualPiece;
-			                asElement.
-		aTextElement measurer: self spartaFixedMeasurer.
-		aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-		aTextElement ].
-
-
-	^ anEditor
-]
-
-{ #category : #'instance creation' }
-AlbExamplesSeeClassSide class >> spartaFixedMeasurer [
-	^ BlSpartaTextElementMockedMeasurer new
-		ascent: self ascent;
-		descent: self descent;
-		glyphWidth: self glyphWidth;
-		glyphHeight: self glyphHeight
 ]
 
 { #category : #'instance creation' }

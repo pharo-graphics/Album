@@ -24,8 +24,13 @@ AlbLineNumberDecoration >> cursorBackgroundRectangleOf: anItemElement in: anInfi
 ]
 
 { #category : #initialization }
+AlbLineNumberDecoration >> defaultMaxAtRight [
+	^ 10
+]
+
+{ #category : #initialization }
 AlbLineNumberDecoration >> defaultWidth [
-	^ 25
+	^ 17
 ]
 
 { #category : #initialization }
@@ -51,5 +56,5 @@ AlbLineNumberDecoration >> onActualWidthChangeWith: anInteger do: aBlock [
 { #category : #geometry }
 AlbLineNumberDecoration >> width [
 
-	^ actualWidth + 6
+	^ (actualWidth + self defaultMaxAtRight - (actualWidth \\ self defaultMaxAtRight)) + 5
 ]

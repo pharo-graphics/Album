@@ -79,7 +79,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 		fontSize: 24;
 		fontName: 'Helvetica Neue'.
 	ed text: text.
-		ed inspect.
+		"ed inspect."
 
 	space := BlSpace new.
 	space root addChild: ed.

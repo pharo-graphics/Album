@@ -61,6 +61,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 		anEditor navigator
 			moveTo: from;
 			apply ].
+	anEvent sendTo: anEditorElement.
 
 ]
 

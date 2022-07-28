@@ -37,6 +37,11 @@ AlbEditorElement >> dragEndEvent: anEvent [
 ]
 
 { #category : #'ui - events managing' }
+AlbEditorElement >> dragEvent: anEvent [
+	
+]
+
+{ #category : #'ui - events managing' }
 AlbEditorElement >> dragStartEvent: anEvent [
 	
 ]

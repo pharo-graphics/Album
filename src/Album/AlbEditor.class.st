@@ -112,6 +112,13 @@ AlbEditor >> dragEndEvent: anEvent [
 ]
 
 { #category : #'ui - events managing' }
+AlbEditor >> dragEvent: anEvent [
+	super dragEvent: anEvent.
+	"self feltPensDo: [ :fp | fp dragEvent: anEvent ]"
+
+]
+
+{ #category : #'ui - events managing' }
 AlbEditor >> dragStartEvent: anEvent [
 	super dragStartEvent: anEvent.
 	self feltPensDo: [ :fp | fp dragStartEvent: anEvent ]

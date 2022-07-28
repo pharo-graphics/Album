@@ -25,6 +25,12 @@ AlbEditoSelectionEchoPen >> dragEndEvent: anEvent [
 ]
 
 { #category : #'mouse handlers' }
+AlbEditoSelectionEchoPen >> dragEvent: anEvent [
+	super dragEvent: anEvent.
+	self shiftSelectionFrom: anEvent currentTarget event: anEvent
+]
+
+{ #category : #'mouse handlers' }
 AlbEditoSelectionEchoPen >> dragStartEvent: anEvent [
 	super dragStartEvent: anEvent.
 	self shiftSelectionFrom: anEvent currentTarget event: anEvent
@@ -35,7 +41,10 @@ AlbEditoSelectionEchoPen >> highlight: aPieceElement from: startIdx to: endIdx [
 
 	aPieceElement
 		highlightCategory: #selectionEcho
-		with: (BlTextParagraphHighlight paint: self class selectionEchoColor from: startIdx to: endIdx).
+		with: (BlTextParagraphHighlight
+				 paint: self class selectionEchoColor
+				 from: startIdx
+				 to: endIdx).
 	currentSelectionEchoList add: aPieceElement
 ]
 

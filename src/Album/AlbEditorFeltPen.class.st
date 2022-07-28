@@ -19,6 +19,12 @@ AlbEditorFeltPen >> dragEndEvent: anEvent [
 ]
 
 { #category : #'mouse handlers' }
+AlbEditorFeltPen >> dragEvent: anEvent [
+
+	
+]
+
+{ #category : #'mouse handlers' }
 AlbEditorFeltPen >> dragStartEvent: anEvent [
 
 ]

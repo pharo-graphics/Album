@@ -32,15 +32,6 @@ AlbExamplesSeeClassSide class >> alexandrieEditorFor: aText [
 ]
 
 { #category : #'*Album-Alexandrie' }
-AlbExamplesSeeClassSide class >> alexandrieFixedMeasurer [
-	^ BATextElementMockedMeasurer new
-		ascent: self ascent;
-		descent: self descent;
-		glyphWidth: self glyphWidth;
-		glyphHeight: self glyphHeight
-]
-
-{ #category : #'*Album-Alexandrie' }
 AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer0 [
 
 	| element text host |

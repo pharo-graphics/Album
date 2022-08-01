@@ -289,24 +289,26 @@ AlbTextEditorOperator >> findTextIndexBelowCursor: aCursor ifAbsent: anException
 
 { #category : #private }
 AlbTextEditorOperator >> findWhitespaceOfLineBefore: aTextIndex [
-	| aLineStartIndex aText aTextIterator isFound |
+	| aLineStartIndex aText aTextIterator count result |
 	<return: #String>
 
 	aText := self text.
+	(aText at: aTextIndex) isLineBreak
+		ifTrue: [ ^ '' ].
+
 	aLineStartIndex := (self findLineStartBefore: aTextIndex) + aText size isZero not asBit.
 
 	aTextIterator := aText iterator: aLineStartIndex to: aTextIndex.
 
-	isFound := false.
+	count := 0.
 	[ aTextIterator hasNext and: [
-		aTextIterator peek = Character space
-			or: [ aTextIterator peek = Character tab ] ] ]
-				whileTrue: [ isFound := true. aTextIterator next ].
+		 aTextIterator peek = Character tab ] ]
+				whileTrue: [ count := count + 1. aTextIterator next ].
 
-	isFound
-		ifFalse: [ ^ '' ].
+	result := ''.
+	count timesRepeat: [ result := result, String tab ].
+	^ result
 
-	^ (aText from: (aLineStartIndex min: aTextIterator position) to: aTextIterator position) asString
 ]
 
 { #category : #private }

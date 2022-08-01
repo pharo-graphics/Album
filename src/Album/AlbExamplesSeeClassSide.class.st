@@ -19,7 +19,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
 
-	text := self methodText asRopedText fontSize: 16;
+	text := self methodText asRopedText fontSize: 20;
 		 fontName: 'Source Code Pro'.
 
 	styler := AlbRBTextStyler new.
@@ -148,7 +148,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 		c horizontal resizer: BlLayoutResizer matchParent].
 
 	ed text: text.
-	"ed inspect."
+	ed inspect.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.

@@ -11,25 +11,19 @@ AlbSelectionLimitDecoration >> itemInsets: aBlInsets of: anItemElement in: anInf
 ]
 
 { #category : #geometry }
-AlbSelectionLimitDecoration >> selectionLimitRectangleOf: anItemElement [ 
+AlbSelectionLimitDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock [
 
-	^ Rectangle origin: 0 @ 0 corner: self width @ anItemElement height
-
-]
-
-{ #category : #testing }
-AlbSelectionLimitDecoration >> shouldDraw: anItemElement in: anInfiniteElement [
-
-	| firstTextElement |
-	anItemElement hasChildren ifFalse: [ ^ false ].
-	firstTextElement := anItemElement firstChild.
-	(firstTextElement hasSelection or: [firstTextElement hasCursor]) ifFalse: [ ^ false ].
+	| elements |
+	elements := anItemElement children select: [ :e | 
+		            (e isKindOf: AlbTextElement) and: [ 
+			            e selection isNotEmpty and: [ e selection from isZero and: [ e bounds left isZero ] ] ] ].
+	"(firstTextElement hasSelection or: [firstTextElement hasCursor]) ifFalse: [ ^ false ]."
 	"(firstTextElement hasSelection not and: [firstTextElement hasCursor and: [firstTextElement cursorElement bounds left > 0]]) ifTrue: [ ^self ]."
-	(firstTextElement hasSelection and: [firstTextElement selection from > 0]) ifTrue: [ ^false ].
-	^ true
+	elements isEmpty ifTrue: [ ^ self ].
+	aBlock value: (elements first bounds topLeft corner: self width @ elements last bounds bottom)
 ]
 
 { #category : #geometry }
 AlbSelectionLimitDecoration >> width [
-	^ 3
+	^ 4
 ]

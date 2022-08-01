@@ -71,10 +71,10 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 	| ed space text |
 	ed := AlbEditor new.
 	text := ('AB', String tab, String tab, 'CD') asRopedText.
-	"text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1."
-	"text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 3 to: 6."
-	"text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2."
-	"text attribute: (BlTextBackgroundAttribute paint: (Color red alpha: 0.3)) from: 3 to: 3."
+	text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1.
+	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 3 to: 6.
+	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2.
+	text attribute: (BlTextBackgroundAttribute paint: (Color red alpha: 0.3)) from: 3 to: 3.
 	text
 		fontSize: 24;
 		fontName: 'Helvetica Neue'.

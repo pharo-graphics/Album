@@ -45,7 +45,7 @@ AlbTextElement >> assertCursorPosition: anIndex [
 AlbTextElement >> createTextParagraph [
 	"Create a text paragraph used to measure and render text"
 
-	^ AlbTextParagraph new
+	^ AlbTextParagraph new segmentPiece: segmentPiece
 ]
 
 { #category : #'cursor - accessing' }
@@ -179,12 +179,13 @@ AlbTextElement >> segmentPiece: aSegmentPiece [
 	| isTextSame |
 	segmentPiece := aSegmentPiece.
 	
-	self flag: 'comparing BlText can be complex and time consuming. trying without copying'.
+	self flag: 'comparing BlText can be complex and time consuming. trying without comparing'.
 	"isTextSame := self text equals: aSegmentPiece text."
 	isTextSame := false.
 	isTextSame
 		ifFalse: [
 			| aTextCopy |
+			"need to copy (copying is fast enough)"
 			aTextCopy := aSegmentPiece text copyFrom: 1 to: aSegmentPiece text size.
 			self text: aTextCopy ]
 ]

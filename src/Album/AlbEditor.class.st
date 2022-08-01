@@ -152,6 +152,7 @@ AlbEditor >> initialize [
 	feltPens := OrderedCollection new.
 	self withOppositeDelimiter.
 	self withSelectionEcho.
+	self withDecoration: AlbSelectionLimitDecoration.
 	
 	self matchParent.
 	textReplacedHandler := BlEventHandler

@@ -57,6 +57,11 @@ AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBloc
 	^ aFoundBlock value: cursorElement
 ]
 
+{ #category : #accessing }
+AlbTextElement >> cursorElement [
+	^ cursorElement
+]
+
 { #category : #'cursor - management' }
 AlbTextElement >> cursorStencil [
 	^ cursorStencil

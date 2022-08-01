@@ -10,6 +10,12 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #'paragraph - measuring' }
+AlbTextParagraph >> emptySpan [
+
+	^ BlSpan text: BlText empty attributes: segmentPiece text iterator attributes
+]
+
 { #category : #accessing }
 AlbTextParagraph >> segmentPiece: aSegmentPiece [
 

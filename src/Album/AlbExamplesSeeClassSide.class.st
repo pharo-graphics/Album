@@ -101,7 +101,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
-	ed inspect.
+	"ed inspect."
 
 	space show.
 	^ ed
@@ -148,7 +148,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 		c horizontal resizer: BlLayoutResizer matchParent].
 
 	ed text: text.
-	ed inspect.
+	"ed inspect."
 	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.

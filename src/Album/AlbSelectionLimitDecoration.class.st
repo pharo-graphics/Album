@@ -8,7 +8,7 @@ Class {
 AlbSelectionLimitDecoration >> initialize [
 	super initialize.
 	"lowest priority"
-	priority := SmallInteger maxVal
+	priority := SmallInteger maxVal negated
 ]
 
 { #category : #geometry }

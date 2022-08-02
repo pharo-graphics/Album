@@ -21,10 +21,10 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element for its child element anItemElement.
 		Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
 
-	| holder index fontBuilder textPainter w font s |
-	w := anInfiniteElement layout leftDecorationWidth: anItemElement.
+	| holder index fontBuilder textPainter font s |
 	aCanvas transform
-		by: [ :aTransform | aTransform translateBy: self computedBounds left @ anItemElement bounds inParent top ]
+		by: [ :aTransform | 
+			aTransform translateBy: self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top ]
 		during: [ 
 			holder := anInfiniteElement childHolderOf: anItemElement.
 			(holder hasCursor and: [ anInfiniteElement selection isEmpty ]) ifTrue: [ 
@@ -38,7 +38,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 			textPainter := aCanvas text
 				               string: s;
 				               font: font;
-				               width: w;
+				               width: self computedBounds width;
 				               baseline: 4 @ fontBuilder size;
 				               paint: Color gray darker.
 			textPainter draw ]

@@ -80,7 +80,7 @@ AlbEditor >> defaultPaddings [
 	^ BlInsets
 		  top: 5
 		  left: 0
-		  bottom: 10
+		  bottom: 5
 		  right: 5
 ]
 
@@ -163,7 +163,6 @@ AlbEditor >> initialize [
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
 	self viewModel: self defaulEditorModel.
-
 	
 	self
 		when: AlbEditorStylerChanged

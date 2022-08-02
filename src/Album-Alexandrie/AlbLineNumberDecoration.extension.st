@@ -32,7 +32,7 @@ AlbLineNumberDecoration >> aeDraw: anItemElement on: aeCanvas in: anInfiniteElem
 
 	| holder index s cairoScaledFont cairoGlyphsArray fontExtents |
 	aeCanvas restoreContextAfter: [ 
-		aeCanvas pathTranslate: self computedBounds left @ anItemElement bounds inParent top.
+		aeCanvas pathTranslate: self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top.
 
 		"Hihglight the selection if the element holds it"
 		holder := anInfiniteElement childHolderOf: anItemElement.

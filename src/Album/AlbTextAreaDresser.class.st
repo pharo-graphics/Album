@@ -23,7 +23,7 @@ AlbTextAreaDresser >> onInstalledIn: anElement [
 					 width: 1) ].
 
 	anElement border: (BlBorder
-			 paint: Color blue
-			 width: 2).
+			 paint: Color white
+			 width: 1).
 	anElement widgetContent background: Color white
 ]

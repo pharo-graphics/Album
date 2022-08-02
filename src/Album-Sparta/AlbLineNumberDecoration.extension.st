@@ -24,7 +24,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 	| holder index fontBuilder textPainter w font s |
 	w := anInfiniteElement layout leftDecorationWidth: anItemElement.
 	aCanvas transform
-		by: [ :aTransform | aTransform translateBy: anInfiniteElement border width @ anItemElement bounds inParent top ]
+		by: [ :aTransform | aTransform translateBy: self computedBounds left @ anItemElement bounds inParent top ]
 		during: [ 
 			holder := anInfiniteElement childHolderOf: anItemElement.
 			(holder hasCursor and: [ anInfiniteElement selection isEmpty ]) ifTrue: [ 
@@ -40,7 +40,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 				               font: font;
 				               width: w;
 				               baseline: 4 @ fontBuilder size;
-				               paint: Color black.
+				               paint: Color gray darker.
 			textPainter draw ]
 ]
 
@@ -48,7 +48,7 @@ AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInf
 AlbLineNumberDecoration >> drawBackgroundOnSpartaCanvas: aCanvas in: anInfiniteElement [
 
 	aCanvas figure
-		path: (self backgroundRectangleIn: anInfiniteElement);
+		path: self computedBounds;
 		borderOutside;
 		background: (Color veryLightGray alpha: 0.20);
 		draw
@@ -71,7 +71,7 @@ AlbLineNumberDecoration >> measureActualWidthOnSpartaCanvas: aCanvas in: anInfin
 	| fontBuilder font holder s |
 	holder := anInfiniteElement childHolderOf: anInfiniteElement children last.
 	s := holder layoutPosition asString.
-	fontBuilder := aCanvas font monospace.
+	fontBuilder := aCanvas font monospace size: 12.
 	font := fontBuilder build.
 	self
 		onActualWidthChangeWith: (font averageWidthOf: $0) * s size

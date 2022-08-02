@@ -4,10 +4,22 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #geometry }
-AlbSelectionLimitDecoration >> itemInsets: aBlInsets of: anItemElement in: anInfiniteElement [
+{ #category : #initialization }
+AlbSelectionLimitDecoration >> initialize [
+	super initialize.
+	"lowest priority"
+	priority := SmallInteger maxVal
+]
 
-	^ (BlInsets left: self width) + aBlInsets
+{ #category : #geometry }
+AlbSelectionLimitDecoration >> requiredInsetsOfChildElement: anElement [
+
+	^ BlInsets left: self requiredWidth
+]
+
+{ #category : #geometry }
+AlbSelectionLimitDecoration >> requiredWidth [
+	^ 4
 ]
 
 { #category : #geometry }
@@ -17,13 +29,6 @@ AlbSelectionLimitDecoration >> selectionLimitRectangleOf: anItemElement in: anIn
 	elements := anItemElement children select: [ :e | 
 		            (e isKindOf: AlbTextElement) and: [ 
 			            e selection isNotEmpty and: [ e selection from isZero and: [ e bounds left isZero ] ] ] ].
-	"(firstTextElement hasSelection or: [firstTextElement hasCursor]) ifFalse: [ ^ false ]."
-	"(firstTextElement hasSelection not and: [firstTextElement hasCursor and: [firstTextElement cursorElement bounds left > 0]]) ifTrue: [ ^self ]."
 	elements isEmpty ifTrue: [ ^ self ].
-	aBlock value: (elements first bounds topLeft corner: self width @ elements last bounds bottom)
-]
-
-{ #category : #geometry }
-AlbSelectionLimitDecoration >> width [
-	^ 4
+	aBlock value: (0 @ elements first bounds top corner: self computedBounds width @ elements last bounds bottom)
 ]

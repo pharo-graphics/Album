@@ -1,13 +1,11 @@
 Extension { #name : #AlbSelectionLimitDecoration }
 
 { #category : #'*Album-Sparta' }
-AlbSelectionLimitDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement [
+AlbSelectionLimitDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas in: anInfiniteElement [
 
 	self selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :rect | 
-		| left |
-		left := anItemElement constraints infinite decorationInsets left.
 		aCanvas transform
-			by: [ :aTransform | aTransform translateBy: left - self width @ anItemElement bounds inParent top ]
+			by: [ :aTransform | aTransform translateBy: self computedBounds left @ anItemElement bounds inParent top ]
 			during: [ 
 				aCanvas figure
 					path: rect;

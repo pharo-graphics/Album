@@ -131,6 +131,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 	cache := Dictionary new.
 	
 	attribute := AlbTextAdornmentDynamicAttribute new
+	beSync;
 		beAppend;
 		withCache: cache key: #key;
 		stencil: [  {  
@@ -170,8 +171,8 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 
 	| text styler editorElement space clickText hoverText |
 	self flag: 'Works, but should be revised because the implementaion of these attributes in Album is really crappy'.
-	clickText := 'Clik here'.
-	hoverText := 'Mouse over here'.
+	clickText := '	<Clik here>'.
+	hoverText := '<<<Mouse over here >>>'.
 	text := (clickText , ' ' , hoverText) asRopedText.
 	editorElement := AlbEditor new text: text.
 
@@ -180,19 +181,19 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 				(BlTextBackgroundAttribute new paint: Color lightBlue).
 				(AlbTextClickAttribute new action: [ :a :b :c :d | 
 					 self inform: a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString ]) }
-		from: 1
-		to: 9.
+		from: 3
+		to: 11.
 
 	editorElement editorText
 		attributes: { 
 				(BlTextBackgroundAttribute new paint: Color yellow).
 				(AlbTextHoverAttribute new
 					 enterAction: [ :a :b :c :d | 
-						 self inform: 'ENTER : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString ];
+						 Transcript show: 'ENTER : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString; cr ];
 					 leaveAction: [ :a :b :c :d | 
-						 self inform: 'LEAVE : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString ]) }
-		from: 11
-		to: 25.
+						 Transcript show: 'LEAVE : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString; cr ]) }
+		from: 17
+		to: 30.
 
 	space := BlSpace new.
 	space root addChild: editorElement.

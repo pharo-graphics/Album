@@ -11,7 +11,7 @@ Class {
 AlbLineNumberDecoration >> cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement [
 
 	^ Rectangle
-		  origin: 0 @ 0
+		  origin: anInfiniteElement border width @ 0
 		  corner: self computedBounds width @ anItemElement height
 ]
 

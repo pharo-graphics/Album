@@ -939,7 +939,8 @@ AlbTextEditor >> redo [
 
 { #category : #'event handler attributes' }
 AlbTextEditor >> registerEventHandlerAttribute: anEventHandlerattribute from: aFromIndex to: aToIndex [
-	hasEventHandlerAttribute := true
+	hasEventHandlerAttribute := true.
+	Transcript show: 'hasEventHandlerAttribute: ', anEventHandlerattribute printString; cr.
 ]
 
 { #category : #'api - shortcuts' }
@@ -1245,6 +1246,7 @@ AlbTextEditor >> unregisterEventHandlerAttribute: anEventHandlerattribute from: 
 
 { #category : #'event handler attributes' }
 AlbTextEditor >> unregisterEventHandlerAttributesFrom: aFromIndex to: aToIndex [
+	Transcript show: 'unregisterEventHandlerAttributesFrom: ', aFromIndex printString, ' to: ', aToIndex printString; cr.
 ]
 
 { #category : #'private - updating' }

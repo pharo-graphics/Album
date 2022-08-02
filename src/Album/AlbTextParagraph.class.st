@@ -12,8 +12,7 @@ Class {
 
 { #category : #'paragraph - measuring' }
 AlbTextParagraph >> emptySpan [
-
-	^ BlSpan text: BlText empty attributes: segmentPiece text iterator attributes
+	^ BlSpan text: BlText empty attributes: (segmentPiece text iterator attributes reject: [ :a | a isEventHandler])
 ]
 
 { #category : #accessing }

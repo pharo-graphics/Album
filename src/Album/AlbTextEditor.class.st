@@ -591,6 +591,12 @@ AlbTextEditor >> notifyTextReplaced: aText [
 ]
 
 { #category : #'event firing' }
+AlbTextEditor >> notifyTextStyled [
+	self notifyTextStyled: self text
+
+]
+
+{ #category : #'event firing' }
 AlbTextEditor >> notifyTextStyled: aText [
 	self dispatchEvent: (AlbTextEditorTextStyledEvent new styledText: aText)
 ]
@@ -797,16 +803,7 @@ AlbTextEditor >> onTextReplaced [
 AlbTextEditor >> onTextStyled: aTextStyledEvent [
 
 	self assertUIProcess.
-	(aTextStyledEvent text isNextGenerationOf: self text)
-		ifTrue: [ 
-			self text rope: aTextStyledEvent text text rope.
-			aTextStyledEvent afterAction value: self text.
-			self notifyTextStyled: self text.
-			self processCursorAttributes.
-			self updater
-				all;
-				update ]
-		ifFalse: [ self styleTextAndAfterDo: aTextStyledEvent afterAction ]
+	self styler onTextStyled: aTextStyledEvent editor: self
 ]
 
 { #category : #'hooks - text modifications' }
@@ -865,7 +862,7 @@ AlbTextEditor >> prepareSelection [
 AlbTextEditor >> processCursorAttributes [
 	"I search for the attributes within the whole text that contain (or not contain) any of the cursors and notify about it"
 	| anEnteredEvent aLeavedEvent eventHandlingAttributesOutside eventHandlingAttributesInside |
-
+	self flag: 'to be revised'.
 	self hasEventHandlerAttribute ifFalse: [ ^self ].
 	anEnteredEvent := AlbTextCursorAttributeEnterEvent new textEditor: self.
 	aLeavedEvent := AlbTextCursorAttributeLeaveEvent new textEditor: self.

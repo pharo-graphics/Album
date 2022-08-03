@@ -4,7 +4,7 @@ Allows users to react to the cursor movement within the editor.
 "
 Class {
 	#name : #AlbTextCursorAttribute,
-	#superclass : #AlbTextEventHandlerAttribute,
+	#superclass : #AlbTextCrappyEventHandlerAttribute,
 	#instVars : [
 		'enterAction',
 		'leaveAction',

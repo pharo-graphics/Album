@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextHoverAttribute,
-	#superclass : #AlbTextEventHandlerAttribute,
+	#superclass : #AlbTextCrappyEventHandlerAttribute,
 	#instVars : [
 		'enterAction',
 		'leaveAction',

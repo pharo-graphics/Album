@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextClickAttribute,
-	#superclass : #AlbTextEventHandlerAttribute,
+	#superclass : #AlbTextCrappyEventHandlerAttribute,
 	#instVars : [
 		'action'
 	],

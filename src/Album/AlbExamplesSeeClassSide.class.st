@@ -19,8 +19,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
 
-	text := self methodText asRopedText fontSize: 20;
-		 fontName: 'Source Code Pro'.
+	text := self methodText asRopedText.
 
 	styler := AlbRBTextStyler new.
 	styler classOrMetaClass: self class.
@@ -112,7 +111,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
 	"The insertion bogue arise around 342225"
-	ed := ((String loremIpsum: 10000000) asRopedText
+	ed := ((String loremIpsum: 100000000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed constraintsDo: [ :c | 
@@ -195,6 +194,16 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 		from: 17
 		to: 30.
 
+	space := BlSpace new.
+	space root addChild: editorElement.
+	space show
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithEmptyText [
+
+	| editorElement space |
+	editorElement := AlbEditor new text: String tab.
 	space := BlSpace new.
 	space root addChild: editorElement.
 	space show

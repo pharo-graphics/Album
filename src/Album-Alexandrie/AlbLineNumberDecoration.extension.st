@@ -5,8 +5,8 @@ AlbLineNumberDecoration >> aeCairoScaledFontOn: aeCanvas [
 
 	| fontAndStyleBuilder freeTypeFont |
 	fontAndStyleBuilder := BlTextFontAndStyleBuilder new.
-	freeTypeFont := fontAndStyleBuilder font asLogicalFont asFreetypeFont.
-	^ aeCanvas scaledFontFor: freeTypeFont  scaleBy: 12
+	freeTypeFont := fontAndStyleBuilder font asAeFTFace.
+	^ aeCanvas scaledFontForFace: freeTypeFont size: 12
 ]
 
 { #category : #'*Album-Alexandrie' }

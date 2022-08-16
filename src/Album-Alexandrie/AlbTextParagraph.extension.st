@@ -13,11 +13,8 @@ AlbTextParagraph >> aeDrawOppositeOn: aeCanvas at: oppositeIndex [
 		aeCanvas setBorderBlock: [
 				aeCanvas setSourceColor: Color black.
 				aeCanvas setBorderWidth: 1.0 ].
-		aeCanvas
-			setPathKey: self
-			hasJoins: true
-			hasCaps: false
-			block: [ :cairoContext | cairoContext rectangle: (bnds expandBy: (Margin
+		aeCanvas drawClosedPathWith: [ :cairoContext |
+			cairoContext rectangle: (bnds expandBy: (Margin
 						  left: 0
 						  right: 0
 						  top: 0

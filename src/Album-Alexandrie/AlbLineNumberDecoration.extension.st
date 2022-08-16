@@ -18,11 +18,7 @@ AlbLineNumberDecoration >> aeCursorBackgroundDraw: anItemElement on: aeCanvas in
 		setBackgroundWith: [ aeCanvas setSourceColor: anInfiniteElement selectionColor ]
 		alpha: 1.0.
 	aeCanvas setBorderOff.
-	aeCanvas
-		setPathKey: self
-		hasJoins: true
-		hasCaps: false
-		block: [ :cairoContext | cairoContext rectangle: path ].
+	aeCanvas drawClosedPathWith: [ :cairoContext | cairoContext rectangle: path ].
 
 	aeCanvas drawFigure
 ]
@@ -57,12 +53,8 @@ AlbLineNumberDecoration >> aeDrawBackgroundOn: aeCanvas in: anInfiniteElement [
 
 	aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ] alpha: 0.10.
 	aeCanvas setBorderOff.
-	aeCanvas
-		setPathKey: self
-		hasJoins: true
-		hasCaps: false
-		block: [ :cairoContext | 
-			cairoContext rectangle: self computedBounds ].
+	aeCanvas drawClosedPathWith: [ :cairoContext | 
+		cairoContext rectangle: self computedBounds ].
 	aeCanvas drawFigure
 ]
 

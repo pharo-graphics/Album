@@ -14,9 +14,8 @@ AlbLineNumberDecoration >> aeCursorBackgroundDraw: anItemElement on: aeCanvas in
 
 	| path |
 	path := self cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement.
-	aeCanvas
-		setBackgroundWith: [ aeCanvas setSourceColor: anInfiniteElement selectionColor ]
-		alpha: 1.0.
+	aeCanvas setBackgroundWith: [
+		aeCanvas setSourceColor: anInfiniteElement selectionColor ].
 	aeCanvas setBorderOff.
 	aeCanvas drawClosedPathWith: [ :cairoContext | cairoContext rectangle: path ].
 
@@ -51,7 +50,9 @@ AlbLineNumberDecoration >> aeDrawBackgroundOn: aeCanvas in: anInfiniteElement [
 
 	"draw the background beneath "
 
-	aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ] alpha: 0.10.
+	aeCanvas
+		setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ]
+		alpha: 0.10.
 	aeCanvas setBorderOff.
 	aeCanvas drawClosedPathWith: [ :cairoContext | 
 		cairoContext rectangle: self computedBounds ].

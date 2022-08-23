@@ -1,16 +1,32 @@
-"
-!Event handler attribute
-Is the superclass of all attributes with the ability to handle some text events received by the visual text elements.
-"
 Class {
 	#name : #AlbTextEventHandlerAttribute,
 	#superclass : #BlTextAttribute,
+	#traits : 'TBlEventTarget',
+	#classTraits : 'TBlEventTarget classTrait',
+	#instVars : [
+		'eventDispatcher'
+	],
 	#category : #'Album-Attributes'
 }
 
-{ #category : #events }
-AlbTextEventHandlerAttribute >> handleEvent: anEvent [ 
-	self subclassResponsibility
+{ #category : #'event management accessing' }
+AlbTextEventHandlerAttribute >> eventDispatcher [
+	"Return an object responsible for event dispatching"
+	<return: #BlDirectEventDispatcher>
+
+	^ eventDispatcher 
+]
+
+{ #category : #'api - event managing' }
+AlbTextEventHandlerAttribute >> handleEvent: aBlEvent [
+	self dispatchEvent: aBlEvent
+]
+
+{ #category : #initialization }
+AlbTextEventHandlerAttribute >> initialize [
+	super initialize.
+	eventDispatcher := BlDirectEventDispatcher on: self.
+
 ]
 
 { #category : #testing }
@@ -22,23 +38,10 @@ AlbTextEventHandlerAttribute >> isEventHandler [
 	^ true
 ]
 
-{ #category : #testing }
-AlbTextEventHandlerAttribute >> mayHaveExternalReferences [
-	"Answer if this attribute can have references to some external objects like AST nodes or computation results"
+{ #category : #'api - event managing' }
+AlbTextEventHandlerAttribute >> wantsEvent: aBlEvent [
 
-	^ true
-]
-
-{ #category : #comparing }
-AlbTextEventHandlerAttribute >> type [
-	^ self
-]
-
-{ #category : #events }
-AlbTextEventHandlerAttribute >> wantsEvent: anEvent [ 
-	"Return true if I am interested in a given event and want to handle it,
-	false otherwise"
-	<return: #Boolean>
-
-	^ self subclassResponsibility
+Transcript show: 'wantsEvent: ', aBlEvent asString, ' ^ ', (self eventDispatcher wantsEvent: aBlEvent) asString; cr.
+(aBlEvent isKindOf: BlClickEvent ) ifTrue: [ self halt ].
+	^self eventDispatcher wantsEvent: aBlEvent
 ]

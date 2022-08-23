@@ -17,7 +17,7 @@ AlbLineNumberDecoration >> cursorBackgroundRectangleOf: anItemElement in: anInfi
 
 { #category : #initialization }
 AlbLineNumberDecoration >> defaultMaxAtRight [
-	^ 10
+	^ 12
 ]
 
 { #category : #initialization }

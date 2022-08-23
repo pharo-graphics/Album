@@ -1070,6 +1070,27 @@ AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
 ]
 
 { #category : #insertion }
+AlbTextEditorLineSegmentTest >> test_insert_Lf_inEmptyAt_0 [
+
+	| aTextEditor aSegment |
+	aTextEditor := self test_emptyEditor.
+	
+	aTextEditor insertString: String lf at: 0.
+	
+	self assert: aTextEditor segmentCollector segments size equals: 2.
+	self assert: aTextEditor text asString equals: String lf.
+	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 2.
+	
+	aSegment := aTextEditor segmentCollector segments at: 1.
+	self assert: aSegment textInterval equals: (0 to: 0).
+	self assert: aSegment textEndDelimited equals: 1.
+
+	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
+
+	^ aTextEditor
+]
+
+{ #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLineCrLf_in_HACrBA_At_3 [
 
 	| aTextEditor |
@@ -2354,12 +2375,12 @@ AlbTextEditorLineSegmentTest >> test_pieces_Hello_World_WithReplacementOf [
 ]
 
 { #category : #pieces }
-AlbTextEditorLineSegmentTest >> test_pieces_Hello_World_WithReplacementOfLineAlbeak [
+AlbTextEditorLineSegmentTest >> test_pieces_Hello_World_WithReplacementOfLineBreak [
 
 	| aTextEditor thePieces |
 	
 	aTextEditor := self test_emptyEditor.
-	aTextEditor text: self text_Hello_World_WithReplacementOfLineAlbeak.
+	aTextEditor text: self text_Hello_World_WithReplacementOfLineBreak.
 	
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	
@@ -2660,6 +2681,27 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_6_to_11_to_b
 ]
 
 { #category : #segments }
+AlbTextEditorLineSegmentTest >> test_segment_Cr_at_0 [
+
+	| aTextEditor aSegment |
+	
+	aTextEditor := self test_emptyEditor.
+	aTextEditor text: String cr.
+	aTextEditor segmentCollector
+		cachedSegmentAt: 0
+		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
+		ifNotFound: [].
+
+	self assert: aSegment index equals: 1.
+	self assert: aSegment textStart equals: 0.
+	self assert: aSegment textEnd equals: 0.
+	self assert: aSegment delimiterLength equals: 1.
+	self assert: aSegment text asString  equals: ''.
+
+	^ aTextEditor
+]
+
+{ #category : #segments }
 AlbTextEditorLineSegmentTest >> test_segment_HelloCrWorld_0_to_5 [
 	| aSegment |
 	
@@ -2705,6 +2747,10 @@ AlbTextEditorLineSegmentTest >> test_segment_in_Empty_at_0 [
 		ifNotFound: [].
 
 	self assert: aSegment index equals: 1.
+	self assert: aSegment textStart equals: 0.
+	self assert: aSegment textEnd equals: 0.
+	self assert: aSegment delimiterLength equals: 0.
+	self assert: aSegment text asString  equals: ''.
 
 	^ aTextEditor
 ]
@@ -2755,7 +2801,12 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_2 [
 		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
 		ifNotFound: [].
 
+	self assert: aSegment notNil.
 	self assert: aSegment index equals: 1.
+	self assert: aSegment delimiterLength equals: 1.
+	self assert: aSegment text asString equals: ('HA').
+	self assert: aSegment textStart equals: 0.
+	self assert: aSegment textEnd equals: 2.
 
 	^ aTextEditor
 ]
@@ -2772,7 +2823,12 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_3 [
 		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
 		ifNotFound: [].
 
+	self assert: aSegment notNil.
 	self assert: aSegment index equals: 2.
+	self assert: aSegment delimiterLength equals: 2.
+	self assert: aSegment text asString equals: ''.
+	self assert: aSegment textStart equals: 3.
+	self assert: aSegment textEnd equals: 3.
 
 	^ aTextEditor
 ]
@@ -2783,13 +2839,17 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_4 [
 	| aTextEditor aSegment |
 	
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 4
 		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
 		ifNotFound: [].
 
+	self assert: aSegment notNil.
 	self assert: aSegment index equals: 2.
+	self assert: aSegment delimiterLength equals: 2.
+	self assert: aSegment text asString equals: ('').
+	self assert: aSegment textStart equals: 3.
+	self assert: aSegment textEnd equals: 3.
 
 	^ aTextEditor
 ]
@@ -3140,11 +3200,11 @@ AlbTextEditorLineSegmentTest >> text_Hello_World_Cr_WithReplacement [
 ]
 
 { #category : #'accessing - text' }
-AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementAndAppendingOfLineAlbeak [
+AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementAndAppendingOfLineBreak [
 
 	| aText |
 
-	aText := self text_Hello_World_WithReplacementOfLineAlbeak.
+	aText := self text_Hello_World_WithReplacementOfLineBreak.
 	(aText from: 4 to: 8)
 		appendingAdornment: [ BlElement new size: 6@6; background: Color blue ].	
 	
@@ -3152,7 +3212,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementAndAppendingOfLi
 ]
 
 { #category : #'accessing - text' }
-AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementOfLineAlbeak [
+AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementOfLineBreak [
 
 	| aText |
 

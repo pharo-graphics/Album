@@ -324,22 +324,8 @@ AlbEditor >> stylerChanged: aStyler [
 { #category : #'editor - accessing' }
 AlbEditor >> subTextOnScreen [
 	
-	| interval |
-	interval := self subTextOnScreenInterval.
-	^ self editorText from: (interval first max: 1) to: interval last
+	^ self editor segmentCollector subText
 
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> subTextOnScreenInterval [
-	
-	| holder first last |
-	self editorText isEmpty ifTrue: [ ^ 0 to: -1 ].
-	holder := self elementHolderOf: self children first.
-	first := holder textInterval first.
-	holder := self elementHolderOf: self children last.
-	last := holder textInterval last.
-	^ first to: last
 
 ]
 

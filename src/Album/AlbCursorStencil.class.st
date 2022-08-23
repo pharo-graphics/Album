@@ -2,7 +2,8 @@ Class {
 	#name : #AlbCursorStencil,
 	#superclass : #OBlStencil,
 	#instVars : [
-		'blinking'
+		'blinking',
+		'current'
 	],
 	#classInstVars : [
 		'uniqueInstance'
@@ -36,7 +37,8 @@ AlbCursorStencil >> blinking: anObject [
 
 { #category : #'api - instantiation' }
 AlbCursorStencil >> create [
-	| current |
+self flag: 'To be checked: why #removeFromParent ? current should be already removed from its parent'.
+	current ifNotNil: [ current removeFromParent. ^ current ].
 	current := AlbCursorElement new
 		constraintsDo: [ :c | 
 			c horizontal exact: 2.

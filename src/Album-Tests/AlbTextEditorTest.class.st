@@ -62,19 +62,6 @@ AlbTextEditorTest >> test_oneCharacter [
 	self assert: textEditor segmentCollector segments first textInterval equals: (0 to: 1).
 ]
 
-{ #category : #segments }
-AlbTextEditorTest >> test_segments_count0 [
-	
-	| segments |
-	
-
-	segments := textEditor children
-		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
-	self assert: segments size equals: 1.
-	
-
-]
-
 { #category : #tests }
 AlbTextEditorTest >> test_textFromString [
 
@@ -89,6 +76,6 @@ AlbTextEditorTest >> test_textFromString [
 { #category : #tests }
 AlbTextEditorTest >> test_textFromStringWithNonPrintableCharacter [
 	"non printable character test"
-	self should: [textEditor text: Character backspace asString] raise: Error.
+	self should: [textEditor checkAndSetText: Character backspace asString] raise: Error.
 
 ]

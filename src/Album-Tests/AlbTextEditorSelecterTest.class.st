@@ -129,7 +129,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 	
 	self 
 		assert: anEditor selection allSelections
-		equals: { BlSelection from: 1 to: 13 }.
+		equals: { BlSelection from: 6 to: 12 }.
 	
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 12).
 	

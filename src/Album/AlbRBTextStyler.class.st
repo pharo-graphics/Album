@@ -1011,23 +1011,20 @@ AlbRBTextStyler >> parse: aText isMethod: isMethod [
 ]
 
 { #category : #private }
-AlbRBTextStyler >> privateStyle: aText [ 
-    | ast |
+AlbRBTextStyler >> privateStyle: aText [
 
-    ast := self parse: aText isMethod: self isForWorkspace not.
-    ast methodNode compilationContext: (CompilationContext new
-            class: (classOrMetaClass ifNil: [UndefinedObject]);
-				requestor: workspace).
-				"Requestor already has support for obtaining the bindings. 
-				Adding both the requestor and the bindings creates two scopes
-				that are used for looking up variables."
-				"bindings: (workspace ifNil: [ Dictionary new ]);"
-    ast doSemanticAnalysis.
-
-
-   self style: aText ast: ast.
-
-    ^ aText
+	| ast |
+	ast := self parse: aText isMethod: self isForWorkspace not.
+	ast methodNode compilationContext: (CompilationContext new
+			 class: (classOrMetaClass ifNil: [ UndefinedObject ]);
+			 requestor: workspace).
+	"Requestor already has support for obtaining the bindings. 
+	Adding both the requestor and the bindings creates two scopes
+	that are used for looking up variables."
+	"bindings: (workspace ifNil: [ Dictionary new ]);"
+	ast doSemanticAnalysis.
+	self style: aText ast: ast.
+	^ aText
 ]
 
 { #category : #private }

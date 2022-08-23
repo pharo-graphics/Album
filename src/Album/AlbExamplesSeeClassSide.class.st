@@ -107,11 +107,21 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorChangesText [
+
+	| ed |
+	ed := Smalltalk changesFile readStream contents onAlbum.
+	ed withLineNumbers.
+	ed openInOblSpace
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
 	"The insertion bogue arise around 342225"
-	ed := ((String loremIpsum: 100000000) asRopedText
+	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
+	ed := ((String loremIpsum: 10000000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed constraintsDo: [ :c | 
@@ -157,6 +167,20 @@ AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
+
+
+	| aText ed |
+
+	aText := ('Hello', String cr, 'World') asRopedText fontSize: 20.
+	(aText from: 4 to: 8)
+		replacingAdornment: [ BlElement new size: 20@6; background: Color red ].
+	ed := aText onAlbum.
+	ed withLineNumbers.
+	ed openInOblSpace
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 
@@ -175,24 +199,21 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 	text := (clickText , ' ' , hoverText) asRopedText.
 	editorElement := AlbEditor new text: text.
 
-	editorElement editorText
+	"editorElement editorText
 		attributes: { 
 				(BlTextBackgroundAttribute new paint: Color lightBlue).
-				(AlbTextClickAttribute new action: [ :a :b :c :d | 
-					 self inform: a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString ]) }
+				(AlbTextEventHandlerAttribute new when: BlClickEvent do: [ :anEvent | self inform: anEvent asString. anEvent consumed: true ]) }
 		from: 3
-		to: 11.
+		to: 11."
 
-	editorElement editorText
+"	editorElement editorText
 		attributes: { 
 				(BlTextBackgroundAttribute new paint: Color yellow).
-				(AlbTextHoverAttribute new
-					 enterAction: [ :a :b :c :d | 
-						 Transcript show: 'ENTER : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString; cr ];
-					 leaveAction: [ :a :b :c :d | 
-						 Transcript show: 'LEAVE : ' , a asString , ' ' , b asString , ' ' , c asString , ' ' , d asString; cr ]) }
+				(AlbTextEventHandlerAttribute new
+					 when: BlMouseEnterEvent do: [ :anEvent | self inform: anEvent asString. anEvent consumed: true ];
+					 when: BlMouseLeaveEvent do: [ :anEvent | self inform: anEvent asString. anEvent consumed: true ]) }
 		from: 17
-		to: 30.
+		to: 30."
 
 	space := BlSpace new.
 	space root addChild: editorElement.
@@ -202,10 +223,46 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
-	| editorElement space |
-	editorElement := AlbEditor new text: String tab.
+	| ed space |
+	ed := AlbEditor new.
 	space := BlSpace new.
-	space root addChild: editorElement.
+	space root addChild: ed.
+	space show
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithHelloWorld [
+
+	| ed space text editor |
+	text := ('Hello', String cr, ' World') asRopedText.
+	editor := AlbTextEditor new text: text.
+	ed := AlbEditor new.
+	ed editor: editor.
+	space := BlSpace new.
+	space root addChild: ed.
+	space show
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithWithCrLf [
+
+	| ed space |
+	ed := AlbEditor new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
+	ed withLineNumbers.
+	space := BlSpace new.
+	space root addChild: ed.
+	space show
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithWithCrOnly [
+
+	| ed space |
+	ed := AlbEditor new text: String cr.
+	ed editor segmentCollector inspect.
+	ed withLineNumbers.
+	space := BlSpace new.
+	space root addChild: ed.
 	space show
 ]
 

@@ -105,6 +105,12 @@ AlbTextEditor >> beReadOnlyWithoutSelection [
 	self editorMode: AlbTextEditorReadonlyWithoutSelectionMode new
 ]
 
+{ #category : #accessing }
+AlbTextEditor >> checkAndSetText: aText [ 
+	self checkText: aText.
+	self text: aText
+]
+
 { #category : #'text checking' }
 AlbTextEditor >> checkText: aText [
 
@@ -394,7 +400,7 @@ AlbTextEditor >> initialize [
 	hasEventHandlerAttribute := false.
 	mode := AlbTextEditorNullMode new.
 	
-	attachedElements := WeakSet new.
+	attachedElements := Set new.
 	
 	filter := AlbTextEditorNoInputFilter new.
 	cursor := self defaultCursor.
@@ -423,10 +429,11 @@ AlbTextEditor >> initialize [
 
 { #category : #initialization }
 AlbTextEditor >> initializeText: aText [
+
 	aText when: BlTextStringsInserted send: #onStringsInserted: to: self.
 	aText when: BlTextsDeleted send: #onTextsDeleted: to: self.
 	aText when: BlTextAttributeAdded send: #onTextAttributeAdded: to: self.
-	aText when: BlTextAttributesRemoved send: #onTextAttributesRemoved: to: self.
+	aText when: BlTextAttributesRemoved send: #onTextAttributesRemoved: to: self
 ]
 
 { #category : #'api - filter' }
@@ -527,7 +534,7 @@ AlbTextEditor >> navigator [
 
 { #category : #initialization }
 AlbTextEditor >> newSegmentCollector [
-	^ AlbTextEditorSegmentCollector new segmentBuilder: self defaultSegmentBuilder; yourself
+	^ self defaultSegmentCollector segmentBuilder: self defaultSegmentBuilder; yourself
 ]
 
 { #category : #'private - cursor' }
@@ -936,8 +943,11 @@ AlbTextEditor >> redo [
 
 { #category : #'event handler attributes' }
 AlbTextEditor >> registerEventHandlerAttribute: anEventHandlerattribute from: aFromIndex to: aToIndex [
+	| eventHandlers |
 	hasEventHandlerAttribute := true.
-	Transcript show: 'hasEventHandlerAttribute: ', anEventHandlerattribute printString; cr.
+	eventHandlers := anEventHandlerattribute eventDispatcher handlers.
+	anEventHandlerattribute  eventDispatcher removeEventHandlers.
+	eventHandlers do: [ :eachHandler | self addEventHandler: (BlEventForwarder forwardTo: eachHandler from: anEventHandlerattribute) ]	
 ]
 
 { #category : #'api - shortcuts' }
@@ -1186,10 +1196,9 @@ AlbTextEditor >> text [
 ]
 
 { #category : #accessing }
-AlbTextEditor >> text: aText [
+AlbTextEditor >> text: aText [ 
 
 	| t |
-	self checkText: aText.
 	t := aText asRopedText.
 	"when reducing the text size we should update the selection and cursor positions"
 	t size < text size ifTrue: [ 

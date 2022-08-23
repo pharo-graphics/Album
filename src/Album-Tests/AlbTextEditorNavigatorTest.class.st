@@ -238,7 +238,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA [
 	addedCursorElements := OrderedCollection new.
 	removedCursorElements := OrderedCollection new.
 
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | self halt. addedCursorElements add: anEvent cursorElement ] for: anEditor.
+	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
 	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
 
 	anEditor navigator
@@ -258,9 +258,8 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 1.
 	}.
-	self assert: addedCursorElements size equals: 2.
-	self assert: addedCursorElements first textPosition equals: 0.
-	self assert: addedCursorElements second textPosition equals: 1.
+	self assert: addedCursorElements size equals: 1.
+	self assert: addedCursorElements first textPosition equals: 1.
 	self assert: removedCursorElements size equals: 1.
 	self assert: removedCursorElements first textPosition equals: 0.
 	
@@ -278,7 +277,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA_CR_BB [
 	addedCursorElements := OrderedCollection new.
 	removedCursorElements := OrderedCollection new.
 
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | self halt. addedCursorElements add: anEvent cursorElement ] for: anEditor.
+	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
 	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
 
 	anEditor navigator
@@ -298,9 +297,8 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA_CR_BB [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 1.
 	}.
-	self assert: addedCursorElements size equals: 2.
-	self assert: addedCursorElements first textPosition equals: 0.
-	self assert: addedCursorElements second textPosition equals: 1.
+	self assert: addedCursorElements size equals: 1.
+	self assert: addedCursorElements first textPosition equals: 1.
 	self assert: removedCursorElements size equals: 1.
 	self assert: removedCursorElements first textPosition equals: 0.
 	
@@ -312,7 +310,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_cursors_at_0 [
 	
 	| anEditor theMovedEvents |
 	
-	anEditor := self test_cursor_add_at_0_in_multi_lines.
+	anEditor := self test_editorOnAA_CR_BB.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -345,7 +343,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 	addedCursorElements := OrderedCollection new.
 	removedCursorElements := OrderedCollection new.
 
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | self halt. addedCursorElements add: anEvent cursorElement ] for: anEditor.
+	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
 	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
 
 	anEditor navigator
@@ -365,9 +363,8 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 1.
 	}.
-	self assert: addedCursorElements size equals: 2.
-	self assert: addedCursorElements first textPosition equals: 0.
-	self assert: addedCursorElements second textPosition equals: 1.
+	self assert: addedCursorElements size equals: 1.
+	self assert: addedCursorElements first textPosition equals: 1.
 	self assert: removedCursorElements size equals: 1.
 	self assert: removedCursorElements first textPosition equals: 0.
 	
@@ -444,8 +441,8 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 68.
 	}.
-	self assert: addedCursorElements size equals: 2.
-	self assert: addedCursorElements first textPosition equals: 0.
+	self assert: addedCursorElements size equals: 1.
+	self assert: addedCursorElements first textPosition equals: 68.
 	self assert: removedCursorElements size equals: 1.
 	self assert: removedCursorElements first textPosition equals: 0.
 	

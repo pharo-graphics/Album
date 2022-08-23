@@ -83,6 +83,7 @@ AlbLineNumberDecoration >> aeMeasureActualWidthOn: aeCanvas in: anInfiniteElemen
 	"Draw the background beneath "
 
 	| holder cairoScaledFont fontExtents cairoGlyphsArray s |
+	anInfiniteElement hasChildren ifFalse: [ ^self ].
 	holder := anInfiniteElement childHolderOf: anInfiniteElement children last.
 	s := holder layoutPosition asString.
 	cairoScaledFont := self aeCairoScaledFontOn: aeCanvas.

@@ -225,12 +225,14 @@ AlbEditor >> navigator [
 AlbEditor >> onLayoutDone [
 
 	super onLayoutDone.
+	self editor viewInterval: self segmentOnScreenInterval.
 	self feltPensDo: [ :fp | fp onLayoutDoneIn: self ]
 ]
 
 { #category : #'hooks - scrolling' }
 AlbEditor >> onScrolled: aPoint [
 	super onScrolled: aPoint.
+	self editor viewInterval: self segmentOnScreenInterval.
 	self feltPensDo: [ :fp | fp onScrollDoneIn: self ]
 ]
 
@@ -269,6 +271,19 @@ AlbEditor >> request: aRequest [
 		ifFalse: [ self dispatchEvent: aRequest ].
 
 	^ aRequest response
+]
+
+{ #category : #'editor - accessing' }
+AlbEditor >> segmentOnScreenInterval [
+	
+	| holder first last |
+	self hasChildren ifFalse: [ ^ 0 to: -1 ].
+	holder := self elementHolderOf: self children first.
+	first := holder position.
+	holder := self elementHolderOf: self children last.
+	last := holder position.
+	^ first to: last
+
 ]
 
 { #category : #'editor - accessing' }
@@ -324,8 +339,22 @@ AlbEditor >> stylerChanged: aStyler [
 { #category : #'editor - accessing' }
 AlbEditor >> subTextOnScreen [
 	
-	^ self editor segmentCollector subText
+	| interval |
+	interval := self subTextOnScreenInterval.
+	^ self editorText from: (interval first max: 1) to: interval last
 
+]
+
+{ #category : #'editor - accessing' }
+AlbEditor >> subTextOnScreenInterval [
+	
+	| holder first last |
+	self editorText isEmpty ifTrue: [ ^ 0 to: -1 ].
+	holder := self elementHolderOf: self children first.
+	first := holder textInterval first.
+	holder := self elementHolderOf: self children last.
+	last := holder textInterval last.
+	^ first to: last
 
 ]
 

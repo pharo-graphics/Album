@@ -111,6 +111,7 @@ AlbExamplesSeeClassSide class >> example_EditorChangesText [
 
 	| ed |
 	ed := Smalltalk changesFile readStream contents onAlbum.
+
 	ed withLineNumbers.
 	ed openInOblSpace
 ]
@@ -121,7 +122,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	| ed |
 	"The insertion bogue arise around 342225"
 	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
-	ed := ((String loremIpsum: 10000000) asRopedText
+	ed := ((String loremIpsum: 100000000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed constraintsDo: [ :c | 

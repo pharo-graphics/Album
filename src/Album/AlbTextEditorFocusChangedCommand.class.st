@@ -10,7 +10,7 @@ Class {
 { #category : #executing }
 AlbTextEditorFocusChangedCommand >> executeOn: aTextEditor [
 	
-	aTextEditor notifyItems: aTextEditor segmentCollector cachedInterval event: self newHolderEvent.
+	aTextEditor notifyItems: aTextEditor segmentCollector viewInterval event: self newHolderEvent.
 
 ]
 

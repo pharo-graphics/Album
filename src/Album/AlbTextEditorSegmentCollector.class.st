@@ -31,7 +31,8 @@ Class {
 		'segments',
 		'segmentBuilder',
 		'segmentsInterval',
-		'cacheLimit'
+		'cacheLimit',
+		'viewInterval'
 	],
 	#category : #'Album-Model-Segment-Text'
 }
@@ -224,7 +225,6 @@ AlbTextEditorSegmentCollector >> computeBackwardAt: anIndex [
 { #category : #'cache - computation' }
 AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	| intervalEnd expectedCachedInterval actualStart skip forwardText stream |
-	Transcript show: 'computeForwardAt: ', anIndex asString; cr.
 	"the index of the last already cached segment"
 	intervalEnd := segmentsInterval last.
 
@@ -344,7 +344,7 @@ AlbTextEditorSegmentCollector >> defaultCacheLimit [
 	" be careful, this limit must be set according to the maximum line number of text that can be drawn. 
 	It depends on the minimum font size and the maximum editor height.
 	If the editor height is to large and this limit is to low, then the layouting will fail"
-	^ 200
+	^ 200000000
 ]
 
 { #category : #'cache - accessing' }
@@ -464,9 +464,7 @@ AlbTextEditorSegmentCollector >> newSegments [
 	"Return a new empty collection that will be used to store segments"
 
 	<return: #SequenceableCollection>
-	^ segments
-		  ifNotNil: [ segments reset ]
-		  ifNil: [ OrderedCollection new ]
+	^ OrderedCollection new
 ]
 
 { #category : #'text - modifications' }
@@ -574,4 +572,14 @@ AlbTextEditorSegmentCollector >> text [
 AlbTextEditorSegmentCollector >> text: aText [
 	text := aText.
 	self computeForwardAt: 1
+]
+
+{ #category : #accessing }
+AlbTextEditorSegmentCollector >> viewInterval [
+	^ viewInterval
+]
+
+{ #category : #accessing }
+AlbTextEditorSegmentCollector >> viewInterval: anInterval [
+	viewInterval := anInterval 
 ]

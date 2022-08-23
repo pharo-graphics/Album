@@ -23,6 +23,7 @@ AlbTextEditorSegmentCollectorTest class >> openEditor [
 	file := self fileName asFileReference.
 	t := BlRopedText file: file.
 	textEditor := AlbTextEditor new text: t.
+	textEditor segmentCollector cacheLimit: 60.
 	ed := AlbEditor new.
 	ed editor: textEditor.
 	ed openInOblSpace 
@@ -63,7 +64,7 @@ AlbTextEditorSegmentCollectorTest >> createFile: nbLines [
 	file ensureCreateFile.
 	file writeStreamDo: [ :stream | 
 		1 to: nbLines do: [ :l | 
-			stream << (l asString, ': 1234567890'); lf ] ].
+			stream << l asString << ': 1234567890'; lf ] ].
 	^ file
 ]
 
@@ -108,52 +109,6 @@ AlbTextEditorSegmentCollectorTest >> segments [
 ]
 
 { #category : #tests }
-AlbTextEditorSegmentCollectorTest >> test_loadChangeFile_cacheLimit20_computeForwardAt40 [
-
-	| seg segIdx |
-	textEditor := AlbTextEditor new.
-	textEditor text: Smalltalk changesFile readStream contents.
-	textEditor segmentCollector cacheLimit: 20.
-	self assertSegmentIndicesMustCorrespondToTheInterval.
-	self assert: self segments size equals: 20.
-	self segmentCollector computeForwardAt: 15.
-	self assertSegmentIndicesMustCorrespondToTheInterval.
-	segIdx := self segmentCollector cachedSegmentIndexAt: 500.
-	seg := self segments at: segIdx.
-	self segmentTestBlock valueWithArguments: {seg. '		spec package: #Toplo with: [ '. 476. 507 .1 }.
-
-
-	
-	
-	
-
-	
-]
-
-{ #category : #tests }
-AlbTextEditorSegmentCollectorTest >> test_loadChangeFile_cacheLimit20_computeForwardFrom0ToFileSize [
-
-	| seg segIdx cacheLimit |
-	textEditor := AlbTextEditor new.
-	textEditor text: Smalltalk changesFile readStream contents.
-	cacheLimit := 20.
-	self segmentCollector cacheLimit: cacheLimit.
-	self assert: self segments size equals: cacheLimit.
-	0 to: textEditor text size // 2 do: [ :pos | 
-		segIdx := self segmentCollector cachedSegmentIndexAt: pos.
-		segIdx isZero ifTrue: [ 
-			"here, normally the last cached segment has been reach a round before"
-			segIdx := self segmentCollector cachedSegmentIndexAt: pos - 1.
-			self assert: segIdx \\ cacheLimit equals: 0.
-			"rebuild forward cache"
-			self segmentCollector computeForwardAt: self segmentCollector cachedInterval last.
-			self assertSegmentIndicesMustCorrespondToTheInterval.
-			segIdx := self segmentCollector cachedSegmentIndexAt: pos ].
-		seg := self segments at: segIdx.
-		self assertSegmentIndicesMustCorrespondToTheInterval ]
-]
-
-{ #category : #tests }
 AlbTextEditorSegmentCollectorTest >> test_loadFile2_cacheLimit50 [
 
 	| seg |
@@ -163,12 +118,46 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile2_cacheLimit50 [
 
 	seg := self segments first.
 	"seg. string. textStart. textEnd. delimiterLength"
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 0. 10. 1 }.
+	self segmentTestBlock valueWithArguments: {seg. '1: 1234567890'. 0. 13. 1 }.
 	seg := self segments second.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 11. 21.  1}.
+	self segmentTestBlock valueWithArguments: {seg. '2: 1234567890'. 14. 27.  1}.
 	seg := self segments third.
-	self segmentTestBlock valueWithArguments: {seg. ''. 22. 22 .0}
+	self segmentTestBlock valueWithArguments: {seg. ''. 28. 28 .0}
 	
+]
+
+{ #category : #tests }
+AlbTextEditorSegmentCollectorTest >> test_loadFile400_cacheLimit20_computeForwardAt15 [
+
+	| seg segIdx |
+	self createFile: 400.
+	self textEditorWithCacheLimit: 20.
+	self assert: self segments size equals: 20.
+	self segmentCollector computeForwardAt: 15.
+	self assertSegmentIndicesMustCorrespondToTheInterval.
+	segIdx := self segmentCollector cachedSegmentIndexAt: 330.
+	seg := self segments at: segIdx.
+	self segmentTestBlock valueWithArguments: {seg. '23: 1234567890'. 321. 335 .1 }.
+
+
+	
+
+]
+
+{ #category : #tests }
+AlbTextEditorSegmentCollectorTest >> test_loadFile400_cacheLimit20_computeForwardAt15BackwardAt1 [
+
+	self createFile: 400.
+	self textEditorWithCacheLimit: 20.
+	self assert: self segments size equals: 20.
+	self segmentCollector computeForwardAt: 15.
+	self assertSegmentIndicesMustCorrespondToTheInterval.
+	self segmentCollector computeBackwardAt: 1.
+	self assertSegmentIndicesMustCorrespondToTheInterval.
+
+
+	
+
 ]
 
 { #category : #tests }
@@ -182,7 +171,7 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile400_cacheLimit20_computeForwar
 	self assertSegmentIndicesMustCorrespondToTheInterval.
 	segIdx := self segmentCollector cachedSegmentIndexAt: 330.
 	seg := self segments at: segIdx.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 330. 340 .1 }.
+	self segmentTestBlock valueWithArguments: {seg. '23: 1234567890'. 321. 335 .1 }.
 
 
 	
@@ -202,11 +191,11 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile4_cacheLimit3 [
 	
 	seg := self segments first.
 	"seg. string. textStart. textEnd. delimiterLength"
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'.  0. 10. 1 }.
+	self segmentTestBlock valueWithArguments: {seg. '1: 1234567890'.  0. 13. 1 }.
 	seg := self segments second.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 11. 21. 1 }.
+	self segmentTestBlock valueWithArguments: {seg. '2: 1234567890'. 14. 27. 1 }.
 	seg := self segments third.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 22. 32 .1 }.
+	self segmentTestBlock valueWithArguments: {seg. '3: 1234567890'. 28. 41 .1 }.
 
 	
 ]
@@ -228,7 +217,7 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile4_cacheLimit3_computeForwardAt
 	self segmentCollector computeForwardAt: 4.
 	segIdx := self segmentCollector cachedSegmentIndexAt: 33.
 	seg := self segments at: segIdx.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 33. 43 .1 }.
+	self segmentTestBlock valueWithArguments: {seg. '3: 1234567890'. 28. 41 .1 }.
 
 
 	
@@ -248,15 +237,15 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile4_cacheLimit50 [
 	
 	seg := self segments first.
 	"seg. string. textStart. textEnd. delimiterLength"
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'.  0. 10. 1 }.
+	self segmentTestBlock valueWithArguments: {seg. '1: 1234567890'.  0. 13. 1 }.
 	seg := self segments second.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 11. 21. 1 }.
+	self segmentTestBlock valueWithArguments: {seg. '2: 1234567890'. 14. 27. 1 }.
 	seg := self segments third.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 22. 32 .1 }.
+	self segmentTestBlock valueWithArguments: {seg. '3: 1234567890'. 28. 41 .1 }.
 	seg := self segments fourth.
-	self segmentTestBlock valueWithArguments: {seg. '1234567890'. 33. 43 .1 }.
+	self segmentTestBlock valueWithArguments: {seg. '4: 1234567890'. 42. 55 .1 }.
 	seg := self segments fifth.
-	self segmentTestBlock valueWithArguments: {seg. ''. 44. 44 .0}
+	self segmentTestBlock valueWithArguments: {seg. ''. 56. 56 .0}
 
 
 	

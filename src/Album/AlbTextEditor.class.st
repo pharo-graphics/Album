@@ -1292,3 +1292,13 @@ AlbTextEditor >> useSyncStylerStrategy [
 AlbTextEditor >> useTaskItStylerStrategy [
 	self stylerStrategy: AlbTextStylerTaskItStrategy new
 ]
+
+{ #category : #accessing }
+AlbTextEditor >> viewInterval [
+	^ self segmentCollector viewInterval
+]
+
+{ #category : #accessing }
+AlbTextEditor >> viewInterval: anInterval [
+	self segmentCollector viewInterval: anInterval
+]

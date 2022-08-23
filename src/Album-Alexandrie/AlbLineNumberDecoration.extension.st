@@ -5,8 +5,8 @@ AlbLineNumberDecoration >> aeCairoScaledFontOn: aeCanvas [
 
 	| fontAndStyleBuilder freeTypeFont |
 	fontAndStyleBuilder := BlTextFontAndStyleBuilder new.
-	freeTypeFont := fontAndStyleBuilder font asLogicalFont asFreetypeFont.
-	^ aeCanvas scaledFontFor: freeTypeFont  scaleBy: 12
+	freeTypeFont := fontAndStyleBuilder font asAeFTFace.
+	^ aeCanvas scaledFontForFace: freeTypeFont size: 12
 ]
 
 { #category : #'*Album-Alexandrie' }
@@ -14,15 +14,10 @@ AlbLineNumberDecoration >> aeCursorBackgroundDraw: anItemElement on: aeCanvas in
 
 	| path |
 	path := self cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement.
-	aeCanvas
-		setBackgroundWith: [ aeCanvas setSourceColor: anInfiniteElement selectionColor ]
-		alpha: 1.0.
+	aeCanvas setBackgroundWith: [
+		aeCanvas setSourceColor: anInfiniteElement selectionColor ].
 	aeCanvas setBorderOff.
-	aeCanvas
-		setPathKey: self
-		hasJoins: true
-		hasCaps: false
-		block: [ :cairoContext | cairoContext rectangle: path ].
+	aeCanvas drawClosedPathWith: [ :cairoContext | cairoContext rectangle: path ].
 
 	aeCanvas drawFigure
 ]
@@ -55,14 +50,12 @@ AlbLineNumberDecoration >> aeDrawBackgroundOn: aeCanvas in: anInfiniteElement [
 
 	"draw the background beneath "
 
-	aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ] alpha: 0.10.
-	aeCanvas setBorderOff.
 	aeCanvas
-		setPathKey: self
-		hasJoins: true
-		hasCaps: false
-		block: [ :cairoContext | 
-			cairoContext rectangle: self computedBounds ].
+		setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ]
+		alpha: 0.10.
+	aeCanvas setBorderOff.
+	aeCanvas drawClosedPathWith: [ :cairoContext | 
+		cairoContext rectangle: self computedBounds ].
 	aeCanvas drawFigure
 ]
 

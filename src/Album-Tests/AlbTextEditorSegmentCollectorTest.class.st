@@ -63,7 +63,7 @@ AlbTextEditorSegmentCollectorTest >> createFile: nbLines [
 	file ensureCreateFile.
 	file writeStreamDo: [ :stream | 
 		1 to: nbLines do: [ :l | 
-			stream << '1234567890'; lf ] ].
+			stream << (l asString, ': 1234567890'); lf ] ].
 	^ file
 ]
 

@@ -31,11 +31,6 @@ AlbEditorElement >> defaultRecycler [
 	^ AlbRecycler new
 ]
 
-{ #category : #initialization }
-AlbEditorElement >> defaultRecyclerController [
-	^ AlbRecyclerController new
-]
-
 { #category : #'ui - events managing' }
 AlbEditorElement >> doubleClickEvent: anEvent [
 	

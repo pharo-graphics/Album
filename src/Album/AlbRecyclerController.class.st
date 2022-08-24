@@ -30,7 +30,7 @@ AlbRecyclerController >> canReuseUpdatedElementHolder: anElementHolder [
 
 { #category : #'recycler -> element' }
 AlbRecyclerController >> childRemoved: anElement [
-	self flag: 'todo'.
+
 ]
 
 { #category : #accessing }
@@ -72,17 +72,12 @@ AlbRecyclerController >> elementHolderOf: anElement [
 
 { #category : #'recycler -> animator' }
 AlbRecyclerController >> endAnimation: aChildHolder [
-	^ self shouldBeImplemented
+
 ]
 
 { #category : #'recycler -> children' }
 AlbRecyclerController >> findHiddenNonRemovedChildAt: aPosition type: anItemType [
 	^ self childrenManager findHiddenNonRemovedChildAt: aPosition type: anItemType
-]
-
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> hasChangedScrap [
-	^ self shouldBeImplemented
 ]
 
 { #category : #'recycler -> data source' }
@@ -122,19 +117,9 @@ AlbRecyclerController >> itemIdAt: aPosition [
 	^ self dataSource itemIdAt: aPosition
 ]
 
-{ #category : #'recycler -> element' }
-AlbRecyclerController >> itemPrefetchCount [
-	^ self shouldBeImplemented
-]
-
 { #category : #'recycler -> data source' }
 AlbRecyclerController >> itemTypeAt: aPosition [
 	^ self dataSource itemTypeAt: aPosition
-]
-
-{ #category : #'recycler -> element' }
-AlbRecyclerController >> lastPrefetchIncludedPosition: aPosition [
-	^ self shouldBeImplemented
 ]
 
 { #category : #accessing }
@@ -142,19 +127,9 @@ AlbRecyclerController >> recycler [
 	^ infiniteElement recycler
 ]
 
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> recyclerPool [
-	^ self recycler pool
-]
-
 { #category : #accessing }
 AlbRecyclerController >> state [
 	^ infiniteElement state
-]
-
-{ #category : #'recycler -> state' }
-AlbRecyclerController >> stateItemCount [
-	^ self shouldBeImplemented
 ]
 
 { #category : #'recycler -> element' }

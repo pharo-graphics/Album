@@ -4,20 +4,8 @@ Class {
 	#category : #'Album-Recycler'
 }
 
-{ #category : #private }
-AlbRecyclerPositionScrapFetcher >> cachedFor: aPosition type: itemType dryRun: dryRun controller: aRecyclerController [
-
-	aRecyclerController cachedScrap withIndexDo: [ :holder :index |
-		(holder wasReturnedFromScrap not and: [ holder layoutPosition = aPosition ])
-			ifTrue: [ 
-				dryRun ifFalse: [ aRecyclerController cachedScrap removeAt: index ].
-				^ holder ] ].
-	^ nil
-]
-
 { #category : #initialization }
 AlbRecyclerPositionScrapFetcher >> defaultNext [
-	"^ BlInfiniteRecyclerStableScrapFetcher new"
 	^ AlbRecyclerDataSourceFetcher new
 ]
 
@@ -42,8 +30,7 @@ AlbRecyclerPositionScrapFetcher >> elementFor: aPosition dryRun: dryRun controll
 							holder itemElement dispatchRemovedFromParent: holder infiniteElement.
 							aRecyclerController unscrapHolder: holder ]
 						ifFalse: [ 
-							holder wasReturnedFromScrap ifTrue: [ holder clearReturnedFromScrap ] ].
-					aRecyclerController recycleElementHolder: holder ].
+							holder wasReturnedFromScrap ifTrue: [ holder clearReturnedFromScrap ] ] ].
 				holder := nil ]
 			ifTrue: [ fromScrap := true ] ].
 
@@ -86,7 +73,7 @@ AlbRecyclerPositionScrapFetcher >> positionedScrapFor: aPosition type: itemType 
 			ifNotNil: [ :child |
 				aRecyclerController endAnimation: (aRecyclerController elementHolderOf: child) ] ].
 		
-	^ self cachedFor: aPosition type: itemType dryRun: dryRun controller: aRecyclerController
+	^ nil
 ]
 
 { #category : #private }

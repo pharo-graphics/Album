@@ -230,15 +230,6 @@ AlbTextEditorLineSegmentHolder >> onFocusChanged: aBoolean [
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentHolder >> onRecycled [
-
-	itemElement removeChildren.
-	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | aPiece onRecycled: aPieceElement in: self infiniteElement ].
-	pieceElements := nil.
-	segment := nil.
-]
-
-{ #category : #updating }
 AlbTextEditorLineSegmentHolder >> onSelectionChanged [
 	"Is sent when text editor's selection changes.
 	Segment holder should update text elements accordingly"

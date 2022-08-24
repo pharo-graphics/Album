@@ -4,27 +4,12 @@ Class {
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
-		'recyclerPool',
 		'controller',
-		'changedScrap',
 		'attachedScrap',
-		'cachedScrap',
-		'fetcher',
-		'cacheSize',
-		'requestedCacheSize',
-		'userCache'
+		'fetcher'
 	],
 	#category : #'Album-Recycler'
 }
-
-{ #category : #private }
-AlbRecycler >> addHolderToRecyclerPool: anElementHolder [
-	self flag: 'Not used in Album'.
-	true ifTrue: [ ^self ].
-	self dispatchElementRecycled: anElementHolder.
-	anElementHolder detachInfiniteElement.
-	self pool put: anElementHolder
-]
 
 { #category : #'accessing - cache' }
 AlbRecycler >> attachedScrap [
@@ -32,39 +17,6 @@ AlbRecycler >> attachedScrap [
 	<return: #SequenceableCollection>
 	
 	^ attachedScrap
-]
-
-{ #category : #'accessing - properties' }
-AlbRecycler >> cacheSize [
-	"Return the maximum number of detached, valid elements we should retain for later use"
-	<return: #Number>
-
-	^ cacheSize
-]
-
-{ #category : #'accessing - properties' }
-AlbRecycler >> cacheSize: aRequestedCacheSize [
-	"Request change of the maximum number of detached, valid elements we should retain for later use.
-	It is not guaranteed that new cache size will be equal to requested one!"
-
-	requestedCacheSize = aRequestedCacheSize.
-	self updateCacheSize
-]
-
-{ #category : #'accessing - cache' }
-AlbRecycler >> cachedScrap [
-	"Return a collection of cached scrapped elements"
-	<return: #SequenceableCollection>
-
-	^ cachedScrap
-]
-
-{ #category : #'accessing - cache' }
-AlbRecycler >> changedScrap [
-	"Return a collection of changed scrapped elements"
-	<return: #SequenceableCollection>
-	
-	^ changedScrap
 ]
 
 { #category : #initialization }
@@ -75,13 +27,7 @@ AlbRecycler >> clear [
 { #category : #recycling }
 AlbRecycler >> clearOldPositions [
 
-	self cachedScrap do: [ :anElementHolder |
-		anElementHolder clearOldPosition ].
-
 	self attachedScrap do: [ :anElementHolder |
-		anElementHolder clearOldPosition ].
-	
-	self changedScrap do: [ :anElementHolder |
 		anElementHolder clearOldPosition ]
 ]
 
@@ -89,8 +35,7 @@ AlbRecycler >> clearOldPositions [
 AlbRecycler >> clearScrap [
 	"Removes all scrapped elements from corresponding pools"
 	
-	attachedScrap removeAll.
-	changedScrap removeAll
+	attachedScrap removeAll
 ]
 
 { #category : #accessing }
@@ -103,39 +48,10 @@ AlbRecycler >> controller: aBlInfiniteRecyclerController [
 	controller := aBlInfiniteRecyclerController
 ]
 
-{ #category : #hooks }
-AlbRecycler >> dataSourceChangedFrom: anOldDataSource to: aNewDataSource isCompatible: aBoolean [
-	self flag: 'Not used in Album'.
-	true ifTrue: [ ^self ].
-	self clear.
-	self pool dataSourceChangedFrom: anOldDataSource to: aNewDataSource isCompatible: aBoolean
-]
-
-{ #category : #initialization }
-AlbRecycler >> defaultCacheSize [
-	^ 0
-]
-
 { #category : #initialization }
 AlbRecycler >> defaultFetcher [
-	"^ BlInfiniteRecyclerChangedScrapFetcher instance"
-	"^ BlInfiniteRecyclerPoolFetcher instance"
-	"^BlInfiniteRecyclerUserCacheFetcher instance"
-	"^ BlInfiniteRecyclerStableScrapFetcher instance"
 	^ AlbRecyclerPositionScrapFetcher new
-	"^ AlbRecyclerDataSourceFetcher new"
-]
 
-{ #category : #initialization }
-AlbRecycler >> defaultRecyclerPool [
-	^ BlInfiniteRecyclerPool new
-]
-
-{ #category : #'event dispatching' }
-AlbRecycler >> dispatchElementRecycled: anElementHolder [
-
-	self notifyElementRecycled: anElementHolder.
-	self controller onElementHolderRecycled: anElementHolder
 ]
 
 { #category : #'accessing - element' }
@@ -163,9 +79,7 @@ AlbRecycler >> elementFor: aPosition dryRun: dryRun [
 	(aPosition < 1 or: [ aPosition > self controller dataSourceItemCount ])
 		ifTrue: [ Error signal: 'Position is out of bounds!' ].
 
-	self controller infiniteElement telemetry
-		timeSync: [ 'Fetch element at {1}' format: { aPosition } ]
-		during: [ fetchedResult := fetcher elementFor: aPosition dryRun: dryRun controller: self controller ].
+	fetchedResult := fetcher elementFor: aPosition dryRun: dryRun controller: self controller.
 	
 	holder := fetchedResult key.
 	fromScrap := fetchedResult value.
@@ -196,154 +110,12 @@ AlbRecycler >> elementFor: aPosition dryRun: dryRun [
 	^ itemElement
 ]
 
-{ #category : #invalidation }
-AlbRecycler >> elementRangeUpdate: aPosition itemCount: anItemCount [
-	| aPositionEnd |
-true ifTrue: [ ^self ].
-	aPositionEnd := aPosition + anItemCount.
-	self cachedScrap reverseWithIndexDo: [ :anElementHolder :anIndex |
-		| aLayoutPosition |
-		aLayoutPosition := anElementHolder layoutPosition.
-		(aLayoutPosition >= aPosition and: [ aLayoutPosition < aPositionEnd ])
-			ifTrue: [ 
-				anElementHolder flags addUpdate.
-				self recycleCachedAt: anIndex.
-				"cached elements should not be flagged as changed because this will cause them
-				to animate when they are returned from cache." ] ]
-]
-
-{ #category : #'event management accessing' }
-AlbRecycler >> eventDispatcher [
-	"Return an object responsible for event dispatching"
-	<return: #BlDirectEventDispatcher>
-self halt.
-	^nil
-]
-
 { #category : #initialization }
 AlbRecycler >> initialize [
 	super initialize.
-	
-	changedScrap := OrderedCollection new.
 	attachedScrap := OrderedCollection new.
-	cachedScrap := OrderedCollection new.
 	fetcher := self defaultFetcher.
-	
-	cacheSize := self defaultCacheSize.
-	requestedCacheSize := self defaultCacheSize.
-	recyclerPool := nil.
-]
 
-{ #category : #invalidation }
-AlbRecycler >> markItemDecorationsInsetsDirty [
-
-	self cachedScrap do: [ :anElementHolder |
-		anElementHolder itemElement constraints infinite insetsDirty: true ]
-]
-
-{ #category : #invalidation }
-AlbRecycler >> markKnownElementsInvalid [
-
-	self controller hasStableIds
-		ifTrue: [ 
-			self cachedScrap do: [ :anElementHolder |
-				anElementHolder flags addUpdate; addInvalid.
-				anElementHolder addEmptyPayload ] ]
-		"we cannot re-use cached elements in this case. Recycle them all"
-		ifFalse: [ self recycleAndRemoveCachedElements ]
-]
-
-{ #category : #'event firing' }
-AlbRecycler >> notifyElementRecycled: anElementHolder [
-	"BlInfiniteElementRecycledEvent is sent whenever the view in the ViewHolder is recycled.
-   Recycler sends me right before clearing ElementHolder's internal data and sending it to RecyclerPool.
-	This way, if ElementHolder was holding valid information before being recycled,
-	you can use ===#dataSourcePosition=== to get its datasource position"
-
-	self fireEvent: (BlInfiniteElementRecycledEvent holder: anElementHolder)
-]
-
-{ #category : #'accessing - position' }
-AlbRecycler >> offsetPositionRecordsForInsert: aStartPosition itemCount: anItemCount [
-
-	cachedScrap
-		select: [ :aHolder | aHolder position >= aStartPosition ]
-		thenDo: [ :aHolder | aHolder offsetPositionBy: anItemCount applyToPreLayout: true ]
-]
-
-{ #category : #'accessing - position' }
-AlbRecycler >> offsetPositionRecordsForMove: aStartPosition to: anEndPosition [
-	| start end inBetweenOffset |
-
-	aStartPosition < anEndPosition
-		ifTrue: [ 
-			start := aStartPosition.
-			end := anEndPosition.
-			inBetweenOffset := -1 ]
-		ifFalse: [ 
-			start := anEndPosition.
-			end := aStartPosition.
-			inBetweenOffset := 1 ].
-	
-	cachedScrap
-		select: [ :aHolder | (aHolder position < start or: [ aHolder position > end ]) ]
-		thenDo: [ :aHolder |
-			aHolder position = aStartPosition
-				ifTrue: [ aHolder offsetPositionBy: anEndPosition - aStartPosition applyToPreLayout: false ]
-				ifFalse: [ aHolder offsetPositionBy: inBetweenOffset applyToPreLayout: false ] ]
-]
-
-{ #category : #'accessing - position' }
-AlbRecycler >> offsetPositionRecordsForRemove: aStartPosition itemCount: anItemCount applyToPreLayout: shouldApplyToPreLayout [
-	| removedEnd |
-true ifTrue: [ ^self ].
-	removedEnd := aStartPosition + anItemCount.
-	cachedScrap reverseWithIndexDo: [ :anElementHolder :anIndex |
-		anElementHolder position >= removedEnd
-			ifTrue: [ anElementHolder
-				offsetPositionBy: anItemCount negated
-				applyToPreLayout: shouldApplyToPreLayout ]
-			ifFalse: [ (anElementHolder position >= aStartPosition)
-					ifTrue: [
-						"Item for this element was removed. Dump it from the cache."
-						anElementHolder flags addRemoved.
-						self recycleCachedAt: anIndex ] ] ]
-]
-
-{ #category : #accessing }
-AlbRecycler >> pool [
-	"Return an object pool used to recycle element holders.
-	recyclerPool can not be nil"
-	<return: #BlInfiniteRecyclerPool>
-
-	^ recyclerPool
-]
-
-{ #category : #'accessing - position' }
-AlbRecycler >> preLayoutPositionToPostLayout: aPosition [
-	"Infinite element provides artificial position range (item count) in pre-layout state and 
-	automatically maps these positions to DataSource positions when #elementFor: is sent.
-
-	Usually, Layout does not need to worry about this. However, in some cases, your
-	Layout may need to call some custom component with item positions in which
-	case you need the actual data source position instead of the pre layout position. You
-	can use me to convert a pre-layout position to data source (post layout) position.
-
-	Note that if the provided position belongs to a deleted ElementHolder, this method will return 0.
-	Using me in post-layout state returns the same value back.
-
-	aPosition must be greater or equal to 1 and less than BlInfiniteElementState>>#itemCount"
-	
-	(aPosition < 1 or: [ aPosition > self controller stateItemCount ])
-		ifTrue: [
-			SubscriptOutOfBounds
-				signalFor: aPosition
-				lowerBound: 1
-				upperBound: self controller stateItemCount ].
-	
-	^ self controller isPreLayout
-		ifTrue: [ self controller computePositionOffset: aPosition ]
-		ifFalse: [ aPosition ]
 ]
 
 { #category : #recycling }
@@ -351,41 +123,6 @@ AlbRecycler >> quickRecycleScrap: anElement [
 	"Used as a fast path for unscrapping and recycling a an element during a bulk operation.
 	The sender must send #clearScrap when it's done to update the recycler's internal bookkeeping.
 	anElement must not be nil"
-	| anElementHolder |
-	self
-		assert: [ anElement isNotNil ]
-		description: [ 'Can not recycle nil element' ].
-
-	anElementHolder := self controller elementHolderOf: anElement.
-	anElementHolder detachRecycler.
-	self recycleElementHolder: anElementHolder
-]
-
-{ #category : #recycling }
-AlbRecycler >> recycleAndRemoveCachedElements [
-	"Recycle and remove all cached elements"
-	
-	"iterate in reversed order since we delete cached elements from collection by index"
-	cachedScrap reverseWithIndexDo: [ :anElementHolder :anIndex |
-		self recycleCachedAt: anIndex ].
-	
-	"post-condition to make sure recycling worked well"
-	self
-		assert: [ cachedScrap isEmpty ]
-		description: [ 'Cached scrap collection must be empty after recycling of all element!' ]
-]
-
-{ #category : #recycling }
-AlbRecycler >> recycleCachedAt: anIndex [
-	"Recycles a cached element and removes it from the list. Elements are added to cache
-	if and only if they are recyclable, I do not check it again."
-	| anElementHolder |
-	self flag: 'Unused in Album'.
-	true ifTrue: [ ^self ].
-	anElementHolder := cachedScrap at: anIndex.
-
-	self addHolderToRecyclerPool: anElementHolder.
-	cachedScrap removeAt: anIndex
 ]
 
 { #category : #recycling }
@@ -397,79 +134,11 @@ AlbRecycler >> recycleElement: anElement [
 
 	Notice: I try to make element recycle-able since layout intended to recycle this element (e.g. even if it is in scrap or change cache)"
 	| anElementHolder |
-	
-	anElementHolder := self controller elementHolderOf: anElement.
-	anElementHolder isTmpDetached
-		ifTrue: [ self controller removeDetachedChild: anElement ].
-	
+	anElementHolder := self controller elementHolderOf: anElement.	
 	anElementHolder isScrap
 		ifTrue: [ self unscrapHolder: anElementHolder ]
 		ifFalse: [ anElementHolder wasReturnedFromScrap
 			ifTrue: [ anElementHolder clearReturnedFromScrap ] ].
-	
-	self recycleElementHolder: anElementHolder
-]
-
-{ #category : #recycling }
-AlbRecycler >> recycleElementHolder: anElementHolder [
-	| cached recycled |
-	self flag: 'unused in Album'.
-true ifTrue: [ ^self ].
-	(anElementHolder isScrap or: [ anElementHolder itemElement hasParent ])
-		ifTrue: [ self error: 'Scrapped or attached elements can not be recycled' ].
-
-	anElementHolder isTmpDetached
-		ifTrue: [ self error: 'Detached element must be removed from infinite element before it can be recycled' ].	
-
-	anElementHolder shouldIgnore
-		ifTrue: [ self error: 'Can not recycle an ignored element holder' ].
-
-	cached := false.
-	recycled := false.
-
-	(cachedScrap includes: anElementHolder)
-		ifTrue: [ self error: 'Trying to recycle already cached element' ].
-
-	anElementHolder isRecyclable ifTrue: [ 
-		(cacheSize > 0 and: [ anElementHolder isInvalid not
-			and: [ anElementHolder isRemoved not
-				and: [ anElementHolder needsUpdate not ] ] ])
-			ifTrue: [ 
-				| cachedScrapSize targetCacheIndex |
-				cachedScrapSize := cachedScrap size.
-				"recycle the oldest cached scrapped element"
-				(cachedScrapSize >= cacheSize and: [ cachedScrapSize > 0 ])
-					ifTrue: [ 
-						self recycleCachedAt: 1.
-						cachedScrapSize := cachedScrapSize - 1 ].
-				targetCacheIndex := cachedScrapSize.
-				(self controller isItemPrefetchEnabled
-					and: [ cachedScrapSize > 0
-						and: [ (self controller lastPrefetchIncludedPosition: anElementHolder position) not ] ])
-					ifTrue: [ 
-						| cacheIndex break |
-						cacheIndex := cachedScrapSize.
-						break := false.
-						[ break not and: [ cacheIndex >= 1 ] ] whileTrue: [ 
-							| cachedPosition |
-							cachedPosition := (cachedScrap at: cacheIndex) position.
-							(self controller lastPrefetchIncludedPosition: cachedPosition)
-								ifTrue: [ cacheIndex := cacheIndex - 1 ]
-								ifFalse: [ break := true ] ].
-						targetCacheIndex := cacheIndex + 1 ].
-				cachedScrap add: anElementHolder afterIndex: targetCacheIndex.
-				cached := true ].
-			cached ifFalse: [ 
-				self addHolderToRecyclerPool: anElementHolder.
-				recycled := true ] ].
-	
-	self controller removeHolderFromInfoStore: anElementHolder
-]
-
-{ #category : #recycling }
-AlbRecycler >> removeChangedScrap [
-
-	changedScrap removeAll
 ]
 
 { #category : #recycling }
@@ -477,8 +146,7 @@ AlbRecycler >> removeScrap [
 	"Remove all scrap elements out of this recycler.
 	Detached elements contained within a recycler pool will remain"
 
-	attachedScrap removeAll.
-	self recycleAndRemoveCachedElements
+	attachedScrap removeAll
 ]
 
 { #category : #'accessing - cache' }
@@ -505,28 +173,23 @@ AlbRecycler >> scrapCount [
 
 { #category : #recycling }
 AlbRecycler >> scrapElement: anElement [
-	"Mark an attached element as scrap. Scrap element are still attached
-	to their parent infinite element but are eligible for rebinding and reuse.
-	Requests for an element at a given position may return a reused or rebound scrap element instance.
-	anElement must not be nil"
+
 	| anElementHolder |
 	anElementHolder := self controller elementHolderOf: anElement.
 
-	(anElementHolder isRemoved or: [
-		anElementHolder isInvalid or: [ 
-			anElementHolder isUpdated not or: [ 
-				self controller canReuseUpdatedElementHolder: anElementHolder ] ] ])
-		ifTrue: [ 
-			(anElementHolder isInvalid and: [
-				anElementHolder isRemoved not and: [ 
-					self controller hasStableIds not ] ])
-				ifTrue: [ self error: 'Can not scrap invalid elements, because they can not be reused from scrap and should be rebound from recycler pool instead' ].
-			anElementHolder recycler: self inChangeScrap: false.
-			attachedScrap add: anElementHolder ]
-		ifFalse: [ 
-			self halt.
-			anElementHolder recycler: self inChangeScrap: true.
-			changedScrap add: anElementHolder ]
+	(anElementHolder isRemoved or: [ 
+		 anElementHolder isInvalid or: [ 
+			 anElementHolder isUpdated not or: [ 
+				 self controller canReuseUpdatedElementHolder: anElementHolder ] ] ]) 
+		ifFalse: [ ^ self ].
+
+	(anElementHolder isInvalid and: [ 
+		 anElementHolder isRemoved not and: [ 
+			 self controller hasStableIds not ] ]) ifTrue: [ 
+		self error:
+			'Can not scrap invalid elements, because they can not be reused from scrap and should be rebound from recycler pool instead' ].
+	anElementHolder recycler: self inChangeScrap: false.
+	attachedScrap add: anElementHolder
 ]
 
 { #category : #'accessing - cache' }
@@ -537,102 +200,12 @@ AlbRecycler >> scrappedElementAt: anIndex [
 	^ (attachedScrap at: anIndex) itemElement
 ]
 
-{ #category : #invalidation }
-AlbRecycler >> setDataSourcePositionsAsUnknown [
-	
-	self cachedScrap do: [ :anElementHolder |
-		anElementHolder flags addDataSourcePositionUnknown ]
-]
-
 { #category : #recycling }
 AlbRecycler >> unscrapHolder: anElementHolder [
 	"Remove a previously scrapped element holder from the pool of eligible scrap.
 	An element will no longer be eligible for reuse until re-scrapped or until
 	it is explicitly removed and recycled"
 
-	anElementHolder isInChangeScrap
-		ifTrue: [ changedScrap remove: anElementHolder ]
-		ifFalse: [ attachedScrap remove: anElementHolder ].
-		
+	attachedScrap remove: anElementHolder.
 	anElementHolder detachRecycler
-]
-
-{ #category : #'accessing - properties' }
-AlbRecycler >> updateCacheSize [
-	"Update cache size based on requested cache size and various
-	additional properties such as item prefetching.
-	Return true if cached size value changed, false otherwise"
-	<return: #Boolean>
-	| extraCache index oldCachedSize |
-	
-	oldCachedSize := cacheSize.
-	
-	extraCache := self controller isItemPrefetchEnabled
-		ifTrue: [ self controller itemPrefetchCount ]
-		ifFalse: [ 0 ].
-
-	cacheSize := requestedCacheSize + extraCache.
-
-	index := cachedScrap size.
-	
-	[ index >= 1 and: [ cachedScrap size >= cacheSize ] ] whileTrue: [ 
-		self recycleCachedAt: index.
-		index := index - 1 ].
-	
-	^ oldCachedSize ~= cacheSize
-]
-
-{ #category : #'accessing - cache' }
-AlbRecycler >> userCache [
-	"Return custom cache defined by user. Custom cache should
-	implement BlInfiniteAbstractCache api in order to be used with recycler"
-	<return: #BlInfiniteAbstractCache>
-
-	^ userCache
-]
-
-{ #category : #'accessing - cache' }
-AlbRecycler >> userCache: aUserCache [
-	"Set user cache to be used with this recycler.
-	aUserCache must not be nil"
-	self assert: aUserCache isNotNil.
-	
-	userCache := aUserCache
-]
-
-{ #category : #'private - testing' }
-AlbRecycler >> validateElementHolderForOffsetPosition: anElementHolder [
-	"Checks whether a given element holder can be used for the provided position.
-	Position is taken from element holder itself.
-	Return true if anElementHolder matches the provided position, false otherwise.
-	anElementHolder must not be nil"
-	<return: #Boolean>
-	self assert: anElementHolder isNotNil.
-	
-	anElementHolder isRemoved ifTrue: [ 
-		^ anElementHolder isPreLayout
-			ifTrue: [ true ]
-			ifFalse: [ 
-				self error: 'Can not validate removed element holder unless it is in pre layout mode!'.
-				^ false ] ].
-	
-	(anElementHolder position < 1
-		or: [ anElementHolder position > self controller dataSourceItemCount ])
-			ifTrue: [
-				SubscriptOutOfBounds
-					signalFor: anElementHolder position
-					lowerBound: 1
-					upperBound: self controller dataSourceItemCount ].
-	
-	"we don't need to check type if it is pre-layout"
-	self controller isPreLayout ifFalse: [
-		| type |
-		type := self controller itemTypeAt: anElementHolder position.
-		type ~= anElementHolder itemType
-			ifFalse: [^ false ] ].
-	
-	self controller hasStableIds
-		ifTrue: [ ^ anElementHolder itemId = self controller itemIdAt: anElementHolder position ].
-	
-	^ true
 ]

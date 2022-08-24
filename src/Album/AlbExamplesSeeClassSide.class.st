@@ -1,12 +1,27 @@
 Class {
 	#name : #AlbExamplesSeeClassSide,
 	#superclass : #Object,
+	#classVars : [
+		'BigText'
+	],
 	#category : #'Album-SandBox'
 }
 
 { #category : #accessing }
 AlbExamplesSeeClassSide class >> ascent [
 	^ -20
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> bigText [
+
+	^ BigText ifNil: [ BigText := String loremIpsum: 1000000000 ]
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> cleanUp [ 
+	super cleanUp.
+	BigText := nil
 ]
 
 { #category : #accessing }
@@ -111,7 +126,7 @@ AlbExamplesSeeClassSide class >> example_EditorChangesText [
 
 	| ed |
 	ed := Smalltalk changesFile readStream contents onAlbum.
-"ed recycler inspect."
+ed recycler inspect.
 	ed withLineNumbers.
 	ed openInOblSpace
 ]
@@ -122,9 +137,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	| ed |
 	"The insertion bogue arise around 342225"
 	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
-	ed := ((String loremIpsum: 1000000000) asRopedText
-		       fontSize: 16;
-		       fontName: 'Helvetica Neue') onAlbum.
+	ed := self bigText asRopedText onAlbum.
 	ed constraintsDo: [ :c | 
 		"c vertical resizer: BlLayoutResizer fitContent. "
 		"c horizontal resizer: BlLayoutResizer fitContent"].

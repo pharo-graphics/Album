@@ -33,10 +33,6 @@ AlbEditorSegmentHolder >> initialize [
 	itemElement := self createSegmentElement
 ]
 
-{ #category : #updating }
-AlbEditorSegmentHolder >> onRecycled [
-]
-
 { #category : #accessing }
 AlbEditorSegmentHolder >> segment: aEditorSegment [
 	^ self subclassResponsibility

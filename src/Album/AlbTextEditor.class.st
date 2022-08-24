@@ -680,14 +680,6 @@ AlbTextEditor >> onDetached: anEditorElement [
 			and: [ { BlMouseUpEvent . BlClickEvent . BlFocusEvent . BlBlurEvent } includes: aHandler eventClass ] ]
 ]
 
-{ #category : #hooks }
-AlbTextEditor >> onElementRecycled: anElementHolder [
-
-	super onElementRecycled: anElementHolder.
-	
-	anElementHolder onRecycled
-]
-
 { #category : #'private - focus' }
 AlbTextEditor >> onGotFocus [
 	isFocused := true.

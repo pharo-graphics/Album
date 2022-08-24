@@ -94,10 +94,6 @@ AlbTextEditorLineSegmentPiece >> onCursorRemoved: aCursor from: aPieceElement in
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> onRecycled: aPieceElement in: anEditorElement [
-]
-
-{ #category : #updating }
 AlbTextEditorLineSegmentPiece >> removeCursor: aPieceElement of: aLineSegment in: anEditorElement [
 
 	currentCursor ifNil: [ ^ self ].

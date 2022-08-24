@@ -38,8 +38,3 @@ AlbTextEditorLineSegmentTextPiece >> hash [
 AlbTextEditorLineSegmentTextPiece >> isText [
 	^ true
 ]
-
-{ #category : #'instance creation' }
-AlbTextEditorLineSegmentTextPiece >> onRecycled: aPieceElement in: anEditorElement [
-	anEditorElement editor segmentBuilder wordStencilBuilder recycle: aPieceElement
-]

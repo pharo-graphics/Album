@@ -293,6 +293,7 @@ AlbTextEditorOperator >> findWhitespaceOfLineBefore: aTextIndex [
 	<return: #String>
 
 	aText := self text.
+	aText ifEmpty: [ ^ '' ].
 	(aText at: (aTextIndex max: 1)) isLineBreak
 		ifTrue: [ ^ '' ].
 

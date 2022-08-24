@@ -142,11 +142,6 @@ AlbTextWordPieceStencilBuilder >> readOnlyWordPieceEventHandlers [
 	
 ]
 
-{ #category : #'private - pool' }
-AlbTextWordPieceStencilBuilder >> recycle: aPieceElement [
-	aPieceElement recycledFrom: self
-]
-
 { #category : #initialization }
 AlbTextWordPieceStencilBuilder >> reset [
 	wordPadding := BlInsets empty.

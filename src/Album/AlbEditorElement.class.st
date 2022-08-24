@@ -3,7 +3,7 @@ I represent a scrollable editor element. I support scrolling, selection and othe
 "
 Class {
 	#name : #AlbEditorElement,
-	#superclass : #BlInfiniteElement,
+	#superclass : #OBlInfiniteElement,
 	#instVars : [
 		'hasFocus',
 		'textStyleHandler'

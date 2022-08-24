@@ -17,11 +17,6 @@ AlbRecyclerController >> bindHolder: aHolder at: aPosition [
 	self dataSource bindHolder: aHolder at: aPosition
 ]
 
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> cachedScrap [
-	^ self recycler cachedScrap
-]
-
 { #category : #'recycler -> animator' }
 AlbRecyclerController >> canReuseUpdatedElementHolder: anElementHolder [
 	"Return true if changed element holder can be reused"
@@ -31,11 +26,6 @@ AlbRecyclerController >> canReuseUpdatedElementHolder: anElementHolder [
 			infiniteElement itemAnimator
 				canReuseUpdatedElementHolder: anElementHolder
 				payloads: anElementHolder payloads ]
-]
-
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> changedScrap [
-	^ self recycler changedScrap
 ]
 
 { #category : #'recycler -> element' }
@@ -147,28 +137,6 @@ AlbRecyclerController >> lastPrefetchIncludedPosition: aPosition [
 	^ self shouldBeImplemented
 ]
 
-{ #category : #'recycler -> element' }
-AlbRecyclerController >> onElementHolderRecycled: anElementHolder [
-
-	self dataSource onElementRecycled: anElementHolder.
-	self infoStore removeHolder: anElementHolder
-]
-
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> quickRecycleScrap: anElement [
-	self recycler quickRecycleScrap: anElement
-]
-
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> recycleCachedAt: anIndex [
-	self recycler recycleCachedAt: anIndex
-]
-
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> recycleElementHolder: anElementHolder [
-	self flag: #todo
-]
-
 { #category : #accessing }
 AlbRecyclerController >> recycler [
 	^ infiniteElement recycler
@@ -177,16 +145,6 @@ AlbRecyclerController >> recycler [
 { #category : #'scrap fetcher -> recycler' }
 AlbRecyclerController >> recyclerPool [
 	^ self recycler pool
-]
-
-{ #category : #'recycler -> element' }
-AlbRecyclerController >> removeDetachedChild: anElement [
-	^ self shouldBeImplemented
-]
-
-{ #category : #'recycler -> state' }
-AlbRecyclerController >> removeHolderFromInfoStore: anElementHolder [
-	self infoStore removeHolder: anElementHolder
 ]
 
 { #category : #accessing }
@@ -202,9 +160,4 @@ AlbRecyclerController >> stateItemCount [
 { #category : #'recycler -> element' }
 AlbRecyclerController >> unscrapHolder: anElementHolder [
 	self recycler unscrapHolder: anElementHolder
-]
-
-{ #category : #'scrap fetcher -> recycler' }
-AlbRecyclerController >> userCache [
-	^ self recycler userCache
 ]

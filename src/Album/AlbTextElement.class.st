@@ -133,17 +133,6 @@ AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #'private - pool' }
-AlbTextElement >> recycledFrom: aStencilBuilder [
-
-	super recycledFrom: aStencilBuilder.
-	self removeCursor.
-	self resetHighlightsMap.
-	"otherwise attributes may not be garbage collected
-	see https://github.com/feenkcom/gtoolkit/issues/537"
-	self removeSegmentPiece
-]
-
 { #category : #'cursor - management' }
 AlbTextElement >> removeCursor [
 	"Remove all cursors"
@@ -164,12 +153,6 @@ AlbTextElement >> removeCursorAt: aTextIndex [
 			cursorElement := nil.
 			c ]
 		ifNone: [ self error: 'Cursor at ', aTextIndex asString, ' does not exist' ]
-]
-
-{ #category : #accessing }
-AlbTextElement >> removeSegmentPiece [
-	segmentPiece := nil.	
-	self text: '' asRopedText
 ]
 
 { #category : #accessing }

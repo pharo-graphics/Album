@@ -486,8 +486,9 @@ AlbTextEditor >> itemIdAt: aPosition [
 AlbTextEditor >> itemTypeAt: aPosition [
 	"Return segment type at a given position"
 	<return: #AlbEditorSegmentType>
-	
-	^ (segmentCollector segmentAt: aPosition) segmentType
+	self flag: 'try with uniform item type to avoid collector>>computeBackwardAt:'.
+	^ AlbTextEditorLineSegmentType uniqueInstance
+	"^ (segmentCollector segmentAt: aPosition) segmentType"
 ]
 
 { #category : #'api - shortcuts' }
@@ -633,14 +634,10 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 	| aSegment previousLastIndex |
 
 	"First we want to acquire a segment for a given position"
-	aSegmentHolder infiniteElement telemetry
-		timeSync: [ 'Get segment at {1}' format: { aPosition } ]
-		during: [ aSegment := segmentCollector segmentAt: aPosition. ].
+	aSegment := segmentCollector segmentAt: aPosition.
 
 	"and then bind it to the holder"
-	aSegmentHolder infiniteElement telemetry
-		timeSync: [ 'Set segment at {1}' format: { aPosition } ]
-		during: [ aSegmentHolder segment: aSegment ].
+	aSegmentHolder segment: aSegment.
 
 	"If the last cached segment was requested, load more so that the editor knows there are more lines"
 	(aPosition = segmentCollector lastIndex and: [ segmentCollector end < segmentCollector text size ])

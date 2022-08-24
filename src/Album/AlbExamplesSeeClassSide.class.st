@@ -111,7 +111,7 @@ AlbExamplesSeeClassSide class >> example_EditorChangesText [
 
 	| ed |
 	ed := Smalltalk changesFile readStream contents onAlbum.
-
+"ed recycler inspect."
 	ed withLineNumbers.
 	ed openInOblSpace
 ]
@@ -122,7 +122,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	| ed |
 	"The insertion bogue arise around 342225"
 	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
-	ed := ((String loremIpsum: 100000000) asRopedText
+	ed := ((String loremIpsum: 1000000000) asRopedText
 		       fontSize: 16;
 		       fontName: 'Helvetica Neue') onAlbum.
 	ed constraintsDo: [ :c | 
@@ -177,6 +177,22 @@ AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 	(aText from: 4 to: 8)
 		replacingAdornment: [ BlElement new size: 20@6; background: Color red ].
 	ed := aText onAlbum.
+	ed withLineNumbers.
+	ed openInOblSpace
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
+
+	| ed t |
+	"The insertion bogue arise around 342225"
+	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
+	t := String streamContents: [ :stream | 
+		1 to: 400000 do: [ :l | 
+			stream << l asString << ': 1234567890'; lf ] ].
+	ed := (t asRopedText
+		       fontSize: 16;
+		       fontName: 'Helvetica Neue') onAlbum.
 	ed withLineNumbers.
 	ed openInOblSpace
 ]

@@ -93,5 +93,5 @@ AlbEditorSegmentStream >> skip: aNumber [
 
 { #category : #testing }
 AlbEditorSegmentStream >> wantsMore [
-	^ true
+	^ self size < self limit
 ]

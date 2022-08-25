@@ -122,7 +122,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 ]
 
 { #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_EditorChangesText [
+AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
 	| ed |
 	ed := Smalltalk changesFile readStream contents onAlbum.
@@ -263,9 +263,10 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 
 	| ed space text editor |
-	text := ('Hello', String cr, ' World') asRopedText.
+	text := ('Hello', String cr, ' World') asRopedText fontSize: 40.
 	editor := AlbTextEditor new text: text.
 	ed := AlbEditor new.
+	ed inspect.
 	ed editor: editor.
 	space := BlSpace new.
 	space root addChild: ed.

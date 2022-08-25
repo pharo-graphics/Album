@@ -172,6 +172,12 @@ AlbRecycler >> recycleElement: anElement [
 			ifTrue: [ anElementHolder clearReturnedFromScrap ] ].
 ]
 
+{ #category : #recycling }
+AlbRecycler >> recycleElementHolder: anElementHolder [
+	
+	self flag: 'Not in Album'.
+]
+
 { #category : #removing }
 AlbRecycler >> removeChangedScrap [
 

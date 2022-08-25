@@ -8,7 +8,7 @@ AlbSelectionLimitDecoration >> aeDraw: anItemElement onOver: aeCanvas in: anInfi
 			aeCanvas pathTranslate: self computedBounds left @ anItemElement bounds inParent top.
 			aeCanvas
 				setBackgroundWith: [ aeCanvas setSourceColor: anInfiniteElement selectionColor ]
-				alpha: 0.5.
+				alpha: 1.0.
 			aeCanvas setBorderOff.
 			aeCanvas drawClosedPathWith: [ :cairoContext | cairoContext rectangle: rect ].
 

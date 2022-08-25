@@ -10,6 +10,6 @@ AlbSelectionLimitDecoration >> draw: anItemElement onSpartaCanvasOver: aCanvas i
 				aCanvas figure
 					path: rect;
 					borderOutside;
-					background: (anInfiniteElement selectionColor alpha: 0.5);
+					background: (anInfiniteElement selectionColor);
 					draw ] ]
 ]

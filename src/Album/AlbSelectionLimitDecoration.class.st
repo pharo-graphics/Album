@@ -25,10 +25,12 @@ AlbSelectionLimitDecoration >> requiredWidth [
 { #category : #geometry }
 AlbSelectionLimitDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock [
 
-	| elements |
-	elements := anItemElement children select: [ :e | 
-		            (e isKindOf: AlbTextElement) and: [ 
-			            e selection isNotEmpty and: [ e selection from isZero and: [ e bounds left isZero ] ] ] ].
-	elements isEmpty ifTrue: [ ^ self ].
-	aBlock value: (0 @ elements first bounds top corner: self computedBounds width @ elements last bounds bottom)
+	| first |
+	anInfiniteElement selection isEmpty ifTrue: [ ^ self ].
+	first := anItemElement firstChild.
+	(first isKindOf: AlbTextElement) ifFalse: [ ^ self ].
+
+	((first hasCursor and: [ first cursorElement bounds left isZero ]) or: [ 
+		 first selection isNotEmpty and: [ first selection from isZero ] ]) ifFalse: [ ^ self ].
+	aBlock value: (0 @ first bounds top corner: self computedBounds width - 1 @ first bounds bottom)
 ]

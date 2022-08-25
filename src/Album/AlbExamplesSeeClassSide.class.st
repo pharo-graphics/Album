@@ -52,7 +52,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 			(BlShortcutWithAction new
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
-
+editorElement inspect.
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space title: 'editor'.
@@ -139,8 +139,8 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
 	ed := self bigText asRopedText onAlbum.
 	ed constraintsDo: [ :c | 
-		"c vertical resizer: BlLayoutResizer fitContent. "
-		"c horizontal resizer: BlLayoutResizer fitContent"].
+		c vertical resizer: BlLayoutResizer fitContent. 
+		c horizontal resizer: BlLayoutResizer fitContent].
 	"ed inspect."
 	ed withLineNumbers.
 	ed openInOblSpace

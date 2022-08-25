@@ -259,10 +259,8 @@ AlbTextEditorSegmentCollector >> computedSegmentsCount [
 
 { #category : #initialization }
 AlbTextEditorSegmentCollector >> defaultCacheLimit [
-	" be careful, this limit must be set according to the maximum line number of text that can be drawn. 
-	It depends on the minimum font size and the maximum editor height.
-	If the editor height is to large and this limit is to low, then the layouting will fail"
-	^ 400
+
+	^ 50
 ]
 
 { #category : #'cache - accessing' }

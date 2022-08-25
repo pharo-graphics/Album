@@ -110,12 +110,43 @@ AlbRecycler >> elementFor: aPosition dryRun: dryRun [
 	^ itemElement
 ]
 
+{ #category : #invalidation }
+AlbRecycler >> elementRangeUpdate: aPosition itemCount: anItemCount [
+
+	self flag: 'Not in Album'
+]
+
 { #category : #initialization }
 AlbRecycler >> initialize [
 	super initialize.
 	attachedScrap := OrderedCollection new.
 	fetcher := self defaultFetcher.
 
+]
+
+{ #category : #'private - invalidation' }
+AlbRecycler >> markItemDecorationsInsetsDirty [
+
+	self flag: 'Not in Album'
+]
+
+{ #category : #'private - invalidation' }
+AlbRecycler >> markKnownElementsInvalid [
+
+	self flag: 'Not in Album'
+]
+
+{ #category : #'private - commands' }
+AlbRecycler >> offsetPositionRecordsForInsert: aStartPosition itemCount: anItemCount [
+
+	self flag: 'Not in Album'
+	
+]
+
+{ #category : #'private - commands' }
+AlbRecycler >> offsetPositionRecordsForRemove: aPositionStart itemCount: anItemCount applyToPreLayout: applyToPreLayout [
+
+	self flag: 'Not in Album'
 ]
 
 { #category : #recycling }
@@ -139,6 +170,12 @@ AlbRecycler >> recycleElement: anElement [
 		ifTrue: [ self unscrapHolder: anElementHolder ]
 		ifFalse: [ anElementHolder wasReturnedFromScrap
 			ifTrue: [ anElementHolder clearReturnedFromScrap ] ].
+]
+
+{ #category : #removing }
+AlbRecycler >> removeChangedScrap [
+
+	self flag: 'Not in Album'
 ]
 
 { #category : #recycling }
@@ -198,6 +235,12 @@ AlbRecycler >> scrappedElementAt: anIndex [
 	<return: #BlElement>
 
 	^ (attachedScrap at: anIndex) itemElement
+]
+
+{ #category : #initialization }
+AlbRecycler >> setDataSourcePositionsAsUnknown [
+
+	self flag: 'Not in Album'
 ]
 
 { #category : #recycling }

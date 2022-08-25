@@ -14,7 +14,7 @@ AlbExamplesSeeClassSide class >> ascent [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> bigText [
-
+	"1000000000 is 1To, ~200 000 pages in LibreOffice - 3 600 000 lines on TextMaker "
 	^ BigText ifNil: [ BigText := String loremIpsum: 1000000000 ]
 ]
 
@@ -136,11 +136,10 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
 	"The insertion bogue arise around 342225"
-	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
 	ed := self bigText asRopedText onAlbum.
-	ed constraintsDo: [ :c | 
+	"ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent. 
-		c horizontal resizer: BlLayoutResizer fitContent].
+		c horizontal resizer: BlLayoutResizer fitContent]."
 	"ed inspect."
 	ed withLineNumbers.
 	ed openInOblSpace

@@ -14,7 +14,7 @@ AlbExamplesSeeClassSide class >> ascent [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> bigText [
-	"1000000000 is 1To, ~200 000 pages in LibreOffice - 3 600 000 lines on TextMaker "
+	"1000000000 is 1Go, ~200 000 pages in LibreOffice - 3 600 000 lines on TextMaker "
 	^ BigText ifNil: [ BigText := String loremIpsum: 1000000000 ]
 ]
 

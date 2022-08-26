@@ -1,19 +1,11 @@
 Class {
 	#name : #AlbLineNumberDecoration,
-	#superclass : #BlInfiniteDecoration,
+	#superclass : #AlbSelectionSideDecoration,
 	#instVars : [
 		'actualWidth'
 	],
 	#category : #'Album-UI'
 }
-
-{ #category : #geometry }
-AlbLineNumberDecoration >> cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement [
-
-	^ Rectangle
-		  origin: anInfiniteElement border width @ 0
-		  corner: self computedBounds width @ anItemElement height
-]
 
 { #category : #initialization }
 AlbLineNumberDecoration >> defaultMaxAtRight [
@@ -23,6 +15,11 @@ AlbLineNumberDecoration >> defaultMaxAtRight [
 { #category : #initialization }
 AlbLineNumberDecoration >> defaultWidth [
 	^ 17
+]
+
+{ #category : #geometry }
+AlbLineNumberDecoration >> gap [
+	^ 1
 ]
 
 { #category : #initialization }

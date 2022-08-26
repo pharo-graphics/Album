@@ -10,30 +10,14 @@ AlbLineNumberDecoration >> aeCairoScaledFontOn: aeCanvas [
 ]
 
 { #category : #'*Album-Alexandrie' }
-AlbLineNumberDecoration >> aeCursorBackgroundDraw: anItemElement on: aeCanvas in: anInfiniteElement [
-
-	| path |
-	path := self cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement.
-	aeCanvas setBackgroundWith: [
-		aeCanvas setSourceColor: anInfiniteElement selectionColor ].
-	aeCanvas setBorderOff.
-	aeCanvas drawClosedPathWith: [ :cairoContext | cairoContext rectangle: path ].
-
-	aeCanvas drawFigure
-]
-
-{ #category : #'*Album-Alexandrie' }
-AlbLineNumberDecoration >> aeDraw: anItemElement on: aeCanvas in: anInfiniteElement [
+AlbLineNumberDecoration >> aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement [
 
 	| holder index s cairoScaledFont cairoGlyphsArray fontExtents |
+	super aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement.
 	aeCanvas restoreContextAfter: [ 
-		aeCanvas pathTranslate: self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top.
-
-		"Hihglight the selection if the element holds it"
+		aeCanvas pathTranslate:
+			self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top.
 		holder := anInfiniteElement childHolderOf: anItemElement.
-		(holder hasCursor and: [ anInfiniteElement selection isEmpty ]) ifTrue: [ 
-			self aeCursorBackgroundDraw: anItemElement on: aeCanvas in: anInfiniteElement ].
-
 		index := holder layoutPosition.
 		s := index asString utf8Encoded.
 
@@ -60,14 +44,14 @@ AlbLineNumberDecoration >> aeDrawBackgroundOn: aeCanvas in: anInfiniteElement [
 ]
 
 { #category : #'*Album-Alexandrie' }
-AlbLineNumberDecoration >> aeDrawOn: aeCanvas in: anInfiniteElement [
+AlbLineNumberDecoration >> aeDrawBeneathOn: aeCanvas in: anInfiniteElement [
 
 	"Update the actual width and draw the background beneath "
 
 	self aeMeasureActualWidthOn: aeCanvas in: anInfiniteElement.
-	self aeDrawBackgroundOn: aeCanvas in: anInfiniteElement.
+	aeCanvas restoreContextAfter: [ self aeDrawBackgroundOn: aeCanvas in: anInfiniteElement ].
 	"super sent ensure drawing for item elements"
-	super aeDrawOn: aeCanvas in: anInfiniteElement
+	super aeDrawBeneathOn: aeCanvas in: anInfiniteElement
 ]
 
 { #category : #'*Album-Alexandrie' }

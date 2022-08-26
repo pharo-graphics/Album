@@ -1,35 +1,18 @@
 Extension { #name : #AlbLineNumberDecoration }
 
 { #category : #'*Album-Sparta' }
-AlbLineNumberDecoration >> cursorBackgroundDraw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement [
-
-	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element for its child element anItemElement.
-		Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
-
-	| path |
-	path := self cursorBackgroundRectangleOf: anItemElement in: anInfiniteElement.
-	aCanvas figure
-		path: path;
-		borderOutside;
-		background: anInfiniteElement selectionColor;
-		draw
-]
-
-{ #category : #'*Album-Sparta' }
-AlbLineNumberDecoration >> draw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement [
+AlbLineNumberDecoration >> draw: anItemElement overOnSpartaCanvas: aCanvas in: anInfiniteElement [
 
 	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element for its child element anItemElement.
 		Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
 
 	| holder index fontBuilder textPainter font s |
+	super draw: anItemElement overOnSpartaCanvas: aCanvas in: anInfiniteElement.
 	aCanvas transform
 		by: [ :aTransform | 
 			aTransform translateBy: self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top ]
 		during: [ 
 			holder := anInfiniteElement childHolderOf: anItemElement.
-			(holder hasCursor and: [ anInfiniteElement selection isEmpty ]) ifTrue: [ 
-				self cursorBackgroundDraw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement ].
-
 			index := holder layoutPosition.
 			s := index asString.
 
@@ -55,14 +38,14 @@ AlbLineNumberDecoration >> drawBackgroundOnSpartaCanvas: aCanvas in: anInfiniteE
 ]
 
 { #category : #'*Album-Sparta' }
-AlbLineNumberDecoration >> drawOnSpartaCanvas: aCanvas in: anInfiniteElement [
+AlbLineNumberDecoration >> drawBeneathOnSpartaCanvas: aCanvas in: anInfiniteElement [
 
 	"Update the actual width and draw the background beneath "
 
 	self measureActualWidthOnSpartaCanvas: aCanvas in: anInfiniteElement.
 	self drawBackgroundOnSpartaCanvas: aCanvas in: anInfiniteElement.
 	"super sent ensure drawing for item elements"
-	super drawOnSpartaCanvas: aCanvas in: anInfiniteElement
+	super drawBeneathOnSpartaCanvas: aCanvas in: anInfiniteElement
 ]
 
 { #category : #'*Album-Sparta' }
@@ -76,4 +59,18 @@ AlbLineNumberDecoration >> measureActualWidthOnSpartaCanvas: aCanvas in: anInfin
 	self
 		onActualWidthChangeWith: (font averageWidthOf: $0) * s size
 		do: [ anInfiniteElement requestLayout ]
+]
+
+{ #category : #'*Album-Sparta' }
+AlbLineNumberDecoration >> selectionBackgroundDraw: anItemElement onSpartaCanvas: aCanvas in: anInfiniteElement [
+
+	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element for its child element anItemElement.
+		Any content drawn by this method will be drawn after the item elements are drawn, and will thus appear over them"
+
+	self selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :bnds | 
+		aCanvas figure
+			path: bnds;
+			borderOutside;
+			background: (self selectionBackgroundColorOf: anItemElement in: anInfiniteElement);
+			draw ]
 ]

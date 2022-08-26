@@ -152,146 +152,148 @@ AlbTextEditorInserter >> inputFilter: aTextEditorInputFilter [
 
 { #category : #'api - processing' }
 AlbTextEditorInserter >> insert [
+
 	| theFilteredTextMap theInsertions theCursorMovements |
 
-	shouldDeleteSelected
-		ifTrue: [ self deleteSelectedText ].
-		
+	self flag: 'aaaahhhhhhhh .... whe should find a way to make it readable...'.
+
+	shouldDeleteSelected ifTrue: [ self deleteSelectedText ].
+
 	theFilteredTextMap := Dictionary new.
 	theInsertions := OrderedCollection new.
 	theCursorMovements := OrderedCollection new.
-	
+
 	insertionIndices ifEmpty: [ self atCursor ].
-	
-	insertionIndices do: [ :eachAssociation |
+
+	insertionIndices do: [ :eachAssociation | 
 		| anIndex aFilteredText |
-		
 		anIndex := eachAssociation key.
-		
+
 		aFilteredText := theFilteredTextMap
-			at: eachAssociation value
-			ifAbsentPut: [ inputFilter filter: eachAssociation value ].
+			                 at: eachAssociation value
+			                 ifAbsentPut: [ inputFilter filter: eachAssociation value ].
 
 		surroundMap
 			closingFor: eachAssociation value
-			in: self at: anIndex
-			ifPresent: [ :aRightSurroundText |
+			in: self
+			at: anIndex
+			ifPresent: [ :aRightSurroundText | 
 				| aFilteredSurroundText theSurroundingIndices |
 				aFilteredSurroundText := theFilteredTextMap
-					at: aRightSurroundText
-					ifAbsentPut: [ inputFilter filter: aRightSurroundText ].
+					                         at: aRightSurroundText
+					                         ifAbsentPut: [ inputFilter filter: aRightSurroundText ].
 
 				theSurroundingIndices := self
-					privateComputeInsertionIndices: aFilteredText
-					withSurround: aFilteredSurroundText
-					at: anIndex.
-					
-				theInsertions add: { 
-					#index -> theSurroundingIndices first.
-					#string -> aFilteredText.
-					#requestedIndex -> anIndex.
-					#surrounding -> {
-						#index -> theSurroundingIndices second.
-						#string -> aRightSurroundText.
-					} asDictionary
-				} asDictionary ]
+					                         privateComputeInsertionIndices: aFilteredText
+					                         withSurround: aFilteredSurroundText
+					                         at: anIndex.
 
-			ifAbsent: [
+				theInsertions add: { 
+						(#index -> theSurroundingIndices first).
+						(#string -> aFilteredText).
+						(#requestedIndex -> anIndex).
+						(#surrounding -> { 
+							 (#index -> theSurroundingIndices second).
+							 (#string -> aRightSurroundText) } asDictionary) } asDictionary ]
+			ifAbsent: [ 
 				surroundMap
 					openingFor: eachAssociation value
-					ifPresent: [ :aLeftSurroundText |
+					ifPresent: [ :aLeftSurroundText | 
 						(self hasString: eachAssociation value afterCursor: (AlbTextEditorSingleCursor at: anIndex))
-							ifTrue: [
-								shouldUpdateCursor
-									ifTrue: [
-										self cursors do: [ :eachCursor |
-											(eachCursor position = anIndex) ifTrue: [ theCursorMovements add: (eachCursor -> (anIndex + eachAssociation value size)) ] ] ]]
-							ifFalse: [
+							ifTrue: [ 
+								shouldUpdateCursor ifTrue: [ 
+									self cursors do: [ :eachCursor | 
+										eachCursor position = anIndex ifTrue: [ 
+											theCursorMovements add: eachCursor -> (anIndex + eachAssociation value size) ] ] ] ]
+							ifFalse: [ 
 								theInsertions add: { 
-									#index -> anIndex.
-									#requestedIndex -> anIndex.
-									#string -> aFilteredText.
-								} asDictionary
-					] ]
-					ifAbsent: [
+										(#index -> anIndex).
+										(#requestedIndex -> anIndex).
+										(#string -> aFilteredText) } asDictionary ] ]
+					ifAbsent: [ 
 						theInsertions add: { 
-							#index -> anIndex.
-							#requestedIndex -> anIndex.
-							#string -> aFilteredText.
-						} asDictionary
-					] ] ].
-		
-	theInsertions in: [ :_ |
+								(#index -> anIndex).
+								(#requestedIndex -> anIndex).
+								(#string -> aFilteredText) } asDictionary ] ] ].
+
+	theInsertions in: [ :_ | 
 		| theInsertionStrings theInsertionIndices |
-		
 		theInsertionStrings := OrderedCollection new.
 		theInsertionIndices := OrderedCollection new.
-		
-		theInsertions do: [ :eachInsertion |
-			(eachInsertion at: #string) ifNotEmpty: [ :eachString |
+
+		theInsertions do: [ :eachInsertion | 
+			(eachInsertion at: #string) ifNotEmpty: [ :eachString | 
 				theInsertionStrings add: eachString.
 				theInsertionIndices add: (eachInsertion at: #index) ].
-			eachInsertion at: #surrounding
-					ifPresent: [ :aSurrounding |
-						(aSurrounding at: #string) ifNotEmpty: [ :eachString |
-							theInsertionStrings add: eachString.
-							theInsertionIndices add: (aSurrounding at: #index) ] ] ].
+			eachInsertion at: #surrounding ifPresent: [ :aSurrounding | 
+				(aSurrounding at: #string) ifNotEmpty: [ :eachString | 
+					theInsertionStrings add: eachString.
+					theInsertionIndices add: (aSurrounding at: #index) ] ] ].
 
-		self editor history groupDuring: [
-			theCursorMovements ifNotEmpty: [ :theMovements |
+		self editor history groupDuring: [ 
+			theCursorMovements ifNotEmpty: [ :theMovements | 
 				| aNavigator |
 				aNavigator := self editor navigator.
 				aNavigator withHistorization.
 				theMovements do: [ :eachMovement | aNavigator move: eachMovement key to: eachMovement value ].
 				aNavigator apply ].
-			
+
 			self telemetry
-				timeSync: [ 'Insert {1} at {2}' format: { theInsertionStrings asArray . theInsertionIndices asArray } ]
-				during: [ self privateInsertStrings: theInsertionStrings atAll: theInsertionIndices ] ] ].	
-	
+				timeSync: [ 
+					'Insert {1} at {2}' format: { 
+							theInsertionStrings asArray.
+							theInsertionIndices asArray } ]
+				during: [ self privateInsertStrings: theInsertionStrings atAll: theInsertionIndices ] ] ].
+
 	theInsertions reverseDo: [ :eachInsertion | 
-		shouldUpdateCursor
-			ifTrue: [
-				eachInsertion at: #surrounding
-					ifPresent: [ :aSurrounding |
-						self telemetry
-							timeSync: [ 'Update cursor {1} surrounding {2} at {3}' format: {
-								(eachInsertion at: #string).
-								(aSurrounding at: #string).
-								(eachInsertion at: #requestedIndex)} ]
-							during: [ self
+		shouldUpdateCursor ifTrue: [ 
+			eachInsertion
+				at: #surrounding
+				ifPresent: [ :aSurrounding | 
+					self telemetry
+						timeSync: [ 
+							'Update cursor {1} surrounding {2} at {3}' format: { 
+									(eachInsertion at: #string).
+									(aSurrounding at: #string).
+									(eachInsertion at: #requestedIndex) } ]
+						during: [ 
+							self
 								privateUpdateCursorsAfterInsertion: (eachInsertion at: #string)
 								withSurround: (aSurrounding at: #string)
 								at: (eachInsertion at: #requestedIndex) ] ]
-					ifAbsent: [
-						self telemetry
-							timeSync: [ 'Update cursor {1} at {2}' format: {
-								(eachInsertion at: #string).
-								(eachInsertion at: #requestedIndex)} ]
-							during: [ self
+				ifAbsent: [ 
+					self telemetry
+						timeSync: [ 
+							'Update cursor {1} at {2}' format: { 
+									(eachInsertion at: #string).
+									(eachInsertion at: #requestedIndex) } ]
+						during: [ 
+							self
 								privateUpdateCursorsAfterInsertion: (eachInsertion at: #string)
 								at: (eachInsertion at: #requestedIndex) ] ] ].
-		shouldUpdateSelection
-			ifTrue: [
-				eachInsertion at: #surrounding
-					ifPresent: [ :aSurrounding |
-						self telemetry
-							timeSync: [ 'Update selection {1} surrounding {2} at {3}' format: {
-								(eachInsertion at: #string).
-								(aSurrounding at: #string).
-								(eachInsertion at: #requestedIndex)} ]
-							during: [ self
+		shouldUpdateSelection ifTrue: [ 
+			eachInsertion
+				at: #surrounding
+				ifPresent: [ :aSurrounding | 
+					self telemetry
+						timeSync: [ 
+							'Update selection {1} surrounding {2} at {3}' format: { 
+									(eachInsertion at: #string).
+									(aSurrounding at: #string).
+									(eachInsertion at: #requestedIndex) } ]
+						during: [ 
+							self
 								updateSelectionAfterInsertion: (eachInsertion at: #string)
 								withSurround: (aSurrounding at: #string)
 								at: (eachInsertion at: #requestedIndex) ] ]
-					ifAbsent: [
-						self telemetry
-							timeSync: [ 'Update selection {1} at {2}' format: {
-								(eachInsertion at: #string).
-								(eachInsertion at: #requestedIndex)} ]
-							during: [ self
-								updateSelectionAfterInsertion: (eachInsertion at: #string)
-								at: (eachInsertion at: #requestedIndex) ] ] ] ]
+				ifAbsent: [ 
+					self telemetry
+						timeSync: [ 
+							'Update selection {1} at {2}' format: { 
+									(eachInsertion at: #string).
+									(eachInsertion at: #requestedIndex) } ]
+						during: [ 
+						self updateSelectionAfterInsertion: (eachInsertion at: #string) at: (eachInsertion at: #requestedIndex) ] ] ] ]
 ]
 
 { #category : #testing }

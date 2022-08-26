@@ -5,14 +5,14 @@ OBlInfiniteElement >> aeDrawChildrenOn: aCanvas [
 	" draw then decorate eventually (between the background and the childrens)"
 	super aeDrawChildrenOn: aCanvas.
 	self itemDecorationsDo: [ :d | 
-		d aeDrawOnOver: aCanvas in: self ]
+		d aeDrawOverOn: aCanvas in: self ]
 ]
 
 { #category : #'*Album-Alexandrie' }
 OBlInfiniteElement >> aeDrawOn: aCanvas [
 	" draw then decorate eventually (between the background and the childrens)"
-	super aeDrawOn: aCanvas.
 	self itemDecorationsDo: [ :d | 
-		d aeDrawOn: aCanvas in: self ].
+		d aeDrawBeneathOn: aCanvas in: self ].
+	super aeDrawOn: aCanvas.
 
 ]

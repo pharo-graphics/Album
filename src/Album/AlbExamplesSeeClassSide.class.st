@@ -266,7 +266,7 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	text := ('Hello', String cr, ' World') asRopedText fontSize: 40.
 	editor := AlbTextEditor new text: text.
 	ed := AlbEditor new.
-	ed inspect.
+	ed withLineNumbers.
 	ed editor: editor.
 	space := BlSpace new.
 	space root addChild: ed.

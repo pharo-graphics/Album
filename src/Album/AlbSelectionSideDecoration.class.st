@@ -41,11 +41,15 @@ AlbSelectionSideDecoration >> selectionBackgroundColorOf: anItemElement in: anIn
 { #category : #geometry }
 AlbSelectionSideDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement [
 
-	| first last withSelectionOrCursor |
+	| first last withSelectionOrCursor holder index |
+	"here anItemElement is a logical line"
+	holder := anInfiniteElement childHolderOf: anItemElement.
+	index := holder layoutPosition.
 	withSelectionOrCursor := anItemElement children select: [ :e | e selection isNotEmpty or: [ e hasCursor ] ].
 	first := withSelectionOrCursor
-		         detect: [ :e | e bounds left isZero and: [ e selection isNotEmpty and: [e selection from isZero ] ] ]
+		         detect: [ :e | e bounds left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ]
 		         ifNone: [ withSelectionOrCursor detect: [ :e | e hasCursor ] ifNone: [  ] ].
+
 	first ifNil: [ first := last := anItemElement firstChild ] ifNotNil: [ last := withSelectionOrCursor last ].
 	((first hasCursor and: [ first cursorElement bounds left isZero ]) or: [ 
 		 first selection isNotEmpty and: [ first selection from isZero ] ]) ifTrue: [ 

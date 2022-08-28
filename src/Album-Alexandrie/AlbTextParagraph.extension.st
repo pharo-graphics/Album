@@ -7,7 +7,7 @@ AlbTextParagraph >> aeDrawOppositeOn: aeCanvas at: oppositeIndex [
 	bnds := self characterBoundsAtIndex: oppositeIndex.
 	aeCanvas restoreContextAfter: [ 
 		aeCanvas setBackgroundWith: [ aeCanvas setSourceColor: Color random ] alpha: 0.3.
-				aeCanvas pathTranslate: self padding topLeft.
+				aeCanvas pathTranslate: padding topLeft.
 
 		aeCanvas setOutskirtsCentered.
 		aeCanvas setBorderBlock: [

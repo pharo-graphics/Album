@@ -120,6 +120,13 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 			context: aBlElementBoundsUpdateContext
 ]
 
+{ #category : #layout }
+AlbTextElement >> manageTabulationOnWidthSpec: aWidthSpec [
+
+	self isTabulation ifFalse: [ ^ self ].
+	aWidthSpec beExact: paragraph advance - (self measuredLeftFromLogicalLineStart \\ paragraph advance)
+]
+
 { #category : #initialization }
 AlbTextElement >> newCursor [
 	"Create and return a new instance of a cursor element"

@@ -162,7 +162,7 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 		maxMeasureHeight := maxMeasureHeight max: e measuredHeight ].
 	anElement children accountedByLayout do: [ :e | 
 		(e isKindOf: BlTextElement) ifTrue: [
-		e measuredMaxLogicalLineHeight: maxMeasureHeight ] ]
+			e measuredMaxLogicalLineHeight: maxMeasureHeight ] ]
 
 
 

@@ -10,3 +10,9 @@ Class {
 	#superclass : #BlElement,
 	#category : #'Album-UI'
 }
+
+{ #category : #initialization }
+AlbTextEditorSegmentElement >> initialize [ 
+	super initialize.
+	self clipChildren: false
+]

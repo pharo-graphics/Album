@@ -109,7 +109,7 @@ AlbEditorTextFlowLayout >> lineSpacing: anObject [
 
 { #category : #measure }
 AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
-	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight |
+	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth maxMeasureHeight |
 	
 	"compute how much space is available along both axes"
 	maxWidth := (anExtentSpec widthSpec isUnspecified
@@ -122,11 +122,14 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 
 	"Actually a linked list of lines"
 	lines := AlbEditorTextFlowLine new maxWidth: maxWidth.
-	
+	measuredWidth := 0.
+
 	"measure children and distribute them in lines"
 	aCurrentLine := lines.
 	anElement children accountedByLayout do: [ :aChildElement |
+		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement measuredLeftFromLogicalLineStart: measuredWidth].
 		self measureChildWithMargins: aChildElement parentSpec: anExtentSpec.
+		measuredWidth := measuredWidth + aChildElement measuredWidth.
 		aCurrentLine := aCurrentLine add: aChildElement ].
 
 	aCurrentLine pushedQueue do: [ :aPushedElement |
@@ -151,7 +154,18 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 					theLastElement measure: (BlExtentMeasurementSpec exact:
 						theLastElement measuredExtent + (((anElement measuredWidth - aLine width) max: 0.0) @ theLastElement padding height negated)) ] ] ].
 			
-	self measureIgnored: anElement with: anExtentSpec
+	self measureIgnored: anElement with: anExtentSpec.
+	
+	"Compute specific BlTextElement width and height data"
+	maxMeasureHeight := 0.
+	anElement children accountedByLayout do: [ :e | 
+		maxMeasureHeight := maxMeasureHeight max: e measuredHeight ].
+	anElement children accountedByLayout do: [ :e | 
+		(e isKindOf: BlTextElement) ifTrue: [
+		e measuredMaxLogicalLineHeight: maxMeasureHeight ] ]
+
+
+
 ]
 
 { #category : #'hooks - layout' }

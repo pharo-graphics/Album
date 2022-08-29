@@ -8,7 +8,7 @@ Class {
 AlbSelectionSideDecoration >> cursorLimitRectangleOf: anItemElement in: anInfiniteElement [ 
 
 	| withCursor |
-	withCursor := anItemElement children detect: [ :e | e hasCursor ] ifNone: [ ^ nil ].
+	withCursor := anItemElement children detect: [ :e | (e isKindOf: BlTextElement) and: [ e hasCursor ]] ifNone: [ ^ nil ].
 	^ (0 @ withCursor bounds top corner: self computedBounds width - self gap @ withCursor bounds bottom).
 ]
 
@@ -45,7 +45,7 @@ AlbSelectionSideDecoration >> selectionLimitRectangleOf: anItemElement in: anInf
 	"here anItemElement is a logical line"
 	holder := anInfiniteElement childHolderOf: anItemElement.
 	index := holder layoutPosition.
-	withSelectionOrCursor := anItemElement children select: [ :e | e selection isNotEmpty or: [ e hasCursor ] ].
+	withSelectionOrCursor := anItemElement children select: [ :e | (e isKindOf: (BlTextElement)) and: [e selection isNotEmpty or: [ e hasCursor ] ] ].
 	first := withSelectionOrCursor
 		         detect: [ :e | e bounds left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ]
 		         ifNone: [ withSelectionOrCursor detect: [ :e | e hasCursor ] ifNone: [  ] ].

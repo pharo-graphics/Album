@@ -22,24 +22,24 @@ Class {
 
 { #category : #adding }
 AlbEditorTextFlowLine >> add: anElement [
+
 	"Try to assign a given element to this line (if possible) or create a new line.
 	Return a line to which next element should be tried to added"
+
 	<return: #AlbEditorTextFlowLine>
 	| currentLine textFlow |
+	textFlow := anElement constraints albTextFlow.
+	textFlow shouldPushLine ifTrue: [ 
+		pushedQueue addLast: anElement.
+		^ self ].
 
-	textFlow := 	anElement constraints albTextFlow.
-	textFlow shouldPushLine
-		ifTrue: [
-			pushedQueue addLast: anElement.
-			^ self ].
-	
 	currentLine := ((self hasSpaceFor: anElement) and: [ textFlow shouldBreakLineBefore not ])
-		ifTrue: [ self push: anElement ]
-		ifFalse: [ self nextLine push: anElement ].
-		
+		               ifTrue: [ self push: anElement ]
+		               ifFalse: [ self nextLine push: anElement ].
+
 	^ textFlow shouldBreakLineAfter
-		ifTrue: [ currentLine nextLine ]
-		ifFalse: [ currentLine ]
+		  ifTrue: [ currentLine nextLine ]
+		  ifFalse: [ currentLine ]
 ]
 
 { #category : #accessing }

@@ -11,8 +11,9 @@ BlInfiniteElement >> aeDrawChildrenOn: aCanvas [
 { #category : #'*Album-Alexandrie' }
 BlInfiniteElement >> aeDrawOn: aCanvas [
 	" decorate beneath eventually"
+	super aeDrawOn: aCanvas.
 	self itemDecorationsDo: [ :d | 
 		d aeDrawBeneathOn: aCanvas in: self ].
-	super aeDrawOn: aCanvas.
+
 
 ]

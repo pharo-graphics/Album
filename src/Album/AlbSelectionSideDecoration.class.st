@@ -5,20 +5,6 @@ Class {
 }
 
 { #category : #geometry }
-AlbSelectionSideDecoration >> cursorLimitRectangleOf: anItemElement in: anInfiniteElement [ 
-
-	| withCursor |
-	withCursor := anItemElement children detect: [ :e | (e isKindOf: BlTextElement) and: [ e hasCursor ]] ifNone: [ ^ nil ].
-	^ (0 @ withCursor bounds top corner: self computedBounds width - self gap @ withCursor bounds bottom).
-]
-
-{ #category : #geometry }
-AlbSelectionSideDecoration >> cursorLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock [
-
-	(self cursorLimitRectangleOf: anItemElement in: anInfiniteElement) ifNotNil: [ :bnds | aBlock value: bnds ]
-]
-
-{ #category : #geometry }
 AlbSelectionSideDecoration >> gap [
 	^ 0
 ]
@@ -41,18 +27,14 @@ AlbSelectionSideDecoration >> selectionBackgroundColorOf: anItemElement in: anIn
 { #category : #geometry }
 AlbSelectionSideDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement [
 
-	| first last withSelectionOrCursor holder index |
+	| first last withSelectionOrCursor |
 	"here anItemElement is a logical line"
-	holder := anInfiniteElement childHolderOf: anItemElement.
-	index := holder layoutPosition.
 	withSelectionOrCursor := anItemElement children select: [ :e | (e isKindOf: (BlTextElement)) and: [e selection isNotEmpty or: [ e hasCursor ] ] ].
 	first := withSelectionOrCursor
-		         detect: [ :e | e bounds left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ]
-		         ifNone: [ withSelectionOrCursor detect: [ :e | e hasCursor ] ifNone: [  ] ].
-
-	first ifNil: [ first := last := anItemElement firstChild ] ifNotNil: [ last := withSelectionOrCursor last ].
-	((first hasCursor and: [ first cursorElement bounds left isZero ]) or: [ 
-		 first selection isNotEmpty and: [ first selection from isZero ] ]) ifTrue: [ 
+		         detect: [ :e | e bounds inParent left isZero and: [ (e selection isNotEmpty and: [ e selection from isZero ]) or: [e hasCursor] ] ]
+		         ifNone: [ ^ nil ].
+	last := withSelectionOrCursor last.
+	(first hasCursor or: [ first selection isNotEmpty ] ) ifTrue: [ 
 		^ 0 @ first bounds top corner: self computedBounds width - self gap @ last bounds bottom ].
 	^ nil
 ]

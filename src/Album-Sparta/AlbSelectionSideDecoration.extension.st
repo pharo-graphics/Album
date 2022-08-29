@@ -6,14 +6,10 @@ AlbSelectionSideDecoration >> draw: anItemElement overOnSpartaCanvas: aCanvas in
 	aCanvas transform
 		by: [ :aTransform | aTransform translateBy: self computedBounds left @ anItemElement bounds inParent top ]
 		during: [ 
-			| path |
-			self selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :rect | path := rect ].
-			path ifNil: [ 
-				self cursorLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :rect | path := rect ] ].
-			path ifNil: [ ^ self ].
-			aCanvas figure
-				path: path;
-				borderOutside;
-				background: (self selectionBackgroundColorOf: anItemElement in: anInfiniteElement);
-				draw ]
+			self selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :rect | 
+				aCanvas figure
+					path: rect;
+					borderOutside;
+					background: (self selectionBackgroundColorOf: anItemElement in: anInfiniteElement);
+					draw ] ]
 ]

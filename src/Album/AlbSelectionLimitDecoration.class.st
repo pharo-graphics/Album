@@ -5,14 +5,6 @@ Class {
 }
 
 { #category : #geometry }
-AlbSelectionLimitDecoration >> cursorLimitRectangleOf: anItemElement in: anInfiniteElement [ 
-
-	anInfiniteElement selection ifEmpty: [ ^ nil ].
-	anInfiniteElement selection from isZero ifFalse: [ ^ nil ].
-	^ super cursorLimitRectangleOf: anItemElement in: anInfiniteElement 
-]
-
-{ #category : #geometry }
 AlbSelectionLimitDecoration >> gap [
 	^ 0
 ]
@@ -38,4 +30,10 @@ AlbSelectionLimitDecoration >> requiredWidth [
 { #category : #accessing }
 AlbSelectionLimitDecoration >> selectionBackgroundColorOf: anItemElement in: anInfiniteElement [
 	^ anInfiniteElement selectionColor 
+]
+
+{ #category : #geometry }
+AlbSelectionLimitDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock [
+	anInfiniteElement selection ifEmpty: [ ^ self ].
+	super selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock
 ]

@@ -47,12 +47,12 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
 	from := startIndex min: currentIndex.
 	to := startIndex max: currentIndex.
-	
-	to ~= from ifTrue: [ 
-		anEditor selecter
-			overwrite;
-			from: from to: to;
-			select ].
+
+	anEditor selecter
+		overwrite;
+		from: from to: to;
+		select.
+
 	anEvent sendTo: anEditorElement
 ]
 

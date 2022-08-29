@@ -151,9 +151,6 @@ AlbTextEditorSelecter >> findExistingSelectionStartBefore: aTextIndex within: aT
 AlbTextEditorSelecter >> from: aFromIndex to: aToIndex [
 	self assertUIProcess.
 
-	aFromIndex = aToIndex
-		ifTrue: [ ^ self ].
-	
 	commands add: (AlbExtendSelectionCommand new 
 		editor: editor;
 		toSelect: { BlSelection from: aFromIndex to: aToIndex };
@@ -491,29 +488,25 @@ AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 
 { #category : #'api - processing' }
 AlbTextEditorSelecter >> select [
+
 	| toBeSelected |
 	self assertUIProcess.
 
 	self privatePerformSelectAndDeselectCommands: commands.
 	commands removeAll.
 
-	selection isEmpty 
-		ifTrue: [ ^ self ].
+	shouldDeselectExisting ifTrue: [ 
+		| toBeDeselected |
+		toBeDeselected := self selection copy.
+		selection do: [ :aMonotoneSelection | toBeDeselected deselect: aMonotoneSelection from to: aMonotoneSelection to ].
+		self privateDeselectExisting: toBeDeselected ].
 
-	shouldDeselectExisting
-		ifTrue: [
-			| toBeDeselected |
-			toBeDeselected := self selection copy.
-			selection do: [ :aMonotoneSelection | toBeDeselected deselect: aMonotoneSelection from to: aMonotoneSelection to ].			
-			self privateDeselectExisting: toBeDeselected ].
-	
 	toBeSelected := selection copy.
 	self selection do: [ :aMonotoneSelection | toBeSelected deselect: aMonotoneSelection from to: aMonotoneSelection to ].
 
-	toBeSelected do: [ :aMonotoneSelection |
-		(aMonotoneSelection interval size > 1)
-			ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ]].
-	
+	toBeSelected do: [ :aMonotoneSelection | 
+		aMonotoneSelection interval size > 1 ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ] ]
+
 	" do not send updateCursors to self here otherwise, navigator moveUp is broken "
 ]
 

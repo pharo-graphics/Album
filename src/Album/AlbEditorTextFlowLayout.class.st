@@ -127,7 +127,7 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 	"measure children and distribute them in lines"
 	aCurrentLine := lines.
 	anElement children accountedByLayout do: [ :aChildElement |
-		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement measuredLeftFromLogicalLineStart: measuredWidth].
+		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement offsetFromSegmentStart: measuredWidth].
 		self measureChildWithMargins: aChildElement parentSpec: anExtentSpec.
 		measuredWidth := measuredWidth + aChildElement measuredWidth.
 		aCurrentLine := aCurrentLine add: aChildElement ].

@@ -120,13 +120,6 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 			context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #layout }
-AlbTextElement >> manageTabulationOnWidthSpec: aWidthSpec [
-
-	self isTabulation ifFalse: [ ^ self ].
-	aWidthSpec beExact: paragraph advance - (self measuredLeftFromLogicalLineStart \\ paragraph advance)
-]
-
 { #category : #initialization }
 AlbTextElement >> newCursor [
 	"Create and return a new instance of a cursor element"
@@ -138,6 +131,16 @@ AlbTextElement >> newCursor [
 AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	super onLayout: aBounds context: aBlElementBoundsUpdateContext.	
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
+]
+
+{ #category : #layout }
+AlbTextElement >> onTabulationMeasure: anExtentMeasurementSpec [
+
+	self isTabulation ifFalse: [ ^ self ].
+	"record the fill size for the selection to work even a tab is at the end of line"
+	fillSize := anExtentMeasurementSpec widthSpec size.
+	anExtentMeasurementSpec widthSpec beExact:
+		paragraph advance - (self offsetFromSegmentStart \\ paragraph advance)
 ]
 
 { #category : #'cursor - management' }

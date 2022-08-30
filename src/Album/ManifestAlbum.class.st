@@ -6,3 +6,8 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Album-Manifest'
 }
+
+{ #category : #'code-critics' }
+ManifestAlbum class >> ruleAnySatisfyRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#AlbSelectionSideDecoration #selectionLimitRectangleOf:in: #false)) #'2022-08-30T23:11:35.989869+02:00') )
+]

@@ -6,13 +6,30 @@ Class {
 	#superclass : #BlLayoutConstraints,
 	#instVars : [
 		'pushLine',
-		'shouldFillLine',
 		'breakLineBefore',
 		'breakLineAfter',
-		'assignedLine'
+		'assignedLine',
+		'offsetFromSegmentStart'
+	],
+	#classVars : [
+		'ShouldFillLine'
 	],
 	#category : #'Album-Layout'
 }
+
+{ #category : #asserting }
+AlbEditorTextFlowLayoutConstraints class >> shouldFillLine [
+	"Return true if the element should fill all available space in the line if it is the last element"
+
+	^ ShouldFillLine ifNil: [ ShouldFillLine := false ]
+]
+
+{ #category : #asserting }
+AlbEditorTextFlowLayoutConstraints class >> shouldFillLine: aBoolean [
+	"true if the element should fill all available space in the line if it is the last element"
+
+	ShouldFillLine := aBoolean
+]
 
 { #category : #accessing }
 AlbEditorTextFlowLayoutConstraints >> assignToLine: aEditorTextFlowLine [
@@ -38,18 +55,25 @@ AlbEditorTextFlowLayoutConstraints >> breakLineBefore [
 	breakLineBefore := true
 ]
 
-{ #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> doNotFillLine [
-	shouldFillLine := false
-]
-
 { #category : #initialization }
 AlbEditorTextFlowLayoutConstraints >> initialize [
 	super initialize.
 	breakLineBefore := false.
 	breakLineAfter := false.
 	pushLine := false.
-	shouldFillLine := true
+	offsetFromSegmentStart := 0
+]
+
+{ #category : #accessing }
+AlbEditorTextFlowLayoutConstraints >> offsetFromSegmentStart [
+	"computed and set during layout"
+	^ offsetFromSegmentStart
+]
+
+{ #category : #accessing }
+AlbEditorTextFlowLayoutConstraints >> offsetFromSegmentStart: aNumber [
+	"computed and set during layout"
+	offsetFromSegmentStart := aNumber
 ]
 
 { #category : #accessing }
@@ -79,7 +103,7 @@ AlbEditorTextFlowLayoutConstraints >> shouldBreakLineBefore [
 AlbEditorTextFlowLayoutConstraints >> shouldFillLine [
 	"Return true if the element should fill all available space in the line if it is the last element"
 
-	^ shouldFillLine
+	^ self class shouldFillLine
 ]
 
 { #category : #testing }

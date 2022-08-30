@@ -109,7 +109,7 @@ AlbEditorTextFlowLayout >> lineSpacing: anObject [
 
 { #category : #measure }
 AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
-	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth maxMeasureHeight |
+	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth |
 	
 	"compute how much space is available along both axes"
 	maxWidth := (anExtentSpec widthSpec isUnspecified
@@ -127,7 +127,7 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 	"measure children and distribute them in lines"
 	aCurrentLine := lines.
 	anElement children accountedByLayout do: [ :aChildElement |
-		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement offsetFromSegmentStart: measuredWidth].
+		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement textFlow offsetFromSegmentStart: measuredWidth].
 		self measureChildWithMargins: aChildElement parentSpec: anExtentSpec.
 		measuredWidth := measuredWidth + aChildElement measuredWidth.
 		aCurrentLine := aCurrentLine add: aChildElement ].
@@ -145,26 +145,15 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 
 	lines do: [ :aLine |
 		aLine elements ifNotEmpty: [ :theElements |
-			| theLastElement textFlow |
+			| theLastElement |
 			
 			theLastElement := theElements last.
-			textFlow := theLastElement constraints albTextFlow.
-			((theLastElement isKindOf: BlTextElement ) and: [ textFlow shouldFillLine ])
+			((theLastElement isKindOf: BlTextElement ) and: [ theLastElement textFlow shouldFillLine ])
 				ifTrue: [
 					theLastElement measure: (BlExtentMeasurementSpec exact:
 						theLastElement measuredExtent + (((anElement measuredWidth - aLine width) max: 0.0) @ theLastElement padding height negated)) ] ] ].
 			
-	self measureIgnored: anElement with: anExtentSpec.
-	
-	"Compute specific BlTextElement width and height data"
-	maxMeasureHeight := 0.
-	anElement children accountedByLayout do: [ :e | 
-		maxMeasureHeight := maxMeasureHeight max: e measuredHeight ].
-	anElement children accountedByLayout do: [ :e | 
-		(e isKindOf: BlTextElement) ifTrue: [
-			e measuredMaxLogicalLineHeight: maxMeasureHeight ] ]
-
-
+	self measureIgnored: anElement with: anExtentSpec
 
 ]
 

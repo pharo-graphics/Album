@@ -1,6 +1,6 @@
 Extension { #name : #BlLayoutCommonConstraints }
 
 { #category : #'*Album' }
-BlLayoutCommonConstraints >> albTextFlow [
+BlLayoutCommonConstraints >> albumTextFlow [
 	^ self at: AlbEditorTextFlowLayout
 ]

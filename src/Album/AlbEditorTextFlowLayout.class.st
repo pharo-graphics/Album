@@ -109,16 +109,16 @@ AlbEditorTextFlowLayout >> lineSpacing: anObject [
 
 { #category : #measure }
 AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
+
 	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth |
-	
 	"compute how much space is available along both axes"
 	maxWidth := (anExtentSpec widthSpec isUnspecified
-		ifTrue: [ SmallInteger maxVal ]
-		ifFalse: [ anExtentSpec widthSpec size ]) - anElement padding width.
-		
+		             ifTrue: [ SmallInteger maxVal ]
+		             ifFalse: [ anExtentSpec widthSpec size ]) - anElement padding width.
+
 	maxHeight := (anExtentSpec heightSpec isUnspecified
-		ifTrue: [ SmallInteger maxVal ]
-		ifFalse: [ anExtentSpec heightSpec size ]) - anElement padding height.
+		              ifTrue: [ SmallInteger maxVal ]
+		              ifFalse: [ anExtentSpec heightSpec size ]) - anElement padding height.
 
 	"Actually a linked list of lines"
 	lines := AlbEditorTextFlowLine new maxWidth: maxWidth.
@@ -126,35 +126,34 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 
 	"measure children and distribute them in lines"
 	aCurrentLine := lines.
-	anElement children accountedByLayout do: [ :aChildElement |
-		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement textFlow offsetFromSegmentStart: measuredWidth].
+	anElement children accountedByLayout do: [ :aChildElement | 
+		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement textFlow offsetFromSegmentStart: measuredWidth ].
 		self measureChildWithMargins: aChildElement parentSpec: anExtentSpec.
 		measuredWidth := measuredWidth + aChildElement measuredWidth.
 		aCurrentLine := aCurrentLine add: aChildElement ].
 
-	aCurrentLine pushedQueue do: [ :aPushedElement |
+	aCurrentLine pushedQueue do: [ :aPushedElement | 
 		aCurrentLine := aCurrentLine nextLine.
 		aCurrentLine push: aPushedElement ].
 
-	"compute total extent to measure layout's owner element"	
+	"compute total extent to measure layout's owner element"
 	totalContentWidth := anElement padding width + lines totalWidth.
 	totalContentHeight := anElement padding height + lines totalHeight.
-	totalContentHeight := totalContentHeight + ((lines count - 1) * lineSpacing).
+	totalContentHeight := totalContentHeight + (lines count - 1 * lineSpacing).
 
 	anElement measuredExtent: (anExtentSpec sizeFor: totalContentWidth @ totalContentHeight).
 
-	lines do: [ :aLine |
-		aLine elements ifNotEmpty: [ :theElements |
-			| theLastElement |
-			
+	lines do: [ :aLine | 
+		aLine elements ifNotEmpty: [ :theElements | 
+			| theLastElement textFlow |
 			theLastElement := theElements last.
-			((theLastElement isKindOf: BlTextElement ) and: [ theLastElement textFlow shouldFillLine ])
-				ifTrue: [
-					theLastElement measure: (BlExtentMeasurementSpec exact:
-						theLastElement measuredExtent + (((anElement measuredWidth - aLine width) max: 0.0) @ theLastElement padding height negated)) ] ] ].
-			
-	self measureIgnored: anElement with: anExtentSpec
+			textFlow := theLastElement constraints albumTextFlow.
+			((theLastElement isKindOf: BlTextElement) and: [ textFlow shouldFillLine or: [ theLastElement hasChildren ] ]) 
+				ifTrue: [ 
+					theLastElement measure: (BlExtentMeasurementSpec exact: theLastElement measuredExtent
+							 + ((anElement measuredWidth - aLine width max: 0.0) @ theLastElement padding height negated)) ] ] ].
 
+	self measureIgnored: anElement with: anExtentSpec
 ]
 
 { #category : #'hooks - layout' }

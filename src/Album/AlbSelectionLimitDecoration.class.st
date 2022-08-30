@@ -24,7 +24,7 @@ AlbSelectionLimitDecoration >> requiredInsetsOfChildElement: anElement [
 
 { #category : #geometry }
 AlbSelectionLimitDecoration >> requiredWidth [
-	^ 4
+	^ 2
 ]
 
 { #category : #accessing }

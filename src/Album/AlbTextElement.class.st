@@ -133,16 +133,6 @@ AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #layout }
-AlbTextElement >> onTabulationMeasure: anExtentMeasurementSpec [
-
-	self isTabulation ifFalse: [ ^ self ].
-	"record the fill size for the selection to work even a tab is at the end of line"
-	fillSize := anExtentMeasurementSpec widthSpec size.
-	tabOffset := self offsetFromSegmentStart \\ paragraph advance.
-	anExtentMeasurementSpec widthSpec beExact: paragraph advance - tabOffset
-]
-
 { #category : #'cursor - management' }
 AlbTextElement >> removeCursor [
 	"Remove all cursors"
@@ -174,18 +164,10 @@ AlbTextElement >> segmentPiece [
 
 { #category : #accessing }
 AlbTextElement >> segmentPiece: aSegmentPiece [
-	| isTextSame |
+
 	segmentPiece := aSegmentPiece.
-	
-	self flag: 'comparing BlText can be complex and time consuming. trying without comparing'.
-	"isTextSame := self text equals: aSegmentPiece text."
-	isTextSame := false.
-	isTextSame
-		ifFalse: [
-			| aTextCopy |
-			"need to copy (copying is fast enough)"
-			aTextCopy := aSegmentPiece text copyFrom: 1 to: aSegmentPiece text size.
-			self text: aTextCopy ]
+	"need to copy (copying is fast enough)"
+	self text: (aSegmentPiece text copyFrom: 1 to: aSegmentPiece text size)
 ]
 
 { #category : #'cursor - management' }

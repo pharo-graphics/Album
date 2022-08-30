@@ -139,8 +139,8 @@ AlbTextElement >> onTabulationMeasure: anExtentMeasurementSpec [
 	self isTabulation ifFalse: [ ^ self ].
 	"record the fill size for the selection to work even a tab is at the end of line"
 	fillSize := anExtentMeasurementSpec widthSpec size.
-	anExtentMeasurementSpec widthSpec beExact:
-		paragraph advance - (self offsetFromSegmentStart \\ paragraph advance)
+	tabOffset := self offsetFromSegmentStart \\ paragraph advance.
+	anExtentMeasurementSpec widthSpec beExact: paragraph advance - tabOffset
 ]
 
 { #category : #'cursor - management' }

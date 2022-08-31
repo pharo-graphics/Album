@@ -33,7 +33,48 @@ AlbEditorSegmentHolder >> initialize [
 	itemElement := self createSegmentElement
 ]
 
+{ #category : #updating }
+AlbEditorSegmentHolder >> onCursorAdded [
+	"Is sent when text editor's cursor changes.
+	Segment holder should update text elements accordingly"
+	
+	self subclassResponsibility
+]
+
+{ #category : #updating }
+AlbEditorSegmentHolder >> onCursorRemoved [
+	"Is sent when text editor's cursor changes.
+	Segment holder should update text elements accordingly"
+	
+	self subclassResponsibility
+]
+
+{ #category : #updating }
+AlbEditorSegmentHolder >> onFocusChanged: aBoolean [
+	"Is sent when text editor's focus state changes.
+	Segment holder should update text elements accordingly"
+
+	self subclassResponsibility
+]
+
+{ #category : #updating }
+AlbEditorSegmentHolder >> onSelectionChanged [
+	"Is sent when text editor's selection changes.
+	Segment holder should update text elements accordingly"
+	
+	self subclassResponsibility
+]
+
+{ #category : #updating }
+AlbEditorSegmentHolder >> onTextChanged [
+	"Is sent when text changed in the editor (for example style attributes).
+	Segment holder should update text elements accordingly"
+	
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 AlbEditorSegmentHolder >> segment: aEditorSegment [
+
 	^ self subclassResponsibility
 ]

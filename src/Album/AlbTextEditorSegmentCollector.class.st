@@ -29,10 +29,10 @@ Class {
 		'text',
 		'subText',
 		'segments',
-		'segmentBuilder',
 		'segmentsInterval',
 		'cacheLimit',
-		'viewInterval'
+		'viewInterval',
+		'lineSplitter'
 	],
 	#category : #'Album-Model-Segment-Text'
 }
@@ -78,6 +78,29 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSeg
 
 ]
 
+{ #category : #'text - modifications' }
+AlbTextEditorSegmentCollector >> addedAttribute: anAttribute from: aFromIndex to: aToIndex in: aTextEditor [
+
+	"Is sent after an attribute was added in provided text editor"
+
+	| aFromSegment aToSegment |
+	self assert: [ aFromIndex <= (aToIndex + 1) ] description: [ '`From` index must be less or equal to `to` index' ].
+
+	self
+		cachedSegmentAt: aFromIndex
+		ifFound: [ :aSegment | aFromSegment := aSegment ]
+		ifNotFound: [  ].
+
+	self cachedSegmentAt: aToIndex ifFound: [ :aSegment | aToSegment := aSegment ] ifNotFound: [  ].
+
+	"we add attribute to something completely outside of the cached segments, just ignore it"
+	(aFromSegment isNil or: [ aToSegment isNil ]) ifTrue: [ ^ self ].
+
+	aTextEditor updater
+		from: aFromSegment textStart to: aToSegment textEnd;
+		update
+]
+
 { #category : #'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> assertSegmentIndicesMustCorrespondToTheInterval [
 	self
@@ -113,7 +136,7 @@ AlbTextEditorSegmentCollector >> cacheLimit: anInteger [
 { #category : #'cache - accessing' }
 AlbTextEditorSegmentCollector >> cachedAt: anIndex [
 	"Return a cached segment at an absolute index within editor
-	(I must convert index from editor coordiantes to my local cache coordinates)"
+	(I must convert index from editor coordinates to my local cache coordinates)"
 	<return: #AlbEditorSegment>
 	| aCachedIndex |
 
@@ -188,28 +211,36 @@ AlbTextEditorSegmentCollector >> cachedSegmentIndexAt: aTextIndex [
 						ifFalse: [ 0 ] ] ]
 ]
 
-{ #category : #'cache - computation' }
+{ #category : #'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
-	| stream offset |
+
+	| stream newSegments idx currSize seg |
 	"cumulative segments computing : old segments are kept, cacheLimit new segments are added "
-	offset := segments ifEmpty: [0] ifNotEmpty: [segments last textEnd].
 	stream := self newSegmentStream.
 	stream skip: segments size.
 	stream limit: self cacheLimit.
-	
-	segmentBuilder
-		split: self text
-		in: stream
-		offset: 0.
-	
-	segments addAll: stream segments.
-	self segments
-		withIndexDo: [ :eachSegment :idx | eachSegment index: idx ].	
-	segmentsInterval := (segments first index to: segments last index).
+
+	self split: self text in: stream offset: 0.
+	"get the stream result directly (without copying)"
+	newSegments := stream rawSegments.
+	currSize := segments size.
+	"newSegment is an Array"
+	newSegments ifEmpty: [ ^ self ].
+	"A loop to set the index to each new segment"
+	idx := 1.
+	seg := newSegments at: idx.
+	[ seg notNil and: [idx < newSegments size]] whileTrue: [ 
+		seg index: currSize + idx.
+		idx := idx + 1.
+		seg := newSegments at: idx
+	 ].
+	segments addAll: (newSegments copyFrom: 1 to: idx - 1).
+
+	segmentsInterval := segments first index to: segments last index.
 	self computeSubText
 ]
 
-{ #category : #accessing }
+{ #category : #'private - computing' }
 AlbTextEditorSegmentCollector >> computeSegmentAt: anIndex [
 
 	<return: #AlbEditorSegment>
@@ -260,7 +291,91 @@ AlbTextEditorSegmentCollector >> computedSegmentsCount [
 { #category : #initialization }
 AlbTextEditorSegmentCollector >> defaultCacheLimit [
 
+	"Arbitrary value "
 	^ 50
+]
+
+{ #category : #initialization }
+AlbTextEditorSegmentCollector >> defaultSplitter [
+
+	^ AlbTextEditorLineSplitter new
+]
+
+{ #category : #'private - deletion' }
+AlbTextEditorSegmentCollector >> deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aTextEditor [
+	"I do the hard work of updating segment structure after deleting a piece of text within provided interval and segments"
+	| shouldMergeWithPrevious aTargetSegment removedLength aNewEnd aNewStart |
+	
+	shouldMergeWithPrevious := self
+		shouldMergeDeletingFrom: aFromIndex
+		segment: aFromSegment
+		in: aTextEditor.
+
+	aTargetSegment := shouldMergeWithPrevious
+		ifTrue: [ self segments at: (aFromSegment index - 1) ]
+		ifFalse: [ aFromSegment ].
+
+	removedLength := aToIndex - aFromIndex + 1.
+
+	"New end can be zero, in this case we should make new start zero too"
+	aNewEnd := aToSegment textEnd - removedLength.
+	aNewStart := aTargetSegment textStart min: aNewEnd.
+
+	aTargetSegment
+		scopeText: aNewStart
+		end: aNewEnd.
+		
+	((aTargetSegment ~= aFromSegment) or: [ aFromSegment ~= aToSegment ])
+		ifTrue: [
+			| removeSegmentStart removeSegmentEnd |
+			
+			removeSegmentStart := (aTargetSegment ~= aFromSegment)
+				ifTrue: [ aFromSegment index ]
+				ifFalse: [ (aFromSegment index + 1) min: aToSegment index ].
+			removeSegmentEnd := aToSegment index.
+
+			self removeSegmentInterval: (removeSegmentStart to: removeSegmentEnd) in: aTextEditor ].
+	
+	aTargetSegment moveTextPiecesBy: removedLength negated at: aFromIndex.
+	self
+		moveTextBy: removedLength negated
+		after: aTargetSegment.
+		
+	^ aTargetSegment
+]
+
+{ #category : #'text - modifications' }
+AlbTextEditorSegmentCollector >> deletedFrom: aFromIndex to: aToIndex in: aTextEditor [
+	| aFromSegment aToSegment aTargetSegment |
+
+	self
+		assert: [ aFromIndex <= aToIndex ]
+		description: [ '`From` index must be less or equal to `to` index' ].
+
+	self
+		cachedSegmentAt: aFromIndex
+		ifFound: [ :aSegment | aFromSegment := aSegment ]
+		ifNotFound: [ ].
+
+	self
+		cachedSegmentAt: aToIndex
+		ifFound: [ :aSegment | aToSegment := aSegment ]
+		ifNotFound: [ ].
+
+	(aFromSegment isNil or: [ aToSegment isNil ])	ifTrue: [ | interval |
+			"Either aFromIndex or aToIndex are outside the segment collector's cache.
+			It looks like the text editor's text has already been updated, 
+			simply reset the cache and notify the editor"
+			interval := self cachedInterval.
+			self resetCache.
+			aTextEditor notifyItemsRemoved: interval.
+			^ self ].
+
+	aTargetSegment := self deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aTextEditor.
+
+	aTextEditor updater
+		from: aTargetSegment textStart to: aTargetSegment textEnd;
+		update
 ]
 
 { #category : #'cache - accessing' }
@@ -294,10 +409,50 @@ AlbTextEditorSegmentCollector >> hasCached [
 { #category : #initialization }
 AlbTextEditorSegmentCollector >> initialize [
 
-	super initialize.	
+	super initialize.
+	lineSplitter := self defaultSplitter.
+
 	cacheLimit := self defaultCacheLimit.
 	subText := BlSubText text: '' asRopedText from: 1 to: 0.
 	self resetCache
+]
+
+{ #category : #'text - modifications' }
+AlbTextEditorSegmentCollector >> insertedString: aString at: aTextIndex in: aTextEditor [
+	"I am doing a hard work updating editor's segment cache due to inserted string.
+	Note: This is an *algorithm* that should be very performant, that is why we don't see
+	a point in doing it in OOP style, procedural way fits quite well"
+	| currentSegment stream newSegments |
+
+	self
+		assert: [ aTextEditor text isNotEmpty ]
+		description: [ 'Text can not be empty here' ].
+	self
+		assert: [ aString isNotEmpty ]
+		description: [ 'String must not be empty' ].
+
+	stream := self newSegmentStream .
+
+	self
+		split: (aTextEditor text from: aTextIndex + 1 to: aTextIndex + aString size)
+		in: stream
+		offset: aTextIndex.
+
+	self
+		cachedSegmentAt: aTextIndex
+		ifFound: [ :aSegment | currentSegment := aSegment ]
+		ifNotFound: [ ^ self ].
+
+	newSegments := currentSegment insert: stream collection.
+	newSegments size > 1
+		ifTrue: [ self addSegments: newSegments allButFirst after: currentSegment in: aTextEditor ].
+
+	currentSegment moveTextPiecesBy: aString size at: aTextIndex.
+	self moveTextBy: aString size after: newSegments last.
+	
+	aTextEditor updater
+		from: currentSegment textStart to: currentSegment textEnd;
+		update
 ]
 
 { #category : #testing }
@@ -341,12 +496,12 @@ AlbTextEditorSegmentCollector >> moveTextBy: aNumber after: aSegment [
 	self computeSubText
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 AlbTextEditorSegmentCollector >> newSegmentStream [
 	^ AlbEditorSegmentStream new
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 AlbTextEditorSegmentCollector >> newSegments [
 
 	"Return a new empty collection that will be used to store segments"
@@ -396,6 +551,29 @@ AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval in: aTextEdit
 	aTextEditor notifyItemsRemoved: anInterval
 ]
 
+{ #category : #'text - modifications' }
+AlbTextEditorSegmentCollector >> removedAttributesFrom: aFromIndex to: aToIndex in: aTextEditor [
+
+	"Is sent after an attributes were removed in provided text editor"
+
+	| aFromSegment aToSegment |
+	self assert: [ aFromIndex <= (aToIndex + 1) ] description: [ '`From` index must be less or equal to `to` index' ].
+
+	self
+		cachedSegmentAt: aFromIndex
+		ifFound: [ :aSegment | aFromSegment := aSegment ]
+		ifNotFound: [  ].
+
+	self cachedSegmentAt: aToIndex ifFound: [ :aSegment | aToSegment := aSegment ] ifNotFound: [  ].
+
+	"we remove attributes from something completely outside of the cached segments, just ignore it"
+	(aFromSegment isNil or: [ aToSegment isNil ]) ifTrue: [ ^ self ].
+
+	aTextEditor updater
+		from: aFromSegment textStart to: aToSegment textEnd;
+		update
+]
+
 { #category : #initialization }
 AlbTextEditorSegmentCollector >> resetCache [
 
@@ -415,22 +593,44 @@ AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentCollector >> segmentBuilder [
-
-	^ segmentBuilder
-]
-
-{ #category : #accessing }
-AlbTextEditorSegmentCollector >> segmentBuilder: aSegmentBuilder [
-
-	segmentBuilder := aSegmentBuilder
-]
-
-{ #category : #accessing }
 AlbTextEditorSegmentCollector >> segments [
 	<return: #SequenceableCollection of: #AlbEditorSegment>
 
 	^ segments
+]
+
+{ #category : #'private - deletion' }
+AlbTextEditorSegmentCollector >> shouldMergeDeletingFrom: aFromIndex segment: aFromSegment in: aTextEditor [
+
+	"Return true if we should merge a given segment with the previous if we delete a piece of
+	text in a given editor starting from a provided index, false otherwise"
+
+	<return: #Boolean>
+	| aPreviousSegment |
+	"A given segment is already the first one, there is no previous to merge with"
+	aFromSegment index = 1 ifTrue: [ ^ false ].
+
+	"when from index is less then segment start index it means we delete a line break symbol and therefore must merge"
+	aFromIndex < aFromSegment textStart ifTrue: [ ^ true ].
+
+	aPreviousSegment := self segments at: aFromSegment index - 1.
+
+	"if the difference between the end of the previous segment and the start of
+	our deletion interval is 1 it means that we are trying to delete a line break symbol
+	which is preceded by another line break"
+	^ aFromIndex - aPreviousSegment textEnd = 1
+]
+
+{ #category : #'api - splitting' }
+AlbTextEditorSegmentCollector >> split: aText in: anEditorSegmentStream [
+
+	lineSplitter split: aText in: anEditorSegmentStream
+]
+
+{ #category : #'api - splitting' }
+AlbTextEditorSegmentCollector >> split: aText in: anEditorSegmentStream offset: anOffset [
+
+	lineSplitter split: aText in: anEditorSegmentStream offset: anOffset
 ]
 
 { #category : #'cache - accessing' }
@@ -459,6 +659,100 @@ AlbTextEditorSegmentCollector >> text [
 AlbTextEditorSegmentCollector >> text: aText [
 	text := aText.
 	self computeForwardAt: 1
+]
+
+{ #category : #private }
+AlbTextEditorSegmentCollector >> validateIntegrity: aTextEditor [
+
+	| anIntegrity |
+	Bloc debugModeEnabled ifFalse: [ ^ self ].
+
+	self validateTextPieceUniquenessIn: aTextEditor.
+
+	anIntegrity := self validateSegmentsIn: aTextEditor.
+	self assert: [ anIntegrity key ] description: [ anIntegrity value key ]
+]
+
+{ #category : #private }
+AlbTextEditorSegmentCollector >> validateSegmentsIn: aTextEditor [
+
+	"Validate integrity of the segments.
+	Return true if everything is ok, false otherwise"
+
+	<return: #Symbol>
+	| aPreviousSegment |
+	aPreviousSegment := nil.
+
+	self segments do: [ :aTextEditorLineSegment | 
+		(aTextEditorLineSegment isEmpty and: [ 
+			 aTextEditorLineSegment textStart > 0 and: [ aTextEditorLineSegment textEnd > 0 ] ]) ifTrue: [ 
+			^ false -> ('empty segment' -> aTextEditorLineSegment) ].
+
+		aTextEditorLineSegment textStart > aTextEditorLineSegment textEnd ifTrue: [ 
+			^ false -> ('start is bigger then end' -> aTextEditorLineSegment) ].
+
+		aTextEditorLineSegment textLength < 1 ifTrue: [ ^ false -> ('segment has zero length' -> aTextEditorLineSegment) ].
+
+		aPreviousSegment ifNotNil: [ 
+			(aTextEditorLineSegment asString anySatisfy: #isLineBreak) ifTrue: [ 
+				(aTextEditorLineSegment textLength = 1 and: [ (aTextEditorLineSegment text at: 1) isLineBreak ]) ifFalse: [ 
+					^ false -> ('new line segment is broken' -> aTextEditorLineSegment) ] ].
+
+			(aPreviousSegment asString anySatisfy: #isLineBreak) ifTrue: [ 
+				(aPreviousSegment textLength = 1 and: [ (aPreviousSegment text at: 1) isLineBreak ]) ifFalse: [ 
+					^ false -> ('new line segment is broken' -> aPreviousSegment) ] ].
+
+			"both are new lines"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) and: [ 
+				 aPreviousSegment asString anySatisfy: #isLineBreak ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 1) ifFalse: [ 
+					^ false -> ('two new line segments are not in sync' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ].
+
+			"current segment is new line, previous one is not"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) and: [ 
+				 (aPreviousSegment asString anySatisfy: #isLineBreak) not ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 1) ifFalse: [ 
+					^ false -> ('new line segment is not in sync with the previous' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ].
+
+			"prevuous segment is a new line, current one is not"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) not and: [ 
+				 aPreviousSegment asString anySatisfy: #isLineBreak ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 2) ifFalse: [ 
+					^ false -> ('previous new line segment is not in sync with the current one' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ].
+
+			"both segments are not new lines"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) not and: [ 
+				 (aPreviousSegment asString anySatisfy: #isLineBreak) not ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 2) ifFalse: [ 
+					^ false -> ('two normal segments are not in sync' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ] ].
+		aPreviousSegment := aTextEditorLineSegment ].
+
+	^ true -> 'ok'
+]
+
+{ #category : #private }
+AlbTextEditorSegmentCollector >> validateTextPieceUniquenessIn: aTextEditor [
+
+	| allTextPieces allGroupedTextPieces |
+	allTextPieces := Array streamContents: [ :aStream | 
+		                 self segments do: [ :eachSegment | 
+			                 aStream nextPut: eachSegment.
+			                 eachSegment hasPieces ifTrue: [ eachSegment pieces do: [ :eachPiece | aStream nextPut: eachPiece ] ] ] ].
+
+	allGroupedTextPieces := OrderedIdentityDictionary new.
+	allTextPieces do: [ :eachPiece | 
+		(allGroupedTextPieces at: eachPiece text ifAbsentPut: [ OrderedCollection new ]) add: eachPiece ].
+
+	allGroupedTextPieces := allGroupedTextPieces select: [ :aGroup | aGroup size > 1 ].
+	self assert: [ allGroupedTextPieces isEmpty ] description: [ 'Some text pieces are not unique!' ]
 ]
 
 { #category : #accessing }

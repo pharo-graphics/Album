@@ -49,7 +49,7 @@ AlbExamplesSeeClassSide class >> spartaEditorFor: aText [
 	"BlDevCrossover on: anEditor."
 
 	"anEditor editor  beLineBased."
-	anEditor editor segmentBuilder wordStencil: [ :aTAlbTextEditorTextualPiece | 
+	anEditor editor wordStencil: [ :aTAlbTextEditorTextualPiece | 
 		| aTextElement |
 		aTextElement := AlbTextWordPieceStencilBuilder editable
 			                segmentPiece: aTAlbTextEditorTextualPiece;

@@ -1,59 +1,54 @@
-"
-I am a simple line-based segment builder and do not take text attributes into account.
-
-Note: I do not support embedded elements
-"
 Class {
 	#name : #AlbTextEditorLineSegmentBuilder,
-	#superclass : #AlbTextEditorSegmentBuilder,
+	#superclass : #Object,
+	#traits : 'TBlDebug',
+	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
+		'lineSplitter',
 		'wordStencilBuilder'
 	],
-	#category : #'Album-Model-Segment-Text-Line'
+	#category : #'Album-Brick-NU-Model-Segment-Text'
 }
 
 { #category : #'text - modifications' }
 AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex to: aToIndex in: aTextEditor [
-	"Is sent after an attribute was added in provided text editor"
-	| aFromSegment aToSegment |
 
-	self
-		assert: [ aFromIndex <= (aToIndex + 1) ]
-		description: [ '`From` index must be less or equal to `to` index' ].
+	"Is sent after an attribute was added in provided text editor"
+
+	| aFromSegment aToSegment |
+	self halt.
+	self assert: [ aFromIndex <= (aToIndex + 1) ] description: [ '`From` index must be less or equal to `to` index' ].
 
 	aTextEditor segmentCollector
 		cachedSegmentAt: aFromIndex
 		ifFound: [ :aSegment | aFromSegment := aSegment ]
-		ifNotFound: [ ].
+		ifNotFound: [  ].
 
-	aTextEditor segmentCollector
-		cachedSegmentAt: aToIndex
-		ifFound: [ :aSegment | aToSegment := aSegment ]
-		ifNotFound: [ ].
+	aTextEditor segmentCollector cachedSegmentAt: aToIndex ifFound: [ :aSegment | aToSegment := aSegment ] ifNotFound: [  ].
 
 	"we add attribute to something completely outside of the cached segments, just ignore it"
-	(aFromSegment isNil or: [ aToSegment isNil ])	
-		ifTrue: [
-			self flag: #TODO.
-			^ self ].
+	(aFromSegment isNil or: [ aToSegment isNil ]) ifTrue: [ ^ self ].
 
 	aTextEditor updater
 		from: aFromSegment textStart to: aToSegment textEnd;
 		update
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #accessing }
 AlbTextEditorLineSegmentBuilder >> beEditable [
+self halt.
 	self wordStencil: AlbTextWordPieceStencilBuilder editable
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #accessing }
 AlbTextEditorLineSegmentBuilder >> beReadOnly [
+self halt.
 	self wordStencil: AlbTextWordPieceStencilBuilder readOnly 
 ]
 
 { #category : #initialization }
 AlbTextEditorLineSegmentBuilder >> defaultSplitter [
+self halt.
 	^ AlbTextEditorLineSplitter new
 ]
 
@@ -61,7 +56,7 @@ AlbTextEditorLineSegmentBuilder >> defaultSplitter [
 AlbTextEditorLineSegmentBuilder >> deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aTextEditor [
 	"I do the hard work of updating segment structure after deleting a piece of text within provided interval and segments"
 	| shouldMergeWithPrevious aTargetSegment removedLength aNewEnd aNewStart |
-	
+self halt.	
 	shouldMergeWithPrevious := self
 		shouldMergeDeletingFrom: aFromIndex
 		segment: aFromSegment
@@ -103,7 +98,7 @@ AlbTextEditorLineSegmentBuilder >> deleteFrom: aFromIndex segment: aFromSegment 
 { #category : #'text - modifications' }
 AlbTextEditorLineSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aTextEditor [
 	| aFromSegment aToSegment aTargetSegment |
-
+self halt.
 	self
 		assert: [ aFromIndex <= aToIndex ]
 		description: [ '`From` index must be less or equal to `to` index' ].
@@ -138,7 +133,8 @@ AlbTextEditorLineSegmentBuilder >> deletedFrom: aFromIndex to: aToIndex in: aTex
 AlbTextEditorLineSegmentBuilder >> initialize [
 	super initialize.
 
-	wordStencilBuilder := AlbTextWordPieceStencilBuilder editable
+	
+
 ]
 
 { #category : #'text - modifications' }
@@ -147,7 +143,7 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aT
 	Note: This is an *algorithm* that should be very performant, that is why we don't see
 	a point in doing it in OOP style, procedural way fits quite well"
 	| aCurrentSegment aStream theNewSegments |
-
+self halt.
 	self
 		assert: [ aTextEditor text isNotEmpty ]
 		description: [ 'Text can not be empty here' ].
@@ -167,7 +163,7 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aT
 		ifFound: [ :aSegment | aCurrentSegment := aSegment ]
 		ifNotFound: [ ^ self ].
 
-	theNewSegments := aCurrentSegment insert: aStream segments.
+	theNewSegments := aCurrentSegment insert: aStream collection.
 	theNewSegments size > 1
 		ifTrue: [ aTextEditor segmentCollector addSegments: theNewSegments allButFirst after: aCurrentSegment in: aTextEditor ].
 
@@ -181,29 +177,22 @@ AlbTextEditorLineSegmentBuilder >> insertedString: aString at: aTextIndex in: aT
 
 { #category : #'text - modifications' }
 AlbTextEditorLineSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToIndex in: aTextEditor [
+
 	"Is sent after an attributes were removed in provided text editor"
 
 	| aFromSegment aToSegment |
-
-	self
-		assert: [ aFromIndex <= (aToIndex + 1) ]
-		description: [ '`From` index must be less or equal to `to` index' ].
+	self halt.
+	self assert: [ aFromIndex <= (aToIndex + 1) ] description: [ '`From` index must be less or equal to `to` index' ].
 
 	aTextEditor segmentCollector
 		cachedSegmentAt: aFromIndex
 		ifFound: [ :aSegment | aFromSegment := aSegment ]
-		ifNotFound: [ ].
+		ifNotFound: [  ].
 
-	aTextEditor segmentCollector
-		cachedSegmentAt: aToIndex
-		ifFound: [ :aSegment | aToSegment := aSegment ]
-		ifNotFound: [ ].
+	aTextEditor segmentCollector cachedSegmentAt: aToIndex ifFound: [ :aSegment | aToSegment := aSegment ] ifNotFound: [  ].
 
 	"we remove attributes from something completely outside of the cached segments, just ignore it"
-	(aFromSegment isNil or: [ aToSegment isNil ])	
-		ifTrue: [
-			self flag: #TODO.
-			^ self ].
+	(aFromSegment isNil or: [ aToSegment isNil ]) ifTrue: [ ^ self ].
 
 	aTextEditor updater
 		from: aFromSegment textStart to: aToSegment textEnd;
@@ -212,125 +201,156 @@ AlbTextEditorLineSegmentBuilder >> removedAttributesFrom: aFromIndex to: aToInde
 
 { #category : #'private - deletion' }
 AlbTextEditorLineSegmentBuilder >> shouldMergeDeletingFrom: aFromIndex segment: aFromSegment in: aTextEditor [
+
 	"Return true if we should merge a given segment with the previous if we delete a piece of
 	text in a given editor starting from a provided index, false otherwise"
+
 	<return: #Boolean>
 	| aPreviousSegment |
-
+	self halt.
 	"A given segment is already the first one, there is no previous to merge with"
-	aFromSegment index = 1
-		ifTrue: [ ^ false ].
+	aFromSegment index = 1 ifTrue: [ ^ false ].
 
-	"when from index is less then segment start index it means we delete a line break symbol and therefore must merge"	
-	(aFromIndex < aFromSegment textStart)
-		ifTrue: [ ^ true ].
+	"when from index is less then segment start index it means we delete a line break symbol and therefore must merge"
+	aFromIndex < aFromSegment textStart ifTrue: [ ^ true ].
 
-	aPreviousSegment := aTextEditor segmentCollector segments at: (aFromSegment index - 1).
-	
+	aPreviousSegment := aTextEditor segmentCollector segments at: aFromSegment index - 1.
+
 	"if the difference between the end of the previous segment and the start of
 	our deletion interval is 1 it means that we are trying to delete a line break symbol
 	which is preceded by another line break"
-	^ (aFromIndex - aPreviousSegment textEnd) = 1
+	^ aFromIndex - aPreviousSegment textEnd = 1
+]
+
+{ #category : #splitting }
+AlbTextEditorLineSegmentBuilder >> split: aText in: anEditorSegmentStream [
+self halt.
+	self splitter split: aText in: anEditorSegmentStream
+]
+
+{ #category : #splitting }
+AlbTextEditorLineSegmentBuilder >> split: aText in: anEditorSegmentStream offset: anOffset [
+self halt.
+	self splitter split: aText in: anEditorSegmentStream offset: anOffset
+]
+
+{ #category : #accessing }
+AlbTextEditorLineSegmentBuilder >> splitter [
+
+	<return: #AlbTextEditorSplitter>
+	^ lineSplitter
+]
+
+{ #category : #accessing }
+AlbTextEditorLineSegmentBuilder >> splitter: aTextEditorSplitter [
+
+	lineSplitter := aTextEditorSplitter
 ]
 
 { #category : #private }
 AlbTextEditorLineSegmentBuilder >> validateIntegrity: aTextEditor [
+
 	| anIntegrity |
-	
-	Bloc debugModeEnabled
-		ifFalse: [ ^ self ].
-	
+	Bloc debugModeEnabled ifFalse: [ ^ self ].
+
 	self validateTextPieceUniquenessIn: aTextEditor.
-	
+
 	anIntegrity := self validateSegmentsIn: aTextEditor.
-	self
-		assert: [ anIntegrity key ]
-		description: [ anIntegrity value key ].
+	self assert: [ anIntegrity key ] description: [ anIntegrity value key ]
 ]
 
 { #category : #private }
 AlbTextEditorLineSegmentBuilder >> validateSegmentsIn: aTextEditor [
+
 	"Validate integrity of the segments.
 	Return true if everything is ok, false otherwise"
+
 	<return: #Symbol>
 	| aPreviousSegment |
-	
 	aPreviousSegment := nil.
 
-	aTextEditor segmentCollector segments do: [ :aTextEditorLineSegment |
-		(aTextEditorLineSegment isEmpty and: [ aTextEditorLineSegment textStart > 0 and: [ aTextEditorLineSegment textEnd > 0 ] ])
-			ifTrue: [ ^ false -> ('empty segment' -> aTextEditorLineSegment) ].
+	aTextEditor segmentCollector segments do: [ :aTextEditorLineSegment | 
+		(aTextEditorLineSegment isEmpty and: [ 
+			 aTextEditorLineSegment textStart > 0 and: [ aTextEditorLineSegment textEnd > 0 ] ]) ifTrue: [ 
+			^ false -> ('empty segment' -> aTextEditorLineSegment) ].
 
-		aTextEditorLineSegment textStart > aTextEditorLineSegment textEnd
-			ifTrue: [ ^ false -> ('start is bigger then end' -> aTextEditorLineSegment). ].
-		
-		aTextEditorLineSegment textLength < 1
-			ifTrue: [ ^ false -> ('segment has zero length' -> aTextEditorLineSegment) ].
+		aTextEditorLineSegment textStart > aTextEditorLineSegment textEnd ifTrue: [ 
+			^ false -> ('start is bigger then end' -> aTextEditorLineSegment) ].
 
-		aPreviousSegment
-			ifNotNil: [
-				(aTextEditorLineSegment asString anySatisfy: #isLineBreak)
-					ifTrue: [ (aTextEditorLineSegment textLength = 1 and: [ (aTextEditorLineSegment text at: 1) isLineBreak ])
-						ifFalse: [ ^ false -> ('new line segment is broken' -> aTextEditorLineSegment) ] ].
+		aTextEditorLineSegment textLength < 1 ifTrue: [ ^ false -> ('segment has zero length' -> aTextEditorLineSegment) ].
 
-				(aPreviousSegment asString anySatisfy: #isLineBreak)
-					ifTrue: [ (aPreviousSegment textLength = 1 and: [ (aPreviousSegment text at: 1) isLineBreak ])
-						ifFalse: [ ^ false -> ('new line segment is broken' -> aPreviousSegment) ] ].
-				
-				"both are new lines"
-				((aTextEditorLineSegment asString anySatisfy: #isLineBreak) and: [ (aPreviousSegment asString anySatisfy: #isLineBreak) ])
-					ifTrue: [ (aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 1))
-						ifFalse: [ ^ false -> ('two new line segments are not in sync' -> {aPreviousSegment. aTextEditorLineSegment}) ] ].
-				
-				"current segment is new line, previous one is not"
-				((aTextEditorLineSegment asString anySatisfy: #isLineBreak) and: [ (aPreviousSegment asString anySatisfy: #isLineBreak) not ])
-					ifTrue: [ (aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 1))
-						ifFalse: [ ^ false -> ('new line segment is not in sync with the previous' -> {aPreviousSegment. aTextEditorLineSegment}) ] ].
-				
-				"prevuous segment is a new line, current one is not"
-				((aTextEditorLineSegment asString anySatisfy: #isLineBreak) not and: [ (aPreviousSegment asString anySatisfy: #isLineBreak) ])
-					ifTrue: [ (aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 2))
-						ifFalse: [ ^ false -> ('previous new line segment is not in sync with the current one' -> {aPreviousSegment. aTextEditorLineSegment}) ] ].
-				
-				"both segments are not new lines"
-				((aTextEditorLineSegment asString anySatisfy: #isLineBreak) not and: [ (aPreviousSegment asString anySatisfy: #isLineBreak) not ])
-					ifTrue: [ (aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 2))
-						ifFalse: [ ^ false -> ('two normal segments are not in sync' -> {aPreviousSegment. aTextEditorLineSegment}) ] ] ].
-			aPreviousSegment := aTextEditorLineSegment ].
+		aPreviousSegment ifNotNil: [ 
+			(aTextEditorLineSegment asString anySatisfy: #isLineBreak) ifTrue: [ 
+				(aTextEditorLineSegment textLength = 1 and: [ (aTextEditorLineSegment text at: 1) isLineBreak ]) ifFalse: [ 
+					^ false -> ('new line segment is broken' -> aTextEditorLineSegment) ] ].
 
-	^ (true -> 'ok')
+			(aPreviousSegment asString anySatisfy: #isLineBreak) ifTrue: [ 
+				(aPreviousSegment textLength = 1 and: [ (aPreviousSegment text at: 1) isLineBreak ]) ifFalse: [ 
+					^ false -> ('new line segment is broken' -> aPreviousSegment) ] ].
+
+			"both are new lines"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) and: [ 
+				 aPreviousSegment asString anySatisfy: #isLineBreak ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 1) ifFalse: [ 
+					^ false -> ('two new line segments are not in sync' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ].
+
+			"current segment is new line, previous one is not"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) and: [ 
+				 (aPreviousSegment asString anySatisfy: #isLineBreak) not ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 1) ifFalse: [ 
+					^ false -> ('new line segment is not in sync with the previous' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ].
+
+			"prevuous segment is a new line, current one is not"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) not and: [ 
+				 aPreviousSegment asString anySatisfy: #isLineBreak ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 2) ifFalse: [ 
+					^ false -> ('previous new line segment is not in sync with the current one' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ].
+
+			"both segments are not new lines"
+			((aTextEditorLineSegment asString anySatisfy: #isLineBreak) not and: [ 
+				 (aPreviousSegment asString anySatisfy: #isLineBreak) not ]) ifTrue: [ 
+				aTextEditorLineSegment textStart = (aPreviousSegment textEnd + 2) ifFalse: [ 
+					^ false -> ('two normal segments are not in sync' -> { 
+						   aPreviousSegment.
+						   aTextEditorLineSegment }) ] ] ].
+		aPreviousSegment := aTextEditorLineSegment ].
+
+	^ true -> 'ok'
 ]
 
 { #category : #private }
 AlbTextEditorLineSegmentBuilder >> validateTextPieceUniquenessIn: aTextEditor [
+
 	| allTextPieces allGroupedTextPieces |
-	
-	allTextPieces := Array streamContents: [ :aStream |
-		aTextEditor segmentCollector segments do: [ :eachSegment |
-			aStream nextPut: eachSegment.
-			eachSegment hasPieces
-				ifTrue: [ eachSegment pieces do: [ :eachPiece | aStream nextPut: eachPiece ] ] ] ].
-	
+	allTextPieces := Array streamContents: [ :aStream | 
+		                 aTextEditor segmentCollector segments do: [ :eachSegment | 
+			                 aStream nextPut: eachSegment.
+			                 eachSegment hasPieces ifTrue: [ eachSegment pieces do: [ :eachPiece | aStream nextPut: eachPiece ] ] ] ].
+
 	allGroupedTextPieces := OrderedIdentityDictionary new.
-	allTextPieces do: [ :eachPiece |
-		(allGroupedTextPieces
-			at: eachPiece text
-			ifAbsentPut: [ OrderedCollection new ]) add: eachPiece ].
-	
+	allTextPieces do: [ :eachPiece | 
+		(allGroupedTextPieces at: eachPiece text ifAbsentPut: [ OrderedCollection new ]) add: eachPiece ].
+
 	allGroupedTextPieces := allGroupedTextPieces select: [ :aGroup | aGroup size > 1 ].
-	self
-		assert: [ allGroupedTextPieces isEmpty ]
-		description: [ 'Some text pieces are not unique!' ].
+	self assert: [ allGroupedTextPieces isEmpty ] description: [ 'Some text pieces are not unique!' ]
 ]
 
 { #category : #'api - accessing' }
 AlbTextEditorLineSegmentBuilder >> wordStencil: aWordStencilBuilder [
+self halt.
 	wordStencilBuilder := aWordStencilBuilder asStencilBuilder: AlbTextEditableWordPieceStencilBuilder
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentBuilder >> wordStencilBuilder [
-	<return: #AlbTextEditableWordPieceStencilBuilder>
 
+	<return: #AlbTextWordPieceStencilBuilder>
+	self halt.
 	^ wordStencilBuilder
 ]

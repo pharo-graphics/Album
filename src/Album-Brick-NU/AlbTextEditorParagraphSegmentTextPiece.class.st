@@ -19,7 +19,7 @@ AlbTextEditorParagraphSegmentTextPiece >> createElement: anEditorElement [
 	<return: #BlElement>
 	| anElement |
 
-	anElement := (anEditorElement editor segmentBuilder wordStencilBuilder
+	anElement := (anEditorElement editor wordStencilBuilder
 		wordPadding: self wordPadding;
 		wordMargin: self wordMargin;
 		segmentPiece: self) asElement.
@@ -38,7 +38,8 @@ AlbTextEditorParagraphSegmentTextPiece >> isText [
 	^ true
 ]
 
-{ #category : #'instance creation' }
+{ #category : #updating }
 AlbTextEditorParagraphSegmentTextPiece >> onRecycled: aPieceElement in: anEditorElement [
-	anEditorElement editor segmentBuilder wordStencilBuilder recycle: aPieceElement
+
+	anEditorElement editor wordStencilBuilder recycle: aPieceElement
 ]

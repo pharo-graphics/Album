@@ -152,7 +152,6 @@ AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 				ifTrue: [ 
 					theLastElement measure: (BlExtentMeasurementSpec exact: theLastElement measuredExtent
 							 + ((anElement measuredWidth - aLine width max: 0.0) @ theLastElement padding height negated)) ] ] ].
-
 	self measureIgnored: anElement with: anExtentSpec
 ]
 

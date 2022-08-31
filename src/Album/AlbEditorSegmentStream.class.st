@@ -60,12 +60,13 @@ AlbEditorSegmentStream >> nextPut: aTextEditorSegment [
 ]
 
 { #category : #accessing }
-AlbEditorSegmentStream >> segments [
+AlbEditorSegmentStream >> rawSegments [
 	"Return a collection of streamed text segments.
-	I am an alias to #collection allowing us to increase readability"
+	I am an alias to #originalContents allowing us to increase readability BUT you must known what you are doing because returning such an internal state for optimization purpose can have bad effects..."
+	
 	<return: #Collection of: #AblTextEditorSegment>
 
-	^ self collection
+	^ stream originalContents
 ]
 
 { #category : #accessing }

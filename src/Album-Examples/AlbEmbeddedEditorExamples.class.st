@@ -20,7 +20,7 @@ AlbEmbeddedEditorExamples >> editorFor: aText [
 	
 	BlDevCrossover on: anEditor.
 	
-	anEditor editor segmentBuilder
+	anEditor editor
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
 			aTextElement := AlbTextEditableWordPieceStencilBuilder new
@@ -38,11 +38,12 @@ AlbEmbeddedEditorExamples >> editorFor: aText [
 
 { #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> editorWithEmbeddedEditor [
-	<gtExample>
 
-	^ self newEditor
-		text: self textWithEmbeddedEditor;
-		segmentBuilderDo: [ :aSegmentBuilder | self makeFixedMeasurement: aSegmentBuilder ]
+	<gtExample>
+	| ed |
+	ed := self newEditor text: self textWithEmbeddedEditor.
+	self makeFixedMeasurement: ed.
+	^ ed
 ]
 
 { #category : #'examples - embedded' }
@@ -71,7 +72,7 @@ AlbEmbeddedEditorExamples >> embeddedTextEditorElement [
 			c vertical fitContent ].
 
 	anEditorElement editor text: self embeddedEditorText.
-	self makeFixedMeasurement: anEditorElement editor segmentBuilder.
+	self makeFixedMeasurement: anEditorElement editor.
 	
 	anEditorElement forceLayout.
 	
@@ -87,9 +88,9 @@ AlbEmbeddedEditorExamples >> mainEditorText [
 ]
 
 { #category : #private }
-AlbEmbeddedEditorExamples >> makeFixedMeasurement: aSegmentBuilder [
+AlbEmbeddedEditorExamples >> makeFixedMeasurement: aTextEditor [
 
-	aSegmentBuilder
+	aTextEditor
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
 			aTextElement := AlbTextEditableWordPieceStencilBuilder new
@@ -123,7 +124,7 @@ AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
 					background: (Color gray alpha: 0.2).
 
 				anEditorElement editor text: self embeddedEditorText.
-				self makeFixedMeasurement: anEditorElement editor segmentBuilder.
+				self makeFixedMeasurement: anEditorElement editor.
 				anEditorElement ]).
 
 	^ aText

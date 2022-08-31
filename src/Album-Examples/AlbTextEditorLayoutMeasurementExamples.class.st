@@ -20,7 +20,7 @@ AlbTextEditorLayoutMeasurementExamples >> editorFor: aText [
 	
 	BlDevCrossover on: anEditor.
 	
-	anEditor editor segmentBuilder
+	anEditor editor 
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
 			aTextElement := AlbTextEditableWordPieceStencilBuilder new

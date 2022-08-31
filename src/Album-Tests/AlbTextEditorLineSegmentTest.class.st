@@ -8,12 +8,6 @@ Class {
 }
 
 { #category : #accessing }
-AlbTextEditorLineSegmentTest >> lineSegmentBuilder [
-	
-	^ AlbTextEditorLineSegmentBuilder new
-]
-
-{ #category : #accessing }
 AlbTextEditorLineSegmentTest >> segmentStream [
 
 	
@@ -803,7 +797,7 @@ AlbTextEditorLineSegmentTest >> test_emptyEditor [
 
 	| aTextEditor aTextEditorElement aSegmentElement aPieceElement |
 	
-	aTextEditor := AlbTextEditor new segmentBuilder: self lineSegmentBuilder.
+	aTextEditor := AlbTextEditor new.
 	
 	self assert: aTextEditor text asString equals: ''.
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.

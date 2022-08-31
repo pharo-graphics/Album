@@ -3,7 +3,7 @@ I am a line segment holder and is responsible for binding `AlbTextEditorLineSegm
 "
 Class {
 	#name : #AlbTextEditorLineSegmentHolder,
-	#superclass : #AlbTextEditorSegmentHolder,
+	#superclass : #AlbEditorSegmentHolder,
 	#instVars : [
 		'segment',
 		'pieceElements'
@@ -103,9 +103,6 @@ AlbTextEditorLineSegmentHolder >> createSegmentElement [
 		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical fitContent ];
-		"aptitude: (AlbLayoutResizerAptitude new
-			hInherit;
-			vAnyToFitContent);"
 		yourself
 ]
 
@@ -182,23 +179,6 @@ AlbTextEditorLineSegmentHolder >> onCursorAdded [
 	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
 		aPiece
 			addCursor: aPieceElement
-			of: segment
-			in: self infiniteElement]
-]
-
-{ #category : #updating }
-AlbTextEditorLineSegmentHolder >> onCursorChanged [
-
-	"Is sent when text editor's cursor changes.
-	Segment holder should update text elements accordingly"
-	self deprecated: 'used #onCursorRemoved and #onCursorAdded'.
-
-	self
-		assert: [ segment isNotNil ]
-		description: [ 'Segment must be bound!' ].
-	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
-		aPiece
-			updateCursor: aPieceElement
 			of: segment
 			in: self infiniteElement]
 ]

@@ -15,7 +15,7 @@ AlbTextEmbellishmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditor
 	<return: #SequenceableCollection of: #BlElement>
 	| aReplacementTextElement |
 
-	aReplacementTextElement := (anEditorElement editor segmentBuilder wordStencilBuilder
+	aReplacementTextElement := (anEditorElement editor wordStencilBuilder
 		wordPadding: padding + aTTextEditorTextualPiece wordPadding;
 		wordMargin: margin + aTTextEditorTextualPiece wordMargin;
 		segmentPiece: aTTextEditorTextualPiece) asElement.

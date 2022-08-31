@@ -28,7 +28,7 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 	
 	BlDevCrossover on: anEditor.
 	
-	anEditor editor segmentBuilder
+	anEditor editor
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
 			aTextElement := AlbTextWordPieceStencilBuilder editable

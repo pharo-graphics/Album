@@ -10,7 +10,7 @@ Class {
 		'position',
 		'cursor'
 	],
-	#category : #'Album-Commands'
+	#category : #'Album-Brick-NU-Commands'
 }
 
 { #category : #testing }

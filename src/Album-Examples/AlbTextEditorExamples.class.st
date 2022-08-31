@@ -369,7 +369,7 @@ AlbTextEditorExamples class >> newBeReplaceTextAttribute [
 AlbTextEditorExamples class >> newEditor [
 	<gtExample>
 
-	^ AlbTextEditor new beLineBased
+	^ AlbTextEditor new 
 ]
 
 { #category : #'instance creation' }

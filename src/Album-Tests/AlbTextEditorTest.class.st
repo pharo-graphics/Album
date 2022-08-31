@@ -17,7 +17,6 @@ AlbTextEditorTest >> setUp [
 
 { #category : #tests }
 AlbTextEditorTest >> test_emptyEditor [
-	self assert: textEditor segmentBuilder class equals: textEditor defaultSegmentBuilder class.
 	self assert: textEditor text asString equals: ''.
 	self assert: textEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: textEditor segmentCollector segments first textInterval equals: (0 to: 0).

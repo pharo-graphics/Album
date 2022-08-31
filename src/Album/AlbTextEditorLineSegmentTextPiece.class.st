@@ -19,7 +19,7 @@ AlbTextEditorLineSegmentTextPiece >> createElement: anEditorElement [
 	<return: #BlElement>
 	| anElement |
 
-	anElement := (anEditorElement editor segmentBuilder wordStencilBuilder
+	anElement := (anEditorElement editor wordStencilBuilder
 		wordPadding: self wordPadding;
 		wordMargin: self wordMargin;
 		segmentPiece: self) asElement.

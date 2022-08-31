@@ -25,7 +25,8 @@ Class {
 		'isFocused',
 		'shouldStyleWhenTextModified',
 		'cursor',
-		'hasEventHandlerAttribute'
+		'hasEventHandlerAttribute',
+		'wordStencilBuilder'
 	],
 	#classInstVars : [
 		'isDebug'
@@ -88,11 +89,6 @@ AlbTextEditor >> beEditable [
 { #category : #'api - mode' }
 AlbTextEditor >> beEditableCode [
 	self editorMode: AlbTextEditorEditableCodeMode new
-]
-
-{ #category : #accessing }
-AlbTextEditor >> beLineBased [
-	self segmentBuilder: (AlbTextEditorLineSegmentBuilder new splitter: AlbTextEditorLineSplitter new)
 ]
 
 { #category : #'api - mode' }
@@ -196,11 +192,6 @@ AlbTextEditor >> defaultCursor [
 ]
 
 { #category : #initialization }
-AlbTextEditor >> defaultSegmentBuilder [
-	^ AlbTextEditorLineSegmentBuilder new
-]
-
-{ #category : #initialization }
 AlbTextEditor >> defaultSegmentCollector [
 	^ AlbTextEditorSegmentCollector new 
 ]
@@ -240,6 +231,11 @@ AlbTextEditor >> defaultStylerStrategy [
 AlbTextEditor >> defaultText [
 	<return: #BlText>
 	^ BlRopedText string: ''
+]
+
+{ #category : #initialization }
+AlbTextEditor >> defaultWordStencilBuilder [
+	^ AlbTextWordPieceStencilBuilder editable
 ]
 
 { #category : #'private - text' }
@@ -409,7 +405,7 @@ AlbTextEditor >> initialize [
 	
 	text := self defaultText.
 	self initializeText: text.
-	
+	wordStencilBuilder := self defaultWordStencilBuilder.
 	segmentCollector := self newSegmentCollector.
 	segmentCollector text: text.
 	
@@ -535,7 +531,7 @@ AlbTextEditor >> navigator [
 
 { #category : #initialization }
 AlbTextEditor >> newSegmentCollector [
-	^ self defaultSegmentCollector segmentBuilder: self defaultSegmentBuilder; yourself
+	^ self defaultSegmentCollector
 ]
 
 { #category : #'private - cursor' }
@@ -727,7 +723,7 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 	aBlTextStringsInserted strings
 		with: aBlTextStringsInserted finalIndices
 		do: [ :aString :anIndex |
-			self segmentBuilder
+			self segmentCollector
 				insertedString: aString
 				at: anIndex
 				in: self ].
@@ -755,7 +751,7 @@ AlbTextEditor >> onTextAttributeAdded: aBlTextAttributeAdded [
 
 	self assertUIProcess.
 
-	self segmentBuilder
+	self segmentCollector
 		addedAttribute: aBlTextAttributeAdded attribute
 		from: aBlTextAttributeAdded fromIndex
 		to: aBlTextAttributeAdded toIndex
@@ -775,9 +771,7 @@ AlbTextEditor >> onTextAttributesRemoved: aBlTextAttributesRemoved [
 
 	self assertUIProcess.
 
-
-
-	self segmentBuilder
+	self segmentCollector
 		removedAttributesFrom: aBlTextAttributesRemoved fromIndex
 		to: aBlTextAttributesRemoved toIndex
 		in: self.
@@ -809,7 +803,7 @@ AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
 
 	aBlTextsDeleted finalIntervals
 		do: [ :eachInterval |
-			self segmentBuilder
+			self segmentCollector
 				deletedFrom: eachInterval first
 				to:  eachInterval last
 				in: self ].
@@ -897,14 +891,6 @@ AlbTextEditor >> processCursorAttributes [
 			ifTrue: [ eachAttribute handleEvent: anEnteredEvent ] ]
 ]
 
-{ #category : #accessing }
-AlbTextEditor >> rawSegmentBuilder: aTextSegmentBuilder [
-	"Change current segment builder to a new one and completely invalidate the structure"
-	
-	self segmentCollector segmentBuilder: aTextSegmentBuilder.
-
-]
-
 { #category : #'private - selection' }
 AlbTextEditor >> recordDeselection: aMonotoneTextSelection [
 	self selectionRecorder deselect: aMonotoneTextSelection in: self.
@@ -974,9 +960,7 @@ AlbTextEditor >> restoreText: aToText [
 
 	"Replacing text instance means that we can not guarantee structural integrity
 	of existing cache and have to rebuild it invalidating the whole underlying model structure"
-	self segmentBuilderDo: [ :sb | 
-		segmentCollector := self defaultSegmentCollector.
-		segmentCollector segmentBuilder: sb].
+	segmentCollector := self defaultSegmentCollector.
 	segmentCollector text: text.
 
 	self onTextReplaced.
@@ -1003,26 +987,6 @@ AlbTextEditor >> saveState: aTextEditorMemento [
 	self assertUIProcess.
 	
 	^ aTextEditorMemento saveStateOf: self
-]
-
-{ #category : #accessing }
-AlbTextEditor >> segmentBuilder [
-	<return: #AlbTextEditorSegmentBuilder>
-
-	^ self segmentCollector segmentBuilder
-]
-
-{ #category : #accessing }
-AlbTextEditor >> segmentBuilder: aTextSegmentBuilder [
-	"Change current segment builder to a new one and completely invalidate the structure"
-	
-	self rawSegmentBuilder: aTextSegmentBuilder.
-	self notifyChanged
-]
-
-{ #category : #accessing }
-AlbTextEditor >> segmentBuilderDo: aBlock [
-	aBlock value: self segmentBuilder
 ]
 
 { #category : #accessing }
@@ -1290,4 +1254,17 @@ AlbTextEditor >> viewInterval [
 { #category : #accessing }
 AlbTextEditor >> viewInterval: anInterval [
 	self segmentCollector viewInterval: anInterval
+]
+
+{ #category : #accessing }
+AlbTextEditor >> wordStencil: aWordStencilBuilder [
+
+	wordStencilBuilder := aWordStencilBuilder asStencilBuilder: AlbTextEditableWordPieceStencilBuilder
+]
+
+{ #category : #accessing }
+AlbTextEditor >> wordStencilBuilder [
+
+	<return: #AlbTextWordPieceStencilBuilder>
+	^ wordStencilBuilder
 ]

@@ -29,7 +29,7 @@ AlbTextEditorReadonlyWithSelectionMode >> initialize [
 AlbTextEditorReadonlyWithSelectionMode >> installOnEditor: aTextEditor [
 	super installOnEditor: aTextEditor.
 
-	aTextEditor segmentBuilder beReadOnly
+	aTextEditor wordStencil: AlbTextWordPieceStencilBuilder readOnly 
 ]
 
 { #category : #testing }

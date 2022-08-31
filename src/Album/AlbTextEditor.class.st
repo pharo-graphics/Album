@@ -637,10 +637,10 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 
 	"If the last cached segment was requested, load more so that the editor knows there are more lines"
 	(aPosition = segmentCollector lastIndex and: [ segmentCollector end < segmentCollector text size ])
-		ifTrue: [
-			previousLastIndex := segmentCollector lastIndex.
-			segmentCollector computeForwardAt: aPosition + 1.
-			self notifyItemsInserted: (aPosition + 1 to: aPosition + segmentCollector lastIndex - previousLastIndex) ]
+		ifFalse: [ ^ self ].
+	previousLastIndex := segmentCollector lastIndex.
+	segmentCollector computeForwardAt: aPosition + 1.
+	self notifyItemsInserted: (aPosition + 1 to: aPosition + segmentCollector lastIndex - previousLastIndex)
 ]
 
 { #category : #'instance creation' }
@@ -1259,7 +1259,7 @@ AlbTextEditor >> viewInterval: anInterval [
 { #category : #accessing }
 AlbTextEditor >> wordStencil: aWordStencilBuilder [
 
-	wordStencilBuilder := aWordStencilBuilder asStencilBuilder: AlbTextEditableWordPieceStencilBuilder
+	wordStencilBuilder := aWordStencilBuilder asStencilBuilder: AlbTextWordPieceStencilBuilder
 ]
 
 { #category : #accessing }

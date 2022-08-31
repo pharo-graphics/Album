@@ -2,7 +2,7 @@
 I am special text flow layout constraints that add support line breaking and pushing which is very useful for embedding visual elements in moldable text editor.
 "
 Class {
-	#name : #AlbEditorTextFlowLayoutConstraints,
+	#name : #AlbLineFlowLayoutConstraints,
 	#superclass : #BlLayoutConstraints,
 	#instVars : [
 		'pushLine',
@@ -18,45 +18,45 @@ Class {
 }
 
 { #category : #asserting }
-AlbEditorTextFlowLayoutConstraints class >> shouldFillLine [
+AlbLineFlowLayoutConstraints class >> shouldFillLine [
 	"Return true if the element should fill all available space in the line if it is the last element"
 
 	^ ShouldFillLine ifNil: [ ShouldFillLine := false ]
 ]
 
 { #category : #asserting }
-AlbEditorTextFlowLayoutConstraints class >> shouldFillLine: aBoolean [
+AlbLineFlowLayoutConstraints class >> shouldFillLine: aBoolean [
 	"true if the element should fill all available space in the line if it is the last element"
 
 	ShouldFillLine := aBoolean
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> assignToLine: aEditorTextFlowLine [
+AlbLineFlowLayoutConstraints >> assignToLine: aEditorTextFlowLine [
 	assignedLine := aEditorTextFlowLine
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> assignedLine [
+AlbLineFlowLayoutConstraints >> assignedLine [
 	^ assignedLine
 ]
 
-{ #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> breakLineAfter [
+{ #category : #initialization }
+AlbLineFlowLayoutConstraints >> breakLineAfter [
 	"Mark an element such that a line should be broken AFTER it"
 
 	breakLineAfter := true
 ]
 
-{ #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> breakLineBefore [
+{ #category : #initialization }
+AlbLineFlowLayoutConstraints >> breakLineBefore [
 	"Mark an element such that a line should be broken BEFORE it"
 
 	breakLineBefore := true
 ]
 
 { #category : #initialization }
-AlbEditorTextFlowLayoutConstraints >> initialize [
+AlbLineFlowLayoutConstraints >> initialize [
 	super initialize.
 	breakLineBefore := false.
 	breakLineAfter := false.
@@ -65,26 +65,26 @@ AlbEditorTextFlowLayoutConstraints >> initialize [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> offsetFromSegmentStart [
+AlbLineFlowLayoutConstraints >> offsetFromSegmentStart [
 	"computed and set during layout"
 	^ offsetFromSegmentStart
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> offsetFromSegmentStart: aNumber [
+AlbLineFlowLayoutConstraints >> offsetFromSegmentStart: aNumber [
 	"computed and set during layout"
 	offsetFromSegmentStart := aNumber
 ]
 
-{ #category : #accessing }
-AlbEditorTextFlowLayoutConstraints >> pushLine [
+{ #category : #initialization }
+AlbLineFlowLayoutConstraints >> pushLine [
 	"Mark an element such that it will be pushed to the new line after the current line"
 	
 	pushLine := true
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLayoutConstraints >> shouldBreakLineAfter [
+AlbLineFlowLayoutConstraints >> shouldBreakLineAfter [
 	"Return true if current line should be broken AFTER an element, false otherwise"
 	<return: #Boolean>
 
@@ -92,7 +92,7 @@ AlbEditorTextFlowLayoutConstraints >> shouldBreakLineAfter [
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLayoutConstraints >> shouldBreakLineBefore [
+AlbLineFlowLayoutConstraints >> shouldBreakLineBefore [
 	"Return true if current line should be broken BEFORE an element, false otherwise"
 	<return: #Boolean>
 
@@ -100,14 +100,14 @@ AlbEditorTextFlowLayoutConstraints >> shouldBreakLineBefore [
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLayoutConstraints >> shouldFillLine [
+AlbLineFlowLayoutConstraints >> shouldFillLine [
 	"Return true if the element should fill all available space in the line if it is the last element"
 
 	^ self class shouldFillLine
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLayoutConstraints >> shouldPushLine [
+AlbLineFlowLayoutConstraints >> shouldPushLine [
 	"Return true if an element should be pushed to the new line after the end of the current line, false otherwise"
 	<return: #Boolean>
 	

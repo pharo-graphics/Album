@@ -4,7 +4,7 @@ I represent a single line of a flow layout.
 I store reference to the next line in order to avoid unnecessary array of lines creation for a very common case of just one line
 "
 Class {
-	#name : #AlbEditorTextFlowLine,
+	#name : #AlbFlowLine,
 	#superclass : #Object,
 	#instVars : [
 		'elements',
@@ -21,12 +21,12 @@ Class {
 }
 
 { #category : #adding }
-AlbEditorTextFlowLine >> add: anElement [
+AlbFlowLine >> add: anElement [
 
 	"Try to assign a given element to this line (if possible) or create a new line.
 	Return a line to which next element should be tried to added"
 
-	<return: #AlbEditorTextFlowLine>
+	<return: #AlbFlowLine>
 	| currentLine textFlow |
 	textFlow := anElement constraints albumTextFlow.
 	textFlow shouldPushLine ifTrue: [ 
@@ -43,12 +43,12 @@ AlbEditorTextFlowLine >> add: anElement [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> baseline [
+AlbFlowLine >> baseline [
 	^ baseline
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> count [
+AlbFlowLine >> count [
 	"Return how many lines there are in total"
 	<return: #Number>
 	
@@ -58,7 +58,7 @@ AlbEditorTextFlowLine >> count [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLine >> distanceTo: aPoint [
+AlbFlowLine >> distanceTo: aPoint [
 	"Compute the vertical distance from me to a given point"
 	<return: #Number>
 	| aClampedCoordinate |
@@ -69,7 +69,7 @@ AlbEditorTextFlowLine >> distanceTo: aPoint [
 ]
 
 { #category : #enumerating }
-AlbEditorTextFlowLine >> do: aBlock [
+AlbFlowLine >> do: aBlock [
 	"Evaluate aBlock with each of my next lines as the argument"
 
 	aBlock value: self.
@@ -78,7 +78,7 @@ AlbEditorTextFlowLine >> do: aBlock [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> elements [
+AlbFlowLine >> elements [
 	"Return a collection of all elements assigned to this line"
 	<return: #OrderedCollection>
 
@@ -86,7 +86,7 @@ AlbEditorTextFlowLine >> elements [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> elementsIn: anElement [
+AlbFlowLine >> elementsIn: anElement [
 	"Return a collection of all elements assigned to this line"
 	<return: #OrderedCollection>
 
@@ -94,7 +94,7 @@ AlbEditorTextFlowLine >> elementsIn: anElement [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLine >> findClosestChildOf: anElement to: aPoint [
+AlbFlowLine >> findClosestChildOf: anElement to: aPoint [
 	<return: #BlElement>
 	
 	"use cached elements"
@@ -108,7 +108,7 @@ AlbEditorTextFlowLine >> findClosestChildOf: anElement to: aPoint [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLine >> findClosestElementTo: aPoint in: aCollectionOfElements [
+AlbFlowLine >> findClosestElementTo: aPoint in: aCollectionOfElements [
 	<return: #BlElement>
 	| aClosestElement aClosestDistance |
 	
@@ -128,7 +128,7 @@ AlbEditorTextFlowLine >> findClosestElementTo: aPoint in: aCollectionOfElements 
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLine >> hasNextLine [
+AlbFlowLine >> hasNextLine [
 	"Return true if there is a next line, false otherwise"
 	<return: #Boolean>
 	
@@ -136,7 +136,7 @@ AlbEditorTextFlowLine >> hasNextLine [
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLine >> hasSpaceFor: anElement [
+AlbFlowLine >> hasSpaceFor: anElement [
 	"Return true if I am able to provide space for a given element.
 	By convention I always allow element to take space if I am empty
 	regardless of actual available space"
@@ -155,7 +155,7 @@ AlbEditorTextFlowLine >> hasSpaceFor: anElement [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLine >> height [
+AlbFlowLine >> height [
 	"Return my height which is equal to the height of the highest element"
 	<return: #Number>
 
@@ -163,24 +163,23 @@ AlbEditorTextFlowLine >> height [
 ]
 
 { #category : #initialization }
-AlbEditorTextFlowLine >> initialize [
+AlbFlowLine >> initialize [
+
 	super initialize.
-	
+
 	maxWidth := Float infinity.
 	width := 0.
 	height := 0.
-	origin := 0@0.
+	origin := 0 @ 0.
 	baseline := 0.
 	availableWidth := maxWidth.
 
 	elements := OrderedCollection new.
-	pushedQueue := LinkedList new.
-
-	nextLine := nil
+	pushedQueue := LinkedList new
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLine >> isEmpty [
+AlbFlowLine >> isEmpty [
 	"Return true if I am an empty line without any element, false otherwise"
 	<return: #Boolean>
 
@@ -188,7 +187,7 @@ AlbEditorTextFlowLine >> isEmpty [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> maxWidth [
+AlbFlowLine >> maxWidth [
 	"Return maximal width limit for the current line"
 	<return: #Number>
 
@@ -196,7 +195,7 @@ AlbEditorTextFlowLine >> maxWidth [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> maxWidth: aNumber [
+AlbFlowLine >> maxWidth: aNumber [
 	"Limit maximal width to the given number"
 
 	maxWidth := aNumber.
@@ -204,31 +203,31 @@ AlbEditorTextFlowLine >> maxWidth: aNumber [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> nextLine [
+AlbFlowLine >> nextLine [
 	"Return or create a new next line to which we should continue adding elements"
-	<return: #AlbEditorTextFlowLine>
+	<return: #AlbFlowLine>
 
 	^ nextLine ifNil: [
-		nextLine := AlbEditorTextFlowLine new
+		nextLine := self class new
 			maxWidth: maxWidth;
 			pushedQueue: pushedQueue;
 			yourself ]
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> origin [
+AlbFlowLine >> origin [
 	<return: #Point>
 
 	^ origin
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> origin: aPoint [
+AlbFlowLine >> origin: aPoint [
 	origin := aPoint
 ]
 
 { #category : #private }
-AlbEditorTextFlowLine >> push: anElement [
+AlbFlowLine >> push: anElement [
 	"Push pushes given element to the end of element's collection
 	and update my geometry properties taking new element into account "
 
@@ -245,17 +244,17 @@ AlbEditorTextFlowLine >> push: anElement [
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> pushedQueue [
+AlbFlowLine >> pushedQueue [
 	^ pushedQueue
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLine >> pushedQueue: aQueue [
+AlbFlowLine >> pushedQueue: aQueue [
 	pushedQueue := aQueue
 ]
 
 { #category : #initialization }
-AlbEditorTextFlowLine >> reset [
+AlbFlowLine >> reset [
 	elements := nil.
 	pushedQueue := nil.
 
@@ -263,7 +262,7 @@ AlbEditorTextFlowLine >> reset [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLine >> totalHeight [
+AlbFlowLine >> totalHeight [
 	"Return a total height taking into account all next lines"
 	<return: #Number>
 	| aTotalHeight |
@@ -276,7 +275,7 @@ AlbEditorTextFlowLine >> totalHeight [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLine >> totalWidth [
+AlbFlowLine >> totalWidth [
 	"Return a total width taking into account all next lines"
 	<return: #Number>
 	| aTotalWidth |
@@ -289,7 +288,7 @@ AlbEditorTextFlowLine >> totalWidth [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLine >> width [
+AlbFlowLine >> width [
 	"Return my width which is a sum of widths of all my elements"
 	<return: #Number>
 

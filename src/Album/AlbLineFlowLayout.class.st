@@ -4,7 +4,7 @@ I am a special kind of Flow layout optimized to layout small text piece elements
 I do not support children matching parent. All of them must have either exact of fit content resizing strategies.
 "
 Class {
-	#name : #AlbEditorTextFlowLayout,
+	#name : #AlbLineFlowLayout,
 	#superclass : #BlLayout,
 	#instVars : [
 		'lines',
@@ -14,12 +14,12 @@ Class {
 }
 
 { #category : #constraints }
-AlbEditorTextFlowLayout class >> constraints [
-	^ AlbEditorTextFlowLayoutConstraints new
+AlbLineFlowLayout class >> constraints [
+	^ AlbLineFlowLayoutConstraints new
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLayout >> findClosestChildOf: anElement to: aPoint [
+AlbLineFlowLayout >> findClosestChildOf: anElement to: aPoint [
 	<return: #BlElement>
 	| aClosestLine |
 
@@ -28,8 +28,8 @@ AlbEditorTextFlowLayout >> findClosestChildOf: anElement to: aPoint [
 ]
 
 { #category : #geometry }
-AlbEditorTextFlowLayout >> findClosestLineTo: aPoint [
-	<return: #AlbEditorTextFlowLine>
+AlbLineFlowLayout >> findClosestLineTo: aPoint [
+	<return: #AlbFlowLine>
 	| aClosestLine aClosestDistance |
 	
 	aClosestLine := lines.
@@ -48,24 +48,24 @@ AlbEditorTextFlowLayout >> findClosestLineTo: aPoint [
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLayout >> hasElements [
+AlbLineFlowLayout >> hasElements [
 	^ lines notNil and: [ lines elements notNil ]
 ]
 
 { #category : #testing }
-AlbEditorTextFlowLayout >> hasLines [
+AlbLineFlowLayout >> hasLines [
 	^ lines notNil
 ]
 
 { #category : #initialization }
-AlbEditorTextFlowLayout >> initialize [
+AlbLineFlowLayout >> initialize [
 	super initialize.
 	
 	lineSpacing := 0
 ]
 
 { #category : #layout }
-AlbEditorTextFlowLayout >> layout: anElement in: aRectangle context: aBlElementBoundsUpdateContext [
+AlbLineFlowLayout >> layout: anElement in: aRectangle context: aBlElementBoundsUpdateContext [
 	| anOffsetX anOffsetY aLeft aTop |
 
 	anOffsetX := anElement padding left.
@@ -79,11 +79,11 @@ AlbEditorTextFlowLayout >> layout: anElement in: aRectangle context: aBlElementB
 		(aLine elementsIn: anElement) do: [ :aChildElement |
 			| aWidth aMarginedTop |
 			aLeft := aLeft + aChildElement margin left.
+
 			aMarginedTop := aTop .
-			
-			aChildElement supportsBaseline
-				ifTrue: [ aMarginedTop := aMarginedTop + (aLine baseline - aChildElement baselineOffset) ]
-				ifFalse: [ aMarginedTop := aMarginedTop + aChildElement margin top + ((aLine baseline - aChildElement measuredHeight) max: 0) ].
+			aMarginedTop := aChildElement supportsBaseline
+				ifTrue: [ aMarginedTop + (aLine baseline - aChildElement baselineOffset) ]
+				ifFalse: [ aMarginedTop + aChildElement margin top + ((aLine baseline - aChildElement measuredHeight) max: 0) ].
 			
 			aWidth := aChildElement measuredWidth.
 			"we computed layout bounds for the element, let it apply it"
@@ -98,17 +98,17 @@ AlbEditorTextFlowLayout >> layout: anElement in: aRectangle context: aBlElementB
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLayout >> lineSpacing [
+AlbLineFlowLayout >> lineSpacing [
 	^ lineSpacing
 ]
 
 { #category : #accessing }
-AlbEditorTextFlowLayout >> lineSpacing: anObject [
+AlbLineFlowLayout >> lineSpacing: anObject [
 	lineSpacing := anObject
 ]
 
 { #category : #measure }
-AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
+AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 
 	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth |
 	"compute how much space is available along both axes"
@@ -121,7 +121,7 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 		              ifFalse: [ anExtentSpec heightSpec size ]) - anElement padding height.
 
 	"Actually a linked list of lines"
-	lines := AlbEditorTextFlowLine new maxWidth: maxWidth.
+	lines := AlbFlowLine new maxWidth: maxWidth.
 	measuredWidth := 0.
 
 	"measure children and distribute them in lines"
@@ -157,11 +157,11 @@ AlbEditorTextFlowLayout >> measure: anElement with: anExtentSpec [
 ]
 
 { #category : #'hooks - layout' }
-AlbEditorTextFlowLayout >> onCleanUp: anElement [
+AlbLineFlowLayout >> onCleanUp: anElement [
 	self resetLines
 ]
 
 { #category : #initialization }
-AlbEditorTextFlowLayout >> resetLines [
+AlbLineFlowLayout >> resetLines [
 	lines ifNotNil: [ :theLines | theLines reset ]
 ]

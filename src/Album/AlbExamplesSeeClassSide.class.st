@@ -209,6 +209,21 @@ AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 	ed openInOblSpace
 ]
 
+{ #category : #elements }
+AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
+
+	| element r |
+	r := Random new.
+	element := BlElement new
+		           layout: (AlbLineFlowLayout new lineSpacing: 5);
+		           constraintsDo: [ :c | 
+			           c horizontal matchParent.
+			           c vertical fitContent ];
+		           addChildren:
+			           (20 timesCollect: [ (String loremIpsum: (r nextIntegerBetween: 2 and: 40)) asRopedText asElement ]).
+	element openInOBlSpace
+]
+
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
@@ -216,6 +231,25 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 	((' ( Monospace 40 ) ' asRopedText
 		  fontSize: 40;
 		  monospace) , (' Default font and size' asRopedText "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}")) onAlbum withLineNumbers;"inspect" openInOblSpace
+]
+
+{ #category : #elements }
+AlbExamplesSeeClassSide class >> example_TextFlowWithBlElements [
+
+	| element |
+
+element := BlElement new
+		layout: (AlbLineFlowLayout new lineSpacing: 10);
+		constraintsDo: [ :c |
+			c horizontal matchParent.
+			c vertical fitContent ];
+		addChildren: (20 timesCollect: [
+			BlElement new
+				size: 75@30;
+				margin: (BlInsets all: 4);
+				background: (Color random alpha: 0.5) ]).
+element openInOBlSpace 
+			
 ]
 
 { #category : #'editor examples' }

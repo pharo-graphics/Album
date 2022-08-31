@@ -23,7 +23,7 @@ AlbTextEditorLineSegmentHolder class >> cleanUp [
 
 { #category : #accessing }
 AlbTextEditorLineSegmentHolder class >> defaultSegmentLayout [
-	^ (defaultSegmentLayoutBlock ifNil: [ AlbEditorTextFlowLayout new ]) value
+	^ (defaultSegmentLayoutBlock ifNil: [ AlbLineFlowLayout new ]) value
 ]
 
 { #category : #accessing }

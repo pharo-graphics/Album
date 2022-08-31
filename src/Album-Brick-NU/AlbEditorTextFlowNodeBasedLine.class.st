@@ -19,7 +19,7 @@ Class {
 AlbEditorTextFlowNodeBasedLine >> add: aLayoutNode [
 	"Try to assign a given element to this line (if possible) or create a new line.
 	Return a line to which next element should be tried to added"
-	<return: #AlbEditorTextFlowLine>
+	<return: #AlbFlowLine>
 	| currentLine |
 	
 	aLayoutNode constraints albumTextFlow shouldPushLine
@@ -188,10 +188,10 @@ AlbEditorTextFlowNodeBasedLine >> maxWidth: aNumber [
 { #category : #accessing }
 AlbEditorTextFlowNodeBasedLine >> nextLine [
 	"Return or create a new next line to which we should continue adding elements"
-	<return: #AlbEditorTextFlowLine>
+	<return: #AlbFlowLine>
 
 	^ nextLine ifNil: [
-		nextLine := AlbEditorTextFlowLine new
+		nextLine := AlbFlowLine new
 			maxWidth: maxWidth;
 			pushedQueue: pushedQueue;
 			yourself ]

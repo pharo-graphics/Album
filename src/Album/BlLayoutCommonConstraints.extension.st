@@ -2,5 +2,5 @@ Extension { #name : #BlLayoutCommonConstraints }
 
 { #category : #'*Album' }
 BlLayoutCommonConstraints >> albumTextFlow [
-	^ self at: AlbEditorTextFlowLayout
+	^ self at: AlbLineFlowLayout
 ]

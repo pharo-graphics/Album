@@ -10,7 +10,7 @@ AlbEditorTextFlowLayoutExamples >> container [
 	| anElement |
 	
 	anElement := BlElement new
-		layout: (AlbEditorTextFlowLayout new lineSpacing: 10);
+		layout: (AlbLineFlowLayout new lineSpacing: 10);
 		constraintsDo: [ :c |
 			c horizontal exact: 500.
 			c vertical fitContent ];

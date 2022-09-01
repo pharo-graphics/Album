@@ -20,7 +20,7 @@ AlbTextEditorParagraphSegment >> clearCache [
 
 { #category : #'pieces - computation' }
 AlbTextEditorParagraphSegment >> computedPieces [
-	<return: #SequenceableCollection of: #AlbTextEditorLineSegmentPiece>
+	<return: #SequenceableCollection of: #AlbTextEditorAbstractSegmentPiece>
 	^ AlbTextEditorParagraphSegmentSplitter new splitSegment: self.
 
 ]
@@ -135,7 +135,7 @@ AlbTextEditorParagraphSegment >> paragraphMargin: aBlInsets [
 
 { #category : #accessing }
 AlbTextEditorParagraphSegment >> pieces [
-	<return: #Array of: #AlbTextEditorLineSegmentPiece>
+	<return: #Array of: #AlbTextEditorAbstractSegmentPiece>
 
 	^ self hasPieces
 		ifTrue: [ pieces ]

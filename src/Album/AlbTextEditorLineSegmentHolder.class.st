@@ -87,7 +87,7 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 
 { #category : #'private - accessing' }
 AlbTextEditorLineSegmentHolder >> cachedPieces [
-	<return: #Collection of: #AlbTextEditorLineSegmentPiece>
+	<return: #Collection of: #AlbTextEditorAbstractSegmentPiece>
 	
 	^ pieceElements allPieces
 ]

@@ -6,11 +6,37 @@ By default segment is a single line: a piece of text between new line characters
 "
 Class {
 	#name : #AlbTextEditorSegment,
-	#superclass : #AlbEditorSegment,
-	#traits : 'TAlbTextEditorTextualPiece',
-	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
+	#superclass : #Object,
+	#traits : 'TAlbTextEditorTextualPiece + TBlDebug',
+	#classTraits : 'TAlbTextEditorTextualPiece classTrait + TBlDebug classTrait',
+	#instVars : [
+		'index'
+	],
 	#category : #'Album-Model-Segment-Text'
 }
+
+{ #category : #'pieces - computation' }
+AlbTextEditorSegment >> clearCache [
+	"Clear all caches and make this segment fresh as if it would just be created and initalized"
+]
+
+{ #category : #accessing }
+AlbTextEditorSegment >> index [
+	"Return segment index within Editor.
+	Note: index can not be nil"
+	<return: #Number>
+	
+	self
+		assert: [ index isNotNil ]
+		description: [ 'Index can not be nil' ].
+
+	^ index
+]
+
+{ #category : #accessing }
+AlbTextEditorSegment >> index: aNumber [
+	index := aNumber
+]
 
 { #category : #initialization }
 AlbTextEditorSegment >> initializeWith: aBlSubText from: aTextStart to: aTextEnd delimiter: aDelimiterLength [
@@ -58,6 +84,20 @@ AlbTextEditorSegment >> isAllLineBreak [
 	<return: #Boolean>
 	
 	^ self text allSatisfy: #isLineBreak
+]
+
+{ #category : #testing }
+AlbTextEditorSegment >> isFirstIn: aTextEditor [
+	"Return true if I am absolutely the very first segment (not first cached) in a given text editor"
+
+	^ self index = 1
+]
+
+{ #category : #testing }
+AlbTextEditorSegment >> isLastIn: aTextEditor [
+	"Return true if I am absolutely the very last segment (not last cached) in a given text editor"
+
+	^ self index = aTextEditor segmentCollector segments size
 ]
 
 { #category : #testing }

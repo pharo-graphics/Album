@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbTextEditorLineSegmentPiece,
+	#name : #AlbTextEditorAbstractSegmentPiece,
 	#superclass : #Object,
 	#traits : 'TAlbTextEditorTextualPiece',
 	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
@@ -7,11 +7,11 @@ Class {
 		'segment',
 		'currentCursor'
 	],
-	#category : #'Album-Model-Segment-Text-Line'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> addCursor: aPieceElement of: aLineSegment in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> addCursor: aPieceElement of: aLineSegment in: anEditorElement [
 	| globalCursor |
 	"if text editor cursor is currently within this segment piece then convert it to a local one"
 
@@ -23,14 +23,14 @@ AlbTextEditorLineSegmentPiece >> addCursor: aPieceElement of: aLineSegment in: a
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorLineSegmentPiece >> createElement: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> createElement: anEditorElement [
 	<return: #BlElement>
 
 	^ self subclassResponsibility
 ]
 
 { #category : #'api - cursor' }
-AlbTextEditorLineSegmentPiece >> currentCursor [
+AlbTextEditorAbstractSegmentPiece >> currentCursor [
 	"local cursor within this segment piece"
 	<return: #AlbTextEditorSingleCursor>
 	
@@ -38,14 +38,14 @@ AlbTextEditorLineSegmentPiece >> currentCursor [
 ]
 
 { #category : #'api - cursor' }
-AlbTextEditorLineSegmentPiece >> currentCursor: aCursor [
+AlbTextEditorAbstractSegmentPiece >> currentCursor: aCursor [
 	"local cursor within this segment piece"
 	
 	currentCursor := aCursor
 ]
 
 { #category : #'api - cursor' }
-AlbTextEditorLineSegmentPiece >> globalCursorToLocal: aSingleCursor [
+AlbTextEditorAbstractSegmentPiece >> globalCursorToLocal: aSingleCursor [
 	"Convert a global cursor as specified in the editor to a local one"
 	<return: #AlbTextEditorSingleCursor>
 	| aLocalCursor |
@@ -57,7 +57,7 @@ AlbTextEditorLineSegmentPiece >> globalCursorToLocal: aSingleCursor [
 ]
 
 { #category : #'api - cursor' }
-AlbTextEditorLineSegmentPiece >> globalTextIndexToLocal: aTextIndex [
+AlbTextEditorAbstractSegmentPiece >> globalTextIndexToLocal: aTextIndex [
 	"Convert global text index given in the text coordinates of the whole editor to a local index within this segment piece.
 	This convertion is necessary due to the fact that text elements that represent every segment piece work with text in their own local system"
 	<return: #Number>
@@ -68,12 +68,12 @@ AlbTextEditorLineSegmentPiece >> globalTextIndexToLocal: aTextIndex [
 ]
 
 { #category : #testing }
-AlbTextEditorLineSegmentPiece >> isText [
+AlbTextEditorAbstractSegmentPiece >> isText [
 	^ false
 ]
 
 { #category : #'cursor - hooks' }
-AlbTextEditorLineSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in: anEditorElement [
 	"Is sent when a cursor is added to a given piece element within provided editor element"
 
 	aPieceElement dispatchEvent:
@@ -84,7 +84,7 @@ AlbTextEditorLineSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in: an
 ]
 
 { #category : #'cursor - hooks' }
-AlbTextEditorLineSegmentPiece >> onCursorRemoved: aCursor from: aPieceElement in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> onCursorRemoved: aCursor from: aPieceElement in: anEditorElement [
 	"Is sent when a cursor is removed from a given piece element within provided editor element"
 	
 	aPieceElement dispatchEvent:
@@ -94,7 +94,7 @@ AlbTextEditorLineSegmentPiece >> onCursorRemoved: aCursor from: aPieceElement in
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> removeCursor: aPieceElement of: aLineSegment in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> removeCursor: aPieceElement of: aLineSegment in: anEditorElement [
 
 	currentCursor ifNil: [ ^ self ].
 	self onCursorRemoved: currentCursor from: aPieceElement in: anEditorElement.
@@ -103,7 +103,7 @@ AlbTextEditorLineSegmentPiece >> removeCursor: aPieceElement of: aLineSegment in
 ]
 
 { #category : #'api - cursor' }
-AlbTextEditorLineSegmentPiece >> screenToCursor: aTransformation of: anEditorElement in: aPieceElement [
+AlbTextEditorAbstractSegmentPiece >> screenToCursor: aTransformation of: anEditorElement in: aPieceElement [
 
 	aPieceElement dispatchEvent:
 		(AlbTextEditorScreenToCursorRequest new
@@ -112,17 +112,17 @@ AlbTextEditorLineSegmentPiece >> screenToCursor: aTransformation of: anEditorEle
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPiece >> segment [
+AlbTextEditorAbstractSegmentPiece >> segment [
 	^ segment
 ]
 
 { #category : #accessing }
-AlbTextEditorLineSegmentPiece >> segment: anObject [
+AlbTextEditorAbstractSegmentPiece >> segment: anObject [
 	segment := anObject
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> setCursor: aPieceElement of: aLineSegment in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> setCursor: aPieceElement of: aLineSegment in: anEditorElement [
 	| aFocusRequest localCursor globalCursor |
 	"get the global cursor "
 	globalCursor := anEditorElement cursor.
@@ -144,7 +144,7 @@ AlbTextEditorLineSegmentPiece >> setCursor: aPieceElement of: aLineSegment in: a
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> updateCursor: aPieceElement of: aLineSegment in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> updateCursor: aPieceElement of: aLineSegment in: anEditorElement [
 	| globalCursor localCursor |
 self flag: 'to be checked because of failing tests AlbTextEditorNavigatorTest>>test_cursor_add_at_1_in_multiline'.
 	"if text editor cursor is currently within this segment piece then convert it to a local one"
@@ -164,7 +164,7 @@ self flag: 'to be checked because of failing tests AlbTextEditorNavigatorTest>>t
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> updateFocus: hasFocus of: aTextPieceElement in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> updateFocus: hasFocus of: aTextPieceElement in: anEditorElement [
 	| aRequest |
 
 	aRequest := hasFocus
@@ -175,7 +175,7 @@ AlbTextEditorLineSegmentPiece >> updateFocus: hasFocus of: aTextPieceElement in:
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> updateSelection: aTextElement of: aLineSegment in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> updateSelection: aTextElement of: aLineSegment in: anEditorElement [
 	| aTextEditor |
 
 	aTextEditor := anEditorElement editor.
@@ -202,7 +202,7 @@ AlbTextEditorLineSegmentPiece >> updateSelection: aTextElement of: aLineSegment 
 ]
 
 { #category : #updating }
-AlbTextEditorLineSegmentPiece >> updateText: aTextElement of: aLineSegment in: anEditorElement [
+AlbTextEditorAbstractSegmentPiece >> updateText: aTextElement of: aLineSegment in: anEditorElement [
 
 	aTextElement dispatchEvent: (AlbTextEditorTextChangedRequest new
 		editorElement: anEditorElement;
@@ -213,7 +213,7 @@ AlbTextEditorLineSegmentPiece >> updateText: aTextElement of: aLineSegment in: a
 ]
 
 { #category : #'api - geometry' }
-AlbTextEditorLineSegmentPiece >> wordMargin [
+AlbTextEditorAbstractSegmentPiece >> wordMargin [
 	<return: #BlInsets>
 	| aHalfOfLineSpacing |
 	
@@ -225,7 +225,7 @@ AlbTextEditorLineSegmentPiece >> wordMargin [
 ]
 
 { #category : #'api - geometry' }
-AlbTextEditorLineSegmentPiece >> wordPadding [
+AlbTextEditorAbstractSegmentPiece >> wordPadding [
 	<return: #BlInsets>
 		
 	^ self segment wordPadding

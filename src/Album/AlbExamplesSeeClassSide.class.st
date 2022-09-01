@@ -148,20 +148,51 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
+"
+broken in GlamorousToolKit too
+| cache attribute text ed space |
 
+	cache := Dictionary new.
+	
+	attribute := BrTextAdornmentDynamicAttribute new
+	""beSync;
+		beAppend;""
+		withCache: cache key: #key;
+		stencil: [  {  
+			BlElement new
+				background: (Color gray alpha: 0.4);
+				size: 20@100.
+			BlElement new
+				background: (Color red alpha: 0.4);
+				size: 20@10. } ].
+
+	text := 'Hello >' asRopedText attribute: attribute.
+	ed := BrEditor new aptitude: BrGlamorousRegularEditorAptitude new.
+	ed constraintsDo: [ :c | 
+		c vertical resizer: BlLayoutResizer fitContent. 
+		c horizontal resizer: BlLayoutResizer matchParent].
+
+	ed text: text.
+	""ed inspect.""
+	space := BlSpace new.
+	space root addChild: ed.
+	space title: 'editor'.
+	space show.
+	^ text
+"
 	| cache attribute text ed space |
 
 	cache := Dictionary new.
 	
 	attribute := AlbTextAdornmentDynamicAttribute new
-	beSync;
+		beSync;
 		beAppend;
 		withCache: cache key: #key;
 		stencil: [  {  
 			BlElement new
 				background: (Color gray alpha: 0.4);
 				size: 20@100.
-				BlElement new
+			BlElement new
 				background: (Color red alpha: 0.4);
 				size: 20@10. } ].
 
@@ -187,7 +218,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 	| aText ed |
 
 	aText := ('Hello', String cr, 'World') asRopedText fontSize: 20.
-	(aText from: 4 to: 8)
+	(aText from: 4 to: 4)
 		replacingAdornment: [ BlElement new size: 20@6; background: Color red ].
 	ed := aText onAlbum.
 	ed withLineNumbers.

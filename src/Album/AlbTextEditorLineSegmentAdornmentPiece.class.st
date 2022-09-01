@@ -5,7 +5,7 @@ I am created by TextEditorAttributedLineSegment - a segment that supports adornm
 "
 Class {
 	#name : #AlbTextEditorLineSegmentAdornmentPiece,
-	#superclass : #AlbTextEditorLineSegmentPiece,
+	#superclass : #AlbTextEditorAbstractSegmentPiece,
 	#instVars : [
 		'adornmentAttribute',
 		'isVirtual'

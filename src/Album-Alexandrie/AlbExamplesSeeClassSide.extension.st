@@ -18,13 +18,14 @@ AlbExamplesSeeClassSide class >> alexandrieEditorFor: aText [
 	"BlDevCrossover on: anEditor."
 
 	"anEditor editor  beLineBased."
-	anEditor editor wordStencil: [ :aTAlbTextEditorTextualPiece | 
+	anEditor editor wordStencil: [ :aTextPiece | 
 		| aTextElement |
+		Transcript show: aTextPiece asString, ' ', aTextPiece text asString; cr.
 		aTextElement := AlbTextWordPieceStencilBuilder editable
-			                segmentPiece: aTAlbTextEditorTextualPiece;
+			                segmentPiece: aTextPiece;
 			                asElement.
 		aTextElement measurer: self alexandrieFixedMeasurer.
-		aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
+		aTextElement measurer textOffset: aTextPiece textStart.
 		aTextElement ].
 
 

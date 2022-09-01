@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorLineSegmentTextPiece,
-	#superclass : #AlbTextEditorLineSegmentPiece,
+	#superclass : #AlbTextEditorAbstractSegmentPiece,
 	#category : #'Album-Model-Segment-Text-Line'
 }
 
@@ -8,7 +8,7 @@ Class {
 AlbTextEditorLineSegmentTextPiece >> = anotherObject [
 	self == anotherObject
 		ifTrue: [ ^ true ].
-	(anotherObject isKindOf: self class)
+	(anotherObject class == self class)
 		ifFalse: [ ^ false ].
 	
 	^ anotherObject text = self text

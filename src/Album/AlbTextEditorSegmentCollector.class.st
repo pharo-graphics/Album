@@ -137,7 +137,7 @@ AlbTextEditorSegmentCollector >> cacheLimit: anInteger [
 AlbTextEditorSegmentCollector >> cachedAt: anIndex [
 	"Return a cached segment at an absolute index within editor
 	(I must convert index from editor coordinates to my local cache coordinates)"
-	<return: #AlbEditorSegment>
+	<return: #AlbTextEditorSegment>
 	| aCachedIndex |
 
 	aCachedIndex := anIndex - segmentsInterval first + 1.
@@ -243,7 +243,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 { #category : #'private - computing' }
 AlbTextEditorSegmentCollector >> computeSegmentAt: anIndex [
 
-	<return: #AlbEditorSegment>
+	<return: #AlbTextEditorSegment>
 	self
 		assert: [ (self isCachedAt: anIndex) not ]
 		description: [ 'Computing of already cached segment is wasteful' ].
@@ -585,7 +585,7 @@ AlbTextEditorSegmentCollector >> resetCache [
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 	"Return segment at given index"
-	<return: #AlbEditorSegment>
+	<return: #AlbTextEditorSegment>
 	
 	^ (self isCachedAt: anIndex)
 		ifTrue: [ self cachedAt: anIndex ]
@@ -594,7 +594,7 @@ AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 
 { #category : #accessing }
 AlbTextEditorSegmentCollector >> segments [
-	<return: #SequenceableCollection of: #AlbEditorSegment>
+	<return: #SequenceableCollection of: #AlbTextEditorSegment>
 
 	^ segments
 ]

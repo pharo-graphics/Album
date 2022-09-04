@@ -425,7 +425,7 @@ AlbEditor >> withOppositeDelimiter [
 
 { #category : #'accessing - decoration' }
 AlbEditor >> withSelectionEcho [
-	self withFeltPen: AlbEditoSelectionEchoPen 
+	self withFeltPen: AlbEditorSelectionEchoPen 
 ]
 
 { #category : #'accessing - decoration' }

@@ -2,7 +2,7 @@ Class {
 	#name : #AlbEditorFeltPen,
 	#superclass : #Object,
 	#instVars : [
-		'shiftSelect'
+		'canHandleEcho'
 	],
 	#category : #'Album-UI'
 }

@@ -269,19 +269,25 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 AlbExamplesSeeClassSide class >> example_TextFlowWithBlElements [
 
 	| element |
-
-element := BlElement new
-		layout: (AlbLineFlowLayout new lineSpacing: 10);
-		constraintsDo: [ :c |
-			c horizontal matchParent.
-			c vertical fitContent ];
-		addChildren: (20 timesCollect: [
-			BlElement new
-				size: 75@30;
-				margin: (BlInsets all: 4);
-				background: (Color random alpha: 0.5) ]).
-element openInOBlSpace 
-			
+	element := BlElement new
+		           layout: (AlbLineFlowLayout new lineSpacing: 10);
+		           constraintsDo: [ :c | 
+			           c horizontal matchParent.
+			           c vertical matchParent ];
+		           addChildren: (20 timesCollect: [ 
+					            | anAnimation |
+					            anAnimation := BlSequentialAnimation new.
+					            anAnimation add:
+							            (BlTransformAnimation scale: 2) absolute.
+					            anAnimation add:
+							            (BlTransformAnimation scale: 0.5) absolute.
+					            anAnimation beInfinite.
+					            BlElement new
+						            size: 50 @ 20;
+						            margin: (BlInsets all: 4);
+						            background: (Color random alpha: 0.5);
+						            addAnimation: anAnimation ]).
+	element openInOBlSpace
 ]
 
 { #category : #'editor examples' }

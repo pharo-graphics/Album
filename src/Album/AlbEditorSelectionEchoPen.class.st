@@ -1,43 +1,43 @@
 Class {
-	#name : #AlbEditoSelectionEchoPen,
+	#name : #AlbEditorSelectionEchoPen,
 	#superclass : #AlbEditorFeltPen,
 	#instVars : [
-		'currentSelectionEchoList'
+		'currentEchoList'
 	],
 	#category : #'Album-UI'
 }
 
 { #category : #accessing }
-AlbEditoSelectionEchoPen class >> selectionEchoColor [
-	^ Color gray alpha: 0.35
+AlbEditorSelectionEchoPen class >> selectionEchoColor [
+	^ Color yellow alpha: 0.35
 ]
 
 { #category : #'mouse handlers' }
-AlbEditoSelectionEchoPen >> doubleClickEvent: anEvent [
+AlbEditorSelectionEchoPen >> doubleClickEvent: anEvent [
 	super doubleClickEvent: anEvent.
-	self shiftSelectionFrom: anEvent currentTarget event: anEvent
+	self updateEchoIn: anEvent currentTarget event: anEvent
 ]
 
 { #category : #'mouse handlers' }
-AlbEditoSelectionEchoPen >> dragEndEvent: anEvent [
+AlbEditorSelectionEchoPen >> dragEndEvent: anEvent [
 	super dragEndEvent: anEvent.
-	self shiftSelectionFrom: anEvent currentTarget event: anEvent
+	self updateEchoIn: anEvent currentTarget event: anEvent
 ]
 
 { #category : #'mouse handlers' }
-AlbEditoSelectionEchoPen >> dragEvent: anEvent [
+AlbEditorSelectionEchoPen >> dragEvent: anEvent [
 	super dragEvent: anEvent.
-	self shiftSelectionFrom: anEvent currentTarget event: anEvent
+	self updateEchoIn: anEvent currentTarget event: anEvent
 ]
 
 { #category : #'mouse handlers' }
-AlbEditoSelectionEchoPen >> dragStartEvent: anEvent [
+AlbEditorSelectionEchoPen >> dragStartEvent: anEvent [
 	super dragStartEvent: anEvent.
-	self shiftSelectionFrom: anEvent currentTarget event: anEvent
+	self updateEchoIn: anEvent currentTarget event: anEvent
 ]
 
 { #category : #updating }
-AlbEditoSelectionEchoPen >> highlight: aPieceElement from: startIdx to: endIdx [
+AlbEditorSelectionEchoPen >> highlight: aPieceElement from: startIdx to: endIdx [
 
 	aPieceElement
 		highlightCategory: #selectionEcho
@@ -45,50 +45,39 @@ AlbEditoSelectionEchoPen >> highlight: aPieceElement from: startIdx to: endIdx [
 				 paint: self class selectionEchoColor
 				 from: startIdx
 				 to: endIdx).
-	currentSelectionEchoList add: aPieceElement
+	currentEchoList add: aPieceElement
 ]
 
 { #category : #initialization }
-AlbEditoSelectionEchoPen >> initialize [ 
+AlbEditorSelectionEchoPen >> initialize [ 
 	super initialize.
 	
-	currentSelectionEchoList := OrderedCollection new.
-	shiftSelect := false
+	currentEchoList := OrderedCollection new.
+	canHandleEcho := false
 	
 ]
 
 { #category : #'mouse handlers' }
-AlbEditoSelectionEchoPen >> mouseDownEvent: anEvent [
+AlbEditorSelectionEchoPen >> mouseDownEvent: anEvent [
 	super mouseDownEvent: anEvent.
-	self shiftSelectionFrom: anEvent currentTarget event: anEvent
+	self updateEchoIn: anEvent currentTarget event: anEvent
 ]
 
 { #category : #updating }
-AlbEditoSelectionEchoPen >> onScrollDoneIn: anEditor [ 
+AlbEditorSelectionEchoPen >> onScrollDoneIn: anEditor [ 
 	super onScrollDoneIn: anEditor.
-	self updateSelectionEchoFrom: anEditor
+	self updateEchoIn: anEditor
 ]
 
 { #category : #updating }
-AlbEditoSelectionEchoPen >> resetCurrentSelectionEcho [
+AlbEditorSelectionEchoPen >> resetCurrentEcho [
 
-	currentSelectionEchoList do: [ :e | e resetHighlightsOfCategory: #selectionEcho ].
-	currentSelectionEchoList reset.
-]
-
-{ #category : #accessing }
-AlbEditoSelectionEchoPen >> shiftSelect: aBoolean [
-	shiftSelect := aBoolean
+	currentEchoList do: [ :e | e resetHighlightsOfCategory: #selectionEcho ].
+	currentEchoList reset.
 ]
 
 { #category : #updating }
-AlbEditoSelectionEchoPen >> shiftSelectionFrom: anEditor event: anEvent [
-	shiftSelect := anEvent modifiers isShift.
-	self updateSelectionEchoFrom: anEditor
-]
-
-{ #category : #updating }
-AlbEditoSelectionEchoPen >> updateSelectionEcho: anInterval from: anEditor [
+AlbEditorSelectionEchoPen >> updateEcho: anInterval in: anEditor [
 
 	| startIdx endIdx |
 	startIdx := anInterval first.
@@ -113,29 +102,35 @@ AlbEditoSelectionEchoPen >> updateSelectionEcho: anInterval from: anEditor [
 ]
 
 { #category : #updating }
-AlbEditoSelectionEchoPen >> updateSelectionEchoFrom: anEditor [
+AlbEditorSelectionEchoPen >> updateEchoIn: anEditor [
 	
 	| selectedString |
-	self resetCurrentSelectionEcho.
-	shiftSelect ifFalse: [ ^ self  ].
+	self resetCurrentEcho.
+	canHandleEcho ifFalse: [ ^ self  ].
 	anEditor selection ifEmpty: [ ^ self  ].
 	selectedString := anEditor selectedText asString.
-	self updateSelectionEchoFrom: anEditor withString: selectedString
+	self updateEchoIn: anEditor withString: selectedString
 
 ]
 
 { #category : #updating }
-AlbEditoSelectionEchoPen >> updateSelectionEchoFrom: anEditor withString: aString [
+AlbEditorSelectionEchoPen >> updateEchoIn: anEditor event: anEvent [
+	canHandleEcho := anEvent modifiers isShift.
+	self updateEchoIn: anEditor
+]
+
+{ #category : #updating }
+AlbEditorSelectionEchoPen >> updateEchoIn: anEditor withString: aString [
 	
 	| collector founds currentSelectionInterval subTextOnScreen |
-	self resetCurrentSelectionEcho.
-	shiftSelect ifFalse: [ ^ self  ].
+	self resetCurrentEcho.
+	canHandleEcho ifFalse: [ ^ self  ].
 	subTextOnScreen := anEditor subTextOnScreen.
 	aString size >= (subTextOnScreen size // 2) ifTrue: [ ^self ].
 	collector := BlIntervalCollector new text: subTextOnScreen asString.
 	currentSelectionInterval := anEditor selection from +1 to: anEditor selection to.
 	founds := collector searchAll: aString excluding: currentSelectionInterval - subTextOnScreen textOffset.
 	founds do: [ :interval | 
-		self updateSelectionEcho: interval + subTextOnScreen textOffset from: anEditor ].
+		self updateEcho: interval + subTextOnScreen textOffset in: anEditor ].
 
 ]

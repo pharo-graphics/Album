@@ -23,12 +23,12 @@ AlbEditorElement >> cursor [
 
 { #category : #initialization }
 AlbEditorElement >> defaultLayout [
-	^ BlInfiniteLinearLayout vertical
+	^ OBlInfiniteLinearLayout vertical
 ]
 
 { #category : #initialization }
 AlbEditorElement >> defaultRecycler [
-	^ AlbRecycler new
+	^ OBlInfiniteRecycler new
 ]
 
 { #category : #'ui - events managing' }

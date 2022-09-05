@@ -4,7 +4,7 @@ I am also responsible for caching functionality in order to reduce amount of ins
 "
 Class {
 	#name : #AlbEditorSegmentHolder,
-	#superclass : #BlInfiniteHolder,
+	#superclass : #OBlInfiniteHolder,
 	#category : #'Album-Model-Segment'
 }
 

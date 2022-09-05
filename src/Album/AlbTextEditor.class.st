@@ -7,7 +7,7 @@ I subclass infinite data source in order to be able to smoothly display practica
 "
 Class {
 	#name : #AlbTextEditor,
-	#superclass : #BlInfiniteDataSource,
+	#superclass : #OBlInfiniteDataSource,
 	#instVars : [
 		'model',
 		'mode',
@@ -626,8 +626,16 @@ AlbTextEditor >> onAttached: anEditorElement [
 
 { #category : #'instance creation' }
 AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
+
 	"I bind a segment at a given position to the provided segment holder"
+
 	| aSegment previousLastIndex |
+	
+	
+	self flag: 'No example with payloads... '.
+	aSegmentHolder payloads ifNotEmpty: [ :theCommands | 
+		theCommands do: [ :aHolderCommand | aHolderCommand executeOn: aSegmentHolder ].
+		^ self ].
 
 	"First we want to acquire a segment for a given position"
 	aSegment := segmentCollector segmentAt: aPosition.
@@ -636,21 +644,10 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 	aSegmentHolder segment: aSegment.
 
 	"If the last cached segment was requested, load more so that the editor knows there are more lines"
-	(aPosition = segmentCollector lastIndex and: [ segmentCollector end < segmentCollector text size ])
-		ifFalse: [ ^ self ].
+	(aPosition = segmentCollector lastIndex and: [ segmentCollector end < segmentCollector text size ]) ifFalse: [ ^ self ].
 	previousLastIndex := segmentCollector lastIndex.
 	segmentCollector computeForwardAt: aPosition + 1.
 	self notifyItemsInserted: (aPosition + 1 to: aPosition + segmentCollector lastIndex - previousLastIndex)
-]
-
-{ #category : #'instance creation' }
-AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition payloads: aCollectionOfPayloads [	
-	"I bind a segment at a given position to provided segment holder"
-
-	aCollectionOfPayloads
-		ifEmpty: [ self onBindHolder: aSegmentHolder at: aPosition ]
-		ifNotEmpty: [ :theCommands |
-			theCommands do: [ :aHolderCommand | aHolderCommand executeOn: aSegmentHolder ] ]
 ]
 
 { #category : #'instance creation' }

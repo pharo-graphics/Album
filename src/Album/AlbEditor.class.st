@@ -201,6 +201,14 @@ AlbEditor >> isReadOnly [
 	^ self viewModel mode isReadOnly
 ]
 
+{ #category : #accessing }
+AlbEditor >> layoutPositionsRange: anInterval [
+	super layoutPositionsRange: anInterval.
+	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
+	self editor layoutPositionsRange: anInterval
+
+]
+
 { #category : #'model - events' }
 AlbEditor >> modeChanged: aTextEditorMode [
 	self editor editorMode: aTextEditorMode.
@@ -225,14 +233,12 @@ AlbEditor >> navigator [
 AlbEditor >> onLayoutDone [
 
 	super onLayoutDone.
-	self editor viewInterval: self segmentOnScreenInterval.
 	self feltPensDo: [ :fp | fp onLayoutDoneIn: self ]
 ]
 
 { #category : #'hooks - scrolling' }
 AlbEditor >> onScrolled: aPoint [
 	super onScrolled: aPoint.
-	self editor viewInterval: self segmentOnScreenInterval.
 	self feltPensDo: [ :fp | fp onScrollDoneIn: self ]
 ]
 
@@ -348,6 +354,9 @@ AlbEditor >> subTextOnScreen [
 { #category : #'editor - accessing' }
 AlbEditor >> subTextOnScreenInterval [
 	
+	"return the viewed subtext interval"
+	" note that layoutPositionsRange can't be used here because the view may not be up-to-date according to the layout "
+	
 	| holder first last |
 	self editorText isEmpty ifTrue: [ ^ 0 to: -1 ].
 	holder := self elementHolderOf: self children first.
@@ -447,5 +456,5 @@ AlbEditor >> withoutOppositeDelimiter [
 
 { #category : #'accessing - decoration' }
 AlbEditor >> withoutSelectionEcho [
-	self withoutFeltPen: AlbEditoSelectionEchoPen 
+	self withoutFeltPen: AlbEditorSelectionEchoPen 
 ]

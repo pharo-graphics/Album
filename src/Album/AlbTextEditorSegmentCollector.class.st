@@ -31,7 +31,6 @@ Class {
 		'segments',
 		'segmentsInterval',
 		'cacheLimit',
-		'viewInterval',
 		'lineSplitter'
 	],
 	#category : #'Album-Model-Segment-Text'
@@ -753,14 +752,4 @@ AlbTextEditorSegmentCollector >> validateTextPieceUniquenessIn: aTextEditor [
 
 	allGroupedTextPieces := allGroupedTextPieces select: [ :aGroup | aGroup size > 1 ].
 	self assert: [ allGroupedTextPieces isEmpty ] description: [ 'Some text pieces are not unique!' ]
-]
-
-{ #category : #accessing }
-AlbTextEditorSegmentCollector >> viewInterval [
-	^ viewInterval
-]
-
-{ #category : #accessing }
-AlbTextEditorSegmentCollector >> viewInterval: anInterval [
-	viewInterval := anInterval 
 ]

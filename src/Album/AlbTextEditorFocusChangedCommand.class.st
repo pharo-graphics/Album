@@ -10,7 +10,8 @@ Class {
 { #category : #executing }
 AlbTextEditorFocusChangedCommand >> executeOn: aTextEditor [
 	
-	aTextEditor notifyItems: aTextEditor segmentCollector viewInterval event: self newHolderEvent.
+	"send to all visible segment holders"
+	aTextEditor notifyItems: aTextEditor layoutPositionsRange event: self newHolderEvent.
 
 ]
 

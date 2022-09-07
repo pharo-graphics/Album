@@ -15,8 +15,8 @@ AlbTextEditorScreenToCursorCommand >> executeOn: aTextEditor [
 { #category : #executing }
 AlbTextEditorScreenToCursorCommand >> explicitScreenToCursor: aTransformation for: aTextEditor [
 
-	"we convert a pure screen position, should send to all segment holders"
-	aTextEditor notifyItems: aTextEditor segmentCollector viewInterval event: self newHolderEvent.
+	"we convert a pure screen position, should send to all visible segment holders"
+	aTextEditor notifyItems: aTextEditor layoutPositionsRange event: self newHolderEvent.
 
 ]
 

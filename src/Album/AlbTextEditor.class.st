@@ -26,7 +26,8 @@ Class {
 		'shouldStyleWhenTextModified',
 		'cursor',
 		'hasEventHandlerAttribute',
-		'wordStencilBuilder'
+		'wordStencilBuilder',
+		'layoutPositionsRange'
 	],
 	#classInstVars : [
 		'isDebug'
@@ -485,6 +486,16 @@ AlbTextEditor >> itemTypeAt: aPosition [
 	self flag: 'try with uniform item type to avoid collector>>computeBackwardAt:'.
 	^ AlbTextEditorLineSegmentType uniqueInstance
 	"^ (segmentCollector segmentAt: aPosition) segmentType"
+]
+
+{ #category : #accessing }
+AlbTextEditor >> layoutPositionsRange [
+	^ layoutPositionsRange
+]
+
+{ #category : #accessing }
+AlbTextEditor >> layoutPositionsRange: anInterval [
+	layoutPositionsRange := anInterval
 ]
 
 { #category : #'api - shortcuts' }
@@ -1241,16 +1252,6 @@ AlbTextEditor >> useSyncStylerStrategy [
 { #category : #initialization }
 AlbTextEditor >> useTaskItStylerStrategy [
 	self stylerStrategy: AlbTextStylerTaskItStrategy new
-]
-
-{ #category : #accessing }
-AlbTextEditor >> viewInterval [
-	^ self segmentCollector viewInterval
-]
-
-{ #category : #accessing }
-AlbTextEditor >> viewInterval: anInterval [
-	self segmentCollector viewInterval: anInterval
 ]
 
 { #category : #accessing }

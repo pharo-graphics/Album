@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 AlbEditorSelectionEchoPen class >> selectionEchoColor [
-	^ Color yellow alpha: 0.35
+	^ Color yellow alpha: 0.55
 ]
 
 { #category : #'mouse handlers' }

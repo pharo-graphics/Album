@@ -54,6 +54,8 @@ AlbRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasi
 { #category : #private }
 AlbRBTextStyler class >> attributesFor: aSymbol [
 	"Return a collection of text or font attributes for a given style name"
+	
+	"self attributesFor: #default"
 	<return: #Array of: #BlTextAttribute>
 	
 	^ self textAttributes

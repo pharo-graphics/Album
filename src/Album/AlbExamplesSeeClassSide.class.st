@@ -34,7 +34,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
 
-	text := self methodText asRopedText.
+	text := self methodText asRopedText fontName: 'Source Sans Pro'; fontSize: 20.
 
 	styler := AlbRBTextStyler new.
 	styler classOrMetaClass: self class.

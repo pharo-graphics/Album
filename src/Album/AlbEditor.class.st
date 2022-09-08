@@ -354,9 +354,6 @@ AlbEditor >> subTextOnScreen [
 { #category : #'editor - accessing' }
 AlbEditor >> subTextOnScreenInterval [
 	
-	"return the viewed subtext interval"
-	" note that layoutPositionsRange can't be used here because the view may not be up-to-date according to the layout "
-	
 	| holder first last |
 	self editorText isEmpty ifTrue: [ ^ 0 to: -1 ].
 	holder := self elementHolderOf: self children first.

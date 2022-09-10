@@ -145,6 +145,16 @@ AlbEditor >> feltPensDo: aBlock [
 	feltPens do: aBlock
 ]
 
+{ #category : #'focus accessing' }
+AlbEditor >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDirection [
+	"Sort candidates according the bounds left, to ensure that rightmost are favored for up and down. "
+	super
+		focusables: aBlFocusFinderCandidates
+		along: aBlFocusSearchDirection.
+	aBlFocusFinderCandidates candidates sort: [ :a :b | 
+		a bounds left > b bounds left ]
+]
+
 { #category : #initialization }
 AlbEditor >> initialize [
 

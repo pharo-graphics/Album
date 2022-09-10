@@ -9,6 +9,7 @@ Class {
 
 { #category : #executing }
 AlbTextEditorScreenToCursorCommand >> executeOn: aTextEditor [
+
 	self transformation evaluateOn: self for: aTextEditor
 ]
 

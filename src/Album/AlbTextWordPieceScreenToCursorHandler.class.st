@@ -24,6 +24,7 @@ AlbTextWordPieceScreenToCursorHandler >> explicitScreenToCursor: aTransformation
 AlbTextWordPieceScreenToCursorHandler >> handleEvent: anEvent [
 
 	| aTextElement |
+
 	aTextElement := anEvent currentTarget.
 	"If text element has no paragraph we can not find text index for mouse event"
 	aTextElement paragraph ifNil: [ ^ self ].

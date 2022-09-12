@@ -2,7 +2,7 @@ Class {
 	#name : #AlbExamplesSeeClassSide,
 	#superclass : #Object,
 	#classVars : [
-		'BigText'
+		'BigString'
 	],
 	#category : #'Album-SandBox'
 }
@@ -13,15 +13,39 @@ AlbExamplesSeeClassSide class >> ascent [
 ]
 
 { #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> bigText [
+AlbExamplesSeeClassSide class >> bigString [
 	"1000000000 is 1Go, ~200 000 pages in LibreOffice - 3 600 000 lines on TextMaker "
-	^ BigText ifNil: [ BigText := String loremIpsum: 1000000000 ]
+	^ BigString ifNil: [ BigString := String loremIpsum: 1000000000 ]
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> bigStringFromFile [
+	" self bigStringFromFile "
+
+	| fref stream |
+	fref := 'bigFile.txt' asFileReference.
+	fref exists ifFalse: [ self inform: fref fullName, ' does''nt exists' ].
+	stream := fref readStream.
+	BigString := stream contents.
+	stream close
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> bigStringToFile [
+	" self bigStringToFile "
+
+	| fref stream |
+	fref := 'bigFile.txt' asFileReference.
+	fref deleteIfAbsent: [  ].
+	stream := fref writeStream.
+	stream nextPutAll: self bigString.
+	stream close
 ]
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> cleanUp [ 
 	super cleanUp.
-	BigText := nil
+	BigString := nil
 ]
 
 { #category : #accessing }
@@ -124,10 +148,10 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
-	| ed |
+	| ed  |
 	" ~4300 pages on LibreOffice, ~8000000 characters "
 	ed := Smalltalk changesFile readStream contents onAlbum.
-	ed recycler inspect.
+	"ed recycler inspect."
 	ed withLineNumbers.
 	ed openInOblSpace
 ]
@@ -137,7 +161,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
 	"The insertion bogue arise around 342225"
-	ed := self bigText asRopedText onAlbum.
+	ed := self bigString asRopedText onAlbum.
 	"ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer fitContent]."
@@ -252,17 +276,18 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
 			           c horizontal matchParent.
 			           c vertical fitContent ];
 		           addChildren:
-			           (20 timesCollect: [ (String loremIpsum: (r nextIntegerBetween: 2 and: 40)) asRopedText asElement ]).
+			           (20 timesCollect: [ ((String loremIpsum: (r nextIntegerBetween: 2 and: 40)), String tab) asRopedText asElement ]).
 	element openInOBlSpace
 ]
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
-
-	((' ( Monospace 40 ) ' asRopedText
-		  fontSize: 40;
-		  monospace) , (' Default font and size' asRopedText "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}")) onAlbum withLineNumbers;"inspect" openInOblSpace
+	(' Default font and size' asRopedText
+	 , (' ( Monospace 40 ) ' asRopedText fontSize: 40; monospace) 
+	 , ' Default font and size' asRopedText) onAlbum
+		withLineNumbers;
+		"inspect"openInOblSpace "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}"
 ]
 
 { #category : #elements }

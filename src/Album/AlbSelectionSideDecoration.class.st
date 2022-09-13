@@ -6,7 +6,7 @@ Class {
 
 { #category : #geometry }
 AlbSelectionSideDecoration >> gap [
-	^ 0
+	^ 1
 ]
 
 { #category : #geometry }
@@ -27,16 +27,14 @@ AlbSelectionSideDecoration >> selectionBackgroundColorOf: anItemElement in: anIn
 { #category : #geometry }
 AlbSelectionSideDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement [
 
-	| first last withSelectionOrCursor top bottom |
-	"here anItemElement is a logical line"
-	withSelectionOrCursor := anItemElement children select: [ :e | 
-		                         (e isKindOf: BlTextElement) and: [ e selection isNotEmpty or: [ e hasCursor ] ] ].
-	withSelectionOrCursor ifEmpty: [ ^ nil ].
-	first := withSelectionOrCursor first.
-	last := withSelectionOrCursor last.
-	top := first textFlow assignedLine origin y.
-	bottom := top + last textFlow assignedLine height.
-	^ (0 @ top) corner: (self computedBounds width - self gap) @ (bottom)
+	" Select lines with cursor or with an element at left which has a selection that start at 0 "
+	(anItemElement children
+		 select: [ :e | 
+			 (e isKindOf: BlTextElement) and: [ 
+				 e hasCursor or: [ e bounds inParent left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ] ] ]
+		 thenCollect: [ :e | e textFlow assignedLine ]) in: [ :l | 
+		l ifEmpty: [ ^ nil ].
+		^ 0 @ l first origin y corner: self computedBounds width - self gap @ (l last origin y + l last height) ]
 ]
 
 { #category : #geometry }

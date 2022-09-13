@@ -4,11 +4,6 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #geometry }
-AlbSelectionLimitDecoration >> gap [
-	^ 0
-]
-
 { #category : #initialization }
 AlbSelectionLimitDecoration >> initialize [
 	super initialize.
@@ -24,16 +19,10 @@ AlbSelectionLimitDecoration >> requiredInsetsOfChildElement: anElement [
 
 { #category : #geometry }
 AlbSelectionLimitDecoration >> requiredWidth [
-	^ 2
+	^ 3
 ]
 
 { #category : #accessing }
 AlbSelectionLimitDecoration >> selectionBackgroundColorOf: anItemElement in: anInfiniteElement [
 	^ anInfiniteElement selectionColor 
-]
-
-{ #category : #geometry }
-AlbSelectionLimitDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock [
-	anInfiniteElement selection ifEmpty: [ ^ self ].
-	super selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock
 ]

@@ -17,11 +17,6 @@ AlbLineNumberDecoration >> defaultWidth [
 	^ 17
 ]
 
-{ #category : #geometry }
-AlbLineNumberDecoration >> gap [
-	^ 1
-]
-
 { #category : #initialization }
 AlbLineNumberDecoration >> initialize [
 	super initialize.

@@ -27,16 +27,16 @@ AlbSelectionSideDecoration >> selectionBackgroundColorOf: anItemElement in: anIn
 { #category : #geometry }
 AlbSelectionSideDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement [
 
-	| top bottom |
+	| first last withSelectionOrCursor top bottom |
 	"here anItemElement is a logical line"
-	(anItemElement children noneSatisfy: [ :e | 
-		 (e isKindOf: BlTextElement) and: [ e selection isNotEmpty or: [ e hasCursor ] ] ]) ifTrue: [ ^ nil ].
-	top := 0.
-	bottom := 0.
-	anItemElement childrenDo: [ :child | 
-		top := top min: child bounds top.
-		bottom := bottom max: child bounds bottom ].
-	^ 0 @ top corner: self computedBounds width - self gap @ bottom
+	withSelectionOrCursor := anItemElement children select: [ :e | 
+		                         (e isKindOf: BlTextElement) and: [ e selection isNotEmpty or: [ e hasCursor ] ] ].
+	withSelectionOrCursor ifEmpty: [ ^ nil ].
+	first := withSelectionOrCursor first.
+	last := withSelectionOrCursor last.
+	top := first textFlow assignedLine origin y.
+	bottom := top + last textFlow assignedLine height.
+	^ (0 @ top) corner: (self computedBounds width - self gap) @ (bottom)
 ]
 
 { #category : #geometry }

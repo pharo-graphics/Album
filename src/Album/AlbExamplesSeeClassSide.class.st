@@ -414,6 +414,41 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
+
+	| ed space |
+	ed := AlbEditor new text: String crlf.
+	ed editor segmentCollector inspect.
+	ed withLineNumbers.
+	space := BlSpace new.
+	space root addChild: ed.
+	space show
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithCrOnly [
+
+	| ed space |
+	ed := AlbEditor new text: String cr.
+	ed editor segmentCollector inspect.
+	ed withLineNumbers.
+	space := BlSpace new.
+	space root addChild: ed.
+	space show
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
+
+	| ed space |
+	ed := AlbEditor new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
+	ed withLineNumbers.
+	space := BlSpace new.
+	space root addChild: ed.
+	space show
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
 	| ed space |
@@ -427,34 +462,11 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 
 	| ed space text editor |
-	text := ('Hello', String cr, ' World') asRopedText fontSize: 40.
+	text := ('Hello World') asRopedText fontSize: 40.
 	editor := AlbTextEditor new text: text.
 	ed := AlbEditor new.
 	ed withLineNumbers.
 	ed editor: editor.
-	space := BlSpace new.
-	space root addChild: ed.
-	space show
-]
-
-{ #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_WithWithCrLf [
-
-	| ed space |
-	ed := AlbEditor new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
-	ed withLineNumbers.
-	space := BlSpace new.
-	space root addChild: ed.
-	space show
-]
-
-{ #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_WithWithCrOnly [
-
-	| ed space |
-	ed := AlbEditor new text: String cr.
-	ed editor segmentCollector inspect.
-	ed withLineNumbers.
 	space := BlSpace new.
 	space root addChild: ed.
 	space show

@@ -98,16 +98,20 @@ AlbTextEditorNavigator >> moveDown [
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveLeft [
-	"Move all cursors to the left"
 
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveLeftOperation cursor: aCursor) ]
+	| delta |
+	delta := -1.
+	(self hasString: String crlf beforeCursor: self cursor) ifTrue: [ delta := -2 ].
+	operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: self cursor) delta: delta)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveRight [
 	"Move all cursors one to the right"
-
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveRightOperation cursor: aCursor) ]
+	| delta |
+	delta := 1.
+	(self hasString: String crlf afterCursor: self cursor) ifTrue: [ delta := 2 ].
+	operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: self cursor) delta: delta)
 ]
 
 { #category : #'api - configuration' }
@@ -206,10 +210,7 @@ AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
 	
 	prevIndex := aCursor position.
 	nextIndex := self privateNormalizePosition: aTextIndex.
-	
-	"Take care to not change if the text index stay unchanged"
-	"prevIndex = nextIndex ifTrue: [ ^self ]."
-	
+		
 	"remove old one"
 	self notifyCursorRemoved: aCursor.
 

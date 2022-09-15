@@ -2,7 +2,8 @@ Class {
 	#name : #AlbEditorSelectionEchoPen,
 	#superclass : #AlbEditorFeltPen,
 	#instVars : [
-		'currentEchoList'
+		'currentEchoList',
+		'canHandleEcho'
 	],
 	#category : #'Album-UI'
 }
@@ -123,8 +124,6 @@ AlbEditorSelectionEchoPen >> updateEchoIn: anEditor event: anEvent [
 AlbEditorSelectionEchoPen >> updateEchoIn: anEditor withString: aString [
 	
 	| collector founds currentSelectionInterval subTextOnScreen |
-	self resetCurrentEcho.
-	canHandleEcho ifFalse: [ ^ self  ].
 	subTextOnScreen := anEditor subTextOnScreen.
 	aString size >= (subTextOnScreen size // 2) ifTrue: [ ^self ].
 	collector := BlIntervalCollector new text: subTextOnScreen asString.

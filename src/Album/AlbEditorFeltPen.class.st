@@ -1,9 +1,6 @@
 Class {
 	#name : #AlbEditorFeltPen,
 	#superclass : #Object,
-	#instVars : [
-		'canHandleEcho'
-	],
 	#category : #'Album-UI'
 }
 

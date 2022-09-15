@@ -50,12 +50,12 @@ AlbTextEditorUpdater >> update [
 				aCommand := AlbTextEditorInvalidateCommand new
 					fromIndex: eachInterval first;
 					toIndex: eachInterval last.
-				self editor executeCommand: aCommand ].
+				editor executeCommand: aCommand ].
 		shouldRecreate
 			ifTrue: [
 				| aCommand |
 				aCommand := AlbTextEditorUpdateCommand new
 					fromIndex: eachInterval first;
 					toIndex: eachInterval last.
-				self editor executeCommand: aCommand ] ]
+				editor executeCommand: aCommand ] ]
 ]

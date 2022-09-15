@@ -106,7 +106,7 @@ AlbTextEditorInserter >> crLineEndingWithWhitespace [
 AlbTextEditorInserter >> deleteSelectedText [
 	| aDeleter newInsertionIndices |
 	
-	aDeleter := self editor deleter.
+	aDeleter := editor deleter.
 	aDeleter selected.
 
 	newInsertionIndices := SortedCollection new.
@@ -230,10 +230,10 @@ AlbTextEditorInserter >> insert [
 					theInsertionStrings add: eachString.
 					theInsertionIndices add: (aSurrounding at: #index) ] ] ].
 
-		self editor history groupDuring: [ 
+		editor history groupDuring: [ 
 			theCursorMovements ifNotEmpty: [ :theMovements | 
 				| aNavigator |
-				aNavigator := self editor navigator.
+				aNavigator := editor navigator.
 				aNavigator withHistorization.
 				theMovements do: [ :eachMovement | aNavigator move: eachMovement key to: eachMovement value ].
 				aNavigator apply ].
@@ -386,7 +386,7 @@ AlbTextEditorInserter >> privateInsertStrings: aCollectionOfString atAll: aColle
 		strings: aCollectionOfString;
 		indices: aCollectionOfIndices.
 
-	self editor executeCommand: aCommand
+	editor executeCommand: aCommand
 ]
 
 { #category : #private }
@@ -409,7 +409,7 @@ AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText at: anIndex [
 				self telemetry
 					timeSync: [ 'Move cursor at {1} by {2}' format: { aCursor position . aCursorDelta } ]
 					during: [
-						self editor navigator
+						editor navigator
 							context: self context;
 							dueTo: self;
 							move: aCursor by: aCursorDelta;
@@ -436,7 +436,7 @@ AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText withSurround:
 			at: theIndices second + aText size).
 
 		aCursorDelta isZero
-			ifFalse: [ self editor navigator
+			ifFalse: [ editor navigator
 				dueTo: self;
 				move: aCursor by: aCursorDelta;
 				apply ] ]
@@ -485,7 +485,7 @@ AlbTextEditorInserter >> surroundings: aSurroundMap [
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> text: aBlText [
 
-	self editor checkText: aBlText.
+	editor checkText: aBlText.
 	text := aBlText asString.
 	insertionIndices do: [ :eachAssociation | 
 		eachAssociation value ifNil: [ eachAssociation value: text ] ]
@@ -495,15 +495,15 @@ AlbTextEditorInserter >> text: aBlText [
 AlbTextEditorInserter >> updateSelectionAfterInsertion: aText at: anIndex [
 	| anExistingSelection |
 
-	anExistingSelection := BlCompositeSelection new select: self editor selection.
+	anExistingSelection := BlCompositeSelection new select: editor selection.
 	anExistingSelection reverseDo: [ :aMonotoneSelection |
 		| aNewSelection |
 
 		aNewSelection := self computeSelection: aMonotoneSelection afterInserted: aText at: anIndex.
 		aNewSelection = aMonotoneSelection
 			ifFalse: [
-				self editor deselect: aMonotoneSelection from to: aMonotoneSelection to.
-				self editor select: aNewSelection from to: aNewSelection to ] ]
+				editor deselect: aMonotoneSelection from to: aMonotoneSelection to.
+				editor select: aNewSelection from to: aNewSelection to ] ]
 ]
 
 { #category : #private }
@@ -512,7 +512,7 @@ AlbTextEditorInserter >> updateSelectionAfterInsertion: aText withSurround: aSur
 	
 	theIndices := self privateComputeSelectionIndices: aText withSurround: aSurroundText at: aTextIndex.
 
-	anExistingSelection := BlCompositeSelection new select: self editor selection.
+	anExistingSelection := BlCompositeSelection new select: editor selection.
 	anExistingSelection reverseDo: [ :aMonotoneSelection |
 		| aNewSelection |
 
@@ -520,8 +520,8 @@ AlbTextEditorInserter >> updateSelectionAfterInsertion: aText withSurround: aSur
 		aNewSelection := self computeSelection: aNewSelection afterInserted: aText at: theIndices second.
 		aNewSelection = aMonotoneSelection
 			ifFalse: [
-				self editor deselect: aMonotoneSelection from to: aMonotoneSelection to.
-				self editor select: aNewSelection from to: aNewSelection to ] ]
+				editor deselect: aMonotoneSelection from to: aMonotoneSelection to.
+				editor select: aNewSelection from to: aNewSelection to ] ]
 ]
 
 { #category : #'api - configuration' }

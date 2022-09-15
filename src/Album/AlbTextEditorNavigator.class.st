@@ -42,7 +42,7 @@ AlbTextEditorNavigator >> apply [
 	operations do: [ :anOperation| anOperation performOn: self ].
 	
 	shouldHistorize ifTrue: [
-		self editor history
+		editor history
 			cursorsMovedFrom: {prevTextPosition} to: { nextTextPosition } ].
 
 	self privateMoveCursor: self cursor to: nextTextPosition.
@@ -183,7 +183,7 @@ AlbTextEditorNavigator >> notifyCursorAdded: aCursor [
 	aCommand := AlbTextEditorCursorAddCommand new
 		context: self context;
 		cursor: aCursor.
-	self editor executeCommand: aCommand
+	editor executeCommand: aCommand
 ]
 
 { #category : #notifying }
@@ -193,7 +193,7 @@ AlbTextEditorNavigator >> notifyCursorRemoved: aCursor [
 	aCommand := AlbTextEditorCursorRemoveCommand new
 		context: self context;
 		cursor: aCursor.
-	self editor executeCommand: aCommand
+	editor executeCommand: aCommand
 ]
 
 { #category : #'private - accessing' }
@@ -221,7 +221,7 @@ AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
 	self notifyCursorAdded: aCursor.
 
 	"now tell everyone interested that the cursor has moved"
-	self editor dispatchEvent: (AlbTextEditorCursorMovedEvent
+	editor dispatchEvent: (AlbTextEditorCursorMovedEvent
 			 cursor: aCursor
 			 from: prevIndex
 			 to: aCursor position

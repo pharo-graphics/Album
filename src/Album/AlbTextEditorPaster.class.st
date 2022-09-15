@@ -62,7 +62,7 @@ AlbTextEditorPaster >> inputFilter: aTextEditorInputFilter [
 AlbTextEditorPaster >> paste [
 	| anInserter |
 	
-	anInserter := self editor inserter.
+	anInserter := editor inserter.
 	anInserter inputFilter: inputFilter.
 	anInserter text: text.
 	anInserter shouldDeleteSelected: shouldDeleteSelected.

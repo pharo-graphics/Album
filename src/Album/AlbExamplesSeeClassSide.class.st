@@ -165,7 +165,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	"ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer fitContent]."
-	"ed inspect."
+	ed inspect.
 	ed withLineNumbers.
 	ed openInOblSpace
 ]

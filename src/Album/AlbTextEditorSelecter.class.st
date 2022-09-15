@@ -304,7 +304,7 @@ AlbTextEditorSelecter >> privateDeselectExisting: aSelection [
 	aSelection isEmpty
 		ifTrue: [ ^ self ].
 
-	aDeselecter := self editor deselecter.	
+	aDeselecter := editor deselecter.	
 	aSelection do: [ :eachMonotoneSelection | aDeselecter from: eachMonotoneSelection from to: eachMonotoneSelection to ].
 	aDeselecter deselect
 ]
@@ -425,7 +425,7 @@ AlbTextEditorSelecter >> privateFrom: aFromIndex to: aToIndex [
 AlbTextEditorSelecter >> privatePerformSelectAndDeselectCommands: theCommands [
 	| aDeselecter  |
 
-	aDeselecter := self editor deselecter.
+	aDeselecter := editor deselecter.
 
 	theCommands do: [ :aCommand |
 		aCommand toDeselectDo: [ :eachSelectionToDeselect |
@@ -445,7 +445,7 @@ AlbTextEditorSelecter >> privatePerformSelectAndDeselectCommands: theCommands [
 	
 	theCommands do: [ :aCommand |
 		| aNavigator |
-		aNavigator := self editor navigator.
+		aNavigator := editor navigator.
 		aNavigator dueTo: self.
 		
 		aCommand shouldResetDesiredCoordinate
@@ -483,7 +483,7 @@ AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 	aCommand := AlbTextEditorSelectCommand new
 		fromIndex: aFromTextIndex;
 		toIndex: aToTextIndex.
-	self editor executeCommand: aCommand
+	editor executeCommand: aCommand
 ]
 
 { #category : #'api - processing' }
@@ -514,7 +514,7 @@ AlbTextEditorSelecter >> select [
 AlbTextEditorSelecter >> updateCursors [
 	| aNavigator |
 	
-	aNavigator := self editor navigator.
+	aNavigator := editor navigator.
 	aNavigator dueTo: self.
 	self selection do: [ :aMonotoneSelection | aNavigator addAt: aMonotoneSelection to ].
 	aNavigator apply

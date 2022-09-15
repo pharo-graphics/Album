@@ -215,8 +215,13 @@ AlbEditor >> isReadOnly [
 AlbEditor >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
 	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
-	self editor layoutPositionsRange: anInterval
-
+	self editor layoutPositionsRange: anInterval.
+	Transcript show: 'interval: ', anInterval asString, ' top: ', self bounds top asString, ' bottom: ', self bounds bottom asString; cr.
+	self childrenDo:   [:child |
+		('			top: ', child bounds inParent top asString, ' bottom ', child bounds inParent bottom asString) traceCr.
+		  ]
+"	Transcript show: 'first child top: ', self bounds top asString; cr.
+"
 ]
 
 { #category : #'model - events' }

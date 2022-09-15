@@ -16,7 +16,7 @@ AlbTextEditorOperator >> apply [
 
 { #category : #'private - asserting' }
 AlbTextEditorOperator >> assertUIProcess [
-	self editor assertUIProcess
+	editor assertUIProcess
 ]
 
 { #category : #private }
@@ -45,12 +45,12 @@ AlbTextEditorOperator >> context: anObject [
 
 { #category : #accessing }
 AlbTextEditorOperator >> cursor [
-	^ self editor cursor
+	^ editor cursor
 ]
 
 { #category : #accessing }
 AlbTextEditorOperator >> cursor: aCursor [
-	self editor cursor: aCursor
+	editor cursor: aCursor
 ]
 
 { #category : #accessing }
@@ -140,7 +140,7 @@ AlbTextEditorOperator >> findTextIndexAboveCursor: aCursor ifAbsent: anException
 		beUp;
 		whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 
-	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	^ aGlobalTextIndex
 		ifNotNil: [ aGlobalTextIndex ]
@@ -159,7 +159,7 @@ AlbTextEditorOperator >> findTextIndexAtCursor: aCursor ifAbsent: anExceptionBlo
 		cursor: aCursor;
 		whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	aGlobalTextIndex
 		ifNotNil: [ ^ aGlobalTextIndex ]
@@ -225,7 +225,7 @@ AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition [
 	aTransformation := AlbTextEditorExplicitScreenToCursorTransformation new screenPosition: aScreenPosition.
 	aTransformation whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	"could not find a text index for a given screen position"
 	self
@@ -246,7 +246,7 @@ AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition ifAbsent
 	aTransformation := AlbTextEditorExplicitScreenToCursorTransformation new screenPosition: aScreenPosition.
 	aTransformation whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	aGlobalTextIndex
 		ifNotNil: [ ^ aGlobalTextIndex ]
@@ -273,7 +273,7 @@ AlbTextEditorOperator >> findTextIndexBelowCursor: aCursor ifAbsent: anException
 		beDown;
 		whenTransformed: [ :aTextIndex | aGlobalTextIndex := aTextIndex ].
 	
-	self editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
+	editor executeCommand: (AlbTextEditorScreenToCursorCommand new transformation: aTransformation).
 	
 	aGlobalTextIndex
 		ifNotNil: [ ^ aGlobalTextIndex ]
@@ -486,12 +486,12 @@ AlbTextEditorOperator >> isWordChar: aCharacter [
 
 { #category : #accessing }
 AlbTextEditorOperator >> selection [
-	^ self editor selection
+	^ editor selection
 ]
 
 { #category : #'api - event' }
 AlbTextEditorOperator >> subscribe: anEventHandler [
-	self editor addEventHandler: anEventHandler.
+	editor addEventHandler: anEventHandler.
 	subscriptions add: anEventHandler.
 	^ anEventHandler
 ]
@@ -507,12 +507,12 @@ AlbTextEditorOperator >> telemetry [
 
 { #category : #accessing }
 AlbTextEditorOperator >> text [
-	^ self editor text
+	^ editor text
 ]
 
 { #category : #'api - event' }
 AlbTextEditorOperator >> unsubscribe [
-	subscriptions do: [ :anEventHandler | self editor removeEventHandler: anEventHandler ]
+	subscriptions do: [ :anEventHandler | editor removeEventHandler: anEventHandler ]
 ]
 
 { #category : #'api - event' }

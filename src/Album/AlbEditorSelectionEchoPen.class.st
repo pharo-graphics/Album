@@ -13,6 +13,11 @@ AlbEditorSelectionEchoPen class >> selectionEchoColor [
 	^ Color yellow alpha: 0.55
 ]
 
+{ #category : #accessing }
+AlbEditorSelectionEchoPen >> canHandleEcho [
+	^ canHandleEcho ifNil: [ canHandleEcho := false ]
+]
+
 { #category : #'mouse handlers' }
 AlbEditorSelectionEchoPen >> doubleClickEvent: anEvent [
 	super doubleClickEvent: anEvent.

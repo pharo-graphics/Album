@@ -152,8 +152,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile400_cacheLimit20_computeForwar
 	self assert: self segments size equals: 20.
 	self segmentCollector computeForwardAt: 15.
 	self assertSegmentIndicesMustCorrespondToTheInterval.
-	self segmentCollector computeBackwardAt: 1.
-	self assertSegmentIndicesMustCorrespondToTheInterval.
 
 
 	

@@ -352,7 +352,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 		apply;
 		unsubscribe.
 
-	anEditor forceLayout.
+	"anEditor forceLayout."
 
 	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
 	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
@@ -374,7 +374,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 	
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents addedCursorElements removedCursorElements |
+	| anEditor theMovedEvents addedCursorElements removedCursorElements |
 	
 	anEditor := self test_editorOnMultilineText.
 
@@ -391,7 +391,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 		apply;
 		unsubscribe.
 
-	anEditor forceLayout.
+	"anEditor forceLayout."
 
 	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
 	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
@@ -429,7 +429,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 		apply;
 		unsubscribe.
 		
-	anEditor forceLayout.
+	"anEditor forceLayout."
 		
 	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
 	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.

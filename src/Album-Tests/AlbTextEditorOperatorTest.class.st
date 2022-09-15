@@ -72,7 +72,7 @@ AlbTextEditorOperatorTest >> lineSpacing [
 AlbTextEditorOperatorTest >> multilineText [
 	
 	
-	^ ' A summer river being crossed
+	^ 'A summer river being crossed
 how pleasing
 with sandals in my hands!
 
@@ -112,6 +112,7 @@ AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	aSpace := OBlSpace new.
 	aSpace host: BlHeadlessHost new.
 	aSpace addChild: anEditor.
+	anEditor forceLayout.
 	
 	self assert: anEditor cursor notNil.
 	

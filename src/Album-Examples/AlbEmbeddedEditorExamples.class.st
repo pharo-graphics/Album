@@ -31,7 +31,7 @@ AlbEmbeddedEditorExamples >> editorFor: aText [
 			aTextElement ].
 	
 	anEditor requestFocus.
-	anEditor forceLayout.
+	"anEditor forceLayout."
 
 	^ anEditor
 ]

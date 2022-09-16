@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextAdornmentAttributeCache,
 	#superclass : #Object,
-	#category : #'Album-Brick-NU-Attributes - Support'
+	#category : #'Album-Brick-NU-Attributes-Support'
 }
 
 { #category : #'api - cache' }

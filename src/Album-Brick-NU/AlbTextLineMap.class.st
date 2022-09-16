@@ -26,7 +26,7 @@ Class {
 		'map',
 		'minEntrySpacing'
 	],
-	#category : #'Album-Brick-NU'
+	#category : #'Album-Brick-NU-Model-Segment-Text'
 }
 
 { #category : #adding }

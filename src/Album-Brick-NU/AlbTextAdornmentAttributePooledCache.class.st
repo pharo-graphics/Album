@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cachePool'
 	],
-	#category : #'Album-Brick-NU-Attributes - Support'
+	#category : #'Album-Brick-NU-Attributes-Support'
 }
 
 { #category : #'private - cache' }

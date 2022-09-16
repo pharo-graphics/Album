@@ -18,6 +18,5 @@ AlbTextWordPieceHideCursorHandler >> handleEvent: anEvent [
 	(aTextElement hasCursorAt: anEvent cursorPosition)
 		ifFalse: [ ^ self ].
 
-	aCursorElement := aTextElement removeCursorAt: anEvent cursorPosition.
-	anEvent editorElement dispatchEvent: (AlbTextEditorCursorElementRemovedEvent new cursorElement: aCursorElement)
+	aCursorElement := aTextElement removeCursorAt: anEvent cursorPosition
 ]

@@ -26,7 +26,7 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 	anEditor fitContent.
 	anEditor text: aRopedText.
 	
-	BlDevCrossover on: anEditor.
+"	BlDevCrossover on: anEditor.
 	
 	anEditor editor
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
@@ -38,7 +38,7 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
 			aTextElement ].
 	
-	anEditor requestFocus.
+"	anEditor requestFocus.
 	anEditor forceLayout.
 
 	^ anEditor

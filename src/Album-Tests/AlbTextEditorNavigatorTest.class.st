@@ -230,17 +230,11 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_does_not_rebuild_editor [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA [
 	
-	| anEditor theMovedEvents addedCursorElements removedCursorElements |
+	| anEditor theMovedEvents |
 	
 	anEditor := self test_editorOnAA.
 
 	theMovedEvents := OrderedCollection new.
-	addedCursorElements := OrderedCollection new.
-	removedCursorElements := OrderedCollection new.
-
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
-	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
-
 	anEditor navigator
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
 		moveTo: 1;
@@ -249,37 +243,23 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA [
 
 	anEditor forceLayout.
 
-	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
-	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
-
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 1 }.
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 1.
-	}.
-	self assert: addedCursorElements size equals: 1.
-	self assert: addedCursorElements first textPosition equals: 1.
-	self assert: removedCursorElements size equals: 1.
-	self assert: removedCursorElements first textPosition equals: 0.
-	
+	}.	
 	^ anEditor
 ]
 
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA_CR_BB [
 	
-	| anEditor theMovedEvents addedCursorElements removedCursorElements |
+	| anEditor theMovedEvents  |
 	
 	anEditor := self test_editorOnAA_CR_BB.
 
 	theMovedEvents := OrderedCollection new.
-	addedCursorElements := OrderedCollection new.
-	removedCursorElements := OrderedCollection new.
-
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
-	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
-
 	anEditor navigator
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
 		moveTo: 1;
@@ -288,20 +268,12 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA_CR_BB [
 
 	anEditor forceLayout.
 
-	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
-	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
-
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 1 }.
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 1.
-	}.
-	self assert: addedCursorElements size equals: 1.
-	self assert: addedCursorElements first textPosition equals: 1.
-	self assert: removedCursorElements size equals: 1.
-	self assert: removedCursorElements first textPosition equals: 0.
-	
+	}.	
 	^ anEditor
 ]
 
@@ -335,16 +307,11 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_cursors_at_0 [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 	
-	| anEditor theMovedEvents addedCursorElements removedCursorElements |
+	| anEditor theMovedEvents |
 	
 	anEditor := self test_editorOnMultilineText.
 
 	theMovedEvents := OrderedCollection new.
-	addedCursorElements := OrderedCollection new.
-	removedCursorElements := OrderedCollection new.
-
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
-	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
 
 	anEditor navigator
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
@@ -352,10 +319,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 		apply;
 		unsubscribe.
 
-	"anEditor forceLayout."
-
-	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
-	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
+	anEditor forceLayout.
 
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 1 }.
 	
@@ -363,10 +327,6 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 1.
 	}.
-	self assert: addedCursorElements size equals: 1.
-	self assert: addedCursorElements first textPosition equals: 1.
-	self assert: removedCursorElements size equals: 1.
-	self assert: removedCursorElements first textPosition equals: 0.
 	
 	^ anEditor
 ]
@@ -374,16 +334,11 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 	
-	| anEditor theMovedEvents addedCursorElements removedCursorElements |
+	| anEditor theMovedEvents |
 	
 	anEditor := self test_editorOnMultilineText.
 
 	theMovedEvents := OrderedCollection new.
-	addedCursorElements := OrderedCollection new.
-	removedCursorElements := OrderedCollection new.
-
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
-	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
 
 	anEditor navigator
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
@@ -391,10 +346,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 		apply;
 		unsubscribe.
 
-	"anEditor forceLayout."
-
-	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
-	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
+	anEditor forceLayout.
 
 	self assert: anEditor cursors isNotEmpty.
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 2 }.
@@ -403,8 +355,6 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 2.
 	}.
-	self assert: addedCursorElements first textPosition equals: 0.
-	self assert: addedCursorElements first textPosition equals: 0.
 	
 	^ anEditor
 ]
@@ -412,28 +362,19 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 	
-	| anEditor  theMovedEvents  addedCursorElements removedCursorElements |
+	| anEditor  theMovedEvents |
 	
 	anEditor := self test_editorOnMultilineText.
 	
 	theMovedEvents := OrderedCollection new.
-	addedCursorElements := OrderedCollection new.
-	removedCursorElements := OrderedCollection new.
-	
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
-	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
-
 	anEditor navigator
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
 		moveTo: 68;
 		apply;
 		unsubscribe.
 		
-	"anEditor forceLayout."
+	anEditor forceLayout.
 		
-	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
-	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
-
 	self assert: anEditor cursors isNotEmpty.
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 68 }.
 	
@@ -441,10 +382,6 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 68.
 	}.
-	self assert: addedCursorElements size equals: 1.
-	self assert: addedCursorElements first textPosition equals: 68.
-	self assert: removedCursorElements size equals: 1.
-	self assert: removedCursorElements first textPosition equals: 0.
 	
 	^ anEditor
 ]
@@ -452,19 +389,15 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_empty [
 	
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
+	| anEditor theMovedEvents |
 	
-	anEditor := self test_cursor_add_at_0_in_multi_lines.
+	anEditor := self test_editorOnMultilineText..
 	
-	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
 
 	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
-		addAt: 8;
+		moveTo: 8;
 		apply;
 		unsubscribe.
 
@@ -473,12 +406,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_empty [
 		AlbTextEditorSingleCursor new position: 8.
 	}.
 	
-	self assert: theAddedEvents size equals: 1.
-	self assert: (theAddedEvents collect: #cursor) asArray equals: {
-		AlbTextEditorSingleCursor new position: 8
-	}.
-	self assert: theMovedEvents isEmpty.
-	self assert: theRemovedEvents isEmpty.
+	self assert: theMovedEvents size = 1.
 
 	^ anEditor
 ]
@@ -624,19 +552,15 @@ AlbTextEditorNavigatorTest >> test_cursor_is_on_last_line_when_before_the_first_
 { #category : #'move down' }
 AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
 	
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents theReachBoudnaryEvents |
+	| anEditor theMovedEvents theReachBoudnaryEvents |
 	
 	anEditor := self test_cursor_moveTo_190_in_empty.
 	
-	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
 	theReachBoudnaryEvents := OrderedCollection new.
 
 	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
 		whenReachedBoundary: [ :anEvent | theReachBoudnaryEvents add: anEvent ];
 		moveDown;
 		apply;
@@ -645,12 +569,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
 	self assert: anEditor cursors isNotEmpty.
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 202 }.
 	
-	self assert: theAddedEvents isEmpty.
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 202).
 	self assert: theMovedEvents first oldIndex equals: 190.
 	self assert: theMovedEvents first newIndex equals: 202.
-	self assert: theRemovedEvents isEmpty.
 	self assert: theReachBoudnaryEvents size equals: 1.
 	self assert: theReachBoudnaryEvents first cursor equals: (AlbTextEditorSingleCursor new position: 202).
 	self assert: theReachBoudnaryEvents first isBottom.
@@ -662,18 +584,14 @@ AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 	
 	<label: 'Cursor before the first character of the line should move to the end'>
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
+	| anEditor theMovedEvents |
 	
-	anEditor := self test_cursor_add_at_0_in_multi_lines.
+	anEditor := self test_editorOnMultilineText.
 	
-	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
 
 	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
 		moveToLineEnd;
 		apply;
 		unsubscribe.
@@ -681,12 +599,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 	self assert: anEditor cursors isNotEmpty.
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 28 }.
 	
-	self assert: theAddedEvents isEmpty.
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 28).
 	self assert: theMovedEvents first oldIndex equals: 0.
 	self assert: theMovedEvents first newIndex equals: 28.
-	self assert: theRemovedEvents isEmpty.
 	
 	^ anEditor
 ]
@@ -695,21 +611,17 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 	
 	<label: 'Cursor after the first character of the line should move to the end'>
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
+	| anEditor theMovedEvents |
 	
-	anEditor := self test_cursor_add_at_0_in_multi_lines.
+	anEditor := self test_editorOnMultilineText.
 	anEditor navigator
 		moveTo: 1;
 		apply.
 	
-	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
 
 	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
 		moveToLineEnd;
 		apply;
 		unsubscribe.
@@ -717,12 +629,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 	self assert: anEditor cursors isNotEmpty.
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 28 }.
 	
-	self assert: theAddedEvents isEmpty.
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 28).
 	self assert: theMovedEvents first oldIndex equals: 1.
 	self assert: theMovedEvents first newIndex equals: 28.
-	self assert: theRemovedEvents isEmpty.
 	
 	^ anEditor
 ]
@@ -731,21 +641,17 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_201 [
 	
 	<label: 'Cursor before the last character of the whole text should not move'>
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
+	| anEditor  theMovedEvents  |
 	
-	anEditor := self test_cursor_add_at_0_in_multi_lines.
+	anEditor := self test_editorOnMultilineText.
 	anEditor navigator
 		moveTo: 201;
 		apply.
 	
-	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
 
 	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
 		moveToLineEnd;
 		apply;
 		unsubscribe.
@@ -753,81 +659,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_201 [
 	self assert: anEditor cursors isNotEmpty.
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 202 }.
 	
-	self assert: theAddedEvents isEmpty.
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 202).
 	self assert: theMovedEvents first oldIndex equals: 201.
 	self assert: theMovedEvents first newIndex equals: 202.
-	self assert: theRemovedEvents isEmpty.
-	
-	^ anEditor
-]
-
-{ #category : #'move to line end' }
-AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_202 [
-	
-	<label: 'Cursor after the last character of the whole text should not move'>
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
-	
-	anEditor := self test_cursor_add_at_0_in_multi_lines.
-	anEditor navigator
-		moveTo: 202;
-		apply.
-	
-	theAddedEvents := OrderedCollection new.
-	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
-
-	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
-		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
-		moveToLineEnd;
-		apply;
-		unsubscribe.
-		
-	self assert: anEditor cursors isNotEmpty.
-	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 202 }.
-	
-	self assert: theAddedEvents isEmpty.
-	self assert: theMovedEvents isEmpty.
-	self assert: theRemovedEvents isEmpty.
-	
-	^ anEditor
-]
-
-{ #category : #'move to line end' }
-AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_27 [
-	
-	<label: 'Cursor before the last character of the line should move to the end'>
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
-	
-	anEditor := self test_cursor_add_at_0_in_multi_lines.
-	anEditor navigator
-		moveTo: 27;
-		apply.
-	
-	theAddedEvents := OrderedCollection new.
-	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
-
-	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
-		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
-		moveToLineEnd;
-		apply;
-		unsubscribe.
-		
-	self assert: anEditor cursors isNotEmpty.
-	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 28 }.
-	
-	self assert: theAddedEvents isEmpty.
-	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 28).
-	self assert: theMovedEvents first oldIndex equals: 27.
-	self assert: theMovedEvents first newIndex equals: 28.
-	self assert: theRemovedEvents isEmpty.
 	
 	^ anEditor
 ]
@@ -1582,18 +1417,14 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_empty [
 { #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_190_in_empty [
 	
-	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
+	| anEditor theMovedEvents |
 	
 	anEditor := self test_editorOnMultilineText.
 	
-	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.
-	theRemovedEvents := OrderedCollection new.
 
 	anEditor navigator
-		whenAdded: [ :anEvent | theAddedEvents add: anEvent ];
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
-		whenRemoved: [ :anEvent | theRemovedEvents add: anEvent ];
 		moveTo: 190;
 		apply;
 		unsubscribe.
@@ -1605,8 +1436,6 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_190_in_empty [
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
 		AlbTextEditorSingleCursor new position: 190.
 	}.
-	self assert: theAddedEvents isEmpty.
-	self assert: theRemovedEvents isEmpty.
 	
 	^ anEditor
 ]
@@ -1681,16 +1510,11 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_2_in_cursors_at_0_and_1 [
 { #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
 	
-	| anEditor  theMovedEvents  addedCursorElements removedCursorElements |
+	| anEditor  theMovedEvents   |
 	
 	anEditor := self test_cursor_add_at_68_in_multiline.
 	
 	theMovedEvents := OrderedCollection new.
-	addedCursorElements := OrderedCollection new.
-	removedCursorElements := OrderedCollection new.
-	
-	self subscribe: AlbTextEditorCursorElementAddedEvent do: [ :anEvent | addedCursorElements add: anEvent cursorElement ] for: anEditor.
-	self subscribe: AlbTextEditorCursorElementRemovedEvent do: [ :anEvent | removedCursorElements add: anEvent cursorElement ] for: anEditor.
 
 	anEditor navigator
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
@@ -1699,9 +1523,6 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
 		unsubscribe.
 	
 	anEditor forceLayout.
-
-	self unsubscribe: AlbTextEditorCursorElementAddedEvent from: anEditor.
-	self unsubscribe: AlbTextEditorCursorElementRemovedEvent from: anEditor.
 	
 	self assert: anEditor cursors isNotEmpty.
 	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 67 }.
@@ -1710,12 +1531,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 67).
 	self assert: theMovedEvents first oldIndex equals: 68.
 	self assert: theMovedEvents first newIndex equals: 67.
-	
-	self assert: addedCursorElements size equals: 1.
-	self assert: addedCursorElements first textPosition equals: 6.
-	self assert: removedCursorElements size equals: 1.
-	self assert: removedCursorElements first textPosition equals: 0.
-	
+		
 	^ anEditor
 ]
 

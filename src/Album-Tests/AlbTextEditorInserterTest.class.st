@@ -109,7 +109,7 @@ AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 		string: 'Hello';
 		insert.
 
-	self assert: anEditor text asString equals: (' Hello', (self multilineText from: 2 to: self multilineText size) asString).
+	self assert: anEditor text asString equals: ('AHello', (self multilineText from: 2 to: self multilineText size) asString).
 	self assert: anEditor cursor position equals: 6.
 	self assert: anEditor selection isEmpty.
 

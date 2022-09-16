@@ -200,10 +200,10 @@ AlbTextEditorAbstractSegmentSplitter >> split: aText from: aStartIndex to: anEnd
 	| thePieces |
 	thePieces := Array streamContents: [ :aStream | 
 		             | lineIterator |
-		             self
+		             "self
 			             processStartingAdornments: aText
 			             in: aStream
-			             offset: aStartIndex.
+			             offset: aStartIndex."
 		             lineIterator := aText iterator.
 		             [ lineIterator hasNext ] whileTrue: [ 
 			             self

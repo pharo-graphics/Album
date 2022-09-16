@@ -70,6 +70,15 @@ AlbEditorSegmentStream >> rawSegments [
 ]
 
 { #category : #accessing }
+AlbEditorSegmentStream >> segments [
+	"Return a collection of streamed text segments."
+	
+	<return: #Collection of: #AblTextEditorSegment>
+
+	^ self collection
+]
+
+{ #category : #accessing }
 AlbEditorSegmentStream >> size [
 	^ stream size
 ]

@@ -4,27 +4,6 @@ Class {
 	#category : #'Album-Model-Segment'
 }
 
-{ #category : #'instance creation' }
-AlbTextEditorAbstractSegmentSplitter >> adornmentPiece: aBlText with: anAdornmentAttribute from: aTextStart to: aTextEnd [
-	"Create and return a segment piece with adornment"
-	<return: #AlbTextEditorAbstractSegmentPiece>
-
-	^ self adornmentPieceClass new
-		initializeWith: aBlText
-			from: aTextStart
-			to: aTextEnd
-			delimiter: 0;
-		adornmentAttribute: anAdornmentAttribute
-]
-
-{ #category : #accessing }
-AlbTextEditorAbstractSegmentSplitter >> adornmentPieceClass [
-	"Create and return a segment piece with adornment"
-	<return: #TAlbTextEditorTextualPiece>
-
-	^ self subclassResponsibility 
-]
-
 { #category : #'private - pieces computation' }
 AlbTextEditorAbstractSegmentSplitter >> itemValueType: anObject [
 
@@ -33,11 +12,6 @@ AlbTextEditorAbstractSegmentSplitter >> itemValueType: anObject [
 	for direct comparison, therefore can be any immutable object"
 
 	^ self subclassResponsibility
-]
-
-{ #category : #'private - pieces computation' }
-AlbTextEditorAbstractSegmentSplitter >> processAdornmentAttribute: anAdornmentAttribute of: aText in: aStream from: aTextStart to: aTextEnd virtual: isVirtual [
-	aStream nextPut: ((self adornmentPiece: aText with: anAdornmentAttribute from: aTextStart to: aTextEnd) virtual: isVirtual)
 ]
 
 { #category : #'private - pieces computation' }
@@ -60,79 +34,20 @@ AlbTextEditorAbstractSegmentSplitter >> processPureWords: aTextIterator in: aStr
 
 { #category : #'private - pieces computation' }
 AlbTextEditorAbstractSegmentSplitter >> processSegment: aTextIterator in: aStream offset: anOffset [
-	
-	aTextIterator
-		nextSpanAny: [ :eachAttribute | eachAttribute isAdornment and: [ eachAttribute shouldReplace ] ]
-		indicesDo: [ :aStart :anEnd :hasReplacements | 
-			| aSpanIterator aDelta |
-			
-			aSpanIterator := (aTextIterator text from: aStart to: anEnd) iterator.
-			aDelta := (aStart - 1) max: 0.	
-			[ aSpanIterator hasNext ]
-				whileTrue: [
-					hasReplacements
-						ifTrue: [ self processWithReplacements: aSpanIterator in: aStream offset: anOffset + aDelta ]
-						ifFalse: [ self processWithoutReplacements: aSpanIterator in: aStream offset: anOffset + aDelta ] ] ]
+
+	aTextIterator nextSpanIndicesDo: [ :aStart :anEnd | 
+		| aSpanIterator aDelta |
+		aSpanIterator := (aTextIterator text from: aStart to: anEnd) iterator.
+		aDelta := aStart - 1 max: 0.
+		[ aSpanIterator hasNext ] whileTrue: [ 
+			self processWithOptionalEventHandlerAttributes: aSpanIterator in: aStream offset: anOffset + aDelta ] ]
 ]
 
 { #category : #'private - pieces computation' }
-AlbTextEditorAbstractSegmentSplitter >> processStartingAdornments: aText in: aStream offset: offset [
-
-	(aText attributesAt: 0)
-		select: [ :eachAttribute | eachAttribute isAdornment and: [ eachAttribute shouldAppend ] ]
-		thenDo: [ :eachAttribute | 
-			self
-				processAdornmentAttribute: eachAttribute
-				of: (aText from: 1 to: 0) 
-				in: aStream
-				from: 0
-				to: 0
-				virtual: true ]
-]
-
-{ #category : #'private - pieces computation' }
-AlbTextEditorAbstractSegmentSplitter >> processWithReplacements: aTextIterator in: aStream offset: anOffset [
-	"There is at least one replacement attribute applied on every character within the scope of the given text iterator"
-	
-	aTextIterator
-		nextAttributedEnd: [ :eachAttribute | eachAttribute isAdornment ]
-		indicesDo: [ :aStart :anEnd :theAdornmentAttributes |
-			| theAttributes replacementFound |
-			
-			theAttributes := theAdornmentAttributes
-				ifEmpty: [ aTextIterator attributes
-					select: [ :eachAttribute | eachAttribute isAdornment and: [ eachAttribute shouldReplace ] ] ].
-			
-			replacementFound := false.
-			
-			theAttributes withIndexDo: [ :eachAttribute :eachIndex |
-				| anAdornmentSpan aTextStart aTextEnd |
-				
-				aTextStart := ((aStart - 1) max: 0) + anOffset.
-				aTextEnd := anEnd + anOffset.
-				
-				"adornment span must not be cashed, because each line piece requires a unique sub-text"
-				anAdornmentSpan := aTextIterator text from: aStart to: anEnd.
-					
-				(anAdornmentSpan allSatisfy: #isLineBreak)
-					ifTrue: [ aTextEnd := aTextStart ].
-				
-				self
-					processAdornmentAttribute: eachAttribute
-					of: anAdornmentSpan
-					in: aStream
-					from: aTextStart
-					to: aTextEnd
-					virtual: (eachAttribute shouldAppend or: [ replacementFound ]).
-				replacementFound := replacementFound or: [ eachAttribute shouldReplace ]  ] ]
-]
-
-{ #category : #'private - pieces computation' }
-AlbTextEditorAbstractSegmentSplitter >> processWithoutAdornments: aTextIterator in: aStream offset: anOffset [
-	"Process a text within the scope of the given iterator as there are no adornment attributes.
-	Now that adornment attributes are filtered we can split text into pieces based on the presence of
-	event handling attributes. Every combination of event handling elements should be a separate text piece
-	with its own unique visual element"
+AlbTextEditorAbstractSegmentSplitter >> processWithOptionalEventHandlerAttributes: aTextIterator in: aStream offset: anOffset [
+	"Process a text within the scope of the given iterator.
+	We can split text into pieces based on the presence of event handling attributes. 
+	Every combination of event handling elements should be a separate text piece with its own unique visual element"
 
 	aTextIterator
 		nextSpan: [ :eachAttribute | eachAttribute isEventHandler ]
@@ -145,81 +60,17 @@ AlbTextEditorAbstractSegmentSplitter >> processWithoutAdornments: aTextIterator 
 				self processPureWords: aSpanIterator in: aStream offset: anOffset + aDelta ] ]
 ]
 
-{ #category : #'private - pieces computation' }
-AlbTextEditorAbstractSegmentSplitter >> processWithoutReplacements: aTextIterator in: aStream offset: anOffset [
-	"There are no replacement attributes within the scope of the given iterator"
-
-	aTextIterator
-		nextAttributedEnd: [ :eachAttribute | eachAttribute isAdornment and: [ eachAttribute shouldAppend ] ]
-		indicesDo: [ :aStart :anEnd :theEndedAttributes |
-			| aSpan aSpanIterator aNewOffset |
-
-			aSpan := aTextIterator text from: aStart to: anEnd.
-			aSpanIterator := aSpan iterator.			
-			aNewOffset := anOffset + ((aStart - 1) max: 0).
-
-			[ aSpanIterator hasNext ] whileTrue: [
-				self processWithoutAdornments: aSpanIterator in: aStream offset: aNewOffset ].
-
-			"aStart is not necessarily where attributes start, so we have to search for them explicitly"
-
-			theEndedAttributes do: [ :eachEndedAttribute |
-				| aTextStart aTextEnd |
-				
-				aSpanIterator := aSpan iterator.
-			
-				[ aSpanIterator hasNext ] whileTrue: [
-					aSpanIterator
-						nextSpan: [ :eachAttribute | eachAttribute == eachEndedAttribute ]
-						indicesDo: [ :anAttributeStart :anAttributeEnd :theAttributes |
-							theAttributes
-								ifNotEmpty: [
-									| anAttributeSpan |
-									anAttributeSpan := aSpan from: anAttributeStart to: anAttributeEnd.
-									
-									aTextStart := ((anAttributeStart - 1) max: 0) + aNewOffset.
-									aTextEnd := anAttributeEnd + aNewOffset.
-
-									(anAttributeSpan allSatisfy: #isLineBreak)
-										ifTrue: [ aTextEnd := aTextStart ].
-
-									self
-										processAdornmentAttribute: eachEndedAttribute
-										of: anAttributeSpan
-										in: aStream
-										from: aTextStart
-										to: aTextEnd
-										virtual: true ]	] ] ] ]
-]
-
 { #category : #splitting }
 AlbTextEditorAbstractSegmentSplitter >> split: aText from: aStartIndex to: anEndIndex [
 
 	"aStartIndex and anEndIndex are given in cursor coordinates"
 
-	| thePieces |
-	thePieces := Array streamContents: [ :aStream | 
-		             | lineIterator |
-		             "self
-			             processStartingAdornments: aText
-			             in: aStream
-			             offset: aStartIndex."
-		             lineIterator := aText iterator.
-		             [ lineIterator hasNext ] whileTrue: [ 
-			             self
-				             processSegment: lineIterator
-				             in: aStream
-				             offset: aStartIndex ] ].
-
-	thePieces := thePieces
-		             ifEmpty: [ 
-			             { (self
-				              textPiece: (aText from: 1 to: aText size)
-				              from: aStartIndex
-				              to: anEndIndex) } ]
-		             ifNotEmpty: #yourself.
-
-	^ thePieces
+	^ Array streamContents: [ :stream | 
+		  | lineIterator |
+		  lineIterator := aText iterator.
+		  [ lineIterator hasNext ] whileTrue: [ self processSegment: lineIterator in: stream offset: aStartIndex ].
+		  stream size isZero ifTrue: [ 
+			  stream nextPut: (self textPiece: (aText from: 1 to: aText size) from: aStartIndex to: anEndIndex) ] ]
 ]
 
 { #category : #splitting }

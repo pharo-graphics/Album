@@ -18,7 +18,7 @@ AlbTextAdornmentAttribute >> affect: aTTextEditorTextualPiece in: anEditorElemen
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #SequenceableCollection of: #BlElement>
 	
-	^ self cache ifAbsentPut: [ self renderingStrategy affect: aTTextEditorTextualPiece in: anEditorElement ]
+	^ self renderingStrategy affect: aTTextEditorTextualPiece in: anEditorElement
 ]
 
 { #category : #accessing }
@@ -41,18 +41,6 @@ AlbTextAdornmentAttribute >> beSync [
 	self renderingStrategy: AlbTextAdornmentAttributeSyncRenderingStrategy new.
 ]
 
-{ #category : #nil }
-AlbTextAdornmentAttribute >> cache [
-	<return: #AlbTextAdornmentAttributeCache>
-
-	^ cache
-]
-
-{ #category : #nil }
-AlbTextAdornmentAttribute >> cache: aTextAdornmentAttributeCache [
-	cache := aTextAdornmentAttributeCache
-]
-
 { #category : #accessing }
 AlbTextAdornmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
@@ -67,7 +55,6 @@ AlbTextAdornmentAttribute >> initialize [
 	
 	shouldAppend := false.
 	self renderingStrategy: AlbTextAdornmentAttributeSyncRenderingStrategy new.
-	cache := AlbTextAdornmentAttributeNoCache uniqueInstance
 ]
 
 { #category : #initialization }
@@ -104,11 +91,6 @@ AlbTextAdornmentAttribute >> mayHaveExternalReferences [
 	"Answer if this attribute can have references to some external objects like AST nodes or computation results"
 
 	^ true
-]
-
-{ #category : #nil }
-AlbTextAdornmentAttribute >> newPooledCache [
-	^ AlbTextAdornmentAttributePooledCache new
 ]
 
 { #category : #accessing }
@@ -149,40 +131,4 @@ AlbTextAdornmentAttribute >> storeOn: aStream [
 { #category : #comparing }
 AlbTextAdornmentAttribute >> type [
 	^ self
-]
-
-{ #category : #nil }
-AlbTextAdornmentAttribute >> withCache: aDictionary key: aKey [
-	self cache: (aDictionary
-		at: aKey
-		ifAbsentPut: [ self newPooledCache ])
-]
-
-{ #category : #nil }
-AlbTextAdornmentAttribute >> withCache: anObject selector: aSelectorSymbol [
-	(anObject perform: aSelectorSymbol withArguments: #())
-		ifNil: [
-			| aNewCache |
-			
-			aNewCache := self newPooledCache.
-			anObject perform: aSelectorSymbol asMutator withArguments: { aNewCache }.
-			self cache: aNewCache ]
-		ifNotNil: [ :aCache | self cache: aCache ]
-]
-
-{ #category : #nil }
-AlbTextAdornmentAttribute >> withCacheGet: aGetBlock set: aSetBlock [
-	aGetBlock value
-		ifNil: [
-			| aNewCache |
-			
-			aNewCache := self newPooledCache.
-			aSetBlock value: aNewCache.
-			self cache: aNewCache ]
-		ifNotNil: [ :aCache | self cache: aCache ]
-]
-
-{ #category : #nil }
-AlbTextAdornmentAttribute >> withoutCache [
-	self cache: AlbTextAdornmentAttributeNoCache uniqueInstance
 ]

@@ -165,7 +165,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	"ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer fitContent]."
-	ed inspect.
+	"ed inspect."
 	ed withLineNumbers.
 	ed openInOblSpace
 ]
@@ -173,7 +173,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 "
-broken in GlamorousToolKit too
+broken in GlamorousToolKit but what to do with that ?
 | cache attribute text ed space |
 
 	cache := Dictionary new.
@@ -210,8 +210,7 @@ broken in GlamorousToolKit too
 	
 	attribute := AlbTextAdornmentDynamicAttribute new
 		beSync;
-		beAppend;
-		withCache: cache key: #key;
+		"beAppend;"
 		stencil: [  {  
 			BlElement new
 				background: (Color gray alpha: 0.4);

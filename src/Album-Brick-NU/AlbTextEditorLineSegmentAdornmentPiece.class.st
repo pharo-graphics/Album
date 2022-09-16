@@ -10,7 +10,7 @@ Class {
 		'adornmentAttribute',
 		'isVirtual'
 	],
-	#category : #'Album-Model-Segment-Text-Line'
+	#category : #'Album-Brick-NU-Model-Segment-Text-Line'
 }
 
 { #category : #comparing }

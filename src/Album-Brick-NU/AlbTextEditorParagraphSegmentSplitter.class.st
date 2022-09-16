@@ -4,11 +4,6 @@ Class {
 	#category : #'Album-Brick-NU-Segment Paragraph'
 }
 
-{ #category : #accessing }
-AlbTextEditorParagraphSegmentSplitter >> adornmentPieceClass [
-	^ AlbTextEditorParagraphSegmentAdornmentPiece
-]
-
 { #category : #'private - pieces computation' }
 AlbTextEditorParagraphSegmentSplitter >> itemValueType: anObject [
 	"Return a type of an item within a segment.

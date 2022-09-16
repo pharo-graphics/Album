@@ -10,14 +10,6 @@ Class {
 	#category : #'Album-Model-Segment-Text-Line'
 }
 
-{ #category : #accessing }
-AlbTextEditorLineSegmentSplitter >> adornmentPieceClass [
-	"Create and return a segment piece with adornment"
-	<return: #TAlbTextEditorTextualPiece>
-
-	^ AlbTextEditorLineSegmentAdornmentPiece
-]
-
 { #category : #'private - pieces computation' }
 AlbTextEditorLineSegmentSplitter >> itemValueType: anObject [
 

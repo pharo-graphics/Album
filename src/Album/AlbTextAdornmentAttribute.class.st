@@ -8,8 +8,7 @@ Class {
 	#superclass : #BlTextAttribute,
 	#instVars : [
 		'shouldAppend',
-		'renderingStrategy',
-		'cache'
+		'renderingStrategy'
 	],
 	#category : #'Album-Attributes'
 }
@@ -42,14 +41,14 @@ AlbTextAdornmentAttribute >> beSync [
 	self renderingStrategy: AlbTextAdornmentAttributeSyncRenderingStrategy new.
 ]
 
-{ #category : #'api - cache' }
+{ #category : #nil }
 AlbTextAdornmentAttribute >> cache [
 	<return: #AlbTextAdornmentAttributeCache>
 
 	^ cache
 ]
 
-{ #category : #'api - cache' }
+{ #category : #nil }
 AlbTextAdornmentAttribute >> cache: aTextAdornmentAttributeCache [
 	cache := aTextAdornmentAttributeCache
 ]
@@ -107,7 +106,7 @@ AlbTextAdornmentAttribute >> mayHaveExternalReferences [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : #nil }
 AlbTextAdornmentAttribute >> newPooledCache [
 	^ AlbTextAdornmentAttributePooledCache new
 ]
@@ -152,14 +151,14 @@ AlbTextAdornmentAttribute >> type [
 	^ self
 ]
 
-{ #category : #'api - cache' }
+{ #category : #nil }
 AlbTextAdornmentAttribute >> withCache: aDictionary key: aKey [
 	self cache: (aDictionary
 		at: aKey
 		ifAbsentPut: [ self newPooledCache ])
 ]
 
-{ #category : #'api - cache' }
+{ #category : #nil }
 AlbTextAdornmentAttribute >> withCache: anObject selector: aSelectorSymbol [
 	(anObject perform: aSelectorSymbol withArguments: #())
 		ifNil: [
@@ -171,7 +170,7 @@ AlbTextAdornmentAttribute >> withCache: anObject selector: aSelectorSymbol [
 		ifNotNil: [ :aCache | self cache: aCache ]
 ]
 
-{ #category : #'api - cache' }
+{ #category : #nil }
 AlbTextAdornmentAttribute >> withCacheGet: aGetBlock set: aSetBlock [
 	aGetBlock value
 		ifNil: [
@@ -183,7 +182,7 @@ AlbTextAdornmentAttribute >> withCacheGet: aGetBlock set: aSetBlock [
 		ifNotNil: [ :aCache | self cache: aCache ]
 ]
 
-{ #category : #'api - cache' }
+{ #category : #nil }
 AlbTextAdornmentAttribute >> withoutCache [
 	self cache: AlbTextAdornmentAttributeNoCache uniqueInstance
 ]

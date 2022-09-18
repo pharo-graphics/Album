@@ -33,18 +33,7 @@ AlbTextEditorAbstractSegmentSplitter >> processPureWords: aTextIterator in: aStr
 ]
 
 { #category : #'private - pieces computation' }
-AlbTextEditorAbstractSegmentSplitter >> processSegment: aTextIterator in: aStream offset: anOffset [
-
-	aTextIterator nextSpanIndicesDo: [ :aStart :anEnd | 
-		| aSpanIterator aDelta |
-		aSpanIterator := (aTextIterator text from: aStart to: anEnd) iterator.
-		aDelta := aStart - 1 max: 0.
-		[ aSpanIterator hasNext ] whileTrue: [ 
-			self processWithOptionalEventHandlerAttributes: aSpanIterator in: aStream offset: anOffset + aDelta ] ]
-]
-
-{ #category : #'private - pieces computation' }
-AlbTextEditorAbstractSegmentSplitter >> processWithOptionalEventHandlerAttributes: aTextIterator in: aStream offset: anOffset [
+AlbTextEditorAbstractSegmentSplitter >> processSegment: aTextIterator in: aStream offset: anOffset [		
 	"Process a text within the scope of the given iterator.
 	We can split text into pieces based on the presence of event handling attributes. 
 	Every combination of event handling elements should be a separate text piece with its own unique visual element"
@@ -74,13 +63,13 @@ AlbTextEditorAbstractSegmentSplitter >> split: aText from: aStartIndex to: anEnd
 ]
 
 { #category : #splitting }
-AlbTextEditorAbstractSegmentSplitter >> splitSegment: aTextEditorSegment [ 
-	| thePieces |
+AlbTextEditorAbstractSegmentSplitter >> splitSegment: aTextEditorSegment [
 
+	| thePieces |
 	thePieces := self
-		split: aTextEditorSegment text
-		from: aTextEditorSegment textStart
-		to: aTextEditorSegment textEnd.
+		             split: aTextEditorSegment text
+		             from: aTextEditorSegment textStart
+		             to: aTextEditorSegment textEnd.
 	thePieces do: [ :eachPiece | eachPiece segment: aTextEditorSegment ].
 	^ thePieces
 ]

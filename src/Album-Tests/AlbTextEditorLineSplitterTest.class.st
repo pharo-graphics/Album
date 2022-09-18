@@ -451,66 +451,6 @@ AlbTextEditorLineSplitterTest >> test_split_Hello [
 ]
 
 { #category : #split }
-AlbTextEditorLineSplitterTest >> test_split_HelloCrBeautifulCrWorldWithReplacement [
-	| aText aSplitter aStream |
-
-	aText := ('Hello', String cr, 'World') asRopedText.
-	(aText from: 4 to: 8) replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
-
-	aSplitter := self textLineSplitter.
-	aStream := self textSegmentStream.
-
-	aSplitter split: aText in: aStream.
-
-	self assert: aStream segments size equals: 1.
-	self assert: aStream segments first textStart equals: 0.
-	self assert: aStream segments first textEnd equals: 11.
-
-	^ aStream
-]
-
-{ #category : #split }
-AlbTextEditorLineSplitterTest >> test_split_HelloCrBeautifulCrWorldWithReplacementAndAppending [
-
-	| aText aSplitter aStream |
-
-	aText := ('Hello', String cr, 'World') asRopedText.
-	(aText from: 4 to: 8)
-		replacingAdornment: [ BlElement new size: 6@6; background: Color red ];
-		appendingAdornment: [ BlElement new size: 6@6; background: Color blue ].
-
-	aSplitter := self textLineSplitter.
-	aStream := self textSegmentStream.
-
-	aSplitter split: aText in: aStream.
-
-	self assert: aStream segments size equals: 1.
-	self assert: aStream segments first textStart equals: 0.
-	self assert: aStream segments first textEnd equals: 11.
-
-	^ aStream
-]
-
-{ #category : #split }
-AlbTextEditorLineSplitterTest >> test_split_HelloCrWorldWithReplacement [
-	| aText aSplitter aStream |
-
-	aText := ('Hello', String cr, 'World') asRopedText.
-	(aText from: 4 to: 8) replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
-
-	aSplitter := self textLineSplitter.
-	aStream := self textSegmentStream.
-
-	aSplitter split: aText in: aStream.
-
-	self assert: aStream segments size equals: 1.
-	self assert: aStream segments first textStart equals: 0.
-	self assert: aStream segments first textEnd equals: 11.
-
-	^ aStream
-]
-
-{ #category : #split }
 AlbTextEditorLineSplitterTest >> test_split_HelloSpaceWorldWithReplacementOfSpace [
 	| aText aSplitter aStream |
 

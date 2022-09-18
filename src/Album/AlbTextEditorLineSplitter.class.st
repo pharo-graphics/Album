@@ -63,11 +63,3 @@ AlbTextEditorLineSplitter >> split: aText in: aEditorSegmentStream offset: anOff
 				 delimited: aText size
 				 offset: anOffset) ]
 ]
-
-{ #category : #testing }
-AlbTextEditorLineSplitter >> wantsToMergeSegments: aTextAttribute [
-	"Return true if a given attribute should merge segments and ignore a new line"
-	<return: #Boolean>
-
-	^ aTextAttribute isAdornment and: [ aTextAttribute shouldReplace ]
-]

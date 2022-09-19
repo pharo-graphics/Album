@@ -8,6 +8,19 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #'data source updates' }
+AlbEditorSelectionView >> extentChangedIn: anInfiniteElement [
+
+	self forceUpdate.
+	self selectionChangedIn: anInfiniteElement
+]
+
+{ #category : #geometry }
+AlbEditorSelectionView >> forceUpdate [
+
+	selection := nil
+]
+
 { #category : #'private ' }
 AlbEditorSelectionView >> maxXRightCoord: yCoord fromRectangles: aListOfRectangles [
 
@@ -57,7 +70,6 @@ AlbEditorSelectionView >> selectionChangedIn: anInfiniteElement [
 	selection = anInfiniteElement selection ifTrue: [ ^ self ].
 	selection := anInfiniteElement selection copy.
 	vertices := nil.
-
 	rects := anInfiniteElement selectionRectangles , (self selectionLimitRectanglesIn: anInfiniteElement).
 	rects ifEmpty: [ ^ self ].
 	vertices := self verticesFromRectangles: rects
@@ -88,9 +100,10 @@ AlbEditorSelectionView >> selectionLimitRectanglesIn: anInfiniteElement [
 ]
 
 { #category : #geometry }
-AlbEditorSelectionView >> selectionScrolled: aPoint [
-	vertices ifNil: [ ^self ].
-	vertices := vertices collect: [ :pt | pt - aPoint ]
+AlbEditorSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
+
+	self forceUpdate.
+	self selectionChangedIn: anInfiniteElement
 ]
 
 { #category : #'private ' }

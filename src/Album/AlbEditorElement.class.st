@@ -97,6 +97,13 @@ AlbEditorElement >> mouseDownEvent: anEvent [
 	
 ]
 
+{ #category : #'geometry hooks' }
+AlbEditorElement >> onExtentChanged [
+	super onExtentChanged.
+	selectionView extentChangedIn: self
+	
+]
+
 { #category : #'hooks - layout' }
 AlbEditorElement >> onLayoutDone [
 
@@ -108,7 +115,7 @@ AlbEditorElement >> onLayoutDone [
 { #category : #'hooks - scrolling' }
 AlbEditorElement >> onScrolled: aPoint [
 	super onScrolled: aPoint.
-	selectionView selectionScrolled: aPoint
+	selectionView selectionScrolled: aPoint in: self
 
 
 ]
@@ -118,6 +125,13 @@ AlbEditorElement >> scrollToLast [
 	"Scroll instantly to the last segment"
 	
 	self scrollToPosition: self editor segmentCollector computedSegmentsCount
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> selection [
+	<return: #BlSelection>
+
+	^ self editor selection
 ]
 
 { #category : #'ui - events managing' }
@@ -144,6 +158,11 @@ AlbEditorElement >> selectionRectangles [
 		  self textElementsDo: [ :te | 
 			  stream nextPutAll: (te selectionRectangles collect: [ :r | 
 					   (self localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: (0 @ te position y) negated ]) ] ]
+]
+
+{ #category : #accessing }
+AlbEditorElement >> selectionView [
+	^ selectionView
 ]
 
 { #category : #'private - accessing' }

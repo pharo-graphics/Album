@@ -312,13 +312,6 @@ AlbEditor >> selecter [
 ]
 
 { #category : #'editor - accessing' }
-AlbEditor >> selection [
-	<return: #BlSelection>
-
-	^ self editor selection
-]
-
-{ #category : #'editor - accessing' }
 AlbEditor >> styler [
 	^ self viewModel styler
 ]

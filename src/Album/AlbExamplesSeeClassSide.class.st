@@ -151,7 +151,6 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	| ed  |
 	" ~4300 pages on LibreOffice, ~8000000 characters "
 	ed := Smalltalk changesFile readStream contents onAlbum.
-	"ed recycler inspect."
 	ed withLineNumbers.
 	ed openInOblSpace
 ]

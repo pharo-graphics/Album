@@ -104,7 +104,8 @@ AlbEditorSelectionEchoPen >> updateEcho: anInterval in: anEditor [
 						ifFalse: [ 
 							first := piece textStart.
 							last := endIdx min: piece textEnd ] ].
-			self highlight: pieceElement from: first - piece textStart - 1 to: last - piece textStart ]
+			self highlight: pieceElement from: first - piece textStart - 1 to: last - piece textStart ]		
+	
 ]
 
 { #category : #updating }

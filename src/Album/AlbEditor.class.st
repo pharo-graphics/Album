@@ -162,7 +162,7 @@ AlbEditor >> initialize [
 	feltPens := OrderedCollection new.
 	self withOppositeDelimiter.
 	self withSelectionEcho.
-	self withDecoration: AlbSelectionLimitDecoration.
+	"self withDecoration: AlbSelectionLimitDecoration."
 	
 	self matchParent.
 	textReplacedHandler := BlEventHandler
@@ -209,13 +209,6 @@ AlbEditor >> isReadOnly [
 	<return: #Boolean>
 
 	^ self viewModel mode isReadOnly
-]
-
-{ #category : #accessing }
-AlbEditor >> layoutPositionsRange: anInterval [
-	super layoutPositionsRange: anInterval.
-	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
-	self editor layoutPositionsRange: anInterval
 ]
 
 { #category : #'model - events' }
@@ -325,16 +318,6 @@ AlbEditor >> selection [
 	^ self editor selection
 ]
 
-{ #category : #accessing }
-AlbEditor >> selectionColor [
-
-	^ Color
-		  r: 0.9530791788856305
-		  g: 0.8084066471163245
-		  b: 0.1906158357771261
-		  alpha: 1.0
-]
-
 { #category : #'editor - accessing' }
 AlbEditor >> styler [
 	^ self viewModel styler
@@ -389,21 +372,6 @@ AlbEditor >> text: aBlText [
 { #category : #'model - events' }
 AlbEditor >> textChanged: aText [
 	self editor text: aText
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> textElementsDo: aBlock [
-
-	self childrenDo: [ :segmentElement | 
-		| holder |
-		"Use the holder here to find piece. needed for non text element element (instance of BlElement)"
-		holder := self elementHolderOf: segmentElement.
-		segmentElement childrenDo: [ :textElement | 
-			holder
-				pieceForElement: textElement
-				ifPresent: [ :foundPiece | 
-					foundPiece isText ifTrue: [ aBlock value: textElement ] ]
-				ifAbsent: [  ] ] ]
 ]
 
 { #category : #'private - accessing' }

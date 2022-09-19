@@ -150,6 +150,17 @@ AlbEditorElement >> selectionColor [
 ]
 
 { #category : #'private - accessing' }
+AlbEditorElement >> selectionEchoRectangles [
+
+	"return all selections echo rectangles from coordinate system of text elements with selection to my local coordinates"
+
+	^ Array streamContents: [ :stream | 
+		  self textElementsDo: [ :te | 
+			  stream nextPutAll: ((te highlightRectanglesOfCategory: #selectionEcho) collect: [ :r | 
+					   (self localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: (0 @ te position y) negated ]) ] ]
+]
+
+{ #category : #'private - accessing' }
 AlbEditorElement >> selectionRectangles [
 
 	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"

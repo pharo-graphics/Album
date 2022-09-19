@@ -70,7 +70,8 @@ AlbEditorSelectionView >> selectionChangedIn: anInfiniteElement [
 	selection = anInfiniteElement selection ifTrue: [ ^ self ].
 	selection := anInfiniteElement selection copy.
 	vertices := nil.
-	rects := anInfiniteElement selectionRectangles , (self selectionLimitRectanglesIn: anInfiniteElement).
+	rects := anInfiniteElement selectionRectangles
+	         , (self selectionLimitRectanglesIn: anInfiniteElement).
 	rects ifEmpty: [ ^ self ].
 	vertices := self verticesFromRectangles: rects
 ]

@@ -1,0 +1,16 @@
+Class {
+	#name : #AlbEditorSelectionEchoView,
+	#superclass : #AlbEditorSelectionView,
+	#category : #'Album-UI'
+}
+
+{ #category : #accessing }
+AlbEditorSelectionEchoView >> borderColor [
+
+	^ Color lightGray alpha: 0.8
+]
+
+{ #category : #accessing }
+AlbEditorSelectionEchoView >> selectionColor [
+	^ Color veryLightGray alpha: 0.1
+]

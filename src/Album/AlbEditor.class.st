@@ -161,8 +161,6 @@ AlbEditor >> initialize [
 	super initialize.
 	feltPens := OrderedCollection new.
 	self withOppositeDelimiter.
-	self withSelectionEcho.
-	"self withDecoration: AlbSelectionLimitDecoration."
 	
 	self matchParent.
 	textReplacedHandler := BlEventHandler
@@ -400,11 +398,6 @@ AlbEditor >> withOppositeDelimiter [
 ]
 
 { #category : #'accessing - decoration' }
-AlbEditor >> withSelectionEcho [
-	self withFeltPen: AlbEditorSelectionEchoPen 
-]
-
-{ #category : #'accessing - decoration' }
 AlbEditor >> withoutFeltPen: aFeltPenClass [
 
 	feltPens := feltPens reject: [ :d | d isKindOf: aFeltPenClass ]
@@ -419,9 +412,4 @@ AlbEditor >> withoutLineNumbers [
 { #category : #'accessing - decoration' }
 AlbEditor >> withoutOppositeDelimiter [
 	self withoutFeltPen: AlbEditorOppositePen
-]
-
-{ #category : #'accessing - decoration' }
-AlbEditor >> withoutSelectionEcho [
-	self withoutFeltPen: AlbEditorSelectionEchoPen 
 ]

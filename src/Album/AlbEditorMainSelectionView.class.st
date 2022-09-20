@@ -1,0 +1,205 @@
+Class {
+	#name : #AlbEditorMainSelectionView,
+	#superclass : #AlbEditorSelectionView,
+	#instVars : [
+		'selection',
+		'echo',
+		'selectedString',
+		'echoUpdater',
+		'echoAllowed'
+	],
+	#category : #'Album-UI'
+}
+
+{ #category : #accessing }
+AlbEditorMainSelectionView >> borderColor [
+	^ self selectionColor lighter 
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> echoInterval: anInterval in: anEditorElement [
+
+	| startIdx endIdx rects |
+	startIdx := anInterval first.
+	endIdx := anInterval last.
+	rects := Array streamContents: [ :stream | 
+		         anEditorElement
+			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
+			         do: [ :piece :pieceElement | 
+				         | first last origin corner bnds |
+				         ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
+					         ifTrue: [ 
+						         first := startIdx.
+						         last := endIdx ]
+					         ifFalse: [ 
+						         startIdx > piece textStart
+							         ifTrue: [ 
+								         first := startIdx.
+								         last := piece textEnd ]
+							         ifFalse: [ 
+								         first := piece textStart.
+								         last := endIdx min: piece textEnd ] ].
+				         origin := pieceElement screenOriginAt: first - piece textStart - 1.
+				         corner := pieceElement screenCornerAt: last - piece textStart.
+				         bnds := anEditorElement
+					                 localBoundsToMine: (BlBounds origin: origin corner: corner)
+					                 fromChild: pieceElement.
+				         stream nextPut: bnds asRectangle ] ].
+	rects ifEmpty: [ ^ self ].
+	echo add: (AlbEditorSelectionEchoView new vertices: (self verticesFromRectangles: rects) )
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> echoUpdatedIn: anEditorElement [
+
+	echoUpdater := nil.
+	anEditorElement invalidate
+]
+
+{ #category : #'infinite element changes' }
+AlbEditorMainSelectionView >> extentChangedIn: anInfiniteElement [
+
+	self forceUpdate.
+	self selectionChangedIn: anInfiniteElement
+]
+
+{ #category : #'infinite element changes' }
+AlbEditorMainSelectionView >> forceUpdate [
+
+	selection := nil
+]
+
+{ #category : #initialization }
+AlbEditorMainSelectionView >> initialize [
+	super initialize.
+	echo := OrderedCollection new.
+	echoAllowed := true
+]
+
+{ #category : #'private - limit computing' }
+AlbEditorMainSelectionView >> minLimitWidth [
+	^ 0
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> resetCurrentEcho [
+
+	echo reset
+]
+
+{ #category : #'infinite element changes' }
+AlbEditorMainSelectionView >> selectionChangedIn: anInfiniteElement [
+
+	selection = anInfiniteElement selection ifTrue: [ ^ self ].
+	selection := anInfiniteElement selection copy.
+	selectedString := anInfiniteElement selectedText asString.
+
+	self updateVerticesIn: anInfiniteElement
+]
+
+{ #category : #accessing }
+AlbEditorMainSelectionView >> selectionColor [
+
+	^ Color
+		  r: 0.9530791788856305
+		  g: 0.8084066471163245
+		  b: 0.1906158357771261
+		  alpha: 1.0
+]
+
+{ #category : #'private - limit computing' }
+AlbEditorMainSelectionView >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement [
+
+	" Select lines with cursor or with an element at left which has a selection that start at 0 "
+
+	(anItemElement children
+		 select: [ :e | 
+			 (e isKindOf: BlTextElement) and: [ 
+				 e bounds inParent left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ] ]
+		 thenCollect: [ :e | e textFlow assignedLine ]) in: [ :l | 
+		l ifEmpty: [ ^ nil ].
+		^ 0 @ l first origin y corner: self minLimitWidth @ (l last origin y + l last height) ]
+]
+
+{ #category : #'private - limit computing' }
+AlbEditorMainSelectionView >> selectionLimitRectanglesIn: anInfiniteElement [
+
+	^ Array streamContents: [ :stream | 
+		  anInfiniteElement childrenDo: [ :child | 
+			  | rect |
+			  rect := self selectionLimitRectangleOf: child in: anInfiniteElement.
+			  rect ifNotNil: [ stream nextPut: ((BlBounds fromRectangle: rect) translateBy: child bounds asRectangle origin)] ] ]
+]
+
+{ #category : #'selection accessing' }
+AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
+	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
+
+	^ Array streamContents: [ :stream | 
+		  anInfiniteElement textElementsDo: [ :te | 
+			  stream nextPutAll: (te selectionRectangles collect: [ :r | 
+					   (anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: (0 @ te position y) negated ]) ].
+			  stream nextPutAll: (self selectionLimitRectanglesIn: anInfiniteElement) ]
+]
+
+{ #category : #'infinite element changes' }
+AlbEditorMainSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
+	super selectionScrolled: aPoint in: anInfiniteElement.
+	self updateEchoIn: anInfiniteElement
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> updateEchoIn: anEditorElement [
+	
+	echoAllowed ifFalse: [ ^ self  ].
+	self resetCurrentEcho.
+	selection ifNil: [ ^ self  ].
+	selection ifEmpty: [ ^ self  ].
+	self updateEchoIn: anEditorElement withString: selectedString
+
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> updateEchoIn: anEditorElement withString: aString [
+
+	| collector currentSelectionInterval subTextOnScreen |
+
+	echoUpdater ifNotNil: #terminate.
+	self resetCurrentEcho.
+	aString = String space ifTrue: [ ^ self ].
+	aString = String cr ifTrue: [ ^ self ].
+	aString = String crlf ifTrue: [ ^ self ].
+	subTextOnScreen := anEditorElement subTextOnScreen.
+	aString size >= (subTextOnScreen size // 2) ifTrue: [ ^ self ].
+	collector := BlIntervalCollector new text: subTextOnScreen asString.
+	currentSelectionInterval := selection from + 1 to: selection to.
+	echoUpdater := [ 
+	               | founds |
+	               founds := collector searchAll: aString excluding: currentSelectionInterval - subTextOnScreen textOffset.
+	               founds do: [ :interval | self echoInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
+	               anEditorElement enqueueTask: (BlTaskAction new action: [ self echoUpdatedIn: anEditorElement ]) ] fork
+]
+
+{ #category : #'infinite element changes' }
+AlbEditorMainSelectionView >> updateVerticesIn: anInfiniteElement [
+
+	| rects |
+	vertices := nil.
+
+	rects := self selectionRectanglesIn: anInfiniteElement.
+	rects ifNotEmpty: [ self vertices: (self verticesFromRectangles: rects)].
+	self updateEchoIn: anInfiniteElement
+]
+
+{ #category : #accessing }
+AlbEditorMainSelectionView >> withSelectionEchoIn: anEditorElement [
+	echoAllowed := true.
+	self updateEchoIn: anEditorElement
+]
+
+{ #category : #accessing }
+AlbEditorMainSelectionView >> withoutSelectionEchoIn: anEditorElement [
+	echoAllowed := false.
+	self resetCurrentEcho.
+	anEditorElement invalidate
+]

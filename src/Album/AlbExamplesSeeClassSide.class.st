@@ -76,7 +76,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 			(BlShortcutWithAction new
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
-"editorElement inspect."
+"editorElement selectionView inspect."
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space title: 'editor'.

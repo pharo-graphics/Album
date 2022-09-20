@@ -75,7 +75,8 @@ AlbEditorElement >> hasFocus [
 AlbEditorElement >> initialize [
 
 	super initialize.
-	selectionView := AlbEditorSelectionView new.
+	selectionView := AlbEditorMainSelectionView new.
+	self withSelectionEcho.
 	hasFocus := false.
 	self when: BlFocusInEvent do: [ hasFocus := true ].
 	self when: BlFocusOutEvent do: [ hasFocus := false ].
@@ -160,17 +161,6 @@ AlbEditorElement >> selectionEchoRectangles [
 					   (self localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: (0 @ te position y) negated ]) ] ]
 ]
 
-{ #category : #'private - accessing' }
-AlbEditorElement >> selectionRectangles [
-
-	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
-
-	^ Array streamContents: [ :stream | 
-		  self textElementsDo: [ :te | 
-			  stream nextPutAll: (te selectionRectangles collect: [ :r | 
-					   (self localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: (0 @ te position y) negated ]) ] ]
-]
-
 { #category : #accessing }
 AlbEditorElement >> selectionView [
 	^ selectionView
@@ -189,4 +179,14 @@ AlbEditorElement >> textElementsDo: aBlock [
 				ifPresent: [ :foundPiece | 
 					foundPiece isText ifTrue: [ aBlock value: textElement ] ]
 				ifAbsent: [  ] ] ]
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditorElement >> withSelectionEcho [
+	self selectionView withSelectionEchoIn: self 
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditorElement >> withoutSelectionEcho [
+	self selectionView withoutSelectionEchoIn: self 
 ]

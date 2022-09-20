@@ -1,34 +1,24 @@
 Extension { #name : #AlbEditorSelectionView }
 
 { #category : #'*Album-Alexandrie' }
-AlbEditorSelectionView >> aeDrawBeneathOn: aeCanvas in: anInfiniteElement [
+AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 
-	"Draw any appropriate decorations into the Sparta Canvas supplied to the Infinite Element. Any content drawn by this method will be drawn before the item elements are drawn, and will thus appear underneath them"
+	"Draw an editor element selection polygon"
 
-	| myBackground myBorder geometry |
 	vertices ifNil: [ ^ self ].
 
 	aeCanvas restoreContextAfter: [ 
-		myBackground := (BlPaintBackground paint:
-			                 anInfiniteElement selectionColor asBlPaint)
-			                yourself.
-		myBackground aeApplyTo: aeCanvas.
+		self background aeApplyTo: aeCanvas.
 
-		myBorder := BlBorder
-			            paint:
-			            anInfiniteElement selectionColor lighter asBlPaint
-			            width: 1.
-		myBorder isTransparent
-			ifTrue: [ aeCanvas setBorderOff ]
-			ifFalse: [ 
-				aeCanvas setOutskirtsOutside.
-				aeCanvas setBorderBlock: [ 
-					myBorder paint aeApplyTo: aeCanvas.
-					myBorder style aeApplyTo: aeCanvas.
-					aeCanvas setBorderWidth: myBorder width ] ].
+		aeCanvas setOutskirtsOutside.
+		aeCanvas setBorderBlock: [ 
+			| border |
+			border := self border.
+			border paint aeApplyTo: aeCanvas.
+			border style aeApplyTo: aeCanvas.
+			aeCanvas setBorderWidth: border width ].
 
-		geometry := BlPolygonGeometry vertices: vertices.
-		geometry aeApplyTo: aeCanvas element: anInfiniteElement.
+		self geometry aeApplyTo: aeCanvas element: anInfiniteElement.
 
 		aeCanvas drawFigure ]
 ]

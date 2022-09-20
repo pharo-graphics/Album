@@ -2,26 +2,32 @@ Class {
 	#name : #AlbEditorSelectionView,
 	#superclass : #Object,
 	#instVars : [
-		'vertices',
-		'selection'
+		'vertices'
 	],
 	#category : #'Album-UI'
 }
 
-{ #category : #'data source updates' }
-AlbEditorSelectionView >> extentChangedIn: anInfiniteElement [
-
-	self forceUpdate.
-	self selectionChangedIn: anInfiniteElement
+{ #category : #accessing }
+AlbEditorSelectionView >> background [
+	^ BlPaintBackground paint: self selectionColor
 ]
 
-{ #category : #geometry }
-AlbEditorSelectionView >> forceUpdate [
-
-	selection := nil
+{ #category : #accessing }
+AlbEditorSelectionView >> border [
+	^ BlBorder paint: self borderColor width: 2
 ]
 
-{ #category : #'private ' }
+{ #category : #accessing }
+AlbEditorSelectionView >> borderColor [
+	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+AlbEditorSelectionView >> geometry [
+	^ BlPolygonGeometry vertices: vertices.
+]
+
+{ #category : #'private - vertices computing' }
 AlbEditorSelectionView >> maxXRightCoord: yCoord fromRectangles: aListOfRectangles [
 
 	| l |
@@ -29,12 +35,7 @@ AlbEditorSelectionView >> maxXRightCoord: yCoord fromRectangles: aListOfRectangl
 	^ (l sort: [ :a :b | a right > b right ]) first right
 ]
 
-{ #category : #geometry }
-AlbEditorSelectionView >> minWidth [
-	^ 4
-]
-
-{ #category : #'private ' }
+{ #category : #'private - vertices computing' }
 AlbEditorSelectionView >> minXLeftCoord: yCoord fromRectangles: aListOfRectangles [
 
 	| l |
@@ -42,7 +43,7 @@ AlbEditorSelectionView >> minXLeftCoord: yCoord fromRectangles: aListOfRectangle
 	^ (l sort: [ :a :b | a left < b left ]) first left
 ]
 
-{ #category : #'private ' }
+{ #category : #'private - vertices computing' }
 AlbEditorSelectionView >> rectanglesAtY: anY fromRectangles: aListOfRectangles [
 
 	| rectsAtYExcBottomLines |
@@ -51,63 +52,41 @@ AlbEditorSelectionView >> rectanglesAtY: anY fromRectangles: aListOfRectangles [
 	^ self rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles
 ]
 
-{ #category : #'private ' }
+{ #category : #'private - vertices computing' }
 AlbEditorSelectionView >> rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles [
 
 	^ aListOfRectangles select: [ :rect | rect top <= anY and: [ rect bottom > anY ] ]
 ]
 
-{ #category : #'private ' }
+{ #category : #'private - vertices computing' }
 AlbEditorSelectionView >> rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles [
 
 	^ aListOfRectangles select: [ :rect | rect top <= anY and: [ rect bottom = anY ] ]
 ]
 
-{ #category : #'data source updates' }
-AlbEditorSelectionView >> selectionChangedIn: anInfiniteElement [
-
-	| rects |
-	selection = anInfiniteElement selection ifTrue: [ ^ self ].
-	selection := anInfiniteElement selection copy.
-	vertices := nil.
-	rects := anInfiniteElement selectionRectangles
-	         , (self selectionLimitRectanglesIn: anInfiniteElement).
-	rects ifEmpty: [ ^ self ].
-	vertices := self verticesFromRectangles: rects
+{ #category : #accessing }
+AlbEditorSelectionView >> selectionColor [
+	^ self subclassResponsibility 
 ]
 
-{ #category : #geometry }
-AlbEditorSelectionView >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement [
+{ #category : #'selection accessing' }
+AlbEditorSelectionView >> selectionRectanglesIn: anInfiniteElement [
 
-	" Select lines with cursor or with an element at left which has a selection that start at 0 "
-
-	(anItemElement children
-		 select: [ :e | 
-			 (e isKindOf: BlTextElement) and: [ 
-				 e bounds inParent left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ] ]
-		 thenCollect: [ :e | e textFlow assignedLine ]) in: [ :l | 
-		l ifEmpty: [ ^ nil ].
-		^ 0 @ l first origin y corner: self minWidth @ (l last origin y + l last height) ]
+	^ #(  )
 ]
 
-{ #category : #geometry }
-AlbEditorSelectionView >> selectionLimitRectanglesIn: anInfiniteElement [
-
-	^ Array streamContents: [ :stream | 
-		  anInfiniteElement childrenDo: [ :child | 
-			  | rect |
-			  rect := self selectionLimitRectangleOf: child in: anInfiniteElement.
-			  rect ifNotNil: [ stream nextPut: ((BlBounds fromRectangle: rect) translateBy: child bounds asRectangle origin)] ] ]
-]
-
-{ #category : #geometry }
+{ #category : #accessing }
 AlbEditorSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
-
-	self forceUpdate.
-	self selectionChangedIn: anInfiniteElement
+	vertices ifNil: [ ^self ].
+	vertices := vertices collect: [ :pt | pt - aPoint ]
 ]
 
-{ #category : #'private ' }
+{ #category : #accessing }
+AlbEditorSelectionView >> vertices: aListOfRectangles [
+	vertices := aListOfRectangles
+]
+
+{ #category : #'private - vertices computing' }
 AlbEditorSelectionView >> verticesFromRectangles: aListOfRectangles [
 
 	| ret yCoords previousLeftCoord previousRightCoord |
@@ -133,7 +112,7 @@ AlbEditorSelectionView >> verticesFromRectangles: aListOfRectangles [
 	^ ret
 ]
 
-{ #category : #'private ' }
+{ #category : #'private - vertices computing' }
 AlbEditorSelectionView >> yCoordsFromRectangles: aListOfRectangles [
 
 	| allBotoms allTops allCoords |

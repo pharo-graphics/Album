@@ -221,7 +221,7 @@ AlbEditorMainSelectionView >> updateEchoIn: anEditorElement withString: aString 
 	               founds := collector searchAll: aString excluding: currentSelectionInterval - subTextOnScreen textOffset.
 	               founds do: [ :interval | self echoInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
 	               anEditorElement enqueueTask: (BlTaskAction new action: [ self echoUpdatedIn: anEditorElement ]) ]
-		               forkAt: Processor userBackgroundPriority
+		               forkAt: Processor systemBackgroundPriority
 		               named: 'Selection echo updater task'
 ]
 

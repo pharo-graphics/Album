@@ -9,7 +9,8 @@ Class {
 		'breakLineBefore',
 		'breakLineAfter',
 		'assignedLine',
-		'offsetFromSegmentStart'
+		'offsetFromSegmentStart',
+		'positionInEditor'
 	],
 	#classVars : [
 		'ShouldFillLine'
@@ -78,7 +79,7 @@ AlbLineFlowLayoutConstraints >> offsetFromSegmentStart: aNumber [
 
 { #category : #accessing }
 AlbLineFlowLayoutConstraints >> positionInEditor [
-	^ positionInEditor
+	^ positionInEditor 
 ]
 
 { #category : #accessing }

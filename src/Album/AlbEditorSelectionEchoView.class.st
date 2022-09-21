@@ -7,7 +7,7 @@ Class {
 { #category : #accessing }
 AlbEditorSelectionEchoView >> borderColor [
 
-	^ Color lightGray alpha: 0.8
+	^ Color gray alpha: 0.9
 ]
 
 { #category : #accessing }

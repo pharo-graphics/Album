@@ -11,6 +11,11 @@ AlbEditorSelectionEchoView >> borderColor [
 ]
 
 { #category : #accessing }
+AlbEditorSelectionEchoView >> borderWidth [
+	^ 1
+]
+
+{ #category : #accessing }
 AlbEditorSelectionEchoView >> selectionColor [
-	^ Color veryLightGray alpha: 0.1
+	^ Color lightGray alpha: 0.2
 ]

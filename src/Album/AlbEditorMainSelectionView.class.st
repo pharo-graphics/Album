@@ -13,7 +13,12 @@ Class {
 
 { #category : #accessing }
 AlbEditorMainSelectionView >> borderColor [
-	^ self selectionColor lighter 
+	^ self selectionColor  
+]
+
+{ #category : #accessing }
+AlbEditorMainSelectionView >> borderWidth [
+	^ 2
 ]
 
 { #category : #'private - selection echo' }
@@ -180,6 +185,7 @@ AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
 { #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 	super selectionScrolled: aPoint in: anInfiniteElement.
+	echo ifNil: [ ^ self ].
 	self updateEchoIn: anInfiniteElement
 ]
 

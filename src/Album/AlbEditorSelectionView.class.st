@@ -14,11 +14,16 @@ AlbEditorSelectionView >> background [
 
 { #category : #accessing }
 AlbEditorSelectionView >> border [
-	^ BlBorder paint: self borderColor width: 2
+	^ BlBorder paint: self borderColor width: self borderWidth 
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> borderColor [
+	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+AlbEditorSelectionView >> borderWidth [
 	^ self subclassResponsibility 
 ]
 

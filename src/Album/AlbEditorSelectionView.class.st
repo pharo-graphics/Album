@@ -43,7 +43,7 @@ AlbEditorSelectionView >> selectionRectanglesIn: anInfiniteElement [
 	^ #(  )
 ]
 
-{ #category : #accessing }
+{ #category : #'infinite element changes' }
 AlbEditorSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 	vertices ifNil: [ ^self ].
 	vertices := vertices collect: [ :pt | pt - aPoint ]

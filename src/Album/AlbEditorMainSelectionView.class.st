@@ -41,10 +41,8 @@ AlbEditorMainSelectionView >> echoInterval: anInterval in: anEditorElement [
 								         last := endIdx min: piece textEnd ] ].
 				         origin := pieceElement screenOriginAt: first - piece textStart - 1.
 				         corner := pieceElement screenCornerAt: last - piece textStart.
-				         bnds := anEditorElement
-					                 localBoundsToMine: (BlBounds origin: origin corner: corner)
-					                 fromChild: pieceElement.
-				         stream nextPut: bnds asRectangle ] ].
+				         bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
+				         stream nextPut: bnds ] ].
 	rects ifEmpty: [ ^ self ].
 	echo add: (AlbEditorSelectionEchoView new vertices: (self verticesFromRectangles: rects) )
 ]
@@ -76,9 +74,46 @@ AlbEditorMainSelectionView >> initialize [
 	echoAllowed := true
 ]
 
+{ #category : #'private - vertices computing' }
+AlbEditorMainSelectionView >> maxXRightCoord: yCoord fromRectangles: aListOfRectangles [
+
+	| l |
+	l := self rectanglesAtY: yCoord fromRectangles: aListOfRectangles.
+	^ (l sort: [ :a :b | a right > b right ]) first right
+]
+
 { #category : #'private - limit computing' }
 AlbEditorMainSelectionView >> minLimitWidth [
 	^ 0
+]
+
+{ #category : #'private - vertices computing' }
+AlbEditorMainSelectionView >> minXLeftCoord: yCoord fromRectangles: aListOfRectangles [
+
+	| l |
+	l := self rectanglesAtY: yCoord fromRectangles: aListOfRectangles.
+	^ (l sort: [ :a :b | a left < b left ]) first left
+]
+
+{ #category : #'private - vertices computing' }
+AlbEditorMainSelectionView >> rectanglesAtY: anY fromRectangles: aListOfRectangles [
+
+	| rectsAtYExcBottomLines |
+	rectsAtYExcBottomLines := self rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles.
+	rectsAtYExcBottomLines ifNotEmpty: [ ^ rectsAtYExcBottomLines ].
+	^ self rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles
+]
+
+{ #category : #'private - vertices computing' }
+AlbEditorMainSelectionView >> rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles [
+
+	^ aListOfRectangles select: [ :rect | rect top <= anY and: [ rect bottom > anY ] ]
+]
+
+{ #category : #'private - vertices computing' }
+AlbEditorMainSelectionView >> rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles [
+
+	^ aListOfRectangles select: [ :rect | rect top <= anY and: [ rect bottom = anY ] ]
 ]
 
 { #category : #'private - selection echo' }
@@ -94,7 +129,7 @@ AlbEditorMainSelectionView >> selectionChangedIn: anInfiniteElement [
 	selection := anInfiniteElement selection copy.
 	selectedString := anInfiniteElement selectedText asString.
 
-	self updateVerticesIn: anInfiniteElement
+	self updateMainSelectionVerticesIn: anInfiniteElement
 ]
 
 { #category : #accessing }
@@ -149,6 +184,13 @@ AlbEditorMainSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 ]
 
 { #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> terminateUpdater [
+
+	echoUpdater ifNotNil: #terminate.
+	echoUpdater := nil
+]
+
+{ #category : #'private - selection echo' }
 AlbEditorMainSelectionView >> updateEchoIn: anEditorElement [
 	
 	echoAllowed ifFalse: [ ^ self  ].
@@ -162,9 +204,9 @@ AlbEditorMainSelectionView >> updateEchoIn: anEditorElement [
 { #category : #'private - selection echo' }
 AlbEditorMainSelectionView >> updateEchoIn: anEditorElement withString: aString [
 
-	| collector currentSelectionInterval subTextOnScreen |
+	| collector currentSelectionInterval subTextOnScreen founds |
+	self terminateUpdater.
 
-	echoUpdater ifNotNil: #terminate.
 	self resetCurrentEcho.
 	aString = String space ifTrue: [ ^ self ].
 	aString = String cr ifTrue: [ ^ self ].
@@ -173,15 +215,18 @@ AlbEditorMainSelectionView >> updateEchoIn: anEditorElement withString: aString 
 	aString size >= (subTextOnScreen size // 2) ifTrue: [ ^ self ].
 	collector := BlIntervalCollector new text: subTextOnScreen asString.
 	currentSelectionInterval := selection from + 1 to: selection to.
+
 	echoUpdater := [ 
-	               | founds |
+						
 	               founds := collector searchAll: aString excluding: currentSelectionInterval - subTextOnScreen textOffset.
 	               founds do: [ :interval | self echoInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
-	               anEditorElement enqueueTask: (BlTaskAction new action: [ self echoUpdatedIn: anEditorElement ]) ] fork
+	               anEditorElement enqueueTask: (BlTaskAction new action: [ self echoUpdatedIn: anEditorElement ]) ]
+		               forkAt: Processor userBackgroundPriority
+		               named: 'Selection echo updater task'
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorMainSelectionView >> updateVerticesIn: anInfiniteElement [
+AlbEditorMainSelectionView >> updateMainSelectionVerticesIn: anInfiniteElement [
 
 	| rects |
 	vertices := nil.
@@ -189,6 +234,32 @@ AlbEditorMainSelectionView >> updateVerticesIn: anInfiniteElement [
 	rects := self selectionRectanglesIn: anInfiniteElement.
 	rects ifNotEmpty: [ self vertices: (self verticesFromRectangles: rects)].
 	self updateEchoIn: anInfiniteElement
+]
+
+{ #category : #'private - vertices computing' }
+AlbEditorMainSelectionView >> verticesFromRectangles: aListOfRectangles [
+
+	| ret yCoords previousLeftCoord previousRightCoord |
+	ret := OrderedCollection new.
+	yCoords := self yCoordsFromRectangles: aListOfRectangles.
+	yCoords := yCoords sort: [ :a :b | a < b ].
+	previousLeftCoord := 0.
+	previousRightCoord := 0.
+	yCoords do: [ :yCoord | 
+		| minimumXLeftCoord maximumXRightCoord first |
+		minimumXLeftCoord := self minXLeftCoord: yCoord fromRectangles: aListOfRectangles.
+		maximumXRightCoord := self maxXRightCoord: yCoord fromRectangles: aListOfRectangles.
+		first := yCoords first.
+		yCoord = yCoords first
+			ifTrue: [ ret add: minimumXLeftCoord @ yCoord ]
+			ifFalse: [ 
+				minimumXLeftCoord ~= previousLeftCoord ifTrue: [ ret add: previousLeftCoord @ yCoord beforeIndex: 1 ].
+				ret add: minimumXLeftCoord @ yCoord beforeIndex: 1.
+				maximumXRightCoord ~= previousRightCoord ifTrue: [ ret add: previousRightCoord @ yCoord ] ].
+		ret add: maximumXRightCoord @ yCoord.
+		previousLeftCoord := minimumXLeftCoord.
+		previousRightCoord := maximumXRightCoord ].
+	^ ret
 ]
 
 { #category : #accessing }
@@ -202,4 +273,16 @@ AlbEditorMainSelectionView >> withoutSelectionEchoIn: anEditorElement [
 	echoAllowed := false.
 	self resetCurrentEcho.
 	anEditorElement invalidate
+]
+
+{ #category : #'private - vertices computing' }
+AlbEditorMainSelectionView >> yCoordsFromRectangles: aListOfRectangles [
+
+	| allBotoms allTops allCoords |
+	allBotoms := aListOfRectangles collect: [ :rect | rect bottom ].
+	allTops := aListOfRectangles collect: [ :rect | rect top ].
+	allCoords := Set new.
+	allCoords addAll: allTops.
+	allCoords addAll: allBotoms.
+	^ allCoords asArray
 ]

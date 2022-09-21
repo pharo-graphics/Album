@@ -76,6 +76,16 @@ AlbLineFlowLayoutConstraints >> offsetFromSegmentStart: aNumber [
 	offsetFromSegmentStart := aNumber
 ]
 
+{ #category : #accessing }
+AlbLineFlowLayoutConstraints >> positionInEditor [
+	^ positionInEditor
+]
+
+{ #category : #accessing }
+AlbLineFlowLayoutConstraints >> positionInEditor: aPoint [
+	positionInEditor := aPoint
+]
+
 { #category : #initialization }
 AlbLineFlowLayoutConstraints >> pushLine [
 	"Mark an element such that it will be pushed to the new line after the current line"

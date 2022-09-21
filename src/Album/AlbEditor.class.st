@@ -15,27 +15,6 @@ AlbEditor >> addEditorShortcut: aTextEditorInteraction [
 	self editor addEditorShortcut: aTextEditorInteraction
 ]
 
-{ #category : #'private - accessing' }
-AlbEditor >> atTextIndex: aTextIndex do: aBlock [
-
-	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
-
-	self childrenDo: [ :segmentElement | 
-		| holder |
-		holder := self elementHolderOf: segmentElement.
-		segmentElement childrenDo: [ :element | 
-			"Use the holder here to find piece. needed for non text element element (instance of BlElement)"
-			holder
-				 pieceForElement: element
-				 ifPresent: [ :foundPiece | 
-					(foundPiece isText and: [ element segmentPiece textInterval includes: aTextIndex ]) ifTrue: [ 
-					"here, foundPiece can be ~~ element segmentPiece, it seems that the good one (uptodate) if found via children and not from the holder"
-						aBlock
-							value: element
-							value: (element segmentPiece globalTextIndexToLocal: aTextIndex) ] ]
-				 ifAbsent: [ ] ] ]
-]
-
 { #category : #'api - editor' }
 AlbEditor >> beEditable [
 	self beMode: AlbTextEditorEditableMode new
@@ -132,11 +111,6 @@ AlbEditor >> editor: aTextEditor [
 	super editor: aTextEditor.
 
 	aTextEditor addEventHandler: textReplacedHandler
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> editorText [
-	^ self editor text
 ]
 
 { #category : #'private - accessing' }
@@ -242,33 +216,6 @@ AlbEditor >> onScrolled: aPoint [
 	self feltPensDo: [ :fp | fp onScrollDoneIn: self ]
 ]
 
-{ #category : #'private - accessing' }
-AlbEditor >> piecesAndTheirElementsDo: aBlock [
-
-	self childrenDo: [ :segmentElement | 
-		| holder |
-		holder := self elementHolderOf: segmentElement.
-		holder piecesAndTheirElementsDo: [ :piece :pieceElement | 
-			aBlock value: piece value: pieceElement ] ].
-	
-"self childrenDo: [ :segmentElement | 
-		| holder |
-		holder := self elementHolderOf: segmentElement.
-		segmentElement childrenDo: [ :element | 
-			""Use the holder here to find piece. needed for non text element element (instance of BlElement)""
-			(holder
-				 pieceForElement: element
-				 ifAbsent: [  ]) ifNotNil: [ :foundPiece | aBlock value: foundPiece value: element]]]"
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
-
-	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
-		(piece textEnd < anInterval first or: [ piece textStart > (anInterval last)]) ifFalse: [ 
-			aBlock value: piece value: pieceElement ] ]
-]
-
 { #category : #accessing }
 AlbEditor >> request: aRequest [
 
@@ -363,21 +310,6 @@ AlbEditor >> text: aBlText [
 { #category : #'model - events' }
 AlbEditor >> textChanged: aText [
 	self editor text: aText
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> textPiecesAndTheirElementsDo: aBlock [
-
-	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
-		piece isText ifTrue: [ aBlock value: piece value: pieceElement ] ]
-]
-
-{ #category : #'private - accessing' }
-AlbEditor >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
-
-	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
-		(piece textEnd < anInterval first or: [ piece textStart > (anInterval last)]) ifFalse: [ 
-			aBlock value: piece value: pieceElement ] ]
 ]
 
 { #category : #'accessing - decoration' }

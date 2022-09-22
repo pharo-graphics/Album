@@ -6,7 +6,7 @@ Class {
 
 { #category : #geometry }
 AlbSelectionSideDecoration >> gap [
-	^ 1
+	^ 0
 ]
 
 { #category : #geometry }

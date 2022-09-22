@@ -173,13 +173,17 @@ AlbEditorMainSelectionView >> selectionLimitRectanglesIn: anInfiniteElement [
 
 { #category : #'selection accessing' }
 AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
+
 	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
 
 	^ Array streamContents: [ :stream | 
 		  anInfiniteElement textElementsDo: [ :te | 
-			  stream nextPutAll: (te selectionRectangles collect: [ :r | 
-					   (anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: (0 @ te position y) negated ]) ].
-			  stream nextPutAll: (self selectionLimitRectanglesIn: anInfiniteElement) ]
+			  | rects |
+			  rects := te selectionRectangles collect: [ :r | r insetBy: self borderWidth].
+			  stream nextPutAll: (rects collect: [ :r | 
+					   (anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy:
+						   (self borderWidth negated @ te position y) negated ]) ].
+		  stream nextPutAll: (self selectionLimitRectanglesIn: anInfiniteElement) ]
 ]
 
 { #category : #'infinite element changes' }
@@ -222,8 +226,7 @@ AlbEditorMainSelectionView >> updateEchoIn: anEditorElement withString: aString 
 	collector := BlIntervalCollector new text: subTextOnScreen asString.
 	currentSelectionInterval := selection from + 1 to: selection to.
 
-	echoUpdater := [ 
-						
+	echoUpdater := [ 						
 	               founds := collector searchAll: aString excluding: currentSelectionInterval - subTextOnScreen textOffset.
 	               founds do: [ :interval | self echoInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
 	               anEditorElement enqueueTask: (BlTaskAction new action: [ self echoUpdatedIn: anEditorElement ]) ]

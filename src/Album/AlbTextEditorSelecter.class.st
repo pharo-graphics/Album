@@ -505,9 +505,11 @@ AlbTextEditorSelecter >> select [
 	self selection do: [ :aMonotoneSelection | toBeSelected deselect: aMonotoneSelection from to: aMonotoneSelection to ].
 
 	toBeSelected do: [ :aMonotoneSelection | 
-		aMonotoneSelection interval size > 1 ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ] ]
-
-	" do not send updateCursors to self here otherwise, navigator moveUp is broken "
+		aMonotoneSelection interval size > 1 ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ] ].
+	
+	selection ifNotEmpty: [ self notifyCursorRemoved: self cursor ]
+	
+	" do not send updateCursors to self here otherwise, navigator moveUp is broken " 
 ]
 
 { #category : #private }

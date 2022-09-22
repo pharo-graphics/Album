@@ -113,7 +113,11 @@ AlbEditorElement >> hasFocus [
 AlbEditorElement >> initialize [
 
 	super initialize.
-	selectionView := AlbEditorMainSelectionView new.
+	selectionView := AlbEditorMainSelectionView new
+		                 borderWidth: 3;
+		                 borderColor: self selectionColor;
+		                 selectionColor: (self selectionColor alpha: 0.5);
+		                 yourself.
 	self withSelectionEcho.
 	hasFocus := false.
 	self when: BlFocusInEvent do: [ hasFocus := true ].
@@ -196,6 +200,11 @@ AlbEditorElement >> scrollToLast [
 ]
 
 { #category : #'editor - accessing' }
+AlbEditorElement >> selectedText [
+	^ self editor selectedText
+]
+
+{ #category : #'editor - accessing' }
 AlbEditorElement >> selection [
 	<return: #BlSelection>
 
@@ -204,7 +213,7 @@ AlbEditorElement >> selection [
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> selectionChanged [
-	selectionView selectionChangedIn: self
+	selectionView selection: self selection withText: self selectedText changedIn: self
 ]
 
 { #category : #accessing }

@@ -25,7 +25,10 @@ AlbTextEditorDeselecter >> deselect [
 	selection do: [ :aMonotoneSelection | 
 		self
 			privateDeselect: aMonotoneSelection from
-			to: aMonotoneSelection to ]
+			to: aMonotoneSelection to ].
+	
+	selection ifNotEmpty: [ self notifyCursorAdded: self cursor ]
+
 ]
 
 { #category : #'api - configuration' }

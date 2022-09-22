@@ -481,6 +481,26 @@ AlbTextEditorOperator >> isWordChar: aCharacter [
 	^ aCharacter isAlphaNumeric
 ]
 
+{ #category : #notifying }
+AlbTextEditorOperator >> notifyCursorAdded: aCursor [
+	| aCommand |
+
+	aCommand := AlbTextEditorCursorAddCommand new
+		context: self context;
+		cursor: aCursor.
+	editor executeCommand: aCommand
+]
+
+{ #category : #notifying }
+AlbTextEditorOperator >> notifyCursorRemoved: aCursor [
+	| aCommand |
+
+	aCommand := AlbTextEditorCursorRemoveCommand new
+		context: self context;
+		cursor: aCursor.
+	editor executeCommand: aCommand
+]
+
 { #category : #accessing }
 AlbTextEditorOperator >> selection [
 	^ editor selection

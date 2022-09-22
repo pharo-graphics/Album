@@ -244,11 +244,6 @@ AlbEditor >> segments [
 	^ self editor segmentCollector segments
 ]
 
-{ #category : #'editor - accessing' }
-AlbEditor >> selectedText [
-	^ self editor selectedText
-]
-
 { #category : #'editor - operations' }
 AlbEditor >> selecter [
 	<return: #AlbTextEditorSelecter>
@@ -277,7 +272,7 @@ AlbEditor >> subTextOnScreen [
 	
 	| interval |
 	interval := self subTextOnScreenInterval.
-	^ self editorText from: (interval first max: 1) to: interval last
+	^ self editorText from: (interval first max: 1) to: (interval last max: 0)
 
 ]
 

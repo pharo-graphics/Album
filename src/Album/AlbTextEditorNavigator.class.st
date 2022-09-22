@@ -176,26 +176,6 @@ AlbTextEditorNavigator >> moveWithin: anInterval [
 				ifTrue: [ self move: aCursor to: anInterval last ] ] ]
 ]
 
-{ #category : #notifying }
-AlbTextEditorNavigator >> notifyCursorAdded: aCursor [
-	| aCommand |
-
-	aCommand := AlbTextEditorCursorAddCommand new
-		context: self context;
-		cursor: aCursor.
-	editor executeCommand: aCommand
-]
-
-{ #category : #notifying }
-AlbTextEditorNavigator >> notifyCursorRemoved: aCursor [
-	| aCommand |
-
-	aCommand := AlbTextEditorCursorRemoveCommand new
-		context: self context;
-		cursor: aCursor.
-	editor executeCommand: aCommand
-]
-
 { #category : #'private - accessing' }
 AlbTextEditorNavigator >> privateAssertPosition: aTextPosition [
 	self

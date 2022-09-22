@@ -91,6 +91,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	| ed space |
 
 	ed := AlbEditor new dresser: AlbTextAreaDresser.
+	"ed inspect."
 	ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer matchParent].

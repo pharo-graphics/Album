@@ -2,7 +2,10 @@ Class {
 	#name : #AlbEditorSelectionView,
 	#superclass : #Object,
 	#instVars : [
-		'vertices'
+		'vertices',
+		'borderWidth',
+		'borderColor',
+		'selectionColor'
 	],
 	#category : #'Album-UI'
 }
@@ -19,12 +22,22 @@ AlbEditorSelectionView >> border [
 
 { #category : #accessing }
 AlbEditorSelectionView >> borderColor [
-	^ self subclassResponsibility 
+	^ borderColor 
+]
+
+{ #category : #accessing }
+AlbEditorSelectionView >> borderColor: aColor [
+	borderColor := aColor
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> borderWidth [
-	^ self subclassResponsibility 
+	^ borderWidth 
+]
+
+{ #category : #accessing }
+AlbEditorSelectionView >> borderWidth: aNumber [
+	borderWidth := aNumber
 ]
 
 { #category : #accessing }
@@ -34,13 +47,12 @@ AlbEditorSelectionView >> geometry [
 
 { #category : #accessing }
 AlbEditorSelectionView >> selectionColor [
-	^ self subclassResponsibility 
+	^ selectionColor
 ]
 
-{ #category : #'selection accessing' }
-AlbEditorSelectionView >> selectionRectanglesIn: anInfiniteElement [
-
-	^ #(  )
+{ #category : #accessing }
+AlbEditorSelectionView >> selectionColor: aColor [
+	selectionColor := aColor
 ]
 
 { #category : #'infinite element changes' }

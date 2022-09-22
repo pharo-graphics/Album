@@ -21,7 +21,7 @@ AlbSelectionSideDecoration >> requiredWidth [
 
 { #category : #accessing }
 AlbSelectionSideDecoration >> selectionBackgroundColorOf: anItemElement in: anInfiniteElement [
-	^ anInfiniteElement selectionColor alpha: 0.6
+	^ anInfiniteElement selectionColor alpha: 0.3
 ]
 
 { #category : #geometry }

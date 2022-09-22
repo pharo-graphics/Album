@@ -11,16 +11,6 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #accessing }
-AlbEditorMainSelectionView >> borderColor [
-	^ self selectionColor  
-]
-
-{ #category : #accessing }
-AlbEditorMainSelectionView >> borderWidth [
-	^ 2
-]
-
 { #category : #'private - selection echo' }
 AlbEditorMainSelectionView >> echoInterval: anInterval in: anEditorElement [
 
@@ -49,7 +39,7 @@ AlbEditorMainSelectionView >> echoInterval: anInterval in: anEditorElement [
 				         bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
 				         stream nextPut: bnds ] ].
 	rects ifEmpty: [ ^ self ].
-	echo add: (AlbEditorSelectionEchoView new vertices: (self verticesFromRectangles: rects) )
+	echo add: (self newEchoVertice: (self verticesFromRectangles: rects))
 ]
 
 { #category : #'private - selection echo' }
@@ -62,14 +52,7 @@ AlbEditorMainSelectionView >> echoUpdatedIn: anEditorElement [
 { #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> extentChangedIn: anInfiniteElement [
 
-	self forceUpdate.
-	self selectionChangedIn: anInfiniteElement
-]
-
-{ #category : #'infinite element changes' }
-AlbEditorMainSelectionView >> forceUpdate [
-
-	selection := nil
+	self updateMainSelectionVerticesIn: anInfiniteElement
 ]
 
 { #category : #initialization }
@@ -100,6 +83,17 @@ AlbEditorMainSelectionView >> minXLeftCoord: yCoord fromRectangles: aListOfRecta
 	^ (l sort: [ :a :b | a left < b left ]) first left
 ]
 
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> newEchoVertice: aListOfPoints [
+
+	^ AlbEditorSelectionView new
+		  vertices: aListOfPoints;
+		  borderWidth: 1;
+		  borderColor: (Color gray alpha: 0.5);
+		  selectionColor: (Color gray alpha: 0.2);
+		  yourself
+]
+
 { #category : #'private - vertices computing' }
 AlbEditorMainSelectionView >> rectanglesAtY: anY fromRectangles: aListOfRectangles [
 
@@ -128,23 +122,13 @@ AlbEditorMainSelectionView >> resetCurrentEcho [
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorMainSelectionView >> selectionChangedIn: anInfiniteElement [
+AlbEditorMainSelectionView >> selection: aSelection withText: aText changedIn: anInfiniteElement [
 
-	selection = anInfiniteElement selection ifTrue: [ ^ self ].
-	selection := anInfiniteElement selection copy.
-	selectedString := anInfiniteElement selectedText asString.
+	(selection = aSelection and: [vertices notNil]) ifTrue: [ ^ self ].
+	selection := aSelection copy.
+	selectedString := aText asString.
 
 	self updateMainSelectionVerticesIn: anInfiniteElement
-]
-
-{ #category : #accessing }
-AlbEditorMainSelectionView >> selectionColor [
-
-	^ Color
-		  r: 0.9530791788856305
-		  g: 0.8084066471163245
-		  b: 0.1906158357771261
-		  alpha: 1.0
 ]
 
 { #category : #'private - limit computing' }
@@ -154,8 +138,8 @@ AlbEditorMainSelectionView >> selectionLimitRectangleOf: anItemElement in: anInf
 
 	(anItemElement children
 		 select: [ :e | 
-			 (e isKindOf: BlTextElement) and: [ 
-				 e bounds inParent left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ] ]
+			 (e isKindOf: BlTextElement) and: [ e hasCursor or: [ 
+				 e bounds inParent left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ] ] ]
 		 thenCollect: [ :e | e textFlow assignedLine ]) in: [ :l | 
 		l ifEmpty: [ ^ nil ].
 		^ 0 @ l first origin y corner: self minLimitWidth @ (l last origin y + l last height) ]
@@ -179,11 +163,13 @@ AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
 	^ Array streamContents: [ :stream | 
 		  anInfiniteElement textElementsDo: [ :te | 
 			  | rects |
-			  rects := te selectionRectangles collect: [ :r | r insetBy: self borderWidth].
-			  stream nextPutAll: (rects collect: [ :r | 
-					   (anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy:
-						   (self borderWidth negated @ te position y) negated ]) ].
-		  stream nextPutAll: (self selectionLimitRectanglesIn: anInfiniteElement) ]
+			  rects := te selectionRectangles.
+			  rects := rects collect: [ :r | 
+				           (anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy:
+					           self borderWidth -1 @ (te position y) negated ].
+			  rects := rects collect: [ :r | r asRectangle withRight: r right - self borderWidth ].
+			  stream nextPutAll: rects.
+			  "stream nextPutAll: (self selectionLimitRectanglesIn: anInfiniteElement)" ] ]
 ]
 
 { #category : #'infinite element changes' }
@@ -239,7 +225,6 @@ AlbEditorMainSelectionView >> updateMainSelectionVerticesIn: anInfiniteElement [
 
 	| rects |
 	vertices := nil.
-
 	rects := self selectionRectanglesIn: anInfiniteElement.
 	rects ifNotEmpty: [ self vertices: (self verticesFromRectangles: rects)].
 	self updateEchoIn: anInfiniteElement

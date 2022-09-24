@@ -58,7 +58,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space |
 
-	text := self methodText asRopedText fontName: 'Source Sans Pro'; fontSize: 20.
+	text := self methodText asRopedText fontName: 'Courier'; fontSize: 20.
 
 	styler := AlbRBTextStyler new.
 	styler classOrMetaClass: self class.
@@ -134,7 +134,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	| ed space |
 	ed := AlbEditor new.
 	"ed withLineNumbers."
-	ed text: (String loremIpsum asRopedText
+	ed text: (String loremIpsum asRopedText fontName: 'Geneva'; fontSize: 20
 			 "fontSize: 16;
 			 fontName: 'Helvetica Neue'").
 	space := BlSpace new.
@@ -154,6 +154,73 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	ed := Smalltalk changesFile readStream contents onAlbum.
 	ed withLineNumbers.
 	ed openInOblSpace
+]
+
+{ #category : #'as yet unclassified' }
+AlbExamplesSeeClassSide class >> example_EditorWithAllFonts [
+
+"
+AeFontSlant: normal italic oblique.
+AeFontWeight: black bold extraBlack extraBold extraLight light medium normal semiBold semiLight thin
+AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiCondensed semiExpanded ultraCondensed ultraExpanded 
+"
+	| aManager allSlants allWeights allStreches root text child |
+	aManager := AeFontManager globalInstance scanDefaultDirectories.
+	allSlants := { BlFontSlant normal.
+		BlFontSlant italic. 
+		BlFontSlant oblique }.
+	allWeights := { 
+		BlFontWeight normal. 
+		BlFontWeight light. 
+		BlFontWeight extraLight. 
+		BlFontWeight medium. 
+		BlFontWeight bold. 
+		BlFontWeight semiBold. 
+		BlFontWeight extraBold. 
+		BlFontWeight black.  
+		BlFontWeight extraBlack. 
+		BlFontWeight thin }.
+	allStreches := { 
+		BlFontStretch normal.
+		BlFontStretch condensed.
+		BlFontStretch semiCondensed.
+		BlFontStretch extraCondensed.
+		BlFontStretch ultraCondensed.
+		BlFontStretch expanded.
+		BlFontStretch semiExpanded.
+		BlFontStretch extraExpanded.
+		BlFontStretch ultraExpanded 
+		}.
+	
+	root := BlElement new 
+				constraintsDo: [ :c | 
+		        c vertical matchParent.
+		        c horizontal matchParent].
+
+	text := '' asRopedText.
+	aManager familyNames do: [ :fname |
+		allSlants do: [ :slant | 
+			allWeights do: [ :weight | 
+				allStreches do: [ :strech | 
+					(aManager
+						detectFamilyName: fname
+						slant: (AeFontSlant perform: slant name asSymbol)
+						weight: (AeFontWeight perform: weight name asSymbol)
+						stretch: (AeFontStretch perform: strech name asSymbol)
+						ifNone: [ ]) in: [ :face | face ifNotNil: [ | fontBuilder t |
+								fontBuilder := BlTextFontAndStyleBuilder new.
+								fontBuilder familyName: fname.
+								fontBuilder fontSize: 18.
+								fontBuilder fontStretch:  strech.
+								fontBuilder fontWeight: weight.
+								fontBuilder fontSlant: slant.
+								t := String loremIpsum asRopedText.
+								fontBuilder font applyOnText: t.
+								text := text, (String cr, String cr, String cr, fname, ' slant: ', slant name, ' weight: ', weight name, ' strech: ', strech name, ' ', String cr, String cr) asRopedText, t.
+								] ]  ] ] ] ].
+		child := text onAlbum dresser: AlbTextAreaDresser new.
+		root addChild: child.
+		root openInOblSpace 
 ]
 
 { #category : #'editor examples' }
@@ -286,7 +353,8 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 	 , (' ( Monospace 40 ) ' asRopedText fontSize: 40; monospace) 
 	 , ' Default font and size' asRopedText) onAlbum
 		withLineNumbers;
-		"inspect"openInOblSpace "attributes: {(BlTextHighlightAttribute paint: (Color red) veryMuchLighter )}"
+		"inspect"
+		openInOblSpace 
 ]
 
 { #category : #elements }

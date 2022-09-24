@@ -166,8 +166,8 @@ AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
 			  rects := te selectionRectangles.
 			  rects := rects collect: [ :r | 
 				           (anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy:
-					           self borderWidth -1 @ (te position y) negated ].
-			  rects := rects collect: [ :r | r asRectangle withRight: r right - self borderWidth ].
+					           0 @ (te position y) negated ].
+			  rects := rects collect: [ :r | r asRectangle withLeft: r left + self borderWidth; withRight: r right - self borderWidth].
 			  stream nextPutAll: rects.
 			  "stream nextPutAll: (self selectionLimitRectanglesIn: anInfiniteElement)" ] ]
 ]

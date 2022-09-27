@@ -123,7 +123,6 @@ AlbEditorElement >> initialize [
 		                 borderColor: (self selectionColor alpha: 0.5);
 		                 selectionColor: self selectionColor;
 		                 yourself.
-	self withSelectionEcho.
 	hasFocus := false.
 	self when: BlFocusInEvent do: [ hasFocus := true ].
 	self when: BlFocusOutEvent do: [ hasFocus := false ].
@@ -218,7 +217,7 @@ AlbEditorElement >> selection [
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> selectionChanged [
-	selectionView selection: self selection withText: self selectedText changedIn: self
+	selectionView selectionChangedIn: self
 ]
 
 { #category : #accessing }
@@ -245,6 +244,11 @@ AlbEditorElement >> selectionEchoRectangles [
 { #category : #accessing }
 AlbEditorElement >> selectionView [
 	^ selectionView
+]
+
+{ #category : #'selection managing' }
+AlbEditorElement >> setRemanents [
+	selectionView setRemanentsIn: self
 ]
 
 { #category : #'private - accessing' }
@@ -277,17 +281,7 @@ AlbEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do
 			aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'accessing - decoration' }
-AlbEditorElement >> withSelectionEcho [
-	self selectionView withSelectionEchoIn: self 
-]
-
 { #category : #'editor - accessing' }
 AlbEditorElement >> withoutCacheLimit [
 	self editor withoutCacheLimit
-]
-
-{ #category : #'accessing - decoration' }
-AlbEditorElement >> withoutSelectionEcho [
-	self selectionView withoutSelectionEchoIn: self 
 ]

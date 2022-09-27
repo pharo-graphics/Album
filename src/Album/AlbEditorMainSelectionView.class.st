@@ -3,63 +3,24 @@ Class {
 	#superclass : #AlbEditorSelectionView,
 	#instVars : [
 		'selection',
-		'echo',
-		'selectedString',
-		'echoUpdater',
-		'echoAllowed'
+		'remanentUpdater',
+		'remanentString',
+		'remanents'
 	],
 	#category : #'Album-UI'
 }
 
-{ #category : #'private - selection echo' }
-AlbEditorMainSelectionView >> echoInterval: anInterval in: anEditorElement [
-
-	| startIdx endIdx rects |
-	startIdx := anInterval first.
-	endIdx := anInterval last.
-	rects := Array streamContents: [ :stream | 
-		         anEditorElement
-			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
-			         do: [ :piece :pieceElement | 
-				         | first last origin corner bnds |
-				         ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
-					         ifTrue: [ 
-						         first := startIdx.
-						         last := endIdx ]
-					         ifFalse: [ 
-						         startIdx > piece textStart
-							         ifTrue: [ 
-								         first := startIdx.
-								         last := piece textEnd ]
-							         ifFalse: [ 
-								         first := piece textStart.
-								         last := endIdx min: piece textEnd ] ].
-				         origin := pieceElement screenOriginAt: first - piece textStart - 1.
-				         corner := pieceElement screenCornerAt: last - piece textStart.
-				         bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
-				         stream nextPut: bnds ] ].
-	rects ifEmpty: [ ^ self ].
-	echo add: (self newEchoVertice: (self verticesFromRectangles: rects))
-]
-
-{ #category : #'private - selection echo' }
-AlbEditorMainSelectionView >> echoUpdatedIn: anEditorElement [
-
-	echoUpdater := nil.
-	anEditorElement invalidate
-]
-
 { #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> extentChangedIn: anInfiniteElement [
 
-	self updateMainSelectionVerticesIn: anInfiniteElement
+	self updateMainSelectionVerticesIn: anInfiniteElement.
+	self updateRemanentsIn: anInfiniteElement
 ]
 
 { #category : #initialization }
 AlbEditorMainSelectionView >> initialize [
 	super initialize.
-	echo := OrderedCollection new.
-	echoAllowed := true
+	remanents := OrderedCollection new
 ]
 
 { #category : #'private - vertices computing' }
@@ -84,7 +45,7 @@ AlbEditorMainSelectionView >> minXLeftCoord: yCoord fromRectangles: aListOfRecta
 ]
 
 { #category : #'private - selection echo' }
-AlbEditorMainSelectionView >> newEchoVertice: aListOfPoints [
+AlbEditorMainSelectionView >> newRemanentVertice: aListOfPoints [
 
 	^ AlbEditorSelectionView new
 		  vertices: aListOfPoints;
@@ -116,17 +77,54 @@ AlbEditorMainSelectionView >> rectsAtYIncBottomLines: anY fromRectangles: aListO
 ]
 
 { #category : #'private - selection echo' }
-AlbEditorMainSelectionView >> resetCurrentEcho [
+AlbEditorMainSelectionView >> remanentInterval: anInterval in: anEditorElement [
 
-	echo reset
+	| startIdx endIdx rects |
+	startIdx := anInterval first.
+	endIdx := anInterval last.
+	rects := Array streamContents: [ :stream | 
+		         anEditorElement
+			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
+			         do: [ :piece :pieceElement | 
+				         | first last origin corner bnds |
+				         ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
+					         ifTrue: [ 
+						         first := startIdx.
+						         last := endIdx ]
+					         ifFalse: [ 
+						         startIdx > piece textStart
+							         ifTrue: [ 
+								         first := startIdx.
+								         last := piece textEnd ]
+							         ifFalse: [ 
+								         first := piece textStart.
+								         last := endIdx min: piece textEnd ] ].
+				         origin := pieceElement screenOriginAt: first - piece textStart - 1.
+				         corner := pieceElement screenCornerAt: last - piece textStart.
+				         bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
+				         stream nextPut: bnds ] ].
+	rects ifEmpty: [ ^ self ].
+	remanents add: (self newRemanentVertice: (self verticesFromRectangles: rects))
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> remanentsUpdatedIn: anEditorElement [
+
+	remanentUpdater := nil.
+	anEditorElement invalidate
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> resetRemanents [
+
+	remanents reset
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorMainSelectionView >> selection: aSelection withText: aText changedIn: anInfiniteElement [
+AlbEditorMainSelectionView >> selectionChangedIn: anInfiniteElement [
 
-	(selection = aSelection and: [vertices notNil]) ifTrue: [ ^ self ].
-	selection := aSelection copy.
-	selectedString := aText asString.
+	(selection = anInfiniteElement selection and: [vertices notNil]) ifTrue: [ ^ self ].
+	selection := anInfiniteElement selection copy.
 
 	self updateMainSelectionVerticesIn: anInfiniteElement
 ]
@@ -167,7 +165,7 @@ AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
 			  rects := rects collect: [ :r | 
 				           (anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy:
 					           0 @ (te position y) negated ].
-			  rects := rects collect: [ :r | r asRectangle withLeft: r left + self borderWidth; withRight: r right - self borderWidth].
+			  rects := rects collect: [ :r | (r asRectangle withLeft: r left + self borderWidth) withRight: r right - self borderWidth].
 			  stream nextPutAll: rects.
 			  "stream nextPutAll: (self selectionLimitRectanglesIn: anInfiniteElement)" ] ]
 ]
@@ -175,49 +173,25 @@ AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
 { #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 	super selectionScrolled: aPoint in: anInfiniteElement.
-	echo ifNil: [ ^ self ].
-	self updateEchoIn: anInfiniteElement
+	self updateRemanentsIn: anInfiniteElement
 ]
 
 { #category : #'private - selection echo' }
-AlbEditorMainSelectionView >> terminateUpdater [
+AlbEditorMainSelectionView >> setRemanentsIn: anEditorElement [
 
-	echoUpdater ifNotNil: #terminate.
-	echoUpdater := nil
-]
-
-{ #category : #'private - selection echo' }
-AlbEditorMainSelectionView >> updateEchoIn: anEditorElement [
-	
-	echoAllowed ifFalse: [ ^ self  ].
-	self resetCurrentEcho.
-	selection ifNil: [ ^ self  ].
-	selection ifEmpty: [ ^ self  ].
-	self updateEchoIn: anEditorElement withString: selectedString
+	remanentString := anEditorElement selectedText asString.
+	self terminateRemanentsUpdater.
+	self resetRemanents.
+	remanentString ifEmpty: [ ^ anEditorElement invalidate ].
+	self updateRemanentsIn: anEditorElement 
 
 ]
 
 { #category : #'private - selection echo' }
-AlbEditorMainSelectionView >> updateEchoIn: anEditorElement withString: aString [
+AlbEditorMainSelectionView >> terminateRemanentsUpdater [
 
-	| collector currentSelectionInterval subTextOnScreen founds |
-	self terminateUpdater.
-
-	self resetCurrentEcho.
-	aString = String space ifTrue: [ ^ self ].
-	aString = String cr ifTrue: [ ^ self ].
-	aString = String crlf ifTrue: [ ^ self ].
-	subTextOnScreen := anEditorElement subTextOnScreen.
-	aString size >= (subTextOnScreen size // 2) ifTrue: [ ^ self ].
-	collector := BlIntervalCollector new text: subTextOnScreen asString.
-	currentSelectionInterval := selection from + 1 to: selection to.
-
-	echoUpdater := [ 						
-	               founds := collector searchAll: aString excluding: currentSelectionInterval - subTextOnScreen textOffset.
-	               founds do: [ :interval | self echoInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
-	               anEditorElement enqueueTask: (BlTaskAction new action: [ self echoUpdatedIn: anEditorElement ]) ]
-		               forkAt: Processor systemBackgroundPriority
-		               named: 'Selection echo updater task'
+	remanentUpdater ifNotNil: #terminate.
+	remanentUpdater := nil
 ]
 
 { #category : #'infinite element changes' }
@@ -226,8 +200,26 @@ AlbEditorMainSelectionView >> updateMainSelectionVerticesIn: anInfiniteElement [
 	| rects |
 	vertices := nil.
 	rects := self selectionRectanglesIn: anInfiniteElement.
-	rects ifNotEmpty: [ self vertices: (self verticesFromRectangles: rects)].
-	self updateEchoIn: anInfiniteElement
+	rects ifNotEmpty: [ self vertices: (self verticesFromRectangles: rects)]
+]
+
+{ #category : #'private - selection echo' }
+AlbEditorMainSelectionView >> updateRemanentsIn: anEditorElement [
+
+	| collector subTextOnScreen founds |
+	self terminateRemanentsUpdater.
+	self resetRemanents.
+	remanentString ifNil: [ ^self ].
+	remanentString ifEmpty: [ ^self ].
+	subTextOnScreen := anEditorElement subTextOnScreen.
+	collector := BlIntervalCollector new text: subTextOnScreen asString.
+
+	remanentUpdater := [ 						
+	               founds := collector searchAll: remanentString.
+	               founds do: [ :interval | self remanentInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
+	               anEditorElement enqueueTask: (BlTaskAction new action: [ self remanentsUpdatedIn: anEditorElement ]) ]
+		               forkAt: Processor systemBackgroundPriority
+		               named: 'Selection echo updater task'
 ]
 
 { #category : #'private - vertices computing' }
@@ -254,19 +246,6 @@ AlbEditorMainSelectionView >> verticesFromRectangles: aListOfRectangles [
 		previousLeftCoord := minimumXLeftCoord.
 		previousRightCoord := maximumXRightCoord ].
 	^ ret
-]
-
-{ #category : #accessing }
-AlbEditorMainSelectionView >> withSelectionEchoIn: anEditorElement [
-	echoAllowed := true.
-	self updateEchoIn: anEditorElement
-]
-
-{ #category : #accessing }
-AlbEditorMainSelectionView >> withoutSelectionEchoIn: anEditorElement [
-	echoAllowed := false.
-	self resetCurrentEcho.
-	anEditorElement invalidate
 ]
 
 { #category : #'private - vertices computing' }

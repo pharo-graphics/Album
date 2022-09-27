@@ -21,6 +21,7 @@ AlbTextEditorReadonlyWithSelectionMode >> initialize [
 	shortcuts := {
 		AlbEditorCopyShortcut new.
 		AlbEditorSelectAllShortcut new.
+		AlbEditorRemanentSelectionShortcut new.
 		AlbEditorDeselectAllShortcut new.
 	}
 ]

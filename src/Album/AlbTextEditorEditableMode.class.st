@@ -41,6 +41,7 @@ AlbTextEditorEditableMode >> initialize [
 		AlbEditorMoveCursorToLineEndShortcut new.
 		
 		AlbEditorSelectAllShortcut new.
+		AlbEditorRemanentSelectionShortcut new.
 		AlbEditorDeselectAllShortcut new.
 		AlbEditorSelectLetterAfterCursorShortcut new.
 		AlbEditorSelectLetterBeforeCursorShortcut new.

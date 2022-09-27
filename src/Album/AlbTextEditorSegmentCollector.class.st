@@ -132,6 +132,11 @@ AlbTextEditorSegmentCollector >> cacheLimit: anInteger [
 	self computeForwardAt: 1
 ]
 
+{ #category : #accessing }
+AlbTextEditorSegmentCollector >> cacheSize: anInteger [
+	self cacheLimit: anInteger
+]
+
 { #category : #'cache - accessing' }
 AlbTextEditorSegmentCollector >> cachedAt: anIndex [
 	"Return a cached segment at an absolute index within editor
@@ -217,7 +222,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	"cumulative segments computing : old segments are kept, cacheLimit new segments are added "
 	stream := self newSegmentStream.
 	stream skip: segments size.
-	stream limit: self cacheLimit.
+	stream limit: cacheLimit.
 
 	self split: self text in: stream offset: 0.
 	"get the stream result directly (without copying)"

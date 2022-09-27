@@ -56,7 +56,7 @@ AlbExamplesSeeClassSide class >> descent [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
-	| text styler editorElement space |
+	| text styler editorElement space vscrollBar |
 
 	text := self methodText asRopedText fontName: 'Courier'; fontSize: 20.
 
@@ -68,7 +68,6 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		styler: styler;
 		text: text.
 
-
 	editorElement withLineNumbers.
 	"editorElement inspect."
 	editorElement editor
@@ -77,30 +76,43 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
 "editorElement selectionView inspect."
+	vscrollBar := BlVerticalScrollbarElement new.
+	vscrollBar constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets right: 2).
+			c ignored horizontal alignRight.
+			c ignored vertical alignBottom]. 
+	vscrollBar attachTo: editorElement.
 	space := OBlSpace new.
 	space root addChild: editorElement.
-	space title: 'editor'.
-	space show.
-	
+	space root addChild: vscrollBar.
+	space show.	
 	
 ]
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
-	| ed space |
+	| ed space hscrollBar |
 
 	ed := AlbEditor new dresser: AlbTextAreaDresser.
 	"ed inspect."
 	ed constraintsDo: [ :c | 
-		c vertical resizer: BlLayoutResizer fitContent. 
-		c horizontal resizer: BlLayoutResizer matchParent].
-	ed text: String loremIpsum.
+		c vertical resizer: BlLayoutResizer matchParent. 
+		c horizontal resizer: BlLayoutResizer fitContent].
+	ed text: (String loremIpsum: 10000).
+	
+	hscrollBar := BlHorizontalScrollbarElement new.
+	hscrollBar constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets bottom: 2).
+			"c ignored vertical alignLeft."
+			c ignored vertical alignBottom]. 
+	hscrollBar attachTo: ed.
 	space := OBlSpace new.
 	space root addChild: ed.
-	space title: 'editor'.
-	space show.
-
+	space root addChild: hscrollBar.
+	space show.	
 	^ed
 ]
 
@@ -149,11 +161,23 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
-	| ed  |
+	| ed vscrollBar space |
 	" ~4300 pages on LibreOffice, ~8000000 characters "
 	ed := Smalltalk changesFile readStream contents onAlbum.
+	ed withoutCacheLimit.
 	ed withLineNumbers.
-	ed openInOblSpace
+	vscrollBar := BlVerticalScrollbarElement new.
+	vscrollBar constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets right: 2).
+			c ignored horizontal alignRight.
+			c ignored vertical alignBottom]. 
+	vscrollBar attachTo: ed.
+	space := OBlSpace new.
+	space root addChild: ed.
+	space root addChild: vscrollBar.
+	space show.
+
 ]
 
 { #category : #'as yet unclassified' }

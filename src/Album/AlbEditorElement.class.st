@@ -38,6 +38,11 @@ AlbEditorElement >> atTextIndex: aTextIndex do: aBlock [
 				 ifAbsent: [ ] ] ]
 ]
 
+{ #category : #'editor - accessing' }
+AlbEditorElement >> cacheSize: aNumber [
+	self editor cacheSize: aNumber
+]
+
 { #category : #accessing }
 AlbEditorElement >> cursor [
 	^ self editor cursor
@@ -114,9 +119,9 @@ AlbEditorElement >> initialize [
 
 	super initialize.
 	selectionView := AlbEditorMainSelectionView new
-		                 borderWidth: 1;
-		                 borderColor: self selectionColor;
-		                 selectionColor: (self selectionColor alpha: 0.3);
+		                 borderWidth: 2;
+		                 borderColor: (self selectionColor alpha: 0.5);
+		                 selectionColor: self selectionColor;
 		                 yourself.
 	self withSelectionEcho.
 	hasFocus := false.
@@ -275,6 +280,11 @@ AlbEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do
 { #category : #'accessing - decoration' }
 AlbEditorElement >> withSelectionEcho [
 	self selectionView withSelectionEchoIn: self 
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> withoutCacheLimit [
+	self editor withoutCacheLimit
 ]
 
 { #category : #'accessing - decoration' }

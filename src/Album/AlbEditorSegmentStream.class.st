@@ -24,9 +24,9 @@ AlbEditorSegmentStream >> collection: anObject [
 ]
 
 { #category : #initialization }
-AlbEditorSegmentStream >> defaultLimit [ 
-	^500
+AlbEditorSegmentStream >> defaultLimit [
 
+	^ 500
 ]
 
 { #category : #initialization }
@@ -101,7 +101,12 @@ AlbEditorSegmentStream >> skip: aNumber [
 	skip := aNumber
 ]
 
+{ #category : #streaming }
+AlbEditorSegmentStream >> unlimited [
+	limit := -1
+]
+
 { #category : #testing }
 AlbEditorSegmentStream >> wantsMore [
-	^ self size < self limit
+	^ limit < 0 or: [self size < limit]
 ]

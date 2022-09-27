@@ -103,6 +103,11 @@ AlbTextEditor >> beReadOnlyWithoutSelection [
 ]
 
 { #category : #accessing }
+AlbTextEditor >> cacheSize: anInteger [
+	segmentCollector cacheSize: anInteger
+]
+
+{ #category : #accessing }
 AlbTextEditor >> checkAndSetText: aText [ 
 	self checkText: aText.
 	self text: aText
@@ -968,7 +973,7 @@ AlbTextEditor >> restoreText: aToText [
 
 	"Replacing text instance means that we can not guarantee structural integrity
 	of existing cache and have to rebuild it invalidating the whole underlying model structure"
-	segmentCollector := self defaultSegmentCollector.
+	segmentCollector resetCache.
 	segmentCollector text: text.
 
 	self onTextReplaced.
@@ -1252,6 +1257,11 @@ AlbTextEditor >> useSyncStylerStrategy [
 { #category : #initialization }
 AlbTextEditor >> useTaskItStylerStrategy [
 	self stylerStrategy: AlbTextStylerTaskItStrategy new
+]
+
+{ #category : #accessing }
+AlbTextEditor >> withoutCacheLimit [
+	 self cacheSize: -1
 ]
 
 { #category : #accessing }

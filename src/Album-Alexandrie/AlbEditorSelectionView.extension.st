@@ -10,7 +10,7 @@ AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 	aeCanvas restoreContextAfter: [ 
 		self background aeApplyTo: aeCanvas.
 
-		aeCanvas setOutskirtsOutside.
+		aeCanvas setOutskirtsCentered.
 		aeCanvas setBorderBlock: [ 
 			| border |
 			border := self border.

@@ -58,7 +58,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text styler editorElement space vscrollBar |
 
-	text := self methodText asRopedText fontName: 'Courier'; fontSize: 20.
+	text := self methodText asRopedText.
 
 	styler := AlbRBTextStyler new.
 	styler classOrMetaClass: self class.
@@ -99,8 +99,8 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	"ed inspect."
 	ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer matchParent. 
-		c horizontal resizer: BlLayoutResizer fitContent].
-	ed text: (String loremIpsum: 10000).
+		c horizontal resizer: BlLayoutResizer matchParent].
+	ed text: ((String loremIpsum: 10000) asRopedText "fontName: 'Source Code Pro'").
 	
 	hscrollBar := BlHorizontalScrollbarElement new.
 	hscrollBar constraintsDo: [ :c |
@@ -113,6 +113,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	space root addChild: ed.
 	space root addChild: hscrollBar.
 	space show.	
+		ed text inspect.
 	^ed
 ]
 
@@ -146,9 +147,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	| ed space |
 	ed := AlbEditor new.
 	"ed withLineNumbers."
-	ed text: (String loremIpsum asRopedText fontName: 'Geneva'; fontSize: 20
-			 "fontSize: 16;
-			 fontName: 'Helvetica Neue'").
+	ed text: (String loremIpsum asRopedText).
 	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
@@ -180,71 +179,87 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithAllFonts [
 
-"
+	"
 AeFontSlant: normal italic oblique.
 AeFontWeight: black bold extraBlack extraBold extraLight light medium normal semiBold semiLight thin
 AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiCondensed semiExpanded ultraCondensed ultraExpanded 
 "
-	| aManager allSlants allWeights allStreches root text child |
-	aManager := AeFontManager globalInstance scanDefaultDirectories.
-	allSlants := { BlFontSlant normal.
-		BlFontSlant italic. 
-		BlFontSlant oblique }.
-	allWeights := { 
-		BlFontWeight normal. 
-		BlFontWeight light. 
-		BlFontWeight extraLight. 
-		BlFontWeight medium. 
-		BlFontWeight bold. 
-		BlFontWeight semiBold. 
-		BlFontWeight extraBold. 
-		BlFontWeight black.  
-		BlFontWeight extraBlack. 
-		BlFontWeight thin }.
-	allStreches := { 
-		BlFontStretch normal.
-		BlFontStretch condensed.
-		BlFontStretch semiCondensed.
-		BlFontStretch extraCondensed.
-		BlFontStretch ultraCondensed.
-		BlFontStretch expanded.
-		BlFontStretch semiExpanded.
-		BlFontStretch extraExpanded.
-		BlFontStretch ultraExpanded 
-		}.
-	
-	root := BlElement new 
-				constraintsDo: [ :c | 
-		        c vertical matchParent.
-		        c horizontal matchParent].
 
+	| aManager allSlants allWeights allStreches root text child allChars vscrollBar |
+	allChars := 'azertyuiopqsdfghjklmwxcvbn' , String cr , 'AZERTYUIOPQSDFGHJKLMWXCVBN' , String cr , '1234567890'
+	            , String cr , '@&é"''(§è!çà)-#°_¨*%£+/.?' , String cr , '€^$`ù=:;,~|'.
+	AeFontManager resetGlobalInstance.
+	aManager := AeFontManager globalInstance .
+	aManager scanEmbeddedFonts.
+	aManager scanDefaultDirectories.
+	allSlants := { 
+		             BlFontSlant normal.
+		             BlFontSlant italic.
+		             BlFontSlant oblique }.
+	allWeights := { 
+		              BlFontWeight normal.
+		              BlFontWeight light.
+		              BlFontWeight extraLight.
+		              BlFontWeight medium.
+		              BlFontWeight bold.
+		              BlFontWeight semiBold.
+		              BlFontWeight extraBold.
+		              BlFontWeight black.
+		              BlFontWeight extraBlack.
+		              BlFontWeight thin }.
+	allStreches := { 
+		               BlFontStretch normal.
+		               BlFontStretch condensed.
+		               BlFontStretch semiCondensed.
+		               BlFontStretch extraCondensed.
+		               BlFontStretch ultraCondensed.
+		               BlFontStretch expanded.
+		               BlFontStretch semiExpanded.
+		               BlFontStretch extraExpanded.
+		               BlFontStretch ultraExpanded }.
+
+	root := BlElement new constraintsDo: [ :c | 
+		        c vertical matchParent.
+		        c horizontal matchParent ].
 	text := '' asRopedText.
-	aManager familyNames do: [ :fname |
+	aManager familyNames do: [ :fname | 
 		allSlants do: [ :slant | 
 			allWeights do: [ :weight | 
 				allStreches do: [ :strech | 
 					(aManager
-						detectFamilyName: fname
-						slant: (AeFontSlant perform: slant name asSymbol)
-						weight: (AeFontWeight perform: weight name asSymbol)
-						stretch: (AeFontStretch perform: strech name asSymbol)
-						ifNone: [ ]) in: [ :face | face ifNotNil: [ | fontBuilder t |
-								fontBuilder := BlTextFontAndStyleBuilder new.
-								fontBuilder familyName: fname.
-								fontBuilder fontSize: 18.
-								fontBuilder fontStretch:  strech.
-								fontBuilder fontWeight: weight.
-								fontBuilder fontSlant: slant.
-								t := String loremIpsum asRopedText.
-								fontBuilder font applyOnText: t.
-								text := text, (String cr, String cr, String cr, fname, ' slant: ', slant name, ' weight: ', weight name, ' strech: ', strech name, ' ', String cr, String cr) asRopedText, t.
-								] ]  ] ] ] ].
-		child := text onAlbum dresser: AlbTextAreaDresser new.
-		root addChild: child.
-		root openInOblSpace 
+						 detectFamilyName: fname
+						 slant: (AeFontSlant perform: slant name asSymbol)
+						 weight: (AeFontWeight perform: weight name asSymbol)
+						 stretch: (AeFontStretch perform: strech name asSymbol)
+						 ifNone: [  ]) in: [ :face | 
+						face ifNotNil: [ 
+							| fontBuilder t |
+							fontBuilder := BlTextFontAndStyleBuilder new.
+							fontBuilder familyName: fname.
+							fontBuilder fontSize: 18.
+							fontBuilder fontStretch: strech.
+							fontBuilder fontWeight: weight.
+							fontBuilder fontSlant: slant.
+							t := allChars copy asRopedText.
+							fontBuilder font applyOnText: t.
+							text append:
+								(String cr , String cr , String cr , fname , ' slant: ' , slant name , ' weight: ' , weight name , ' strech: '
+								 , strech name , ' ' , String cr , String cr) asRopedText.
+							text append: t ] ] ] ] ] ].
+	child := text onAlbum dresser: AlbTextAreaDresser new.
+	vscrollBar := BlVerticalScrollbarElement new.
+	vscrollBar constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets right: 2).
+			c ignored horizontal alignRight.
+			c ignored vertical alignBottom]. 
+	vscrollBar attachTo: child.
+	root addChild: child.
+	root addChild: vscrollBar.
+	root openInOblSpace
 ]
 
 { #category : #'editor examples' }
@@ -326,6 +341,77 @@ broken in GlamorousToolKit but what to do with that ?
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorWithEmbeddedFonts [
+
+	"
+AeFontSlant: normal italic oblique.
+AeFontWeight: black bold extraBlack extraBold extraLight light medium normal semiBold semiLight thin
+AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiCondensed semiExpanded ultraCondensed ultraExpanded 
+"
+
+	| aManager allSlants allWeights allStreches root text child allChars |
+	allChars := 'azertyuiopqsdfghjklmwxcvbn' , String cr , 'AZERTYUIOPQSDFGHJKLMWXCVBN' , String cr , '1234567890'
+	            , String cr , '@&é"''(§è!çà)-#°_¨*%£+/.?' , String cr , '^$`ù=:;,~|'.
+	AeFontManager resetGlobalInstance.
+	aManager := AeFontManager globalInstance .
+	allSlants := { 
+		             BlFontSlant normal.
+		             BlFontSlant italic.
+		             BlFontSlant oblique }.
+	allWeights := { 
+		              BlFontWeight normal.
+		              BlFontWeight light.
+		              BlFontWeight extraLight.
+		              BlFontWeight medium.
+		              BlFontWeight bold.
+		              BlFontWeight semiBold.
+		              BlFontWeight extraBold.
+		              BlFontWeight black.
+		              BlFontWeight extraBlack.
+		              BlFontWeight thin }.
+	allStreches := { 
+		               BlFontStretch normal.
+		               BlFontStretch condensed.
+		               BlFontStretch semiCondensed.
+		               BlFontStretch extraCondensed.
+		               BlFontStretch ultraCondensed.
+		               BlFontStretch expanded.
+		               BlFontStretch semiExpanded.
+		               BlFontStretch extraExpanded.
+		               BlFontStretch ultraExpanded }.
+
+	root := BlElement new constraintsDo: [ :c | 
+		        c vertical matchParent.
+		        c horizontal matchParent ].
+	text := '' asRopedText.
+	aManager familyNames do: [ :fname | 
+		allSlants do: [ :slant | 
+			allWeights do: [ :weight | 
+				allStreches do: [ :strech | 
+					(aManager
+						 detectFamilyName: fname
+						 slant: (AeFontSlant perform: slant name asSymbol)
+						 weight: (AeFontWeight perform: weight name asSymbol)
+						 stretch: (AeFontStretch perform: strech name asSymbol)
+						 ifNone: [  ]) in: [ :face | 
+						face ifNotNil: [ 
+							| fontBuilder t |
+							fontBuilder := BlTextFontAndStyleBuilder new.
+							fontBuilder familyName: fname.
+							fontBuilder fontSize: 18.
+							fontBuilder fontStretch: strech.
+							fontBuilder fontWeight: weight.
+							fontBuilder fontSlant: slant.
+							t := allChars copy asRopedText.
+							fontBuilder font applyOnText: t.
+							text := text, (String cr , String cr , String cr , fname , ' slant: ' , slant name , ' weight: ' , weight name
+							         , ' strech: ' , strech name , ' ' , String cr , String cr) asRopedText , t ] ] ] ] ] ].
+	child := text onAlbum dresser: AlbTextAreaDresser new.
+	root addChild: child.
+	root openInOblSpace
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 
 
@@ -349,8 +435,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 		1 to: 400000 do: [ :l | 
 			stream << l asString << ': 1234567890'; lf ] ].
 	ed := (t asRopedText
-		       fontSize: 16;
-		       fontName: 'Helvetica Neue') onAlbum.
+		       fontSize: 16) onAlbum.
 	ed withLineNumbers.
 	ed openInOblSpace
 ]
@@ -374,7 +459,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 		l withIndexDo: [ :c :idx | 
 			(colorIndex at: c ifAbsent: [  ]) in: [ :color | 
 				color ifNotNil: [ lrt attribute: (BlTextBackgroundAttribute paint: color) from: idx to: idx ] ] ].
-		tgcaText append: ((lrt , String cr asRopedText) fontName: 'Fira Code'; fontSize: 25)].
+		tgcaText append: ((lrt , String cr asRopedText) fontName: 'Source Code Pro'; fontSize: 20)].
 
 	ed := tgcaText onAlbum.
 	ed dresser: AlbTextAreaDresser new.
@@ -405,8 +490,8 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 	(' Default font and size' asRopedText
-	 , (' ( Monospace 40 ) ' asRopedText fontSize: 40; monospace) 
-	 , ' Default font and size' asRopedText) onAlbum
+	 , (' ( Source code pro  40 bold ) ' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
+	 , (' Default font 30' asRopedText fontSize: 30)) onAlbum
 		withLineNumbers;
 		"inspect"
 		openInOblSpace 

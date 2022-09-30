@@ -77,7 +77,7 @@ AlbTextElement >> defaultMinWidth [
 
 	"to ensure that the clickable area is width enough event in case of fitContent"
 
-	^ 8
+	^ 4
 ]
 
 { #category : #'cursor - accessing' }
@@ -128,16 +128,6 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 		cursorElement
 			applyLayoutIn: (textPos extent: (cursorElement measuredWidth @ ((cursorElement measuredHeight - self padding height) max: 0.0)))
 			context: aBlElementBoundsUpdateContext
-]
-
-{ #category : #layout }
-AlbTextElement >> measuredExtent: anExtentPoint [
-
-	| p |
-	p := self hasCursor
-		     ifFalse: [ anExtentPoint ]
-		     ifTrue: [ (anExtentPoint x + self cursorElement width) @ anExtentPoint y ].
-	super measuredExtent: p
 ]
 
 { #category : #initialization }

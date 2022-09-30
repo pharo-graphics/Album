@@ -120,7 +120,7 @@ AlbEditorElement >> initialize [
 	super initialize.
 	selectionView := AlbEditorMainSelectionView new
 		                 borderWidth: 2;
-		                 borderColor: (self selectionColor alpha: 0.5);
+		                 borderColor: (self selectionColor twiceDarker);
 		                 selectionColor: self selectionColor;
 		                 yourself.
 	hasFocus := false.

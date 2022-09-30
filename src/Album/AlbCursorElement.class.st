@@ -13,7 +13,7 @@ AlbCursorElement >> initialize [
 	
 	textPosition := 0.
 	self focusability: BlFocusability none.
-	self constraintsDo: [ :c | c ignoreByLayout ]
+	"self constraintsDo: [ :c | c ignoreByLayout ]"
 ]
 
 { #category : #accessing }

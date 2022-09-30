@@ -571,6 +571,7 @@ AlbExamplesSeeClassSide class >> example_TextFlowWithBlElements [
 	element := BlElement new
 		           layout: (AlbLineFlowLayout new lineSpacing: 10);
 		           constraintsDo: [ :c | 
+							c minWidth: 50.
 			           c horizontal matchParent.
 			           c vertical matchParent ];
 		           addChildren: (20 timesCollect: [ 
@@ -660,6 +661,19 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
 	| ed space |
 	ed := AlbEditor new.
+	space := BlSpace new.
+	space root addChild: ed.
+	space show
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
+
+	| ed space |
+	ed := AlbEditor new dresser: AlbTextAreaDresser new.
+	ed constraintsDo: [ :c | 
+		c horizontal fitContent.
+		c vertical fitContent ].
 	space := BlSpace new.
 	space root addChild: ed.
 	space show

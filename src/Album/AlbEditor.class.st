@@ -58,7 +58,7 @@ AlbEditor >> defaultPaddings [
 
 	^ BlInsets
 		  top: 5
-		  left: 0
+		  left: 1
 		  bottom: 5
 		  right: 5
 ]

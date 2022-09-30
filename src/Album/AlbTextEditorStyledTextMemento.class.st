@@ -33,7 +33,7 @@ AlbTextEditorStyledTextMemento >> order [
 { #category : #memento }
 AlbTextEditorStyledTextMemento >> restoreStateOf: aTextEditor [
 	aTextEditor
-		disableStyleTextWhenModifiedDuring: [
+		disableStylerDuring: [
 			aTextEditor styler: self styler.
 			aTextEditor restoreText: text copy ]
 ]

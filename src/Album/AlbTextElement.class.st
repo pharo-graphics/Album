@@ -77,7 +77,7 @@ AlbTextElement >> defaultMinWidth [
 
 	"to ensure that the clickable area is width enough event in case of fitContent"
 
-	^ 4
+	^ 2
 ]
 
 { #category : #'cursor - accessing' }

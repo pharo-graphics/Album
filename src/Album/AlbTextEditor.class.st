@@ -23,7 +23,6 @@ Class {
 		'filter',
 		'shortcuts',
 		'isFocused',
-		'shouldStyleWhenTextModified',
 		'cursor',
 		'hasEventHandlerAttribute',
 		'wordStencilBuilder',
@@ -281,17 +280,12 @@ AlbTextEditor >> deselecter [
 ]
 
 { #category : #'text - styling' }
-AlbTextEditor >> disableStyleTextWhenModified [
-	shouldStyleWhenTextModified := false
-]
-
-{ #category : #'text - styling' }
-AlbTextEditor >> disableStyleTextWhenModifiedDuring: aBlock [
-	| aPreviousShouldStyleWhenTextModified |
-	
-	aPreviousShouldStyleWhenTextModified := shouldStyleWhenTextModified.
-	shouldStyleWhenTextModified := false.
-	aBlock ensure: [ shouldStyleWhenTextModified := aPreviousShouldStyleWhenTextModified ]
+AlbTextEditor >> disableStylerDuring: aBlock [
+	| prevStyler |
+		
+	prevStyler := styler.
+	styler := BlTextNullStyler new.
+	aBlock ensure: [ styler := prevStyler ]
 ]
 
 { #category : #'api - mode' }
@@ -326,11 +320,6 @@ AlbTextEditor >> editorShortcuts [
 	<return: #AlbTextEditorShortcuts>
 
 	^ shortcuts
-]
-
-{ #category : #'text - styling' }
-AlbTextEditor >> enableStyleTextWhenModified [
-	shouldStyleWhenTextModified := true
 ]
 
 { #category : #'commands - processing' }
@@ -424,8 +413,6 @@ AlbTextEditor >> initialize [
 	history := AlbTextEditorHistory new.
 	
 	isFocused := false.
-	shouldStyleWhenTextModified := true.
-
 	self beEditable.
 ]
 
@@ -755,8 +742,7 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 
 	self notifyModified: self text.
 
-	shouldStyleWhenTextModified
-		ifTrue: [ self styleText ]
+	self styleText
 ]
 
 { #category : #'hooks - text modifications' }
@@ -836,8 +822,7 @@ AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
 
 	self notifyModified: self text.
 	
-	shouldStyleWhenTextModified
-		ifTrue: [ self styleText ]
+	self styleText
 ]
 
 { #category : #'text - copy/paste' }
@@ -982,8 +967,7 @@ AlbTextEditor >> restoreText: aToText [
 	self notifyChanged.
 
 	"text changed, we should style it"
-	shouldStyleWhenTextModified
-		ifTrue: [ self styleText ]
+	self styleText
 ]
 
 { #category : #'api - save state' }
@@ -1114,8 +1098,7 @@ AlbTextEditor >> styler: aStyler [
 	styler := aStyler.
 
 	"styler changed, let's restyle the text"
-	shouldStyleWhenTextModified
-		ifTrue: [ self styleText ]
+	self styleText
 ]
 
 { #category : #accessing }

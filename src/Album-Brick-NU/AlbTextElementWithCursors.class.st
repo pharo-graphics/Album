@@ -173,7 +173,6 @@ AlbTextElementWithCursors >> newCursor [
 	<return: #BlElement>
 
 	^ self cursorStencil asElement
-		constraintsDo: [ :c | c ignoreByLayout ]
 ]
 
 { #category : #layout }

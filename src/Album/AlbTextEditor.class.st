@@ -1055,8 +1055,9 @@ AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 
 { #category : #'text - styling' }
 AlbTextEditor >> styleText [
-	"I first style, and then I do aBlock once I am finished"
+	" I first style "
 	
+	" Target the editor element that will send back styling (through #launchStylingFromElement: with itself as argument "
 	self dispatchEvent: (AlbTextEditorTextStyleRequested new)
 ]
 

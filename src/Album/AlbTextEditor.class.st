@@ -16,8 +16,6 @@ Class {
 		'selectionRecorder',
 		'segmentCollector',
 		'styler',
-		'stylerStrategy',
-		'stylerEventHandler',
 		'attachedElements',
 		'history',
 		'filter',
@@ -217,19 +215,7 @@ AlbTextEditor >> defaultSelectionRecorder [
 
 { #category : #initialization }
 AlbTextEditor >> defaultStyler [
-	^ BlTextNullStyler new
-]
-
-{ #category : #initialization }
-AlbTextEditor >> defaultStylerEventHandler [
-	^ BlEventHandler
-		on: AlbTextStyledEvent
-		do: [ :anEvent | self onTextStyled: anEvent ]
-]
-
-{ #category : #initialization }
-AlbTextEditor >> defaultStylerStrategy [
-	^ AlbTextStylerSyncStrategy new
+	^ nil
 ]
 
 { #category : #initialization }
@@ -284,7 +270,7 @@ AlbTextEditor >> disableStylerDuring: aBlock [
 	| prevStyler |
 		
 	prevStyler := styler.
-	styler := BlTextNullStyler new.
+	styler := nil.
 	aBlock ensure: [ styler := prevStyler ]
 ]
 
@@ -405,9 +391,6 @@ AlbTextEditor >> initialize [
 	segmentCollector text: text.
 	
 	styler := self defaultStyler.
-	stylerEventHandler := self defaultStylerEventHandler.
-	self addEventHandler: stylerEventHandler.
-	self useDefaultStylerStrategy.
 	
 	shortcuts := AlbTextEditorShortcuts new.
 	history := AlbTextEditorHistory new.
@@ -478,6 +461,12 @@ AlbTextEditor >> itemTypeAt: aPosition [
 	self flag: 'try with uniform item type to avoid collector>>computeBackwardAt:'.
 	^ AlbTextEditorLineSegmentType uniqueInstance
 	"^ (segmentCollector segmentAt: aPosition) segmentType"
+]
+
+{ #category : #'text - styling' }
+AlbTextEditor >> launchStylingFromElement: anElement [ 
+	styler ifNil: [ ^ self ].
+	styler launcher styleTextInElement: anElement 
 ]
 
 { #category : #accessing }
@@ -605,7 +594,8 @@ AlbTextEditor >> notifyTextStyled [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyTextStyled: aText [
-	self dispatchEvent: (AlbTextEditorTextStyledEvent new styledText: aText)
+	self dispatchEvent: (AlbTextEditorTextStyledEvent new styledText: aText).
+
 ]
 
 { #category : #hooks }
@@ -786,13 +776,6 @@ AlbTextEditor >> onTextReplaced [
 
 	self processCursorAttributes.
 	self notifyTextReplaced: self text
-]
-
-{ #category : #'hooks - text modifications' }
-AlbTextEditor >> onTextStyled: aTextStyledEvent [
-
-	self assertUIProcess.
-	self styler onTextStyled: aTextStyledEvent editor: self
 ]
 
 { #category : #'hooks - text modifications' }
@@ -1072,16 +1055,9 @@ AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 
 { #category : #'text - styling' }
 AlbTextEditor >> styleText [
-	"I request styler to re-style my current text"
-	
-	self styleTextAndAfterDo: [ :aStyledText | "do nothing" ]
-]
-
-{ #category : #'text - styling' }
-AlbTextEditor >> styleTextAndAfterDo: aBlock [
 	"I first style, and then I do aBlock once I am finished"
 	
-	self dispatchEvent: (AlbTextEditorTextStyleRequested new afterAction: aBlock)
+	self dispatchEvent: (AlbTextEditorTextStyleRequested new)
 ]
 
 { #category : #accessing }
@@ -1099,18 +1075,6 @@ AlbTextEditor >> styler: aStyler [
 
 	"styler changed, let's restyle the text"
 	self styleText
-]
-
-{ #category : #accessing }
-AlbTextEditor >> stylerStrategy [
-	<return: #AlbTextStylerStrategy>
-	^ stylerStrategy
-]
-
-{ #category : #accessing }
-AlbTextEditor >> stylerStrategy: aToTextStylerStrategy [
-
-	stylerStrategy := aToTextStylerStrategy
 ]
 
 { #category : #'api - shortcuts' }
@@ -1172,6 +1136,19 @@ AlbTextEditor >> textSnapshot [
 	^ text copy
 ]
 
+{ #category : #'text - styling' }
+AlbTextEditor >> textStyled: aStyledText [
+
+	self assertUIProcess.	
+	(aStyledText isNextGenerationOf: self text) ifFalse: [ ^ false ].
+
+	self text rope: aStyledText text rope.
+	self notifyTextStyled.
+	self processCursorAttributes.
+	self updater all; update.
+	^ true
+]
+
 { #category : #asserting }
 AlbTextEditor >> uiProcesses [
 	| theElementGroupedByProcess allUIProcesses |
@@ -1220,26 +1197,6 @@ AlbTextEditor >> updater [
 	<return: #AlbTextEditorUpdater>
 
 	^ AlbTextEditorUpdater new editor: self
-]
-
-{ #category : #initialization }
-AlbTextEditor >> useAsyncStylerStrategy [
-	self stylerStrategy: AlbTextStylerAsyncStrategy new
-]
-
-{ #category : #initialization }
-AlbTextEditor >> useDefaultStylerStrategy [
-	self stylerStrategy: self defaultStylerStrategy
-]
-
-{ #category : #initialization }
-AlbTextEditor >> useSyncStylerStrategy [
-	self stylerStrategy: AlbTextStylerSyncStrategy new
-]
-
-{ #category : #initialization }
-AlbTextEditor >> useTaskItStylerStrategy [
-	self stylerStrategy: AlbTextStylerTaskItStrategy new
 ]
 
 { #category : #accessing }

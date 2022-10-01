@@ -18,7 +18,6 @@ AlbEditorModel >> beEditable [
 AlbEditorModel >> initialize [
 	super initialize.
 	
-	styler := BlTextNullStyler new.
 	text := '' asRopedText.
 	mode := AlbTextEditorEditableMode new
 ]

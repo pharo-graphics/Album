@@ -60,14 +60,13 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	text := self methodText asRopedText.
 
-	styler := AlbRBTextStyler new.
+	styler := BlRBTextStyler new.
 	styler classOrMetaClass: self class.
 
 	editorElement := AlbEditor new 
 		dresser: AlbTextAreaDresser new;
 		styler: styler;
 		text: text.
-
 	editorElement withLineNumbers.
 	"editorElement inspect."
 	editorElement editor

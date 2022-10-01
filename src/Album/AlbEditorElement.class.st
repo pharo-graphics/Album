@@ -120,7 +120,7 @@ AlbEditorElement >> initialize [
 	super initialize.
 	selectionView := AlbEditorMainSelectionView new
 		                 borderWidth: 2;
-		                 borderColor: (self selectionColor twiceDarker);
+		                 borderColor: self selectionColor twiceDarker;
 		                 selectionColor: self selectionColor;
 		                 yourself.
 	hasFocus := false.
@@ -128,8 +128,7 @@ AlbEditorElement >> initialize [
 	self when: BlFocusOutEvent do: [ hasFocus := false ].
 	textStyleHandler := BlEventHandler
 		                    on: AlbTextEditorTextStyleRequested
-		                    do: [ :anEvent | 
-		                    self editor stylerStrategy styleTextInEditorElement: self thenDo: anEvent afterAction ]
+		                    do: [ :anEvent | self editor launchStylingFromElement: self ]
 ]
 
 { #category : #accessing }
@@ -279,6 +278,21 @@ AlbEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do
 	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
 		(piece textEnd < anInterval first or: [ piece textStart > (anInterval last)]) ifFalse: [ 
 			aBlock value: piece value: pieceElement ] ]
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> textSnapshot [
+	"Return a snaphost (copy) of the current text.
+	I am safe to use from a non-UI thread because the returned text is independent from the
+	current one and can be safely modified"
+	<return: #BlText>
+
+	^ self editor textSnapshot
+]
+
+{ #category : #'text - styling' }
+AlbEditorElement >> textStyled: aStyledText [
+	^ self editor textStyled: aStyledText
 ]
 
 { #category : #'editor - accessing' }

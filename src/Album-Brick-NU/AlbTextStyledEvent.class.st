@@ -6,7 +6,7 @@ Class {
 		'afterAction',
 		'editorElement'
 	],
-	#category : #'Album-Model-Events'
+	#category : #'Album-Brick-NU-Model-Events'
 }
 
 { #category : #accessing }

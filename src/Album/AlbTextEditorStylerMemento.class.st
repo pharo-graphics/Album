@@ -7,13 +7,6 @@ Class {
 	#category : #'Album-Model-Memento'
 }
 
-{ #category : #initialization }
-AlbTextEditorStylerMemento >> initialize [
-	super initialize.
-	
-	styler := BlTextNullStyler new
-]
-
 { #category : #evaluating }
 AlbTextEditorStylerMemento >> label [
 	^ 'Styler'

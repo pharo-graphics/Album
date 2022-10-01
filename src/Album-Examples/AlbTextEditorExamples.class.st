@@ -162,7 +162,7 @@ AlbTextEditorExamples class >> elementOnMethodWithSyntaxHighlighting [
 	text := self newMethodText.
 	element := self newElement.
 	editor := self newEditor.
-	styler := AlbRBTextStyler new.
+	styler := BlRBTextStyler new.
 	styler classOrMetaClass: Object.
 	editor styler: styler.
 	editor text: text.

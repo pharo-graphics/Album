@@ -5,7 +5,8 @@ Class {
 		'selection',
 		'remanentUpdater',
 		'remanentString',
-		'remanents'
+		'remanents',
+		'monitor'
 	],
 	#category : #'Album-UI'
 }
@@ -20,6 +21,8 @@ AlbEditorMainSelectionView >> extentChangedIn: anInfiniteElement [
 { #category : #initialization }
 AlbEditorMainSelectionView >> initialize [
 	super initialize.
+	
+	monitor := Monitor new.
 	remanents := OrderedCollection new
 ]
 
@@ -44,7 +47,7 @@ AlbEditorMainSelectionView >> minXLeftCoord: yCoord fromRectangles: aListOfRecta
 	^ (l sort: [ :a :b | a left < b left ]) first left
 ]
 
-{ #category : #'private - selection echo' }
+{ #category : #'private - remanent selection' }
 AlbEditorMainSelectionView >> newRemanentVertice: aListOfPoints [
 
 	^ AlbEditorSelectionView new
@@ -76,7 +79,7 @@ AlbEditorMainSelectionView >> rectsAtYIncBottomLines: anY fromRectangles: aListO
 	^ aListOfRectangles select: [ :rect | rect top <= anY and: [ rect bottom = anY ] ]
 ]
 
-{ #category : #'private - selection echo' }
+{ #category : #'private - remanent selection' }
 AlbEditorMainSelectionView >> remanentInterval: anInterval in: anEditorElement [
 
 	| startIdx endIdx rects |
@@ -107,14 +110,14 @@ AlbEditorMainSelectionView >> remanentInterval: anInterval in: anEditorElement [
 	remanents add: (self newRemanentVertice: (self verticesFromRectangles: rects))
 ]
 
-{ #category : #'private - selection echo' }
+{ #category : #'private - remanent selection' }
 AlbEditorMainSelectionView >> remanentsUpdatedIn: anEditorElement [
 
 	remanentUpdater := nil.
 	anEditorElement invalidate
 ]
 
-{ #category : #'private - selection echo' }
+{ #category : #'private - remanent selection' }
 AlbEditorMainSelectionView >> resetRemanents [
 
 	remanents reset
@@ -175,7 +178,7 @@ AlbEditorMainSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 	self updateRemanentsIn: anInfiniteElement
 ]
 
-{ #category : #'private - selection echo' }
+{ #category : #'private - remanent selection' }
 AlbEditorMainSelectionView >> setRemanentsIn: anEditorElement [
 
 	remanentString := anEditorElement selectedText asString.
@@ -186,7 +189,7 @@ AlbEditorMainSelectionView >> setRemanentsIn: anEditorElement [
 
 ]
 
-{ #category : #'private - selection echo' }
+{ #category : #'private - remanent selection' }
 AlbEditorMainSelectionView >> terminateRemanentsUpdater [
 
 	remanentUpdater ifNotNil: #terminate.
@@ -206,19 +209,19 @@ AlbEditorMainSelectionView >> updateMainSelectionVerticesIn: anInfiniteElement [
 AlbEditorMainSelectionView >> updateRemanentsIn: anEditorElement [
 
 	| collector subTextOnScreen founds |
-	self terminateRemanentsUpdater.
-	self resetRemanents.
-	remanentString ifNil: [ ^self ].
-	remanentString ifEmpty: [ ^self ].
-	subTextOnScreen := anEditorElement subTextOnScreen.
-	collector := BlIntervalCollector new text: subTextOnScreen asString.
-
-	remanentUpdater := [ 						
-	               founds := collector searchAll: remanentString.
-	               founds do: [ :interval | self remanentInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
-	               anEditorElement enqueueTask: (BlTaskAction new action: [ self remanentsUpdatedIn: anEditorElement ]) ]
-		               forkAt: Processor systemBackgroundPriority
-		               named: 'Selection echo updater task'
+	monitor critical: [
+		self terminateRemanentsUpdater.
+		self resetRemanents.
+		remanentString ifNil: [ ^ self ].
+		remanentString ifEmpty: [ ^ self ].
+		subTextOnScreen := anEditorElement subTextOnScreen.
+		collector := BlIntervalCollector new text: subTextOnScreen asString.
+		remanentUpdater := [ 
+		                   founds := collector searchAll: remanentString.
+		                   founds do: [ :interval | self remanentInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
+		                   self remanentsUpdatedIn: anEditorElement ]
+			                   forkAt: Processor systemBackgroundPriority
+			                   named: 'Selection echo updater task' ]
 ]
 
 { #category : #'private - vertices computing' }

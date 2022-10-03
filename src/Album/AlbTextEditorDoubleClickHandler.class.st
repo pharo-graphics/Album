@@ -1,36 +1,15 @@
 Class {
 	#name : #AlbTextEditorDoubleClickHandler,
-	#superclass : #BlCustomEventHandler,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#superclass : #AlbTextEditorToElementHandler,
 	#category : #'Album-UI-Handlers'
 }
-
-{ #category : #accessing }
-AlbTextEditorDoubleClickHandler class >> cleanUp [
-	super cleanUp.
-	
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-AlbTextEditorDoubleClickHandler class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
-]
 
 { #category : #'mouse handlers' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
-	| editorElement |
 	"To not create an instance of me for each tiny text element"
-	editorElement := anEvent currentTarget
-		                 withAllParentsDetect: [ :anElement | 
-		                 anElement isKindOf: AlbEditorElement ]
-		                 ifFound: #yourself
-		                 ifNone: [ ^ self ].
-	self handleSelectionFromEvent: anEvent editorElement: editorElement.
-	anEvent sendTo: editorElement
+	self handleSelectionFromEvent: anEvent editorElement: element.
+	anEvent sendTo: element
 	
 ]
 

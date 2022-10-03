@@ -7,10 +7,10 @@ Class {
 { #category : #initialization }
 AlbTextEditorReadonlyWithSelectionMode >> createEventHandlers [
 	^ super createEventHandlers, {
-		AlbTextEditorMouseDownHandler uniqueInstance.
-		AlbTextEditorDoubleClickHandler uniqueInstance.
+		AlbTextEditorMouseDownHandler new.
+		AlbTextEditorDoubleClickHandler new.
 		AlbTextEditorSelectionHandler new.
-		AlbTextEditorCursorIconHandler uniqueInstance.
+		AlbTextEditorCursorIconHandler new.
 	}
 ]
 

@@ -6,7 +6,7 @@ Class {
 	#superclass : #OBlInfiniteElement,
 	#instVars : [
 		'hasFocus',
-		'textStyleHandler',
+		'textEditorHandlers',
 		'selectionView'
 	],
 	#category : #'Album-UI'
@@ -87,9 +87,10 @@ AlbEditorElement >> editor [
 
 { #category : #accessing }
 AlbEditorElement >> editor: aTextEditor [
-	self editor removeEventHandler: textStyleHandler.
+
+	textEditorHandlers do: [ :handler | self editor removeEventHandler: handler ].
 	self dataSource: aTextEditor.
-	self editor addEventHandler: textStyleHandler.
+	textEditorHandlers do: [ :handler | self editor addEventHandler: handler ]
 ]
 
 { #category : #'private - accessing' }
@@ -124,11 +125,19 @@ AlbEditorElement >> initialize [
 		                 selectionColor: self selectionColor;
 		                 yourself.
 	hasFocus := false.
+
 	self when: BlFocusInEvent do: [ hasFocus := true ].
 	self when: BlFocusOutEvent do: [ hasFocus := false ].
-	textStyleHandler := BlEventHandler
-		                    on: AlbTextEditorTextStyleRequested
-		                    do: [ :anEvent | self editor launchStylingFromElement: self ]
+	textEditorHandlers := OrderedCollection new.
+	textEditorHandlers add: (AlbTextEditorModeHandler new element: self).
+	textEditorHandlers add: (AlbTextEditorShortcutHandler new element: self).
+	textEditorHandlers add: (AlbTextEditorTextStyleHandler new element: self)
+]
+
+{ #category : #'text - styling' }
+AlbEditorElement >> launchTextStyle [
+
+	self editor launchStylingFromElement: self
 ]
 
 { #category : #accessing }

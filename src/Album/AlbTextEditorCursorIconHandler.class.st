@@ -1,21 +1,8 @@
 Class {
 	#name : #AlbTextEditorCursorIconHandler,
-	#superclass : #BlCustomEventHandler,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#superclass : #AlbTextEditorToElementHandler,
 	#category : #'Album-UI-Handlers'
 }
-
-{ #category : #accessing }
-AlbTextEditorCursorIconHandler class >> cleanUp [
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-AlbTextEditorCursorIconHandler class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
-]
 
 { #category : #'api - event managing' }
 AlbTextEditorCursorIconHandler >> dragEnterEvent: anEvent [

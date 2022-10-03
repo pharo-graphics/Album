@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorSelectionHandler,
-	#superclass : #BlCustomEventHandler,
+	#superclass : #AlbTextEditorToElementHandler,
 	#instVars : [
 		'startIndex'
 	],
@@ -10,29 +10,18 @@ Class {
 { #category : #'dnd handlers' }
 AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
-	| anEditorElement |
 	anEvent consumed: true.
 
-	anEditorElement := anEvent currentTarget
-		                   withAllParentsDetect: [ :anElement | 
-		                   anElement isKindOf: AlbEditorElement ]
-		                   ifFound: #yourself
-		                   ifNone: [ ^ self ].
-	anEvent currentTarget: anEditorElement.
-	anEvent sendTo: anEditorElement.
+	anEvent currentTarget: element.
+	anEvent sendTo: element.
 
 ]
 
 { #category : #'dnd handlers' }
 AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
-	| anEditor currentIndex from to anEditorElement |
+	| anEditor currentIndex from to |
 	anEvent consumed: true.
-
-	anEditorElement := anEvent currentTarget
-		                   withAllParentsDetect: [ :anElement | anElement isKindOf: AlbEditorElement ]
-		                   ifFound: #yourself
-		                   ifNone: [ ^ self ].
 
 	anEditor := anEvent currentTarget editor.
 
@@ -53,12 +42,12 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 		from: from to: to;
 		select.
 
-	anEvent sendTo: anEditorElement
+	anEvent sendTo: element
 ]
 
 { #category : #'dnd handlers' }
 AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
-	| anEditor anEditorElement |	
+	| anEditor |	
 	anEvent consumed: true.
 
 	anEditor := anEvent currentTarget editor.
@@ -67,13 +56,8 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	startIndex := anEditor navigator
 		findTextIndexAtScreenPosition: anEvent localPosition
 		ifAbsent: [ nil ].
-	anEditorElement := anEvent currentTarget
-		                   withAllParentsDetect: [ :anElement | 
-		                   anElement isKindOf: AlbEditorElement ]
-		                   ifFound: #yourself
-		                   ifNone: [ ^ self ].
-	anEvent currentTarget: anEditorElement.
-	anEvent sendTo: anEditorElement.
+	anEvent currentTarget: element.
+	anEvent sendTo: element.
 ]
 
 { #category : #'api - accessing' }

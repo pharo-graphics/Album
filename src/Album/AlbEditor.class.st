@@ -144,8 +144,6 @@ AlbEditor >> initialize [
 	"we intentionally set text directly to the viewModel to prevent any possible #asRopedText convertion"
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
-	self viewModel: self defaulEditorModel.
-	
 	self
 		when: AlbEditorStylerChanged
 		do: [ :anEvent | self stylerChanged: anEvent styler ].
@@ -154,7 +152,10 @@ AlbEditor >> initialize [
 		do: [ :anEvent | self textChanged: anEvent text ].
 	self
 		when: AlbEditorModeChanged
-		do: [ :anEvent | self modeChanged: anEvent mode ]
+		do: [ :anEvent | self modeChanged: anEvent mode ].
+	self viewModel: self defaulEditorModel.
+	
+
 ]
 
 { #category : #'api - editor' }
@@ -185,7 +186,8 @@ AlbEditor >> isReadOnly [
 
 { #category : #'model - events' }
 AlbEditor >> modeChanged: aTextEditorMode [
-	self editor editorMode: aTextEditorMode.
+
+	self editor editorMode: aTextEditorMode.	
 	self states addState: (AlbEditorModeState mode: aTextEditorMode class)
 ]
 

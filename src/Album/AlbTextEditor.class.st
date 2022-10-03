@@ -16,7 +16,6 @@ Class {
 		'selectionRecorder',
 		'segmentCollector',
 		'styler',
-		'attachedElements',
 		'history',
 		'filter',
 		'shortcuts',
@@ -51,32 +50,24 @@ AlbTextEditor class >> isDebug: aBoolean [
 
 { #category : #'api - shortcuts' }
 AlbTextEditor >> addEditorShortcut: aTextEditorShortcut [
+
 	self editorShortcuts
 		add: aTextEditorShortcut
 		ifAdded: [ :aNewEditorShortcut | self onShortcutAdded: aNewEditorShortcut ]
 		ifReplaced: [ :aPreviousEditorShortcut | self onShortcutRemoved: aPreviousEditorShortcut ]
 ]
 
-{ #category : #'api - shortcuts' }
-AlbTextEditor >> addEditorShortcuts: aCollectionOfTextEditorShortcut [
-	aCollectionOfTextEditorShortcut
-		do: [ :eachShortcut | self addEditorShortcut: eachShortcut ]
-]
-
 { #category : #asserting }
 AlbTextEditor >> assertUIProcess [
 	"I check if the current process is a UI process of all attached editor elements"
-	| aCurrentProcess allUIProcesses |
+	| aCurrentProcess myProcess |
 	Bloc debugModeEnabled ifFalse: [ ^self ].
 	aCurrentProcess := Processor activeProcess.	
-	allUIProcesses := self uiProcesses.
-	
-	(allUIProcesses size <= 1)
-		ifFalse: [ AlbEditorWrongThreadError signal: 'The editor is attached to multiple elements from different UI processes' ].
-		
-	(allUIProcesses isEmpty or: [ allUIProcesses anyOne == aCurrentProcess ])
+	myProcess := self uiProcess.
+	myProcess ifNil: [ ^self ].
+	myProcess == aCurrentProcess
 		ifFalse: [ AlbEditorWrongThreadError signal: ('I am running from a non-UI process ({1}) expected ({2})'
-				format: { aCurrentProcess asString . allUIProcesses anyOne asString }) ].
+				format: { aCurrentProcess asString . myProcess asString }) ].
 ]
 
 { #category : #'api - mode' }
@@ -283,21 +274,25 @@ AlbTextEditor >> editorMode [
 
 { #category : #'api - mode' }
 AlbTextEditor >> editorMode: aTextEditorMode [
-	self
-		assert: [ aTextEditorMode isNotNil ]
-		description: [ 'Mode must not be nil' ].
 
-	mode = aTextEditorMode
-		ifTrue: [ ^ self ].
+	(mode notNil and: [mode = aTextEditorMode]) ifTrue: [ ^ self ].
 
 	"Uninstall existing mode"
-	mode uninstallFromEditor: self.
-	attachedElements do: [ :eachElement | mode uninstallFromEditorElement: eachElement ].
+	mode ifNotNil: [ 
+		mode uninstallFromEditor: self.
+		self dispatchEvent: (AlbTextEditorModeUninstalledEvent new
+				 editor: self;
+				 mode: mode;
+				 yourself) ].
 
 	mode := aTextEditorMode.
-	mode installOnEditor: self.
-	attachedElements do: [ :eachElement | mode installOnEditorElement: eachElement ].
-	
+	mode ifNotNil: [ 
+		mode installOnEditor: self.
+		self dispatchEvent: (AlbTextEditorModeInstalledEvent new
+				 editor: self;
+				 mode: mode;
+				 yourself) ].
+
 	self notifyChanged
 ]
 
@@ -375,10 +370,7 @@ AlbTextEditor >> history: aTextEditorHistory [
 AlbTextEditor >> initialize [
 	super initialize.
 	hasEventHandlerAttribute := false.
-	mode := AlbTextEditorNullMode new.
-	
-	attachedElements := Set new.
-	
+		
 	filter := AlbTextEditorNoInputFilter new.
 	cursor := self defaultCursor.
 	selection := self defaultSelection.
@@ -395,8 +387,7 @@ AlbTextEditor >> initialize [
 	shortcuts := AlbTextEditorShortcuts new.
 	history := AlbTextEditorHistory new.
 	
-	isFocused := false.
-	self beEditable.
+	isFocused := false
 ]
 
 { #category : #initialization }
@@ -562,16 +553,6 @@ AlbTextEditor >> notifyInserted: aText at: aTextIndex [
 ]
 
 { #category : #'event firing' }
-AlbTextEditor >> notifyInteractionAdded: anInteraction [
-	self dispatchEvent: (AlbTextEditorInteractionAddedEvent new interaction: anInteraction)
-]
-
-{ #category : #'event firing' }
-AlbTextEditor >> notifyInteractionRemoved: anInteraction [
-	self dispatchEvent: (AlbTextEditorInteractionRemovedEvent new interaction: anInteraction)
-]
-
-{ #category : #'event firing' }
 AlbTextEditor >> notifyModified: aText [
 	self dispatchEvent: (AlbTextEditorModifiedEvent new text: aText)
 ]
@@ -579,6 +560,16 @@ AlbTextEditor >> notifyModified: aText [
 { #category : #'event firing' }
 AlbTextEditor >> notifySelectionChanged: aSelection [
 	self dispatchEvent: (AlbTextEditorSelectionChangedEvent new selection: aSelection)
+]
+
+{ #category : #'event firing' }
+AlbTextEditor >> notifyShortcutAdded: aShortcut [
+	self dispatchEvent: (AlbTextEditorShortcutAddedEvent new shortcut: aShortcut)
+]
+
+{ #category : #'event firing' }
+AlbTextEditor >> notifyShortcutRemoved: aShortcut [
+	self dispatchEvent: (AlbTextEditorShortcutRemovedEvent new shortcut: aShortcut)
 ]
 
 { #category : #'event firing' }
@@ -603,17 +594,10 @@ AlbTextEditor >> onAttached: anEditorElement [
 	"sent by the element (from dataSource: )"
 	
 	super onAttached: anEditorElement.
-
-	attachedElements := attachedElements copyWith: anEditorElement.
-
- 	mode installOnEditorElement: anEditorElement.
-	shortcuts do: [ :eachInteraction | self onInteractionAdded: eachInteraction to: anEditorElement ].
-
 	anEditorElement when: BlMouseUpEvent do: [ :anEvent | anEvent consumed: true ].
 	anEditorElement when: BlClickEvent do: [ :anEvent | anEvent consumed: true ].
 	anEditorElement when: BlFocusEvent do: [ self onGotFocus ].
 	anEditorElement when: BlBlurEvent do: [ self onLostFocus ].
-
 	self notifyChanged
 ]
 
@@ -656,11 +640,6 @@ AlbTextEditor >> onCreateHolder: anEditorElement type: aSegmentType [
 AlbTextEditor >> onDetached: anEditorElement [
 	super onDetached: anEditorElement.
 
-	attachedElements := attachedElements copyWithout: anEditorElement.
-
-	mode uninstallFromEditorElement: anEditorElement.
-	shortcuts do: [ :eachInteraction | self onInteractionRemoved: eachInteraction from: anEditorElement ].
-
 	anEditorElement
 		removeEventHandlersSuchThat: [ :aHandler | (aHandler isKindOf: BlEventHandler)
 			and: [ { BlMouseUpEvent . BlClickEvent . BlFocusEvent . BlBlurEvent } includes: aHandler eventClass ] ]
@@ -674,17 +653,6 @@ AlbTextEditor >> onGotFocus [
 	self executeCommand: (AlbTextEditorFocusChangedCommand new hasFocus: true)
 ]
 
-{ #category : #hooks }
-AlbTextEditor >> onInteractionAdded: anInteraction to: anEditorElement [
-	anEditorElement removeShortcutsWithCombination: anInteraction combination.
-	anEditorElement addShortcut: anInteraction asShortcut
-]
-
-{ #category : #hooks }
-AlbTextEditor >> onInteractionRemoved: anInteraction from: anEditorElement [
-	anEditorElement removeShortcutsWithCombination: anInteraction combination
-]
-
 { #category : #'private - focus' }
 AlbTextEditor >> onLostFocus [
 	isFocused := false.
@@ -694,15 +662,15 @@ AlbTextEditor >> onLostFocus [
 ]
 
 { #category : #hooks }
-AlbTextEditor >> onShortcutAdded: anInteraction [
-	attachedElements do: [ :eachElement | self onInteractionAdded: anInteraction to: eachElement ].
-	self notifyInteractionAdded: anInteraction
+AlbTextEditor >> onShortcutAdded: aShortcut [
+
+	self notifyShortcutAdded: aShortcut
 ]
 
 { #category : #hooks }
-AlbTextEditor >> onShortcutRemoved: anInteraction [
-	attachedElements do: [ :eachElement | self onInteractionRemoved: anInteraction from: eachElement ].
-	self notifyInteractionRemoved: anInteraction
+AlbTextEditor >> onShortcutRemoved: aShortcut [
+
+	self notifyShortcutRemoved: aShortcut
 ]
 
 { #category : #'hooks - text modifications' }
@@ -1043,12 +1011,8 @@ AlbTextEditor >> selectionRecorder [
 
 { #category : #'api - shortcuts' }
 AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
-	self
-		assert: [ aTextEditorShortcuts isKindOf: AlbTextEditorShortcuts ]
-		description: [ 'Must be an editor shortcuts object' ].
-	
+
 	self removeAllEditorShortcuts.
-	
 	shortcuts := aTextEditorShortcuts.
 	shortcuts do: [ :aNewEditorShortcut | self onShortcutAdded: aNewEditorShortcut ]
 ]
@@ -1151,21 +1115,17 @@ AlbTextEditor >> textStyled: aStyledText [
 ]
 
 { #category : #asserting }
-AlbTextEditor >> uiProcesses [
-	| theElementGroupedByProcess allUIProcesses |
+AlbTextEditor >> uiProcess [
 
-	theElementGroupedByProcess := attachedElements groupedBy: [ :eachElement |
-		| eachSpace eachUIProcess |
-		eachSpace := eachElement isAttachedToSceneGraph
-			ifTrue: [ eachElement space ]
-			ifFalse: [ nil ].
-		eachUIProcess := nil.
-		eachSpace ifNotNil: [ eachSpace host uiProcessDo: [ :aProcess | eachUIProcess := aProcess ] ].
-		eachUIProcess ].
-	
-	allUIProcesses := theElementGroupedByProcess keys reject: #isNil.
-
-	^ allUIProcesses
+	| element space |
+	element := AlbEditorElement allSubInstances
+		           detect: [ :editorElement | editorElement editor == self ]
+		           ifNone: [ ^ nil ].
+	space := element isAttachedToSceneGraph
+		         ifTrue: [ element space ]
+		         ifFalse: [ ^ nil ].
+	space host uiProcessDo: [ :process | ^ process ].
+	^ nil
 ]
 
 { #category : #'text - undo/redo' }

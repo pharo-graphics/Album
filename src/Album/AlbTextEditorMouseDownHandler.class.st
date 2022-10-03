@@ -1,23 +1,8 @@
 Class {
 	#name : #AlbTextEditorMouseDownHandler,
-	#superclass : #BlCustomEventHandler,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#superclass : #AlbTextEditorToElementHandler,
 	#category : #'Album-UI-Handlers'
 }
-
-{ #category : #cleanup }
-AlbTextEditorMouseDownHandler class >> cleanUp [
-	super cleanUp.
-	
-	uniqueInstance := nil
-]
-
-{ #category : #cleanup }
-AlbTextEditorMouseDownHandler class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
-]
 
 { #category : #'api - accessing' }
 AlbTextEditorMouseDownHandler >> eventsToHandle [
@@ -27,45 +12,40 @@ AlbTextEditorMouseDownHandler >> eventsToHandle [
 { #category : #'mouse handlers' }
 AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 
-	| aNavigator aScreenPosition anEditorElement spacePosition textInputPosition |
+	| aNavigator aScreenPosition spacePosition textInputPosition |
 	"To not create an instance of me for each tiny text element"
-	anEditorElement := anEvent currentTarget
-		                   withAllParentsDetect: [ :anElement | 
-		                   anElement isKindOf: AlbEditorElement ]
-		                   ifFound: #yourself
-		                   ifNone: [ ^ self ].
 
 	anEvent target
-		withAllParentsUpTo: anEditorElement
+		withAllParentsUpTo: element
 		detect: [ :anElement | 
 			anElement userData at: #editorAdornment ifAbsent: [ false ] ]
 		ifFound: [ :anAdornmentElement | ^ self ]
 		ifNone: #yourself.
 
 	anEvent consumed: true.
-	aScreenPosition := (anEditorElement
+	aScreenPosition := (element
 		                    localBoundsToMine:
 		                    (BlBounds
 			                     origin: anEvent localPosition
 			                     extent: 0.0 @ 0.0)
 		                    fromChild: anEvent currentTarget) center.
 
-	anEditorElement editor deselecter all deselect.
+	element editor deselecter all deselect.
 
-	aNavigator := anEditorElement editor navigator.
+	aNavigator := element editor navigator.
 	aNavigator moveToScreenPosition: aScreenPosition.
 	aNavigator apply.
 
 	"it is important to request focus *after* we add a cursor, otherwise it would jump to the 0 position when
 	handling focus event"
-	anEditorElement requestFocus.
-	anEvent sendTo: anEditorElement.
+	element requestFocus.
+	anEvent sendTo: element.
 	self flag: 'low level text input managing. Should be revised to use the right screen position'.
-	spacePosition := anEditorElement space position.
+	spacePosition := element space position.
 	textInputPosition := aScreenPosition. "spacePosition + " "+ (12@25)"
-	anEditorElement startTextInputAtRectangle:
+	element startTextInputAtRectangle:
 		(textInputPosition corner: (textInputPosition translateBy: 2 @ 20)).
-	anEditorElement startTextInput
+	element startTextInput
 ]
 
 { #category : #'api - event managing' }

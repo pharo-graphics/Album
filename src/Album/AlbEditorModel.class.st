@@ -15,11 +15,15 @@ AlbEditorModel >> beEditable [
 ]
 
 { #category : #initialization }
+AlbEditorModel >> defaultTextEditorMode [
+	^ AlbTextEditorEditableMode new
+]
+
+{ #category : #initialization }
 AlbEditorModel >> initialize [
 	super initialize.
 	
-	text := '' asRopedText.
-	mode := AlbTextEditorEditableMode new
+	text := '' asRopedText
 ]
 
 { #category : #accessing }
@@ -40,6 +44,7 @@ AlbEditorModel >> mode: aTextEditorMode [
 { #category : #'api - hooks' }
 AlbEditorModel >> onInstalledIn: anElement [
 	super onInstalledIn: anElement.
+	self mode: self defaultTextEditorMode 
 
 ]
 

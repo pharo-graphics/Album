@@ -41,6 +41,7 @@ AlbTextEditorBasicMode >> installOnEditorElement: anEditorElement [
 	super installOnEditorElement: anEditorElement.
 
 	self eventHandlers do: [ :eachEventHandler |
+		eachEventHandler element: anEditorElement.
 		anEditorElement addEventHandler: eachEventHandler ]
 ]
 
@@ -64,7 +65,8 @@ AlbTextEditorBasicMode >> uninstallFromEditorElement: anEditorElement [
 	super uninstallFromEditorElement: anEditorElement.
 
 	self eventHandlers do: [ :eachEventHandler |
-		anEditorElement removeEventHandler: eachEventHandler ]
+		anEditorElement removeEventHandler: eachEventHandler.
+		eachEventHandler element: nil ]
 ]
 
 { #category : #initialization }

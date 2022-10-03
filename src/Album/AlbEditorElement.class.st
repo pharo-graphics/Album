@@ -60,22 +60,22 @@ AlbEditorElement >> defaultRecycler [
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> doubleClickEvent: anEvent [
-	
+	self selectionChanged
 ]
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> dragEndEvent: anEvent [
-	
+	self selectionChanged
 ]
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> dragEvent: anEvent [
-	
+	self selectionChanged
 ]
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> dragStartEvent: anEvent [
-	
+	self selectionChanged
 ]
 
 { #category : #accessing }
@@ -149,7 +149,7 @@ AlbEditorElement >> layoutPositionsRange: anInterval [
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> mouseDownEvent: anEvent [
-	
+	self selectionChanged
 ]
 
 { #category : #'geometry hooks' }

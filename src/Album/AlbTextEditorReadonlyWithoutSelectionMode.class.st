@@ -6,9 +6,12 @@ Class {
 
 { #category : #'api - hooks' }
 AlbTextEditorReadonlyWithoutSelectionMode >> installOnEditor: aTextEditor [
-	super installOnEditor: aTextEditor.
 
-	aTextEditor wordStencil: AlbTextWordPieceStencilBuilder readOnly 
+	super installOnEditor: aTextEditor.
+	aTextEditor deselecter
+		all;
+		deselect.
+	aTextEditor wordStencil: AlbTextWordPieceStencilBuilder readOnly
 ]
 
 { #category : #testing }

@@ -5,7 +5,6 @@ Class {
 	#name : #AlbEditorElement,
 	#superclass : #OBlInfiniteElement,
 	#instVars : [
-		'hasFocus',
 		'textEditorHandlers',
 		'selectionView'
 	],
@@ -112,7 +111,7 @@ AlbEditorElement >> geometryChanged [
 
 { #category : #'focus testing' }
 AlbEditorElement >> hasFocus [
-	^ hasFocus or: [ self isFocused ]
+	^ self editor isFocused
 ]
 
 { #category : #initialization }
@@ -124,10 +123,6 @@ AlbEditorElement >> initialize [
 		                 borderColor: self selectionColor twiceDarker;
 		                 selectionColor: self selectionColor;
 		                 yourself.
-	hasFocus := false.
-
-	self when: BlFocusInEvent do: [ hasFocus := true ].
-	self when: BlFocusOutEvent do: [ hasFocus := false ].
 	textEditorHandlers := OrderedCollection new.
 	textEditorHandlers add: (AlbTextEditorModeHandler new element: self).
 	textEditorHandlers add: (AlbTextEditorShortcutHandler new element: self).

@@ -136,26 +136,6 @@ AlbEditorElement >> deselecter [
 	^ self editor deselecter
 ]
 
-{ #category : #'ui - events managing' }
-AlbEditorElement >> doubleClickEvent: anEvent [
-	self selectionChanged
-]
-
-{ #category : #'ui - events managing' }
-AlbEditorElement >> dragEndEvent: anEvent [
-	self selectionChanged
-]
-
-{ #category : #'ui - events managing' }
-AlbEditorElement >> dragEvent: anEvent [
-	self selectionChanged
-]
-
-{ #category : #'ui - events managing' }
-AlbEditorElement >> dragStartEvent: anEvent [
-	self selectionChanged
-]
-
 { #category : #accessing }
 AlbEditorElement >> editor [
 	<return: #AlbTextEditor>

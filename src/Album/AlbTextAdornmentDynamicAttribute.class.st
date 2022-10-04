@@ -47,7 +47,7 @@ AlbTextAdornmentDynamicAttribute >> doAffect: aTTextEditorTextualPiece in: anEdi
 
 { #category : #accessing }
 AlbTextAdornmentDynamicAttribute >> stencil: anAdornmentStencilBuilder [
-	stencilBuilder := anAdornmentStencilBuilder asStencilBuilder: AlbTextAdornmentStencilBuilder
+	stencilBuilder := anAdornmentStencilBuilder "asStencilBuilder: AlbTextAdornmentStencilBuilder"
 ]
 
 { #category : #printing }

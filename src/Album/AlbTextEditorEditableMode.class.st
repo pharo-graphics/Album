@@ -58,7 +58,7 @@ AlbTextEditorEditableMode >> initialize [
 AlbTextEditorEditableMode >> installOnEditor: aTextEditor [
 	super installOnEditor: aTextEditor.
 
-	aTextEditor wordStencil: AlbTextWordPieceStencilBuilder editable
+	aTextEditor wordStencil: AlbTextWordPieceStencil editable
 ]
 
 { #category : #testing }

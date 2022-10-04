@@ -1,45 +1,48 @@
 Class {
-	#name : #AlbTextWordPieceStencilBuilder,
-	#superclass : #OBlStencilBuilder,
+	#name : #AlbTextWordPieceStencil,
+	#superclass : #OBlStencil,
 	#instVars : [
 		'wordPadding',
 		'wordMargin',
 		'segmentPiece',
-		'readOnly'
+		'readOnly',
+		'measurer'
 	],
 	#category : #'Album-UI-Stencils'
 }
 
 { #category : #'instance creation' }
-AlbTextWordPieceStencilBuilder class >> editable [
+AlbTextWordPieceStencil class >> editable [
 	^ self new beEditable 
 ]
 
 { #category : #'instance creation' }
-AlbTextWordPieceStencilBuilder class >> readOnly [
+AlbTextWordPieceStencil class >> readOnly [
 	^ self new beReadOnly 
 ]
 
 { #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> allEventHandlers [
-	readOnly ifTrue: [ ^ self readOnlyWordPieceEventHandlers ].
-	^ self editableWordPieceEventHandlers 
+AlbTextWordPieceStencil >> allEventHandlers [
+
+	^ readOnly
+		  ifTrue: [ self readOnlyWordPieceEventHandlers ]
+		  ifFalse: [ self editableWordPieceEventHandlers ]
 ]
 
 { #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> beEditable [
+AlbTextWordPieceStencil >> beEditable [
 
 	readOnly := false
 ]
 
 { #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> beReadOnly [ 
+AlbTextWordPieceStencil >> beReadOnly [ 
 
 	readOnly := true
 ]
 
 { #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> buildDefault [
+AlbTextWordPieceStencil >> create [
 
 	| aTextElement |
 	aTextElement := self createWordElement
@@ -48,23 +51,23 @@ AlbTextWordPieceStencilBuilder >> buildDefault [
 		                margin: self wordMargin.
 
 	self reset.
-
 	^ aTextElement
 ]
 
 { #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> createWordElement [
+AlbTextWordPieceStencil >> createWordElement [
+
 	<return: #AlbTextElements>
 	| wordElement |
 	wordElement := AlbTextElement new.
+	measurer ifNotNil: [ wordElement measurer: measurer ].
 	wordElement editorMeasurement.
-	self allEventHandlers do: [ :e |
-		wordElement addEventHandler: e ].
+	self allEventHandlers do: [ :e | wordElement addEventHandler: e ].
 	^ wordElement
 ]
 
 { #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> editableWordPieceEventHandlers [
+AlbTextWordPieceStencil >> editableWordPieceEventHandlers [
 
 	^ {  "to support event-handling attributes"
 			AlbTextEditorLineSegmentTextListener uniqueInstance.
@@ -100,20 +103,27 @@ AlbTextWordPieceStencilBuilder >> editableWordPieceEventHandlers [
 ]
 
 { #category : #initialization }
-AlbTextWordPieceStencilBuilder >> initialize [
+AlbTextWordPieceStencil >> initialize [
 	super initialize.
-	readOnly := false.
-	
+	readOnly := false.	
 	self reset
 ]
 
-{ #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> paramsOn: aStencilExecutor [
-	aStencilExecutor push: self segmentPiece
+{ #category : #accessing }
+AlbTextWordPieceStencil >> measurer [
+	<return: #BlTextElementMeasurer>
+
+	^ measurer
+]
+
+{ #category : #accessing }
+AlbTextWordPieceStencil >> measurer: aBlTextElementMeasurer [
+
+	measurer := aBlTextElementMeasurer
 ]
 
 { #category : #'api - instantiation' }
-AlbTextWordPieceStencilBuilder >> readOnlyWordPieceEventHandlers [
+AlbTextWordPieceStencil >> readOnlyWordPieceEventHandlers [
 
 	^ {  "to support event-handling attributes"
 			AlbTextEditorLineSegmentTextListener uniqueInstance.
@@ -143,44 +153,44 @@ AlbTextWordPieceStencilBuilder >> readOnlyWordPieceEventHandlers [
 ]
 
 { #category : #initialization }
-AlbTextWordPieceStencilBuilder >> reset [
+AlbTextWordPieceStencil >> reset [
 	wordPadding := BlInsets empty.
 	wordMargin := BlInsets empty.
 	segmentPiece := nil
 ]
 
 { #category : #accessing }
-AlbTextWordPieceStencilBuilder >> segmentPiece [
+AlbTextWordPieceStencil >> segmentPiece [
 	<return: #TAlbTextEditorTextualPiece>
 
 	^ segmentPiece
 ]
 
 { #category : #accessing }
-AlbTextWordPieceStencilBuilder >> segmentPiece: aTAlbTextEditorTextualPiece [
+AlbTextWordPieceStencil >> segmentPiece: aTAlbTextEditorTextualPiece [
 	segmentPiece := aTAlbTextEditorTextualPiece
 ]
 
 { #category : #accessing }
-AlbTextWordPieceStencilBuilder >> wordMargin [
+AlbTextWordPieceStencil >> wordMargin [
 	<return: #BlInsets>
 
 	^ wordMargin
 ]
 
 { #category : #accessing }
-AlbTextWordPieceStencilBuilder >> wordMargin: aBlInsets [
+AlbTextWordPieceStencil >> wordMargin: aBlInsets [
 	wordMargin := aBlInsets
 ]
 
 { #category : #accessing }
-AlbTextWordPieceStencilBuilder >> wordPadding [
+AlbTextWordPieceStencil >> wordPadding [
 	<return: #BlInsets>
 
 	^ wordPadding
 ]
 
 { #category : #accessing }
-AlbTextWordPieceStencilBuilder >> wordPadding: aBlInsets [
+AlbTextWordPieceStencil >> wordPadding: aBlInsets [
 	wordPadding := aBlInsets
 ]

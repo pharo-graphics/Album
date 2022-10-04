@@ -1,11 +1,11 @@
 Class {
 	#name : #AlbTextAdornmentStencilBuilder,
-	#superclass : #OBlStencilBuilder,
+	#superclass : #BrStencilBuilder,
 	#instVars : [
 		'editorElement',
 		'segmentPiece'
 	],
-	#category : #'Album-UI-Stencils'
+	#category : #'Album-Brick-NU-UI-Stencils'
 }
 
 { #category : #'api - instantiation' }

@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditableWordPieceStencilBuilder,
-	#superclass : #AlbTextWordPieceStencilBuilder,
+	#superclass : #AlbTextWordPieceStencil,
 	#category : #'Album-Brick-NU-UI-Stencils'
 }
 

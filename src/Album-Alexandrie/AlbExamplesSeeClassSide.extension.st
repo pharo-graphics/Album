@@ -13,21 +13,8 @@ AlbExamplesSeeClassSide class >> alexandrieEditorFor: aText [
 	anEditor := AlbEditorElement new.
 	anEditor padding: BlInsets empty.
 	anEditor fitContent.
-	anEditor text: aRopedText.
-
-	"BlDevCrossover on: anEditor."
-
-	"anEditor editor  beLineBased."
-	anEditor editor wordStencil: [ :aTextPiece | 
-		| aTextElement |
-		Transcript show: aTextPiece asString, ' ', aTextPiece text asString; cr.
-		aTextElement := AlbTextWordPieceStencilBuilder editable
-			                segmentPiece: aTextPiece;
-			                asElement.
-		aTextElement measurer: self alexandrieFixedMeasurer.
-		aTextElement measurer textOffset: aTextPiece textStart.
-		aTextElement ].
-
+	anEditor text: aRopedText.	
+	anEditor editor wordStencil measurer: self alexandrieFixedMeasurer.
 
 	^ anEditor
 ]

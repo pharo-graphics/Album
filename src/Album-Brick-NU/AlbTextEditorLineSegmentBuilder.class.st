@@ -37,13 +37,13 @@ AlbTextEditorLineSegmentBuilder >> addedAttribute: anAttribute from: aFromIndex 
 { #category : #accessing }
 AlbTextEditorLineSegmentBuilder >> beEditable [
 self halt.
-	self wordStencil: AlbTextWordPieceStencilBuilder editable
+	self wordStencil: AlbTextWordPieceStencil editable
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentBuilder >> beReadOnly [
 self halt.
-	self wordStencil: AlbTextWordPieceStencilBuilder readOnly 
+	self wordStencil: AlbTextWordPieceStencil readOnly 
 ]
 
 { #category : #initialization }
@@ -350,7 +350,7 @@ self halt.
 { #category : #accessing }
 AlbTextEditorLineSegmentBuilder >> wordStencilBuilder [
 
-	<return: #AlbTextWordPieceStencilBuilder>
+	<return: #AlbTextWordPieceStencil>
 	self halt.
 	^ wordStencilBuilder
 ]

@@ -19,12 +19,10 @@ AlbTextEditorLineSegmentTextPiece >> createElement: anEditorElement [
 	<return: #BlElement>
 	| anElement |
 
-	anElement := (anEditorElement editor wordStencilBuilder
+	anElement := (anEditorElement editor wordStencil
 		wordPadding: self wordPadding;
 		wordMargin: self wordMargin;
 		segmentPiece: self) asElement.
-		
-	anElement userData removeKey: #editorAdornment ifAbsent: [  ].
 	
 	^ anElement
 ]

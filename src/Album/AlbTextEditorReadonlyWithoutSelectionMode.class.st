@@ -11,7 +11,7 @@ AlbTextEditorReadonlyWithoutSelectionMode >> installOnEditor: aTextEditor [
 	aTextEditor deselecter
 		all;
 		deselect.
-	aTextEditor wordStencil: AlbTextWordPieceStencilBuilder readOnly
+	aTextEditor wordStencil: AlbTextWordPieceStencil readOnly
 ]
 
 { #category : #testing }

@@ -23,7 +23,7 @@ AlbEmbeddedEditorExamples >> editorFor: aText [
 	anEditor editor
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
-			aTextElement := AlbTextWordPieceStencilBuilder editable
+			aTextElement := AlbTextWordPieceStencil editable
 				segmentPiece: aTAlbTextEditorTextualPiece;
 				asElement.
 			aTextElement measurer: self fixedMeasurer.
@@ -93,7 +93,7 @@ AlbEmbeddedEditorExamples >> makeFixedMeasurement: aTextEditor [
 	aTextEditor
 		wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
-			aTextElement := AlbTextWordPieceStencilBuilder editable
+			aTextElement := AlbTextWordPieceStencil editable
 				segmentPiece: aTAlbTextEditorTextualPiece;
 				asElement.
 			aTextElement measurer: self fixedMeasurer.

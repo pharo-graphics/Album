@@ -14,20 +14,9 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 
 	| aNavigator aScreenPosition spacePosition textInputPosition |
 	"To not create an instance of me for each tiny text element"
-
-	anEvent target
-		withAllParentsUpTo: element
-		detect: [ :anElement | 
-			anElement userData at: #editorAdornment ifAbsent: [ false ] ]
-		ifFound: [ :anAdornmentElement | ^ self ]
-		ifNone: #yourself.
-
 	anEvent consumed: true.
 	aScreenPosition := (element
-		                    localBoundsToMine:
-		                    (BlBounds
-			                     origin: anEvent localPosition
-			                     extent: 0.0 @ 0.0)
+		                    localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                    fromChild: anEvent currentTarget) center.
 
 	element editor deselecter all deselect.
@@ -40,11 +29,11 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 	handling focus event"
 	element requestFocus.
 	anEvent sendTo: element.
+	
 	self flag: 'low level text input managing. Should be revised to use the right screen position'.
 	spacePosition := element space position.
 	textInputPosition := aScreenPosition. "spacePosition + " "+ (12@25)"
-	element startTextInputAtRectangle:
-		(textInputPosition corner: (textInputPosition translateBy: 2 @ 20)).
+	element startTextInputAtRectangle: (textInputPosition corner: (textInputPosition translateBy: 2 @ 20)).
 	element startTextInput
 ]
 

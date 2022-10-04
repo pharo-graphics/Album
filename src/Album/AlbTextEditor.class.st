@@ -22,8 +22,8 @@ Class {
 		'isFocused',
 		'cursor',
 		'hasEventHandlerAttribute',
-		'wordStencilBuilder',
-		'layoutPositionsRange'
+		'layoutPositionsRange',
+		'wordStencil'
 	],
 	#classInstVars : [
 		'isDebug'
@@ -216,8 +216,8 @@ AlbTextEditor >> defaultText [
 ]
 
 { #category : #initialization }
-AlbTextEditor >> defaultWordStencilBuilder [
-	^ AlbTextWordPieceStencilBuilder editable
+AlbTextEditor >> defaultWordStencil [
+	^ AlbTextWordPieceStencil editable
 ]
 
 { #category : #'private - text' }
@@ -378,7 +378,7 @@ AlbTextEditor >> initialize [
 	
 	text := self defaultText.
 	self initializeText: text.
-	wordStencilBuilder := self defaultWordStencilBuilder.
+	wordStencil := self defaultWordStencil.
 	segmentCollector := self newSegmentCollector.
 	segmentCollector text: text.
 	
@@ -1166,14 +1166,14 @@ AlbTextEditor >> withoutCacheLimit [
 ]
 
 { #category : #accessing }
-AlbTextEditor >> wordStencil: aWordStencilBuilder [
+AlbTextEditor >> wordStencil [
 
-	wordStencilBuilder := aWordStencilBuilder asStencilBuilder: AlbTextWordPieceStencilBuilder
+	<return: #AlbTextWordPieceStencil>
+	^ wordStencil
 ]
 
 { #category : #accessing }
-AlbTextEditor >> wordStencilBuilder [
+AlbTextEditor >> wordStencil: aWordStencil [
 
-	<return: #AlbTextWordPieceStencilBuilder>
-	^ wordStencilBuilder
+	wordStencil := aWordStencil
 ]

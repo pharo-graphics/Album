@@ -7,44 +7,23 @@ Class {
 { #category : #'event handling' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
-	"To not create an instance of me for each tiny text element"
-	self handleSelectionFromEvent: anEvent editorElement: element.
-	anEvent sendTo: element
-	
-]
-
-{ #category : #accessing }
-AlbTextEditorDoubleClickHandler >> eventsToHandle [
-	^ { BlDoubleClickEvent }
-]
-
-{ #category : #'event handling' }
-AlbTextEditorDoubleClickHandler >> handleSelectionFromEvent: anEvent editorElement: anEditorElement [
-
-	| screenPosition globalTextIndex selecter navigator editor selection  |
-	"To not create an instance of me for each tiny text element"
-	screenPosition := (anEditorElement
-		                   localBoundsToMine:
-		                   (BlBounds
-			                    origin: anEvent localPosition
-			                    extent: 0.0 @ 0.0)
+	| screenPosition globalTextIndex selecter navigator editor selection |
+	screenPosition := (element
+		                   localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                   fromChild: anEvent currentTarget) center.
 
-	editor := anEditorElement editor.
+	editor := element editor.
 	navigator := editor navigator.
 	selecter := editor selecter.
 
-	globalTextIndex := navigator
-		                   findTextIndexAtScreenPosition: screenPosition
-		                   ifAbsent: [ ^ self ].
+	globalTextIndex := navigator findTextIndexAtScreenPosition: screenPosition ifAbsent: [ ^ self ].
 
 
-	(globalTextIndex isZero or: [ globalTextIndex = editor text size ]) 
-		ifTrue: [ 
-			selecter
-				all;
-				apply.
-			^ self ].
+	(globalTextIndex isZero or: [ globalTextIndex = editor text size ]) ifTrue: [ 
+		selecter
+			all;
+			apply.
+		^ self ].
 
 	selection := selecter selection.
 
@@ -57,10 +36,10 @@ AlbTextEditorDoubleClickHandler >> handleSelectionFromEvent: anEvent editorEleme
 				from: interval first to: interval last;
 				apply.
 			^ self ]
-		ifAbsent: [].
+		ifAbsent: [  ].
 
 	" try to select the whole line "
-	anEditorElement cursor ifNotNil: [ :globalCursor |
+	element cursor ifNotNil: [ :globalCursor | 
 		| delta lineIdx |
 		lineIdx := navigator findTextIndexAtLineStart: globalCursor.
 		delta := lineIdx - globalTextIndex.
@@ -77,13 +56,17 @@ AlbTextEditorDoubleClickHandler >> handleSelectionFromEvent: anEvent editorEleme
 				apply.
 			^ self ] ].
 
-	anEvent modifiers isPrimaryModifier ifTrue: [ 
-		selecter withoutCursorUpdate ].
+	anEvent modifiers isPrimaryModifier ifTrue: [ selecter withoutCursorUpdate ].
 
 	selecter
 		wordAt: globalTextIndex;
-		apply.
-	
+		apply
+]
+
+{ #category : #'api - accessing' }
+AlbTextEditorDoubleClickHandler >> eventsToHandle [
+
+	^ { BlDoubleClickEvent }
 ]
 
 { #category : #accessing }

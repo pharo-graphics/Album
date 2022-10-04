@@ -35,9 +35,9 @@ AlbEditorAptitude >> initialize [
 AlbEditorAptitude >> initializeListeners [
 	super initializeListeners.
 	
-	self when: AlbEditorStylerChanged do: [ :anEvent | self styler: anEvent styler ].
-	self when: AlbEditorTextChanged do: [ :anEvent | self text: anEvent text ].
-	self when: AlbEditorModeChanged do: [ :anEvent | self mode: anEvent mode ]
+	self when: AlbEditorStylerChangedEvent do: [ :anEvent | self styler: anEvent styler ].
+	self when: AlbEditorTextChangedEvent do: [ :anEvent | self text: anEvent text ].
+	self when: AlbEditorModeChangedEvent do: [ :anEvent | self mode: anEvent mode ]
 ]
 
 { #category : #initialization }

@@ -2,5 +2,5 @@ Extension { #name : #String }
 
 { #category : #'*Album' }
 String >> onAlbum [
-	^ AlbEditor new text: self 
+	^ AlbEditorElement new text: self 
 ]

@@ -9,7 +9,7 @@ Class {
 
 { #category : #initialization }
 AlbEditorStructureTest >> setUp [
-	editor := AlbEditor new.
+	editor := AlbEditorElement new.
 ]
 
 { #category : #segments }

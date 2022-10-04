@@ -1,11 +1,11 @@
 Class {
-	#name : #AlbTextEditorModeHandler,
+	#name : #AlbTextEditorModeInstallHandler,
 	#superclass : #AlbTextEditorToElementHandler,
 	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'api - accessing' }
-AlbTextEditorModeHandler >> eventsToHandle [
+AlbTextEditorModeInstallHandler >> eventsToHandle [
 
 	^ { 
 		  AlbTextEditorModeInstalledEvent.
@@ -13,13 +13,13 @@ AlbTextEditorModeHandler >> eventsToHandle [
 ]
 
 { #category : #'event handling' }
-AlbTextEditorModeHandler >> modeInstalledEvent: anEvent [
+AlbTextEditorModeInstallHandler >> modeInstalledEvent: anEvent [
 
 	anEvent mode installOnEditorElement: element
 ]
 
 { #category : #'event handling' }
-AlbTextEditorModeHandler >> modeUninstalledEvent: anEvent [
+AlbTextEditorModeInstallHandler >> modeUninstalledEvent: anEvent [
 
 	anEvent mode uninstallFromEditorElement: element
 ]

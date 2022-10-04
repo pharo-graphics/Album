@@ -9,7 +9,7 @@ AlbTextEditorMouseDownHandler >> eventsToHandle [
 	^ { BlMouseDownEvent }
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : #'event handling' }
 AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 
 	| aNavigator aScreenPosition spacePosition textInputPosition |
@@ -48,7 +48,7 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 	element startTextInput
 ]
 
-{ #category : #'api - event managing' }
+{ #category : #'event handling' }
 AlbTextEditorMouseDownHandler >> wantsEvent: anEvent [
 	^ (super wantsEvent: anEvent) and: [ anEvent primaryButtonPressed ]
 ]

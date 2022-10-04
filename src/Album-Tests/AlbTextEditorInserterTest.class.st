@@ -10,7 +10,7 @@ AlbTextEditorInserterTest >> test_big_text_insert_cr_twice_at_0 [
 	| anEditor bigText size |
 	size := 10000000.
 	bigText := (String loremIpsum: size) asRopedText.
-	anEditor := AlbEditor new.
+	anEditor := AlbEditorElement new.
 	anEditor text: bigText.
 	anEditor forceLayout.
 	anEditor requestFocus.

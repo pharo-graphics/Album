@@ -4,12 +4,12 @@ Class {
 	#category : #'Album-UI-Handlers'
 }
 
-{ #category : #'api - event managing' }
+{ #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> dragEnterEvent: anEvent [
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
-{ #category : #'api - event managing' }
+{ #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> dragLeaveEvent: anEvent [
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
@@ -25,17 +25,17 @@ AlbTextEditorCursorIconHandler >> eventsToHandle [
 	}
 ]
 
-{ #category : #'api - event managing' }
+{ #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseEnterEvent: anEvent [
 	anEvent currentTarget mouseCursor: BlCursor overEditableText
 ]
 
-{ #category : #'api - event managing' }
+{ #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseLeaveEvent: anEvent [
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
-{ #category : #'api - event managing' }
+{ #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
 	anEvent currentTarget mouseCursor: BlCursor overEditableText
 ]

@@ -63,7 +63,7 @@ AlbTextEditorByScripterExamples class >> scripter [
 { #category : #'instance creation' }
 AlbTextEditorByScripterExamples class >> scripterElement [
 
-	^ AlbEditor new
+	^ AlbEditorElement new
 		text: '' asRopedText
 ]
 

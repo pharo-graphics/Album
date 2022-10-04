@@ -24,7 +24,7 @@ AlbTextEditorSegmentCollectorTest class >> openEditor [
 	t := BlRopedText file: file.
 	textEditor := AlbTextEditor new text: t.
 	textEditor segmentCollector cacheLimit: 60.
-	ed := AlbEditor new.
+	ed := AlbEditorElement new.
 	ed editor: textEditor.
 	ed openInOblSpace 
 	

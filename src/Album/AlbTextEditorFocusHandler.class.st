@@ -12,13 +12,13 @@ AlbTextEditorFocusHandler >> eventsToHandle [
 		  BlFocusOutEvent }
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'event handling' }
 AlbTextEditorFocusHandler >> focusInEvent: anEvent [
 
 	element hasFocus: true
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'event handling' }
 AlbTextEditorFocusHandler >> focusOutEvent: anEvent [
 
 	element hasFocus: false

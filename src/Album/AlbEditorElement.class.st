@@ -4,12 +4,19 @@ I represent a scrollable editor element. I support scrolling, selection and othe
 Class {
 	#name : #AlbEditorElement,
 	#superclass : #OBlInfiniteElement,
+	#traits : 'TOBlLayoutResizable',
+	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
 		'textEditorHandlers',
 		'selectionView'
 	],
 	#category : #'Album-UI'
 }
+
+{ #category : #'api - editor' }
+AlbEditorElement >> addEditorShortcut: aTextEditorInteraction [
+	self editor addEditorShortcut: aTextEditorInteraction
+]
 
 { #category : #converting }
 AlbEditorElement >> asScrollableElement [
@@ -37,6 +44,26 @@ AlbEditorElement >> atTextIndex: aTextIndex do: aBlock [
 				 ifAbsent: [ ] ] ]
 ]
 
+{ #category : #'api - editor' }
+AlbEditorElement >> beEditable [
+	self beMode: AlbTextEditorEditableMode new
+]
+
+{ #category : #'api - editor' }
+AlbEditorElement >> beMode: aTextEditorMode [
+	self viewModel mode: aTextEditorMode
+]
+
+{ #category : #'api - editor' }
+AlbEditorElement >> beReadOnlyWithSelection [
+	self beMode: AlbTextEditorReadonlyWithSelectionMode new
+]
+
+{ #category : #'api - editor' }
+AlbEditorElement >> beReadOnlyWithoutSelection [
+	self beMode: AlbTextEditorReadonlyWithoutSelectionMode new
+]
+
 { #category : #'editor - accessing' }
 AlbEditorElement >> cacheSize: aNumber [
 	self editor cacheSize: aNumber
@@ -47,14 +74,66 @@ AlbEditorElement >> cursor [
 	^ self editor cursor
 ]
 
+{ #category : #'editor - accessing' }
+AlbEditorElement >> cursors [
+	<return: #AlbTextEditorCursor>
+	^ self editor cursors
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaulEditorModel [
+
+	^ AlbEditorModel new.
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaulTextEditor [
+
+	^ AlbTextEditor new.
+]
+
 { #category : #initialization }
 AlbEditorElement >> defaultLayout [
 	^ OBlInfiniteLinearLayout vertical
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultPaddings [
+
+	^ BlInsets
+		  top: 5
+		  left: 1
+		  bottom: 5
+		  right: 5
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultRecycler [
 	^ OBlInfiniteRecycler new
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultSelectionView [
+
+	^ AlbEditorMainSelectionView new
+		  borderWidth: 2;
+		  borderColor: self selectionColor twiceDarker;
+		  selectionColor: self selectionColor;
+		  yourself
+]
+
+{ #category : #'editor - operations' }
+AlbEditorElement >> deleter [
+	<return: #AlbTextEditorDeleter>
+
+	^ self editor deleter
+]
+
+{ #category : #'editor - operations' }
+AlbEditorElement >> deselecter [
+	<return: #AlbTextEditorDeselecter>
+
+	^ self editor deselecter
 ]
 
 { #category : #'ui - events managing' }
@@ -97,6 +176,16 @@ AlbEditorElement >> editorText [
 	^ self editor text
 ]
 
+{ #category : #'focus accessing' }
+AlbEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDirection [
+	"Sort candidates according the bounds left, to ensure that rightmost are favored for up and down. "
+	super
+		focusables: aBlFocusFinderCandidates
+		along: aBlFocusSearchDirection.
+	aBlFocusFinderCandidates candidates sort: [ :a :b | 
+		a bounds left > b bounds left ]
+]
+
 { #category : #'private - geometry change' }
 AlbEditorElement >> geometryChanged [
 	"My geometry has possibly changed as a result of extent change, scrolling or layout re-computing"
@@ -118,15 +207,47 @@ AlbEditorElement >> hasFocus [
 AlbEditorElement >> initialize [
 
 	super initialize.
-	selectionView := AlbEditorMainSelectionView new
-		                 borderWidth: 2;
-		                 borderColor: self selectionColor twiceDarker;
-		                 selectionColor: self selectionColor;
-		                 yourself.
+	selectionView := self defaultSelectionView.
 	textEditorHandlers := OrderedCollection new.
-	textEditorHandlers add: (AlbTextEditorModeHandler new element: self).
+	textEditorHandlers add: (AlbTextEditorModeInstallHandler new element: self).
 	textEditorHandlers add: (AlbTextEditorShortcutHandler new element: self).
-	textEditorHandlers add: (AlbTextEditorTextStyleHandler new element: self)
+	textEditorHandlers add: (AlbTextEditorTextStyleHandler new element: self).
+	textEditorHandlers add: (AlbTextEditorTextReplaceHandler new element: self).
+	textEditorHandlers add: (AlbTextEditorChangeHandler  new element: self).
+	
+	self padding: self defaultPaddings.
+	self editor: self defaulTextEditor.
+	self viewModel: self defaulEditorModel.
+	self matchParent.
+
+	
+
+]
+
+{ #category : #'api - editor' }
+AlbEditorElement >> inputFilter: aTextEditorInputFilter [
+	self editor inputFilter: aTextEditorInputFilter
+]
+
+{ #category : #'editor - operations' }
+AlbEditorElement >> inserter [
+	<return: #AlbTextEditorInserter>
+
+	^ self editor inserter
+]
+
+{ #category : #'api - editor' }
+AlbEditorElement >> isEditable [
+	<return: #Boolean>
+
+	^ self viewModel mode isEditable
+]
+
+{ #category : #'api - editor' }
+AlbEditorElement >> isReadOnly [
+	<return: #Boolean>
+
+	^ self viewModel mode isReadOnly
 ]
 
 { #category : #'text - styling' }
@@ -142,9 +263,23 @@ AlbEditorElement >> layoutPositionsRange: anInterval [
 	self editor layoutPositionsRange: anInterval
 ]
 
+{ #category : #'model - events' }
+AlbEditorElement >> modeChanged: aTextEditorMode [
+
+	self editor editorMode: aTextEditorMode.	
+	self states addState: (AlbEditorModeState mode: aTextEditorMode class)
+]
+
 { #category : #'ui - events managing' }
 AlbEditorElement >> mouseDownEvent: anEvent [
 	self selectionChanged
+]
+
+{ #category : #'editor - operations' }
+AlbEditorElement >> navigator [
+	<return: #AlbTextEditorNavigator>
+
+	^ self editor navigator
 ]
 
 { #category : #'geometry hooks' }
@@ -207,8 +342,20 @@ AlbEditorElement >> scrollToLast [
 ]
 
 { #category : #'editor - accessing' }
+AlbEditorElement >> segments [
+	^ self editor segmentCollector segments
+]
+
+{ #category : #'editor - accessing' }
 AlbEditorElement >> selectedText [
 	^ self editor selectedText
+]
+
+{ #category : #'editor - operations' }
+AlbEditorElement >> selecter [
+	<return: #AlbTextEditorSelecter>
+
+	^ self editor selecter
 ]
 
 { #category : #'editor - accessing' }
@@ -252,6 +399,62 @@ AlbEditorElement >> selectionView [
 { #category : #'selection managing' }
 AlbEditorElement >> setRemanents [
 	selectionView setRemanentsIn: self
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> styler [
+	^ self viewModel styler
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> styler: aStyler [
+	self viewModel styler: aStyler
+]
+
+{ #category : #'model - events' }
+AlbEditorElement >> stylerChanged: aStyler [
+
+	self editor styler: aStyler
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> subTextOnScreen [
+	
+	| interval |
+	interval := self subTextOnScreenInterval.
+	^ self editorText from: (interval first max: 1) to: (interval last max: 0)
+
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> subTextOnScreenInterval [
+	
+	| holder first last |
+	self editorText isEmpty ifTrue: [ ^ 0 to: -1 ].
+	holder := self elementHolderOf: self children first.
+	first := holder textInterval first.
+	holder := self elementHolderOf: self children last.
+	last := holder textInterval last.
+	^ first to: last
+
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> text [
+	"Return a text I work with. All modifications to a text must be done from UI thread"
+	<return: #BlText>
+
+	^ self viewModel text
+]
+
+{ #category : #'editor - accessing' }
+AlbEditorElement >> text: aBlText [
+	self viewModel text: aBlText asRopedText
+]
+
+{ #category : #'model - events' }
+AlbEditorElement >> textChanged: aText [
+	self editor text: aText
 ]
 
 { #category : #'private - accessing' }
@@ -299,7 +502,19 @@ AlbEditorElement >> textStyled: aStyledText [
 	^ self editor textStyled: aStyledText
 ]
 
+{ #category : #'accessing - decoration' }
+AlbEditorElement >> withLineNumbers [
+
+	self withDecoration: AlbLineNumberDecoration
+]
+
 { #category : #'editor - accessing' }
 AlbEditorElement >> withoutCacheLimit [
 	self editor withoutCacheLimit
+]
+
+{ #category : #'accessing - decoration' }
+AlbEditorElement >> withoutLineNumbers [
+
+	self withoutDecoration: AlbLineNumberDecoration
 ]

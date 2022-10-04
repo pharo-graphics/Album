@@ -9,7 +9,7 @@ AlbTextEditorInsertionHandler >> eventsToHandle [
 	^ { BlTextInputEvent }
 ]
 
-{ #category : #'api - insertion' }
+{ #category : #'event handling' }
 AlbTextEditorInsertionHandler >> insert: aString atCursorIn: anEditor context: anElement [
 
 	anEditor surroundMap
@@ -33,7 +33,7 @@ AlbTextEditorInsertionHandler >> insert: aString atCursorIn: anEditor context: a
 				insert ]
 ]
 
-{ #category : #'api - event managing' }
+{ #category : #'event handling' }
 AlbTextEditorInsertionHandler >> textInputEvent: anEvent [
 
 	"we don't want to insert anything if primary modifier key is pressed.

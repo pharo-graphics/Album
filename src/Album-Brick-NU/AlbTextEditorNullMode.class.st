@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbTextEditorNullMode,
 	#superclass : #AlbTextEditorMode,
-	#category : #'Album-Model'
+	#category : #'Album-Brick-NU-Model'
 }

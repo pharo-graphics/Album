@@ -4,7 +4,7 @@ Class {
 	#category : #'Album-UI-Handlers'
 }
 
-{ #category : #'mouse handlers' }
+{ #category : #'event handling' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	"To not create an instance of me for each tiny text element"
@@ -18,7 +18,7 @@ AlbTextEditorDoubleClickHandler >> eventsToHandle [
 	^ { BlDoubleClickEvent }
 ]
 
-{ #category : #'mouse handlers' }
+{ #category : #'event handling' }
 AlbTextEditorDoubleClickHandler >> handleSelectionFromEvent: anEvent editorElement: anEditorElement [
 
 	| screenPosition globalTextIndex selecter navigator editor selection  |

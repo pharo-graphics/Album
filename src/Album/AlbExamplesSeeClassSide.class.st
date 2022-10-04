@@ -63,12 +63,13 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	styler := BlRBTextStyler new.
 	styler classOrMetaClass: self class.
 
-	editorElement := AlbEditor new 
+	editorElement := AlbEditorElement new 
 		dresser: AlbTextAreaDresser new;
 		styler: styler;
 		text: text.
 	editorElement withLineNumbers.
 	editorElement editor inspect.
+	editorElement viewModel inspect.
 	editorElement editor
 		addEditorShortcut:
 			(BlShortcutWithAction new
@@ -94,7 +95,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
 	| ed space hscrollBar |
 
-	ed := AlbEditor new dresser: AlbTextAreaDresser.
+	ed := AlbEditorElement new dresser: AlbTextAreaDresser.
 	"ed inspect."
 	ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer matchParent. 
@@ -120,7 +121,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 
 	| ed space text |
-	ed := AlbEditor new.
+	ed := AlbEditorElement new.
 	text := ('AB', String tab, String tab, 'CD') asRopedText.
 	text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1.
 	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 3 to: 6.
@@ -144,7 +145,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |
-	ed := AlbEditor new.
+	ed := AlbEditorElement new.
 	"ed withLineNumbers."
 	ed text: (String loremIpsum asRopedText).
 	space := BlSpace new.
@@ -325,7 +326,7 @@ broken in GlamorousToolKit but what to do with that ?
 				size: 20@10. } ].
 
 	text := 'Hello >' asRopedText attribute: attribute.
-	ed := AlbEditor new "dresser: AlbTextAreaDresser new".
+	ed := AlbEditorElement new "dresser: AlbTextAreaDresser new".
 	ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer matchParent].
@@ -597,7 +598,7 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 	clickText := '	<Clik here>'.
 	hoverText := '<<<Mouse over here >>>'.
 	text := (clickText , ' ' , hoverText) asRopedText.
-	editorElement := AlbEditor new text: text.
+	editorElement := AlbEditorElement new text: text.
 
 	"editorElement editorText
 		attributes: { 
@@ -624,7 +625,7 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 
 	| ed space |
-	ed := AlbEditor new text: String crlf.
+	ed := AlbEditorElement new text: String crlf.
 	ed editor segmentCollector inspect.
 	ed withLineNumbers.
 	space := BlSpace new.
@@ -636,7 +637,7 @@ AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 AlbExamplesSeeClassSide class >> example_WithCrOnly [
 
 	| ed space |
-	ed := AlbEditor new text: String cr.
+	ed := AlbEditorElement new text: String cr.
 	ed editor segmentCollector inspect.
 	ed withLineNumbers.
 	space := BlSpace new.
@@ -648,7 +649,7 @@ AlbExamplesSeeClassSide class >> example_WithCrOnly [
 AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 
 	| ed space |
-	ed := AlbEditor new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
+	ed := AlbEditorElement new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
 	ed withLineNumbers.
 	space := BlSpace new.
 	space root addChild: ed.
@@ -659,7 +660,7 @@ AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
 	| ed space |
-	ed := AlbEditor new.
+	ed := AlbEditorElement new.
 	space := BlSpace new.
 	space root addChild: ed.
 	space show
@@ -669,7 +670,7 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
 
 	| ed space |
-	ed := AlbEditor new dresser: AlbTextAreaDresser new.
+	ed := AlbEditorElement new dresser: AlbTextAreaDresser new.
 	ed constraintsDo: [ :c | 
 		c horizontal fitContent.
 		c vertical fitContent ].
@@ -684,7 +685,7 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	| ed space text editor |
 	text := ('Hello World') asRopedText fontSize: 40.
 	editor := AlbTextEditor new text: text.
-	ed := AlbEditor new.
+	ed := AlbEditorElement new.
 	ed withLineNumbers.
 	ed editor: editor.
 	space := BlSpace new.

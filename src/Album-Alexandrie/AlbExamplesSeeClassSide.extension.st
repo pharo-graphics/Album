@@ -3,14 +3,14 @@ Extension { #name : #AlbExamplesSeeClassSide }
 { #category : #'*Album-Alexandrie' }
 AlbExamplesSeeClassSide class >> alexandrieEditorFor: aText [
 
-	<return: #AlbEditor>
+	<return: #AlbEditorElement>
 	| anEditor aRopedText |
 	aRopedText := aText asRopedText
 		              lineSpacing: self lineSpacing;
 		              paragraphMargin: self paragraphMargin;
 		              wordPadding: self wordPadding.
 
-	anEditor := AlbEditor new.
+	anEditor := AlbEditorElement new.
 	anEditor padding: BlInsets empty.
 	anEditor fitContent.
 	anEditor text: aRopedText.

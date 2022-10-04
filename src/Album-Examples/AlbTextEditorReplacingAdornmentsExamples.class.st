@@ -43,7 +43,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleOver
 				size: 20@20;
 				background: Color red ].
 
-	^ (AlbEditor new text: aText) openInOblSpace 
+	^ (AlbEditorElement new text: aText) openInOblSpace 
 ]
 
 { #category : #'examples - replacements' }

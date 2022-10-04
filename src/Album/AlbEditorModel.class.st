@@ -38,7 +38,7 @@ AlbEditorModel >> mode: aTextEditorMode [
 
 	mode = aTextEditorMode ifTrue: [ ^ self ].
 	mode := aTextEditorMode.
-	self dispatchEvent: (AlbEditorModeChanged new mode: self mode)
+	self dispatchEvent: (AlbEditorModeChangedEvent new mode: self mode)
 ]
 
 { #category : #'api - hooks' }
@@ -59,7 +59,7 @@ AlbEditorModel >> styler: aStyler [
 		ifTrue: [ ^ self ].
 
 	styler := aStyler.
-	self dispatchEvent: (AlbEditorStylerChanged styler: self styler)
+	self dispatchEvent: (AlbEditorStylerChangedEvent styler: self styler)
 ]
 
 { #category : #accessing }
@@ -73,5 +73,5 @@ AlbEditorModel >> text: aText [
 	text == aText ifTrue: [ ^ self ].
 
 	text := aText.
-	self dispatchEvent: (AlbEditorTextChanged text: self text)
+	self dispatchEvent: (AlbEditorTextChangedEvent text: self text)
 ]

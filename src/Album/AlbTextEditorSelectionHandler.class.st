@@ -7,7 +7,7 @@ Class {
 	#category : #'Album-UI-Handlers'
 }
 
-{ #category : #'dnd handlers' }
+{ #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
 	anEvent consumed: true.
@@ -17,7 +17,7 @@ AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
 ]
 
-{ #category : #'dnd handlers' }
+{ #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
 	| anEditor currentIndex from to |
@@ -45,7 +45,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 	anEvent sendTo: element
 ]
 
-{ #category : #'dnd handlers' }
+{ #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	| anEditor |	
 	anEvent consumed: true.

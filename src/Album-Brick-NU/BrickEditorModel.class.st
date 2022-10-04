@@ -50,17 +50,17 @@ BrickEditorModel >> mode: aTextEditorMode [
 
 { #category : #notifying }
 BrickEditorModel >> notifyModeChanged [
-	self dispatchEvent: (AlbEditorModeChanged new mode: self mode)
+	self dispatchEvent: (AlbEditorModeChangedEvent new mode: self mode)
 ]
 
 { #category : #notifying }
 BrickEditorModel >> notifyStylerChanged [
-	self dispatchEvent: (AlbEditorStylerChanged styler: self styler)
+	self dispatchEvent: (AlbEditorStylerChangedEvent styler: self styler)
 ]
 
 { #category : #notifying }
 BrickEditorModel >> notifyTextChanged [
-	self dispatchEvent: (AlbEditorTextChanged text: self text)
+	self dispatchEvent: (AlbEditorTextChangedEvent text: self text)
 ]
 
 { #category : #accessing }

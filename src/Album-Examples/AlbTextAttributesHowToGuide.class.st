@@ -52,7 +52,7 @@ AlbTextAttributesHowToGuide class >> hideMarkupInText [
 					(aSubText from: aMarkupStart to: aMarkupEnd) attribute:
 						AlbTextHideAttribute new ] ].
 
-	^ (AlbEditor new text: text) openInOblSpace
+	^ (AlbEditorElement new text: text) openInOblSpace
 ]
 
 { #category : #examples }
@@ -64,5 +64,5 @@ AlbTextAttributesHowToGuide class >> linkInText [
 		foreground: Color blue;
 		onClick: [ :textPiece :aTarget :aTextEditor :anEvent | self inform: 'click on "', textPiece text asString, '"' ];
 		attribute: (AlbTextHoverStylableAttribute new attribute: (BlTextDecorationAttribute new underline color: Color blue)).
-	^  (AlbEditor new text: text) openInOblSpace 
+	^  (AlbEditorElement new text: text) openInOblSpace 
 ]

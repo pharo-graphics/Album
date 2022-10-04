@@ -10,7 +10,7 @@ AlbTextEditorTextStyleHandler >> eventsToHandle [
 	^ { AlbTextEditorTextStyleRequested }
 ]
 
-{ #category : #'api - accessing' }
+{ #category : #'event handling' }
 AlbTextEditorTextStyleHandler >> textStyleRequestedEvent: anEvent [
 
 	element launchTextStyle

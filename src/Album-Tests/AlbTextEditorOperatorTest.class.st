@@ -21,7 +21,7 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 
 	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
 
-	anEditor := AlbEditor new.
+	anEditor := AlbEditorElement new.
 	anEditor padding: BlInsets empty.
 	anEditor fitContent.
 	anEditor text: aRopedText.
@@ -133,7 +133,7 @@ AlbTextEditorOperatorTest >> test_editorHasNoFocusByDefault [
 	
 	| anEditor |
 	
-	anEditor := AlbEditor new.
+	anEditor := AlbEditorElement new.
 	self assert: anEditor isFocused not.
 	self assert: anEditor hasFocus not.
 	

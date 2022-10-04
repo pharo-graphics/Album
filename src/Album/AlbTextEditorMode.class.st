@@ -4,17 +4,6 @@ Class {
 	#category : #'Album-Model'
 }
 
-{ #category : #comparing }
-AlbTextEditorMode >> = anObject [
-	self == anObject ifTrue: [ ^ true ].
-	^ self class = anObject class
-]
-
-{ #category : #comparing }
-AlbTextEditorMode >> hash [
-	^ self hash class
-]
-
 { #category : #'api - hooks' }
 AlbTextEditorMode >> installOnEditor: aTextEditor [
 ]

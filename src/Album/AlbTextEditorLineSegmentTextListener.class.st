@@ -4,13 +4,6 @@ Class {
 	#category : #'Album-UI-Word'
 }
 
-{ #category : #cleanup }
-AlbTextEditorLineSegmentTextListener class >> cleanUp [
-	super cleanUp.
-	
-	uniqueInstance := nil
-]
-
 { #category : #accessing }
 AlbTextEditorLineSegmentTextListener >> eventClass [
 	^ BlMouseEvent

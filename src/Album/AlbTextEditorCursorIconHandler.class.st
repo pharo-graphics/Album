@@ -1,16 +1,18 @@
 Class {
 	#name : #AlbTextEditorCursorIconHandler,
-	#superclass : #AlbTextEditorToElementHandler,
+	#superclass : #AlbTextEditorHandler,
 	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> dragEnterEvent: anEvent [
+
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> dragLeaveEvent: anEvent [
+
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
@@ -27,15 +29,18 @@ AlbTextEditorCursorIconHandler >> eventsToHandle [
 
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseEnterEvent: anEvent [
+
 	anEvent currentTarget mouseCursor: BlCursor overEditableText
 ]
 
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseLeaveEvent: anEvent [
+
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
+
 	anEvent currentTarget mouseCursor: BlCursor overEditableText
 ]

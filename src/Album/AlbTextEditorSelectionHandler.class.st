@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorSelectionHandler,
-	#superclass : #AlbTextEditorToElementHandler,
+	#superclass : #AlbTextEditorHandler,
 	#instVars : [
 		'startIndex'
 	],

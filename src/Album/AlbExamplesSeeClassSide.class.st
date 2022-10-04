@@ -507,15 +507,17 @@ AlbExamplesSeeClassSide class >> example_ScaledElement [
 
 	scalable := BlScalableElement new.
 	
-	scalable scaleStrategy: (BlScalableFixedStrategy zoom: 3). "set custom zoom level"
+	scalable scaleStrategy: (BlScalableFixedStrategy zoom: 10). "set custom zoom level"
 	"scalable scaleStrategy: BlScalableFitWidthStrategy new." "Fit horizontally"
 	"scalable scaleStrategy: BlScalableFitHeightStrategy new. ""Fit vertically""
 	scalable scaleStrategy: BlScalableFitAllStrategy new. ""Fit vertically and horizontally at the same time"""
 	scalable constraintsDo: [ :c | 
-		c horizontal matchParent.
+		c horizontal matchParent .
 		c vertical matchParent ].
-
+	content border: (BlBorder paint: Color blue width: 2).
 	scalable contentElement: content.
+	scalable border: (BlBorder paint: Color yellow width: 5).
+	scalable outskirts: BlOutskirts inside.
 	scalable openInOBlSpace
 ]
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorChangeHandler,
-	#superclass : #AlbTextEditorToElementHandler,
+	#superclass : #AlbTextEditorHandler,
 	#category : #'Album-UI-Handlers'
 }
 

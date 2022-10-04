@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbTextEditorToElementHandler,
+	#name : #AlbTextEditorHandler,
 	#superclass : #BlCustomEventHandler,
 	#instVars : [
 		'element'
@@ -8,19 +8,19 @@ Class {
 }
 
 { #category : #accessing }
-AlbTextEditorToElementHandler >> element [
+AlbTextEditorHandler >> element [
 
 	^ element
 ]
 
 { #category : #accessing }
-AlbTextEditorToElementHandler >> element: anElement [
+AlbTextEditorHandler >> element: anElement [
 
 	element := anElement
 ]
 
 { #category : #'api - accessing' }
-AlbTextEditorToElementHandler >> eventsToHandle [
+AlbTextEditorHandler >> eventsToHandle [
 
 	^ {  }
 ]

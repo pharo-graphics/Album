@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorMouseDownHandler,
-	#superclass : #AlbTextEditorToElementHandler,
+	#superclass : #AlbTextEditorHandler,
 	#category : #'Album-UI-Handlers'
 }
 

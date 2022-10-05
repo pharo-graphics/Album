@@ -14,7 +14,7 @@ Class {
 
 { #category : #accessing }
 AlbEditorMainSelectionView class >> oppositeDelimiterBackgroundColor [
-	^ Color brown alpha: 0.35
+	^ Color lightGray
 ]
 
 { #category : #'infinite element changes' }
@@ -226,6 +226,7 @@ AlbEditorMainSelectionView >> updateMainSelectionVerticesIn: anInfiniteElement [
 AlbEditorMainSelectionView >> updateOppositeFrom: anEditor [
 
 	| globalCursorPos subtext localCursorPos |
+	
 	currentOppositeTextElement ifNotNil: [ 
 		currentOppositeTextElement resetHighlightsOfCategory: #opposite.
 		currentOppositeTextElement := nil ].

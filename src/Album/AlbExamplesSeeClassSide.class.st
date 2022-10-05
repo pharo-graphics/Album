@@ -122,7 +122,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 
 	| ed space text |
 	ed := AlbEditorElement new.
-	text := ('AB', String tab, String tab, 'CD') asRopedText.
+	text := ('AB', String tab, String tab, 'CD') asRopedText fontName: 'Source Code Pro'.
 	text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1.
 	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 3 to: 6.
 	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2.
@@ -160,9 +160,10 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
-	| ed vscrollBar space |
+	| ed vscrollBar space text |
 	" ~4300 pages on LibreOffice, ~8000000 characters "
-	ed := Smalltalk changesFile readStream contents onAlbum.
+	text := Smalltalk changesFile readStream contents asRopedText fontName: 'Source Code Pro'.
+	ed := text onAlbum.
 	ed withoutCacheLimit.
 	ed withLineNumbers.
 	vscrollBar := BlVerticalScrollbarElement new.

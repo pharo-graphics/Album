@@ -67,15 +67,16 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		dresser: AlbTextAreaDresser new;
 		styler: styler;
 		text: text.
-	editorElement withLineNumbers.
-	editorElement editor inspect.
-	editorElement viewModel inspect.
+	"editorElement withLineNumbers."
+	"editorElement editor inspect."
+	"editorElement selectionView inspect."
+	"editorElement viewModel inspect."
 	editorElement editor
 		addEditorShortcut:
 			(BlShortcutWithAction new
 				combination: BlKeyCombination primaryR;
 				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
-"editorElement selectionView inspect."
+
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
@@ -491,7 +492,7 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 	(' Default font and size' asRopedText
-	 , (' ( Source code pro  40 bold ) ' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
+	 , (' ( Source code pro 40 bold ) ' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
 	 , (' Default font 30' asRopedText fontSize: 30)) onAlbum
 		withLineNumbers;
 		"inspect"

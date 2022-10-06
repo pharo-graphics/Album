@@ -93,7 +93,14 @@ AlbEditorElement >> defaulTextEditor [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultCodeFontName [
+
+	^ BlFont defaultFontName
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultLayout [
+
 	^ OBlInfiniteLinearLayout vertical
 ]
 
@@ -120,6 +127,12 @@ AlbEditorElement >> defaultSelectionView [
 		  borderColor: self selectionColor twiceDarker;
 		  selectionColor: self selectionColor;
 		  yourself
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultSystemFontName [
+
+	^ 'Source Code Pro'"AeFontManager defaultFontFamilyName"
 ]
 
 { #category : #'editor - operations' }
@@ -151,7 +164,7 @@ AlbEditorElement >> editor: aTextEditor [
 	textEditorHandlers do: [ :handler | self editor addEventHandler: handler ]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : #'editor - accessing' }
 AlbEditorElement >> editorText [
 	^ self editor text
 ]
@@ -170,12 +183,10 @@ AlbEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDi
 AlbEditorElement >> geometryChanged [
 	"My geometry has possibly changed as a result of extent change, scrolling or layout re-computing"
 	
-	"selectionView terminateUpdater."
-	"re-compute the positionInEdtor that is used to compute and draw selection echo"
+	"re-compute the positionInEdtor that is used to compute and draw selection.
+	Done here because during drawing, elements can be temporarly detached by the layout"
 	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
-		pieceElement positionInEditor: (self localPointToMine: self position fromChild: pieceElement) ].
-
-
+		pieceElement positionInEditor: (self localPointToMine: self position fromChild: pieceElement) ]
 ]
 
 { #category : #'focus testing' }
@@ -241,6 +252,19 @@ AlbEditorElement >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
 	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
 	self editor layoutPositionsRange: anInterval
+]
+
+{ #category : #accessing }
+AlbEditorElement >> mode [
+
+	<return: #AlbTextEditorMode>
+	^ self viewModel mode
+]
+
+{ #category : #accessing }
+AlbEditorElement >> mode: aTextEditorMode [
+
+	^ self viewModel mode: aTextEditorMode
 ]
 
 { #category : #'model - events' }
@@ -378,6 +402,7 @@ AlbEditorElement >> selectionView [
 
 { #category : #'selection managing' }
 AlbEditorElement >> setRemanents [
+
 	selectionView setRemanentsIn: self
 ]
 
@@ -388,6 +413,7 @@ AlbEditorElement >> styler [
 
 { #category : #'editor - accessing' }
 AlbEditorElement >> styler: aStyler [
+
 	self viewModel styler: aStyler
 ]
 
@@ -429,11 +455,13 @@ AlbEditorElement >> text [
 
 { #category : #'editor - accessing' }
 AlbEditorElement >> text: aBlText [
+
 	self viewModel text: aBlText asRopedText
 ]
 
 { #category : #'model - events' }
 AlbEditorElement >> textChanged: aText [
+
 	self editor text: aText
 ]
 
@@ -479,7 +507,8 @@ AlbEditorElement >> textSnapshot [
 
 { #category : #'text - styling' }
 AlbEditorElement >> textStyled: aStyledText [
-	^ self editor textStyled: aStyledText
+
+	^ self viewModel textStyled: aStyledText
 ]
 
 { #category : #'accessing - decoration' }

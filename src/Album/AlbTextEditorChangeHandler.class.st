@@ -9,6 +9,7 @@ AlbTextEditorChangeHandler >> eventsToHandle [
 	^ {
 		AlbEditorTextChangedEvent.
 		AlbEditorStylerChangedEvent.
+		AlbEditorTextStyledEvent.
 		AlbEditorModeChangedEvent.
 	}
 ]
@@ -29,4 +30,10 @@ AlbTextEditorChangeHandler >> stylerChangedEvent: anEvent [
 AlbTextEditorChangeHandler >> textChangedEvent: anEvent [
 
 	element textChanged: anEvent text
+]
+
+{ #category : #'event handling' }
+AlbTextEditorChangeHandler >> textStyledEvent: anEvent [
+
+	element editor textStyled: anEvent text
 ]

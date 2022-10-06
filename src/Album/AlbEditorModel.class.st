@@ -75,3 +75,10 @@ AlbEditorModel >> text: aText [
 	text := aText.
 	self dispatchEvent: (AlbEditorTextChangedEvent text: self text)
 ]
+
+{ #category : #accessing }
+AlbEditorModel >> textStyled: aText [
+
+	text := aText fontName: 'Source Code Pro'.
+	self dispatchEvent: (AlbEditorTextStyledEvent text: self text)
+]

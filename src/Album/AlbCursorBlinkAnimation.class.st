@@ -12,7 +12,7 @@ Class {
 AlbCursorBlinkAnimation >> applyValue: aValue [
 
 	aValue ifNil: [ ^ self ].
-	self target enqueueTask: (BlTaskAction new action: [ self target background: aValue asBlBackground ])
+	self target background: aValue asBlBackground
 ]
 
 { #category : #initialization }
@@ -33,9 +33,8 @@ AlbCursorBlinkAnimation >> initialize [
 { #category : #starting }
 AlbCursorBlinkAnimation >> restart [
 
-	self target enqueueTask: (BlTaskAction new action: [ 
-			 lastTime := DateAndTime now.
-			 self target background: targetPaint asBlBackground ])
+	lastTime := DateAndTime now.
+	self target background: targetPaint asBlBackground
 ]
 
 { #category : #accessing }

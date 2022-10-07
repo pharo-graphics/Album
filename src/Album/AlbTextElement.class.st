@@ -3,27 +3,22 @@ Class {
 	#superclass : #BlTextElement,
 	#instVars : [
 		'cursorElement',
-		'cursorStencil',
 		'segmentPiece'
 	],
 	#category : #'Album-UI'
 }
 
 { #category : #'cursor - management' }
-AlbTextElement >> addCursorAt: aTextPosition [
+AlbTextElement >> addCursorAt: aTextPosition inEditorElement: anEditorElement [
 
 	<return: #AlbCursorElement>
-	^ self
-		  cursorAt: aTextPosition
-		  ifFound: #yourself
-		  ifNone: [ 
-			  cursorElement ifNil: [ 
-				  cursorElement := self newCursor.
-				self flag: 'Should not be removed with #removeFromParent but let it until the issue of adding a CursorElement whereas it is already a child of another element is fixed'.
-					cursorElement removeFromParent.
-					self addChild: cursorElement ].
-			  cursorElement textPosition: aTextPosition.
-			  cursorElement ]
+	^ self cursorAt: aTextPosition ifFound: #yourself ifNone: [ 
+		  cursorElement ifNil: [ 
+			  cursorElement := anEditorElement cursorStencil asElement.
+			  cursorElement removeFromParent.
+			  self addChild: cursorElement ].
+		  cursorElement textPosition: aTextPosition.
+		  cursorElement ]
 ]
 
 { #category : #'cursor - asserting' }
@@ -55,21 +50,6 @@ AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBloc
 	cursorElement textPosition = aTextPosition ifFalse: [ ^ aNoneBlock value ].
 
 	^ aFoundBlock value: cursorElement
-]
-
-{ #category : #accessing }
-AlbTextElement >> cursorElement [
-	^ cursorElement
-]
-
-{ #category : #'cursor - management' }
-AlbTextElement >> cursorStencil [
-	^ cursorStencil
-]
-
-{ #category : #'cursor - management' }
-AlbTextElement >> cursorStencil: aStencil [
-	cursorStencil := aStencil
 ]
 
 { #category : #initialization }
@@ -107,7 +87,6 @@ AlbTextElement >> hideCursor [
 AlbTextElement >> initialize [
 
 	super initialize.
-	cursorStencil := AlbCursorStencil uniqueInstance.
 	self constraints minWidth: self defaultMinWidth.
 	self clipChildren: false.
 ]
@@ -131,26 +110,10 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 			context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #initialization }
-AlbTextElement >> newCursor [
-	"Create and return a new instance of a cursor element"
-
-	^ self cursorStencil asElement
-]
-
 { #category : #layout }
 AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	super onLayout: aBounds context: aBlElementBoundsUpdateContext.	
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
-]
-
-{ #category : #'cursor - management' }
-AlbTextElement >> removeCursor [
-	"Remove all cursors"
-	cursorElement ifNil: [ ^ self ].
-	cursorElement removeFromParent.
-	cursorElement := nil
-
 ]
 
 { #category : #'cursor - management' }

@@ -8,7 +8,8 @@ Class {
 	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
 		'textEditorHandlers',
-		'selectionView'
+		'selectionView',
+		'cursorStencil'
 	],
 	#category : #'Album-UI'
 }
@@ -72,6 +73,12 @@ AlbEditorElement >> cacheSize: aNumber [
 { #category : #accessing }
 AlbEditorElement >> cursor [
 	^ self editor cursor
+]
+
+{ #category : #accessing }
+AlbEditorElement >> cursorStencil [
+
+	^ cursorStencil
 ]
 
 { #category : #'editor - accessing' }
@@ -198,6 +205,7 @@ AlbEditorElement >> hasFocus [
 AlbEditorElement >> initialize [
 
 	super initialize.
+	cursorStencil := AlbCursorStencil new.
 	selectionView := self defaultSelectionView.
 	textEditorHandlers := OrderedCollection new.
 	textEditorHandlers add: (AlbTextEditorModeInstallHandler new element: self).

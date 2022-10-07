@@ -5,7 +5,7 @@ Class {
 	#name : #AlbTextEditorLineSegmentSplitter,
 	#superclass : #AlbTextEditorAbstractSegmentSplitter,
 	#instVars : [
-		'tabCount'
+		'privateCount'
 	],
 	#category : #'Album-Model-Segment-Text-Line'
 }
@@ -21,11 +21,11 @@ AlbTextEditorLineSegmentSplitter >> itemValueType: anObject [
 	^ anObject isCharacter
 		  ifTrue: [ 
 			  anObject isSeparator
-				  ifTrue: [ 
-					  anObject = Character tab
-						  ifTrue: [ "each tab separately" tabCount := tabCount + 1 ]
-						  ifFalse: [ #separator ] ]
-				  ifFalse: [ #letter ] ]
+				  ifTrue: [ privateCount := privateCount + 1 ]
+				  ifFalse: [ 
+					  anObject isSpecial
+						  ifTrue: [ privateCount := privateCount + 1 ]
+						  ifFalse: [ #letter ] ] ]
 		  ifFalse: [ #object ]
 ]
 
@@ -38,7 +38,7 @@ AlbTextEditorLineSegmentSplitter >> processPureWords: aTextIterator in: aStream 
 
 	"tabCount is only used to separate each tab as a word with only the tab char"
 
-	tabCount := 0.
+	privateCount := 0.
 	super processPureWords: aTextIterator in: aStream offset: anOffset
 ]
 

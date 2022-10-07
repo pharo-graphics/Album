@@ -1,8 +1,15 @@
 Class {
 	#name : #AlbTextEditorReadonlyWithoutSelectionMode,
-	#superclass : #AlbTextEditorBasicMode,
+	#superclass : #AlbTextEditorMode,
 	#category : #'Album-Model'
 }
+
+{ #category : #initialization }
+AlbTextEditorReadonlyWithoutSelectionMode >> initialize [
+	super initialize.
+	readonly := true.
+
+]
 
 { #category : #'api - hooks' }
 AlbTextEditorReadonlyWithoutSelectionMode >> installOnEditor: aTextEditor [
@@ -10,11 +17,5 @@ AlbTextEditorReadonlyWithoutSelectionMode >> installOnEditor: aTextEditor [
 	super installOnEditor: aTextEditor.
 	aTextEditor deselecter
 		all;
-		deselect.
-	aTextEditor wordStencil: AlbTextWordPieceStencil readOnly
-]
-
-{ #category : #testing }
-AlbTextEditorReadonlyWithoutSelectionMode >> isReadOnly [
-	^ true
+		deselect
 ]

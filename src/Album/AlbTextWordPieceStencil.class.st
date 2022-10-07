@@ -13,12 +13,22 @@ Class {
 
 { #category : #'instance creation' }
 AlbTextWordPieceStencil class >> editable [
-	^ self new beEditable 
+
+	^ self new beEditable
+]
+
+{ #category : #'instance creation' }
+AlbTextWordPieceStencil class >> forTextEditorMode: aTextEditorMode [
+
+	^ aTextEditorMode isReadOnly
+		  ifTrue: [ self readOnly ]
+		  ifFalse: [ self editable ]
 ]
 
 { #category : #'instance creation' }
 AlbTextWordPieceStencil class >> readOnly [
-	^ self new beReadOnly 
+
+	^ self new beReadOnly
 ]
 
 { #category : #'api - instantiation' }

@@ -108,7 +108,8 @@ AlbTextElement >> initialize [
 
 	super initialize.
 	cursorStencil := AlbCursorStencil uniqueInstance.
-	self constraints minWidth: self defaultMinWidth
+	self constraints minWidth: self defaultMinWidth.
+	self clipChildren: false.
 ]
 
 { #category : #layout }
@@ -119,7 +120,7 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 		cursorPos := cursorElement textPosition min: self text size max: 0.0.
 		
 		maxTextPosX := ((self measuredWidth - (cursorElement measuredWidth))) max: 0.0.
-		minTextPosX := 0.0.
+		minTextPosX := cursorElement measuredWidth negated.
 		
 		textPosX := (self screenPositionAt: cursorPos) x.
 		textPosX := ((textPosX - (cursorElement measuredWidth // 2)) min: maxTextPosX) max: minTextPosX.

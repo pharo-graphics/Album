@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorReadonlyWithoutSelectionMode,
 	#superclass : #AlbTextEditorMode,
-	#category : #'Album-Model'
+	#category : #'Album-Brick-NU-Album-Model'
 }
 
 { #category : #initialization }

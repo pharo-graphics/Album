@@ -68,9 +68,9 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		styler: styler;
 		text: text.
 	"editorElement withLineNumbers."
-	"editorElement editor inspect."
-	"editorElement selectionView inspect."
-	"editorElement viewModel inspect."
+	"editorElement editor inspect.
+	editorElement selectionView inspect.
+	editorElement viewModel inspect."
 	editorElement editor
 		addEditorShortcut:
 			(BlShortcutWithAction new

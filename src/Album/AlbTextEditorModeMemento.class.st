@@ -11,7 +11,7 @@ Class {
 AlbTextEditorModeMemento >> initialize [
 	super initialize.
 	
-	mode := AlbTextEditorEditableMode new
+	mode := AlbTextEditorMode new
 ]
 
 { #category : #evaluating }

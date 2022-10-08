@@ -45,26 +45,6 @@ AlbEditorElement >> atTextIndex: aTextIndex do: aBlock [
 				 ifAbsent: [ ] ] ]
 ]
 
-{ #category : #'api - editor' }
-AlbEditorElement >> beEditable [
-	self beMode: AlbTextEditorEditableMode new
-]
-
-{ #category : #'api - editor' }
-AlbEditorElement >> beMode: aTextEditorMode [
-	self viewModel mode: aTextEditorMode
-]
-
-{ #category : #'api - editor' }
-AlbEditorElement >> beReadOnlyWithSelection [
-	self beMode: AlbTextEditorReadonlyWithSelectionMode new
-]
-
-{ #category : #'api - editor' }
-AlbEditorElement >> beReadOnlyWithoutSelection [
-	self beMode: AlbTextEditorReadonlyWithoutSelectionMode new
-]
-
 { #category : #'editor - accessing' }
 AlbEditorElement >> cacheSize: aNumber [
 	self editor cacheSize: aNumber
@@ -278,8 +258,7 @@ AlbEditorElement >> mode: aTextEditorMode [
 { #category : #'model - events' }
 AlbEditorElement >> modeChanged: aTextEditorMode [
 
-	self editor editorMode: aTextEditorMode.	
-	self states addState: (AlbEditorModeState mode: aTextEditorMode class)
+	self editor editorMode: aTextEditorMode
 ]
 
 { #category : #'ui - events managing' }
@@ -306,8 +285,7 @@ AlbEditorElement >> onExtentChanged [
 AlbEditorElement >> onLayoutDone [
 
 	super onLayoutDone.
-	self geometryChanged.
-	self selectionChanged
+	self geometryChanged
 ]
 
 { #category : #'hooks - scrolling' }
@@ -379,7 +357,7 @@ AlbEditorElement >> selection [
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> selectionChanged [
-	selectionView selectionChangedIn: self
+	self mode selectionChangedIn: self
 ]
 
 { #category : #accessing }

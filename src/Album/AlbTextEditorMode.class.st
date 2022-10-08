@@ -4,16 +4,53 @@ Class {
 	#instVars : [
 		'eventHandlers',
 		'shortcuts',
-		'readonly'
+		'readonly',
+		'allowSelection'
 	],
 	#category : #'Album-Model'
 }
+
+{ #category : #'text - copying' }
+AlbTextEditorMode class >> editable [
+
+	^ self new readonly: false
+]
+
+{ #category : #'text - copying' }
+AlbTextEditorMode class >> readonly [
+
+	^ self new readonly: true
+]
+
+{ #category : #'text - copying' }
+AlbTextEditorMode class >> readonlyWithSelection [
+
+	^ self new readonly: true
+]
+
+{ #category : #'text - copying' }
+AlbTextEditorMode class >> readonlyWithoutSelection [
+
+	^ self new
+		  readonly: true;
+		  allowSelection: false;
+		  yourself
+]
+
+{ #category : #accessing }
+AlbTextEditorMode >> allowSelection: aBoolean [
+
+	allowSelection := aBoolean
+]
 
 { #category : #initialization }
 AlbTextEditorMode >> createEventHandlers [
 
 	^ self isReadOnly
-		  ifTrue: [ self eventHandlersForReadonly ]
+		  ifTrue: [ 
+			  self isWithSelection
+				  ifTrue: [ self eventHandlersForReadonly ]
+				  ifFalse: [ self eventHandlersForReadonlyWithoutSelection ] ]
 		  ifFalse: [ self eventHandlersForEditable ]
 ]
 
@@ -21,7 +58,10 @@ AlbTextEditorMode >> createEventHandlers [
 AlbTextEditorMode >> createShortcuts [
 
 	^ self isReadOnly
-		  ifTrue: [ self shortcutsForReadonly ]
+		  ifTrue: [ 
+			  self isWithSelection
+				  ifTrue: [ self shortcutsForReadonly ]
+				  ifFalse: [ self shortcutsForReadonlyWithoutSelection ] ]
 		  ifFalse: [ self shortcutsForEditable ]
 ]
 
@@ -52,16 +92,23 @@ AlbTextEditorMode >> eventHandlersForReadonly [
 ]
 
 { #category : #initialization }
+AlbTextEditorMode >> eventHandlersForReadonlyWithoutSelection [
+
+	^ {  }
+]
+
+{ #category : #initialization }
 AlbTextEditorMode >> initialize [
 	super initialize.
-	readonly := false
+	readonly := false.
+	allowSelection := true
 ]
 
 { #category : #'api - hooks' }
 AlbTextEditorMode >> installOnEditor: aTextEditor [
 
 	aTextEditor wordStencil: (AlbTextWordPieceStencil forTextEditorMode: self).
-	self shortcuts do: [ :eachInteraction | aTextEditor addEditorShortcut: eachInteraction ]
+	self shortcuts do: [ :eachShortcut | aTextEditor addEditorShortcut: eachShortcut ]
 ]
 
 { #category : #'api - hooks' }
@@ -82,11 +129,28 @@ AlbTextEditorMode >> isReadOnly [
 	^ readonly
 ]
 
+{ #category : #testing }
+AlbTextEditorMode >> isWithSelection [
+	^ allowSelection 
+]
+
 { #category : #copying }
 AlbTextEditorMode >> postCopy [
 	"they will be initialized lazily later"
 	eventHandlers := nil.
 	shortcuts := shortcuts copy
+]
+
+{ #category : #testing }
+AlbTextEditorMode >> readonly: aBoolean [
+
+	readonly := aBoolean
+]
+
+{ #category : #'infinite element changes' }
+AlbTextEditorMode >> selectionChangedIn: anEditorElement [
+	allowSelection ifFalse: [ ^ self ].
+	anEditorElement selectionView selectionChangedIn: anEditorElement
 ]
 
 { #category : #accessing }
@@ -106,9 +170,7 @@ AlbTextEditorMode >> shortcutsForEditable [
 		  AlbEditorPasteShortcut new.
 		  AlbEditorUndoShortcut new.
 		  AlbEditorRedoShortcut new.
-
-		  self returnKeyAndAction.
-
+		  AlbEditorCarriageReturnShortcut new.
 		  AlbEditorMoveCursorLeftShortcut new.
 		  AlbEditorMoveCursorRightShortcut new.
 		  AlbEditorMoveCursorUpShortcut new.
@@ -141,11 +203,17 @@ AlbTextEditorMode >> shortcutsForReadonly [
 		  AlbEditorDeselectAllShortcut new }
 ]
 
+{ #category : #initialization }
+AlbTextEditorMode >> shortcutsForReadonlyWithoutSelection [
+
+	^ {  }
+]
+
 { #category : #'api - hooks' }
 AlbTextEditorMode >> uninstallFromEditor: aTextEditor [
 
-	self shortcuts do: [ :eachInteraction |
-		aTextEditor removeEditorShortcut: eachInteraction ]
+	self shortcuts do: [ :eachShortcut |
+		aTextEditor removeEditorShortcut: eachShortcut ]
 ]
 
 { #category : #'api - hooks' }
@@ -154,9 +222,4 @@ AlbTextEditorMode >> uninstallFromEditorElement: anEditorElement [
 	self eventHandlers do: [ :eachEventHandler |
 		anEditorElement removeEventHandler: eachEventHandler.
 		eachEventHandler element: nil ]
-]
-
-{ #category : #initialization }
-AlbTextEditorMode >> withShortcuts: aCollectionOfShortcuts [
-	shortcuts := self shortcuts, aCollectionOfShortcuts
 ]

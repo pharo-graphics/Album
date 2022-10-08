@@ -11,12 +11,27 @@ Class {
 
 { #category : #accessing }
 AlbEditorModel >> beEditable [
-	self mode: AlbTextEditorEditableMode new
+	self mode: AlbTextEditorMode editable
+]
+
+{ #category : #accessing }
+AlbEditorModel >> beEditableCode [
+	self mode: AlbTextEditorMode editable
+]
+
+{ #category : #accessing }
+AlbEditorModel >> beReadonlyWithSelection [ 
+	self mode: AlbTextEditorMode readonlyWithSelection
+]
+
+{ #category : #accessing }
+AlbEditorModel >> beReadonlyWithoutSelection [ 
+	self mode: AlbTextEditorMode readonlyWithoutSelection
 ]
 
 { #category : #initialization }
 AlbEditorModel >> defaultTextEditorMode [
-	^ AlbTextEditorEditableMode new
+	^ AlbTextEditorMode editable
 ]
 
 { #category : #initialization }

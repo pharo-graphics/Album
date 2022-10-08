@@ -11,6 +11,7 @@ Class {
 AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
 	anEvent consumed: true.
+	element selectionChanged
 
 ]
 
@@ -21,7 +22,6 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 	anEvent consumed: true.
 
 	anEditor := anEvent currentTarget editor.
-
 	currentIndex := anEditor navigator findTextIndexAtScreenPosition: anEvent localPosition ifAbsent: [ ^ self ].
 
 	startIndex ifNil: [ startIndex := currentIndex ].
@@ -33,6 +33,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 		overwrite;
 		from: from to: to;
 		select.
+	element selectionChanged
 ]
 
 { #category : #'event handling' }
@@ -45,7 +46,8 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	
 	startIndex := anEditor navigator
 		findTextIndexAtScreenPosition: anEvent localPosition
-		ifAbsent: [ nil ]
+		ifAbsent: [ nil ].
+	element selectionChanged
 ]
 
 { #category : #'api - accessing' }

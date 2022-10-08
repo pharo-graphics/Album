@@ -70,26 +70,6 @@ AlbTextEditor >> assertUIProcess [
 				format: { aCurrentProcess asString . myProcess asString }) ].
 ]
 
-{ #category : #'api - mode' }
-AlbTextEditor >> beEditable [
-	self editorMode: AlbTextEditorEditableMode new
-]
-
-{ #category : #'api - mode' }
-AlbTextEditor >> beEditableCode [
-	self editorMode: AlbTextEditorEditableCodeMode new
-]
-
-{ #category : #'api - mode' }
-AlbTextEditor >> beReadOnlyWithSelection [
-	self editorMode: AlbTextEditorReadonlyWithSelectionMode new
-]
-
-{ #category : #'api - mode' }
-AlbTextEditor >> beReadOnlyWithoutSelection [
-	self editorMode: AlbTextEditorReadonlyWithoutSelectionMode new
-]
-
 { #category : #accessing }
 AlbTextEditor >> cacheSize: anInteger [
 	segmentCollector cacheSize: anInteger

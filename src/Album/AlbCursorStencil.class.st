@@ -36,7 +36,7 @@ AlbCursorStencil >> create [
 			           c vertical matchParent ];
 		           border: (BlBorder paint: Color red width: 0);
 		           outskirts: BlOutskirts centered;
-		           background: Color red;
+		           background: (Color red alpha: 0.5);
 		           yourself.
 	blinking ifTrue: [ 
 		current addAnimation: (animation := AlbCursorBlinkAnimation new) ].

@@ -65,13 +65,14 @@ AlbEditorModel >> onInstalledIn: anElement [
 
 { #category : #accessing }
 AlbEditorModel >> styler [
+
 	^ styler
 ]
 
 { #category : #accessing }
 AlbEditorModel >> styler: aStyler [
-	styler = aStyler
-		ifTrue: [ ^ self ].
+
+	styler = aStyler ifTrue: [ ^ self ].
 
 	styler := aStyler.
 	self dispatchEvent: (AlbEditorStylerChangedEvent styler: self styler)

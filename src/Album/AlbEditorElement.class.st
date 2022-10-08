@@ -285,7 +285,8 @@ AlbEditorElement >> onExtentChanged [
 AlbEditorElement >> onLayoutDone [
 
 	super onLayoutDone.
-	self geometryChanged
+	self geometryChanged.
+	self selectionChanged
 ]
 
 { #category : #'hooks - scrolling' }

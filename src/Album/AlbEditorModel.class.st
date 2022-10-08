@@ -94,7 +94,6 @@ AlbEditorModel >> text: aText [
 
 { #category : #accessing }
 AlbEditorModel >> textStyled: aText [
-
 	text := aText fontName: 'Source Code Pro'.
 	self dispatchEvent: (AlbEditorTextStyledEvent text: self text)
 ]

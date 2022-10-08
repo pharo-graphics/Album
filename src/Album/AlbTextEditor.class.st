@@ -436,7 +436,9 @@ AlbTextEditor >> itemTypeAt: aPosition [
 
 { #category : #'text - styling' }
 AlbTextEditor >> launchStylingFromElement: anElement [ 
+
 	styler ifNil: [ ^ self ].
+
 	styler launcher styleTextInElement: anElement 
 ]
 
@@ -1013,10 +1015,14 @@ AlbTextEditor >> styler [
 
 { #category : #accessing }
 AlbTextEditor >> styler: aStyler [
-	styler = aStyler
-		ifTrue: [ ^ self ].
+
+	styler = aStyler ifTrue: [ ^ self ].
 
 	styler := aStyler.
+	styler
+		when: BlStylerTextStyled
+		send: #whenTextStyled:
+		to: self.
 
 	"styler changed, let's restyle the text"
 	self styleText
@@ -1138,6 +1144,12 @@ AlbTextEditor >> updater [
 	<return: #AlbTextEditorUpdater>
 
 	^ AlbTextEditorUpdater new editor: self
+]
+
+{ #category : #'text - styling' }
+AlbTextEditor >> whenTextStyled: anAnnouncement [
+
+	self textStyled: anAnnouncement textStyled
 ]
 
 { #category : #accessing }

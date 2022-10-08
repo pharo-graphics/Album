@@ -56,21 +56,20 @@ AlbExamplesSeeClassSide class >> descent [
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
-	| text styler editorElement space vscrollBar |
+	| text editorElement space vscrollBar |
 
 	text := self methodText asRopedText.
 
-	styler := BlRBTextStyler new.
-	styler classOrMetaClass: self class.
-
 	editorElement := AlbEditorElement new 
 		dresser: AlbTextAreaDresser new;
-		styler: styler;
 		text: text.
+	editorElement viewModel mode: AlbTextEditorPharoCodeMode new.
+	editorElement editor styler classOrMetaClass: self class.
+
 	"editorElement withLineNumbers."
-	"editorElement editor inspect.
-	editorElement selectionView inspect.
-	editorElement viewModel inspect."
+	editorElement editor inspect.
+	"editorElement selectionView inspect."
+	editorElement viewModel inspect.
 	editorElement editor
 		addEditorShortcut:
 			(BlShortcutWithAction new
@@ -87,8 +86,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space root addChild: vscrollBar.
-	space show.	
-	
+	space show.
 ]
 
 { #category : #'editor examples' }

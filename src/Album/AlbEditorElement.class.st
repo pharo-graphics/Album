@@ -232,7 +232,7 @@ AlbEditorElement >> isReadOnly [
 { #category : #'text - styling' }
 AlbEditorElement >> launchTextStyle [
 
-	self editor launchStylingFromElement: self
+	self editor launchStyleFromElement: self
 ]
 
 { #category : #accessing }

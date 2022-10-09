@@ -435,11 +435,10 @@ AlbTextEditor >> itemTypeAt: aPosition [
 ]
 
 { #category : #'text - styling' }
-AlbTextEditor >> launchStylingFromElement: anElement [ 
+AlbTextEditor >> launchStyleFromElement: anElement [
 
 	styler ifNil: [ ^ self ].
-
-	styler launcher styleTextInElement: anElement 
+	styler launchStyle: self textSnapshot nextGeneration in: anElement
 ]
 
 { #category : #accessing }
@@ -1001,9 +1000,7 @@ AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 
 { #category : #'text - styling' }
 AlbTextEditor >> styleText [
-	" I first style "
-	
-	" Target the editor element that will send back styling (through #launchStylingFromElement: with itself as argument "
+	" this announce is received in my EditorElement which then send back #launchStyleFromElement: to self "
 	self dispatchEvent: (AlbTextEditorTextStyleRequested new)
 ]
 
@@ -1017,12 +1014,9 @@ AlbTextEditor >> styler [
 AlbTextEditor >> styler: aStyler [
 
 	styler = aStyler ifTrue: [ ^ self ].
-
 	styler := aStyler.
-	styler
-		when: BlStylerTextStyled
-		send: #whenTextStyled:
-		to: self.
+	styler when: BlStylerTextStyled send: #whenTextStyled: to: self.
+	styler when: BlStylerStateChanged send: #whenStylerStateChanged: to: self.
 
 	"styler changed, let's restyle the text"
 	self styleText
@@ -1092,7 +1086,6 @@ AlbTextEditor >> textStyled: aStyledText [
 
 	self assertUIProcess.	
 	(aStyledText isNextGenerationOf: self text) ifFalse: [ ^ false ].
-
 	self text rope: aStyledText text rope.
 	self notifyTextStyled.
 	self processCursorAttributes.
@@ -1144,6 +1137,12 @@ AlbTextEditor >> updater [
 	<return: #AlbTextEditorUpdater>
 
 	^ AlbTextEditorUpdater new editor: self
+]
+
+{ #category : #'text - styling' }
+AlbTextEditor >> whenStylerStateChanged: anAnnouncement [
+
+	self styleText
 ]
 
 { #category : #'text - styling' }

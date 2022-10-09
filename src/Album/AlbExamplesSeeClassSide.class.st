@@ -57,36 +57,33 @@ AlbExamplesSeeClassSide class >> descent [
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text editorElement space vscrollBar |
-
 	text := self methodText asRopedText.
 
-	editorElement := AlbEditorElement new 
-		dresser: AlbTextAreaDresser new;
-		text: text.
+	editorElement := AlbEditorElement new
+		                 dresser: AlbTextAreaDresser new;
+		                 text: text.
 	editorElement viewModel mode: AlbTextEditorPharoCodeMode new.
 	editorElement editor styler classOrMetaClass: self class.
 
 	"editorElement withLineNumbers."
-	editorElement editor inspect.
+	"editorElement editor inspect."
 	"editorElement selectionView inspect."
 	editorElement viewModel inspect.
-	editorElement editor
-		addEditorShortcut:
-			(BlShortcutWithAction new
-				combination: BlKeyCombination primaryR;
-				action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
+	editorElement editor addEditorShortcut: (BlShortcutWithAction new
+			 combination: BlKeyCombination primaryR;
+			 action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
 
 	vscrollBar := BlVerticalScrollbarElement new.
-	vscrollBar constraintsDo: [ :c |
-			c ignoreByLayout.
-			c margin: (BlInsets right: 2).
-			c ignored horizontal alignRight.
-			c ignored vertical alignBottom]. 
+	vscrollBar constraintsDo: [ :c | 
+		c ignoreByLayout.
+		c margin: (BlInsets right: 2).
+		c ignored horizontal alignRight.
+		c ignored vertical alignBottom ].
 	vscrollBar attachTo: editorElement.
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space root addChild: vscrollBar.
-	space show.
+	space show
 ]
 
 { #category : #'editor examples' }

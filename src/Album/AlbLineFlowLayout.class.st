@@ -18,6 +18,18 @@ AlbLineFlowLayout class >> constraints [
 	^ AlbLineFlowLayoutConstraints new
 ]
 
+{ #category : #measure }
+AlbLineFlowLayout >> adaptLinesLastElementMeasureToFillLine: anElement [
+
+	"In case a the selection should fill line, each last (soft) line element should be resized to fill the available horizontal space"
+
+	lines do: [ :aLine | 
+		aLine lastElementDo: [ :theLastElement | 
+			(theLastElement isKindOf: BlTextElement) ifTrue: [ 
+				theLastElement measure: (BlExtentMeasurementSpec exact: theLastElement measuredExtent
+						 + ((anElement measuredWidth - aLine width max: 0.0) @ theLastElement padding height negated)) ] ] ]
+]
+
 { #category : #geometry }
 AlbLineFlowLayout >> findClosestChildOf: anElement to: aPoint [
 	<return: #BlElement>
@@ -110,7 +122,8 @@ AlbLineFlowLayout >> lineSpacing: anObject [
 { #category : #measure }
 AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 
-	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth |
+	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth textFlow |
+
 	"compute how much space is available along both axes"
 	maxWidth := (anExtentSpec widthSpec isUnspecified
 		             ifTrue: [ SmallInteger maxVal ]
@@ -138,20 +151,14 @@ AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 
 	"compute total extent to measure layout's owner element"
 	totalContentWidth := anElement padding width + lines totalWidth.
-	totalContentHeight := anElement padding height + lines totalHeight.
-	totalContentHeight := totalContentHeight + (lines count - 1 * lineSpacing).
+	totalContentHeight := anElement padding height + lines totalHeight + (lines count - 1 * lineSpacing).
 
 	anElement measuredExtent: (anExtentSpec sizeFor: totalContentWidth @ totalContentHeight).
 
-	lines do: [ :aLine | 
-		aLine elements ifNotEmpty: [ :theElements | 
-			| theLastElement textFlow |
-			theLastElement := theElements last.
-			textFlow := theLastElement constraints albumTextFlow.
-			((theLastElement isKindOf: BlTextElement) and: [ textFlow shouldFillLine or: [ theLastElement hasChildren ] ]) 
-				ifTrue: [ 
-					theLastElement measure: (BlExtentMeasurementSpec exact: theLastElement measuredExtent
-							 + ((anElement measuredWidth - aLine width max: 0.0) @ theLastElement padding height negated)) ] ] ].
+	"check the shouldFillLine setting"
+	textFlow := anElement constraints albumTextFlow.
+	textFlow shouldFillLine ifTrue: [ self adaptLinesLastElementMeasureToFillLine: anElement ].
+
 	self measureIgnored: anElement with: anExtentSpec
 ]
 

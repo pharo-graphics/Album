@@ -68,7 +68,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	"editorElement withLineNumbers."
 	"editorElement editor inspect."
 	"editorElement selectionView inspect."
-	editorElement viewModel inspect.
+	"editorElement viewModel inspect."
 	editorElement editor addEditorShortcut: (BlShortcutWithAction new
 			 combination: BlKeyCombination primaryR;
 			 action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
@@ -108,8 +108,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 	space := OBlSpace new.
 	space root addChild: ed.
 	space root addChild: hscrollBar.
-	space show.	
-		ed text inspect.
+	space show.
 	^ed
 ]
 

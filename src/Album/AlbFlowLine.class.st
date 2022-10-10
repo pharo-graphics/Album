@@ -186,6 +186,12 @@ AlbFlowLine >> isEmpty [
 	^ elements isEmpty
 ]
 
+{ #category : #enumerating }
+AlbFlowLine >> lastElementDo: aBlock [
+
+	elements ifNotEmpty: [ :theElements | aBlock value: theElements last ]
+]
+
 { #category : #accessing }
 AlbFlowLine >> maxWidth [
 	"Return maximal width limit for the current line"

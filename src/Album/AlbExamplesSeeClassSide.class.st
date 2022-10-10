@@ -83,7 +83,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space root addChild: vscrollBar.
-	space show.
+	space show
 
 
 ]

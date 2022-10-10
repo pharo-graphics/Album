@@ -923,10 +923,7 @@ AlbTextEditor >> restoreText: aText [
 	self onTextReplaced.
 
 	"notify UI about structural update"
-	self notifyChanged.
-
-	"text changed, we should style it"
-	self styleText
+	self notifyChanged
 ]
 
 { #category : #'api - save state' }

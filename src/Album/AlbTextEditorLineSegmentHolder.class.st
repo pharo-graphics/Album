@@ -108,38 +108,37 @@ AlbTextEditorLineSegmentHolder >> createSegmentElement [
 
 { #category : #cursor }
 AlbTextEditorLineSegmentHolder >> explicitScreenToCursor: aTransformation [
+
 	| aBoundsInEditor aPositionInSegment aClosestPieceElement aClosestPiece aTransformedScreenPosition |
 	aTransformedScreenPosition := aTransformation screenPosition.
 	aBoundsInEditor := (itemElement bounds inParent: self infiniteElement) bounds.
-	
+
 	"if location is above the first segment then the index is 0"
-	((segment isFirstIn: self editor) and: [ aTransformedScreenPosition y < aBoundsInEditor top ])
-		ifTrue: [ ^ aTransformation transformed: 0 ].
+	((segment isFirstIn: self editor) and: [ aTransformedScreenPosition y < aBoundsInEditor top ]) ifTrue: [ 
+		^ aTransformation transformed: 0 ].
 
 	"if location is below the last segment then the index is text size"
-	((segment isLastIn: self editor) and: [ aTransformedScreenPosition y > aBoundsInEditor bottom ])
-		ifTrue: [ ^ aTransformation transformed: self editor text size ].	
+	((segment isLastIn: self editor) and: [ aTransformedScreenPosition y > aBoundsInEditor bottom ]) ifTrue: [ 
+		^ aTransformation transformed: self editor privateText size ].
 
 	"not in this segment, ignoring"
-	(aTransformedScreenPosition y between: aBoundsInEditor top and: aBoundsInEditor bottom)
-		ifFalse: [  ^ self ].
-			
-	aPositionInSegment := (itemElement globalBoundsToMine: (BlBounds origin: aTransformation screenPosition extent: 0.0@0.0) fromParent: self infiniteElement) center.	
-	segment hasPieces
-		ifFalse: [ ^ self ].
-	
+	(aTransformedScreenPosition y between: aBoundsInEditor top and: aBoundsInEditor bottom) ifFalse: [ ^ self ].
+
+	aPositionInSegment := (itemElement
+		                       globalBoundsToMine: (BlBounds origin: aTransformation screenPosition extent: 0.0 @ 0.0)
+		                       fromParent: self infiniteElement) center.
+	segment hasPieces ifFalse: [ ^ self ].
+
 	"trying to find a segment that actually contains a given position"
-	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement |
-		(aPieceElement bounds inParent bounds containsPoint: aPositionInSegment)
-			ifTrue: [ ^ aPiece screenToCursor: aTransformation of: self infiniteElement in: aPieceElement ] ].
-		
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+		(aPieceElement bounds inParent bounds containsPoint: aPositionInSegment) ifTrue: [ 
+			^ aPiece screenToCursor: aTransformation of: self infiniteElement in: aPieceElement ] ].
+
 	"clicked outside of a segment piece, should find the closest element"
-	
+
 	aClosestPieceElement := itemElement layout findClosestChildOf: itemElement to: aPositionInSegment.
-	aClosestPiece := pieceElements 
-		pieceForElement: aClosestPieceElement
-		ifAbsent: [ ^ self ].
-		
+	aClosestPiece := pieceElements pieceForElement: aClosestPieceElement ifAbsent: [ ^ self ].
+
 	aClosestPiece screenToCursor: aTransformation of: self infiniteElement in: aClosestPieceElement
 ]
 

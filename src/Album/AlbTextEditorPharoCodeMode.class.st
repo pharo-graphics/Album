@@ -27,11 +27,5 @@ AlbTextEditorPharoCodeMode >> initialize [
 AlbTextEditorPharoCodeMode >> installOnEditorElement: anEditorElement [
 
 	super installOnEditorElement: anEditorElement.
-	anEditorElement viewModel styler: BlRBTextStyler new.
-	
-]
-
-{ #category : #accessing }
-AlbTextEditorPharoCodeMode >> textFrom: aBlText [
-	^ aBlText fontName: self defaultFontName 
+	anEditorElement viewModel styler: (BlRBTextStyler new fontName: self defaultFontName)
 ]

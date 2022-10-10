@@ -11,9 +11,7 @@ Class {
 { #category : #executing }
 AlbTextEditorInsertStringsCommand >> executeOn: aTextEditor [
 
-	aTextEditor text
-		insertStrings: self strings
-		atAll: self indices
+	aTextEditor privateText insertStrings: self strings atAll: self indices
 ]
 
 { #category : #accessing }

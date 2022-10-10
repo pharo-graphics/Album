@@ -1,19 +1,37 @@
 Class {
 	#name : #AlbTextEditorPharoCodeMode,
 	#superclass : #AlbTextEditorMode,
+	#instVars : [
+		'defaultFontName'
+	],
 	#category : #'Album-Model'
 }
 
-{ #category : #'as yet unclassified' }
-AlbTextEditorPharoCodeMode >> classOrMetaClass: aClass [
-
-	
+{ #category : #accessing }
+AlbTextEditorPharoCodeMode >> defaultFontName [
+	^ defaultFontName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+AlbTextEditorPharoCodeMode >> defaultFontName: aString [
+	defaultFontName := aString
+]
+
+{ #category : #initialization }
+AlbTextEditorPharoCodeMode >> initialize [
+	super initialize.
+	defaultFontName := AeFontManager defaultCodeFontFamilyName
+]
+
+{ #category : #'api - hooks' }
 AlbTextEditorPharoCodeMode >> installOnEditorElement: anEditorElement [
 
 	super installOnEditorElement: anEditorElement.
 	anEditorElement viewModel styler: BlRBTextStyler new.
 	
+]
+
+{ #category : #accessing }
+AlbTextEditorPharoCodeMode >> textFrom: aBlText [
+	^ aBlText fontName: self defaultFontName 
 ]

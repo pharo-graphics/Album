@@ -160,23 +160,22 @@ AlbTextEditorDeleter >> oneBeforeCursorIfOutsideOfSelection [
 
 { #category : #private }
 AlbTextEditorDeleter >> privateDelete: aFromTextIndex to: aToTextIndex [
+
 	"I delete a piece of text within a given text interval without cursor or selection update.
 	Note: cursor or selection location after deletion may be invalid!"
-	| aCommand |
 
+	| aCommand |
 	self
-		assert: [ aFromTextIndex >= 0 and: [ aFromTextIndex <= self editor text size ] ]
+		assert: [ aFromTextIndex >= 0 and: [ aFromTextIndex <= self editor privateText size ] ]
 		description: [ 'From deletion index must be within interval [0... text size]' ].
 	self
-		assert: [ aToTextIndex >= 0 and: [ aToTextIndex <= self editor text size ] ]
+		assert: [ aToTextIndex >= 0 and: [ aToTextIndex <= self editor privateText size ] ]
 		description: [ 'To deletion index must be within interval [0... text size]' ].
-	self
-		assert: [ aToTextIndex >= aFromTextIndex ]
-		description: [ 'To index must be greater or equal from index' ].
+	self assert: [ aToTextIndex >= aFromTextIndex ] description: [ 'To index must be greater or equal from index' ].
 
 	aCommand := AlbTextEditorDeleteCommand new
-		fromIndex: aFromTextIndex;
-		toIndex: aToTextIndex.
+		            fromIndex: aFromTextIndex;
+		            toIndex: aToTextIndex.
 	self editor executeCommand: aCommand
 ]
 

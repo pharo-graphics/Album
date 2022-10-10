@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'styler',
 		'text',
-		'mode'
+		'mode',
+		'defaultFontName'
 	],
 	#category : #'Album-Model'
 }
@@ -85,10 +86,10 @@ AlbEditorModel >> text [
 
 { #category : #accessing }
 AlbEditorModel >> text: aText [
-
-	text == aText ifTrue: [ ^ self ].
-
-	text := aText.
+	| modeText|
+	modeText := self mode textFrom: aText. 
+	text = modeText ifTrue: [ ^ self ].
+	text := modeText.
 	self dispatchEvent: (AlbEditorTextChangedEvent text: self text)
 ]
 

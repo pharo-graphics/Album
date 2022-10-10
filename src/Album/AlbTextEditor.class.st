@@ -97,9 +97,10 @@ AlbTextEditor >> commitSelection [
 
 { #category : #'text - copy/paste' }
 AlbTextEditor >> copy: aFromIndex to: aToIndex [
+
 	"Copy text within given text interval to the clipboard"
-	
-	Clipboard clipboardText: (self text from: aFromIndex + 1 to: aToIndex) asString
+
+	Clipboard clipboardText: (self privateText from: aFromIndex + 1 to: aToIndex) asString
 ]
 
 { #category : #'text - copy/paste' }
@@ -555,13 +556,14 @@ AlbTextEditor >> notifyShortcutRemoved: aShortcut [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyTextReplaced: aText [
+
 	self dispatchEvent: (AlbTextEditorTextReplacedEvent new text: aText)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyTextStyled [
-	self notifyTextStyled: self text
 
+	self notifyTextStyled: self privateText
 ]
 
 { #category : #'event firing' }
@@ -656,16 +658,14 @@ AlbTextEditor >> onShortcutRemoved: aShortcut [
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
+
 	"Is sent after a few strings (or one) are inserted in a text model"
+
 	self assertUIProcess.
-	
+
 	aBlTextStringsInserted strings
 		with: aBlTextStringsInserted finalIndices
-		do: [ :aString :anIndex |
-			self segmentCollector
-				insertedString: aString
-				at: anIndex
-				in: self ].
+		do: [ :aString :anIndex | self segmentCollector insertedString: aString at: anIndex in: self ].
 
 	history
 		insertedStrings: aBlTextStringsInserted strings
@@ -674,12 +674,9 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 
 	aBlTextStringsInserted strings
 		with: aBlTextStringsInserted finalIndices
-		do: [ :aString :anIndex |
-			self
-				notifyInserted: aString asRopedText
-				at: anIndex ].
+		do: [ :aString :anIndex | self notifyInserted: aString asRopedText at: anIndex ].
 
-	self notifyModified: self text.
+	self notifyModified: self privateText.
 
 	self styleText
 ]
@@ -720,40 +717,36 @@ AlbTextEditor >> onTextAttributesRemoved: aBlTextAttributesRemoved [
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextReplaced [
+
 	"Is sent after a text instance is replaced with a new one"
+
 	self assertUIProcess.
 
 	self processCursorAttributes.
-	self notifyTextReplaced: self text
+	self notifyTextReplaced: self privateText
 ]
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
+
 	"Is sent after a piece of text was deleted in a text model"
+
 	self assertUIProcess.
 
-	aBlTextsDeleted finalIntervals
-		do: [ :eachInterval |
-			self segmentCollector
-				deletedFrom: eachInterval first
-				to:  eachInterval last
-				in: self ].
+	aBlTextsDeleted finalIntervals do: [ :eachInterval | 
+		self segmentCollector deletedFrom: eachInterval first to: eachInterval last in: self ].
 
 	history
-		"text attributes may reference objects such as computation results in the editor and therefore we
-		should remove such attributes"
 		deletedTexts: (aBlTextsDeleted texts collect: [ :eachText | eachText copyWithoutExternalReferences ])
 		undo: (aBlTextsDeleted finalIntervals collect: #first)
 		redo: (aBlTextsDeleted requestedIntervals collect: #first).
+	"text attributes may reference objects such as computation results in the editor and therefore we
+		should remove such attributes"
 
-	aBlTextsDeleted finalIntervals
-		do: [ :eachInterval |
-			self
-				notifyDeletedFrom: eachInterval first
-				to:  eachInterval last ].
+	aBlTextsDeleted finalIntervals do: [ :eachInterval | self notifyDeletedFrom: eachInterval first to: eachInterval last ].
 
-	self notifyModified: self text.
-	
+	self notifyModified: self privateText.
+
 	self styleText
 ]
 
@@ -776,6 +769,40 @@ AlbTextEditor >> paster [
 { #category : #'private - selection' }
 AlbTextEditor >> prepareSelection [
 	self selectionRecorder prepare: self
+]
+
+{ #category : #accessing }
+AlbTextEditor >> privateText [
+	"Return a current text in the text editor. All modification to the text
+	are reflected in the UI of the editor. For this reason I must only be
+	used from a UI thread. To access a text from a non-UI thread use #textSnapshot
+	which would give a copy of the current text.
+	
+	Note that public text accessing must be done by the element viewModel "
+	
+	<return: #BlText>
+	
+	self assertUIProcess.
+	^ text
+]
+
+{ #category : #accessing }
+AlbTextEditor >> privateText: aText [ 
+
+	" public text change must be done by the element viewModel "
+	| t |
+	t := aText asRopedText.
+	"when reducing the text size we should update the selection and cursor positions"
+	t size < text size ifTrue: [ 
+		self navigator
+			moveWithin: (0 to: t size);
+			apply.
+
+		self deselecter
+			from: t size to: text size;
+			deselect ].
+
+	self restoreText: t
 ]
 
 { #category : #'private - cursor' }
@@ -881,11 +908,11 @@ AlbTextEditor >> restoreState: aTextEditorMemento [
 ]
 
 { #category : #accessing }
-AlbTextEditor >> restoreText: aToText [
+AlbTextEditor >> restoreText: aText [
 	"before changing the text we must unsubscribe from existing one"	
 	text unsubscribe: self.
 
-	text := aToText.
+	text := aText.
 	self initializeText: text.
 
 	"Replacing text instance means that we can not guarantee structural integrity
@@ -1001,6 +1028,7 @@ AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 { #category : #'text - styling' }
 AlbTextEditor >> styleText [
 	" this announce is received in my EditorElement which then send back #launchStyleFromElement: to self "
+	styler ifNil: [ ^ self ].
 	self dispatchEvent: (AlbTextEditorTextStyleRequested new)
 ]
 
@@ -1050,13 +1078,23 @@ AlbTextEditor >> text [
 	<return: #BlText>
 	
 	self assertUIProcess.
+	self
+		deprecated: 'Please use privateText instead.'
+		transformWith:
+			'`@receiver text'
+				-> '`@receiver privateText'.
 	^ text
 ]
 
 { #category : #accessing }
 AlbTextEditor >> text: aText [ 
-
 	| t |
+	self
+		deprecated: 'Please use privateText: instead.'
+		transformWith:
+			'`@receiver text: `@statements1'
+				-> '`@receiver privateText: `@statements1'.
+
 	t := aText asRopedText.
 	"when reducing the text size we should update the selection and cursor positions"
 	t size < text size ifTrue: [ 
@@ -1084,12 +1122,14 @@ AlbTextEditor >> textSnapshot [
 { #category : #'text - styling' }
 AlbTextEditor >> textStyled: aStyledText [
 
-	self assertUIProcess.	
-	(aStyledText isNextGenerationOf: self text) ifFalse: [ ^ false ].
-	self text rope: aStyledText text rope.
+	self assertUIProcess.
+	(aStyledText isNextGenerationOf: self privateText) ifFalse: [ ^ false ].
+	self privateText rope: aStyledText text rope.
 	self notifyTextStyled.
 	self processCursorAttributes.
-	self updater all; update.
+	self updater
+		all;
+		update.
 	^ true
 ]
 

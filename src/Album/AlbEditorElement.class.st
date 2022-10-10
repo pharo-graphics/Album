@@ -153,7 +153,8 @@ AlbEditorElement >> editor: aTextEditor [
 
 { #category : #'editor - accessing' }
 AlbEditorElement >> editorText [
-	^ self editor text
+
+	^ self editor privateText
 ]
 
 { #category : #'focus accessing' }
@@ -449,7 +450,7 @@ AlbEditorElement >> text: aBlText [
 { #category : #'model - events' }
 AlbEditorElement >> textChanged: aText [
 
-	self editor text: aText
+	self editor privateText: aText
 ]
 
 { #category : #'private - accessing' }

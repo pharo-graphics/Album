@@ -19,7 +19,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	globalTextIndex := navigator findTextIndexAtScreenPosition: screenPosition ifAbsent: [ ^ self ].
 
 
-	(globalTextIndex isZero or: [ globalTextIndex = editor text size ]) ifTrue: [ 
+	(globalTextIndex isZero or: [ globalTextIndex = editor privateText size ]) ifTrue: [ 
 		selecter
 			all;
 			apply.
@@ -29,7 +29,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	"Try to select between delimiters () [] etc"
 	editor surroundMap
-		intervalBetweenDelimitersIn: editor text
+		intervalBetweenDelimitersIn: editor privateText
 		at: globalTextIndex
 		ifPresent: [ :interval | 
 			selecter

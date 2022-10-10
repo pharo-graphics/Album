@@ -209,6 +209,11 @@ AlbTextEditorMode >> shortcutsForReadonlyWithoutSelection [
 	^ {  }
 ]
 
+{ #category : #accessing }
+AlbTextEditorMode >> textFrom: aBlText [
+	^ aBlText
+]
+
 { #category : #'api - hooks' }
 AlbTextEditorMode >> uninstallFromEditor: aTextEditor [
 

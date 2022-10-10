@@ -423,37 +423,27 @@ AlbTextEditorSegmentCollector >> initialize [
 
 { #category : #'text - modifications' }
 AlbTextEditorSegmentCollector >> insertedString: aString at: aTextIndex in: aTextEditor [
+
 	"I am doing a hard work updating editor's segment cache due to inserted string.
 	Note: This is an *algorithm* that should be very performant, that is why we don't see
 	a point in doing it in OOP style, procedural way fits quite well"
+
 	| currentSegment stream newSegments |
+	self assert: [ aTextEditor privateText isNotEmpty ] description: [ 'Text can not be empty here' ].
+	self assert: [ aString isNotEmpty ] description: [ 'String must not be empty' ].
 
-	self
-		assert: [ aTextEditor text isNotEmpty ]
-		description: [ 'Text can not be empty here' ].
-	self
-		assert: [ aString isNotEmpty ]
-		description: [ 'String must not be empty' ].
+	stream := self newSegmentStream.
 
-	stream := self newSegmentStream .
+	self split: (aTextEditor privateText from: aTextIndex + 1 to: aTextIndex + aString size) in: stream offset: aTextIndex.
 
-	self
-		split: (aTextEditor text from: aTextIndex + 1 to: aTextIndex + aString size)
-		in: stream
-		offset: aTextIndex.
-
-	self
-		cachedSegmentAt: aTextIndex
-		ifFound: [ :aSegment | currentSegment := aSegment ]
-		ifNotFound: [ ^ self ].
+	self cachedSegmentAt: aTextIndex ifFound: [ :aSegment | currentSegment := aSegment ] ifNotFound: [ ^ self ].
 
 	newSegments := currentSegment insert: stream collection.
-	newSegments size > 1
-		ifTrue: [ self addSegments: newSegments allButFirst after: currentSegment in: aTextEditor ].
+	newSegments size > 1 ifTrue: [ self addSegments: newSegments allButFirst after: currentSegment in: aTextEditor ].
 
 	currentSegment moveTextPiecesBy: aString size at: aTextIndex.
 	self moveTextBy: aString size after: newSegments last.
-	
+
 	aTextEditor updater
 		from: currentSegment textStart to: currentSegment textEnd;
 		update

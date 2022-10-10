@@ -60,8 +60,8 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	text := self methodText asRopedText.
 
 	editorElement := AlbEditorElement new
-		                 dresser: AlbTextAreaDresser new;
-		                 text: text.
+		                 dresser: AlbTextAreaDresser new.
+	editorElement viewModel text: text.
 	editorElement viewModel mode: AlbTextEditorPharoCodeMode new.
 	editorElement editor styler classOrMetaClass: self class.
 
@@ -83,7 +83,9 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space root addChild: vscrollBar.
-	space show
+	space show.
+
+
 ]
 
 { #category : #'editor examples' }

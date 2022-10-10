@@ -524,7 +524,8 @@ AlbTextEditorOperator >> telemetry [
 
 { #category : #accessing }
 AlbTextEditorOperator >> text [
-	^ editor text
+
+	^ editor privateText
 ]
 
 { #category : #'api - event' }

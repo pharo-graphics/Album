@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'mode'
 	],
-	#category : #'Album-Model-Events'
+	#category : #'Album-Brick-NU-Album-Model-Events'
 }
 
 { #category : #accessing }

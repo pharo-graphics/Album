@@ -26,6 +26,14 @@ AlbTextWordPieceStencil class >> forTextEditorMode: aTextEditorMode [
 ]
 
 { #category : #'instance creation' }
+AlbTextWordPieceStencil class >> forTextEditorModel: aTextEditorModel [
+
+	^ aTextEditorModel isReadOnly
+		  ifTrue: [ self readOnly ]
+		  ifFalse: [ self editable ]
+]
+
+{ #category : #'instance creation' }
 AlbTextWordPieceStencil class >> readOnly [
 
 	^ self new beReadOnly

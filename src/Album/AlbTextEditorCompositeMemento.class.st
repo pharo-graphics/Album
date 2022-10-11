@@ -66,7 +66,7 @@ AlbTextEditorCompositeMemento >> mementos [
 
 { #category : #'api - memento' }
 AlbTextEditorCompositeMemento >> mode [
-	mementos add: AlbTextEditorModeMemento new
+
 ]
 
 { #category : #accessing }

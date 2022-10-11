@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorModeInstalledEvent,
 	#superclass : #AlbTextEditorModeChangedEvent,
-	#category : #'Album-Model-Events'
+	#category : #'Album-Brick-NU-Album-Model-Events'
 }
 
 { #category : #sending }

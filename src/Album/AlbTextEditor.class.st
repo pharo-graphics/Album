@@ -10,7 +10,6 @@ Class {
 	#superclass : #OBlInfiniteDataSource,
 	#instVars : [
 		'model',
-		'mode',
 		'text',
 		'selection',
 		'selectionRecorder',
@@ -244,37 +243,6 @@ AlbTextEditor >> disableStylerDuring: aBlock [
 	prevStyler := styler.
 	styler := nil.
 	aBlock ensure: [ styler := prevStyler ]
-]
-
-{ #category : #'api - mode' }
-AlbTextEditor >> editorMode [
-	<return: #AlbTextEditorMode>
-
-	^ mode
-]
-
-{ #category : #'api - mode' }
-AlbTextEditor >> editorMode: aTextEditorMode [
-
-	(mode notNil and: [mode = aTextEditorMode]) ifTrue: [ ^ self ].
-
-	"Uninstall existing mode"
-	mode ifNotNil: [ 
-		mode uninstallFromEditor: self.
-		self dispatchEvent: (AlbTextEditorModeUninstalledEvent new
-				 editor: self;
-				 mode: mode;
-				 yourself) ].
-
-	mode := aTextEditorMode.
-	mode ifNotNil: [ 
-		mode installOnEditor: self.
-		self dispatchEvent: (AlbTextEditorModeInstalledEvent new
-				 editor: self;
-				 mode: mode;
-				 yourself) ].
-
-	self notifyChanged
 ]
 
 { #category : #'api - shortcuts' }

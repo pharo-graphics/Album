@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorModeInstallHandler,
 	#superclass : #AlbTextEditorHandler,
-	#category : #'Album-UI-Handlers'
+	#category : #'Album-Brick-NU-Album-UI-Handlers'
 }
 
 { #category : #'api - accessing' }

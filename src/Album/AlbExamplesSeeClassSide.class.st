@@ -59,13 +59,12 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	| text editorElement space vscrollBar |
 	text := self methodText asRopedText.
 
-	editorElement := AlbEditorElement new
-		                 dresser: AlbTextAreaDresser new.
+	editorElement := AlbEditorElement new dresser: AlbTextAreaDresser new.
+	editorElement viewModel: AlbEditorPharoCodeModel new.
 	editorElement viewModel text: text.
-	editorElement viewModel mode: AlbTextEditorPharoCodeMode new.
-	editorElement editor styler classOrMetaClass: self class.
+	editorElement viewModel classOrMetaClass: self class.
 
-	"editorElement withLineNumbers."
+	editorElement withLineNumbers.
 	"editorElement editor inspect."
 	"editorElement selectionView inspect."
 	"editorElement viewModel inspect."

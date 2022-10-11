@@ -189,7 +189,6 @@ AlbEditorElement >> initialize [
 	cursorStencil := AlbCursorStencil new.
 	selectionView := self defaultSelectionView.
 	textEditorHandlers := OrderedCollection new.
-	textEditorHandlers add: (AlbTextEditorModeInstallHandler new element: self).
 	textEditorHandlers add: (AlbTextEditorShortcutHandler new element: self).
 	textEditorHandlers add: (AlbTextEditorTextStyleHandler new element: self).
 	textEditorHandlers add: (AlbTextEditorTextReplaceHandler new element: self).
@@ -206,6 +205,7 @@ AlbEditorElement >> initialize [
 
 { #category : #'api - editor' }
 AlbEditorElement >> inputFilter: aTextEditorInputFilter [
+
 	self editor inputFilter: aTextEditorInputFilter
 ]
 
@@ -220,14 +220,14 @@ AlbEditorElement >> inserter [
 AlbEditorElement >> isEditable [
 	<return: #Boolean>
 
-	^ self viewModel mode isEditable
+	^ self viewModel isEditable
 ]
 
 { #category : #'api - editor' }
 AlbEditorElement >> isReadOnly [
 	<return: #Boolean>
 
-	^ self viewModel mode isReadOnly
+	^ self viewModel isReadOnly
 ]
 
 { #category : #'text - styling' }
@@ -241,25 +241,6 @@ AlbEditorElement >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
 	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
 	self editor layoutPositionsRange: anInterval
-]
-
-{ #category : #accessing }
-AlbEditorElement >> mode [
-
-	<return: #AlbTextEditorMode>
-	^ self viewModel mode
-]
-
-{ #category : #accessing }
-AlbEditorElement >> mode: aTextEditorMode [
-
-	^ self viewModel mode: aTextEditorMode
-]
-
-{ #category : #'model - events' }
-AlbEditorElement >> modeChanged: aTextEditorMode [
-
-	self editor editorMode: aTextEditorMode
 ]
 
 { #category : #'ui - events managing' }
@@ -359,7 +340,7 @@ AlbEditorElement >> selection [
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> selectionChanged [
-	self mode selectionChangedIn: self
+	self viewModel selectionChangedIn: self
 ]
 
 { #category : #accessing }

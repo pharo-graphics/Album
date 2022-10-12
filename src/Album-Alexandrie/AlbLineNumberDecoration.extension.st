@@ -12,20 +12,19 @@ AlbLineNumberDecoration >> aeCairoScaledFontOn: aeCanvas [
 { #category : #'*Album-Alexandrie' }
 AlbLineNumberDecoration >> aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement [
 
-	| holder index s cairoScaledFont cairoGlyphsArray fontExtents |
+	| holder index cairoScaledFont cairoGlyphsArray fontExtents |
 	super aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement.
 	aeCanvas restoreContextAfter: [ 
 		aeCanvas pathTranslate:
 			self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top.
 		holder := anInfiniteElement childHolderOf: anItemElement.
 		index := holder layoutPosition.
-		s := index asString utf8Encoded.
 
 		cairoScaledFont := self aeCairoScaledFontOn: aeCanvas.
 		fontExtents := cairoScaledFont extents.
 		aeCanvas pathTranslate: 4 @ fontExtents ascent.
 		aeCanvas setSourceColor: Color gray darker.
-		cairoGlyphsArray := cairoScaledFont glyphArrayFor: s length: s size.
+		cairoGlyphsArray := cairoScaledFont glyphArrayFor: index asString.
 		aeCanvas drawText: cairoGlyphsArray font: cairoScaledFont ]
 ]
 
@@ -59,13 +58,12 @@ AlbLineNumberDecoration >> aeMeasureActualWidthOn: aeCanvas in: anInfiniteElemen
 
 	"Draw the background beneath "
 
-	| holder cairoScaledFont fontExtents cairoGlyphsArray s |
+	| holder cairoScaledFont fontExtents cairoGlyphsArray |
 	anInfiniteElement hasChildren ifFalse: [ ^self ].
 	holder := anInfiniteElement childHolderOf: anInfiniteElement children last.
-	s := holder layoutPosition asString.
 	cairoScaledFont := self aeCairoScaledFontOn: aeCanvas.
 	fontExtents := cairoScaledFont extents.
-	cairoGlyphsArray := cairoScaledFont glyphArrayFor: s length: s size.
+	cairoGlyphsArray := cairoScaledFont glyphArrayFor: holder layoutPosition asString.
 	aeCanvas textExtentsFor: cairoGlyphsArray scaledFont: cairoScaledFont do: [ :aTextExtents | 
 		self onActualWidthChangeWith: aTextExtents width do: [ anInfiniteElement requestLayout ] ]
 ]

@@ -22,7 +22,8 @@ AlbEditorDeleteOneLetterAfterCursorShortcut >> name [
 ]
 
 { #category : #evaluation }
-AlbEditorDeleteOneLetterAfterCursorShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+AlbEditorDeleteOneLetterAfterCursorShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor deleter
 		selected;
 		oneAfterCursorIfOutsideOfSelection;

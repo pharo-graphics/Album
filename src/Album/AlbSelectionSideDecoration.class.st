@@ -39,6 +39,5 @@ AlbSelectionSideDecoration >> selectionLimitRectangleOf: anItemElement in: anInf
 
 { #category : #geometry }
 AlbSelectionSideDecoration >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: aBlock [
-
 	(self selectionLimitRectangleOf: anItemElement in: anInfiniteElement) ifNotNil: [ :bnds | aBlock value: bnds ]
 ]

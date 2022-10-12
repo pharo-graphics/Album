@@ -23,6 +23,7 @@ AlbEditorCarriageReturnShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorCarriageReturnShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor inserter
 		inputFilter: aTextEditor inputFilter;
 		atCursor;

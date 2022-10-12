@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorChangedEvent,
 	#superclass : #BlEvent,
-	#category : #'Album-Model-Events'
+	#category : #'Album-Brick-NU-Album-Model-Events'
 }

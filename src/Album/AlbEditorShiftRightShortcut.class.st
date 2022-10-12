@@ -23,13 +23,14 @@ AlbEditorShiftRightShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorShiftRightShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor selection isEmpty
-		ifTrue: [
+		ifTrue: [ 
 			aTextEditor inserter
 				atCursor;
 				indentation;
 				insert ]
-		ifFalse: [
+		ifFalse: [ 
 			aTextEditor inserter
 				indentation;
 				beforeSelectedLines;

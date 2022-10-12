@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorSelectionHandler,
-	#superclass : #AlbTextEditorHandler,
+	#superclass : #AlbEditorElementHandler,
 	#instVars : [
 		'startIndex'
 	],
@@ -53,4 +53,10 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 { #category : #'api - accessing' }
 AlbTextEditorSelectionHandler >> eventsToHandle [
 	^ { BlDragEvent . BlDragStartEvent. BlDragEndEvent}
+]
+
+{ #category : #'api - event managing' }
+AlbTextEditorSelectionHandler >> wantsEvent: anEvent [
+	element isWithSelection ifFalse: [  ^ false ].
+	^ (super wantsEvent: anEvent) 
 ]

@@ -7,7 +7,6 @@ Class {
 	#traits : 'TOBlLayoutResizable',
 	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
-		'textEditorHandlers',
 		'selectionView',
 		'cursorStencil'
 	],
@@ -91,6 +90,18 @@ AlbEditorElement >> defaultCodeFontName [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultEventHandlers [
+
+	^ { 
+		  AlbTextEditorMouseHandler new.
+		  AlbTextEditorDoubleClickHandler new.
+		  AlbTextEditorSelectionHandler new.
+		  AlbTextEditorInsertionHandler new.
+		  AlbTextEditorCursorIconHandler new.
+		  AlbTextEditorFocusHandler new }
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultLayout [
 
 	^ OBlInfiniteLinearLayout vertical
@@ -151,9 +162,8 @@ AlbEditorElement >> editor [
 { #category : #accessing }
 AlbEditorElement >> editor: aTextEditor [
 
-	textEditorHandlers do: [ :handler | self editor removeEventHandler: handler ].
 	self dataSource: aTextEditor.
-	textEditorHandlers do: [ :handler | self editor addEventHandler: handler ]
+
 ]
 
 { #category : #'editor - accessing' }
@@ -193,19 +203,14 @@ AlbEditorElement >> initialize [
 	super initialize.
 	cursorStencil := AlbCursorStencil new.
 	selectionView := self defaultSelectionView.
-	textEditorHandlers := OrderedCollection new.
-	textEditorHandlers add: (AlbTextEditorShortcutHandler new element: self).
-	textEditorHandlers add: (AlbTextEditorTextStyleHandler new element: self).
-	textEditorHandlers add: (AlbTextEditorTextReplaceHandler new element: self).
-	textEditorHandlers add: (AlbTextEditorChangeHandler  new element: self).
-	
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
 	self viewModel: self defaulEditorModel.
 	self matchParent.
-
-	
-
+	self defaultEventHandlers do: [ :handler | 
+		self addEventHandler: (handler
+				 element: self;
+				 yourself) ]
 ]
 
 { #category : #'api - editor' }
@@ -233,6 +238,11 @@ AlbEditorElement >> isReadOnly [
 	<return: #Boolean>
 
 	^ self viewModel isReadOnly
+]
+
+{ #category : #'selection managing' }
+AlbEditorElement >> isWithSelection [
+	^ self viewModel isWithSelection
 ]
 
 { #category : #'text - styling' }
@@ -391,12 +401,6 @@ AlbEditorElement >> styler: aStyler [
 	self viewModel styler: aStyler
 ]
 
-{ #category : #'model - events' }
-AlbEditorElement >> stylerChanged: aStyler [
-
-	self editor styler: aStyler
-]
-
 { #category : #'editor - accessing' }
 AlbEditorElement >> subTextOnScreen [
 	
@@ -483,6 +487,32 @@ AlbEditorElement >> textSnapshot [
 AlbEditorElement >> textStyled: aStyledText [
 
 	^ self viewModel textStyled: aStyledText
+]
+
+{ #category : #'model - events' }
+AlbEditorElement >> whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement [
+
+	self editor whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement.
+	self viewModel applyEditabilityChangeIn: self.
+	
+]
+
+{ #category : #'model - events' }
+AlbEditorElement >> whenStylerChangedFromModel: aStylerChangedAnnouncement [
+
+	self editor whenStylerChangedFromModel: aStylerChangedAnnouncement
+]
+
+{ #category : #'model - events' }
+AlbEditorElement >> whenTextChangedFromModel: aTextChangedAnnouncement [
+
+	self editor whenTextChangedFromModel: aTextChangedAnnouncement
+]
+
+{ #category : #'text - styling' }
+AlbEditorElement >> whenTextStyleRequestedFromModel: aTextStyleRequestAnnounce [
+
+	self editor launchStyleFromElement: self
 ]
 
 { #category : #'accessing - decoration' }

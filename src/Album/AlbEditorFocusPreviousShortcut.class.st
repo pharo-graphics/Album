@@ -23,6 +23,7 @@ AlbEditorFocusPreviousShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorFocusPreviousShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aEditorElement
 		previousSiblingSuchThat: [ :eachElement | eachElement isFocusable ]
 		do: [ :anElement | anElement requestFocus ]

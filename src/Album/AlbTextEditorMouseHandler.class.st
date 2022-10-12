@@ -1,16 +1,26 @@
 Class {
-	#name : #AlbTextEditorMouseDownHandler,
-	#superclass : #AlbTextEditorHandler,
+	#name : #AlbTextEditorMouseHandler,
+	#superclass : #AlbEditorElementHandler,
 	#category : #'Album-UI-Handlers'
 }
 
+{ #category : #'event handling' }
+AlbTextEditorMouseHandler >> clickEvent: anEvent [
+
+	anEvent consumed: true
+]
+
 { #category : #'api - accessing' }
-AlbTextEditorMouseDownHandler >> eventsToHandle [
-	^ { BlMouseDownEvent }
+AlbTextEditorMouseHandler >> eventsToHandle [
+
+	^ { 
+		  BlMouseDownEvent.
+		  BlMouseUpEvent.
+		  BlClickEvent }
 ]
 
 { #category : #'event handling' }
-AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
+AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 
 	| aNavigator aScreenPosition spacePosition textInputPosition |
 	"To not create an instance of me for each tiny text element"
@@ -38,6 +48,13 @@ AlbTextEditorMouseDownHandler >> mouseDownEvent: anEvent [
 ]
 
 { #category : #'event handling' }
-AlbTextEditorMouseDownHandler >> wantsEvent: anEvent [
+AlbTextEditorMouseHandler >> mouseUpEvent: anEvent [
+
+	anEvent consumed: true
+]
+
+{ #category : #'event handling' }
+AlbTextEditorMouseHandler >> wantsEvent: anEvent [
+	element isWithSelection ifFalse: [  ^ false ].
 	^ (super wantsEvent: anEvent) and: [ anEvent primaryButtonPressed ]
 ]

@@ -23,6 +23,7 @@ AlbEditorSelectAllShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorSelectAllShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor selecter
 		all;
 		select

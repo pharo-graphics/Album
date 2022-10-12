@@ -22,7 +22,8 @@ AlbEditorLineEndingShortcut >> name [
 ]
 
 { #category : #evaluation }
-AlbEditorLineEndingShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+AlbEditorLineEndingShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor inserter
 		inputFilter: aTextEditor inputFilter;
 		atCursor;

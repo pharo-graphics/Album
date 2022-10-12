@@ -7,21 +7,24 @@ Class {
 		'fontName',
 		'readonly',
 		'allowSelection',
-		'eventHandlers',
 		'shortcuts'
 	],
 	#category : #'Album-Model'
 }
 
-{ #category : #initialization }
-AlbEditorModel >> createEventHandlers [
+{ #category : #accessing }
+AlbEditorModel >> allowSelection: aBoolean [
 
-	^ self isReadOnly
-		  ifTrue: [ 
-			  self isWithSelection
-				  ifTrue: [ self eventHandlersForReadonly ]
-				  ifFalse: [ self eventHandlersForReadonlyWithoutSelection ] ]
-		  ifFalse: [ self eventHandlersForEditable ]
+	allowSelection = aBoolean ifTrue: [ ^ self ].
+	allowSelection := aBoolean.
+	self announce: AlbEditorEditabilityChanged new
+]
+
+{ #category : #'api - hooks' }
+AlbEditorModel >> applyEditabilityChangeIn: anEditorElement [
+
+	self recreateShortcutsIn: anEditorElement.
+	anEditorElement editor wordStencil: self defaultWordStencil.
 ]
 
 { #category : #initialization }
@@ -50,42 +53,6 @@ AlbEditorModel >> defaultStyler [
 AlbEditorModel >> defaultWordStencil [
 
 	^ AlbTextWordPieceStencil forTextEditorModel: self
-]
-
-{ #category : #initialization }
-AlbEditorModel >> eventHandlers [
-	^ eventHandlers ifNil: [ eventHandlers := self createEventHandlers ] 
-]
-
-{ #category : #initialization }
-AlbEditorModel >> eventHandlersForEditable [
-
-	^ { 
-		  "AlbTextEditorShortcutHandler new.
-		  AlbTextEditorTextStyleHandler new.
-		  AlbTextEditorTextReplaceHandler new.
-		  AlbTextEditorChangeHandler new."
-		  AlbTextEditorMouseDownHandler new.
-		  AlbTextEditorDoubleClickHandler new.
-		  AlbTextEditorSelectionHandler new.
-		  AlbTextEditorInsertionHandler new.
-		  AlbTextEditorCursorIconHandler new }
-]
-
-{ #category : #initialization }
-AlbEditorModel >> eventHandlersForReadonly [
-
-	^ { 
-		  AlbTextEditorMouseDownHandler new.
-		  AlbTextEditorDoubleClickHandler new.
-		  AlbTextEditorSelectionHandler new.
-		  AlbTextEditorCursorIconHandler new }
-]
-
-{ #category : #initialization }
-AlbEditorModel >> eventHandlersForReadonlyWithoutSelection [
-
-	^ {  }
 ]
 
 { #category : #initialization }
@@ -120,10 +87,13 @@ AlbEditorModel >> onInstalledIn: anElement [
 	"Is sent when I am added to an element "
 
 	super onInstalledIn: anElement.
+	
+	self when: AlbEditorTextChanged send: #whenTextChangedFromModel: to: anElement.
+	self when: AlbEditorStylerChanged send: #whenStylerChangedFromModel: to: anElement.
+	self when: AlbEditorEditabilityChanged  send: #whenEditabilityChangedFromModel: to: anElement.
+	
 	anElement editor wordStencil: self defaultWordStencil.
-	self eventHandlers do: [ :eachEventHandler | 
-		eachEventHandler element: anElement.
-		anElement addEventHandler: eachEventHandler ].
+
 	self shortcuts do: [ :eachShortcut | anElement editor addEditorShortcut: eachShortcut ]
 ]
 
@@ -133,23 +103,31 @@ AlbEditorModel >> onUninstalledIn: anElement [
 	"Is sent when I am removed from an element "
 
 	super onUninstalledIn: anElement.
-	self shortcuts do: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ].
-	self eventHandlers do: [ :eachEventHandler | 
-		anElement removeEventHandler: eachEventHandler.
-		eachEventHandler element: nil ]
+	self unsubscribe: anElement editor.
+	self shortcuts do: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ]
 ]
 
 { #category : #copying }
 AlbEditorModel >> postCopy [
 	"they will be initialized lazily later"
-	eventHandlers := nil.
 	shortcuts := shortcuts copy 
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 AlbEditorModel >> readonly: aBoolean [
 
-	readonly := aBoolean
+	readonly = aBoolean ifTrue: [ ^ self ].
+	readonly := aBoolean.
+	self announce: AlbEditorEditabilityChanged new
+]
+
+{ #category : #'api - hooks' }
+AlbEditorModel >> recreateShortcutsIn: anEditorElement [
+
+	self shortcuts do: [ :eachShortcut | anEditorElement editor removeEditorShortcut: eachShortcut ].
+	shortcuts := nil.
+	self shortcuts do: [ :eachShortcut | anEditorElement editor addEditorShortcut: eachShortcut ]
+	
 ]
 
 { #category : #'infinite element changes' }
@@ -226,7 +204,7 @@ AlbEditorModel >> styler: aStyler [
 	styler = aStyler ifTrue: [ ^ self ].
 
 	styler := aStyler.
-	self dispatchEvent: (AlbEditorStylerChangedEvent styler: self styler)
+	self announce: (AlbEditorStylerChanged new styler: self styler)
 ]
 
 { #category : #accessing }
@@ -238,11 +216,11 @@ AlbEditorModel >> text [
 AlbEditorModel >> text: aText [
 	text = aText ifTrue: [ ^ self ].
 	text := aText.
-	self dispatchEvent: (AlbEditorTextChangedEvent text: self text)
+	self announce: (AlbEditorTextChanged new text: self text)
 ]
 
 { #category : #accessing }
 AlbEditorModel >> textStyled: aText [
-	text := aText.
-	self dispatchEvent: (AlbEditorTextStyledEvent text: self text)
+	" nothing to do here because the text is already up-to-date "
+
 ]

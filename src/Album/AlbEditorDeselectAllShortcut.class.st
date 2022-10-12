@@ -23,5 +23,6 @@ AlbEditorDeselectAllShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorDeselectAllShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor selectNone
 ]

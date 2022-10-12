@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorCursorIconHandler,
-	#superclass : #AlbTextEditorHandler,
+	#superclass : #AlbEditorElementHandler,
 	#category : #'Album-UI-Handlers'
 }
 
@@ -43,4 +43,10 @@ AlbTextEditorCursorIconHandler >> mouseLeaveEvent: anEvent [
 AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
 
 	anEvent currentTarget mouseCursor: BlCursor overEditableText
+]
+
+{ #category : #'api - event managing' }
+AlbTextEditorCursorIconHandler >> wantsEvent: anEvent [
+	element isWithSelection ifFalse: [  ^ false ].
+	^ (super wantsEvent: anEvent)
 ]

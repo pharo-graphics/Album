@@ -22,7 +22,8 @@ AlbEditorPasteShortcut >> name [
 ]
 
 { #category : #evaluation }
-AlbEditorPasteShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+AlbEditorPasteShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor paster
 		inputFilter: aTextEditor inputFilter;
 		fromClipboard;

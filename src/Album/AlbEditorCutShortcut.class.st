@@ -22,6 +22,7 @@ AlbEditorCutShortcut >> name [
 ]
 
 { #category : #evaluation }
-AlbEditorCutShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+AlbEditorCutShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor cutSelected
 ]

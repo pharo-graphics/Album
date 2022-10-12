@@ -22,6 +22,7 @@ AlbEditorCopyShortcut >> name [
 ]
 
 { #category : #evaluation }
-AlbEditorCopyShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+AlbEditorCopyShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor copySelected
 ]

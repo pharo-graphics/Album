@@ -492,6 +492,11 @@ AlbTextEditorOperator >> notifyCursorAdded: aCursor [
 ]
 
 { #category : #notifying }
+AlbTextEditorOperator >> notifyCursorRemoved [
+	self notifyCursorRemoved: self cursor
+]
+
+{ #category : #notifying }
 AlbTextEditorOperator >> notifyCursorRemoved: aCursor [
 	| aCommand |
 

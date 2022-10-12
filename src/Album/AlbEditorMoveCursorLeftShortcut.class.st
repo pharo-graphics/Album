@@ -22,7 +22,9 @@ AlbEditorMoveCursorLeftShortcut >> name [
 ]
 
 { #category : #evaluation }
-AlbEditorMoveCursorLeftShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+AlbEditorMoveCursorLeftShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
+
+
 	aTextEditor deselecter
 		all;
 		deselect.

@@ -47,11 +47,6 @@ AlbEditorModel >> defaultStyler [
 ]
 
 { #category : #initialization }
-AlbEditorModel >> defaultTextEditorMode [
-	^ AlbTextEditorMode new
-]
-
-{ #category : #initialization }
 AlbEditorModel >> defaultWordStencil [
 
 	^ AlbTextWordPieceStencil forTextEditorModel: self

@@ -54,13 +54,20 @@ AlbExamplesSeeClassSide class >> descent [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_CodeEditorWithRBScannerStylerWithDresser [
+
+	| ed |
+	ed := self example_CodeEditorWithRBStylerWithDresser.
+	ed viewModel styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro')
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	| text editorElement space vscrollBar |
 	text := self methodText asRopedText.
 
-	editorElement := AlbEditorElement new dresser: AlbTextAreaDresser new.
-	editorElement viewModel: AlbEditorPharoCodeModel new.
+	editorElement := AlbEditorElement forPharoCode dresser: AlbTextAreaDresser new.
 	editorElement viewModel text: text.
 	editorElement viewModel classOrMetaClass: self class.
 
@@ -82,7 +89,8 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	space := OBlSpace new.
 	space root addChild: editorElement.
 	space root addChild: vscrollBar.
-	space show
+	space show.
+	^ editorElement
 
 
 ]
@@ -118,7 +126,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 
 	| ed space text |
 	ed := AlbEditorElement new.
-	text := ('AB', String tab, String tab, 'CD') asRopedText fontName: 'Source Code Pro'.
+	text := ('AB', String tab, String tab, 'CD') asRopedText.
 	text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1.
 	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 3 to: 6.
 	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2.
@@ -158,10 +166,12 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
 	| ed vscrollBar space text |
 	" ~4300 pages on LibreOffice, ~8000000 characters "
-	text := Smalltalk changesFile readStream contents asRopedText fontName: 'Source Code Pro'.
-	ed := text onAlbum.
+	text := Smalltalk changesFile readStream contents asRopedText.
+	ed := AlbEditorElement forPharoCode dresser: AlbTextAreaDresser new.
+	ed text: text.
 	ed withoutCacheLimit.
 	ed withLineNumbers.
+	ed viewModel styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro').
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.

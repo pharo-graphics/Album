@@ -14,6 +14,11 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #'as yet unclassified' }
+AlbEditorElement class >> forPharoCode [
+	^ self new viewModel: AlbEditorPharoCodeModel new.
+]
+
 { #category : #'api - editor' }
 AlbEditorElement >> addEditorShortcut: aTextEditorInteraction [
 	self editor addEditorShortcut: aTextEditorInteraction

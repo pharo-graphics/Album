@@ -4,5 +4,5 @@ Class {
 	#instVars : [
 		'defaultFontName'
 	],
-	#category : #'Album-Model'
+	#category : #'Album-Brick-NU-Album-Model'
 }

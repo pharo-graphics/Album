@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbTextEditorPharoCodeMode,
 	#superclass : #AlbTextEditorCodeMode,
-	#category : #'Album-Model'
+	#category : #'Album-Brick-NU-Album-Model'
 }

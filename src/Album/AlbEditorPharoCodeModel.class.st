@@ -22,6 +22,12 @@ AlbEditorPharoCodeModel >> defaultStyler [
 	^ BlRBTextStyler new.
 ]
 
+{ #category : #accessing }
+AlbEditorPharoCodeModel >> isForWorkspace: aBoolean [
+
+	self styler isForWorkspace: aBoolean
+]
+
 { #category : #'api - hooks' }
 AlbEditorPharoCodeModel >> onInstalledIn: anElement [
 
@@ -34,4 +40,15 @@ AlbEditorPharoCodeModel >> onUninstalledIn: anElement [
 
 	super onUninstalledIn: anElement.
 	self styler: nil
+]
+
+{ #category : #accessing }
+AlbEditorPharoCodeModel >> text: aText [
+	^ super text: (aText fontName: self defaultFontName)  
+]
+
+{ #category : #accessing }
+AlbEditorPharoCodeModel >> workspace: aWorkspace [
+
+	self styler workspace: aWorkspace
 ]

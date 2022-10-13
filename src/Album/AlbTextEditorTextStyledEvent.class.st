@@ -7,6 +7,12 @@ Class {
 	#category : #'Album-Model-Events'
 }
 
+{ #category : #sending }
+AlbTextEditorTextStyledEvent >> sendTo: anEventHandler [
+
+	anEventHandler textStyledEvent: self
+]
+
 { #category : #accessing }
 AlbTextEditorTextStyledEvent >> styledText [
 	^ styledText

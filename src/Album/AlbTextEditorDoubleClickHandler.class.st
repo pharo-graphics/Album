@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorDoubleClickHandler,
-	#superclass : #AlbTextEditorHandler,
+	#superclass : #AlbEditorElementHandler,
 	#category : #'Album-UI-Handlers'
 }
 
@@ -67,9 +67,4 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 AlbTextEditorDoubleClickHandler >> eventsToHandle [
 
 	^ { BlDoubleClickEvent }
-]
-
-{ #category : #accessing }
-AlbTextEditorDoubleClickHandler >> wantsEvent: anEvent [
-	^ (super wantsEvent: anEvent) and: [ anEvent primaryButtonPressed ]
 ]

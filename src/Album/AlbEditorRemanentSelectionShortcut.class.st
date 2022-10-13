@@ -23,5 +23,6 @@ AlbEditorRemanentSelectionShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorRemanentSelectionShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aEditorElement setRemanents
 ]

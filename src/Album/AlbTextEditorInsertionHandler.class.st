@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorInsertionHandler,
-	#superclass : #AlbTextEditorHandler,
+	#superclass : #AlbEditorElementHandler,
 	#category : #'Album-UI-Handlers'
 }
 
@@ -51,4 +51,10 @@ AlbTextEditorInsertionHandler >> textInputEvent: anEvent [
 		insert: anEvent text asString
 		atCursorIn: anEvent currentTarget editor
 		context: anEvent currentTarget
+]
+
+{ #category : #'api - event managing' }
+AlbTextEditorInsertionHandler >> wantsEvent: anEvent [
+	element isEditable ifFalse: [  ^ false ].
+	^ (super wantsEvent: anEvent) 
 ]

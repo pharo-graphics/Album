@@ -24,6 +24,7 @@ AlbEditorMoveCursorToLineStartShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorMoveCursorToLineStartShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor deselecter
 		all;
 		deselect.

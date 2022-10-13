@@ -23,5 +23,6 @@ AlbEditorUndoShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorUndoShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor undo
 ]

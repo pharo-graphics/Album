@@ -23,5 +23,6 @@ AlbEditorRedoShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorRedoShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor redo
 ]

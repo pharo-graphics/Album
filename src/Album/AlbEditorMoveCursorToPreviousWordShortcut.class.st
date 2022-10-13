@@ -32,6 +32,7 @@ AlbEditorMoveCursorToPreviousWordShortcut >> name [
 
 { #category : #evaluation }
 AlbEditorMoveCursorToPreviousWordShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
+
 	aTextEditor deselecter
 		all;
 		deselect.

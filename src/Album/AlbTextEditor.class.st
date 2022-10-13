@@ -195,11 +195,6 @@ AlbTextEditor >> defaultText [
 	^ BlRopedText string: ''
 ]
 
-{ #category : #initialization }
-AlbTextEditor >> defaultWordStencil [
-	^ AlbTextWordPieceStencil editable
-]
-
 { #category : #'private - text' }
 AlbTextEditor >> delete: aFromTextIndex to: aToTextIndex [
 	"I delete a piece of text within a given text interval without cursor or selection update.
@@ -327,7 +322,6 @@ AlbTextEditor >> initialize [
 	
 	text := self defaultText.
 	self initializeText: text.
-	wordStencil := self defaultWordStencil.
 	segmentCollector := self newSegmentCollector.
 	segmentCollector text: text.
 	
@@ -545,10 +539,7 @@ AlbTextEditor >> onAttached: anEditorElement [
 	"sent by the element (from dataSource: )"
 	
 	super onAttached: anEditorElement.
-	anEditorElement when: BlMouseUpEvent do: [ :anEvent | anEvent consumed: true ].
-	anEditorElement when: BlClickEvent do: [ :anEvent | anEvent consumed: true ].
-	anEditorElement when: BlFocusEvent do: [ self onGotFocus ].
-	anEditorElement when: BlBlurEvent do: [ self onLostFocus ].
+	self addEventHandler: (AlbTextEditorHandler new element: anEditorElement).
 	self notifyChanged
 ]
 
@@ -589,11 +580,10 @@ AlbTextEditor >> onCreateHolder: anEditorElement type: aSegmentType [
 
 { #category : #hooks }
 AlbTextEditor >> onDetached: anEditorElement [
+
+	self removeEventHandlersSuchThat: [ true ].
 	super onDetached: anEditorElement.
 
-	anEditorElement
-		removeEventHandlersSuchThat: [ :aHandler | (aHandler isKindOf: BlEventHandler)
-			and: [ { BlMouseUpEvent . BlClickEvent . BlFocusEvent . BlBlurEvent } includes: aHandler eventClass ] ]
 ]
 
 { #category : #'private - focus' }
@@ -1144,10 +1134,31 @@ AlbTextEditor >> updater [
 	^ AlbTextEditorUpdater new editor: self
 ]
 
+{ #category : #'model protocol' }
+AlbTextEditor >> whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement [
+
+	self deselecter
+		all;
+		apply;
+		notifyCursorRemoved
+]
+
+{ #category : #'model protocol' }
+AlbTextEditor >> whenStylerChangedFromModel: aStylerChangedAnnouncement [
+
+	self styler: aStylerChangedAnnouncement styler
+]
+
 { #category : #'text - styling' }
 AlbTextEditor >> whenStylerStateChanged: anAnnouncement [
 
 	self styleText
+]
+
+{ #category : #'model protocol' }
+AlbTextEditor >> whenTextChangedFromModel: aTextChangedAnnouncement [
+
+	self privateText: aTextChangedAnnouncement text
 ]
 
 { #category : #'text - styling' }

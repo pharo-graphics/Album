@@ -5,19 +5,15 @@ Class {
 		'styler',
 		'text',
 		'fontName',
-		'readonly',
-		'allowSelection',
-		'shortcuts'
+		'shortcuts',
+		'mode'
 	],
 	#category : #'Album-Model'
 }
 
-{ #category : #accessing }
-AlbEditorModel >> allowSelection: aBoolean [
-
-	allowSelection = aBoolean ifTrue: [ ^ self ].
-	allowSelection := aBoolean.
-	self announce: AlbEditorEditabilityChanged new
+{ #category : #testing }
+AlbEditorModel >> allowSelection [ 
+	^ mode allowSelection  
 ]
 
 { #category : #'api - hooks' }
@@ -27,15 +23,34 @@ AlbEditorModel >> applyEditabilityChangeIn: anEditorElement [
 	anEditorElement editor wordStencil: self defaultWordStencil.
 ]
 
+{ #category : #accessing }
+AlbEditorModel >> beEditable [
+
+	mode isEditable ifTrue: [ ^ self ].
+	mode := AlbEditorEditableMode new.
+	self announce: AlbEditorEditabilityChanged new
+]
+
+{ #category : #accessing }
+AlbEditorModel >> beReadonlyWithSelection [
+
+	(mode isReadOnly and: [ mode allowSelection ]) ifTrue: [ ^ self ].
+	mode := AlbEditorReadonlyWithSelectionMode new.
+	self announce: AlbEditorEditabilityChanged new
+]
+
+{ #category : #accessing }
+AlbEditorModel >> beReadonlyWithoutSelection [
+
+	mode allowSelection ifFalse: [ ^ self ].
+	mode := AlbEditorReadonlyWithoutSelectionMode new.
+	self announce: AlbEditorEditabilityChanged new
+]
+
 { #category : #initialization }
 AlbEditorModel >> createShortcuts [
 
-	^ self isReadOnly
-		  ifTrue: [ 
-			  self isWithSelection
-				  ifTrue: [ self shortcutsForReadonly ]
-				  ifFalse: [ self shortcutsForReadonlyWithoutSelection ] ]
-		  ifFalse: [ self shortcutsForEditable ]
+	^ mode shortcuts 
 ]
 
 { #category : #initialization }
@@ -59,8 +74,7 @@ AlbEditorModel >> defaultWordStencil [
 AlbEditorModel >> initialize [
 	super initialize.
 	
-	readonly := false.
-	allowSelection := true.
+	mode := AlbEditorEditableMode new.
 	text := '' asRopedText.
 	fontName := self defaultFontName.
 	styler := self defaultStyler
@@ -68,17 +82,12 @@ AlbEditorModel >> initialize [
 
 { #category : #testing }
 AlbEditorModel >> isEditable [
-	^ readonly not
+	^ mode isEditable 
 ]
 
 { #category : #testing }
 AlbEditorModel >> isReadOnly [
-	^ readonly
-]
-
-{ #category : #testing }
-AlbEditorModel >> isWithSelection [
-	^ allowSelection 
+	^ mode isReadOnly 
 ]
 
 { #category : #'api - hooks' }
@@ -113,14 +122,6 @@ AlbEditorModel >> postCopy [
 	shortcuts := shortcuts copy 
 ]
 
-{ #category : #accessing }
-AlbEditorModel >> readonly: aBoolean [
-
-	readonly = aBoolean ifTrue: [ ^ self ].
-	readonly := aBoolean.
-	self announce: AlbEditorEditabilityChanged new
-]
-
 { #category : #'api - hooks' }
 AlbEditorModel >> recreateShortcutsIn: anEditorElement [
 
@@ -132,64 +133,14 @@ AlbEditorModel >> recreateShortcutsIn: anEditorElement [
 
 { #category : #'infinite element changes' }
 AlbEditorModel >> selectionChangedIn: anEditorElement [
-	allowSelection ifFalse: [ ^ self ].
+
+	self allowSelection ifFalse: [ ^ self ].
 	anEditorElement selectionView selectionChangedIn: anEditorElement
 ]
 
 { #category : #accessing }
 AlbEditorModel >> shortcuts [
 	^ shortcuts ifNil: [ shortcuts := self createShortcuts ]
-]
-
-{ #category : #initialization }
-AlbEditorModel >> shortcutsForEditable [
-
-	^ { 
-		  AlbEditorDeleteOneLetterAfterCursorShortcut new.
-		  AlbEditorDeleteOneLetterBeforeCursorShortcut new.
-		  AlbEditorShiftRightShortcut new.
-		  AlbEditorCutShortcut new.
-		  AlbEditorCopyShortcut new.
-		  AlbEditorPasteShortcut new.
-		  AlbEditorUndoShortcut new.
-		  AlbEditorRedoShortcut new.
-		  AlbEditorCarriageReturnShortcut new.
-		  AlbEditorMoveCursorLeftShortcut new.
-		  AlbEditorMoveCursorRightShortcut new.
-		  AlbEditorMoveCursorUpShortcut new.
-		  AlbEditorMoveCursorDownShortcut new.
-		  AlbEditorMoveCursorToPreviousWordShortcut new.
-		  AlbEditorMoveCursorToNextWordShortcut new.
-		  AlbEditorMoveCursorToLineStartShortcut new.
-		  AlbEditorMoveCursorToLineEndShortcut new.
-
-		  AlbEditorSelectAllShortcut new.
-		  AlbEditorRemanentSelectionShortcut new.
-		  AlbEditorDeselectAllShortcut new.
-		  AlbEditorSelectLetterAfterCursorShortcut new.
-		  AlbEditorSelectLetterBeforeCursorShortcut new.
-		  AlbEditorSelectWordBeforeCursorShortcut new.
-		  AlbEditorSelectWordAfterCursorShortcut new.
-		  AlbEditorSelectLineBeforeCursorShortcut new.
-		  AlbEditorSelectLineAfterCursorShortcut new.
-		  AlbEditorSelectLineBelowCursorShortcut new.
-		  AlbEditorSelectLineAboveCursorShortcut new }
-]
-
-{ #category : #initialization }
-AlbEditorModel >> shortcutsForReadonly [
-
-	^ { 
-		  AlbEditorCopyShortcut new.
-		  AlbEditorSelectAllShortcut new.
-		  AlbEditorRemanentSelectionShortcut new.
-		  AlbEditorDeselectAllShortcut new }
-]
-
-{ #category : #initialization }
-AlbEditorModel >> shortcutsForReadonlyWithoutSelection [
-
-	^ {  }
 ]
 
 { #category : #accessing }

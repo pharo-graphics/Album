@@ -57,6 +57,6 @@ AlbTextEditorSelectionHandler >> eventsToHandle [
 
 { #category : #'api - event managing' }
 AlbTextEditorSelectionHandler >> wantsEvent: anEvent [
-	element isWithSelection ifFalse: [  ^ false ].
+	element allowSelection ifFalse: [  ^ false ].
 	^ (super wantsEvent: anEvent) 
 ]

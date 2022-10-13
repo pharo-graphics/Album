@@ -3,7 +3,7 @@ Extension { #name : #AlbEditorElement }
 { #category : #'*Album-Alexandrie' }
 AlbEditorElement >> aeDrawChildrenOn: aeCanvas [
 
-	self isWithSelection ifTrue: [
+	self allowSelection ifTrue: [
 		selectionView aeDrawOn: aeCanvas in: self.
 
 		self flag: #todo.

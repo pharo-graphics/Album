@@ -3,7 +3,7 @@ Extension { #name : #AlbSelectionSideDecoration }
 { #category : #'*Album-Alexandrie' }
 AlbSelectionSideDecoration >> aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement [
 
-	anInfiniteElement isWithSelection  ifFalse: [ ^ self ].
+	anInfiniteElement allowSelection  ifFalse: [ ^ self ].
 
 	aeCanvas restoreContextAfter: [ 
 		self selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :rect | 

@@ -47,6 +47,6 @@ AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
 
 { #category : #'api - event managing' }
 AlbTextEditorCursorIconHandler >> wantsEvent: anEvent [
-	element isWithSelection ifFalse: [  ^ false ].
+	element allowSelection ifFalse: [  ^ false ].
 	^ (super wantsEvent: anEvent)
 ]

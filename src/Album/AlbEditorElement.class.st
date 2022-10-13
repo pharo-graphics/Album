@@ -23,6 +23,11 @@ AlbEditorElement >> addEditorShortcut: aTextEditorInteraction [
 	self editor addEditorShortcut: aTextEditorInteraction
 ]
 
+{ #category : #editability }
+AlbEditorElement >> allowSelection [
+	^ self viewModel allowSelection
+]
+
 { #category : #converting }
 AlbEditorElement >> asScrollableElement [
 	^ self
@@ -226,23 +231,18 @@ AlbEditorElement >> inserter [
 	^ self editor inserter
 ]
 
-{ #category : #'api - editor' }
+{ #category : #editability }
 AlbEditorElement >> isEditable [
 	<return: #Boolean>
 
 	^ self viewModel isEditable
 ]
 
-{ #category : #'api - editor' }
+{ #category : #editability }
 AlbEditorElement >> isReadOnly [
 	<return: #Boolean>
 
 	^ self viewModel isReadOnly
-]
-
-{ #category : #'selection managing' }
-AlbEditorElement >> isWithSelection [
-	^ self viewModel isWithSelection
 ]
 
 { #category : #'text - styling' }

@@ -22,10 +22,7 @@ AlbTextEditorLineSegmentSplitter >> itemValueType: anObject [
 		  ifTrue: [ 
 			  anObject isSeparator
 				  ifTrue: [ privateCount := privateCount + 1 ]
-				  ifFalse: [ 
-					  anObject isSpecial
-						  ifTrue: [ privateCount := privateCount + 1 ]
-						  ifFalse: [ #letter ] ] ]
+				  ifFalse: [ #letter ] ] 
 		  ifFalse: [ #object ]
 ]
 

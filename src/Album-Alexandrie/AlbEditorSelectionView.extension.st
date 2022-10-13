@@ -6,7 +6,6 @@ AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 	"Draw an editor element selection polygon"
 
 	vertices ifNil: [ ^ self ].
-	anInfiniteElement isWithSelection ifFalse: [ ^ false ].
 
 	aeCanvas restoreContextAfter: [ 
 		self background aeApplyTo: aeCanvas.
@@ -20,8 +19,7 @@ AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 			border paint aeApplyTo: aeCanvas.
 			border style aeApplyTo: aeCanvas.
 			aeCanvas setLineJoinBlock: [ aeCanvas setJoinRound ].
-			aeCanvas setBorderWidth: border width.
-			aeCanvas prepareToDrawChildrenWithClipping: true.].
+			aeCanvas setBorderWidth: border width ].
 
 		self geometry aeApplyTo: aeCanvas element: anInfiniteElement.
 

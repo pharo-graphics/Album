@@ -112,7 +112,6 @@ AlbEditorModel >> onUninstalledIn: anElement [
 	"Is sent when I am removed from an element "
 
 	super onUninstalledIn: anElement.
-	self unsubscribe: anElement editor.
 	self shortcuts do: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ]
 ]
 

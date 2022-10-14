@@ -406,7 +406,7 @@ AlbTextEditor >> launchStyleFromElement: anElement [
 
 { #category : #accessing }
 AlbTextEditor >> layoutPositionsRange [
-	^ layoutPositionsRange
+	^ layoutPositionsRange ifNil: [ 0 to: 0 ]
 ]
 
 { #category : #accessing }
@@ -589,7 +589,6 @@ AlbTextEditor >> onDetached: anEditorElement [
 { #category : #'private - focus' }
 AlbTextEditor >> onGotFocus [
 	isFocused := true.
-	
 	self processCursorAttributes.
 	self executeCommand: (AlbTextEditorFocusChangedCommand new hasFocus: true)
 ]

@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'BigString'
 	],
-	#category : #'Album-SandBox'
+	#category : #'Album-Examples-TRY-HERE'
 }
 
 { #category : #accessing }
@@ -133,7 +133,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	| text album space vscrollBar |
 	text := self methodText asRopedText.
 
-	album := Album forPharoCode.
+	album := ToAlbum forPharoCode.
 	album viewModel text: text.
 	album viewModel classOrMetaClass: self class.
 	album withLineNumbers.
@@ -425,6 +425,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 		        c horizontal matchParent ].
 	text := self embeddedFontsText.
 	child := text onAlbum dresser: AlbTextAreaDresser new.
+	child fitContent.
 	root addChild: child.
 	root openInOblSpace
 ]
@@ -505,6 +506,23 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
 ]
 
 { #category : #elements }
+AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel0 [
+
+	| element l |
+	l := AlbTextScissor new cut: ('This is a text' asRopedText fontSize: 20).
+
+	element := BlElement new
+		           layout: AlbLineFlowLayout new;
+		           constraintsDo: [ :c | 
+			           c horizontal matchParent.
+			           c vertical fitContent ];
+		           addChildren: (l collect: [ :w | w asElement editorMeasurement ]).
+	element border: (BlBorder paint: Color gray width: 1).
+	element inspect.
+	element openInOBlSpace
+]
+
+{ #category : #elements }
 AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel2 [
 
 	| element l |
@@ -569,14 +587,51 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel4 [
 			| sub cutted lineElement |
 			sub := text from: aLineStart to: aLineEnd.
 			cutted := AlbTextScissor new cut: sub.
-			cutted
-				ifEmpty: [ cutted := Array with: (BlText empty attributes: sub iterator attributes) ].
+			cutted ifEmpty: [ 
+				cutted := Array with:
+					          (BlText empty attributes: sub iterator attributes) ].
 			lineElement := BlElement new
 				               layout: AlbLineFlowLayout new;
 				               constraintsDo: [ :c | 
 					               c horizontal matchParent.
 					               c vertical fitContent ];
-				               addChildren: (cutted collect: [ :w | w asElement editorMeasurement ]).
+				               addChildren:
+					               (cutted collect: [ :w | 
+							                w asElement editorMeasurement ]).
+			root addChild: lineElement ] ].
+
+	root openInOBlSpace
+]
+
+{ #category : #elements }
+AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel5 [
+
+	| root text itor |
+	text := self embeddedFontsText.
+
+	root := BlElement new
+		        constraintsDo: [ :c | 
+			        c vertical matchParent.
+			        c horizontal matchParent ];
+		        layout: BlLinearLayout vertical alignTopCenter.
+	itor := text iterator.
+	[ itor hasNext ] whileTrue: [ 
+		itor nextLineIndicesDo: [ :aLineStart :aLineEnd :aLineDelimiterEnd | 
+			| sub cutted lineElement |
+			sub := text from: aLineStart to: aLineEnd.
+			cutted := AlbTextScissor new cut: sub.
+			cutted ifEmpty: [ 
+				cutted := Array with:
+					          (BlText empty attributes: sub iterator attributes) ].
+			lineElement := BlElement new
+				               layout: AlbLineFlowLayout new;
+				               constraintsDo: [ :c | 
+					               c horizontal fitContent.
+					               c vertical fitContent ];
+				               addChildren:
+					               (cutted collect: [ :w | 
+							                w asElement editorMeasurement ]).
+			"lineElement constraintsDo: [ :c | c linear horizontal alignCenter ]."
 			root addChild: lineElement ] ].
 
 	root openInOBlSpace

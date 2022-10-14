@@ -13,7 +13,7 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 AlbEditorElement class >> forPharoCode [
 	^ self new viewModel: AlbEditorPharoCodeModel new.
 ]

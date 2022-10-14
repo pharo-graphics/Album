@@ -54,6 +54,72 @@ AlbExamplesSeeClassSide class >> descent [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> embeddedFontsText [
+
+	"
+AeFontSlant: normal italic oblique.
+AeFontWeight: black bold extraBlack extraBold extraLight light medium normal semiBold semiLight thin
+AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiCondensed semiExpanded ultraCondensed ultraExpanded 
+"
+
+	| aManager allSlants allWeights allStreches text allChars |
+	allChars := 'azertyuiopqsdfghjklmwxcvbn' , String cr , 'AZERTYUIOPQSDFGHJKLMWXCVBN' , String cr , '1234567890'
+	            , String cr , '@&é"''[(§è!çà)]-#°_¨*%£+/*.?' , String cr , '~^$`ù=:;,~|'.
+	"AeFontManager resetGlobalInstance."
+	aManager := AeFontManager globalInstance .
+	allSlants := { 
+		             BlFontSlant normal.
+		             BlFontSlant italic.
+		             BlFontSlant oblique }.
+	allWeights := { 
+		              BlFontWeight normal.
+		              BlFontWeight light.
+		              BlFontWeight extraLight.
+		              BlFontWeight medium.
+		              BlFontWeight bold.
+		              BlFontWeight semiBold.
+		              BlFontWeight extraBold.
+		              BlFontWeight black.
+		              BlFontWeight extraBlack.
+		              BlFontWeight thin }.
+	allStreches := { 
+		               BlFontStretch normal.
+		               BlFontStretch condensed.
+		               BlFontStretch semiCondensed.
+		               BlFontStretch extraCondensed.
+		               BlFontStretch ultraCondensed.
+		               BlFontStretch expanded.
+		               BlFontStretch semiExpanded.
+		               BlFontStretch extraExpanded.
+		               BlFontStretch ultraExpanded }.
+
+	text := '' asRopedText.
+	aManager familyNames do: [ :fname | 
+		allSlants do: [ :slant | 
+			allWeights do: [ :weight | 
+				allStreches do: [ :strech | 
+					(aManager
+						 detectFamilyName: fname
+						 slant: (AeFontSlant perform: slant name asSymbol)
+						 weight: (AeFontWeight perform: weight name asSymbol)
+						 stretch: (AeFontStretch perform: strech name asSymbol)
+						 ifNone: [  ]) in: [ :face | 
+						face ifNotNil: [ 
+							| fontBuilder t |
+							fontBuilder := BlTextFontAndStyleBuilder new.
+							fontBuilder familyName: fname.
+							fontBuilder fontSize: 18.
+							fontBuilder fontStretch: strech.
+							fontBuilder fontWeight: weight.
+							fontBuilder fontSlant: slant.
+							t := allChars copy asRopedText.
+							fontBuilder font applyOnText: t.
+							text := text, (String cr , String cr , String cr , fname , ' slant: ' , slant name , ' weight: ' , weight name
+							         , ' strech: ' , strech name , ' ' , String cr , String cr) asRopedText , t ] ] ] ] ] ].
+	^ text
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBScannerStylerWithDresser [
 
 	| ed |
@@ -64,20 +130,17 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBScannerStylerWithDresse
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
-	| text editorElement space vscrollBar |
+	| text album space vscrollBar |
 	text := self methodText asRopedText.
 
-	editorElement := AlbEditorElement forPharoCode dresser: AlbTextAreaDresser new.
-	editorElement viewModel text: text.
-	editorElement viewModel classOrMetaClass: self class.
-
-	editorElement withLineNumbers.
-	"editorElement editor inspect."
-	"editorElement selectionView inspect."
-	editorElement viewModel inspect.
-	editorElement editor addEditorShortcut: (BlShortcutWithAction new
-			 combination: BlKeyCombination primaryR;
-			 action: [ :aShortcutEvent | self inform: 'shortcut catched' ]).
+	album := Album forPharoCode.
+	album viewModel text: text.
+	album viewModel classOrMetaClass: self class.
+	album withLineNumbers.
+	
+	"album editorElement editor inspect."
+	"album editorElement selectionView inspect."
+	"album editorElement viewModel inspect."
 
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c | 
@@ -85,12 +148,12 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 		c margin: (BlInsets right: 2).
 		c ignored horizontal alignRight.
 		c ignored vertical alignBottom ].
-	vscrollBar attachTo: editorElement.
+	vscrollBar attachTo: album editorElement.
+	album addChild: vscrollBar. 
 	space := OBlSpace new.
-	space root addChild: editorElement.
-	space root addChild: vscrollBar.
+	space root addChild: album.
 	space show.
-	^ editorElement
+	^ album
 
 
 ]
@@ -356,63 +419,11 @@ AeFontWeight: black bold extraBlack extraBold extraLight light medium normal sem
 AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiCondensed semiExpanded ultraCondensed ultraExpanded 
 "
 
-	| aManager allSlants allWeights allStreches root text child allChars |
-	allChars := 'azertyuiopqsdfghjklmwxcvbn' , String cr , 'AZERTYUIOPQSDFGHJKLMWXCVBN' , String cr , '1234567890'
-	            , String cr , '@&é"''(§è!çà)-#°_¨*%£+/.?' , String cr , '^$`ù=:;,~|'.
-	AeFontManager resetGlobalInstance.
-	aManager := AeFontManager globalInstance .
-	allSlants := { 
-		             BlFontSlant normal.
-		             BlFontSlant italic.
-		             BlFontSlant oblique }.
-	allWeights := { 
-		              BlFontWeight normal.
-		              BlFontWeight light.
-		              BlFontWeight extraLight.
-		              BlFontWeight medium.
-		              BlFontWeight bold.
-		              BlFontWeight semiBold.
-		              BlFontWeight extraBold.
-		              BlFontWeight black.
-		              BlFontWeight extraBlack.
-		              BlFontWeight thin }.
-	allStreches := { 
-		               BlFontStretch normal.
-		               BlFontStretch condensed.
-		               BlFontStretch semiCondensed.
-		               BlFontStretch extraCondensed.
-		               BlFontStretch ultraCondensed.
-		               BlFontStretch expanded.
-		               BlFontStretch semiExpanded.
-		               BlFontStretch extraExpanded.
-		               BlFontStretch ultraExpanded }.
-
+	| root text child |
 	root := BlElement new constraintsDo: [ :c | 
 		        c vertical matchParent.
 		        c horizontal matchParent ].
-	text := '' asRopedText.
-	aManager familyNames do: [ :fname | 
-		allSlants do: [ :slant | 
-			allWeights do: [ :weight | 
-				allStreches do: [ :strech | 
-					(aManager
-						 detectFamilyName: fname
-						 slant: (AeFontSlant perform: slant name asSymbol)
-						 weight: (AeFontWeight perform: weight name asSymbol)
-						 stretch: (AeFontStretch perform: strech name asSymbol)
-						 ifNone: [  ]) in: [ :face | 
-						face ifNotNil: [ 
-							| fontBuilder t |
-							fontBuilder := BlTextFontAndStyleBuilder new.
-							fontBuilder familyName: fname.
-							fontBuilder fontSize: 18.
-							fontBuilder fontStretch: strech.
-							fontBuilder fontWeight: weight.
-							fontBuilder fontSlant: slant.
-							t := allChars copy asRopedText.
-							fontBuilder font applyOnText: t.
-							text := text, (String cr , String cr , String cr , fname , ' slant: ' , slant name , ' weight: ' , weight name
-							         , ' strech: ' , strech name , ' ' , String cr , String cr) asRopedText , t ] ] ] ] ] ].
+	text := self embeddedFontsText.
 	child := text onAlbum dresser: AlbTextAreaDresser new.
 	root addChild: child.
 	root openInOblSpace
@@ -481,16 +492,94 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 { #category : #elements }
 AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
 
-	| element r |
-	r := Random new.
+	| element l |
+	l := AlbTextScissor new cut: String loremIpsum asRopedText.
+
 	element := BlElement new
-		           layout: (AlbLineFlowLayout new lineSpacing: 5);
+		           layout: AlbLineFlowLayout new;
 		           constraintsDo: [ :c | 
 			           c horizontal matchParent.
 			           c vertical fitContent ];
-		           addChildren:
-			           (20 timesCollect: [ ((String loremIpsum: (r nextIntegerBetween: 2 and: 40)), String tab) asRopedText asElement ]).
+		           addChildren: (l collect: [ :w | w asElement editorMeasurement ]).
 	element openInOBlSpace
+]
+
+{ #category : #elements }
+AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel2 [
+
+	| element l |
+	l := AlbTextScissor new cut: (('Default font and size' asRopedText, ('Source code pro 40 bold' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
+	 , (' Default font 30' asRopedText fontSize: 30))).
+
+	element := BlElement new
+		           layout: AlbLineFlowLayout new;
+		           constraintsDo: [ :c | 
+			           c horizontal matchParent.
+			           c vertical fitContent ];
+		           addChildren: (l collect: [ :w | w asElement editorMeasurement ]).
+	element openInOBlSpace
+]
+
+{ #category : #elements }
+AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel3 [
+
+	| root text itor |
+	text := 'Default font and size' asRopedText , String cr asRopedText , ('Source code pro 40 bold' asRopedText
+		         fontSize: 40;
+		         fontName: 'Source code pro';
+		         bold) , String cr asRopedText , (' Default font 30' asRopedText fontSize: 30).
+
+	root := BlElement new
+		        constraintsDo: [ :c | 
+			        c vertical matchParent.
+			        c horizontal matchParent ];
+		        layout: BlLinearLayout vertical.
+
+	itor := text iterator.
+	[ itor hasNext ] whileTrue: [ 
+		itor nextLineIndicesDo: [ :aLineStart :aLineEnd :aLineDelimiterEnd | 
+			| sub cutted lineElement |
+			sub := text from: aLineStart to: aLineEnd.
+			cutted := AlbTextScissor new cut: sub.
+			lineElement := BlElement new
+				               layout: AlbLineFlowLayout new;
+				               constraintsDo: [ :c | 
+					               c horizontal matchParent.
+					               c vertical fitContent ];
+				               addChildren: (cutted collect: [ :w | w asElement editorMeasurement ]).
+			root addChild: lineElement ] ].
+
+	root openInOBlSpace
+]
+
+{ #category : #elements }
+AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel4 [
+
+	| root text itor |
+	text := self embeddedFontsText.
+
+	root := BlElement new
+		        constraintsDo: [ :c | 
+			        c vertical matchParent.
+			        c horizontal matchParent ];
+		        layout: BlLinearLayout vertical.
+	itor := text iterator.
+	[ itor hasNext ] whileTrue: [ 
+		itor nextLineIndicesDo: [ :aLineStart :aLineEnd :aLineDelimiterEnd | 
+			| sub cutted lineElement |
+			sub := text from: aLineStart to: aLineEnd.
+			cutted := AlbTextScissor new cut: sub.
+			cutted
+				ifEmpty: [ cutted := Array with: (BlText empty attributes: sub iterator attributes) ].
+			lineElement := BlElement new
+				               layout: AlbLineFlowLayout new;
+				               constraintsDo: [ :c | 
+					               c horizontal matchParent.
+					               c vertical fitContent ];
+				               addChildren: (cutted collect: [ :w | w asElement editorMeasurement ]).
+			root addChild: lineElement ] ].
+
+	root openInOBlSpace
 ]
 
 { #category : #'editor examples' }

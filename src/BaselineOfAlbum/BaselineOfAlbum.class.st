@@ -14,7 +14,7 @@ BaselineOfAlbum >> baseline: spec [
 		spec baseline: 'Alexandrie' with: [ spec repository: 'github://pharo-graphics/Alexandrie:master/src' ].
 
 		spec
-			package: #ToAlbum with: [ spec requires: #( #OnBloc ) ];
+			package: #Album with: [ spec requires: #( #OnBloc ) ];
 			package: #'Album-Tests' with: [ spec requires: #( #OnBloc ) ];
 			package: #'Album-Examples' with: [ spec requires: #( #OnBloc ) ];
 			package: #'Album-Brick-NU' with: [ spec requires: #( #OnBloc ) ];

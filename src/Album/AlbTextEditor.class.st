@@ -9,7 +9,6 @@ Class {
 	#name : #AlbTextEditor,
 	#superclass : #OBlInfiniteDataSource,
 	#instVars : [
-		'model',
 		'text',
 		'selection',
 		'selectionRecorder',
@@ -429,16 +428,6 @@ AlbTextEditor >> limitedSurroundMap [
 			{ #'['. #']'. nil. }.
 			{ #'{'. #'}'. nil. }
 		}
-]
-
-{ #category : #accessing }
-AlbTextEditor >> model [
-	^ model
-]
-
-{ #category : #accessing }
-AlbTextEditor >> model: anObject [
-	model := anObject
 ]
 
 { #category : #'text - cursor' }
@@ -897,6 +886,14 @@ AlbTextEditor >> saveState: aTextEditorMemento [
 	self assertUIProcess.
 	
 	^ aTextEditorMemento saveStateOf: self
+]
+
+{ #category : #'text - styling' }
+AlbTextEditor >> saveTextRequest [
+
+	" this announce is received in my EditorElement which then communicate with its viewModel "
+
+	self dispatchEvent: AlbTextEditorTextSaveRequested new
 ]
 
 { #category : #accessing }

@@ -425,7 +425,6 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 		        c horizontal matchParent ].
 	text := self embeddedFontsText.
 	child := text onAlbum dresser: AlbTextAreaDresser new.
-	child fitContent.
 	root addChild: child.
 	root openInOblSpace
 ]

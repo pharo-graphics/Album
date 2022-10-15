@@ -89,6 +89,12 @@ AlbEditorElement >> defaulTextEditor [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultBackground [
+
+	^ BlBackground paint: Color white
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultCodeFontName [
 
 	^ BlFont defaultFontName
@@ -206,6 +212,7 @@ AlbEditorElement >> hasFocus [
 AlbEditorElement >> initialize [
 
 	super initialize.
+	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
 	selectionView := self defaultSelectionView.
 	self padding: self defaultPaddings.
@@ -215,7 +222,8 @@ AlbEditorElement >> initialize [
 	self defaultEventHandlers do: [ :handler | 
 		self addEventHandler: (handler
 				 element: self;
-				 yourself) ]
+				 yourself) ].
+
 ]
 
 { #category : #'api - editor' }
@@ -473,6 +481,12 @@ AlbEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do
 			aBlock value: piece value: pieceElement ] ]
 ]
 
+{ #category : #'model - events' }
+AlbEditorElement >> textSaveRequested [
+
+	self viewModel requestSave
+]
+
 { #category : #'editor - accessing' }
 AlbEditorElement >> textSnapshot [
 	"Return a snaphost (copy) of the current text.
@@ -486,7 +500,7 @@ AlbEditorElement >> textSnapshot [
 { #category : #'text - styling' }
 AlbEditorElement >> textStyled: aStyledText [
 
-	^ self viewModel textStyled: aStyledText
+	^ self viewModel textStyled
 ]
 
 { #category : #'model - events' }
@@ -494,6 +508,18 @@ AlbEditorElement >> whenEditabilityChangedFromModel: anEditabilityChangedAnnounc
 
 	self editor whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement.
 	self viewModel applyEditabilityChangeIn: self.
+	
+]
+
+{ #category : #'model - events' }
+AlbEditorElement >> whenSaveAcceptedFromModel: aSaveAcceptedAnnounce [
+
+	
+]
+
+{ #category : #'model - events' }
+AlbEditorElement >> whenSaveDeniedFromModel: aSaveAcceptedAnnounce [
+
 	
 ]
 
@@ -507,12 +533,6 @@ AlbEditorElement >> whenStylerChangedFromModel: aStylerChangedAnnouncement [
 AlbEditorElement >> whenTextChangedFromModel: aTextChangedAnnouncement [
 
 	self editor whenTextChangedFromModel: aTextChangedAnnouncement
-]
-
-{ #category : #'text - styling' }
-AlbEditorElement >> whenTextStyleRequestedFromModel: aTextStyleRequestAnnounce [
-
-	self editor launchStyleFromElement: self
 ]
 
 { #category : #'accessing - decoration' }

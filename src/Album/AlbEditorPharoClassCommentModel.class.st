@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbEditorPharoClassCommentModel,
-	#superclass : #AlbEditorCodeModel,
+	#superclass : #AlbEditorWithCodeInteractionModel,
 	#category : #'Album-Model'
 }

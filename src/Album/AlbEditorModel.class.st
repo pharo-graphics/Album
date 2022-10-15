@@ -6,7 +6,8 @@ Class {
 		'text',
 		'fontName',
 		'shortcuts',
-		'mode'
+		'mode',
+		'editorEventHandler'
 	],
 	#category : #'Album-Model'
 }
@@ -70,6 +71,12 @@ AlbEditorModel >> defaultWordStencil [
 	^ AlbTextWordPieceStencil forTextEditorModel: self
 ]
 
+{ #category : #testing }
+AlbEditorModel >> hasUnacceptedEdits [
+
+	^ false
+]
+
 { #category : #initialization }
 AlbEditorModel >> initialize [
 	super initialize.
@@ -100,7 +107,13 @@ AlbEditorModel >> onInstalledIn: anElement [
 	self when: AlbEditorTextChanged send: #whenTextChangedFromModel: to: anElement.
 	self when: AlbEditorStylerChanged send: #whenStylerChangedFromModel: to: anElement.
 	self when: AlbEditorEditabilityChanged  send: #whenEditabilityChangedFromModel: to: anElement.
-	
+
+	editorEventHandler := BlEventHandler
+			 on: AlbTextEditorModifiedEvent
+			 do: [ :anEvent | self textEdited ].
+			
+	anElement editor addEventHandler: editorEventHandler.
+		
 	anElement editor wordStencil: self defaultWordStencil.
 
 	self shortcuts do: [ :eachShortcut | anElement editor addEditorShortcut: eachShortcut ]
@@ -112,7 +125,9 @@ AlbEditorModel >> onUninstalledIn: anElement [
 	"Is sent when I am removed from an element "
 
 	super onUninstalledIn: anElement.
-	self shortcuts do: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ]
+	self shortcuts do: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ].
+	anElement editor removeEventHandler: editorEventHandler.
+	editorEventHandler := nil
 ]
 
 { #category : #copying }
@@ -169,8 +184,12 @@ AlbEditorModel >> text: aText [
 	self announce: (AlbEditorTextChanged new text: self text)
 ]
 
+{ #category : #'api - hooks' }
+AlbEditorModel >> textEdited [
+]
+
 { #category : #accessing }
-AlbEditorModel >> textStyled: aText [
+AlbEditorModel >> textStyled [
 	" nothing to do here because the text is already up-to-date "
 
 ]

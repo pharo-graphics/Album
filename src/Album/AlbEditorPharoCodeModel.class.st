@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbEditorPharoCodeModel,
-	#superclass : #AlbEditorCodeModel,
+	#superclass : #AlbEditorWithCodeInteractionModel,
 	#category : #'Album-Model'
 }
 

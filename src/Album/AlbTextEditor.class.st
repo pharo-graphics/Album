@@ -1,8 +1,5 @@
 "
 I edit text and provide high level abstractions of essential text editor functionality such as selection, cursor, text insertions and deletions.
-
-I make use of `AlbTextAdornmentAttribute` to augment text with visual elements. 
-
 I subclass infinite data source in order to be able to smoothly display practically infinite amounts of text.
 "
 Class {
@@ -20,8 +17,7 @@ Class {
 		'isFocused',
 		'cursor',
 		'hasEventHandlerAttribute',
-		'layoutPositionsRange',
-		'wordStencil'
+		'layoutPositionsRange'
 	],
 	#classInstVars : [
 		'isDebug'
@@ -570,7 +566,7 @@ AlbTextEditor >> onCreateHolder: anEditorElement type: aSegmentType [
 { #category : #hooks }
 AlbTextEditor >> onDetached: anEditorElement [
 
-	self removeEventHandlersSuchThat: [ true ].
+	self removeEventHandlersSuchThat: [ :eventHandler | true ].
 	super onDetached: anEditorElement.
 
 ]
@@ -1166,17 +1162,4 @@ AlbTextEditor >> whenTextStyled: anAnnouncement [
 { #category : #accessing }
 AlbTextEditor >> withoutCacheLimit [
 	 self cacheSize: -1
-]
-
-{ #category : #accessing }
-AlbTextEditor >> wordStencil [
-
-	<return: #AlbTextWordPieceStencil>
-	^ wordStencil
-]
-
-{ #category : #accessing }
-AlbTextEditor >> wordStencil: aWordStencil [
-
-	wordStencil := aWordStencil
 ]

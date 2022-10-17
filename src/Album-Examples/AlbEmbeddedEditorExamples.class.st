@@ -41,7 +41,7 @@ AlbEmbeddedEditorExamples >> editorWithEmbeddedEditor [
 
 	<gtExample>
 	| ed |
-	ed := self newEditor text: self textWithEmbeddedEditor.
+	ed := self newEditor privateText: self textWithEmbeddedEditor.
 	self makeFixedMeasurement: ed.
 	^ ed
 ]

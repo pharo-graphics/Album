@@ -7,7 +7,8 @@ Class {
 		'fontName',
 		'shortcuts',
 		'mode',
-		'editorEventHandler'
+		'editorEventHandler',
+		'wordStencil'
 	],
 	#category : #'Album-Model'
 }
@@ -21,7 +22,7 @@ AlbEditorModel >> allowSelection [
 AlbEditorModel >> applyEditabilityChangeIn: anEditorElement [
 
 	self recreateShortcutsIn: anEditorElement.
-	anEditorElement editor wordStencil: self defaultWordStencil.
+	wordStencil := self defaultWordStencil.
 ]
 
 { #category : #accessing }
@@ -84,7 +85,10 @@ AlbEditorModel >> initialize [
 	mode := AlbEditorEditableMode new.
 	text := '' asRopedText.
 	fontName := self defaultFontName.
-	styler := self defaultStyler
+	styler := self defaultStyler.
+	wordStencil := self defaultWordStencil.
+
+
 ]
 
 { #category : #testing }
@@ -114,8 +118,6 @@ AlbEditorModel >> onInstalledIn: anElement [
 			
 	anElement editor addEventHandler: editorEventHandler.
 		
-	anElement editor wordStencil: self defaultWordStencil.
-
 	self shortcuts do: [ :eachShortcut | anElement editor addEditorShortcut: eachShortcut ]
 ]
 
@@ -192,4 +194,17 @@ AlbEditorModel >> textEdited [
 AlbEditorModel >> textStyled [
 	" nothing to do here because the text is already up-to-date "
 
+]
+
+{ #category : #accessing }
+AlbEditorModel >> wordStencil [
+
+	<return: #AlbTextWordPieceStencil>
+	^ wordStencil
+]
+
+{ #category : #accessing }
+AlbEditorModel >> wordStencil: aWordStencil [
+
+	wordStencil := aWordStencil
 ]

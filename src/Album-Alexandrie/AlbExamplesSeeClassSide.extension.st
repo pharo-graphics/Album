@@ -14,7 +14,7 @@ AlbExamplesSeeClassSide class >> alexandrieEditorFor: aText [
 	anEditor padding: BlInsets empty.
 	anEditor fitContent.
 	anEditor text: aRopedText.	
-	anEditor editor wordStencil measurer: self alexandrieFixedMeasurer.
+	anEditor viewModel wordStencil measurer: self alexandrieFixedMeasurer.
 
 	^ anEditor
 ]

@@ -1,18 +1,18 @@
 Class {
-	#name : #AlbEditorStylerChanged,
+	#name : #AlbTextStyleDone,
 	#superclass : #Announcement,
 	#instVars : [
-		'styler'
+		'styledText'
 	],
 	#category : #'Album-Model-Announcements'
 }
 
 { #category : #accessing }
-AlbEditorStylerChanged >> styler [
-	^ styler
+AlbTextStyleDone >> styledText [
+	^ styledText
 ]
 
 { #category : #accessing }
-AlbEditorStylerChanged >> styler: anObject [
-	styler := anObject
+AlbTextStyleDone >> styledText: anObject [
+	styledText := anObject
 ]

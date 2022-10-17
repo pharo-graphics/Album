@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbEditorPharoCodeModel,
-	#superclass : #AlbEditorWithCodeInteractionModel,
+	#superclass : #AlbEditorWithSaveTransactionModel,
 	#category : #'Album-Model'
 }
 
@@ -32,14 +32,13 @@ AlbEditorPharoCodeModel >> isForWorkspace: aBoolean [
 AlbEditorPharoCodeModel >> onInstalledIn: anElement [
 
 	super onInstalledIn: anElement.
-	self styler: (BlRBTextStyler new fontName: self defaultFontName)
+	"self styler: (BlRBTextStyler new fontName: self defaultFontName)"
 ]
 
 { #category : #'api - hooks' }
 AlbEditorPharoCodeModel >> onUninstalledIn: anElement [
 
-	super onUninstalledIn: anElement.
-	self styler: nil
+	super onUninstalledIn: anElement
 ]
 
 { #category : #accessing }

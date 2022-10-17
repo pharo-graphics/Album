@@ -1,23 +1,23 @@
 Class {
-	#name : #AlbEditorReadonlyWithSelectionMode,
-	#superclass : #AlbEditorEditabilityMode,
+	#name : #AlbReadonlyWithSelectionMode,
+	#superclass : #AlbEditabilityMode,
 	#category : #'Album-Model'
 }
 
 { #category : #testing }
-AlbEditorReadonlyWithSelectionMode >> allowSelection [
+AlbReadonlyWithSelectionMode >> allowSelection [
 
 	^ true
 ]
 
 { #category : #testing }
-AlbEditorReadonlyWithSelectionMode >> isEditable [
+AlbReadonlyWithSelectionMode >> isEditable [
 
 	^ false
 ]
 
 { #category : #'shortcut management' }
-AlbEditorReadonlyWithSelectionMode >> shortcuts [
+AlbReadonlyWithSelectionMode >> shortcuts [
 
 	^ { 
 		  AlbEditorCopyShortcut new.

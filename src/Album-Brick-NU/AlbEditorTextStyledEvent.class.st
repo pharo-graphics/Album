@@ -12,12 +12,6 @@ AlbEditorTextStyledEvent class >> text: aText [
 	^ self new text: aText
 ]
 
-{ #category : #sending }
-AlbEditorTextStyledEvent >> sendTo: anEventHandler [
-
-	anEventHandler textStyledEvent: self
-]
-
 { #category : #accessing }
 AlbEditorTextStyledEvent >> text [
 

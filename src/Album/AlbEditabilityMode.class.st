@@ -1,35 +1,35 @@
 Class {
-	#name : #AlbEditorEditabilityMode,
+	#name : #AlbEditabilityMode,
 	#superclass : #Object,
 	#category : #'Album-Model'
 }
 
 { #category : #testing }
-AlbEditorEditabilityMode >> allowSelection [
+AlbEditabilityMode >> allowSelection [
 
 	^ self subclassResponsibility 
 ]
 
 { #category : #testing }
-AlbEditorEditabilityMode >> forbidSelection [
+AlbEditabilityMode >> forbidSelection [
 
 	^ self allowSelection not
 ]
 
 { #category : #testing }
-AlbEditorEditabilityMode >> isEditable [
+AlbEditabilityMode >> isEditable [
 
 	^self subclassResponsibility 
 ]
 
 { #category : #testing }
-AlbEditorEditabilityMode >> isReadOnly [
+AlbEditabilityMode >> isReadOnly [
 
 	^ self isEditable not
 ]
 
 { #category : #'shortcut management' }
-AlbEditorEditabilityMode >> shortcuts [
+AlbEditabilityMode >> shortcuts [
 
 	^self subclassResponsibility 
 ]

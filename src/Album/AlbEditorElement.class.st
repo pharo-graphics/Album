@@ -256,12 +256,6 @@ AlbEditorElement >> isReadOnly [
 	^ self viewModel isReadOnly
 ]
 
-{ #category : #'text - styling' }
-AlbEditorElement >> launchTextStyle [
-
-	self editor launchStyleFromElement: self
-]
-
 { #category : #accessing }
 AlbEditorElement >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
@@ -500,12 +494,6 @@ AlbEditorElement >> textSnapshot [
 	^ self editor textSnapshot
 ]
 
-{ #category : #'text - styling' }
-AlbEditorElement >> textStyled: aStyledText [
-
-	^ self viewModel textStyled
-]
-
 { #category : #'model - events' }
 AlbEditorElement >> whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement [
 
@@ -527,15 +515,25 @@ AlbEditorElement >> whenSaveDeniedFromModel: aSaveAcceptedAnnounce [
 ]
 
 { #category : #'model - events' }
-AlbEditorElement >> whenStylerChangedFromModel: aStylerChangedAnnouncement [
+AlbEditorElement >> whenTextChangedFromModel: aTextChangedAnnouncement [
 
-	self editor whenStylerChangedFromModel: aStylerChangedAnnouncement
+	self editor whenTextChangedFromModel: aTextChangedAnnouncement.
+	self viewModel privateLaunchTextStyleFromElement: self
 ]
 
 { #category : #'model - events' }
-AlbEditorElement >> whenTextChangedFromModel: aTextChangedAnnouncement [
+AlbEditorElement >> whenTextStyleDoneFromModel: aTextEditorTextStyledEvent [
 
-	self editor whenTextChangedFromModel: aTextChangedAnnouncement
+	self editor processCursorAttributes.
+	self editor updater
+		all;
+		update.
+]
+
+{ #category : #'text - styling' }
+AlbEditorElement >> whenTextStyleRequestedFromModel: anEditorModel [
+
+	self viewModel privateLaunchTextStyleFromElement: self
 ]
 
 { #category : #'accessing - decoration' }

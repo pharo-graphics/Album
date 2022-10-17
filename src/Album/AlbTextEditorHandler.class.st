@@ -11,9 +11,7 @@ AlbTextEditorHandler >> eventsToHandle [
 		  AlbTextEditorShortcutAddedEvent.
 		  AlbTextEditorShortcutRemovedEvent.
 		  AlbTextEditorTextReplacedEvent.
-		  AlbTextEditorTextStyleRequested.
-		  AlbTextEditorTextSaveRequested.
-		  AlbTextEditorTextStyledEvent }
+		  AlbTextEditorTextSaveRequested }
 ]
 
 { #category : #'event handling' }
@@ -38,16 +36,4 @@ AlbTextEditorHandler >> textReplacedEvent: anEvent [
 AlbTextEditorHandler >> textSaveRequestedEvent: anEvent [
 
 	element textSaveRequested
-]
-
-{ #category : #'event handling' }
-AlbTextEditorHandler >> textStyleRequestedEvent: anEvent [
-
-	element launchTextStyle
-]
-
-{ #category : #'event handling' }
-AlbTextEditorHandler >> textStyledEvent: anEvent [
-
-	element textStyled: anEvent styledText
 ]

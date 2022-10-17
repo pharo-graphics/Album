@@ -21,7 +21,6 @@ AlbTextEditorCompositeMemento >> all [
 		mode;
 		selection;
 		shortcuts;
-		styler;
 		text
 ]
 
@@ -99,11 +98,6 @@ AlbTextEditorCompositeMemento >> selectionDo: aBlock [
 { #category : #'api - memento' }
 AlbTextEditorCompositeMemento >> shortcuts [
 	mementos add: AlbTextEditorShortcutsMemento new
-]
-
-{ #category : #'api - memento' }
-AlbTextEditorCompositeMemento >> styler [
-	mementos add: AlbTextEditorStylerMemento new
 ]
 
 { #category : #'api - memento' }

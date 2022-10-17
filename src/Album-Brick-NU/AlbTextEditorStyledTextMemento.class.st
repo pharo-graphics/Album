@@ -5,7 +5,7 @@ Class {
 		'text',
 		'styler'
 	],
-	#category : #'Album-Model-Memento'
+	#category : #'Album-Brick-NU-Album-Model-Memento'
 }
 
 { #category : #initialization }

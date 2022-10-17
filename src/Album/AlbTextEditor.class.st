@@ -10,7 +10,6 @@ Class {
 		'selection',
 		'selectionRecorder',
 		'segmentCollector',
-		'styler',
 		'history',
 		'filter',
 		'shortcuts',
@@ -180,11 +179,6 @@ AlbTextEditor >> defaultSelectionRecorder [
 ]
 
 { #category : #initialization }
-AlbTextEditor >> defaultStyler [
-	^ nil
-]
-
-{ #category : #initialization }
 AlbTextEditor >> defaultText [
 	<return: #BlText>
 	^ BlRopedText string: ''
@@ -224,15 +218,6 @@ AlbTextEditor >> deselecter [
 	<return: #AlbTextEditorDeselecter>
 
 	^ AlbTextEditorDeselecter new editor: self
-]
-
-{ #category : #'text - styling' }
-AlbTextEditor >> disableStylerDuring: aBlock [
-	| prevStyler |
-		
-	prevStyler := styler.
-	styler := nil.
-	aBlock ensure: [ styler := prevStyler ]
 ]
 
 { #category : #'api - shortcuts' }
@@ -320,8 +305,6 @@ AlbTextEditor >> initialize [
 	segmentCollector := self newSegmentCollector.
 	segmentCollector text: text.
 	
-	styler := self defaultStyler.
-	
 	shortcuts := AlbTextEditorShortcuts new.
 	history := AlbTextEditorHistory new.
 	
@@ -390,13 +373,6 @@ AlbTextEditor >> itemTypeAt: aPosition [
 	self flag: 'try with uniform item type to avoid collector>>computeBackwardAt:'.
 	^ AlbTextEditorLineSegmentType uniqueInstance
 	"^ (segmentCollector segmentAt: aPosition) segmentType"
-]
-
-{ #category : #'text - styling' }
-AlbTextEditor >> launchStyleFromElement: anElement [
-
-	styler ifNil: [ ^ self ].
-	styler launchStyle: self textSnapshot nextGeneration in: anElement
 ]
 
 { #category : #accessing }
@@ -507,18 +483,6 @@ AlbTextEditor >> notifyTextReplaced: aText [
 	self dispatchEvent: (AlbTextEditorTextReplacedEvent new text: aText)
 ]
 
-{ #category : #'event firing' }
-AlbTextEditor >> notifyTextStyled [
-
-	self notifyTextStyled: self privateText
-]
-
-{ #category : #'event firing' }
-AlbTextEditor >> notifyTextStyled: aText [
-	self dispatchEvent: (AlbTextEditorTextStyledEvent new styledText: aText).
-
-]
-
 { #category : #hooks }
 AlbTextEditor >> onAttached: anEditorElement [
 	"sent by the element (from dataSource: )"
@@ -618,9 +582,7 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 		with: aBlTextStringsInserted finalIndices
 		do: [ :aString :anIndex | self notifyInserted: aString asRopedText at: anIndex ].
 
-	self notifyModified: self privateText.
-
-	self styleText
+	self notifyModified: self privateText
 ]
 
 { #category : #'hooks - text modifications' }
@@ -687,9 +649,7 @@ AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
 
 	aBlTextsDeleted finalIntervals do: [ :eachInterval | self notifyDeletedFrom: eachInterval first to: eachInterval last ].
 
-	self notifyModified: self privateText.
-
-	self styleText
+	self notifyModified: self privateText
 ]
 
 { #category : #'text - copy/paste' }
@@ -884,7 +844,7 @@ AlbTextEditor >> saveState: aTextEditorMemento [
 	^ aTextEditorMemento saveStateOf: self
 ]
 
-{ #category : #'text - styling' }
+{ #category : #'model protocol' }
 AlbTextEditor >> saveTextRequest [
 
 	" this announce is received in my EditorElement which then communicate with its viewModel "
@@ -972,31 +932,6 @@ AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 	shortcuts do: [ :aNewEditorShortcut | self onShortcutAdded: aNewEditorShortcut ]
 ]
 
-{ #category : #'text - styling' }
-AlbTextEditor >> styleText [
-	" this announce is received in my EditorElement which then send back #launchStyleFromElement: to self "
-	styler ifNil: [ ^ self ].
-	self dispatchEvent: (AlbTextEditorTextStyleRequested new)
-]
-
-{ #category : #accessing }
-AlbTextEditor >> styler [
-	<return: #BlTextStyler>
-	^ styler
-]
-
-{ #category : #accessing }
-AlbTextEditor >> styler: aStyler [
-
-	styler = aStyler ifTrue: [ ^ self ].
-	styler := aStyler.
-	styler when: BlStylerTextStyled send: #whenTextStyled: to: self.
-	styler when: BlStylerStateChanged send: #whenStylerStateChanged: to: self.
-
-	"styler changed, let's restyle the text"
-	self styleText
-]
-
 { #category : #'api - shortcuts' }
 AlbTextEditor >> surroundMap [
 	"When inserting some special symbols a text editor should surround a cursor or selection with that symbol"
@@ -1066,20 +1001,6 @@ AlbTextEditor >> textSnapshot [
 	^ text copy
 ]
 
-{ #category : #'text - styling' }
-AlbTextEditor >> textStyled: aStyledText [
-
-	self assertUIProcess.
-	(aStyledText isNextGenerationOf: self privateText) ifFalse: [ ^ false ].
-	self privateText rope: aStyledText text rope.
-	self notifyTextStyled.
-	self processCursorAttributes.
-	self updater
-		all;
-		update.
-	^ true
-]
-
 { #category : #asserting }
 AlbTextEditor >> uiProcess [
 
@@ -1136,27 +1057,9 @@ AlbTextEditor >> whenEditabilityChangedFromModel: anEditabilityChangedAnnounceme
 ]
 
 { #category : #'model protocol' }
-AlbTextEditor >> whenStylerChangedFromModel: aStylerChangedAnnouncement [
-
-	self styler: aStylerChangedAnnouncement styler
-]
-
-{ #category : #'text - styling' }
-AlbTextEditor >> whenStylerStateChanged: anAnnouncement [
-
-	self styleText
-]
-
-{ #category : #'model protocol' }
 AlbTextEditor >> whenTextChangedFromModel: aTextChangedAnnouncement [
 
 	self privateText: aTextChangedAnnouncement text
-]
-
-{ #category : #'text - styling' }
-AlbTextEditor >> whenTextStyled: anAnnouncement [
-
-	self textStyled: anAnnouncement textStyled
 ]
 
 { #category : #accessing }

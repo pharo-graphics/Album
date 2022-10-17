@@ -29,24 +29,24 @@ AlbEditorModel >> applyEditabilityChangeIn: anEditorElement [
 AlbEditorModel >> beEditable [
 
 	mode isEditable ifTrue: [ ^ self ].
-	mode := AlbEditorEditableMode new.
-	self announce: AlbEditorEditabilityChanged new
+	mode := AlbEditableMode new.
+	self announce: AlbEditabilityChanged new
 ]
 
 { #category : #accessing }
 AlbEditorModel >> beReadonlyWithSelection [
 
 	(mode isReadOnly and: [ mode allowSelection ]) ifTrue: [ ^ self ].
-	mode := AlbEditorReadonlyWithSelectionMode new.
-	self announce: AlbEditorEditabilityChanged new
+	mode := AlbReadonlyWithSelectionMode new.
+	self announce: AlbEditabilityChanged new
 ]
 
 { #category : #accessing }
 AlbEditorModel >> beReadonlyWithoutSelection [
 
 	mode allowSelection ifFalse: [ ^ self ].
-	mode := AlbEditorReadonlyWithoutSelectionMode new.
-	self announce: AlbEditorEditabilityChanged new
+	mode := AlbReadonlyWithoutSelectionMode new.
+	self announce: AlbEditabilityChanged new
 ]
 
 { #category : #initialization }
@@ -82,10 +82,10 @@ AlbEditorModel >> hasUnacceptedEdits [
 AlbEditorModel >> initialize [
 	super initialize.
 	
-	mode := AlbEditorEditableMode new.
+	mode := AlbEditableMode new.
 	text := '' asRopedText.
 	fontName := self defaultFontName.
-	styler := self defaultStyler.
+	self styler: self defaultStyler.
 	wordStencil := self defaultWordStencil.
 
 
@@ -108,9 +108,10 @@ AlbEditorModel >> onInstalledIn: anElement [
 
 	super onInstalledIn: anElement.
 	
-	self when: AlbEditorTextChanged send: #whenTextChangedFromModel: to: anElement.
-	self when: AlbEditorStylerChanged send: #whenStylerChangedFromModel: to: anElement.
-	self when: AlbEditorEditabilityChanged  send: #whenEditabilityChangedFromModel: to: anElement.
+	self when: AlbTextChanged send: #whenTextChangedFromModel: to: anElement.
+	self when: AlbTextStyleDone send: #whenTextStyleDoneFromModel: to: anElement.
+	self when: AlbTextStyleRequested send: #whenTextStyleRequestedFromModel: to: anElement.
+	self when: AlbEditabilityChanged  send: #whenEditabilityChangedFromModel: to: anElement.
 
 	editorEventHandler := BlEventHandler
 			 on: AlbTextEditorModifiedEvent
@@ -138,6 +139,15 @@ AlbEditorModel >> postCopy [
 	shortcuts := shortcuts copy 
 ]
 
+{ #category : #'api - text style' }
+AlbEditorModel >> privateLaunchTextStyleFromElement: anElement [
+
+	" see resquestTextStyle comments "
+
+	styler ifNil: [ ^ self ].
+	self styler launchStyle: self text nextGeneration in: anElement
+]
+
 { #category : #'api - hooks' }
 AlbEditorModel >> recreateShortcutsIn: anEditorElement [
 
@@ -145,6 +155,15 @@ AlbEditorModel >> recreateShortcutsIn: anEditorElement [
 	shortcuts := nil.
 	self shortcuts do: [ :eachShortcut | anEditorElement editor addEditorShortcut: eachShortcut ]
 	
+]
+
+{ #category : #'api - text style' }
+AlbEditorModel >> requestTextStyle [
+
+	" since text styler launcher need an element to launch styling, this announce is sent to ask the editorElement to launch styling by sending back #privateLaunchTextStyleFromElement: to self "
+
+	styler ifNil: [ ^ self ].
+	self announce: AlbTextStyleRequested new
 ]
 
 { #category : #'infinite element changes' }
@@ -169,9 +188,13 @@ AlbEditorModel >> styler [
 AlbEditorModel >> styler: aStyler [
 
 	styler = aStyler ifTrue: [ ^ self ].
-
+	styler ifNotNil: [ styler unsubscribe: self ].
 	styler := aStyler.
-	self announce: (AlbEditorStylerChanged new styler: self styler)
+	styler ifNotNil: [ 
+		styler when: BlStylerTextStyled send: #whenTextStyled: to: self.
+		styler when: BlStylerStateChanged send: #whenStylerStateChanged: to: self ].
+	self announce: (AlbStylerChanged new styler: self styler).
+	self requestTextStyle
 ]
 
 { #category : #accessing }
@@ -183,17 +206,35 @@ AlbEditorModel >> text [
 AlbEditorModel >> text: aText [
 	text = aText ifTrue: [ ^ self ].
 	text := aText.
-	self announce: (AlbEditorTextChanged new text: self text)
+	self announce: (AlbTextChanged new text: self text)
 ]
 
 { #category : #'api - hooks' }
 AlbEditorModel >> textEdited [
+
+	self requestTextStyle
 ]
 
-{ #category : #accessing }
-AlbEditorModel >> textStyled [
-	" nothing to do here because the text is already up-to-date "
+{ #category : #'api - text style' }
+AlbEditorModel >> whenStylerStateChanged: anAnnouncement [
 
+	"the internal configuration of the styler has changed"
+
+	self requestTextStyle
+]
+
+{ #category : #'api - text style' }
+AlbEditorModel >> whenTextStyled: anAnnouncement [
+
+	| styledText |
+	styledText := anAnnouncement styledText.
+	" text just styled by the styler"
+	(styledText isNextGenerationOf: self text) ifFalse: [ ^ false ].
+	"change only the rope to keep text reference untouched"
+	self text rope: styledText text rope.
+	"tell the world that the text has been styled again"
+	self announce: (AlbTextStyleDone new styledText: self text).
+	^ true
 ]
 
 { #category : #accessing }

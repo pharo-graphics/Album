@@ -1,23 +1,23 @@
 Class {
-	#name : #AlbEditorEditableMode,
-	#superclass : #AlbEditorEditabilityMode,
+	#name : #AlbEditableMode,
+	#superclass : #AlbEditabilityMode,
 	#category : #'Album-Model'
 }
 
 { #category : #testing }
-AlbEditorEditableMode >> allowSelection [
+AlbEditableMode >> allowSelection [
 
 	^ true
 ]
 
 { #category : #testing }
-AlbEditorEditableMode >> isEditable [
+AlbEditableMode >> isEditable [
 
 	^ true
 ]
 
 { #category : #'shortcut management' }
-AlbEditorEditableMode >> shortcuts [
+AlbEditableMode >> shortcuts [
 
 	^ { 
 		  AlbEditorDeleteOneLetterAfterCursorShortcut new.

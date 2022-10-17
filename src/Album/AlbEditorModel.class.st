@@ -1,8 +1,9 @@
 Class {
 	#name : #AlbEditorModel,
 	#superclass : #OBlViewModel,
+	#traits : 'TBlTextStylerClient',
+	#classTraits : 'TBlTextStylerClient classTrait',
 	#instVars : [
-		'styler',
 		'text',
 		'fontName',
 		'shortcuts',
@@ -145,7 +146,7 @@ AlbEditorModel >> privateLaunchTextStyleFromElement: anElement [
 	" see resquestTextStyle comments "
 
 	styler ifNil: [ ^ self ].
-	self styler launchStyle: self text nextGeneration in: anElement
+	self launchStyle: self text in: anElement
 ]
 
 { #category : #'api - hooks' }
@@ -176,25 +177,6 @@ AlbEditorModel >> selectionChangedIn: anEditorElement [
 { #category : #accessing }
 AlbEditorModel >> shortcuts [
 	^ shortcuts ifNil: [ shortcuts := self createShortcuts ]
-]
-
-{ #category : #accessing }
-AlbEditorModel >> styler [
-
-	^ styler
-]
-
-{ #category : #accessing }
-AlbEditorModel >> styler: aStyler [
-
-	styler = aStyler ifTrue: [ ^ self ].
-	styler ifNotNil: [ styler unsubscribe: self ].
-	styler := aStyler.
-	styler ifNotNil: [ 
-		styler when: BlStylerTextStyled send: #whenTextStyled: to: self.
-		styler when: BlStylerStateChanged send: #whenStylerStateChanged: to: self ].
-	self announce: (AlbStylerChanged new styler: self styler).
-	self requestTextStyle
 ]
 
 { #category : #accessing }
@@ -229,7 +211,6 @@ AlbEditorModel >> whenTextStyled: anAnnouncement [
 	| styledText |
 	styledText := anAnnouncement styledText.
 	" text just styled by the styler"
-	(styledText isNextGenerationOf: self text) ifFalse: [ ^ false ].
 	"change only the rope to keep text reference untouched"
 	self text rope: styledText text rope.
 	"tell the world that the text has been styled again"

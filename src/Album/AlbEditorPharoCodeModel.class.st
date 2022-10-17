@@ -19,26 +19,13 @@ AlbEditorPharoCodeModel >> defaultFontName [
 { #category : #initialization }
 AlbEditorPharoCodeModel >> defaultStyler [
 
-	^ BlRBTextStyler new.
+	^ BlRBTextStyler new fontName: self defaultFontName 
 ]
 
 { #category : #accessing }
 AlbEditorPharoCodeModel >> isForWorkspace: aBoolean [
 
 	self styler isForWorkspace: aBoolean
-]
-
-{ #category : #'api - hooks' }
-AlbEditorPharoCodeModel >> onInstalledIn: anElement [
-
-	super onInstalledIn: anElement.
-	"self styler: (BlRBTextStyler new fontName: self defaultFontName)"
-]
-
-{ #category : #'api - hooks' }
-AlbEditorPharoCodeModel >> onUninstalledIn: anElement [
-
-	super onUninstalledIn: anElement
 ]
 
 { #category : #accessing }

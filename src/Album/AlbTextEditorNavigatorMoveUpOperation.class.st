@@ -16,7 +16,7 @@ AlbTextEditorNavigatorMoveUpOperation >> performOn: aNavigator [
 				ifFalse: [ ^ self ]
 				ifTrue: [
 					| anEvent |
-					anEvent := AlbTextEditorCursorReachedBoundaryEvent new
+					anEvent := AlbCursorReachedBoundaryEvent new
 						beTop;
 						cursor: self cursor.
 					aNavigator editor dispatchEvent: anEvent.

@@ -55,6 +55,7 @@ AlbTextEditorMouseHandler >> mouseUpEvent: anEvent [
 
 { #category : #'event handling' }
 AlbTextEditorMouseHandler >> wantsEvent: anEvent [
-	element allowSelection ifFalse: [  ^ false ].
+
+	element allowSelection ifFalse: [ ^ false ].
 	^ (super wantsEvent: anEvent) and: [ anEvent primaryButtonPressed ]
 ]

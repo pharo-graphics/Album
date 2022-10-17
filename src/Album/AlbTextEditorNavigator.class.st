@@ -201,7 +201,7 @@ AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
 	self notifyCursorAdded: aCursor.
 
 	"now tell everyone interested that the cursor has moved"
-	editor dispatchEvent: (AlbTextEditorCursorMovedEvent
+	editor dispatchEvent: (AlbCursorMovedEvent
 			 cursor: aCursor
 			 from: prevIndex
 			 to: aCursor position
@@ -227,14 +227,14 @@ AlbTextEditorNavigator >> privateRegisterForMove: aCursor to: aTextPosition [
 AlbTextEditorNavigator >> whenMoved: aBlock [
 	"Subscribe to the cursor moved event and return an event handler"
 
-	^ self when: AlbTextEditorCursorMovedEvent do: aBlock
+	^ self when: AlbCursorMovedEvent do: aBlock
 ]
 
 { #category : #'api - events' }
 AlbTextEditorNavigator >> whenReachedBoundary: aBlock [
 	"Subscribe to the cursor reached boundary event and return an event handler"
 
-	^ self when: AlbTextEditorCursorReachedBoundaryEvent do: aBlock
+	^ self when: AlbCursorReachedBoundaryEvent do: aBlock
 ]
 
 { #category : #'api - configuration' }

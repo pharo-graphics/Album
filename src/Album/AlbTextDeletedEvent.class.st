@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbTextEditorDeletedEvent,
-	#superclass : #AlbTextEditorEvent,
+	#name : #AlbTextDeletedEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'fromIndex',
 		'toIndex'
@@ -9,8 +9,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-AlbTextEditorDeletedEvent class >> from: aFromIndex to: aToIndex [
-	<return: #AlbTextEditorDeletedEvent>
+AlbTextDeletedEvent class >> from: aFromIndex to: aToIndex [
+	<return: #AlbTextDeletedEvent>
 
 	^ self new
 		fromIndex: aFromIndex;
@@ -18,21 +18,21 @@ AlbTextEditorDeletedEvent class >> from: aFromIndex to: aToIndex [
 ]
 
 { #category : #accessing }
-AlbTextEditorDeletedEvent >> fromIndex [
+AlbTextDeletedEvent >> fromIndex [
 	^ fromIndex
 ]
 
 { #category : #accessing }
-AlbTextEditorDeletedEvent >> fromIndex: anObject [
+AlbTextDeletedEvent >> fromIndex: anObject [
 	fromIndex := anObject
 ]
 
 { #category : #accessing }
-AlbTextEditorDeletedEvent >> toIndex [
+AlbTextDeletedEvent >> toIndex [
 	^ toIndex
 ]
 
 { #category : #accessing }
-AlbTextEditorDeletedEvent >> toIndex: anObject [
+AlbTextDeletedEvent >> toIndex: anObject [
 	toIndex := anObject
 ]

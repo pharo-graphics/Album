@@ -214,6 +214,12 @@ AlbEditorMainSelectionView >> terminateRemanentsUpdater [
 ]
 
 { #category : #'infinite element changes' }
+AlbEditorMainSelectionView >> textModifiedIn: anInfiniteElement [
+
+	self updateRemanentsIn: anInfiniteElement
+]
+
+{ #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> updateMainSelectionVerticesIn: anInfiniteElement [
 
 	| rects |

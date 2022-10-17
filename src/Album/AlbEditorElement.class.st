@@ -463,6 +463,12 @@ AlbEditorElement >> textElementsDo: aBlock [
 				ifAbsent: [  ] ] ]
 ]
 
+{ #category : #'api - editor' }
+AlbEditorElement >> textModified [
+
+	self selectionView textModifiedIn: self
+]
+
 { #category : #'private - accessing' }
 AlbEditorElement >> textPiecesAndTheirElementsDo: aBlock [
 
@@ -495,10 +501,10 @@ AlbEditorElement >> textSnapshot [
 ]
 
 { #category : #'model - events' }
-AlbEditorElement >> whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement [
+AlbEditorElement >> whenEditionModeChangedFromModel: anEditabilityChangedAnnouncement [
 
-	self editor whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement.
-	self viewModel applyEditabilityChangeIn: self.
+	self editor whenEditionModeChangedFromModel: anEditabilityChangedAnnouncement.
+	self viewModel privateEditionModeChangedFromElement: self.
 	
 ]
 

@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbTextEditorCursorMovedEvent,
-	#superclass : #AlbTextEditorEvent,
+	#name : #AlbCursorMovedEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'cursor',
 		'oldIndex',
@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-AlbTextEditorCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNewIndex [
-	<return: #AlbTextEditorCursorMovedEvent>
+AlbCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNewIndex [
+	<return: #AlbCursorMovedEvent>
 
 	^ self new
 		cursor: aCursor;
@@ -21,8 +21,8 @@ AlbTextEditorCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNew
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNewIndex dueTo: aTextEditorOperator [
-	<return: #AlbTextEditorCursorMovedEvent>
+AlbCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNewIndex dueTo: aTextEditorOperator [
+	<return: #AlbCursorMovedEvent>
 	
 	^ self new
 		cursor: aCursor;
@@ -32,47 +32,47 @@ AlbTextEditorCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNew
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> cursor [
+AlbCursorMovedEvent >> cursor [
 	<return: #AlbTextEditorSingleCursor>
 
 	^ cursor
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> cursor: aTextEditorSingleCursor [
+AlbCursorMovedEvent >> cursor: aTextEditorSingleCursor [
 	cursor := aTextEditorSingleCursor
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> dueTo [
+AlbCursorMovedEvent >> dueTo [
 	^ dueTo
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> dueTo: aTextEditorOperator [
+AlbCursorMovedEvent >> dueTo: aTextEditorOperator [
 	dueTo := aTextEditorOperator
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> newIndex [
+AlbCursorMovedEvent >> newIndex [
 	<return: #Number>
 
 	^ newIndex
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> newIndex: aNumber [
+AlbCursorMovedEvent >> newIndex: aNumber [
 	newIndex := aNumber
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> oldIndex [
+AlbCursorMovedEvent >> oldIndex [
 	<return: #Number>
 
 	^ oldIndex
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorMovedEvent >> oldIndex: aNumber [
+AlbCursorMovedEvent >> oldIndex: aNumber [
 	oldIndex := aNumber
 ]

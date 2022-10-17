@@ -18,19 +18,12 @@ AlbEditorModel >> allowSelection [
 	^ mode allowSelection  
 ]
 
-{ #category : #'api - hooks' }
-AlbEditorModel >> applyEditabilityChangeIn: anEditorElement [
-
-	self recreateShortcutsIn: anEditorElement.
-	wordStencil := self defaultWordStencil.
-]
-
 { #category : #accessing }
 AlbEditorModel >> beEditable [
 
 	mode isEditable ifTrue: [ ^ self ].
 	mode := AlbEditableMode new.
-	self announce: AlbEditabilityChanged new
+	self announce: AlbEditionModeChanged new
 ]
 
 { #category : #accessing }
@@ -38,7 +31,7 @@ AlbEditorModel >> beReadonlyWithSelection [
 
 	(mode isReadOnly and: [ mode allowSelection ]) ifTrue: [ ^ self ].
 	mode := AlbReadonlyWithSelectionMode new.
-	self announce: AlbEditabilityChanged new
+	self announce: AlbEditionModeChanged new
 ]
 
 { #category : #accessing }
@@ -46,7 +39,7 @@ AlbEditorModel >> beReadonlyWithoutSelection [
 
 	mode allowSelection ifFalse: [ ^ self ].
 	mode := AlbReadonlyWithoutSelectionMode new.
-	self announce: AlbEditabilityChanged new
+	self announce: AlbEditionModeChanged new
 ]
 
 { #category : #initialization }
@@ -111,11 +104,11 @@ AlbEditorModel >> onInstalledIn: anElement [
 	self when: AlbTextChanged send: #whenTextChangedFromModel: to: anElement.
 	self when: AlbTextStyleDone send: #whenTextStyleDoneFromModel: to: anElement.
 	self when: AlbTextStyleRequested send: #whenTextStyleRequestedFromModel: to: anElement.
-	self when: AlbEditabilityChanged  send: #whenEditabilityChangedFromModel: to: anElement.
+	self when: AlbEditionModeChanged  send: #whenEditionModeChangedFromModel: to: anElement.
 
 	editorEventHandler := BlEventHandler
-			 on: AlbTextEditorModifiedEvent
-			 do: [ :anEvent | self textEdited ].
+			 on: AlbTextModifiedEvent
+			 do: [ :anEvent | self textModifiedByTextEditor ].
 			
 	anElement editor addEventHandler: editorEventHandler.
 		
@@ -137,6 +130,13 @@ AlbEditorModel >> onUninstalledIn: anElement [
 AlbEditorModel >> postCopy [
 	"they will be initialized lazily later"
 	shortcuts := shortcuts copy 
+]
+
+{ #category : #'api - hooks' }
+AlbEditorModel >> privateEditionModeChangedFromElement: anEditorElement [
+
+	self recreateShortcutsIn: anEditorElement.
+	wordStencil := self defaultWordStencil.
 ]
 
 { #category : #'api - text style' }
@@ -210,7 +210,7 @@ AlbEditorModel >> text: aText [
 ]
 
 { #category : #'api - hooks' }
-AlbEditorModel >> textEdited [
+AlbEditorModel >> textModifiedByTextEditor [
 
 	self requestTextStyle
 ]

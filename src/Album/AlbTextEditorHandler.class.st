@@ -8,10 +8,11 @@ Class {
 AlbTextEditorHandler >> eventsToHandle [
 
 	^ { 
-		  AlbTextEditorShortcutAddedEvent.
-		  AlbTextEditorShortcutRemovedEvent.
-		  AlbTextEditorTextReplacedEvent.
-		  AlbTextEditorTextSaveRequested }
+		  AlbShortcutAddedEvent.
+		  AlbShortcutRemovedEvent.
+		  AlbTextReplacedEvent.
+		  AlbTextModifiedEvent.
+		  AlbTextSaveRequested }
 ]
 
 { #category : #'event handling' }
@@ -28,7 +29,14 @@ AlbTextEditorHandler >> shortcutRemovedEvent: anEvent [
 ]
 
 { #category : #'event handling' }
+AlbTextEditorHandler >> textModifiedEvent: anEvent [
+
+	element textModified
+]
+
+{ #category : #'event handling' }
 AlbTextEditorHandler >> textReplacedEvent: anEvent [
+
 	element text: anEvent text
 ]
 

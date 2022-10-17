@@ -405,7 +405,7 @@ AlbTextEditor >> limitedSurroundMap [
 { #category : #'text - cursor' }
 AlbTextEditor >> moveCursorTo: aTextIndex [
 	"Moves cursor to a given position without any further action such as cancelling selection"
-	<event: #AlbTextEditorCursorMovedEvent>
+	<event: #AlbCursorMovedEvent>
 
 	self navigator
 		moveTo: aTextIndex;
@@ -446,41 +446,40 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyDeletedFrom: aFromIndex to: aToIndex [
-	self dispatchEvent: (AlbTextEditorDeletedEvent new
-		editor: self;
+	self dispatchEvent: (AlbTextDeletedEvent new
 		fromIndex: aFromIndex;
 		toIndex: aToIndex)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyInserted: aText at: aTextIndex [
-	self dispatchEvent: (AlbTextEditorInsertedEvent text: aText at: aTextIndex)
+	self dispatchEvent: (AlbTextInsertedEvent text: aText at: aTextIndex)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyModified: aText [
-	self dispatchEvent: (AlbTextEditorModifiedEvent new text: aText)
+	self dispatchEvent: (AlbTextModifiedEvent new text: aText)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifySelectionChanged: aSelection [
-	self dispatchEvent: (AlbTextEditorSelectionChangedEvent new selection: aSelection)
+	self dispatchEvent: (AlbSelectionChangedEvent new selection: aSelection)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyShortcutAdded: aShortcut [
-	self dispatchEvent: (AlbTextEditorShortcutAddedEvent new shortcut: aShortcut)
+	self dispatchEvent: (AlbShortcutAddedEvent new shortcut: aShortcut)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyShortcutRemoved: aShortcut [
-	self dispatchEvent: (AlbTextEditorShortcutRemovedEvent new shortcut: aShortcut)
+	self dispatchEvent: (AlbShortcutRemovedEvent new shortcut: aShortcut)
 ]
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyTextReplaced: aText [
 
-	self dispatchEvent: (AlbTextEditorTextReplacedEvent new text: aText)
+	self dispatchEvent: (AlbTextReplacedEvent new text: aText)
 ]
 
 { #category : #hooks }
@@ -849,7 +848,7 @@ AlbTextEditor >> saveTextRequest [
 
 	" this announce is received in my EditorElement which then communicate with its viewModel "
 
-	self dispatchEvent: AlbTextEditorTextSaveRequested new
+	self dispatchEvent: AlbTextSaveRequested new
 ]
 
 { #category : #accessing }
@@ -889,11 +888,11 @@ AlbTextEditor >> selectNone [
 
 { #category : #'text - selection' }
 AlbTextEditor >> selectedText [
+
 	<return: #BlText>
-	
 	^ self hasSelection
-		ifTrue: [ self text copyFrom: self selection from + 1 to: self selection to ]
-		ifFalse: [ self text empty ]
+		  ifTrue: [ self privateText copyFrom: self selection from + 1 to: self selection to ]
+		  ifFalse: [ self privateText empty ]
 ]
 
 { #category : #'api - modification' }
@@ -1048,7 +1047,7 @@ AlbTextEditor >> updater [
 ]
 
 { #category : #'model protocol' }
-AlbTextEditor >> whenEditabilityChangedFromModel: anEditabilityChangedAnnouncement [
+AlbTextEditor >> whenEditionModeChangedFromModel: anEditabilityChangedAnnouncement [
 
 	self deselecter
 		all;

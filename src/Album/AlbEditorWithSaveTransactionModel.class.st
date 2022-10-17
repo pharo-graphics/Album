@@ -57,8 +57,8 @@ AlbEditorWithSaveTransactionModel >> saveResult: aBoolean [
 ]
 
 { #category : #'api - hooks' }
-AlbEditorWithSaveTransactionModel >> textEdited [
+AlbEditorWithSaveTransactionModel >> textModifiedByTextEditor [
 
-	super textEdited.
+	super textModifiedByTextEditor.
 	self hasUnacceptedEdits: true
 ]

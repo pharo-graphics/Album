@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbTextEditorCursorReachedBoundaryEvent,
-	#superclass : #AlbTextEditorEvent,
+	#name : #AlbCursorReachedBoundaryEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'cursor',
 		'boundary'
@@ -13,37 +13,37 @@ Class {
 }
 
 { #category : #'class initialization' }
-AlbTextEditorCursorReachedBoundaryEvent class >> initialize [
+AlbCursorReachedBoundaryEvent class >> initialize [
 	Top := #top.
 	Bottom := #bottom
 ]
 
 { #category : #location }
-AlbTextEditorCursorReachedBoundaryEvent >> beBottom [
+AlbCursorReachedBoundaryEvent >> beBottom [
 	boundary := Bottom
 ]
 
 { #category : #location }
-AlbTextEditorCursorReachedBoundaryEvent >> beTop [
+AlbCursorReachedBoundaryEvent >> beTop [
 	boundary := Top
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorReachedBoundaryEvent >> cursor [
+AlbCursorReachedBoundaryEvent >> cursor [
 	^ cursor
 ]
 
 { #category : #accessing }
-AlbTextEditorCursorReachedBoundaryEvent >> cursor: anObject [
+AlbCursorReachedBoundaryEvent >> cursor: anObject [
 	cursor := anObject
 ]
 
 { #category : #testing }
-AlbTextEditorCursorReachedBoundaryEvent >> isBottom [
+AlbCursorReachedBoundaryEvent >> isBottom [
 	^ boundary = Bottom
 ]
 
 { #category : #testing }
-AlbTextEditorCursorReachedBoundaryEvent >> isTop [
+AlbCursorReachedBoundaryEvent >> isTop [
 	^ boundary = Top
 ]

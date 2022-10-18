@@ -396,17 +396,6 @@ AlbEditorElement >> setRemanents [
 ]
 
 { #category : #'editor - accessing' }
-AlbEditorElement >> styler [
-	^ self viewModel styler
-]
-
-{ #category : #'editor - accessing' }
-AlbEditorElement >> styler: aStyler [
-
-	self viewModel styler: aStyler
-]
-
-{ #category : #'editor - accessing' }
 AlbEditorElement >> subTextOnScreen [
 	
 	| interval |
@@ -524,7 +513,7 @@ AlbEditorElement >> whenSaveDeniedFromModel: aSaveAcceptedAnnounce [
 AlbEditorElement >> whenTextChangedFromModel: aTextChangedAnnouncement [
 
 	self editor whenTextChangedFromModel: aTextChangedAnnouncement.
-	self viewModel privateLaunchTextStyleFromElement: self
+	self viewModel privateTextChangedFromElement: self
 ]
 
 { #category : #'model - events' }

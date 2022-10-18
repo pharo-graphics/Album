@@ -146,7 +146,14 @@ AlbEditorModel >> privateLaunchTextStyleFromElement: anElement [
 	" see resquestTextStyle comments "
 
 	styler ifNil: [ ^ self ].
-	self launchStyle: self text in: anElement
+	self launchStyle: self text nextGeneration in: anElement
+]
+
+{ #category : #'api - text style' }
+AlbEditorModel >> privateTextChangedFromElement:  anElement [
+
+	self privateLaunchTextStyleFromElement: anElement
+
 ]
 
 { #category : #'api - hooks' }
@@ -210,9 +217,10 @@ AlbEditorModel >> whenTextStyled: anAnnouncement [
 
 	| styledText |
 	styledText := anAnnouncement styledText.
-	" text just styled by the styler"
-	"change only the rope to keep text reference untouched"
-	self text rope: styledText text rope.
+	" text just styled by the styler, check the generation (to be thread-safe) to ensure that my text has not be changed elsewhere during the styling "
+	(styledText isNextGenerationOf: self text) ifFalse: [ ^ false ].
+	"change only my internal representation to keep text reference with its original announcer "
+	self text takeInternalRepresentationOf: styledText.
 	"tell the world that the text has been styled again"
 	self announce: (AlbTextStyleDone new styledText: self text).
 	^ true

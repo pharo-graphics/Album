@@ -424,24 +424,21 @@ AlbTextEditor >> newSegmentCollector [
 
 { #category : #'private - cursor' }
 AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
+
 	"I select and notify those attributes in the given collection that are within any of the cursors"
+
 	| theEventHandlingAttributes anEvent |
-	
-	self isFocused
-		ifFalse: [ ^ self ].
+	self isFocused ifFalse: [ ^ self ].
 
 	anEvent := AlbTextCursorAttributeEnterEvent new textEditor: self.
 	theEventHandlingAttributes := (aCollectionOfAttributes select: [ :eachAttribute | eachAttribute isEventHandler ]) asSet.
-	
-	self text
-		findAttributesSuchThat: [ :eachAttribute | theEventHandlingAttributes includes:  eachAttribute ]
-		indicesDo: [ :aStart :anEnd :eachAttribute |
-			(self cursors anySatisfy: [ :eachCursor |
-					eachCursor position between: aStart and: anEnd ])
-						ifTrue: [
-							anEvent interval: (aStart to: anEnd).
-							(eachAttribute wantsEvent: anEvent)
-								ifTrue: [ eachAttribute handleEvent: anEvent ] ] ]
+
+	self privateText
+		findAttributesSuchThat: [ :eachAttribute | theEventHandlingAttributes includes: eachAttribute ]
+		indicesDo: [ :aStart :anEnd :eachAttribute | 
+			(self cursors anySatisfy: [ :eachCursor | eachCursor position between: aStart and: anEnd ]) ifTrue: [ 
+				anEvent interval: (aStart to: anEnd).
+				(eachAttribute wantsEvent: anEvent) ifTrue: [ eachAttribute handleEvent: anEvent ] ] ]
 ]
 
 { #category : #'event firing' }

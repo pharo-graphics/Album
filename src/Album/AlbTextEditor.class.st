@@ -808,9 +808,11 @@ AlbTextEditor >> restoreState: aTextEditorMemento [
 { #category : #accessing }
 AlbTextEditor >> restoreText: aText [
 	"before changing the text we must unsubscribe from existing one"	
+
 	text unsubscribe: self.
 
 	text := aText.
+	" then subscribe to internal text state change (insertion/deletion/attribute change) "
 	self initializeText: text.
 
 	"Replacing text instance means that we can not guarantee structural integrity
@@ -1044,7 +1046,7 @@ AlbTextEditor >> updater [
 ]
 
 { #category : #'model protocol' }
-AlbTextEditor >> whenEditionModeChangedFromModel: anEditabilityChangedAnnouncement [
+AlbTextEditor >> whenEditionModeChanged: aMode [
 
 	self deselecter
 		all;
@@ -1053,9 +1055,9 @@ AlbTextEditor >> whenEditionModeChangedFromModel: anEditabilityChangedAnnounceme
 ]
 
 { #category : #'model protocol' }
-AlbTextEditor >> whenTextChangedFromModel: aTextChangedAnnouncement [
+AlbTextEditor >> whenTextChanged: aText [
 
-	self privateText: aTextChangedAnnouncement text
+	self privateText: aText
 ]
 
 { #category : #accessing }

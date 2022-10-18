@@ -10,6 +10,17 @@ AlbReadonlyWithSelectionMode >> allowSelection [
 	^ true
 ]
 
+{ #category : #initialization }
+AlbReadonlyWithSelectionMode >> editorElementEventHandlers [
+
+	^ { 
+		  AlbTextEditorMouseHandler new.
+		  AlbTextEditorDoubleClickHandler new.
+		  AlbTextEditorSelectionHandler new.
+		  AlbTextEditorCursorIconHandler new.
+		  AlbTextEditorFocusHandler new }
+]
+
 { #category : #testing }
 AlbReadonlyWithSelectionMode >> isEditable [
 

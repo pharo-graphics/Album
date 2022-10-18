@@ -10,6 +10,19 @@ AlbReadonlyWithoutSelectionMode >> allowSelection [
 	^ false
 ]
 
+{ #category : #initialization }
+AlbReadonlyWithoutSelectionMode >> defaultSelectionView [
+
+	^ nil
+
+]
+
+{ #category : #initialization }
+AlbReadonlyWithoutSelectionMode >> editorElementEventHandlers [
+
+	^ {  }
+]
+
 { #category : #testing }
 AlbReadonlyWithoutSelectionMode >> isEditable [
 

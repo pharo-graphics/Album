@@ -19,18 +19,13 @@ AlbEditorPharoCodeModel >> defaultFontName [
 { #category : #initialization }
 AlbEditorPharoCodeModel >> defaultStyler [
 
-	^ BlRBTextStyler new fontName: self defaultFontName 
+	^ BlRBTextStyler new fontName: self fontName 
 ]
 
 { #category : #accessing }
 AlbEditorPharoCodeModel >> isForWorkspace: aBoolean [
 
 	self styler isForWorkspace: aBoolean
-]
-
-{ #category : #accessing }
-AlbEditorPharoCodeModel >> text: aText [
-	^ super text: (aText fontName: self defaultFontName)  
 ]
 
 { #category : #accessing }

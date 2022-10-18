@@ -11,7 +11,8 @@ Class {
 	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
 		'selectionView',
-		'cursorStencil'
+		'cursorStencil',
+		'eventHandlers'
 	],
 	#category : #'Album-UI'
 }
@@ -104,18 +105,6 @@ AlbEditorElement >> defaultCodeFontName [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaultEventHandlers [
-
-	^ { 
-		  AlbTextEditorMouseHandler new.
-		  AlbTextEditorDoubleClickHandler new.
-		  AlbTextEditorSelectionHandler new.
-		  AlbTextEditorInsertionHandler new.
-		  AlbTextEditorCursorIconHandler new.
-		  AlbTextEditorFocusHandler new }
-]
-
-{ #category : #initialization }
 AlbEditorElement >> defaultLayout [
 
 	^ OBlInfiniteLinearLayout vertical
@@ -134,16 +123,6 @@ AlbEditorElement >> defaultPaddings [
 { #category : #initialization }
 AlbEditorElement >> defaultRecycler [
 	^ OBlInfiniteRecycler new
-]
-
-{ #category : #initialization }
-AlbEditorElement >> defaultSelectionView [
-
-	^ AlbEditorMainSelectionView new
-		  borderWidth: 2;
-		  borderColor: self selectionColor twiceDarker;
-		  selectionColor: self selectionColor;
-		  yourself
 ]
 
 { #category : #initialization }
@@ -217,15 +196,11 @@ AlbEditorElement >> initialize [
 	super initialize.
 	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
-	selectionView := self defaultSelectionView.
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
 	self viewModel: self defaulEditorModel.
 	self matchParent.
-	self defaultEventHandlers do: [ :handler | 
-		self addEventHandler: (handler
-				 element: self;
-				 yourself) ].
+	self setupEventHandlers.
 
 ]
 
@@ -279,7 +254,7 @@ AlbEditorElement >> navigator [
 AlbEditorElement >> onExtentChanged [
 	super onExtentChanged.
 	self geometryChanged.
-	selectionView extentChangedIn: self
+	self selectionViewDo: [ :selView | selView extentChangedIn: self ]
 	
 ]
 
@@ -295,7 +270,7 @@ AlbEditorElement >> onLayoutDone [
 AlbEditorElement >> onScrolled: aPoint [
 	super onScrolled: aPoint.
 	self geometryChanged.
-	selectionView selectionScrolled: aPoint in: self
+	self selectionViewDo: [ :selView | selView selectionScrolled: aPoint in: self ]
 
 
 ]
@@ -360,7 +335,8 @@ AlbEditorElement >> selection [
 
 { #category : #'ui - events managing' }
 AlbEditorElement >> selectionChanged [
-	self viewModel selectionChangedIn: self
+
+	self selectionViewDo: [ :selView | selView selectionChangedIn: self ]
 ]
 
 { #category : #accessing }
@@ -385,14 +361,37 @@ AlbEditorElement >> selectionEchoRectangles [
 ]
 
 { #category : #accessing }
-AlbEditorElement >> selectionView [
-	^ selectionView
+AlbEditorElement >> selectionView: anEditorSelectionView [
+
+	anEditorSelectionView ifNotNil: [ 
+		anEditorSelectionView
+			borderWidth: 2;
+			borderColor: self selectionColor twiceDarker;
+			selectionColor: self selectionColor ].
+	selectionView := anEditorSelectionView
+]
+
+{ #category : #accessing }
+AlbEditorElement >> selectionViewDo: aBlock [
+	^ selectionView ifNotNil: aBlock
 ]
 
 { #category : #'selection managing' }
 AlbEditorElement >> setRemanents [
 
-	selectionView setRemanentsIn: self
+	self selectionViewDo: [ :selView | selView setRemanentsIn: self ]
+]
+
+{ #category : #initialization }
+AlbEditorElement >> setupEventHandlers [
+
+	eventHandlers ifNotNil: [ eventHandlers do: [ :e | self removeEventHandler: e ] ].
+	eventHandlers := self viewModel editorElementEventHandlers.
+	eventHandlers ifNotNil: [ 
+		eventHandlers do: [ :e | 
+			self addEventHandler: (e
+					 element: self;
+					 yourself) ] ]
 ]
 
 { #category : #'editor - accessing' }
@@ -455,7 +454,7 @@ AlbEditorElement >> textElementsDo: aBlock [
 { #category : #'api - editor' }
 AlbEditorElement >> textModified [
 
-	self selectionView textModifiedIn: self
+	self selectionViewDo: [ :selView | selView textModifiedIn: self ]
 ]
 
 { #category : #'private - accessing' }
@@ -490,9 +489,10 @@ AlbEditorElement >> textSnapshot [
 ]
 
 { #category : #'model - events' }
-AlbEditorElement >> whenEditionModeChangedFromModel: anEditabilityChangedAnnouncement [
+AlbEditorElement >> whenEditionModeChangedFromModel [
 
-	self editor whenEditionModeChangedFromModel: anEditabilityChangedAnnouncement.
+	self editor whenEditionModeChanged: self viewModel mode.
+	self setupEventHandlers.
 	self viewModel privateEditionModeChangedFromElement: self.
 	
 ]
@@ -510,10 +510,10 @@ AlbEditorElement >> whenSaveDeniedFromModel: aSaveAcceptedAnnounce [
 ]
 
 { #category : #'model - events' }
-AlbEditorElement >> whenTextChangedFromModel: aTextChangedAnnouncement [
+AlbEditorElement >> whenTextChangedFromModel [
 
-	self editor whenTextChangedFromModel: aTextChangedAnnouncement.
-	self viewModel privateTextChangedFromElement: self
+	self editor whenTextChanged: self viewModel text.
+	self viewModel privateTextChangedFromElement: self.
 ]
 
 { #category : #'model - events' }

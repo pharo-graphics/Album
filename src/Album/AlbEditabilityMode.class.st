@@ -10,6 +10,24 @@ AlbEditabilityMode >> allowSelection [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #initialization }
+AlbEditabilityMode >> defaultSelectionView [
+
+	^ AlbEditorMainSelectionView new
+]
+
+{ #category : #initialization }
+AlbEditabilityMode >> defaultWordStencil [ 
+
+	^ AlbTextWordPieceStencil readOnly
+]
+
+{ #category : #initialization }
+AlbEditabilityMode >> editorElementEventHandlers [
+
+	^ self subclassResponsibility 
+]
+
 { #category : #testing }
 AlbEditabilityMode >> forbidSelection [
 

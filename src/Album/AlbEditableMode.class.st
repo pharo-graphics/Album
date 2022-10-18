@@ -10,6 +10,24 @@ AlbEditableMode >> allowSelection [
 	^ true
 ]
 
+{ #category : #initialization }
+AlbEditableMode >> defaultWordStencil [ 
+
+	^ AlbTextWordPieceStencil editable
+]
+
+{ #category : #initialization }
+AlbEditableMode >> editorElementEventHandlers [
+
+	^ { 
+		  AlbTextEditorMouseHandler new.
+		  AlbTextEditorDoubleClickHandler new.
+		  AlbTextEditorSelectionHandler new.
+		  AlbTextEditorInsertionHandler new.
+		  AlbTextEditorCursorIconHandler new.
+		  AlbTextEditorFocusHandler new }
+]
+
 { #category : #testing }
 AlbEditableMode >> isEditable [
 

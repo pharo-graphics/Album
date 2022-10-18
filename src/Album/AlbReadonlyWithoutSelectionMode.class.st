@@ -11,14 +11,20 @@ AlbReadonlyWithoutSelectionMode >> allowSelection [
 ]
 
 { #category : #initialization }
+AlbReadonlyWithoutSelectionMode >> defaultEditorElementEventHandlers [
+
+	^ {  }
+]
+
+{ #category : #initialization }
 AlbReadonlyWithoutSelectionMode >> defaultSelectionView [
 
 	^ nil
 
 ]
 
-{ #category : #initialization }
-AlbReadonlyWithoutSelectionMode >> editorElementEventHandlers [
+{ #category : #'shortcut management' }
+AlbReadonlyWithoutSelectionMode >> defaultShortcuts [
 
 	^ {  }
 ]
@@ -27,10 +33,4 @@ AlbReadonlyWithoutSelectionMode >> editorElementEventHandlers [
 AlbReadonlyWithoutSelectionMode >> isEditable [
 
 	^ false
-]
-
-{ #category : #'shortcut management' }
-AlbReadonlyWithoutSelectionMode >> shortcuts [
-
-	^ {  }
 ]

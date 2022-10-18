@@ -11,13 +11,7 @@ AlbEditableMode >> allowSelection [
 ]
 
 { #category : #initialization }
-AlbEditableMode >> defaultWordStencil [ 
-
-	^ AlbTextWordPieceStencil editable
-]
-
-{ #category : #initialization }
-AlbEditableMode >> editorElementEventHandlers [
+AlbEditableMode >> defaultEditorElementEventHandlers [
 
 	^ { 
 		  AlbTextEditorMouseHandler new.
@@ -28,14 +22,8 @@ AlbEditableMode >> editorElementEventHandlers [
 		  AlbTextEditorFocusHandler new }
 ]
 
-{ #category : #testing }
-AlbEditableMode >> isEditable [
-
-	^ true
-]
-
 { #category : #'shortcut management' }
-AlbEditableMode >> shortcuts [
+AlbEditableMode >> defaultShortcuts [
 
 	^ { 
 		  AlbEditorDeleteOneLetterAfterCursorShortcut new.
@@ -67,4 +55,16 @@ AlbEditableMode >> shortcuts [
 		  AlbEditorSelectLineAfterCursorShortcut new.
 		  AlbEditorSelectLineBelowCursorShortcut new.
 		  AlbEditorSelectLineAboveCursorShortcut new }
+]
+
+{ #category : #initialization }
+AlbEditableMode >> defaultWordStencil [ 
+
+	^ AlbTextWordPieceStencil editable
+]
+
+{ #category : #testing }
+AlbEditableMode >> isEditable [
+
+	^ true
 ]

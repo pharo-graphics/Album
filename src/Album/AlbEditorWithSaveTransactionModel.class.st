@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #initialization }
-AlbEditorWithSaveTransactionModel >> createShortcuts [
+AlbEditorWithSaveTransactionModel >> defaultShortcuts [
 
-	^ super createShortcuts , { AlbEditorSaveShortcut new }
+	^ super defaultShortcuts , { AlbEditorSaveShortcut new }
 ]
 
 { #category : #accessing }

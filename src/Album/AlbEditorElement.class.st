@@ -11,8 +11,7 @@ Class {
 	#classTraits : 'TOBlLayoutResizable classTrait',
 	#instVars : [
 		'selectionView',
-		'cursorStencil',
-		'eventHandlers'
+		'cursorStencil'
 	],
 	#category : #'Album-UI'
 }
@@ -160,12 +159,6 @@ AlbEditorElement >> editorText [
 	^ self editor privateText
 ]
 
-{ #category : #'ui - events managing' }
-AlbEditorElement >> eventHandlersDo: aBlock [
-
-	eventHandlers ifNotNil: [ eventHandlers do: aBlock ]
-]
-
 { #category : #'focus accessing' }
 AlbEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDirection [
 	"Sort candidates according the bounds left, to ensure that rightmost are favored for up and down. "
@@ -200,9 +193,7 @@ AlbEditorElement >> initialize [
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
 	self viewModel: self defaulEditorModel.
-	self matchParent.
-	self setupEventHandlers.
-
+	self matchParent
 ]
 
 { #category : #'api - editor' }
@@ -356,17 +347,6 @@ AlbEditorElement >> selectionViewDo: aBlock [
 AlbEditorElement >> setRemanents [
 
 	self selectionViewDo: [ :selView | selView setRemanentsIn: self ]
-]
-
-{ #category : #initialization }
-AlbEditorElement >> setupEventHandlers [
-
-	self eventHandlersDo: [ :e | self removeEventHandler: e ].
-	eventHandlers := self viewModel editorElementEventHandlers.
-	self eventHandlersDo: [ :e | 
-		self addEventHandler: (e
-				 element: self;
-				 yourself) ]
 ]
 
 { #category : #'editor - accessing' }

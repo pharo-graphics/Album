@@ -11,21 +11,27 @@ AlbEditabilityMode >> allowSelection [
 ]
 
 { #category : #initialization }
+AlbEditabilityMode >> defaultEditorElementEventHandlers [
+
+	^ self subclassResponsibility 
+]
+
+{ #category : #initialization }
 AlbEditabilityMode >> defaultSelectionView [
 
 	^ AlbEditorMainSelectionView new
+]
+
+{ #category : #'shortcut management' }
+AlbEditabilityMode >> defaultShortcuts [
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #initialization }
 AlbEditabilityMode >> defaultWordStencil [ 
 
 	^ AlbTextWordPieceStencil readOnly
-]
-
-{ #category : #initialization }
-AlbEditabilityMode >> editorElementEventHandlers [
-
-	^ self subclassResponsibility 
 ]
 
 { #category : #testing }
@@ -44,10 +50,4 @@ AlbEditabilityMode >> isEditable [
 AlbEditabilityMode >> isReadOnly [
 
 	^ self isEditable not
-]
-
-{ #category : #'shortcut management' }
-AlbEditabilityMode >> shortcuts [
-
-	^self subclassResponsibility 
 ]

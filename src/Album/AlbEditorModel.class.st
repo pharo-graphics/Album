@@ -9,7 +9,8 @@ Class {
 		'#fontName',
 		'#shortcuts',
 		'#editorEventHandler',
-		'#wordStencil'
+		'#wordStencil',
+		'#elementEventHandlers'
 	],
 	#category : #'Album-Model'
 }
@@ -38,9 +39,9 @@ AlbEditorModel >> beReadonlyWithoutSelection [
 ]
 
 { #category : #initialization }
-AlbEditorModel >> createShortcuts [
+AlbEditorModel >> defaultEditorElementEventHandlers [
 
-	^ mode shortcuts 
+	^ self mode defaultEditorElementEventHandlers
 ]
 
 { #category : #initialization }
@@ -58,6 +59,11 @@ AlbEditorModel >> defaultMode [
 AlbEditorModel >> defaultSelectionView [
 
 	^ self mode defaultSelectionView
+]
+
+{ #category : #accessing }
+AlbEditorModel >> defaultShortcuts [
+	^ mode defaultShortcuts
 ]
 
 { #category : #initialization }
@@ -78,10 +84,10 @@ AlbEditorModel >> defaultWordStencil [
 	^ mode defaultWordStencil
 ]
 
-{ #category : #initialization }
-AlbEditorModel >> editorElementEventHandlers [
+{ #category : #accessing }
+AlbEditorModel >> elementEventHandlersDo: aBlock [
 
-	^ self mode editorElementEventHandlers
+	elementEventHandlers ifNotNil: [ elementEventHandlers do: aBlock ]
 ]
 
 { #category : #accessing }
@@ -122,9 +128,9 @@ AlbEditorModel >> initialize [
 	self whenModeChangedDo: [ :m | 
 		self announce: (AlbActionRequired new valuable: [ :element | 
 				 element editor whenEditionModeChanged: self mode.
-				 element setupEventHandlers.
+				 self setupEventHandlersForElement: element.
 				 wordStencil := self defaultWordStencil.
-				 self recreateShortcutsInTextEditor: element editor.
+				 self setupShortcutsInTextEditor: element editor.
 				 element selectionView: self defaultSelectionView ]) ].
 
 	" action when  text change"
@@ -161,14 +167,17 @@ AlbEditorModel >> onInstalledIn: anElement [
 
 	self when: AlbActionRequired send: #whenActionRequired: to: anElement.
 
-	" editor related : text insertion/deletion "
+	" element related event handlers "
+	self setupEventHandlersForElement: anElement.
+	
+	" editor related event handler: text insertion/deletion "
 	editorEventHandler := BlEventHandler
 			 on: AlbTextModifiedEvent
 			 do: [ :anEvent | self textModifiedByTextEditor ].			
 	anElement editor addEventHandler: editorEventHandler.
 	
 	" current mode compatible shortcuts "	
-	self shortcuts do: [ :eachShortcut | anElement editor addEditorShortcut: eachShortcut ]
+	self setupShortcutsInTextEditor: anElement editor
 ]
 
 { #category : #'api - hooks' }
@@ -177,24 +186,18 @@ AlbEditorModel >> onUninstalledIn: anElement [
 	"Is sent when I am removed from an element "
 
 	super onUninstalledIn: anElement.
-	self shortcuts do: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ].
+	self shortcutsDo: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ].
+	self elementEventHandlersDo: [ :e | anElement removeEventHandler: e ].
 	anElement editor removeEventHandler: editorEventHandler.
-	editorEventHandler := nil
+	shortcuts := nil.
+	editorEventHandler := nil.
+	elementEventHandlers := nil
 ]
 
 { #category : #copying }
 AlbEditorModel >> postCopy [
 	"they will be initialized lazily later"
 	shortcuts := shortcuts copy 
-]
-
-{ #category : #'api - hooks' }
-AlbEditorModel >> recreateShortcutsInTextEditor: aTextEditor [
-
-	self shortcuts do: [ :eachShortcut | aTextEditor removeEditorShortcut: eachShortcut ].
-	shortcuts := nil.
-	self shortcuts do: [ :eachShortcut | aTextEditor addEditorShortcut: eachShortcut ]
-	
 ]
 
 { #category : #'api - text style' }
@@ -207,9 +210,35 @@ AlbEditorModel >> requestTextStyle [
 			(AlbActionRequired new valuable: [ :element | self launchStyle: self text nextGeneration in: element ]) ]
 ]
 
+{ #category : #'api - hooks' }
+AlbEditorModel >> setupEventHandlersForElement: anElement [
+	
+	self elementEventHandlersDo: [ :e | anElement removeEventHandler: e ].
+	elementEventHandlers := self defaultEditorElementEventHandlers.
+	self elementEventHandlersDo: [ :e | 
+		anElement addEventHandler: (e
+				 element: anElement;
+				 yourself) ]	
+
+]
+
+{ #category : #'api - hooks' }
+AlbEditorModel >> setupShortcutsInTextEditor: aTextEditor [
+
+	self shortcutsDo: [ :eachShortcut | aTextEditor removeEditorShortcut: eachShortcut ].
+	shortcuts := self defaultShortcuts.
+	self shortcutsDo: [ :eachShortcut | aTextEditor addEditorShortcut: eachShortcut ]
+	
+]
+
 { #category : #accessing }
 AlbEditorModel >> shortcuts [
-	^ shortcuts ifNil: [ shortcuts := self createShortcuts ]
+	^ shortcuts 
+]
+
+{ #category : #accessing }
+AlbEditorModel >> shortcutsDo: aBlock [
+	shortcuts ifNotNil: [ shortcuts do: aBlock ]
 ]
 
 { #category : #'api - text style' }

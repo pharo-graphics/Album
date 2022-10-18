@@ -11,7 +11,7 @@ AlbReadonlyWithSelectionMode >> allowSelection [
 ]
 
 { #category : #initialization }
-AlbReadonlyWithSelectionMode >> editorElementEventHandlers [
+AlbReadonlyWithSelectionMode >> defaultEditorElementEventHandlers [
 
 	^ { 
 		  AlbTextEditorMouseHandler new.
@@ -21,18 +21,18 @@ AlbReadonlyWithSelectionMode >> editorElementEventHandlers [
 		  AlbTextEditorFocusHandler new }
 ]
 
-{ #category : #testing }
-AlbReadonlyWithSelectionMode >> isEditable [
-
-	^ false
-]
-
 { #category : #'shortcut management' }
-AlbReadonlyWithSelectionMode >> shortcuts [
+AlbReadonlyWithSelectionMode >> defaultShortcuts [
 
 	^ { 
 		  AlbEditorCopyShortcut new.
 		  AlbEditorSelectAllShortcut new.
 		  AlbEditorRemanentSelectionShortcut new.
 		  AlbEditorDeselectAllShortcut new }
+]
+
+{ #category : #testing }
+AlbReadonlyWithSelectionMode >> isEditable [
+
+	^ false
 ]

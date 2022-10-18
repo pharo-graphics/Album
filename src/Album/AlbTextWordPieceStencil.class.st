@@ -18,14 +18,6 @@ AlbTextWordPieceStencil class >> editable [
 ]
 
 { #category : #'instance creation' }
-AlbTextWordPieceStencil class >> forTextEditorMode: aTextEditorMode [
-
-	^ aTextEditorMode isReadOnly
-		  ifTrue: [ self readOnly ]
-		  ifFalse: [ self editable ]
-]
-
-{ #category : #'instance creation' }
 AlbTextWordPieceStencil class >> readOnly [
 
 	^ self new beReadOnly

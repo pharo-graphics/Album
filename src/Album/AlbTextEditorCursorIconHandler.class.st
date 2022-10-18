@@ -44,10 +44,3 @@ AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
 
 	anEvent currentTarget mouseCursor: BlCursor overEditableText
 ]
-
-{ #category : #'api - event managing' }
-AlbTextEditorCursorIconHandler >> wantsEvent: anEvent [
-
-	element allowSelection ifFalse: [ ^ false ].
-	^ super wantsEvent: anEvent
-]

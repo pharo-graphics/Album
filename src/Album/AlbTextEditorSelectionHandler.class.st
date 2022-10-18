@@ -54,10 +54,3 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 AlbTextEditorSelectionHandler >> eventsToHandle [
 	^ { BlDragEvent . BlDragStartEvent. BlDragEndEvent}
 ]
-
-{ #category : #'api - event managing' }
-AlbTextEditorSelectionHandler >> wantsEvent: anEvent [
-
-	element allowSelection ifFalse: [ ^ false ].
-	^ super wantsEvent: anEvent
-]

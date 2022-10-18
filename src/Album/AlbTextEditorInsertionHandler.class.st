@@ -52,10 +52,3 @@ AlbTextEditorInsertionHandler >> textInputEvent: anEvent [
 		atCursorIn: anEvent currentTarget editor
 		context: anEvent currentTarget
 ]
-
-{ #category : #'api - event managing' }
-AlbTextEditorInsertionHandler >> wantsEvent: anEvent [
-
-	element isEditable ifFalse: [ ^ false ].
-	^ super wantsEvent: anEvent
-]

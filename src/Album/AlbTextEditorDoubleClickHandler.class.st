@@ -68,10 +68,3 @@ AlbTextEditorDoubleClickHandler >> eventsToHandle [
 
 	^ { BlDoubleClickEvent }
 ]
-
-{ #category : #'api - event managing' }
-AlbTextEditorDoubleClickHandler >> wantsEvent: anEvent [
-
-	element allowSelection ifFalse: [ ^ false ].
-	^ super wantsEvent: anEvent
-]

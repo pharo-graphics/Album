@@ -27,11 +27,6 @@ AlbEditorElement >> addEditorShortcut: aTextEditorInteraction [
 	self editor addEditorShortcut: aTextEditorInteraction
 ]
 
-{ #category : #editability }
-AlbEditorElement >> allowSelection [
-	^ self viewModel allowSelection
-]
-
 { #category : #converting }
 AlbEditorElement >> asScrollableElement [
 	^ self
@@ -165,6 +160,12 @@ AlbEditorElement >> editorText [
 	^ self editor privateText
 ]
 
+{ #category : #'ui - events managing' }
+AlbEditorElement >> eventHandlersDo: aBlock [
+
+	eventHandlers ifNotNil: [ eventHandlers do: aBlock ]
+]
+
 { #category : #'focus accessing' }
 AlbEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDirection [
 	"Sort candidates according the bounds left, to ensure that rightmost are favored for up and down. "
@@ -215,20 +216,6 @@ AlbEditorElement >> inserter [
 	<return: #AlbTextEditorInserter>
 
 	^ self editor inserter
-]
-
-{ #category : #editability }
-AlbEditorElement >> isEditable [
-	<return: #Boolean>
-
-	^ self viewModel isEditable
-]
-
-{ #category : #editability }
-AlbEditorElement >> isReadOnly [
-	<return: #Boolean>
-
-	^ self viewModel isReadOnly
 ]
 
 { #category : #accessing }
@@ -349,17 +336,6 @@ AlbEditorElement >> selectionColor [
 		  alpha: 1.0
 ]
 
-{ #category : #'private - accessing' }
-AlbEditorElement >> selectionEchoRectangles [
-
-	"return all selections echo rectangles from coordinate system of text elements with selection to my local coordinates"
-
-	^ Array streamContents: [ :stream | 
-		  self textElementsDo: [ :te | 
-			  stream nextPutAll: ((te highlightRectanglesOfCategory: #selectionEcho) collect: [ :r | 
-					   (self localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: (0 @ te position y) negated ]) ] ]
-]
-
 { #category : #accessing }
 AlbEditorElement >> selectionView: anEditorSelectionView [
 
@@ -385,13 +361,12 @@ AlbEditorElement >> setRemanents [
 { #category : #initialization }
 AlbEditorElement >> setupEventHandlers [
 
-	eventHandlers ifNotNil: [ eventHandlers do: [ :e | self removeEventHandler: e ] ].
+	self eventHandlersDo: [ :e | self removeEventHandler: e ].
 	eventHandlers := self viewModel editorElementEventHandlers.
-	eventHandlers ifNotNil: [ 
-		eventHandlers do: [ :e | 
-			self addEventHandler: (e
-					 element: self;
-					 yourself) ] ]
+	self eventHandlersDo: [ :e | 
+		self addEventHandler: (e
+				 element: self;
+				 yourself) ]
 ]
 
 { #category : #'editor - accessing' }
@@ -489,46 +464,9 @@ AlbEditorElement >> textSnapshot [
 ]
 
 { #category : #'model - events' }
-AlbEditorElement >> whenEditionModeChangedFromModel [
+AlbEditorElement >> whenActionRequired: anActionRequiredAnnouncement [
 
-	self editor whenEditionModeChanged: self viewModel mode.
-	self setupEventHandlers.
-	self viewModel privateEditionModeChangedFromElement: self.
-	
-]
-
-{ #category : #'model - events' }
-AlbEditorElement >> whenSaveAcceptedFromModel: aSaveAcceptedAnnounce [
-
-	
-]
-
-{ #category : #'model - events' }
-AlbEditorElement >> whenSaveDeniedFromModel: aSaveAcceptedAnnounce [
-
-	
-]
-
-{ #category : #'model - events' }
-AlbEditorElement >> whenTextChangedFromModel [
-
-	self editor whenTextChanged: self viewModel text.
-	self viewModel privateTextChangedFromElement: self.
-]
-
-{ #category : #'model - events' }
-AlbEditorElement >> whenTextStyleDoneFromModel: aTextEditorTextStyledEvent [
-
-	self editor processCursorAttributes.
-	self editor updater
-		all;
-		update.
-]
-
-{ #category : #'text - styling' }
-AlbEditorElement >> whenTextStyleRequestedFromModel: anEditorModel [
-
-	self viewModel privateLaunchTextStyleFromElement: self
+	anActionRequiredAnnouncement value: self
 ]
 
 { #category : #'accessing - decoration' }

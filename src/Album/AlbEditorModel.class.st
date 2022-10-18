@@ -22,21 +22,18 @@ AlbEditorModel >> allowSelection [
 { #category : #accessing }
 AlbEditorModel >> beEditable [
 
-	mode isEditable ifTrue: [ ^ self ].
 	mode := AlbEditableMode new
 ]
 
 { #category : #accessing }
 AlbEditorModel >> beReadonlyWithSelection [
 
-	(mode isReadOnly and: [ mode allowSelection ]) ifTrue: [ ^ self ].
 	mode := AlbReadonlyWithSelectionMode new
 ]
 
 { #category : #accessing }
 AlbEditorModel >> beReadonlyWithoutSelection [
 
-	mode allowSelection ifFalse: [ ^ self ].
 	mode := AlbReadonlyWithoutSelectionMode new
 ]
 
@@ -107,17 +104,34 @@ AlbEditorModel >> hasUnacceptedEdits [
 
 { #category : #initialization }
 AlbEditorModel >> initialize [
+
 	super initialize.
 	self class initializeSlots: self.
-	
+
 	" fontName must be initialize before text "
 	fontName := self defaultFontName.
 	mode := self defaultMode.
 	text := self defaultText.
 	self styler: self defaultStyler.
 	wordStencil := self defaultWordStencil.
+	
+	" action when styling done "
+	self when: AlbTextStyleDone send: #whenTextStyleDone: to: self.
+	
+	" action when  mode change "
+	self whenModeChangedDo: [ :m | 
+		self announce: (AlbActionRequired new valuable: [ :element | 
+				 element editor whenEditionModeChanged: self mode.
+				 element setupEventHandlers.
+				 wordStencil := self defaultWordStencil.
+				 self recreateShortcutsInTextEditor: element editor.
+				 element selectionView: self defaultSelectionView ]) ].
 
-
+	" action when  text change"
+	self whenTextChangedDo: [ :t | 
+		self announce: (AlbActionRequired new valuable: [ :element | 
+				 element editor whenTextChanged: self text.
+				 self stylerDo: [ self launchStyle: self text nextGeneration in: element ] ]) ]
 ]
 
 { #category : #testing }
@@ -145,14 +159,7 @@ AlbEditorModel >> onInstalledIn: anElement [
 	
 	anElement selectionView: self defaultSelectionView.
 
-	" Observable slot "
-	self whenTextChangedDo: [ :t | anElement whenTextChangedFromModel ].
-	" Observable slot "
-	self whenModeChangedDo: [ :m | anElement whenEditionModeChangedFromModel ].
-	
-	" Text styler "
-	self when: AlbTextStyleDone send: #whenTextStyleDoneFromModel: to: anElement.
-	self when: AlbTextStyleRequested send: #whenTextStyleRequestedFromModel: to: anElement.
+	self when: AlbActionRequired send: #whenActionRequired: to: anElement.
 
 	" editor related : text insertion/deletion "
 	editorEventHandler := BlEventHandler
@@ -182,31 +189,6 @@ AlbEditorModel >> postCopy [
 ]
 
 { #category : #'api - hooks' }
-AlbEditorModel >> privateEditionModeChangedFromElement: anEditorElement [
-
-	wordStencil := self defaultWordStencil.	
-	self recreateShortcutsInTextEditor: anEditorElement editor.
-	anEditorElement selectionView: self defaultSelectionView 
-
-]
-
-{ #category : #'api - text style' }
-AlbEditorModel >> privateLaunchTextStyleFromElement: anElement [
-
-	" see resquestTextStyle comments "
-
-	styler ifNil: [ ^ self ].
-	self launchStyle: self text nextGeneration in: anElement
-]
-
-{ #category : #'api - text style' }
-AlbEditorModel >> privateTextChangedFromElement:  anElement [
-
-	self privateLaunchTextStyleFromElement: anElement
-
-]
-
-{ #category : #'api - hooks' }
 AlbEditorModel >> recreateShortcutsInTextEditor: aTextEditor [
 
 	self shortcuts do: [ :eachShortcut | aTextEditor removeEditorShortcut: eachShortcut ].
@@ -218,15 +200,22 @@ AlbEditorModel >> recreateShortcutsInTextEditor: aTextEditor [
 { #category : #'api - text style' }
 AlbEditorModel >> requestTextStyle [
 
-	" since text styler launcher need an element to launch styling, this announce is sent to ask the editorElement to launch styling by sending back #privateLaunchTextStyleFromElement: to self "
+	" since text styler launcher need an element to launch styling, this announce is sent to ask the editorElement to evaluate the valuable with itself as argument "
 
-	styler ifNil: [ ^ self ].
-	self announce: AlbTextStyleRequested new
+	self stylerDo: [ 
+		self announce:
+			(AlbActionRequired new valuable: [ :element | self launchStyle: self text nextGeneration in: element ]) ]
 ]
 
 { #category : #accessing }
 AlbEditorModel >> shortcuts [
 	^ shortcuts ifNil: [ shortcuts := self createShortcuts ]
+]
+
+{ #category : #'api - text style' }
+AlbEditorModel >> stylerDo: aBlock [
+
+	styler ifNotNil: aBlock
 ]
 
 { #category : #accessing }
@@ -269,6 +258,16 @@ AlbEditorModel >> whenTextChangedDo: aBlock [
 	"set a block to perform after that the text has been chanbed, and its action performed"
 
 	self property: #text whenChangedDo: aBlock
+]
+
+{ #category : #'api - text style' }
+AlbEditorModel >> whenTextStyleDone: aTextStyleDoneAnnouncement [
+
+	self announce: (AlbActionRequired new valuable: [ :element | 
+			 element editor processCursorAttributes.
+			 element editor updater
+				 all;
+				 update ])
 ]
 
 { #category : #'api - text style' }

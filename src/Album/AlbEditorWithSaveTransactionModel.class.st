@@ -27,16 +27,6 @@ AlbEditorWithSaveTransactionModel >> hasUnacceptedEdits: aBoolean [
 	self announce: (AlbEditsStateChangedInModel new viewModel: self)
 ]
 
-{ #category : #'api - hooks' }
-AlbEditorWithSaveTransactionModel >> onInstalledIn: anElement [
-
-	super onInstalledIn: anElement.
-	self when: AlbSaveAccepted send: #whenSaveAcceptedFromModel: to: anElement.
-	self when: AlbSaveDenied send: #whenSaveDeniedFromModel: to: anElement.
-
-
-]
-
 { #category : #'api-transaction' }
 AlbEditorWithSaveTransactionModel >> requestSave [
 

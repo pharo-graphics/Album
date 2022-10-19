@@ -135,7 +135,6 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	album := ToAlbum forPharoCode.
 	album viewModel text: text.
-	"album viewModel fontName: AeFontManager defaultCodeFontFamilyName."
 	album viewModel classOrMetaClass: self class.
 	album withLineNumbers.
 	

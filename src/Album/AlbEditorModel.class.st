@@ -1,16 +1,18 @@
 Class {
 	#name : #AlbEditorModel,
 	#superclass : #OBlViewModel,
-	#traits : 'TBlTextStylerClient + TObservable',
-	#classTraits : 'TBlTextStylerClient classTrait + TObservable classTrait',
+	#traits : 'TObservable',
+	#classTraits : 'TObservable classTrait',
 	#instVars : [
 		'#text => ObservableSlot',
 		'#mode => ObservableSlot',
+		'#hasUnacceptedEdits',
 		'#fontName',
 		'#shortcuts',
 		'#editorEventHandler',
 		'#wordStencil',
-		'#elementEventHandlers'
+		'#elementEventHandlers',
+		'#stylerHolder'
 	],
 	#category : #'Album-Model'
 }
@@ -99,45 +101,53 @@ AlbEditorModel >> fontName [
 { #category : #accessing }
 AlbEditorModel >> fontName: aFontName [
 
-	fontName := aFontName
+	fontName := aFontName.
+	self stylerHolder fontName: aFontName 
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 AlbEditorModel >> hasUnacceptedEdits [
 
-	^ false
+	^ hasUnacceptedEdits ifNil: [ hasUnacceptedEdits := false ]
+]
+
+{ #category : #accessing }
+AlbEditorModel >> hasUnacceptedEdits: aBoolean [
+
+	hasUnacceptedEdits = aBoolean ifTrue: [ ^ self ].
+	hasUnacceptedEdits := aBoolean.
+	self announce: (AlbEditsStateChangedInModel new viewModel: self)
 ]
 
 { #category : #initialization }
 AlbEditorModel >> initialize [
 
-	super initialize.
 	self class initializeSlots: self.
+	super initialize.
 
 	" fontName must be initialize before text "
 	fontName := self defaultFontName.
 	mode := self defaultMode.
 	text := self defaultText.
-	self styler: self defaultStyler.
 	wordStencil := self defaultWordStencil.
-	
-	" action when styling done "
-	self when: AlbTextStyleDone send: #whenTextStyleDone: to: self.
-	
+
 	" action when  mode change "
 	self whenModeChangedDo: [ :m | 
-		self announce: (AlbActionRequired new valuable: [ :element | 
+		self announce: (AlbActionRequiredFromEditorElement new valuable: [ :element | 
 				 element editor whenEditionModeChanged: self mode.
 				 self setupEventHandlersForElement: element.
 				 wordStencil := self defaultWordStencil.
 				 self setupShortcutsInTextEditor: element editor.
-				 element selectionView: self defaultSelectionView ]) ].
+				 element selectionView: self defaultSelectionView.
+				 stylerHolder styler: self defaultStyler.
+				 stylerHolder unstyledText: self text nextGeneration ]) ].
 
 	" action when  text change"
 	self whenTextChangedDo: [ :t | 
-		self announce: (AlbActionRequired new valuable: [ :element | 
+		self announce: (AlbActionRequiredFromEditorElement new valuable: [ :element | 
 				 element editor whenTextChanged: self text.
-				 self stylerDo: [ self launchStyle: self text nextGeneration in: element ] ]) ]
+				 " ask the stylerClient to style through its observal slot"
+				 stylerHolder unstyledText: self text nextGeneration ]) ]
 ]
 
 { #category : #testing }
@@ -148,6 +158,14 @@ AlbEditorModel >> isEditable [
 { #category : #testing }
 AlbEditorModel >> isReadOnly [
 	^ mode isReadOnly 
+]
+
+{ #category : #'text style' }
+AlbEditorModel >> launchTextStyle [
+
+	" ask the stylerHolder through its observale slot "
+
+	stylerHolder unstyledText: self text
 ]
 
 { #category : #accessing }
@@ -162,21 +180,30 @@ AlbEditorModel >> onInstalledIn: anElement [
 	"Is sent when I am added to an element "
 
 	super onInstalledIn: anElement.
+
+	stylerHolder := AlbStylerHolder new
+		                referentElement: anElement;
+		                styler: self defaultStyler;
+		                yourself.
 	
+	stylerHolder whenStyledTextChangedDo: [ :styledText | 
+		self text takeInternalRepresentationOf: styledText.
+		self announce: (AlbActionRequiredFromEditorElement new valuable: [ :element | element textInternalRepresentationChanged ]) ].
+
 	anElement selectionView: self defaultSelectionView.
 
-	self when: AlbActionRequired send: #whenActionRequired: to: anElement.
+	self when: AlbActionRequiredFromEditorElement send: #whenActionRequired: to: anElement.
 
 	" element related event handlers "
 	self setupEventHandlersForElement: anElement.
-	
+
 	" editor related event handler: text insertion/deletion "
 	editorEventHandler := BlEventHandler
-			 on: AlbTextModifiedEvent
-			 do: [ :anEvent | self textModifiedByTextEditor ].			
+		                      on: AlbTextModifiedEvent
+		                      do: [ :anEvent | self textModifiedByTextEditor ].
 	anElement editor addEventHandler: editorEventHandler.
-	
-	" current mode compatible shortcuts "	
+
+	" current mode compatible shortcuts "
 	self setupShortcutsInTextEditor: anElement editor
 ]
 
@@ -186,28 +213,33 @@ AlbEditorModel >> onUninstalledIn: anElement [
 	"Is sent when I am removed from an element "
 
 	super onUninstalledIn: anElement.
+	stylerHolder := nil.
 	self shortcutsDo: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ].
 	self elementEventHandlersDo: [ :e | anElement removeEventHandler: e ].
+	self unsubscribe: anElement.
 	anElement editor removeEventHandler: editorEventHandler.
 	shortcuts := nil.
 	editorEventHandler := nil.
 	elementEventHandlers := nil
 ]
 
-{ #category : #copying }
-AlbEditorModel >> postCopy [
-	"they will be initialized lazily later"
-	shortcuts := shortcuts copy 
+{ #category : #'api-transaction' }
+AlbEditorModel >> requestSave [
+
+	self announce: (AlbSaveRequested new viewModel: self).
+	self saveResult: true
 ]
 
-{ #category : #'api - text style' }
-AlbEditorModel >> requestTextStyle [
+{ #category : #'api-transaction' }
+AlbEditorModel >> saveResult: aBoolean [
 
-	" since text styler launcher need an element to launch styling, this announce is sent to ask the editorElement to evaluate the valuable with itself as argument "
+	| announcement |
+	self hasUnacceptedEdits: aBoolean not.
+	announcement := aBoolean
+		                ifTrue: [ AlbSaveAccepted new ]
+		                ifFalse: [ AlbSaveDenied new ].
+	self announce: (announcement viewModel: self).
 
-	self stylerDo: [ 
-		self announce:
-			(AlbActionRequired new valuable: [ :element | self launchStyle: self text nextGeneration in: element ]) ]
 ]
 
 { #category : #'api - hooks' }
@@ -233,84 +265,60 @@ AlbEditorModel >> setupShortcutsInTextEditor: aTextEditor [
 
 { #category : #accessing }
 AlbEditorModel >> shortcuts [
-	^ shortcuts 
+
+	^ shortcuts
 ]
 
 { #category : #accessing }
 AlbEditorModel >> shortcutsDo: aBlock [
+
 	shortcuts ifNotNil: [ shortcuts do: aBlock ]
 ]
 
-{ #category : #'api - text style' }
-AlbEditorModel >> stylerDo: aBlock [
+{ #category : #accessing }
+AlbEditorModel >> stylerHolder [
 
-	styler ifNotNil: aBlock
+	^ stylerHolder
 ]
 
 { #category : #accessing }
 AlbEditorModel >> text [
+
 	^ text
 ]
 
 { #category : #accessing }
 AlbEditorModel >> text: aText [
+
 	| t |
 	t := aText.
 	fontName ifNotNil: [ t fontName: self fontName ].
 	text = t ifTrue: [ ^ self ].
-	text := t
+	text := t.
+	self launchTextStyle
 ]
 
 { #category : #'api - hooks' }
 AlbEditorModel >> textModifiedByTextEditor [
 
-	self requestTextStyle
+	self launchTextStyle.
+	self hasUnacceptedEdits: true
 ]
 
-{ #category : #'api - hooks' }
+{ #category : #'slot - change hook' }
 AlbEditorModel >> whenModeChangedDo: aBlock [
+
 	"set a block to perform after that the mode has been chanbed, and its action performed"
 
 	self property: #mode whenChangedDo: aBlock
 ]
 
-{ #category : #'api - text style' }
-AlbEditorModel >> whenStylerStateChanged: anAnnouncement [
-
-	"the internal configuration of the styler has changed"
-
-	self requestTextStyle
-]
-
-{ #category : #'api - hooks' }
+{ #category : #'slot - change hook' }
 AlbEditorModel >> whenTextChangedDo: aBlock [
+
 	"set a block to perform after that the text has been chanbed, and its action performed"
 
 	self property: #text whenChangedDo: aBlock
-]
-
-{ #category : #'api - text style' }
-AlbEditorModel >> whenTextStyleDone: aTextStyleDoneAnnouncement [
-
-	self announce: (AlbActionRequired new valuable: [ :element | 
-			 element editor processCursorAttributes.
-			 element editor updater
-				 all;
-				 update ])
-]
-
-{ #category : #'api - text style' }
-AlbEditorModel >> whenTextStyled: anAnnouncement [
-
-	| styledText |
-	styledText := anAnnouncement styledText.
-	" text just styled by the styler, check the generation (to be thread-safe) to ensure that my text has not be changed elsewhere during the styling "
-	(styledText isNextGenerationOf: self text) ifFalse: [ ^ false ].
-	"change only my internal representation to keep text reference with its original announcer "
-	self text takeInternalRepresentationOf: styledText.
-	"tell the world that the text has been styled again"
-	self announce: (AlbTextStyleDone new styledText: self text).
-	^ true
 ]
 
 { #category : #accessing }

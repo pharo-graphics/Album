@@ -124,7 +124,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBScannerStylerWithDresse
 
 	| ed |
 	ed := self example_CodeEditorWithRBStylerWithDresser.
-	ed viewModel styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro')
+	ed viewModel stylerHolder styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro')
 ]
 
 { #category : #'editor examples' }
@@ -135,6 +135,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	album := ToAlbum forPharoCode.
 	album viewModel text: text.
+	album viewModel fontName: AeFontManager defaultCodeFontFamilyName.
 	album viewModel classOrMetaClass: self class.
 	album withLineNumbers.
 	
@@ -142,14 +143,14 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	"album editorElement selectionView inspect."
 	"album editorElement viewModel inspect."
 
-	vscrollBar := BlVerticalScrollbarElement new.
+	"vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c | 
 		c ignoreByLayout.
 		c margin: (BlInsets right: 2).
 		c ignored horizontal alignRight.
 		c ignored vertical alignBottom ].
-	vscrollBar attachTo: album editorElement.
-	album addChild: vscrollBar. 
+	vscrollBar attachTo: album editorElement."
+	"album addChild: vscrollBar." 
 	space := OBlSpace new.
 	space root addChild: album.
 	space show.
@@ -234,7 +235,7 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	ed text: text.
 	ed withoutCacheLimit.
 	ed withLineNumbers.
-	ed viewModel styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro').
+	ed viewModel stylerHolder styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro').
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.

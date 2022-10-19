@@ -407,6 +407,15 @@ AlbEditorElement >> textElementsDo: aBlock [
 ]
 
 { #category : #'api - editor' }
+AlbEditorElement >> textInternalRepresentationChanged [
+
+	self editor processCursorAttributes.
+	self editor updater
+					 all;
+					 update
+]
+
+{ #category : #'api - editor' }
 AlbEditorElement >> textModified [
 
 	self selectionViewDo: [ :selView | selView textModifiedIn: self ]

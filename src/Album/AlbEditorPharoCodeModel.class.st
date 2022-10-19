@@ -7,13 +7,7 @@ Class {
 { #category : #accessing }
 AlbEditorPharoCodeModel >> classOrMetaClass: aClass [
 
-	self styler classOrMetaClass: aClass
-]
-
-{ #category : #initialization }
-AlbEditorPharoCodeModel >> defaultFontName [
-
-	^ AeFontManager defaultCodeFontFamilyName
+	self stylerHolder classOrMetaClass: aClass
 ]
 
 { #category : #initialization }
@@ -25,11 +19,11 @@ AlbEditorPharoCodeModel >> defaultStyler [
 { #category : #accessing }
 AlbEditorPharoCodeModel >> isForWorkspace: aBoolean [
 
-	self styler isForWorkspace: aBoolean
+	self stylerHolder isForWorkspace: aBoolean
 ]
 
 { #category : #accessing }
 AlbEditorPharoCodeModel >> workspace: aWorkspace [
 
-	self styler workspace: aWorkspace
+	self stylerHolder workspace: aWorkspace
 ]

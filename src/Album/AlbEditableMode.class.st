@@ -34,6 +34,9 @@ AlbEditableMode >> defaultShortcuts [
 		  AlbEditorPasteShortcut new.
 		  AlbEditorUndoShortcut new.
 		  AlbEditorRedoShortcut new.
+		
+		  AlbEditorSaveShortcut new.
+
 		  AlbEditorCarriageReturnShortcut new.
 		  AlbEditorMoveCursorLeftShortcut new.
 		  AlbEditorMoveCursorRightShortcut new.

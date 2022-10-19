@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'valuable'
 	],
-	#category : #'Album-Model-Announcements'
+	#category : #'Album-Announcements'
 }
 
 { #category : #accessing }
@@ -14,7 +14,7 @@ AlbActionRequired >> valuable: aValuable [
 ]
 
 { #category : #accessing }
-AlbActionRequired >> value: anEditorElement [
+AlbActionRequired >> value: anObject [
 
-	^ valuable value: anEditorElement
+	^ valuable value: anObject
 ]

@@ -11,8 +11,7 @@ Class {
 		'#shortcuts',
 		'#editorEventHandler',
 		'#wordStencil',
-		'#elementEventHandlers',
-		'#stylerHolder'
+		'#elementEventHandlers'
 	],
 	#category : #'Album-Model'
 }
@@ -69,12 +68,6 @@ AlbEditorModel >> defaultShortcuts [
 ]
 
 { #category : #initialization }
-AlbEditorModel >> defaultStyler [
-
-	^ nil
-]
-
-{ #category : #initialization }
 AlbEditorModel >> defaultText [
 
 	^ '' asRopedText
@@ -101,8 +94,7 @@ AlbEditorModel >> fontName [
 { #category : #accessing }
 AlbEditorModel >> fontName: aFontName [
 
-	fontName := aFontName.
-	self stylerHolder fontName: aFontName 
+	fontName := aFontName
 ]
 
 { #category : #accessing }
@@ -131,23 +123,11 @@ AlbEditorModel >> initialize [
 	text := self defaultText.
 	wordStencil := self defaultWordStencil.
 
-	" action when  mode change "
-	self whenModeChangedDo: [ :m | 
-		self announce: (AlbActionRequiredFromEditorElement new valuable: [ :element | 
-				 element editor whenEditionModeChanged: self mode.
-				 self setupEventHandlersForElement: element.
-				 wordStencil := self defaultWordStencil.
-				 self setupShortcutsInTextEditor: element editor.
-				 element selectionView: self defaultSelectionView.
-				 stylerHolder styler: self defaultStyler.
-				 stylerHolder unstyledText: self text nextGeneration ]) ].
-
-	" action when  text change"
-	self whenTextChangedDo: [ :t | 
-		self announce: (AlbActionRequiredFromEditorElement new valuable: [ :element | 
-				 element editor whenTextChanged: self text.
-				 " ask the stylerClient to style through its observal slot"
-				 stylerHolder unstyledText: self text nextGeneration ]) ]
+	" action when  mode change (Observable slot) "
+	self whenModeChangedDo: [ :m | self modeChanged ].
+		
+	" action when  text change (Observable slot) "
+	self whenTextChangedDo: [ :t | self textChanged ]
 ]
 
 { #category : #testing }
@@ -160,18 +140,21 @@ AlbEditorModel >> isReadOnly [
 	^ mode isReadOnly 
 ]
 
-{ #category : #'text style' }
-AlbEditorModel >> launchTextStyle [
-
-	" ask the stylerHolder through its observale slot "
-
-	stylerHolder unstyledText: self text
-]
-
 { #category : #accessing }
 AlbEditorModel >> mode [
 
 	^ mode
+]
+
+{ #category : #initialization }
+AlbEditorModel >> modeChanged [
+
+	wordStencil := self defaultWordStencil.
+	self withEditorElementDo: [ :element | 
+			 element editor whenEditionModeChanged: self mode.
+			 self setupEventHandlersForElement: element.
+			 self setupShortcutsInTextEditor: element editor.
+			 element selectionView: self defaultSelectionView ]
 ]
 
 { #category : #'api - hooks' }
@@ -180,15 +163,6 @@ AlbEditorModel >> onInstalledIn: anElement [
 	"Is sent when I am added to an element "
 
 	super onInstalledIn: anElement.
-
-	stylerHolder := AlbStylerHolder new
-		                referentElement: anElement;
-		                styler: self defaultStyler;
-		                yourself.
-	
-	stylerHolder whenStyledTextChangedDo: [ :styledText | 
-		self text takeInternalRepresentationOf: styledText.
-		self announce: (AlbActionRequiredFromEditorElement new valuable: [ :element | element textInternalRepresentationChanged ]) ].
 
 	anElement selectionView: self defaultSelectionView.
 
@@ -213,7 +187,6 @@ AlbEditorModel >> onUninstalledIn: anElement [
 	"Is sent when I am removed from an element "
 
 	super onUninstalledIn: anElement.
-	stylerHolder := nil.
 	self shortcutsDo: [ :eachShortcut | anElement editor removeEditorShortcut: eachShortcut ].
 	self elementEventHandlersDo: [ :e | anElement removeEventHandler: e ].
 	self unsubscribe: anElement.
@@ -276,12 +249,6 @@ AlbEditorModel >> shortcutsDo: aBlock [
 ]
 
 { #category : #accessing }
-AlbEditorModel >> stylerHolder [
-
-	^ stylerHolder
-]
-
-{ #category : #accessing }
 AlbEditorModel >> text [
 
 	^ text
@@ -294,14 +261,18 @@ AlbEditorModel >> text: aText [
 	t := aText.
 	fontName ifNotNil: [ t fontName: self fontName ].
 	text = t ifTrue: [ ^ self ].
-	text := t.
-	self launchTextStyle
+	text := t
+]
+
+{ #category : #initialization }
+AlbEditorModel >> textChanged [
+
+	self withEditorElementDo: [ :element | element editor whenTextChanged: self text ]
 ]
 
 { #category : #'api - hooks' }
 AlbEditorModel >> textModifiedByTextEditor [
 
-	self launchTextStyle.
 	self hasUnacceptedEdits: true
 ]
 
@@ -319,6 +290,14 @@ AlbEditorModel >> whenTextChangedDo: aBlock [
 	"set a block to perform after that the text has been chanbed, and its action performed"
 
 	self property: #text whenChangedDo: aBlock
+]
+
+{ #category : #initialization }
+AlbEditorModel >> withEditorElementDo: aBlock [
+
+	self announce: (AlbActionRequiredFromEditorElement new
+			 valuable: aBlock;
+			 yourself)
 ]
 
 { #category : #accessing }

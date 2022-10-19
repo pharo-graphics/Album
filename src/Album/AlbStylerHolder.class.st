@@ -35,7 +35,7 @@ AlbStylerHolder >> initialize [
 		self launchTextStyle ]
 ]
 
-{ #category : #'api - styler hook' }
+{ #category : #styling }
 AlbStylerHolder >> launchTextStyle [
 
 	self stylerDo: [ 

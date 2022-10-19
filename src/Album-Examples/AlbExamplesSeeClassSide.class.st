@@ -135,13 +135,14 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 
 	album := ToAlbum forPharoCode.
 	album viewModel text: text.
-	album viewModel fontName: AeFontManager defaultCodeFontFamilyName.
+	"album viewModel fontName: AeFontManager defaultCodeFontFamilyName."
 	album viewModel classOrMetaClass: self class.
 	album withLineNumbers.
 	
 	"album editorElement editor inspect."
 	"album editorElement selectionView inspect."
 	"album editorElement viewModel inspect."
+	"album editorElement viewModel stylerHolder inspect."
 
 	"vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c | 

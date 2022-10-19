@@ -39,7 +39,8 @@ AlbStylerHolder >> initialize [
 AlbStylerHolder >> launchTextStyle [
 
 	self stylerDo: [ 
-		self unstyledText ifNotNil: [ self launchStyle: self unstyledText nextGeneration in: self referentElement ] ]
+		self unstyledText ifNotNil: [ 
+			self launchStyle: self unstyledText nextGeneration in: self referentElement ] ]
 ]
 
 { #category : #accessing }

@@ -133,7 +133,7 @@ AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
 	| text album space vscrollBar |
 	text := self methodText asRopedText.
 
-	album := ToAlbum forPharoCode.
+	album := ToAlbum new.
 	album viewModel text: text.
 	album viewModel classOrMetaClass: self class.
 	album withLineNumbers.
@@ -231,7 +231,7 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	| ed vscrollBar space text |
 	" ~4300 pages on LibreOffice, ~8000000 characters "
 	text := Smalltalk changesFile readStream contents asRopedText.
-	ed := AlbEditorElement forPharoCode dresser: AlbTextAreaDresser new.
+	ed := AlbEditorElement new dresser: AlbTextAreaDresser new.
 	ed text: text.
 	ed withoutCacheLimit.
 	ed withLineNumbers.

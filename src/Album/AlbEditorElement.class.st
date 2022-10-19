@@ -16,11 +16,6 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #'instance creation' }
-AlbEditorElement class >> forPharoCode [
-	^ self new viewModel: AlbEditorPharoCodeModel new.
-]
-
 { #category : #'api - editor' }
 AlbEditorElement >> addEditorShortcut: aTextEditorInteraction [
 	self editor addEditorShortcut: aTextEditorInteraction
@@ -77,7 +72,7 @@ AlbEditorElement >> cursors [
 { #category : #initialization }
 AlbEditorElement >> defaulEditorModel [
 
-	^ AlbEditorModel new.
+	^ AlbEditorViewModel new.
 ]
 
 { #category : #initialization }

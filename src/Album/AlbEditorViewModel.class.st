@@ -1,13 +1,11 @@
 Class {
-	#name : #AlbEditorModel,
+	#name : #AlbEditorViewModel,
 	#superclass : #OBlViewModel,
 	#traits : 'TObservable',
 	#classTraits : 'TObservable classTrait',
 	#instVars : [
 		'#text => ObservableSlot',
 		'#mode => ObservableSlot',
-		'#hasUnacceptedEdits',
-		'#fontName',
 		'#shortcuts',
 		'#editorEventHandler',
 		'#wordStencil',
@@ -17,108 +15,85 @@ Class {
 }
 
 { #category : #testing }
-AlbEditorModel >> allowSelection [ 
-	^ mode allowSelection  
+AlbEditorViewModel >> allowSelection [
+
+	^ mode allowSelection
 ]
 
 { #category : #accessing }
-AlbEditorModel >> beEditable [
+AlbEditorViewModel >> beEditable [
 
-	mode := AlbEditableMode new
+	self mode: AlbEditableMode new
 ]
 
 { #category : #accessing }
-AlbEditorModel >> beReadonlyWithSelection [
+AlbEditorViewModel >> beReadonlyWithSelection [
 
-	mode := AlbReadonlyWithSelectionMode new
+	self mode: AlbReadonlyWithSelectionMode new
 ]
 
 { #category : #accessing }
-AlbEditorModel >> beReadonlyWithoutSelection [
+AlbEditorViewModel >> beReadonlyWithoutSelection [
 
-	mode := AlbReadonlyWithoutSelectionMode new
+	self mode: AlbReadonlyWithoutSelectionMode new
 ]
 
 { #category : #initialization }
-AlbEditorModel >> defaultEditorElementEventHandlers [
+AlbEditorViewModel >> defaultEditorElementEventHandlers [
 
 	^ self mode defaultEditorElementEventHandlers
 ]
 
 { #category : #initialization }
-AlbEditorModel >> defaultFontName [
-	^ nil
-]
-
-{ #category : #initialization }
-AlbEditorModel >> defaultMode [
+AlbEditorViewModel >> defaultMode [
 
 	^ AlbEditableMode new
 ]
 
 { #category : #initialization }
-AlbEditorModel >> defaultSelectionView [
+AlbEditorViewModel >> defaultSelectionView [
 
 	^ self mode defaultSelectionView
 ]
 
 { #category : #accessing }
-AlbEditorModel >> defaultShortcuts [
+AlbEditorViewModel >> defaultShortcuts [
+
 	^ mode defaultShortcuts
 ]
 
 { #category : #initialization }
-AlbEditorModel >> defaultText [
+AlbEditorViewModel >> defaultText [
 
 	^ '' asRopedText
 ]
 
 { #category : #initialization }
-AlbEditorModel >> defaultWordStencil [
+AlbEditorViewModel >> defaultWordStencil [
 
 	^ mode defaultWordStencil
 ]
 
+{ #category : #initialization }
+AlbEditorViewModel >> editorElementDo: aBlock [
+
+	self announce: (AlbActionRequiredFromEditorElement new
+			 valuable: aBlock;
+			 yourself)
+]
+
 { #category : #accessing }
-AlbEditorModel >> elementEventHandlersDo: aBlock [
+AlbEditorViewModel >> elementEventHandlersDo: aBlock [
 
 	elementEventHandlers ifNotNil: [ elementEventHandlers do: aBlock ]
 ]
 
-{ #category : #accessing }
-AlbEditorModel >> fontName [
-
-	^ fontName 
-]
-
-{ #category : #accessing }
-AlbEditorModel >> fontName: aFontName [
-
-	fontName := aFontName
-]
-
-{ #category : #accessing }
-AlbEditorModel >> hasUnacceptedEdits [
-
-	^ hasUnacceptedEdits ifNil: [ hasUnacceptedEdits := false ]
-]
-
-{ #category : #accessing }
-AlbEditorModel >> hasUnacceptedEdits: aBoolean [
-
-	hasUnacceptedEdits = aBoolean ifTrue: [ ^ self ].
-	hasUnacceptedEdits := aBoolean.
-	self announce: (AlbEditsStateChangedInModel new viewModel: self)
-]
-
 { #category : #initialization }
-AlbEditorModel >> initialize [
+AlbEditorViewModel >> initialize [
 
 	self class initializeSlots: self.
 	super initialize.
 
-	" fontName must be initialize before text "
-	fontName := self defaultFontName.
 	mode := self defaultMode.
 	text := self defaultText.
 	wordStencil := self defaultWordStencil.
@@ -127,30 +102,39 @@ AlbEditorModel >> initialize [
 	self whenModeChangedDo: [ :m | self modeChanged ].
 		
 	" action when  text change (Observable slot) "
-	self whenTextChangedDo: [ :t | self textChanged ]
+	self whenTextChangedDo: [ :t | self textChanged ].
 ]
 
 { #category : #testing }
-AlbEditorModel >> isEditable [
-	^ mode isEditable 
+AlbEditorViewModel >> isEditable [
+
+	^ mode isEditable
 ]
 
 { #category : #testing }
-AlbEditorModel >> isReadOnly [
-	^ mode isReadOnly 
+AlbEditorViewModel >> isReadOnly [
+
+	^ mode isReadOnly
 ]
 
 { #category : #accessing }
-AlbEditorModel >> mode [
+AlbEditorViewModel >> mode [
 
 	^ mode
 ]
 
+{ #category : #accessing }
+AlbEditorViewModel >> mode: anEditabilityMode [
+
+	mode = anEditabilityMode ifTrue: [ ^ self ].
+	mode := anEditabilityMode
+]
+
 { #category : #initialization }
-AlbEditorModel >> modeChanged [
+AlbEditorViewModel >> modeChanged [
 
 	wordStencil := self defaultWordStencil.
-	self withEditorElementDo: [ :element | 
+	self editorElementDo: [ :element | 
 			 element editor whenEditionModeChanged: self mode.
 			 self setupEventHandlersForElement: element.
 			 self setupShortcutsInTextEditor: element editor.
@@ -158,31 +142,27 @@ AlbEditorModel >> modeChanged [
 ]
 
 { #category : #'api - hooks' }
-AlbEditorModel >> onInstalledIn: anElement [
+AlbEditorViewModel >> onInstalledIn: anElement [
 
 	"Is sent when I am added to an element "
 
 	super onInstalledIn: anElement.
 
 	anElement selectionView: self defaultSelectionView.
-
 	self when: AlbActionRequiredFromEditorElement send: #whenActionRequired: to: anElement.
-
 	" element related event handlers "
 	self setupEventHandlersForElement: anElement.
-
 	" editor related event handler: text insertion/deletion "
 	editorEventHandler := BlEventHandler
 		                      on: AlbTextModifiedEvent
 		                      do: [ :anEvent | self textModifiedByTextEditor ].
 	anElement editor addEventHandler: editorEventHandler.
-
 	" current mode compatible shortcuts "
 	self setupShortcutsInTextEditor: anElement editor
 ]
 
 { #category : #'api - hooks' }
-AlbEditorModel >> onUninstalledIn: anElement [
+AlbEditorViewModel >> onUninstalledIn: anElement [
 
 	"Is sent when I am removed from an element "
 
@@ -197,26 +177,13 @@ AlbEditorModel >> onUninstalledIn: anElement [
 ]
 
 { #category : #'api-transaction' }
-AlbEditorModel >> requestSave [
+AlbEditorViewModel >> requestSave [
 
-	self announce: (AlbSaveRequested new viewModel: self).
-	self saveResult: true
-]
-
-{ #category : #'api-transaction' }
-AlbEditorModel >> saveResult: aBoolean [
-
-	| announcement |
-	self hasUnacceptedEdits: aBoolean not.
-	announcement := aBoolean
-		                ifTrue: [ AlbSaveAccepted new ]
-		                ifFalse: [ AlbSaveDenied new ].
-	self announce: (announcement viewModel: self).
-
+	self announce: (AlbSaveRequested new viewModel: self)
 ]
 
 { #category : #'api - hooks' }
-AlbEditorModel >> setupEventHandlersForElement: anElement [
+AlbEditorViewModel >> setupEventHandlersForElement: anElement [
 	
 	self elementEventHandlersDo: [ :e | anElement removeEventHandler: e ].
 	elementEventHandlers := self defaultEditorElementEventHandlers.
@@ -228,7 +195,7 @@ AlbEditorModel >> setupEventHandlersForElement: anElement [
 ]
 
 { #category : #'api - hooks' }
-AlbEditorModel >> setupShortcutsInTextEditor: aTextEditor [
+AlbEditorViewModel >> setupShortcutsInTextEditor: aTextEditor [
 
 	self shortcutsDo: [ :eachShortcut | aTextEditor removeEditorShortcut: eachShortcut ].
 	shortcuts := self defaultShortcuts.
@@ -237,47 +204,46 @@ AlbEditorModel >> setupShortcutsInTextEditor: aTextEditor [
 ]
 
 { #category : #accessing }
-AlbEditorModel >> shortcuts [
+AlbEditorViewModel >> shortcuts [
 
 	^ shortcuts
 ]
 
 { #category : #accessing }
-AlbEditorModel >> shortcutsDo: aBlock [
+AlbEditorViewModel >> shortcutsDo: aBlock [
 
 	shortcuts ifNotNil: [ shortcuts do: aBlock ]
 ]
 
 { #category : #accessing }
-AlbEditorModel >> text [
+AlbEditorViewModel >> text [
 
 	^ text
 ]
 
 { #category : #accessing }
-AlbEditorModel >> text: aText [
+AlbEditorViewModel >> text: aText [
 
 	| t |
 	t := aText.
-	fontName ifNotNil: [ t fontName: self fontName ].
 	text = t ifTrue: [ ^ self ].
 	text := t
 ]
 
 { #category : #initialization }
-AlbEditorModel >> textChanged [
+AlbEditorViewModel >> textChanged [
 
-	self withEditorElementDo: [ :element | element editor whenTextChanged: self text ]
+	self editorElementDo: [ :element | element editor whenTextChanged: self text ]
 ]
 
 { #category : #'api - hooks' }
-AlbEditorModel >> textModifiedByTextEditor [
+AlbEditorViewModel >> textModifiedByTextEditor [
 
-	self hasUnacceptedEdits: true
+	self announce: AlbTextModifiedByEditor new
 ]
 
 { #category : #'slot - change hook' }
-AlbEditorModel >> whenModeChangedDo: aBlock [
+AlbEditorViewModel >> whenModeChangedDo: aBlock [
 
 	"set a block to perform after that the mode has been chanbed, and its action performed"
 
@@ -285,30 +251,22 @@ AlbEditorModel >> whenModeChangedDo: aBlock [
 ]
 
 { #category : #'slot - change hook' }
-AlbEditorModel >> whenTextChangedDo: aBlock [
+AlbEditorViewModel >> whenTextChangedDo: aBlock [
 
 	"set a block to perform after that the text has been chanbed, and its action performed"
 
 	self property: #text whenChangedDo: aBlock
 ]
 
-{ #category : #initialization }
-AlbEditorModel >> withEditorElementDo: aBlock [
-
-	self announce: (AlbActionRequiredFromEditorElement new
-			 valuable: aBlock;
-			 yourself)
-]
-
 { #category : #accessing }
-AlbEditorModel >> wordStencil [
+AlbEditorViewModel >> wordStencil [
 
 	<return: #AlbTextWordPieceStencil>
 	^ wordStencil
 ]
 
 { #category : #accessing }
-AlbEditorModel >> wordStencil: aWordStencil [
+AlbEditorViewModel >> wordStencil: aWordStencil [
 
 	wordStencil := aWordStencil
 ]

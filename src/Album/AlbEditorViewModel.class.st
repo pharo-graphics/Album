@@ -1,7 +1,6 @@
 Class {
 	#name : #AlbEditorViewModel,
 	#superclass : #OBlViewModel,
-	#traits : 'TObservable',
 	#classTraits : 'TObservable classTrait',
 	#instVars : [
 		'#text => ObservableSlot',

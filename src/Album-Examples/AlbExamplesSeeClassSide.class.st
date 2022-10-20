@@ -494,7 +494,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
 
 	| element l |
-	l := AlbTextScissor new cut: String loremIpsum asRopedText.
+	l := ToTextScissor new cut: String loremIpsum asRopedText.
 
 	element := BlElement new
 		           layout: AlbLineFlowLayout new;
@@ -509,7 +509,7 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel [
 AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel0 [
 
 	| element l |
-	l := AlbTextScissor new cut: ('This is a text' asRopedText fontSize: 20).
+	l := ToTextScissor new cut: ('This is a text' asRopedText fontSize: 20).
 
 	element := BlElement new
 		           layout: AlbLineFlowLayout new;
@@ -526,7 +526,7 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel0 [
 AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel2 [
 
 	| element l |
-	l := AlbTextScissor new cut: (('Default font and size' asRopedText, ('Source code pro 40 bold' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
+	l := ToTextScissor new cut: (('Default font and size' asRopedText, ('Source code pro 40 bold' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
 	 , (' Default font 30' asRopedText fontSize: 30))).
 
 	element := BlElement new
@@ -558,7 +558,7 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel3 [
 		itor nextLineIndicesDo: [ :aLineStart :aLineEnd :aLineDelimiterEnd | 
 			| sub cutted lineElement |
 			sub := text from: aLineStart to: aLineEnd.
-			cutted := AlbTextScissor new cut: sub.
+			cutted := ToTextScissor new cut: sub.
 			lineElement := BlElement new
 				               layout: AlbLineFlowLayout new;
 				               constraintsDo: [ :c | 
@@ -578,15 +578,15 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel4 [
 
 	root := BlElement new
 		        constraintsDo: [ :c | 
-			        c vertical matchParent.
-			        c horizontal matchParent ];
+			        c vertical fitContent.
+			        c horizontal fitContent ];
 		        layout: BlLinearLayout vertical.
 	itor := text iterator.
 	[ itor hasNext ] whileTrue: [ 
 		itor nextLineIndicesDo: [ :aLineStart :aLineEnd :aLineDelimiterEnd | 
 			| sub cutted lineElement |
 			sub := text from: aLineStart to: aLineEnd.
-			cutted := AlbTextScissor new cut: sub.
+			cutted := ToTextScissor new cut: sub.
 			cutted ifEmpty: [ 
 				cutted := Array with:
 					          (BlText empty attributes: sub iterator attributes) ].
@@ -619,7 +619,7 @@ AlbExamplesSeeClassSide class >> example_ExperimentForMultilineLabel5 [
 		itor nextLineIndicesDo: [ :aLineStart :aLineEnd :aLineDelimiterEnd | 
 			| sub cutted lineElement |
 			sub := text from: aLineStart to: aLineEnd.
-			cutted := AlbTextScissor new cut: sub.
+			cutted := ToTextScissor new cut: sub.
 			cutted ifEmpty: [ 
 				cutted := Array with:
 					          (BlText empty attributes: sub iterator attributes) ].

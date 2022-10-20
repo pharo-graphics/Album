@@ -154,7 +154,7 @@ AlbEditorViewModel >> onInstalledIn: anElement [
 	" editor related event handler: text insertion/deletion "
 	editorEventHandler := BlEventHandler
 		                      on: AlbTextModifiedEvent
-		                      do: [ :anEvent | self textModifiedByTextEditor ].
+		                      do: [ :anEvent | self whenTextModifiedByTextEditor: anEvent].
 	anElement editor addEventHandler: editorEventHandler.
 	" current mode compatible shortcuts "
 	self setupShortcutsInTextEditor: anElement editor
@@ -235,12 +235,6 @@ AlbEditorViewModel >> textChanged [
 	self editorElementDo: [ :element | element editor whenTextChanged: self text ]
 ]
 
-{ #category : #'api - hooks' }
-AlbEditorViewModel >> textModifiedByTextEditor [
-
-	self announce: AlbTextModifiedByEditor new
-]
-
 { #category : #'slot - change hook' }
 AlbEditorViewModel >> whenModeChangedDo: aBlock [
 
@@ -255,6 +249,12 @@ AlbEditorViewModel >> whenTextChangedDo: aBlock [
 	"set a block to perform after that the text has been chanbed, and its action performed"
 
 	self property: #text whenChangedDo: aBlock
+]
+
+{ #category : #'api - hooks' }
+AlbEditorViewModel >> whenTextModifiedByTextEditor: aTextModifiedEvent [
+
+	self announce: (AlbTextModifiedByEditor new text: aTextModifiedEvent text)
 ]
 
 { #category : #accessing }

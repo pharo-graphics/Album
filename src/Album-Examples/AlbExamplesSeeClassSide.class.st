@@ -120,51 +120,11 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 ]
 
 { #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_CodeEditorWithRBScannerStylerWithDresser [
-
-	| ed |
-	ed := self example_CodeEditorWithRBStylerWithDresser.
-	ed viewModel stylerHolder styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro')
-]
-
-{ #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_CodeEditorWithRBStylerWithDresser [
-
-	| text album space vscrollBar |
-	text := self methodText asRopedText.
-
-	album := ToAlbum new.
-	album viewModel text: text.
-	album viewModel classOrMetaClass: self class.
-	album withLineNumbers.
-	
-	"album editorElement editor inspect."
-	"album editorElement selectionView inspect."
-	"album editorElement viewModel inspect."
-	"album editorElement viewModel stylerHolder inspect."
-
-	"vscrollBar := BlVerticalScrollbarElement new.
-	vscrollBar constraintsDo: [ :c | 
-		c ignoreByLayout.
-		c margin: (BlInsets right: 2).
-		c ignored horizontal alignRight.
-		c ignored vertical alignBottom ].
-	vscrollBar attachTo: album editorElement."
-	"album addChild: vscrollBar." 
-	space := OBlSpace new.
-	space root addChild: album.
-	space show.
-	^ album
-
-
-]
-
-{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
 
 	| ed space hscrollBar |
 
-	ed := AlbEditorElement new dresser: AlbTextAreaDresser.
+	ed := AlbEditorElement new dresser: AlbTextAreaDresser new.
 	ed viewModel inspect.
 	ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer matchParent. 
@@ -730,11 +690,6 @@ AlbExamplesSeeClassSide class >> glyphWidth [
 { #category : #'instance creation' }
 AlbExamplesSeeClassSide class >> lineSpacing [
 	^ 5
-]
-
-{ #category : #accessing }
-AlbExamplesSeeClassSide class >> methodText [
-	^ self  class sourceCodeAt: #example_CodeEditorWithRBStylerWithDresser
 ]
 
 { #category : #'instance creation' }

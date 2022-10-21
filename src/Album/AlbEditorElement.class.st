@@ -70,15 +70,15 @@ AlbEditorElement >> cursors [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaulEditorModel [
-
-	^ AlbEditorViewModel new.
-]
-
-{ #category : #initialization }
 AlbEditorElement >> defaulTextEditor [
 
 	^ AlbTextEditor new.
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaulViewModel [
+
+	^ AlbEditorViewModel new.
 ]
 
 { #category : #initialization }
@@ -187,7 +187,8 @@ AlbEditorElement >> initialize [
 	cursorStencil := AlbCursorStencil new.
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
-	self viewModel: self defaulEditorModel.
+	self viewModel: self defaulViewModel.
+	self editor privateText: self viewModel text.
 	self matchParent
 ]
 
@@ -289,6 +290,7 @@ AlbEditorElement >> segments [
 
 { #category : #'editor - accessing' }
 AlbEditorElement >> selectedText [
+
 	^ self editor selectedText
 ]
 
@@ -378,12 +380,6 @@ AlbEditorElement >> text [
 AlbEditorElement >> text: aBlText [
 
 	self viewModel text: aBlText asRopedText
-]
-
-{ #category : #'model - events' }
-AlbEditorElement >> textChanged: aText [
-
-	self editor privateText: aText
 ]
 
 { #category : #'private - accessing' }

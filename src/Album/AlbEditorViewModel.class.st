@@ -224,8 +224,8 @@ AlbEditorViewModel >> text [
 AlbEditorViewModel >> text: aText [
 
 	| t |
-	t := aText.
-	text = t ifTrue: [ ^ self ].
+	t := aText asRopedText.
+	text == t ifTrue: [ ^ self ].
 	text := t
 ]
 

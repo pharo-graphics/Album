@@ -689,7 +689,7 @@ AlbTextEditor >> privateText: aText [
 
 	" public text change must be done by the element viewModel "
 	| t |
-	t := aText asRopedText.
+	t := aText.
 	"when reducing the text size we should update the selection and cursor positions"
 	t size < text size ifTrue: [ 
 		self navigator

@@ -27,12 +27,13 @@ AlbStylerHolder >> fontName: aFontName [
 
 { #category : #initialization }
 AlbStylerHolder >> initialize [
-
+	
 	self class initializeSlots: self.
 	super initialize.
+	
 	announcer := Announcer new.
-	self whenUnstyledTextChangedDo: [ 
-		self launchTextStyle ]
+	.
+	self whenUnstyledTextChangedDo: [ self launchTextStyle ]
 ]
 
 { #category : #styling }
@@ -95,6 +96,20 @@ AlbStylerHolder >> whenStyledTextChangedDo: aBlock [
 	"set a block to perform after that the mode has been chanbed, and its action performed"
 
 	self property: #styledText whenChangedDo: aBlock
+]
+
+{ #category : #'api - styler hook' }
+AlbStylerHolder >> whenStylerStateChanged: aBlStylerStateChangedAnnouncement [
+
+	"the internal configuration of the styler has changed"
+
+	self requestTextStyle
+]
+
+{ #category : #'api - text style' }
+AlbStylerHolder >> whenTextStyleRequested: aTBlTextStyleRequested [
+
+	self launchStyle: aTBlTextStyleRequested unstyledText in: aTBlTextStyleRequested element
 ]
 
 { #category : #'api - styler hook' }

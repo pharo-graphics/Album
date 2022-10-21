@@ -88,12 +88,6 @@ AlbEditorElement >> defaultBackground [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaultCodeFontName [
-
-	^ BlFont defaultFontName
-]
-
-{ #category : #initialization }
 AlbEditorElement >> defaultLayout [
 
 	^ OBlInfiniteLinearLayout vertical

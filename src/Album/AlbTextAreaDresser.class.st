@@ -8,7 +8,6 @@ Class {
 AlbTextAreaDresser >> onInstalledIn: anElement [
 
 	super onInstalledIn: anElement.
-
 	anElement
 		when: BlBlurEvent
 		do: [ :anEvent | 
@@ -20,7 +19,7 @@ AlbTextAreaDresser >> onInstalledIn: anElement [
 		do: [ :anEvent | 
 			anElement widgetContent border: (BlBorder
 					 paint: anElement theme editor focusedBorderColor
-					 width: 1) ].
+					 width: 2) ].
 
 	anElement border: (BlBorder
 			 paint: anElement theme editor borderColor

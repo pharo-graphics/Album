@@ -15,14 +15,13 @@ AlbLineNumberDecoration >> aeDraw: anItemElement overOn: aeCanvas in: anInfinite
 	| holder index cairoScaledFont cairoGlyphsArray fontExtents |
 	super aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement.
 	aeCanvas restoreContextAfter: [ 
-		aeCanvas pathTranslate:
-			self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top.
+		aeCanvas pathTranslate: self computedBounds left - anInfiniteElement border width @ anItemElement bounds inParent top.
 		holder := anInfiniteElement childHolderOf: anItemElement.
 		index := holder layoutPosition.
 
 		cairoScaledFont := self aeCairoScaledFontOn: aeCanvas.
 		fontExtents := cairoScaledFont extents.
-		aeCanvas pathTranslate: 4 @ fontExtents ascent.
+		aeCanvas pathTranslate: 6 @ fontExtents ascent.
 		aeCanvas setSourceColor: Color gray darker.
 		cairoGlyphsArray := cairoScaledFont glyphArrayFor: index asString.
 		aeCanvas drawText: cairoGlyphsArray font: cairoScaledFont ]

@@ -104,7 +104,7 @@ AlbEditorElement >> defaultPaddings [
 
 	^ BlInsets
 		  top: 5
-		  left: 1
+		  left: 3
 		  bottom: 5
 		  right: 5
 ]
@@ -189,7 +189,9 @@ AlbEditorElement >> initialize [
 	self editor: self defaulTextEditor.
 	self viewModel: self defaulViewModel.
 	self editor privateText: self viewModel text.
-	self matchParent
+	self matchParent.
+	self margin: (BlInsets all: 10).
+
 ]
 
 { #category : #'api - editor' }

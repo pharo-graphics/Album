@@ -12,7 +12,8 @@ AlbCursorElement >> initialize [
 	super initialize.
 	
 	textPosition := 0.
-	self focusability: BlFocusability none
+	self focusability: BlFocusability none.
+	self elevation: (BlRelativeElevation elevation: 10000).
 ]
 
 { #category : #accessing }

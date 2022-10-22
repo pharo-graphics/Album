@@ -4,12 +4,6 @@ Class {
 	#category : #'Album-Model'
 }
 
-{ #category : #testing }
-AlbEditableMode >> allowSelection [
-
-	^ true
-]
-
 { #category : #initialization }
 AlbEditableMode >> defaultEditorElementEventHandlers [
 
@@ -64,10 +58,4 @@ AlbEditableMode >> defaultShortcuts [
 AlbEditableMode >> defaultWordStencil [ 
 
 	^ AlbTextWordPieceStencil editable
-]
-
-{ #category : #testing }
-AlbEditableMode >> isEditable [
-
-	^ true
 ]

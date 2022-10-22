@@ -13,12 +13,6 @@ Class {
 	#category : #'Album-Model'
 }
 
-{ #category : #testing }
-AlbEditorViewModel >> allowSelection [
-
-	^ mode allowSelection
-]
-
 { #category : #accessing }
 AlbEditorViewModel >> beEditable [
 
@@ -102,18 +96,6 @@ AlbEditorViewModel >> initialize [
 		
 	" action when  text change (Observable slot) "
 	self whenTextChangedDo: [ :t | self textChanged ].
-]
-
-{ #category : #testing }
-AlbEditorViewModel >> isEditable [
-
-	^ mode isEditable
-]
-
-{ #category : #testing }
-AlbEditorViewModel >> isReadOnly [
-
-	^ mode isReadOnly
 ]
 
 { #category : #accessing }

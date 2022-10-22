@@ -4,12 +4,6 @@ Class {
 	#category : #'Album-Model'
 }
 
-{ #category : #testing }
-AlbReadonlyWithoutSelectionMode >> allowSelection [
-
-	^ false
-]
-
 { #category : #initialization }
 AlbReadonlyWithoutSelectionMode >> defaultEditorElementEventHandlers [
 
@@ -27,10 +21,4 @@ AlbReadonlyWithoutSelectionMode >> defaultSelectionView [
 AlbReadonlyWithoutSelectionMode >> defaultShortcuts [
 
 	^ {  }
-]
-
-{ #category : #testing }
-AlbReadonlyWithoutSelectionMode >> isEditable [
-
-	^ false
 ]

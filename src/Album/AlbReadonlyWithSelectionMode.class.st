@@ -4,12 +4,6 @@ Class {
 	#category : #'Album-Model'
 }
 
-{ #category : #testing }
-AlbReadonlyWithSelectionMode >> allowSelection [
-
-	^ true
-]
-
 { #category : #initialization }
 AlbReadonlyWithSelectionMode >> defaultEditorElementEventHandlers [
 
@@ -29,10 +23,4 @@ AlbReadonlyWithSelectionMode >> defaultShortcuts [
 		  AlbEditorSelectAllShortcut new.
 		  AlbEditorRemanentSelectionShortcut new.
 		  AlbEditorDeselectAllShortcut new }
-]
-
-{ #category : #testing }
-AlbReadonlyWithSelectionMode >> isEditable [
-
-	^ false
 ]

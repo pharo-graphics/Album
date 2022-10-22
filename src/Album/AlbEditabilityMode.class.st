@@ -4,12 +4,6 @@ Class {
 	#category : #'Album-Model'
 }
 
-{ #category : #testing }
-AlbEditabilityMode >> allowSelection [
-
-	^ self subclassResponsibility 
-]
-
 { #category : #initialization }
 AlbEditabilityMode >> defaultEditorElementEventHandlers [
 
@@ -32,22 +26,4 @@ AlbEditabilityMode >> defaultShortcuts [
 AlbEditabilityMode >> defaultWordStencil [ 
 
 	^ AlbTextWordPieceStencil readOnly
-]
-
-{ #category : #testing }
-AlbEditabilityMode >> forbidSelection [
-
-	^ self allowSelection not
-]
-
-{ #category : #testing }
-AlbEditabilityMode >> isEditable [
-
-	^self subclassResponsibility 
-]
-
-{ #category : #testing }
-AlbEditabilityMode >> isReadOnly [
-
-	^ self isEditable not
 ]

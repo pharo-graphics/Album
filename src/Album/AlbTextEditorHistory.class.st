@@ -74,14 +74,7 @@ AlbTextEditorHistory >> groupDuring: aBlock [
 AlbTextEditorHistory >> initialize [
 	super initialize.
 	
-	undoCommands := OrderedCollection new.
-	redoCommands := OrderedCollection new.
-
-	isEnabled := true.
-	
-	"when set to false all commands are added individually, otherwise they end up in a composite group"
-	shouldGroup := false.
-	currentGroup := AlbTextEditorHistoryCompositeCommand new
+	self setUpToStart 
 ]
 
 { #category : #'api - history' }
@@ -96,6 +89,19 @@ AlbTextEditorHistory >> insertedStrings: aCollectionOfStrings undo: aCollectionO
 AlbTextEditorHistory >> redoOn: aTextEditor [
 	redoCommands ifNotEmpty: [ :theCommands |
 		self disableDuring: [ undoCommands add: (theCommands removeLast redoOn: aTextEditor) ] ]
+]
+
+{ #category : #initialization }
+AlbTextEditorHistory >> setUpToStart [
+
+	undoCommands := OrderedCollection new.
+	redoCommands := OrderedCollection new.
+
+	isEnabled := true.
+	
+	"when set to false all commands are added individually, otherwise they end up in a composite group"
+	shouldGroup := false.
+	currentGroup := AlbTextEditorHistoryCompositeCommand new
 ]
 
 { #category : #'api - undo/redo' }

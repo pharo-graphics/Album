@@ -5,9 +5,9 @@ Class {
 	#instVars : [
 		'#text => ObservableSlot',
 		'#mode => ObservableSlot',
+		'#wordStencil',
 		'#shortcuts',
 		'#editorEventHandler',
-		'#wordStencil',
 		'#elementEventHandlers'
 	],
 	#category : #'Album-Model'
@@ -155,12 +155,6 @@ AlbEditorViewModel >> onUninstalledIn: anElement [
 	shortcuts := nil.
 	editorEventHandler := nil.
 	elementEventHandlers := nil
-]
-
-{ #category : #'api-transaction' }
-AlbEditorViewModel >> requestSave [
-
-	self announce: (AlbSaveRequested new viewModel: self)
 ]
 
 { #category : #'api - hooks' }

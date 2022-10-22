@@ -195,7 +195,6 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	ed text: text.
 	ed withoutCacheLimit.
 	ed withLineNumbers.
-	ed viewModel stylerHolder styler: (BlRBScannerTextStyler new fontName: 'Source Code Pro').
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.

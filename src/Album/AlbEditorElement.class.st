@@ -423,12 +423,6 @@ AlbEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do
 			aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'model - events' }
-AlbEditorElement >> textSaveRequested [
-
-	self viewModel requestSave
-]
-
 { #category : #'editor - accessing' }
 AlbEditorElement >> textSnapshot [
 	"Return a snaphost (copy) of the current text.

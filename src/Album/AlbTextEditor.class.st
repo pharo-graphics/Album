@@ -842,14 +842,6 @@ AlbTextEditor >> saveState: aTextEditorMemento [
 	^ aTextEditorMemento saveStateOf: self
 ]
 
-{ #category : #'model protocol' }
-AlbTextEditor >> saveTextRequest [
-
-	" this announce is received in my EditorElement which then communicate with its viewModel "
-
-	self dispatchEvent: AlbTextSaveRequested new
-]
-
 { #category : #accessing }
 AlbTextEditor >> segmentCollector [
 	<return: #AlbTextEditorSegmentCollector>

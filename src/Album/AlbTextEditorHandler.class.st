@@ -11,8 +11,7 @@ AlbTextEditorHandler >> eventsToHandle [
 		  AlbShortcutAddedEvent.
 		  AlbShortcutRemovedEvent.
 		  AlbTextReplacedEvent.
-		  AlbTextModifiedEvent.
-		  AlbTextSaveRequested }
+		  AlbTextModifiedEvent }
 ]
 
 { #category : #'event handling' }
@@ -38,10 +37,4 @@ AlbTextEditorHandler >> textModifiedEvent: anEvent [
 AlbTextEditorHandler >> textReplacedEvent: anEvent [
 
 	element text: anEvent text
-]
-
-{ #category : #'event handling' }
-AlbTextEditorHandler >> textSaveRequestedEvent: anEvent [
-
-	element textSaveRequested
 ]

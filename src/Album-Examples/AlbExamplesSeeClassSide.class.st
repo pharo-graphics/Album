@@ -665,12 +665,12 @@ AlbExamplesSeeClassSide class >> example_elements_sandbox [
 	root := BlElement new background: Color cyan.
 	child1 := BlElement new background: Color yellow.
 	child2 := BlElement new background: Color gray.
-	root layout: BlFlowLayout new.
+	root layout: BlLinearLayout vertical.
 	root addChild: child1.
 	root addChild: child2.
 	root constraintsDo: [ :c |
-			c horizontal matchParent.
-			c vertical matchParent ].
+			c horizontal fitContent .
+			c vertical fitContent ].
 	sp := OBlSpace new.
 	sp addChild: root.
 	sp show

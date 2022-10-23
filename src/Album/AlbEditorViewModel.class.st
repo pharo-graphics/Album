@@ -136,7 +136,7 @@ AlbEditorViewModel >> onInstalledIn: anElement [
 	" editor related event handler: text insertion/deletion "
 	editorEventHandler := BlEventHandler
 		                      on: AlbTextModifiedEvent
-		                      do: [ :anEvent | self whenTextModifiedByTextEditor: anEvent].
+		                      do: [ :anEvent | self whenTextModified: anEvent].
 	anElement editor addEventHandler: editorEventHandler.
 	" current mode compatible shortcuts "
 	self setupShortcutsInTextEditor: anElement editor
@@ -228,7 +228,7 @@ AlbEditorViewModel >> whenTextChangedDo: aBlock [
 ]
 
 { #category : #'api - hooks' }
-AlbEditorViewModel >> whenTextModifiedByTextEditor: aTextModifiedEvent [
+AlbEditorViewModel >> whenTextModified: aTextModifiedEvent [
 
 	self announce: (AlbTextModifiedByEditor new text: aTextModifiedEvent text)
 ]

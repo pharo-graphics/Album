@@ -76,12 +76,6 @@ AlbEditorElement >> defaulTextEditor [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaulViewModel [
-
-	^ AlbEditorViewModel new.
-]
-
-{ #category : #initialization }
 AlbEditorElement >> defaultBackground [
 
 	^ BlBackground paint: Color white
@@ -112,6 +106,12 @@ AlbEditorElement >> defaultRecycler [
 AlbEditorElement >> defaultSystemFontName [
 
 	^ 'Source Code Pro'"AeFontManager defaultFontFamilyName"
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultViewModel [
+
+	^ AlbEditorViewModel new.
 ]
 
 { #category : #'editor - operations' }
@@ -181,7 +181,7 @@ AlbEditorElement >> initialize [
 	cursorStencil := AlbCursorStencil new.
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
-	self viewModel: self defaulViewModel.
+	self viewModel: self defaultViewModel.
 	self editor privateText: self viewModel text.
 	self matchParent.
 	self margin: (BlInsets all: 10).
@@ -206,6 +206,22 @@ AlbEditorElement >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
 	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
 	self editor layoutPositionsRange: anInterval
+]
+
+{ #category : #'model accessing' }
+AlbEditorElement >> mode [
+
+	<return: #BlText>
+
+	^ self viewModel mode
+]
+
+{ #category : #'model accessing' }
+AlbEditorElement >> mode: anEditabilityMode [
+
+	<return: #BlText>
+
+	self viewModel mode: anEditabilityMode
 ]
 
 { #category : #'ui - events managing' }
@@ -364,7 +380,7 @@ AlbEditorElement >> subTextOnScreenInterval [
 
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'model accessing' }
 AlbEditorElement >> text [
 	"Return a text I work with. All modifications to a text must be done from UI thread"
 	<return: #BlText>
@@ -372,7 +388,7 @@ AlbEditorElement >> text [
 	^ self viewModel text
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'model accessing' }
 AlbEditorElement >> text: aBlText [
 
 	self viewModel text: aBlText asRopedText

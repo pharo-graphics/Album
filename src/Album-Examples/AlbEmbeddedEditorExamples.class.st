@@ -20,8 +20,7 @@ AlbEmbeddedEditorExamples >> editorFor: aText [
 	
 	BlDevCrossover on: anEditor.
 	
-	anEditor editor
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
+	anEditor 	wordStencil: [ :aTAlbTextEditorTextualPiece |
 			| aTextElement |
 			aTextElement := AlbTextWordPieceStencil editable
 				segmentPiece: aTAlbTextEditorTextualPiece;

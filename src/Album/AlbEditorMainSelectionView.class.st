@@ -214,7 +214,7 @@ AlbEditorMainSelectionView >> terminateRemanentsUpdater [
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorMainSelectionView >> textModifiedIn: anInfiniteElement [
+AlbEditorMainSelectionView >> textEditedIn: anInfiniteElement [
 
 	self updateRemanentsIn: anInfiniteElement
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditableMode,
 	#superclass : #AlbEditabilityMode,
-	#category : #'Album-Model'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }

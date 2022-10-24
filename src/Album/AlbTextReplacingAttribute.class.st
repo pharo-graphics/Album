@@ -18,7 +18,7 @@ AlbTextReplacingAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 	<return: #SequenceableCollection of: #BlElement>
 	| aReplacementTextElement |
 
-	aReplacementTextElement := (anEditorElement viewModel wordStencil
+	aReplacementTextElement := (anEditorElement wordStencil
 		wordPadding: padding + aTTextEditorTextualPiece wordPadding;
 		wordMargin: margin + aTTextEditorTextualPiece wordMargin;
 		segmentPiece: (self replaceTextInPiece: aTTextEditorTextualPiece)) asElement.

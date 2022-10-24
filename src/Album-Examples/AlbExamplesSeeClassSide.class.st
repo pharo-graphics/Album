@@ -120,32 +120,6 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 ]
 
 { #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithDresser [
-
-	| ed space hscrollBar |
-
-	ed := AlbEditorElement new dresser: AlbTextAreaDresser new.
-	ed viewModel inspect.
-	ed constraintsDo: [ :c | 
-		c vertical resizer: BlLayoutResizer matchParent. 
-		c horizontal resizer: BlLayoutResizer matchParent].
-	ed text: ((String loremIpsum: 10000) asRopedText "fontName: 'Source Code Pro'").
-	
-	hscrollBar := BlHorizontalScrollbarElement new.
-	hscrollBar constraintsDo: [ :c |
-			c ignoreByLayout.
-			c margin: (BlInsets bottom: 2).
-			"c ignored vertical alignLeft."
-			c ignored vertical alignBottom]. 
-	hscrollBar attachTo: ed.
-	space := OBlSpace new.
-	space root addChild: ed.
-	space root addChild: hscrollBar.
-	space show.
-	^ed
-]
-
-{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 
 	| ed space text |
@@ -191,9 +165,8 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	| ed vscrollBar space text |
 	" ~4300 pages on LibreOffice, ~8000000 characters "
 	text := Smalltalk changesFile readStream contents asRopedText.
-	ed := AlbEditorElement new dresser: AlbTextAreaDresser new.
+	ed := AlbEditorElement new .
 	ed text: text.
-	ed withoutCacheLimit.
 	ed withLineNumbers.
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
@@ -279,7 +252,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 								(String cr , String cr , String cr , fname , ' slant: ' , slant name , ' weight: ' , weight name , ' strech: '
 								 , strech name , ' ' , String cr , String cr) asRopedText.
 							text append: t ] ] ] ] ] ].
-	child := text onAlbum dresser: AlbTextAreaDresser new.
+	child := text onAlbum.
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
@@ -384,9 +357,34 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 		        c vertical matchParent.
 		        c horizontal matchParent ].
 	text := self embeddedFontsText.
-	child := text onAlbum dresser: AlbTextAreaDresser new.
+	child := text onAlbum.
 	root addChild: child.
 	root openInOblSpace
+]
+
+{ #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorWithLorem [
+
+	| ed space hscrollBar |
+
+	ed := AlbEditorElement new.
+	ed constraintsDo: [ :c | 
+		c vertical resizer: BlLayoutResizer matchParent. 
+		c horizontal resizer: BlLayoutResizer matchParent].
+	ed text: ((String loremIpsum: 10000) asRopedText "fontName: 'Source Code Pro'").
+	
+	hscrollBar := BlHorizontalScrollbarElement new.
+	hscrollBar constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets bottom: 2).
+			"c ignored vertical alignLeft."
+			c ignored vertical alignBottom]. 
+	hscrollBar attachTo: ed.
+	space := OBlSpace new.
+	space root addChild: ed.
+	space root addChild: hscrollBar.
+	space show.
+	^ed
 ]
 
 { #category : #'editor examples' }
@@ -440,7 +438,6 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 		tgcaText append: ((lrt , String cr asRopedText) fontName: 'Source Code Pro'; fontSize: 20)].
 
 	ed := tgcaText onAlbum.
-	ed dresser: AlbTextAreaDresser new.
 	ed constraintsDo: [ :c | 
 		c vertical matchParent. 
 		c horizontal fitContent].
@@ -635,7 +632,7 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
 
 	| ed space |
-	ed := AlbEditorElement new dresser: AlbTextAreaDresser new.
+	ed := AlbEditorElement new.
 	ed constraintsDo: [ :c | 
 		c horizontal fitContent.
 		c vertical fitContent ].
@@ -648,8 +645,8 @@ AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
 AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 
 	| ed space text editor |
-	text := ('Hello World') asRopedText fontSize: 40.
-	editor := AlbTextEditor new text: text.
+	text := 'Hello World' asRopedText fontSize: 40.
+	editor := AlbTextEditor new privateText: text.
 	ed := AlbEditorElement new.
 	ed withLineNumbers.
 	ed editor: editor.

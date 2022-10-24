@@ -7,16 +7,20 @@ Text editing operations are driven by my data source (called textEditor). I also
 Class {
 	#name : #AlbEditorElement,
 	#superclass : #OBlInfiniteElement,
-	#traits : 'TOBlLayoutResizable',
-	#classTraits : 'TOBlLayoutResizable classTrait',
+	#traits : 'TObservable + TOBlLayoutResizable + TBlAnnouncerProvider',
+	#classTraits : 'TObservable classTrait + TOBlLayoutResizable classTrait + TBlAnnouncerProvider classTrait',
 	#instVars : [
-		'selectionView',
-		'cursorStencil'
+		'#mode => ObservableSlot',
+		'#selectionView',
+		'#cursorStencil',
+		'#wordStencil',
+		'#modeEventHandlers',
+		'#modeShortcuts'
 	],
 	#category : #'Album-UI'
 }
 
-{ #category : #'api - editor' }
+{ #category : #'accessing - editor' }
 AlbEditorElement >> addEditorShortcut: aTextEditorInteraction [
 	self editor addEditorShortcut: aTextEditorInteraction
 ]
@@ -26,7 +30,7 @@ AlbEditorElement >> asScrollableElement [
 	^ self
 ]
 
-{ #category : #'private - accessing' }
+{ #category : #'private - view accessing' }
 AlbEditorElement >> atTextIndex: aTextIndex do: aBlock [
 
 	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
@@ -47,23 +51,41 @@ AlbEditorElement >> atTextIndex: aTextIndex do: aBlock [
 				 ifAbsent: [ ] ] ]
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'view - configuration' }
+AlbEditorElement >> beEditable [
+
+	self mode: AlbEditableMode new
+]
+
+{ #category : #'view - configuration' }
+AlbEditorElement >> beReadonlyWithSelection [
+
+	self mode: AlbReadonlyWithSelectionMode new
+]
+
+{ #category : #'view - configuration' }
+AlbEditorElement >> beReadonlyWithoutSelection [
+
+	self mode: AlbReadonlyWithoutSelectionMode new
+]
+
+{ #category : #'private - accessing editor' }
 AlbEditorElement >> cacheSize: aNumber [
 	self editor cacheSize: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - cursor' }
 AlbEditorElement >> cursor [
 	^ self editor cursor
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - cursor' }
 AlbEditorElement >> cursorStencil [
 
 	^ cursorStencil
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'private - accessing editor' }
 AlbEditorElement >> cursors [
 	<return: #AlbTextEditorCursor>
 	^ self editor cursors
@@ -88,6 +110,25 @@ AlbEditorElement >> defaultLayout [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultMode [
+
+	^ AlbEditableMode new
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultModeEventHandlers [
+
+	^ self mode defaultEditorElementEventHandlers.
+
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultModeShortcuts [
+
+	^ self mode defaultShortcuts
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultPaddings [
 
 	^ BlInsets
@@ -109,43 +150,37 @@ AlbEditorElement >> defaultSystemFontName [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaultViewModel [
+AlbEditorElement >> defaultWordStencil [
 
-	^ AlbEditorViewModel new.
+	^ mode defaultWordStencil
 ]
 
-{ #category : #'editor - operations' }
+{ #category : #'editor - operator' }
 AlbEditorElement >> deleter [
 	<return: #AlbTextEditorDeleter>
 
 	^ self editor deleter
 ]
 
-{ #category : #'editor - operations' }
+{ #category : #'editor - operator' }
 AlbEditorElement >> deselecter [
 	<return: #AlbTextEditorDeselecter>
 
 	^ self editor deselecter
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing editor' }
 AlbEditorElement >> editor [
 	<return: #AlbTextEditor>
 
 	^ self dataSource
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing editor' }
 AlbEditorElement >> editor: aTextEditor [
 
 	self dataSource: aTextEditor.
 
-]
-
-{ #category : #'editor - accessing' }
-AlbEditorElement >> editorText [
-
-	^ self editor privateText
 ]
 
 { #category : #'focus accessing' }
@@ -176,67 +211,93 @@ AlbEditorElement >> hasFocus [
 { #category : #initialization }
 AlbEditorElement >> initialize [
 
+	self class initializeSlots: self.
 	super initialize.
+
+	announcer := Announcer new.
 	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
 	self padding: self defaultPaddings.
 	self editor: self defaulTextEditor.
-	self viewModel: self defaultViewModel.
-	self editor privateText: self viewModel text.
+
+   " action when  mode change (Observable slot) "
+	self onModeChangedDo: [ :m | self modeChanged ].
+	mode := self defaultMode.
 	self matchParent.
 	self margin: (BlInsets all: 10).
 
 ]
 
-{ #category : #'api - editor' }
+{ #category : #'accessing - editor' }
 AlbEditorElement >> inputFilter: aTextEditorInputFilter [
 
 	self editor inputFilter: aTextEditorInputFilter
 ]
 
-{ #category : #'editor - operations' }
+{ #category : #'editor - operator' }
 AlbEditorElement >> inserter [
 	<return: #AlbTextEditorInserter>
 
 	^ self editor inserter
 ]
 
-{ #category : #accessing }
+{ #category : #'private - view accessing' }
 AlbEditorElement >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
 	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
 	self editor layoutPositionsRange: anInterval
 ]
 
-{ #category : #'model accessing' }
+{ #category : #'accessing - mode' }
 AlbEditorElement >> mode [
 
 	<return: #BlText>
 
-	^ self viewModel mode
+	^ mode
 ]
 
-{ #category : #'model accessing' }
+{ #category : #'accessing - mode' }
 AlbEditorElement >> mode: anEditabilityMode [
 
-	<return: #BlText>
-
-	self viewModel mode: anEditabilityMode
+	mode = anEditabilityMode ifTrue: [ ^ self ].
+	mode := anEditabilityMode
 ]
 
-{ #category : #'ui - events managing' }
+{ #category : #'view - configuration' }
+AlbEditorElement >> modeChanged [
+
+	wordStencil := self defaultWordStencil.
+	self editor whenEditionModeChanged: self mode.
+	self setupModeEventHandlers.
+	self setupModeShortcuts.
+	self selectionView: self mode defaultSelectionView
+]
+
+{ #category : #'private - accessing editor' }
+AlbEditorElement >> modeEventHandlersDo: aBlock [
+
+	modeEventHandlers ifNotNil: [ modeEventHandlers do: aBlock ]
+]
+
+{ #category : #'private - accessing editor' }
+AlbEditorElement >> modeShortcutsDo: aBlock [
+
+	modeShortcuts ifNotNil: [ modeShortcuts do: aBlock ]
+]
+
+{ #category : #'event management' }
 AlbEditorElement >> mouseDownEvent: anEvent [
 	self selectionChanged
 ]
 
-{ #category : #'editor - operations' }
+{ #category : #'editor - operator' }
 AlbEditorElement >> navigator [
 	<return: #AlbTextEditorNavigator>
 
 	^ self editor navigator
 ]
 
-{ #category : #'geometry hooks' }
+{ #category : #'hooks - geometry' }
 AlbEditorElement >> onExtentChanged [
 	super onExtentChanged.
 	self geometryChanged.
@@ -252,6 +313,14 @@ AlbEditorElement >> onLayoutDone [
 	self selectionChanged
 ]
 
+{ #category : #'view - configuration' }
+AlbEditorElement >> onModeChangedDo: aBlock [
+
+	"set a block to perform after that the mode has been chanbed, and its action performed"
+
+	self property: #mode whenChangedDo: aBlock
+]
+
 { #category : #'hooks - scrolling' }
 AlbEditorElement >> onScrolled: aPoint [
 	super onScrolled: aPoint.
@@ -261,7 +330,7 @@ AlbEditorElement >> onScrolled: aPoint [
 
 ]
 
-{ #category : #'private - accessing' }
+{ #category : #'private - view accessing' }
 AlbEditorElement >> piecesAndTheirElementsDo: aBlock [
 
 	self childrenDo: [ :segmentElement | 
@@ -280,7 +349,7 @@ AlbEditorElement >> piecesAndTheirElementsDo: aBlock [
 				 ifAbsent: [  ]) ifNotNil: [ :foundPiece | aBlock value: foundPiece value: element]]]"
 ]
 
-{ #category : #'private - accessing' }
+{ #category : #'private - view accessing' }
 AlbEditorElement >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
 
 	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
@@ -295,38 +364,38 @@ AlbEditorElement >> scrollToLast [
 	self scrollToPosition: self editor segmentCollector computedSegmentsCount
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'private - accessing editor' }
 AlbEditorElement >> segments [
 	^ self editor segmentCollector segments
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'accessing - selection' }
 AlbEditorElement >> selectedText [
 
 	^ self editor selectedText
 ]
 
-{ #category : #'editor - operations' }
+{ #category : #'editor - operator' }
 AlbEditorElement >> selecter [
 	<return: #AlbTextEditorSelecter>
 
 	^ self editor selecter
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'accessing - selection' }
 AlbEditorElement >> selection [
 	<return: #BlSelection>
 
 	^ self editor selection
 ]
 
-{ #category : #'ui - events managing' }
+{ #category : #'event management' }
 AlbEditorElement >> selectionChanged [
 
 	self selectionViewDo: [ :selView | selView selectionChangedIn: self ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - selection' }
 AlbEditorElement >> selectionColor [
 
 	^ Color
@@ -336,7 +405,7 @@ AlbEditorElement >> selectionColor [
 		  alpha: 1.0
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - selection' }
 AlbEditorElement >> selectionView: anEditorSelectionView [
 
 	anEditorSelectionView ifNotNil: [ 
@@ -347,31 +416,52 @@ AlbEditorElement >> selectionView: anEditorSelectionView [
 	selectionView := anEditorSelectionView
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - selection' }
 AlbEditorElement >> selectionViewDo: aBlock [
 	^ selectionView ifNotNil: aBlock
 ]
 
-{ #category : #'selection managing' }
+{ #category : #'private - view accessing' }
 AlbEditorElement >> setRemanents [
 
 	self selectionViewDo: [ :selView | selView setRemanentsIn: self ]
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'private - accessing editor' }
+AlbEditorElement >> setupModeEventHandlers [
+
+	self modeEventHandlersDo: [ :e | self removeEventHandler: e ].
+	modeEventHandlers := self defaultModeEventHandlers.
+	self modeEventHandlersDo: [ :e | 
+		self addEventHandler: (e
+				 element: self;
+				 yourself) ]	
+
+]
+
+{ #category : #'private - accessing editor' }
+AlbEditorElement >> setupModeShortcuts [
+
+	self modeShortcutsDo: [ :eachShortcut | self editor removeEditorShortcut: eachShortcut ].
+	modeShortcuts := self defaultModeShortcuts.
+	self modeShortcutsDo: [ :eachShortcut | self editor addEditorShortcut: eachShortcut ]
+	
+]
+
+{ #category : #'accessing - text' }
 AlbEditorElement >> subTextOnScreen [
 	
 	| interval |
 	interval := self subTextOnScreenInterval.
-	^ self editorText from: (interval first max: 1) to: (interval last max: 0)
+	^ self text from: (interval first max: 1) to: (interval last max: 0)
 
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'accessing - text' }
 AlbEditorElement >> subTextOnScreenInterval [
 	
 	| holder first last |
-	self editorText isEmpty ifTrue: [ ^ 0 to: -1 ].
+	self text isEmpty ifTrue: [ ^ 0 to: -1 ].
 	holder := self elementHolderOf: self children first.
 	first := holder textInterval first.
 	holder := self elementHolderOf: self children last.
@@ -380,21 +470,31 @@ AlbEditorElement >> subTextOnScreenInterval [
 
 ]
 
-{ #category : #'model accessing' }
+{ #category : #'accessing - text' }
 AlbEditorElement >> text [
 	"Return a text I work with. All modifications to a text must be done from UI thread"
 	<return: #BlText>
 
-	^ self viewModel text
+	^ self editor privateText
 ]
 
-{ #category : #'model accessing' }
-AlbEditorElement >> text: aBlText [
+{ #category : #'accessing - text' }
+AlbEditorElement >> text: aText [
 
-	self viewModel text: aBlText asRopedText
+	aText == self text ifTrue: [ ^ self ].
+	self editor privateText: aText asRopedText.
+	self announce: (AlbTextReplaced new text: self text)
 ]
 
-{ #category : #'private - accessing' }
+{ #category : #'api - editor' }
+AlbEditorElement >> textEdited [
+
+	self selectionViewDo: [ :selView | selView textEditedIn: self ].
+	self announce: (AlbTextEdited new text: self text).
+
+]
+
+{ #category : #'private - view accessing' }
 AlbEditorElement >> textElementsDo: aBlock [
 
 	self childrenDo: [ :segmentElement | 
@@ -409,7 +509,7 @@ AlbEditorElement >> textElementsDo: aBlock [
 				ifAbsent: [  ] ] ]
 ]
 
-{ #category : #'api - editor' }
+{ #category : #'private - accessing text' }
 AlbEditorElement >> textInternalRepresentationChanged [
 
 	self editor processCursorAttributes.
@@ -418,20 +518,14 @@ AlbEditorElement >> textInternalRepresentationChanged [
 					 update
 ]
 
-{ #category : #'api - editor' }
-AlbEditorElement >> textModified [
-
-	self selectionViewDo: [ :selView | selView textModifiedIn: self ]
-]
-
-{ #category : #'private - accessing' }
+{ #category : #'private - view accessing' }
 AlbEditorElement >> textPiecesAndTheirElementsDo: aBlock [
 
 	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
 		piece isText ifTrue: [ aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : #'private - view accessing' }
 AlbEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
 
 	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
@@ -439,7 +533,7 @@ AlbEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do
 			aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'accessing - text' }
 AlbEditorElement >> textSnapshot [
 	"Return a snaphost (copy) of the current text.
 	I am safe to use from a non-UI thread because the returned text is independent from the
@@ -455,19 +549,38 @@ AlbEditorElement >> whenActionRequired: anActionRequiredAnnouncement [
 	anActionRequiredAnnouncement value: self
 ]
 
-{ #category : #'accessing - decoration' }
+{ #category : #'view - configuration' }
+AlbEditorElement >> whenTextReplacedDo: aBlock [
+
+	self announcerWhen: AlbTextReplaced do: aBlock
+]
+
+{ #category : #'view - configuration' }
 AlbEditorElement >> withLineNumbers [
 
 	self withDecoration: AlbLineNumberDecoration
 ]
 
-{ #category : #'editor - accessing' }
+{ #category : #'private - accessing editor' }
 AlbEditorElement >> withoutCacheLimit [
 	self editor withoutCacheLimit
 ]
 
-{ #category : #'accessing - decoration' }
+{ #category : #'view - configuration' }
 AlbEditorElement >> withoutLineNumbers [
 
 	self withoutDecoration: AlbLineNumberDecoration
+]
+
+{ #category : #'private - view accessing' }
+AlbEditorElement >> wordStencil [
+
+	<return: #AlbTextWordPieceStencil>
+	^ wordStencil
+]
+
+{ #category : #'private - view accessing' }
+AlbEditorElement >> wordStencil: aWordStencil [
+
+	wordStencil := aWordStencil
 ]

@@ -45,7 +45,7 @@ AlbExamplesSeeClassSide class >> spartaEditorFor: aText [
 	anEditor padding: BlInsets empty.
 	anEditor fitContent.
 	anEditor text: aRopedText.
-	anEditor viewModel wordStencil measurer: self spartaFixedMeasurer.
+	anEditor wordStencil measurer: self spartaFixedMeasurer.
 
 	^ anEditor
 ]

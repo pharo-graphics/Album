@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbTextModifiedByEditor,
+	#name : #AlbTextChangeAnnouncement,
 	#superclass : #Announcement,
 	#instVars : [
 		'text'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-AlbTextModifiedByEditor >> text [
+AlbTextChangeAnnouncement >> text [
 
 	^ text
 ]
 
 { #category : #accessing }
-AlbTextModifiedByEditor >> text: aText [
+AlbTextChangeAnnouncement >> text: aText [
 
 	text := aText
 ]

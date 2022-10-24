@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbTextModifiedEvent,
+	#name : #AlbTextEditedEvent,
 	#superclass : #BlEvent,
 	#instVars : [
 		'text'
@@ -8,17 +8,17 @@ Class {
 }
 
 { #category : #sending }
-AlbTextModifiedEvent >> sendTo: anEventHandler [
+AlbTextEditedEvent >> sendTo: anEventHandler [
 
-	anEventHandler textModifiedEvent: self
+	anEventHandler textEditedEvent: self
 ]
 
 { #category : #accessing }
-AlbTextModifiedEvent >> text [
+AlbTextEditedEvent >> text [
 	^ text
 ]
 
 { #category : #accessing }
-AlbTextModifiedEvent >> text: anObject [
+AlbTextEditedEvent >> text: anObject [
 	text := anObject
 ]

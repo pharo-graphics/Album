@@ -5,6 +5,7 @@ I subclass infinite data source in order to be able to smoothly display practica
 Class {
 	#name : #AlbTextEditor,
 	#superclass : #OBlInfiniteDataSource,
+	#classTraits : 'TObservable classTrait',
 	#instVars : [
 		'text',
 		'selection',
@@ -292,23 +293,23 @@ AlbTextEditor >> history: aTextEditorHistory [
 
 { #category : #initialization }
 AlbTextEditor >> initialize [
+
 	super initialize.
+	
 	hasEventHandlerAttribute := false.
-		
 	filter := AlbTextEditorNoInputFilter new.
 	cursor := self defaultCursor.
 	selection := self defaultSelection.
-	selectionRecorder := self defaultSelectionRecorder.
-	
-	text := self defaultText.
-	self initializeText: text.
-	segmentCollector := self newSegmentCollector.
-	segmentCollector text: text.
-	
+	selectionRecorder := self defaultSelectionRecorder.		
 	shortcuts := AlbTextEditorShortcuts new.
 	history := AlbTextEditorHistory new.
 	
-	isFocused := false
+	isFocused := false.
+	
+	self privateText: self defaultText.
+
+
+
 ]
 
 { #category : #initialization }
@@ -454,11 +455,6 @@ AlbTextEditor >> notifyInserted: aText at: aTextIndex [
 ]
 
 { #category : #'event firing' }
-AlbTextEditor >> notifyModified: aText [
-	self dispatchEvent: (AlbTextModifiedEvent new text: aText)
-]
-
-{ #category : #'event firing' }
 AlbTextEditor >> notifySelectionChanged: aSelection [
 	self dispatchEvent: (AlbSelectionChangedEvent new selection: aSelection)
 ]
@@ -471,6 +467,11 @@ AlbTextEditor >> notifyShortcutAdded: aShortcut [
 { #category : #'event firing' }
 AlbTextEditor >> notifyShortcutRemoved: aShortcut [
 	self dispatchEvent: (AlbShortcutRemovedEvent new shortcut: aShortcut)
+]
+
+{ #category : #'event firing' }
+AlbTextEditor >> notifyTextEdited: aText [
+	self dispatchEvent: (AlbTextEditedEvent new text: aText)
 ]
 
 { #category : #'event firing' }
@@ -533,6 +534,7 @@ AlbTextEditor >> onDetached: anEditorElement [
 
 { #category : #'private - focus' }
 AlbTextEditor >> onGotFocus [
+
 	isFocused := true.
 	self processCursorAttributes.
 	self executeCommand: (AlbTextEditorFocusChangedCommand new hasFocus: true)
@@ -578,7 +580,7 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 		with: aBlTextStringsInserted finalIndices
 		do: [ :aString :anIndex | self notifyInserted: aString asRopedText at: anIndex ].
 
-	self notifyModified: self privateText
+	self notifyTextEdited: self privateText
 ]
 
 { #category : #'hooks - text modifications' }
@@ -645,7 +647,7 @@ AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
 
 	aBlTextsDeleted finalIntervals do: [ :eachInterval | self notifyDeletedFrom: eachInterval first to: eachInterval last ].
 
-	self notifyModified: self privateText
+	self notifyTextEdited: self privateText
 ]
 
 { #category : #'text - copy/paste' }
@@ -674,9 +676,7 @@ AlbTextEditor >> privateText [
 	"Return a current text in the text editor. All modification to the text
 	are reflected in the UI of the editor. For this reason I must only be
 	used from a UI thread. To access a text from a non-UI thread use #textSnapshot
-	which would give a copy of the current text.
-	
-	Note that public text accessing must be done by the element viewModel "
+	which would give a copy of the current text."
 	
 	<return: #BlText>
 	
@@ -687,20 +687,8 @@ AlbTextEditor >> privateText [
 { #category : #accessing }
 AlbTextEditor >> privateText: aText [ 
 
-	" public text change must be done by the element viewModel "
-	| t |
-	t := aText.
-	"when reducing the text size we should update the selection and cursor positions"
-	t size < text size ifTrue: [ 
-		self navigator
-			moveWithin: (0 to: t size);
-			apply.
-
-		self deselecter
-			from: t size to: text size;
-			deselect ].
-
-	self restoreText: t
+	text == aText ifTrue: [ ^self ].
+	self restoreText: aText
 ]
 
 { #category : #'private - cursor' }
@@ -807,9 +795,11 @@ AlbTextEditor >> restoreState: aTextEditorMemento [
 
 { #category : #accessing }
 AlbTextEditor >> restoreText: aText [
-	"before changing the text we must unsubscribe from existing one"	
 
-	text unsubscribe: self.
+	"before changing the text we must unsubscribe from existing one"
+
+	text ifNotNil: [ text unsubscribe: self ].
+	self history setUpToStart.
 
 	text := aText.
 	" then subscribe to internal text state change (insertion/deletion/attribute change) "
@@ -817,7 +807,9 @@ AlbTextEditor >> restoreText: aText [
 
 	"Replacing text instance means that we can not guarantee structural integrity
 	of existing cache and have to rebuild it invalidating the whole underlying model structure"
-	segmentCollector resetCache.
+	segmentCollector
+		ifNil: [ segmentCollector := self newSegmentCollector ]
+		ifNotNil: [ segmentCollector resetCache ].
 	segmentCollector text: text.
 
 	self onTextReplaced.
@@ -967,18 +959,7 @@ AlbTextEditor >> text: aText [
 			'`@receiver text: `@statements1'
 				-> '`@receiver privateText: `@statements1'.
 
-	t := aText asRopedText.
-	"when reducing the text size we should update the selection and cursor positions"
-	t size < text size ifTrue: [ 
-		self navigator
-			moveWithin: (0 to: t size);
-			apply.
-
-		self deselecter
-			from: t size to: text size;
-			deselect ].
-
-	self restoreText: t
+	self privateText: aText
 ]
 
 { #category : #accessing }
@@ -1044,12 +1025,6 @@ AlbTextEditor >> whenEditionModeChanged: aMode [
 		all;
 		apply;
 		notifyCursorRemoved
-]
-
-{ #category : #'model protocol' }
-AlbTextEditor >> whenTextChanged: aText [
-
-	self privateText: aText
 ]
 
 { #category : #accessing }

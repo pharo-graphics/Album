@@ -214,7 +214,7 @@ AlbEditorElement >> initialize [
 	self class initializeSlots: self.
 	super initialize.
 
-	announcer := Announcer new.
+	privateAnnouncer := Announcer new.
 	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
 	self padding: self defaultPaddings.
@@ -552,7 +552,7 @@ AlbEditorElement >> whenActionRequired: anActionRequiredAnnouncement [
 { #category : #'view - configuration' }
 AlbEditorElement >> whenTextReplacedDo: aBlock [
 
-	self announcerWhen: AlbTextReplaced do: aBlock
+	self whenAnnouncement: AlbTextReplaced do: aBlock
 ]
 
 { #category : #'view - configuration' }

@@ -23,7 +23,7 @@ AlbLineNumberDecoration >> aeDraw: anItemElement overOn: aeCanvas in: anInfinite
 		fontExtents := cairoScaledFont extents.
 		aeCanvas pathTranslate: 6 @ fontExtents ascent.
 		aeCanvas setSourceColor: Color gray darker.
-		cairoGlyphsArray := cairoScaledFont glyphArrayFor: index asString.
+		cairoGlyphsArray := cairoScaledFont glyphArrayForString: index asString.
 		aeCanvas drawText: cairoGlyphsArray font: cairoScaledFont ]
 ]
 
@@ -62,7 +62,7 @@ AlbLineNumberDecoration >> aeMeasureActualWidthOn: aeCanvas in: anInfiniteElemen
 	holder := anInfiniteElement childHolderOf: anInfiniteElement children last.
 	cairoScaledFont := self aeCairoScaledFontOn: aeCanvas.
 	fontExtents := cairoScaledFont extents.
-	cairoGlyphsArray := cairoScaledFont glyphArrayFor: holder layoutPosition asString.
+	cairoGlyphsArray := cairoScaledFont glyphArrayForString: holder layoutPosition asString.
 	aeCanvas textExtentsFor: cairoGlyphsArray scaledFont: cairoScaledFont do: [ :aTextExtents | 
 		self onActualWidthChangeWith: aTextExtents width do: [ anInfiniteElement requestLayout ] ]
 ]

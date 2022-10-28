@@ -80,6 +80,12 @@ AlbEditorElement >> cursor [
 ]
 
 { #category : #'accessing - cursor' }
+AlbEditorElement >> cursorElement [
+
+	^ cursorStencil currentCursorElement
+]
+
+{ #category : #'accessing - cursor' }
 AlbEditorElement >> cursorStencil [
 
 	^ cursorStencil
@@ -305,12 +311,24 @@ AlbEditorElement >> onExtentChanged [
 	
 ]
 
+{ #category : #'focus accessing' }
+AlbEditorElement >> onGotFocus [
+	self editor onGotFocus.
+	self cursorElement ifNotNil: [:c | c onGotFocus]
+]
+
 { #category : #'hooks - layout' }
 AlbEditorElement >> onLayoutDone [
 
 	super onLayoutDone.
 	self geometryChanged.
 	self selectionChanged
+]
+
+{ #category : #'focus accessing' }
+AlbEditorElement >> onLostFocus [
+	self editor onLostFocus.
+	self cursorElement onLostFocus
 ]
 
 { #category : #'view - configuration' }

@@ -7,7 +7,7 @@ Class {
 { #category : #'event handling' }
 AlbTextEditorFocusHandler >> blurEvent: anEvent [
 
-	element editor onLostFocus
+	element onLostFocus
 ]
 
 { #category : #'api - accessing' }
@@ -21,5 +21,5 @@ AlbTextEditorFocusHandler >> eventsToHandle [
 { #category : #'event handling' }
 AlbTextEditorFocusHandler >> focusEvent: anEvent [
 
-	element editor onGotFocus
+	element onGotFocus
 ]

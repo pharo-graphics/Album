@@ -7,7 +7,7 @@ Internal Representation and Key Implementation Points.
     Instance Variables
 	blinkTask:		<AlbCursorBlinkingTask> to manage the blinking
 	blinking:		<Boolean> true is the cursor must blink
-	current:		<AlbCursorElement> the current cursor element
+	currentCursorElement:		<AlbCursorElement> the current cursor element
 
 
     Implementation Points
@@ -21,8 +21,8 @@ Class {
 	#superclass : #OBlStencil,
 	#instVars : [
 		'blinking',
-		'current',
-		'blinkTask'
+		'blinkTask',
+		'currentCursorElement'
 	],
 	#category : #'Album-UI-Stencils'
 }
@@ -40,17 +40,22 @@ AlbCursorStencil >> create [
 	If not, dbl clicking will not work because the target of the first click may 
 	be different from the one of the second click"
 
-	current ifNotNil: [ 
+	currentCursorElement ifNotNil: [ 
 		self startBlinkingTask.
-		^ current ].
-	current := AlbCursorElement new
+		^ currentCursorElement ].
+	currentCursorElement := AlbCursorElement new
 		           constraintsDo: [ :c | 
 			           c horizontal exact: 2.
 			           c vertical matchParent];
-		           background: (Color red alpha: 0.5);
 		           yourself.
 	self startBlinkingTask.
-	^ current
+	^ currentCursorElement
+]
+
+{ #category : #accessing }
+AlbCursorStencil >> currentCursorElement [
+
+	^ currentCursorElement
 ]
 
 { #category : #initialization }
@@ -62,7 +67,7 @@ AlbCursorStencil >> initialize [
 { #category : #'api - instantiation' }
 AlbCursorStencil >> newBlinkingTask [
 
-	^ AlbCursorBlinkingTask new cursor: current
+	^ AlbCursorBlinkingTask new cursor: currentCursorElement
 ]
 
 { #category : #'api - instantiation' }
@@ -72,7 +77,7 @@ AlbCursorStencil >> startBlinkingTask [
 
 	blinkTask ifNotNil: [ 
 		blinkTask stop.
-		current dequeueTask: blinkTask ].
+		currentCursorElement dequeueTask: blinkTask ].
 
-	current enqueueTask: (blinkTask := self newBlinkingTask)
+	currentCursorElement enqueueTask: (blinkTask := self newBlinkingTask)
 ]

@@ -687,7 +687,7 @@ AlbTextEditor >> privateText [
 { #category : #accessing }
 AlbTextEditor >> privateText: aText [ 
 
-	text == aText ifTrue: [ ^self ].
+	text == aText ifTrue: [ ^ self ].
 	self restoreText: aText
 ]
 

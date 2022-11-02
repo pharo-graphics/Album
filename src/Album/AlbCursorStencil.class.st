@@ -20,18 +20,10 @@ Class {
 	#name : #AlbCursorStencil,
 	#superclass : #OBlStencil,
 	#instVars : [
-		'blinking',
-		'blinkTask',
 		'currentCursorElement'
 	],
 	#category : #'Album-UI-Stencils'
 }
-
-{ #category : #accessing }
-AlbCursorStencil >> beBlinking: aBoolean [
-
-	blinking := aBoolean
-]
 
 { #category : #'api - instantiation' }
 AlbCursorStencil >> create [
@@ -40,44 +32,12 @@ AlbCursorStencil >> create [
 	If not, dbl clicking will not work because the target of the first click may 
 	be different from the one of the second click"
 
-	currentCursorElement ifNotNil: [ 
-		self startBlinkingTask.
-		^ currentCursorElement ].
-	currentCursorElement := AlbCursorElement new
-		           constraintsDo: [ :c | 
-			           c horizontal exact: 2.
-			           c vertical matchParent];
-		           yourself.
-	self startBlinkingTask.
-	^ currentCursorElement
+	currentCursorElement ifNotNil: [ ^ currentCursorElement startBlinkingTask ].
+	^ currentCursorElement := AlbCursorElement new startBlinkingTask
 ]
 
 { #category : #accessing }
 AlbCursorStencil >> currentCursorElement [
 
 	^ currentCursorElement
-]
-
-{ #category : #initialization }
-AlbCursorStencil >> initialize [
-	super initialize.
-	blinking := true
-]
-
-{ #category : #'api - instantiation' }
-AlbCursorStencil >> newBlinkingTask [
-
-	^ AlbCursorBlinkingTask new cursor: currentCursorElement
-]
-
-{ #category : #'api - instantiation' }
-AlbCursorStencil >> startBlinkingTask [
-
-	blinking ifFalse: [ ^ self ].
-
-	blinkTask ifNotNil: [ 
-		blinkTask stop.
-		currentCursorElement dequeueTask: blinkTask ].
-
-	currentCursorElement enqueueTask: (blinkTask := self newBlinkingTask)
 ]

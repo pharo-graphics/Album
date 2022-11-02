@@ -198,7 +198,7 @@ AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
 	aCursor position: nextIndex.
 
 	shouldResetDesiredCoordinate ifTrue: [ aCursor resetDesiredCoordinate ].
-	self notifyCursorAdded: aCursor.
+	self selection ifEmpty: [ self notifyCursorAdded: aCursor ].
 
 	"now tell everyone interested that the cursor has moved"
 	editor dispatchEvent: (AlbCursorMovedEvent

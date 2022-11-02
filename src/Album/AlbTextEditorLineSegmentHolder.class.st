@@ -47,7 +47,6 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 
 	thePieces := segment pieces.
 
-
 	thePieces withIndexDo: [ :aPiece :eachIndex | 
 		| thePieceElements |
 		thePieceElements := (aPiece createElement: self infiniteElement)
@@ -58,7 +57,7 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 
 	(hasCursor or: [ hasSelection ]) ifTrue: [ 
 		pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
-			hasCursor ifTrue: [ 
+			(hasCursor and: [hasSelection not]) ifTrue: [ 
 				aPiece
 					setCursor: aPieceElement
 					of: anEditorSegment

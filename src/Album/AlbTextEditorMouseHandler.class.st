@@ -4,51 +4,44 @@ Class {
 	#category : #'Album-UI-Handlers'
 }
 
-{ #category : #'event handling' }
-AlbTextEditorMouseHandler >> clickEvent: anEvent [
-
-	anEvent consumed: true
-]
-
 { #category : #'api - accessing' }
 AlbTextEditorMouseHandler >> eventsToHandle [
 
-	^ { 
-		  BlMouseDownEvent.
-		  BlMouseUpEvent.
-		  BlClickEvent }
+	^ { BlMouseDownEvent }
 ]
 
 { #category : #'event handling' }
 AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 
-	| aNavigator aScreenPosition spacePosition textInputPosition |
+	| aNavigator aScreenPosition editor aTextIndex |
 	"To not create an instance of me for each tiny text element"
+
 	anEvent consumed: true.
 	aScreenPosition := (element
 		                    localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                    fromChild: anEvent currentTarget) center.
+	editor := element editor.
+	aNavigator := editor navigator.
+	aTextIndex := aNavigator findTextIndexAtScreenPosition: aScreenPosition ifAbsent: [ nil ].
 
-	element editor deselecter all deselect.
-
-	aNavigator := element editor navigator.
-	aNavigator moveToScreenPosition: aScreenPosition.
+	anEvent modifiers isShift
+		ifTrue: [ 
+			aTextIndex ifNotNil: [ 
+				(editor selection contains: aTextIndex)
+					ifTrue: [ 
+						editor deselecter
+							from: aTextIndex to: editor selection indices last;
+							deselect ]
+					ifFalse: [ 
+						editor selecter
+							extendToIndex: aTextIndex;
+							select ] ] ]
+		ifFalse: [ 
+			(element hasFocus ) ifTrue: [ 
+				editor deselecter all deselect ] ].
+	element hasSelection ifFalse: [ aNavigator moveToScreenPosition: aScreenPosition ].
+	element requestFocus.
 	aNavigator apply.
 
-	"it is important to request focus *after* we add a cursor, otherwise it would jump to the 0 position when
-	handling focus event"
-	element requestFocus.
-	anEvent sendTo: element.
-	
-	self flag: 'low level text input managing. Should be revised to use the right screen position'.
-	spacePosition := element space position.
-	textInputPosition := aScreenPosition. "spacePosition + " "+ (12@25)"
-	element startTextInputAtRectangle: (textInputPosition corner: (textInputPosition translateBy: 2 @ 20)).
-	element startTextInput
-]
-
-{ #category : #'event handling' }
-AlbTextEditorMouseHandler >> mouseUpEvent: anEvent [
-
-	anEvent consumed: true
+	anEvent sendTo: element
 ]

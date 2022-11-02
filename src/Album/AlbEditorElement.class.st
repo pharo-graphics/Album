@@ -214,6 +214,12 @@ AlbEditorElement >> hasFocus [
 	^ self editor isFocused
 ]
 
+{ #category : #'accessing - selection' }
+AlbEditorElement >> hasSelection [
+
+	^ self selection isNotEmpty
+]
+
 { #category : #initialization }
 AlbEditorElement >> initialize [
 
@@ -313,8 +319,9 @@ AlbEditorElement >> onExtentChanged [
 
 { #category : #'focus accessing' }
 AlbEditorElement >> onGotFocus [
+
 	self editor onGotFocus.
-	self cursorElement ifNotNil: [:c | c onGotFocus]
+	self cursorElement ifNotNil: [ :c | c onGotFocus ]
 ]
 
 { #category : #'hooks - layout' }
@@ -327,8 +334,9 @@ AlbEditorElement >> onLayoutDone [
 
 { #category : #'focus accessing' }
 AlbEditorElement >> onLostFocus [
+
 	self editor onLostFocus.
-	self cursorElement onLostFocus
+	self cursorElement ifNotNil: [:ce | ce onLostFocus]
 ]
 
 { #category : #'view - configuration' }

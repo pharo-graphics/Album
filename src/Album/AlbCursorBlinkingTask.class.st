@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'cursor'
 	],
-	#category : #'Album-UI-Stencils'
+	#category : #'Album-UI'
 }
 
 { #category : #accessing }
@@ -17,11 +17,9 @@ AlbCursorBlinkingTask >> cursor: aCursorElement [
 ]
 
 { #category : #initialization }
-AlbCursorBlinkingTask >> defaultBlinkingDelay [
+AlbCursorBlinkingTask >> defaultBlinkingDelay [ 
 
-	"in ms"
-
-	^ 800 milliSeconds
+	^ 600 milliSeconds 
 ]
 
 { #category : #initialization }

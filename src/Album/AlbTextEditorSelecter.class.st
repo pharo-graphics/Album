@@ -35,6 +35,15 @@ AlbTextEditorSelecter >> apply [
 ]
 
 { #category : #'api - configuration' }
+AlbTextEditorSelecter >> extendToIndex: anIndex [
+	| cursorPosition |
+	cursorPosition := self cursor position.
+	anIndex > cursorPosition
+		ifTrue: [ self from: cursorPosition to: anIndex ]
+		ifFalse: [ self from: anIndex to: cursorPosition ]
+]
+
+{ #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToLineEnd [
 	"Extend selection to the end of the line"
 	|  cmd globalCursor delta |

@@ -103,7 +103,7 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 		
 		textPosX := (self screenPositionAt: cursorPos) x.
 		textPosX := ((textPosX - (cursorElement measuredWidth // 2)) min: maxTextPosX) max: minTextPosX.
-		textPos := textPosX @ self padding top.
+		textPos := (textPosX max: 0.0) @ self padding top.
 		
 		cursorElement
 			applyLayoutIn: (textPos extent: (cursorElement measuredWidth @ ((cursorElement measuredHeight - self padding height) max: 0.0)))

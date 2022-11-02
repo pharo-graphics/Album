@@ -8,14 +8,14 @@ AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 	vertices ifNil: [ ^ self ].
 
 	aeCanvas restoreContextAfter: [ 
-		self background aeApplyTo: aeCanvas.
+		(self backgroundIn: anInfiniteElement) aeApplyTo: aeCanvas.
 
 		aeCanvas setOutskirtsCentered.
 		
 		aeCanvas setBorderBlock: [ 
 			| border |
 			
-			border := self border.
+			border := self borderIn: anInfiniteElement.
 			border paint aeApplyTo: aeCanvas.
 			border style aeApplyTo: aeCanvas.
 			aeCanvas setLineJoinBlock: [ aeCanvas setJoinRound ].

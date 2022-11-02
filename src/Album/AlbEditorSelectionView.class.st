@@ -11,23 +11,29 @@ Class {
 }
 
 { #category : #accessing }
-AlbEditorSelectionView >> background [
-	^ BlPaintBackground paint: self selectionColor
-]
+AlbEditorSelectionView >> backgroundIn: anInfiniteElement [
 
-{ #category : #accessing }
-AlbEditorSelectionView >> border [
-	^ BlBorder paint: self borderColor width: self borderWidth 
-]
-
-{ #category : #accessing }
-AlbEditorSelectionView >> borderColor [
-	^ borderColor 
+	^ BlPaintBackground paint: (anInfiniteElement hasFocus
+			   ifTrue: [ selectionColor ]
+			   ifFalse: [ Color veryLightGray alpha: 0.1 ])
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> borderColor: aColor [
 	borderColor := aColor
+]
+
+{ #category : #accessing }
+AlbEditorSelectionView >> borderColorIn: anInfiniteElement [
+
+	^ anInfiniteElement hasFocus
+		  ifTrue: [ borderColor ]
+		  ifFalse: [ Color veryLightGray ]
+]
+
+{ #category : #accessing }
+AlbEditorSelectionView >> borderIn: anInfiniteElement [
+	^ BlBorder paint: (self borderColorIn: anInfiniteElement) width: self borderWidth 
 ]
 
 { #category : #accessing }

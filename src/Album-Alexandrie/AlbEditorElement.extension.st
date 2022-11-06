@@ -4,12 +4,7 @@ Extension { #name : #AlbEditorElement }
 AlbEditorElement >> aeDrawChildrenOn: aeCanvas [
 
 	self selectionViewDo: [ :selView | 
-		selView aeDrawOn: aeCanvas in: self.
-
-		self flag: #todo.
-		"Workaround: selectionView may change the clipping area, we restore it for text segments, which are my children."
-		self geometry aeApplyTo: aeCanvas element: self.
-		aeCanvas prepareToDrawChildrenWithClipping: self clipChildren ].
+		selView aeDrawOn: aeCanvas in: self ].
 
 	" draw then decorate eventually (between the background and the childrens)"
 	super aeDrawChildrenOn: aeCanvas

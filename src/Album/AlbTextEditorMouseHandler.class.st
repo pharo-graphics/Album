@@ -39,7 +39,7 @@ AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 		ifFalse: [ 
 			(element hasFocus ) ifTrue: [ 
 				editor deselecter all deselect ] ].
-	element hasSelection ifFalse: [ aNavigator moveToScreenPosition: aScreenPosition ].
+	aNavigator moveToScreenPosition: aScreenPosition.
 	element requestFocus.
 	aNavigator apply.
 

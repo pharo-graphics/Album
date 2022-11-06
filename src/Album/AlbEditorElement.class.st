@@ -116,6 +116,12 @@ AlbEditorElement >> defaultLayout [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultMargins [
+
+	^ BlInsets all: 1
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultMode [
 
 	^ AlbEditableMode new
@@ -236,7 +242,8 @@ AlbEditorElement >> initialize [
 	self onModeChangedDo: [ :m | self modeChanged ].
 	mode := self defaultMode.
 	self matchParent.
-	self margin: (BlInsets all: 10).
+	self margin: self defaultMargins.
+	self padding: self defaultPaddings 
 
 ]
 

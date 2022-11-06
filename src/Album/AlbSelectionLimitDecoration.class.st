@@ -12,7 +12,7 @@ AlbSelectionLimitDecoration >> initialize [
 ]
 
 { #category : #geometry }
-AlbSelectionLimitDecoration >> requiredInsetsOfChildElement: anElement [
+AlbSelectionLimitDecoration >> requiredInsetsOfChildElement: anElement in: anInfiniteElement [
 
 	^ BlInsets left: self requiredWidth
 ]

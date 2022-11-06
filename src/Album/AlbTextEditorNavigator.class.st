@@ -187,7 +187,6 @@ AlbTextEditorNavigator >> privateAssertPosition: aTextPosition [
 AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
 
 	| prevIndex nextIndex |
-	
 	prevIndex := aCursor position.
 	nextIndex := self privateNormalizePosition: aTextIndex.
 		

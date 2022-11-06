@@ -34,9 +34,9 @@ AlbLineNumberDecoration >> onActualWidthChangeWith: anInteger do: aBlock [
 ]
 
 { #category : #geometry }
-AlbLineNumberDecoration >> requiredInsetsOfChildElement: anElement [
+AlbLineNumberDecoration >> requiredInsetsOfChildElement: anElement in: anInfiniteElement [
 
-	^ BlInsets left: self requiredWidth
+	^ BlInsets left: self requiredWidth + anInfiniteElement margin left
 ]
 
 { #category : #geometry }

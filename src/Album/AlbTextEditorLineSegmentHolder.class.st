@@ -57,7 +57,7 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 
 	(hasCursor or: [ hasSelection ]) ifTrue: [ 
 		pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
-			(hasCursor and: [hasSelection not]) ifTrue: [ 
+			(hasCursor and: [hasSelection not and: [self infiniteElement isFocused]]) ifTrue: [ 
 				aPiece
 					setCursor: aPieceElement
 					of: anEditorSegment

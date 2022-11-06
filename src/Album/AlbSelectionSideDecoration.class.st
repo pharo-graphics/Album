@@ -10,11 +10,6 @@ AlbSelectionSideDecoration >> gap [
 ]
 
 { #category : #geometry }
-AlbSelectionSideDecoration >> requiredInsetsOfChildElement: anElement [
-	^ self subclassResponsibility 
-]
-
-{ #category : #geometry }
 AlbSelectionSideDecoration >> requiredWidth [
 	^ self subclassResponsibility 
 ]

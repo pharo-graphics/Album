@@ -5,7 +5,7 @@ AlbSelectionSideDecoration >> aeDraw: anItemElement overOn: aeCanvas in: anInfin
 
 	aeCanvas restoreContextAfter: [ 
 		self selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :rect | 
-			aeCanvas pathTranslate: self computedBounds left @ anItemElement bounds inParent top.
+			aeCanvas pathTranslate: 0 @ anItemElement bounds inParent top.
 			aeCanvas setBackgroundWith: [ 
 				aeCanvas setSourceColor: (self selectionBackgroundColorOf: anItemElement in: anInfiniteElement) ].
 			aeCanvas setBorderOff.

@@ -239,7 +239,7 @@ AlbEditorElement >> initialize [
 	self editor: self defaulTextEditor.
 
    " action when  mode change (Observable slot) "
-	self onModeChangedDo: [ :m | self modeChanged ].
+	self whenModeChangedDo: [ :m | self modeChanged ].
 	mode := self defaultMode.
 	self matchParent.
 	self margin: self defaultMargins.
@@ -344,14 +344,6 @@ AlbEditorElement >> onLostFocus [
 
 	self editor onLostFocus.
 	self cursorElement ifNotNil: [:ce | ce onLostFocus]
-]
-
-{ #category : #'view - configuration' }
-AlbEditorElement >> onModeChangedDo: aBlock [
-
-	"set a block to perform after that the mode has been chanbed, and its action performed"
-
-	self property: #mode whenChangedDo: aBlock
 ]
 
 { #category : #'hooks - scrolling' }
@@ -580,6 +572,14 @@ AlbEditorElement >> textSnapshot [
 AlbEditorElement >> whenActionRequired: anActionRequiredAnnouncement [
 
 	anActionRequiredAnnouncement value: self
+]
+
+{ #category : #'view - configuration' }
+AlbEditorElement >> whenModeChangedDo: aBlock [
+
+	"set a block to perform after that the mode has been chanbed, and its action performed"
+
+	self property: #mode whenChangedDo: aBlock
 ]
 
 { #category : #'view - configuration' }

@@ -382,6 +382,11 @@ AlbEditorElement >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aB
 			aBlock value: piece value: pieceElement ] ]
 ]
 
+{ #category : #'accessing - editor' }
+AlbEditorElement >> removeEditorShortcut: aTextEditorInteraction [
+	self editor removeEditorShortcut: aTextEditorInteraction
+]
+
 { #category : #scrolling }
 AlbEditorElement >> scrollToLast [
 	"Scroll instantly to the last segment"
@@ -506,7 +511,7 @@ AlbEditorElement >> text [
 { #category : #'accessing - text' }
 AlbEditorElement >> text: aText [
 
-	aText == self text ifTrue: [ ^ self ].
+	aText == self editor privateText ifTrue: [ ^ self ].
 	self editor privateText: aText asRopedText.
 	self announce: (AlbTextReplaced new text: self text)
 ]

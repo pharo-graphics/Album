@@ -19,11 +19,6 @@ AlbWidgetModel class >> asModel [
 	^ self new
 ]
 
-{ #category : #printing }
-AlbWidgetModel class >> modelName [
-	^ self name
-]
-
 { #category : #'api - composition' }
 AlbWidgetModel >> + anotherModel [
 	self deprecated: 'use #add: instead'.
@@ -73,11 +68,6 @@ AlbWidgetModel >> model [
 { #category : #accessing }
 AlbWidgetModel >> model: anObject [
 	model := anObject
-]
-
-{ #category : #printing }
-AlbWidgetModel >> modelName [
-	^ self class modelName
 ]
 
 { #category : #hooks }

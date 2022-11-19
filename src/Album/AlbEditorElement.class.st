@@ -588,6 +588,12 @@ AlbEditorElement >> whenModeChangedDo: aBlock [
 ]
 
 { #category : #'view - configuration' }
+AlbEditorElement >> whenTextEditedDo: aBlock [
+
+	self whenAnnouncement: AlbTextEdited do: aBlock
+]
+
+{ #category : #'view - configuration' }
 AlbEditorElement >> whenTextReplacedDo: aBlock [
 
 	self whenAnnouncement: AlbTextReplaced do: aBlock

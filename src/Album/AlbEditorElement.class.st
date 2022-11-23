@@ -116,7 +116,7 @@ AlbEditorElement >> defaultLayout [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaultMargins [
+AlbEditorElement >> defaultMargin [
 
 	^ BlInsets all: 1
 ]
@@ -141,7 +141,7 @@ AlbEditorElement >> defaultModeShortcuts [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaultPaddings [
+AlbEditorElement >> defaultPadding [
 
 	^ BlInsets
 		  top: 5
@@ -235,15 +235,15 @@ AlbEditorElement >> initialize [
 	privateAnnouncer := Announcer new.
 	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
-	self padding: self defaultPaddings.
+	self padding: self defaultPadding.
 	self editor: self defaulTextEditor.
 
    " action when  mode change (Observable slot) "
 	self whenModeChangedDo: [ :m | self modeChanged ].
 	mode := self defaultMode.
 	self matchParent.
-	self margin: self defaultMargins.
-	self padding: self defaultPaddings 
+	self margin: self defaultMargin.
+	self padding: self defaultPadding 
 
 ]
 

@@ -262,7 +262,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	vscrollBar attachTo: child.
 	root addChild: child.
 	root addChild: vscrollBar.
-	root openInOblSpace
+	root openInOBlSpace
 ]
 
 { #category : #'editor examples' }
@@ -359,7 +359,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	text := self embeddedFontsText.
 	child := text onAlbum.
 	root addChild: child.
-	root openInOblSpace
+	root openInOBlSpace
 ]
 
 { #category : #'editor examples' }

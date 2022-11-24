@@ -167,7 +167,7 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	text := Smalltalk changesFile readStream contents asRopedText.
 	ed := AlbEditorElement new .
 	ed text: text.
-	ed withLineNumbers.
+	ed withLineNumbers; withoutCacheLimit.
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.

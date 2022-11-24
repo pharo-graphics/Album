@@ -605,8 +605,9 @@ AlbEditorElement >> withLineNumbers [
 	self withDecoration: AlbLineNumberDecoration
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : #accessing }
 AlbEditorElement >> withoutCacheLimit [
+
 	self editor withoutCacheLimit
 ]
 

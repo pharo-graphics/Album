@@ -413,13 +413,13 @@ AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 	ed := (t asRopedText
 		       fontSize: 16) onAlbum.
 	ed withLineNumbers.
-	ed openInOblSpace
+	ed openInOBlSpace
 ]
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 
-	| ed tgca tgcaText colorIndex |
+	| ed tgca tgcaText colorIndex vscrollBar space |
 	colorIndex := IdentityDictionary new.
 	colorIndex at: $T put: (Color red alpha: 0.4).
 	colorIndex at: $G put: (Color blue alpha: 0.4).
@@ -443,7 +443,20 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 		c horizontal fitContent].
 	"ed inspect."
 	ed withLineNumbers.
-	ed openInOblSpace
+	
+	vscrollBar := BlVerticalScrollbarElement new.
+	vscrollBar constraintsDo: [ :c |
+			c ignoreByLayout.
+			c margin: (BlInsets right: 2).
+			c ignored horizontal alignRight.
+			c ignored vertical alignBottom]. 
+	vscrollBar attachTo: ed.
+	space := OBlSpace new.
+	space root addChild: ed.
+	space root addChild: vscrollBar.
+	space show.
+	
+	
 ]
 
 { #category : #'editor examples' }

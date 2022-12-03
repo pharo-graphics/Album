@@ -209,6 +209,9 @@ AlbEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDi
 AlbEditorElement >> geometryChanged [
 	"My geometry has possibly changed as a result of extent change, scrolling or layout re-computing"
 	
+	self hasParent
+		ifFalse: [ ^ self ].
+
 	"re-compute the positionInEdtor that is used to compute and draw selection.
 	Done here because during drawing, elements can be temporarly detached by the layout"
 	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
@@ -238,13 +241,15 @@ AlbEditorElement >> initialize [
 	self padding: self defaultPadding.
 	self editor: self defaulTextEditor.
 
-   " action when  mode change (Observable slot) "
+	" action when  mode change (Observable slot) "
 	self whenModeChangedDo: [ :m | self modeChanged ].
 	mode := self defaultMode.
 	self matchParent.
 	self margin: self defaultMargin.
-	self padding: self defaultPadding 
-
+	self padding: self defaultPadding.
+	self whenLayoutedDo: [ 
+		self geometryChanged.
+		self selectionChanged ]
 ]
 
 { #category : #'accessing - editor' }
@@ -329,14 +334,6 @@ AlbEditorElement >> onGotFocus [
 
 	self editor onGotFocus.
 	self cursorElement ifNotNil: [ :c | c onGotFocus ]
-]
-
-{ #category : #'hooks - layout' }
-AlbEditorElement >> onLayoutDone [
-
-	super onLayoutDone.
-	self geometryChanged.
-	self selectionChanged
 ]
 
 { #category : #'focus accessing' }

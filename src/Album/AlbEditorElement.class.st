@@ -22,6 +22,7 @@ Class {
 
 { #category : #'accessing - editor' }
 AlbEditorElement >> addEditorShortcut: aTextEditorInteraction [
+
 	self editor addEditorShortcut: aTextEditorInteraction
 ]
 

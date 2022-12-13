@@ -145,10 +145,10 @@ AlbEditorElement >> defaultModeShortcuts [
 AlbEditorElement >> defaultPadding [
 
 	^ BlInsets
-		  top: 5
+		  top: 2
 		  left: 3
-		  bottom: 5
-		  right: 5
+		  bottom: 2
+		  right: 3
 ]
 
 { #category : #initialization }

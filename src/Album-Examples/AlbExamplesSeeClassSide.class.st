@@ -276,7 +276,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 		c horizontal resizer: BlLayoutResizer fitContent]."
 	"ed inspect."
 	ed withLineNumbers.
-	ed openInOblSpace
+	ed openInOBlSpace
 ]
 
 { #category : #'editor examples' }

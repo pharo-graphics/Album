@@ -32,12 +32,12 @@ AlbLineNumberDecoration >> aeDrawBackgroundOn: aeCanvas in: anInfiniteElement [
 
 	"draw the background beneath "
 
+	aeCanvas pathFactory: [ :cairoContext | 
+		cairoContext rectangle: self computedBounds ].
 	aeCanvas
 		setBackgroundWith: [ aeCanvas setSourceColor: Color veryLightGray ]
 		alpha: 0.10.
 	aeCanvas setBorderOff.
-	aeCanvas drawClosedPathWith: [ :cairoContext | 
-		cairoContext rectangle: self computedBounds ].
 	aeCanvas drawFigure
 ]
 

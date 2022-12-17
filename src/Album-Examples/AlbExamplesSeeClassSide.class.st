@@ -398,7 +398,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 		replacingAdornment: [ BlElement new size: 20@6; background: Color red ].
 	ed := aText onAlbum.
 	ed withLineNumbers.
-	ed openInOblSpace
+	ed openInOBlSpace
 ]
 
 { #category : #'editor examples' }
@@ -467,7 +467,7 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 	 , (' Default font 30' asRopedText fontSize: 30)) onAlbum
 		withLineNumbers;
 		"inspect"
-		openInOblSpace 
+		openInOBlSpace 
 ]
 
 { #category : #elements }

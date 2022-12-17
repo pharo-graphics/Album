@@ -18,5 +18,5 @@ AlbTextCursorAttributeExamples class >> changingForeground [
 		leave: [ :aTextEditor :anEvent :aFromIndex :aToIndex |
 			(aTextEditor text from: aFromIndex to: aToIndex) foreground: Color blue ].
 
-	^ text onAlbum openInOblSpace 
+	^ text onAlbum openInOBlSpace 
 ]

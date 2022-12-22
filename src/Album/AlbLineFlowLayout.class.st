@@ -80,7 +80,7 @@ AlbLineFlowLayout >> initialize [
 AlbLineFlowLayout >> layout: anElement in: aRectangle context: aBlElementBoundsUpdateContext [
 	| anOffsetX anOffsetY aLeft aTop |
 
-	anOffsetX := anElement padding left.
+	anOffsetX := anElement padding left + 2. "+ 2 is to ensure the curor visibility on the left side, should be fixed..."
 	anOffsetY := anElement padding top.
 
 	aLeft := anOffsetX.

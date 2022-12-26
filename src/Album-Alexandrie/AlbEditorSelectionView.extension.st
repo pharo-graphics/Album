@@ -17,12 +17,6 @@ AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 			border := self borderIn: anInfiniteElement.
 			border paint aeApplyTo: aeCanvas.
 			border style in: [ :style |
-				style dashArray ifNotEmpty: [ :da |
-					aeCanvas
-						setDashes: da
-						offset: style dashOffset ].
-				style lineJoin aeApplyTo: aeCanvas style: style.
-				style lineCap aeApplyTo: aeCanvas.
 				aeCanvas setBorderWidth: border width ]].
 
 		aeCanvas drawFigure ]

@@ -33,41 +33,51 @@ AlbEditorSelectionView >> borderColorIn: anInfiniteElement [
 
 { #category : #accessing }
 AlbEditorSelectionView >> borderIn: anInfiniteElement [
-	^ BlBorder paint: (self borderColorIn: anInfiniteElement) width: self borderWidth 
+
+	^ BlBorder
+		  paint: (self borderColorIn: anInfiniteElement)
+		  width: self borderWidth
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> borderWidth [
-	^ borderWidth 
+
+	^ borderWidth
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> borderWidth: aNumber [
+
 	borderWidth := aNumber
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> geometry [
-	^ BlPolygonGeometry vertices: vertices.
+
+	^ BlPolygonGeometry vertices: vertices
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> selectionColor [
+
 	^ selectionColor
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> selectionColor: aColor [
+
 	selectionColor := aColor
 ]
 
 { #category : #'infinite element changes' }
 AlbEditorSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
-	vertices ifNil: [ ^self ].
+
+	vertices ifNil: [ ^ self ].
 	vertices := vertices collect: [ :pt | pt - aPoint ]
 ]
 
 { #category : #accessing }
 AlbEditorSelectionView >> vertices: aListOfPoints [
+
 	vertices := aListOfPoints
 ]

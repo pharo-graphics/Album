@@ -368,15 +368,6 @@ AlbTextEditor >> itemIdAt: aPosition [
 ]
 
 { #category : #accessing }
-AlbTextEditor >> itemTypeAt: aPosition [
-	"Return segment type at a given position"
-	<return: #AlbEditorSegmentType>
-	self flag: 'try with uniform item type to avoid collector>>computeBackwardAt:'.
-	^ AlbTextEditorLineSegmentType uniqueInstance
-	"^ (segmentCollector segmentAt: aPosition) segmentType"
-]
-
-{ #category : #accessing }
 AlbTextEditor >> layoutPositionsRange [
 	^ layoutPositionsRange ifNil: [ 0 to: 0 ]
 ]
@@ -510,12 +501,12 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 ]
 
 { #category : #'instance creation' }
-AlbTextEditor >> onCreateHolder: anEditorElement type: aSegmentType [
+AlbTextEditor >> onCreateHolder: anEditorElement [ 
 	"Create and return a new segment holder of a given type to be used with provided editor element"
 	<return: #AlbEditorSegmentHolder>
 	
 	"We perform a single dispatch on a segment type in order to support multiple types"
-	^ aSegmentType holder
+	^ AlbTextEditorLineSegmentHolder new
 ]
 
 { #category : #hooks }

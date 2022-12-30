@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Album-Model-Segment'
+	#category : #'Album-Brick-NU-Model-Segment'
 }
 
 { #category : #cleanup }

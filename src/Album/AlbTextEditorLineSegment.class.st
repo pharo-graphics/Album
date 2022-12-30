@@ -149,15 +149,6 @@ AlbTextEditorLineSegment >> resetProperties [
 	paragraphMargin := BlInsets empty.
 ]
 
-{ #category : #accessing }
-AlbTextEditorLineSegment >> segmentType [
-	"Return a type of this segment responsible for creation
-	of segment holder and also used as a key for caching purposes"
-	<return: #AlbEditorSegmentType>
-	
-	^ AlbTextEditorLineSegmentType uniqueInstance
-]
-
 { #category : #'text - modifications' }
 AlbTextEditorLineSegment >> updateSegmentProperties [
 	| theParagraphAttributes |

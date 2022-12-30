@@ -496,12 +496,6 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 
 	| aSegment previousLastIndex |
 	
-	
-	self flag: 'No example with payloads... '.
-	aSegmentHolder payloads ifNotEmpty: [ :theCommands | 
-		theCommands do: [ :aHolderCommand | aHolderCommand executeOn: aSegmentHolder ].
-		^ self ].
-
 	"First we want to acquire a segment for a given position"
 	aSegment := segmentCollector segmentAt: aPosition.
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbSelectionLimitDecoration,
-	#superclass : #AlbSelectionSideDecoration,
+	#superclass : #OBlInfinteSideDecoration,
 	#category : #'Album-UI'
 }
 

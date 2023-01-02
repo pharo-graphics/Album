@@ -167,7 +167,7 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	text := Smalltalk changesFile readStream contents asRopedText.
 	ed := AlbEditorElement new .
 	ed text: text.
-	ed withLineNumbers; withoutCacheLimit.
+	ed withRowNumbers; withoutCacheLimit.
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
@@ -275,7 +275,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 		c vertical resizer: BlLayoutResizer fitContent. 
 		c horizontal resizer: BlLayoutResizer fitContent]."
 	"ed inspect."
-	ed withLineNumbers.
+	ed withRowNumbers.
 	ed openInOBlSpace
 ]
 
@@ -397,7 +397,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 	(aText from: 4 to: 4)
 		replacingAdornment: [ BlElement new size: 20@6; background: Color red ].
 	ed := aText onAlbum.
-	ed withLineNumbers.
+	ed withRowNumbers.
 	ed openInOBlSpace
 ]
 
@@ -412,7 +412,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 			stream << l asString << ': 1234567890'; lf ] ].
 	ed := (t asRopedText
 		       fontSize: 16) onAlbum.
-	ed withLineNumbers.
+	ed withRowNumbers.
 	ed openInOBlSpace
 ]
 
@@ -442,7 +442,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 		c vertical matchParent. 
 		c horizontal fitContent].
 	"ed inspect."
-	ed withLineNumbers.
+	ed withRowNumbers.
 	
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
@@ -465,7 +465,7 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 	(' Default font and size' asRopedText
 	 , (' ( Source code pro 40 bold ) ' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
 	 , (' Default font 30' asRopedText fontSize: 30)) onAlbum
-		withLineNumbers;
+		withRowNumbers;
 		"inspect"
 		openInOBlSpace 
 ]
@@ -602,7 +602,7 @@ AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 	| ed space |
 	ed := AlbEditorElement new text: String crlf.
 	ed editor segmentCollector inspect.
-	ed withLineNumbers.
+	ed withRowNumbers.
 	space := BlSpace new.
 	space root addChild: ed.
 	space show
@@ -614,7 +614,7 @@ AlbExamplesSeeClassSide class >> example_WithCrOnly [
 	| ed space |
 	ed := AlbEditorElement new text: String cr.
 	ed editor segmentCollector inspect.
-	ed withLineNumbers.
+	ed withRowNumbers.
 	space := BlSpace new.
 	space root addChild: ed.
 	space show
@@ -625,7 +625,7 @@ AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 
 	| ed space |
 	ed := AlbEditorElement new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
-	ed withLineNumbers.
+	ed withRowNumbers.
 	space := BlSpace new.
 	space root addChild: ed.
 	space show
@@ -661,7 +661,7 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	text := 'Hello World' asRopedText fontSize: 40.
 	editor := AlbTextEditor new privateText: text.
 	ed := AlbEditorElement new.
-	ed withLineNumbers.
+	ed withRowNumbers.
 	ed editor: editor.
 	space := BlSpace new.
 	space root addChild: ed.

@@ -597,22 +597,10 @@ AlbEditorElement >> whenTextReplacedDo: aBlock [
 	self whenAnnouncement: AlbTextReplaced do: aBlock
 ]
 
-{ #category : #'view - configuration' }
-AlbEditorElement >> withLineNumbers [
-
-	self withDecoration: AlbLineNumberDecoration
-]
-
 { #category : #accessing }
 AlbEditorElement >> withoutCacheLimit [
 
 	self editor withoutCacheLimit
-]
-
-{ #category : #'view - configuration' }
-AlbEditorElement >> withoutLineNumbers [
-
-	self withoutDecoration: AlbLineNumberDecoration
 ]
 
 { #category : #'private - view accessing' }

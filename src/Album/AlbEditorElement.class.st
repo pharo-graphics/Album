@@ -597,10 +597,22 @@ AlbEditorElement >> whenTextReplacedDo: aBlock [
 	self whenAnnouncement: AlbTextReplaced do: aBlock
 ]
 
+{ #category : #'view - configuration' }
+AlbEditorElement >> withRowNumbers [
+
+	self withDecoration: AlbRowNumberDecoration
+]
+
 { #category : #accessing }
 AlbEditorElement >> withoutCacheLimit [
 
 	self editor withoutCacheLimit
+]
+
+{ #category : #'view - configuration' }
+AlbEditorElement >> withoutRowNumbers [
+
+	self withoutDecoration: AlbRowNumberDecoration
 ]
 
 { #category : #'private - view accessing' }

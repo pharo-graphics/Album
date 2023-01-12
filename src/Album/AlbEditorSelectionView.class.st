@@ -57,6 +57,13 @@ AlbEditorSelectionView >> geometry [
 	^ BlPolygonGeometry vertices: vertices
 ]
 
+{ #category : #initialization }
+AlbEditorSelectionView >> initialize [ 
+
+	super initialize.
+	vertices := #()
+]
+
 { #category : #accessing }
 AlbEditorSelectionView >> selectionColor [
 
@@ -72,7 +79,7 @@ AlbEditorSelectionView >> selectionColor: aColor [
 { #category : #'infinite element changes' }
 AlbEditorSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 
-	vertices ifNil: [ ^ self ].
+	vertices ifEmpty: [ ^ self ].
 	vertices := vertices collect: [ :pt | pt - aPoint ]
 ]
 

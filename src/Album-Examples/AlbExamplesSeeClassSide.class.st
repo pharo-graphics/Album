@@ -495,51 +495,6 @@ AlbExamplesSeeClassSide class >> example_ScaledElement [
 ]
 
 { #category : #elements }
-AlbExamplesSeeClassSide class >> example_TextFlowWithAnimatedZoomableElements [
-
-	| element |
-	element := BlElement new
-		           layout: (AlbLineFlowLayout new lineSpacing: 10);
-		           constraintsDo: [ :c | 
-			           c horizontal matchParent.
-			           c vertical matchParent ];
-		           addChildren: (20 timesCollect: [ 
-					            | e zoomable anim |
-					            anim := BlSequentialAnimation withAll: { 
-								                    (BlTransformAnimation new
-									                     absolute;
-									                     duration: 1 seconds;
-									                     in: [ :elem | 
-										                     elem transform
-											                     scaleBy: 10@10;
-											                     apply ];
-									                     yourself).
-								                    (BlTransformAnimation new
-									                     absolute;
-									                     duration: 2 seconds;
-									                     in: [ :elem | 
-										                     elem transform
-											                     scaleBy: 0.5 asPoint;
-											                     apply ];
-									                     yourself) }.
-					            anim beInfinite.
-					            e := BlElement new
-						                 size: 10 @ 10;
-						                 margin: (BlInsets all: 1);
-						                 background: (Color random alpha: 0.5).
-					            zoomable := BlZoomableElement new.
-					            zoomable constraintsDo: [ :c | 
-						            c horizontal fitContent.
-						            c vertical fitContent ].
-					            zoomable zoomLevel: 10.
-					            zoomable border: (BlBorder paint: Color gray width: 1).
-					            zoomable addChild: e.
-					            e addAnimation: anim.
-					            zoomable ]).
-	element openInNewSpace
-]
-
-{ #category : #elements }
 AlbExamplesSeeClassSide class >> example_TextFlowWithBlElements [
 
 	| element |

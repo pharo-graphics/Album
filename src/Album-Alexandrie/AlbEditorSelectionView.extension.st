@@ -4,7 +4,7 @@ Extension { #name : #AlbEditorSelectionView }
 AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 	"Draw an editor element selection polygon"
 
-	vertices ifNil: [ ^ self ].
+	vertices ifEmpty: [ ^ self ].
 
 	aeCanvas restoreContextAfter: [ 
 

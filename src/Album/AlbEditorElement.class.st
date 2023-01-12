@@ -7,8 +7,8 @@ Text editing operations are driven by my data source (called textEditor). I also
 Class {
 	#name : #AlbEditorElement,
 	#superclass : #OBlInfiniteElement,
-	#traits : 'TObservable + TOBlLayoutResizable + TBlAnnouncerProvider',
-	#classTraits : 'TObservable classTrait + TOBlLayoutResizable classTrait + TBlAnnouncerProvider classTrait',
+	#traits : 'TObservable + TOBlLayoutResizable',
+	#classTraits : 'TObservable classTrait + TOBlLayoutResizable classTrait',
 	#instVars : [
 		'#mode => ObservableSlot',
 		'#selectionView',
@@ -236,7 +236,6 @@ AlbEditorElement >> initialize [
 	self class initializeSlots: self.
 	super initialize.
 
-	privateAnnouncer := Announcer new.
 	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
 	self padding: self defaultPadding.
@@ -510,16 +509,13 @@ AlbEditorElement >> text [
 AlbEditorElement >> text: aText [
 
 	aText == self editor privateText ifTrue: [ ^ self ].
-	self editor privateText: aText asRopedText.
-	self announce: (AlbTextReplaced new text: self text)
+	self editor privateText: aText asRopedText
 ]
 
 { #category : #'api - editor' }
 AlbEditorElement >> textEdited [
 
-	self selectionViewDo: [ :selView | selView textEditedIn: self ].
-	self announce: (AlbTextEdited new text: self text).
-
+	self selectionViewDo: [ :selView | selView textEditedIn: self ]
 ]
 
 { #category : #'private - view accessing' }
@@ -588,13 +584,13 @@ AlbEditorElement >> whenModeChangedDo: aBlock [
 { #category : #'view - configuration' }
 AlbEditorElement >> whenTextEditedDo: aBlock [
 
-	self whenAnnouncement: AlbTextEdited do: aBlock
+	self editor when: AlbTextEditedEvent do: aBlock
 ]
 
 { #category : #'view - configuration' }
 AlbEditorElement >> whenTextReplacedDo: aBlock [
 
-	self whenAnnouncement: AlbTextReplaced do: aBlock
+	self editor when: AlbTextReplacedEvent do: aBlock
 ]
 
 { #category : #'view - configuration' }

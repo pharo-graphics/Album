@@ -674,14 +674,7 @@ AlbTextEditor >> privateText: aText [
 
 	text == aText ifTrue: [ ^ self ].
 	"when reducing the text size we should update the selection and cursor positions"
-	(text notNil and: [aText size < text size])
-		ifTrue: [
-			self navigator
-				moveWithin: (0 to: aText size);
-				apply.		
-			self deselecter
-				from: aText size to: text size;
-				deselect ].
+	text ifNotNil: [ self selectNone ].
 	self restoreText: aText
 ]
 

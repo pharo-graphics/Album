@@ -13,7 +13,7 @@ AlbEditabilityMode >> defaultEditorElementEventHandlers [
 { #category : #initialization }
 AlbEditabilityMode >> defaultSelectionView [
 
-	^ AlbEditorMainSelectionView new
+	^ AlbEditorSelectionView new
 ]
 
 { #category : #'shortcut management' }

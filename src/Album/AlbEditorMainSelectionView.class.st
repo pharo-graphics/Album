@@ -18,6 +18,17 @@ AlbEditorMainSelectionView class >> oppositeDelimiterBackgroundColor [
 ]
 
 { #category : #'infinite element changes' }
+AlbEditorMainSelectionView >> adjacentRectangles: aCollection [
+
+	aCollection ifEmpty: [ 
+		selectionGeometry := nil.
+		vertices := #().
+		^ self ].
+	selectionGeometry := OBlAjacentRectanglesGeometry new adjacentRectangles: aCollection.
+	vertices := selectionGeometry vertices
+]
+
+{ #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> extentChangedIn: anInfiniteElement [
 
 	self updateOppositeFrom: anInfiniteElement.
@@ -42,33 +53,6 @@ AlbEditorMainSelectionView >> initialize [
 	remanents := OrderedCollection new
 ]
 
-{ #category : #'private - vertices computing' }
-AlbEditorMainSelectionView >> maxXRightCoord: yCoord fromRectangles: aListOfRectangles [
-	" optimized with compiled in-line primitives "
-
-	| l mostRight |
-	l := self rectanglesAtY: yCoord fromRectangles: aListOfRectangles.
-	mostRight := l first right.
-	2 to: l size do: [ :pos | mostRight := mostRight max: (l at: pos) right ].
-	^ mostRight
-]
-
-{ #category : #'private - limit computing' }
-AlbEditorMainSelectionView >> minLimitWidth [
-	^ 0
-]
-
-{ #category : #'private - vertices computing' }
-AlbEditorMainSelectionView >> minXLeftCoord: yCoord fromRectangles: aListOfRectangles [
-	"optimized with compiled in-line primitives "
-
-	| l mostLeft |
-	l := self rectanglesAtY: yCoord fromRectangles: aListOfRectangles.
-	mostLeft := l first left.
-	2 to: l size do: [ :pos | mostLeft := mostLeft min: (l at: pos) left ].
-	^ mostLeft
-]
-
 { #category : #'private - remanent selection' }
 AlbEditorMainSelectionView >> newRemanentVertice: aListOfPoints [
 
@@ -78,29 +62,6 @@ AlbEditorMainSelectionView >> newRemanentVertice: aListOfPoints [
 		  borderColor: (Color gray alpha: 0.5);
 		  selectionColor: (Color gray alpha: 0.2);
 		  yourself
-]
-
-{ #category : #'private - vertices computing' }
-AlbEditorMainSelectionView >> rectanglesAtY: anY fromRectangles: aListOfRectangles [
-
-	| rectsAtYExcBottomLines |
-	rectsAtYExcBottomLines := self rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles.
-	rectsAtYExcBottomLines ifNotEmpty: [ ^ rectsAtYExcBottomLines ].
-	^ self rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles
-]
-
-{ #category : #'private - vertices computing' }
-AlbEditorMainSelectionView >> rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles [
-
-	^ Array streamContents: [ :stream | aListOfRectangles do: [ :rect |
-			(rect top <= anY and: [ rect bottom > anY ]) ifTrue: [ stream nextPut: rect ] ]]
-]
-
-{ #category : #'private - vertices computing' }
-AlbEditorMainSelectionView >> rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles [
-
-	^ Array streamContents: [ :stream | aListOfRectangles do: [ :rect |
-			(rect top <= anY and: [ rect bottom = anY ]) ifTrue: [ stream nextPut: rect ] ]]
 ]
 
 { #category : #'private - remanent selection' }
@@ -131,7 +92,7 @@ AlbEditorMainSelectionView >> remanentInterval: anInterval in: anEditorElement [
 				         bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
 				         stream nextPut: bnds ] ].
 	rects ifEmpty: [ ^ self ].
-	remanents add: (self newRemanentVertice: (self verticesFromRectangles: rects))
+	remanents add: (OBlAjacentRectanglesGeometry new adjacentRectangles: rects)
 ]
 
 { #category : #'private - remanent selection' }
@@ -157,43 +118,22 @@ AlbEditorMainSelectionView >> selectionChangedIn: anInfiniteElement [
 	self updateMainSelectionVerticesIn: anInfiniteElement.
 ]
 
-{ #category : #'private - limit computing' }
-AlbEditorMainSelectionView >> selectionLimitRectangleOf: anItemElement in: anInfiniteElement [
-
-	" Select lines with cursor or with an element at left which has a selection that start at 0 "
-
-	(anItemElement children
-		 select: [ :e | 
-			 (e isKindOf: BlTextElement) and: [ e hasCursor or: [ 
-				 e bounds inParent left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ] ] ]
-		 thenCollect: [ :e | e textFlow assignedLine ]) in: [ :l | 
-		l ifEmpty: [ ^ nil ].
-		^ 0 @ l first origin y corner: self minLimitWidth @ (l last origin y + l last height) ]
-]
-
-{ #category : #'private - limit computing' }
-AlbEditorMainSelectionView >> selectionLimitRectanglesIn: anInfiniteElement [
-
-	^ Array streamContents: [ :stream | 
-		  anInfiniteElement childrenDo: [ :child | 
-			  | rect |
-			  rect := self selectionLimitRectangleOf: child in: anInfiniteElement.
-			  rect ifNotNil: [ stream nextPut: ((BlBounds fromRectangle: rect) translateBy: child bounds asRectangle origin)] ] ]
-]
-
 { #category : #'selection accessing' }
 AlbEditorMainSelectionView >> selectionRectanglesIn: anInfiniteElement [
-
-	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
+	"return all selections rectangles from coordinate system of text elements to my local coordinates"
 
 	^ Array streamContents: [ :stream | 
-		  anInfiniteElement textElementsDo: [ :te | 
-			  te selectionRectangles do: [ :r | 
-					stream nextPut: ((anInfiniteElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: 0 @ (te position y) negated ) ] ] ]
+		  (anInfiniteElement textElementsSelect: [ :te | te hasSelection ]) 
+			  do: [ :te | 
+				  te selectionRectangles do: [ :r | 
+					  stream nextPut: ((anInfiniteElement
+							    localBoundsToMine: (BlBounds fromRectangle: r)
+							    fromChild: te) translateBy: 0 @ te position y negated) ] ] ]
 ]
 
 { #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
+
 	super selectionScrolled: aPoint in: anInfiniteElement.
 	self updateMainSelectionVerticesIn: anInfiniteElement.
 	self updateRemanentsIn: anInfiniteElement
@@ -226,9 +166,7 @@ AlbEditorMainSelectionView >> textEditedIn: anInfiniteElement [
 { #category : #'infinite element changes' }
 AlbEditorMainSelectionView >> updateMainSelectionVerticesIn: anInfiniteElement [
 
-	| rects |
-	rects := self selectionRectanglesIn: anInfiniteElement.
-	self vertices: (self verticesFromRectangles: rects).
+	self adjacentRectangles: (self selectionRectanglesIn: anInfiniteElement).
 			
 ]
 
@@ -280,42 +218,4 @@ AlbEditorMainSelectionView >> updateRemanentsIn: anEditorElement [
 		                   self remanentsUpdatedIn: anEditorElement ]
 			                   forkAt: Processor systemBackgroundPriority
 			                   named: 'Selection echo updater task' ]
-]
-
-{ #category : #'private - vertices computing' }
-AlbEditorMainSelectionView >> verticesFromRectangles: aListOfRectangles [
-
-	| ret yCoords previousLeftCoord previousRightCoord |
-	ret := OrderedCollection new.
-	yCoords := self yCoordsFromRectangles: aListOfRectangles.
-	yCoords := yCoords sort: [ :a :b | a < b ].
-	previousLeftCoord := 0.
-	previousRightCoord := 0.
-	yCoords do: [ :yCoord | 
-		| minimumXLeftCoord maximumXRightCoord first |
-		minimumXLeftCoord := self minXLeftCoord: yCoord fromRectangles: aListOfRectangles.
-		maximumXRightCoord := self maxXRightCoord: yCoord fromRectangles: aListOfRectangles.
-		first := yCoords first.
-		yCoord = yCoords first
-			ifTrue: [ ret add: minimumXLeftCoord @ yCoord ]
-			ifFalse: [ 
-				minimumXLeftCoord ~= previousLeftCoord ifTrue: [ ret add: previousLeftCoord @ yCoord beforeIndex: 1 ].
-				ret add: minimumXLeftCoord @ yCoord beforeIndex: 1.
-				maximumXRightCoord ~= previousRightCoord ifTrue: [ ret add: previousRightCoord @ yCoord ] ].
-		ret add: maximumXRightCoord @ yCoord.
-		previousLeftCoord := minimumXLeftCoord.
-		previousRightCoord := maximumXRightCoord ].
-	^ ret
-]
-
-{ #category : #'private - vertices computing' }
-AlbEditorMainSelectionView >> yCoordsFromRectangles: aListOfRectangles [
-
-	| allBotoms allTops allCoords |
-	allBotoms := aListOfRectangles collect: [ :rect | rect bottom ].
-	allTops := aListOfRectangles collect: [ :rect | rect top ].
-	allCoords := Set new.
-	allCoords addAll: allTops.
-	allCoords addAll: allBotoms.
-	^ allCoords asArray
 ]

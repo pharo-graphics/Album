@@ -533,6 +533,22 @@ AlbEditorElement >> textElementsDo: aBlock [
 				ifAbsent: [  ] ] ]
 ]
 
+{ #category : #'private - view accessing' }
+AlbEditorElement >> textElementsSelect: aSelectBlock [
+
+	^ Array streamContents: [ :stream | 
+		self childrenDo: [ :segmentElement | 
+		| holder |
+		"Use the holder here to find piece. needed for non text element element (instance of BlElement)"
+		holder := self elementHolderOf: segmentElement.
+		segmentElement childrenDo: [ :textElement | 
+			holder
+				pieceForElement: textElement
+				ifPresent: [ :foundPiece | 
+					(foundPiece isText and: [ aSelectBlock value: textElement ]) ifTrue: [ stream nextPut: textElement ] ]
+				ifAbsent: [  ] ] ] ]
+]
+
 { #category : #'private - accessing text' }
 AlbEditorElement >> textInternalRepresentationChanged [
 

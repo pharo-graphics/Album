@@ -5,7 +5,8 @@ Class {
 		'vertices',
 		'borderWidth',
 		'borderColor',
-		'selectionColor'
+		'selectionColor',
+		'selectionGeometry'
 	],
 	#category : #'Album-UI'
 }
@@ -51,17 +52,20 @@ AlbEditorSelectionView >> borderWidth: aNumber [
 	borderWidth := aNumber
 ]
 
-{ #category : #accessing }
-AlbEditorSelectionView >> geometry [
-
-	^ BlPolygonGeometry vertices: vertices
-]
-
 { #category : #initialization }
 AlbEditorSelectionView >> initialize [ 
 
 	super initialize.
 	vertices := #()
+]
+
+{ #category : #accessing }
+AlbEditorSelectionView >> newSelectionGeometry [ 
+
+	self vertices ifEmpty: [ ^ nil ].
+	^ BlPolygonGeometry new vertices: self vertices
+
+
 ]
 
 { #category : #accessing }
@@ -76,6 +80,12 @@ AlbEditorSelectionView >> selectionColor: aColor [
 	selectionColor := aColor
 ]
 
+{ #category : #accessing }
+AlbEditorSelectionView >> selectionGeometry [
+
+	^ selectionGeometry 
+]
+
 { #category : #'infinite element changes' }
 AlbEditorSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 
@@ -84,7 +94,14 @@ AlbEditorSelectionView >> selectionScrolled: aPoint in: anInfiniteElement [
 ]
 
 { #category : #accessing }
+AlbEditorSelectionView >> vertices [
+
+	^ vertices 
+]
+
+{ #category : #accessing }
 AlbEditorSelectionView >> vertices: aListOfPoints [
 
-	vertices := aListOfPoints
+	vertices := aListOfPoints.
+	selectionGeometry := self newSelectionGeometry
 ]

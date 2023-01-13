@@ -4,11 +4,9 @@ Extension { #name : #AlbEditorSelectionView }
 AlbEditorSelectionView >> aeDrawOn: aeCanvas in: anInfiniteElement [
 	"Draw an editor element selection polygon"
 
-	vertices ifEmpty: [ ^ self ].
-
+	self selectionGeometry ifNil: [ ^ self ].
 	aeCanvas restoreContextAfter: [ 
-
-		self geometry aeApplyTo: aeCanvas element: anInfiniteElement.
+		self selectionGeometry aeApplyTo: aeCanvas element: anInfiniteElement.
 		(self backgroundIn: anInfiniteElement) aeApplyTo: aeCanvas.
 		aeCanvas setOutskirtsCentered.
 

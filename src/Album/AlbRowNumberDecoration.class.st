@@ -4,21 +4,6 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #'as yet unclassified' }
-AlbRowNumberDecoration >> aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement [
-
-	aeCanvas restoreContextAfter: [ 
-		self selectionLimitRectangleOf: anItemElement in: anInfiniteElement do: [ :rect | 
-			aeCanvas pathTranslate: 0 @ anItemElement bounds inParent top.
-			aeCanvas pathFactory: [ :cairoContext | cairoContext rectangle: rect ].
-			aeCanvas setBackgroundWith: [ 
-				aeCanvas setSourceColor: (self selectionBackgroundColorOf: anItemElement in: anInfiniteElement) ].
-			aeCanvas setBorderOff.
-			aeCanvas drawFigure ] ].
-	super 	aeDraw: anItemElement overOn: aeCanvas in: anInfiniteElement 
-
-]
-
 { #category : #accessing }
 AlbRowNumberDecoration >> selectionBackgroundColorOf: anItemElement in: anInfiniteElement [
 

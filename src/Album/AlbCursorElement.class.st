@@ -37,6 +37,7 @@ AlbCursorElement >> initialize [
 	self beBlinking: self defaultBlinking.
 	self focusability: BlFocusability none.
 	self elevation: (BlRelativeElevation elevation: 10000).
+	self preventMouseEvents.
 	self constraintsDo: [ :c | 
 		c horizontal exact: 2.
 		c vertical matchParent ]

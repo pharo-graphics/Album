@@ -11,7 +11,6 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	screenPosition := (element
 		                   localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                   fromChild: anEvent currentTarget) center.
-
 	editor := element editor.
 	navigator := editor navigator.
 	selecter := editor selecter.

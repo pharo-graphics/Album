@@ -438,10 +438,6 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 		tgcaText append: ((lrt , String cr asRopedText) fontName: 'Source Code Pro'; fontSize: 20)].
 
 	ed := tgcaText onAlbum.
-	ed constraintsDo: [ :c | 
-		c vertical matchParent. 
-		c horizontal fitContent].
-	"ed inspect."
 	ed withRowNumbers.
 	
 	vscrollBar := BlVerticalScrollbarElement new.
@@ -450,7 +446,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 			c margin: (BlInsets right: 2).
 			c ignored horizontal alignRight.
 			c ignored vertical alignBottom]. 
-	vscrollBar attachTo: ed.
+	vscrollBar attachTo: ed infinite.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space root addChild: vscrollBar.
@@ -618,7 +614,7 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	ed := AlbEditorElement new.
 	ed withRowNumbers.
 	ed editor: editor.
-	space := BlSpace new.
+	space := OBlSpace new.
 	space root addChild: ed.
 	space show
 ]

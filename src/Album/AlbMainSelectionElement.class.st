@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbEditorSelectionElement,
+	#name : #AlbMainSelectionElement,
 	#superclass : #BlOverlayElement,
 	#instVars : [
 		'selection',
@@ -16,19 +16,19 @@ Class {
 }
 
 { #category : #accessing }
-AlbEditorSelectionElement >> borderWidth [
+AlbMainSelectionElement >> borderWidth [
 
 	^ borderWidth ifNil: [ borderWidth := 1 ]
 ]
 
 { #category : #accessing }
-AlbEditorSelectionElement >> borderWidth: aNumber [
+AlbMainSelectionElement >> borderWidth: aNumber [
 
 	borderWidth := aNumber
 ]
 
 { #category : #'private - focus' }
-AlbEditorSelectionElement >> defaultSelectionColor [
+AlbMainSelectionElement >> defaultSelectionColor [
 
 	^  (Color
 		  r: 0.9530791788856305
@@ -38,13 +38,13 @@ AlbEditorSelectionElement >> defaultSelectionColor [
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorSelectionElement >> extentChangedIn: anInfiniteElement [
+AlbMainSelectionElement >> extentChangedIn: anInfiniteElement [
 
 	self updateMainSelectionVerticesIn: anInfiniteElement
 ]
 
 { #category : #initialization }
-AlbEditorSelectionElement >> initialize [ 
+AlbMainSelectionElement >> initialize [ 
 
 	super initialize.
 	selectionPolygon := BlPolygonElement new.
@@ -54,7 +54,7 @@ AlbEditorSelectionElement >> initialize [
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> maxXRightCoord: yCoord fromRectangles: aListOfRectangles [
+AlbMainSelectionElement >> maxXRightCoord: yCoord fromRectangles: aListOfRectangles [
 	" optimized with compiled in-line primitives "
 
 	| l mostRight |
@@ -65,7 +65,7 @@ AlbEditorSelectionElement >> maxXRightCoord: yCoord fromRectangles: aListOfRecta
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> minXLeftCoord: yCoord fromRectangles: aListOfRectangles [
+AlbMainSelectionElement >> minXLeftCoord: yCoord fromRectangles: aListOfRectangles [
 	"optimized with compiled in-line primitives "
 
 	| l mostLeft |
@@ -76,13 +76,13 @@ AlbEditorSelectionElement >> minXLeftCoord: yCoord fromRectangles: aListOfRectan
 ]
 
 { #category : #'private - focus' }
-AlbEditorSelectionElement >> onGotFocus [ 
+AlbMainSelectionElement >> onGotFocus [ 
 
 	self selectionColor: self defaultSelectionColor
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorSelectionElement >> onInstalledIn: anEditorElement [
+AlbMainSelectionElement >> onInstalledIn: anEditorElement [
 
 	editorHandler := AlbSelectionViewEditorHandler new
 		                 selectionView: self;
@@ -96,13 +96,13 @@ AlbEditorSelectionElement >> onInstalledIn: anEditorElement [
 ]
 
 { #category : #'private - focus' }
-AlbEditorSelectionElement >> onLostFocus [ 
+AlbMainSelectionElement >> onLostFocus [ 
 
 	self selectionColor: (Color veryVeryLightGray )
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorSelectionElement >> onUninstalledIn: anEditorElement [
+AlbMainSelectionElement >> onUninstalledIn: anEditorElement [
 
 	anEditorElement editor removeEventHandler: editorHandler.
 	anEditorElement editor removeEventHandler: focusHandler.
@@ -110,7 +110,7 @@ AlbEditorSelectionElement >> onUninstalledIn: anEditorElement [
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> rectanglesAtY: anY fromRectangles: aListOfRectangles [
+AlbMainSelectionElement >> rectanglesAtY: anY fromRectangles: aListOfRectangles [
 
 	| rectsAtYExcBottomLines |
 	rectsAtYExcBottomLines := self rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles.
@@ -119,21 +119,21 @@ AlbEditorSelectionElement >> rectanglesAtY: anY fromRectangles: aListOfRectangle
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles [
+AlbMainSelectionElement >> rectsAtYExcBottomLines: anY fromRectangles: aListOfRectangles [
 
 	^ Array streamContents: [ :stream | aListOfRectangles do: [ :rect |
 			(rect top <= anY and: [ rect bottom > anY ]) ifTrue: [ stream nextPut: rect ] ]]
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles [
+AlbMainSelectionElement >> rectsAtYIncBottomLines: anY fromRectangles: aListOfRectangles [
 
 	^ Array streamContents: [ :stream | aListOfRectangles do: [ :rect |
 			(rect top <= anY and: [ rect bottom = anY ]) ifTrue: [ stream nextPut: rect ] ]]
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorSelectionElement >> selectionChangedIn: anInfiniteElement [
+AlbMainSelectionElement >> selectionChangedIn: anInfiniteElement [
 
 	(selection = anInfiniteElement selection and: [vertices notEmpty]) ifTrue: [ ^ self ].
 	selection := anInfiniteElement selection copy.
@@ -141,13 +141,13 @@ AlbEditorSelectionElement >> selectionChangedIn: anInfiniteElement [
 ]
 
 { #category : #accessing }
-AlbEditorSelectionElement >> selectionColor [
+AlbMainSelectionElement >> selectionColor [
 
 	^ selectionColor
 ]
 
 { #category : #accessing }
-AlbEditorSelectionElement >> selectionColor: aColor [
+AlbMainSelectionElement >> selectionColor: aColor [
 
 	aColor = selectionColor ifTrue: [ ^ self ].
 	selectionColor := aColor.
@@ -156,7 +156,7 @@ AlbEditorSelectionElement >> selectionColor: aColor [
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> selectionRectanglesIn: anInfiniteElement [
+AlbMainSelectionElement >> selectionRectanglesIn: anInfiniteElement [
 
 	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
 
@@ -167,17 +167,17 @@ AlbEditorSelectionElement >> selectionRectanglesIn: anInfiniteElement [
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorSelectionElement >> selectionScrolled: aPoint in: anInfiniteElement [
+AlbMainSelectionElement >> selectionScrolled: aPoint in: anInfiniteElement [
 
 	self updateMainSelectionVerticesIn: anInfiniteElement
 ]
 
 { #category : #'infinite element changes' }
-AlbEditorSelectionElement >> textEditedIn: anInfiniteElement [
+AlbMainSelectionElement >> textEditedIn: anInfiniteElement [
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> updateMainSelectionVerticesIn: anInfiniteElement [
+AlbMainSelectionElement >> updateMainSelectionVerticesIn: anInfiniteElement [
 
 		| rects |
 		rects := self selectionRectanglesIn: anInfiniteElement.
@@ -186,7 +186,7 @@ AlbEditorSelectionElement >> updateMainSelectionVerticesIn: anInfiniteElement [
 ]
 
 { #category : #accessing }
-AlbEditorSelectionElement >> vertices: aListOfPoints [
+AlbMainSelectionElement >> vertices: aListOfPoints [
 
 	vertices := aListOfPoints.
 	selectionPolygon vertices: vertices.
@@ -197,7 +197,7 @@ AlbEditorSelectionElement >> vertices: aListOfPoints [
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> verticesFromRectangles: aListOfRectangles [
+AlbMainSelectionElement >> verticesFromRectangles: aListOfRectangles [
 	" raw implementation https://stackoverflow.com/questions/289779/calculating-a-boundary-around-several-linked-rectangles. "
 	
 	| ret yCoords previousLeftCoord previousRightCoord |
@@ -224,7 +224,7 @@ AlbEditorSelectionElement >> verticesFromRectangles: aListOfRectangles [
 ]
 
 { #category : #'private - vertices computing' }
-AlbEditorSelectionElement >> yCoordsFromRectangles: aListOfRectangles [
+AlbMainSelectionElement >> yCoordsFromRectangles: aListOfRectangles [
 
 	^ Array streamContents: [ :stream | 
 		  aListOfRectangles do: [ :rect | 

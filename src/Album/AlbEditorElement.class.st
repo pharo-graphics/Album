@@ -382,6 +382,12 @@ AlbEditorElement >> withoutRowNumbers [
 ]
 
 { #category : #'private - view accessing' }
+AlbEditorElement >> wordStencil [
+
+	^ self infinite wordStencil
+]
+
+{ #category : #'private - view accessing' }
 AlbEditorElement >> wordStencil: aWordStencil [
 
 	self infinite wordStencil: aWordStencil

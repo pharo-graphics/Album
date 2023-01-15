@@ -222,6 +222,12 @@ AlbInfiniteTextEditorElement >> hasSelection [
 	^ self selection isNotEmpty
 ]
 
+{ #category : #accessing }
+AlbInfiniteTextEditorElement >> infinite [
+
+	^ self
+]
+
 { #category : #initialization }
 AlbInfiniteTextEditorElement >> initialize [
 	

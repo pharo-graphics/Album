@@ -103,6 +103,12 @@ TAlbInfiniteDecorator >> hasSelection [
 	^ self next hasSelection
 ]
 
+{ #category : #'t - infinite editor accessing' }
+TAlbInfiniteDecorator >> infinite [
+
+	^ self next infinite
+]
+
 { #category : #'t - infinite editor accessing - editor' }
 TAlbInfiniteDecorator >> inputFilter: aTextEditorInputFilter [
 
@@ -288,12 +294,6 @@ TAlbInfiniteDecorator >> textSnapshot [
 	<return: #BlText>
 
 	^ self next textSnapshot
-]
-
-{ #category : #'t - infinite editor model - events' }
-TAlbInfiniteDecorator >> whenActionRequired: anActionRequiredAnnouncement [
-
-	self next whenActionRequired: anActionRequiredAnnouncement
 ]
 
 { #category : #'t - infinite editor view - configuration' }

@@ -582,12 +582,6 @@ AlbInfiniteTextEditorElement >> textSnapshot [
 	^ self editor textSnapshot
 ]
 
-{ #category : #'model - events' }
-AlbInfiniteTextEditorElement >> whenActionRequired: anActionRequiredAnnouncement [
-
-	anActionRequiredAnnouncement value: self
-]
-
 { #category : #'view - configuration' }
 AlbInfiniteTextEditorElement >> whenModeChangedDo: aBlock [
 

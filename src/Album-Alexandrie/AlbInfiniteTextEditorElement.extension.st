@@ -1,7 +1,7 @@
-Extension { #name : #AlbInfiniteElement }
+Extension { #name : #AlbInfiniteTextEditorElement }
 
 { #category : #'*Album-Alexandrie' }
-AlbInfiniteElement >> aeDrawChildrenOn: aeCanvas [
+AlbInfiniteTextEditorElement >> aeDrawChildrenOn: aeCanvas [
 
 	self selectionViewDo: [ :selView | 
 		selView aeDrawOn: aeCanvas in: self ].

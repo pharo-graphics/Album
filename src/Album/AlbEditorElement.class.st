@@ -11,7 +11,8 @@ Class {
 	#classTraits : 'TAlbInfiniteDecorator classTrait + TOBlLayoutResizable classTrait',
 	#instVars : [
 		'next',
-		'selectionElement'
+		'selectionElement',
+		'oppositeUpdater'
 	],
 	#category : #'Album-UI'
 }
@@ -49,18 +50,45 @@ AlbEditorElement >> initialize [
 	self background: self defaultBackground.
 	self margin: self defaultMargin.
 	self padding: self defaultPadding.
-	self next: AlbInfiniteTextEditorElement new.
+	self next: AlbInfiniteEditorElement new.
+	self installSelectionElement.
+	self installOppositeUpdater.
+	self whenModeChangedDo: [ self modeChanged ].
 	self addChild: next.
-	self infinite editor when: BlInfiniteDataSourceChanged do: [ self initializeSelectionElement ].
-	self matchParent
+	self matchParent.
 ]
 
 { #category : #initialization }
-AlbEditorElement >> initializeSelectionElement [
+AlbEditorElement >> installOppositeUpdater [
+
+	oppositeUpdater ifNotNil: [ oppositeUpdater onUninstalledIn: self ].
+	oppositeUpdater := AlbOppositeUpdater new.
+	oppositeUpdater onInstalledIn: self
+]
+
+{ #category : #initialization }
+AlbEditorElement >> installSelectionElement [
 
 	selectionElement ifNotNil: [ :se | 
 		se onUninstalledIn: self.
 		se parentDo: [ se removeFromParent ] ].
 	selectionElement := self mode selectionElement.
 	selectionElement ifNotNil: [ :se | se onInstalledIn: self ]
+]
+
+{ #category : #initialization }
+AlbEditorElement >> modeChanged [
+
+	self installSelectionElement.
+	self installOppositeUpdater 
+]
+
+{ #category : #initialization }
+AlbEditorElement >> selectionColor [
+
+	^  (Color
+		  r: 0.9530791788856305
+		  g: 0.8084066471163245
+		  b: 0.1906158357771261
+		  alpha: 1.0)
 ]

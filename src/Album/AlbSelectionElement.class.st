@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbSelectionElement,
-	#superclass : #OBlAdjacentRectanglesElement,
+	#superclass : #AlbTextPortionElement,
 	#instVars : [
 		'editorHandler',
 		'elementHandler',
@@ -21,16 +21,6 @@ AlbSelectionElement >> defaultBackground [
 	^ self defaultSelectionColor 
 ]
 
-{ #category : #initialization }
-AlbSelectionElement >> defaultSelectionColor [
-
-	^  (Color
-		  r: 0.9530791788856305
-		  g: 0.8084066471163245
-		  b: 0.1906158357771261
-		  alpha: 1.0)
-]
-
 { #category : #'private - infinite element changes' }
 AlbSelectionElement >> extentChangedIn: anInfiniteElement [
 
@@ -44,39 +34,49 @@ AlbSelectionElement >> initialize [
 	self vertices: #().
 	self constraintsDo: [ :c | c ignoreByLayout  ].
 	self outskirts: (BlOutskirts centered).
-	self background: self defaultBackground.
-	self border:	(BlBorder paint: self defaultSelectionColor twiceDarker  width: self borderWidth)
+
 ]
 
 { #category : #'private - focus' }
-AlbSelectionElement >> onGotFocus [ 
+AlbSelectionElement >> onGotFocusIn: anEditorElement [ 
 
-	self background: self defaultSelectionColor.
-	self border:	(BlBorder paint: self defaultSelectionColor twiceDarker  width: self borderWidth)
+	self background: anEditorElement selectionColor.
+	self border:	(BlBorder paint: anEditorElement selectionColor twiceDarker  width: self borderWidth)
 ]
 
 { #category : #initialization }
 AlbSelectionElement >> onInstalledIn: anEditorElement [
 
-	editorHandler := AlbSelectionViewEditorHandler new
-		                 selectionView: self;
+
+	self background: anEditorElement selectionColor.
+	self border:	(BlBorder paint: anEditorElement selectionColor twiceDarker  width: self borderWidth).
+	editorHandler := AlbSelectionEditorHandler new
+		                 selectionElement: self;
 		                 editorElement: anEditorElement;
 		                 yourself.
-	elementHandler := AlbSelectionViewElementHandler new
-		                  selectionView: self;
+	elementHandler := AlbSelectionElementHandler new
+		                  selectionElement: self;
 		                  editorElement: anEditorElement;
 		                  yourself.
-	infiniteHandler := AlbSelectionViewInfiniteHandler new
-		                   selectionView: self;
+	infiniteHandler := AlbSelectionInfiniteHandler new
+		                   selectionElement: self;
 		                   editorElement: anEditorElement;
 		                   yourself.
 	anEditorElement editor addEventHandler: editorHandler.
 	anEditorElement addEventHandler: elementHandler.
-	anEditorElement infinite addEventHandler: infiniteHandler
+	anEditorElement infinite addEventHandler: infiniteHandler.
+
+	anEditorElement infinite
+		when: AlbTextEditorReplacedEvent
+		do: [ :event | 
+			event previous ifNotNil: [ :prev | prev removeEventHandler: editorHandler ].
+			event current ifNotNil: [ :curr | curr addEventHandler: editorHandler ] ].
+
+
 ]
 
 { #category : #'private - focus' }
-AlbSelectionElement >> onLostFocus [ 
+AlbSelectionElement >> onLostFocusIn: anEditorElement [  
 
 	| c |
 	c := Color lightGray alpha: 0.1.
@@ -89,8 +89,7 @@ AlbSelectionElement >> onUninstalledIn: anEditorElement [
 
 	anEditorElement infinite removeEventHandler: infiniteHandler.
 	anEditorElement editor removeEventHandler: editorHandler.
-	anEditorElement removeEventHandler: elementHandler.
-
+	anEditorElement removeEventHandler: elementHandler
 ]
 
 { #category : #'private - infinite element changes' }

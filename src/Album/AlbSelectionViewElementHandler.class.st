@@ -7,19 +7,11 @@ Class {
 { #category : #'api - accessing' }
 AlbSelectionViewElementHandler >> elementExtentChangedEvent: anEvent [
 
-	self selectionView extentChangedIn: anEvent currentTarget
-]
-
-{ #category : #'api - accessing' }
-AlbSelectionViewElementHandler >> elementScrolledEvent: anEvent [
-
-	self selectionView selectionScrolled: anEvent delta in: anEvent currentTarget
+	self selectionView extentChangedIn: self editorElement
 ]
 
 { #category : #'api - accessing' }
 AlbSelectionViewElementHandler >> eventsToHandle [
 
-	^ { 
-		  BlElementExtentChangedEvent.
-		  BlElementScrolledEvent }
+	^ { BlElementExtentChangedEvent }
 ]

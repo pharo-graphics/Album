@@ -447,6 +447,7 @@ AlbTextEditor >> notifyInserted: aText at: aTextIndex [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifySelectionChanged: aSelection [
+
 	self dispatchEvent: (AlbSelectionChangedEvent new selection: aSelection)
 ]
 

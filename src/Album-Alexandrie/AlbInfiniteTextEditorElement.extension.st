@@ -4,7 +4,7 @@ Extension { #name : #AlbInfiniteTextEditorElement }
 AlbInfiniteTextEditorElement >> aeDrawChildrenOn: aeCanvas [
 
 	self selectionViewDo: [ :selView | 
-		selView aeDrawOn: aeCanvas in: self ].
+		"selView aeDrawOn: aeCanvas in: self" ].
 
 	" draw then decorate eventually (between the background and the childrens)"
 	super aeDrawChildrenOn: aeCanvas

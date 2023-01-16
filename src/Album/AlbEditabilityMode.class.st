@@ -27,3 +27,9 @@ AlbEditabilityMode >> defaultWordStencil [
 
 	^ AlbTextWordPieceStencil readOnly
 ]
+
+{ #category : #initialization }
+AlbEditabilityMode >> selectionElement [
+
+	^ AlbSelectionElement new
+]

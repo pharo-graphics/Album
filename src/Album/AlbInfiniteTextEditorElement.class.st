@@ -236,7 +236,6 @@ AlbInfiniteTextEditorElement >> initialize [
 	
 	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
-	self padding: self defaultPadding.
 	self editor: self defaulTextEditor.
 
 	" action when  mode change (Observable slot) "
@@ -247,7 +246,8 @@ AlbInfiniteTextEditorElement >> initialize [
 	self padding: self defaultPadding.
 	self whenLayoutedDo: [ 
 		self geometryChanged.
-		self selectionChanged ]
+		self selectionChanged ].
+	self elevation: ((BlRelativeElevation elevation: SmallInteger maxVal)).
 ]
 
 { #category : #'accessing - editor' }
@@ -323,7 +323,7 @@ AlbInfiniteTextEditorElement >> navigator [
 AlbInfiniteTextEditorElement >> onExtentChanged [
 	super onExtentChanged.
 	self geometryChanged.
-	self selectionViewDo: [ :selView | selView extentChangedIn: self ]
+	self selectionViewDo: [ :selView | "selView extentChangedIn: self" ]
 	
 ]
 
@@ -345,7 +345,7 @@ AlbInfiniteTextEditorElement >> onLostFocus [
 AlbInfiniteTextEditorElement >> onScrolled: aPoint [
 	super onScrolled: aPoint.
 	self geometryChanged.
-	self selectionViewDo: [ :selView | selView selectionScrolled: aPoint in: self ]
+	self selectionViewDo: [ :selView | "selView selectionScrolled: aPoint in: self" ]
 
 
 ]
@@ -417,7 +417,7 @@ AlbInfiniteTextEditorElement >> selection [
 { #category : #'event management' }
 AlbInfiniteTextEditorElement >> selectionChanged [
 
-	self selectionViewDo: [ :selView | selView selectionChangedIn: self ]
+	"self selectionViewDo: [ :selView | selView selectionChangedIn: self ]"
 ]
 
 { #category : #'accessing - selection' }
@@ -433,12 +433,12 @@ AlbInfiniteTextEditorElement >> selectionColor [
 { #category : #'accessing - selection' }
 AlbInfiniteTextEditorElement >> selectionView: anEditorSelectionView [
 
-	anEditorSelectionView ifNotNil: [ 
+	"anEditorSelectionView ifNotNil: [ 
 		anEditorSelectionView
 			borderWidth: 2;
 			borderColor: self selectionColor twiceDarker;
 			selectionColor: self selectionColor ].
-	selectionView := anEditorSelectionView
+	selectionView := anEditorSelectionView"
 ]
 
 { #category : #'accessing - selection' }
@@ -449,7 +449,7 @@ AlbInfiniteTextEditorElement >> selectionViewDo: aBlock [
 { #category : #'private - view accessing' }
 AlbInfiniteTextEditorElement >> setRemanents [
 
-	self selectionViewDo: [ :selView | selView setRemanentsIn: self ]
+	self selectionViewDo: [ :selView | "selView setRemanentsIn: self" ]
 ]
 
 { #category : #'private - accessing editor' }
@@ -514,7 +514,7 @@ AlbInfiniteTextEditorElement >> text: aText [
 { #category : #'api - editor' }
 AlbInfiniteTextEditorElement >> textEdited [
 
-	self selectionViewDo: [ :selView | selView textEditedIn: self ]
+	self selectionViewDo: [ :selView | "selView textEditedIn: self" ]
 ]
 
 { #category : #'private - view accessing' }

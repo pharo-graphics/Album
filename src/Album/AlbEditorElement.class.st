@@ -10,7 +10,8 @@ Class {
 	#traits : 'TAlbInfiniteDecorator + TOBlLayoutResizable',
 	#classTraits : 'TAlbInfiniteDecorator classTrait + TOBlLayoutResizable classTrait',
 	#instVars : [
-		'next'
+		'next',
+		'selectionElement'
 	],
 	#category : #'Album-UI'
 }
@@ -36,11 +37,8 @@ AlbEditorElement >> defaultMargin [
 { #category : #initialization }
 AlbEditorElement >> defaultPadding [
 
-	^ BlInsets
-		  top: 2
-		  left: 3
-		  bottom: 2
-		  right: 3
+	^ BlInsets empty
+
 ]
 
 { #category : #initialization }
@@ -53,5 +51,16 @@ AlbEditorElement >> initialize [
 	self padding: self defaultPadding.
 	self next: AlbInfiniteTextEditorElement new.
 	self addChild: next.
+	self infinite editor when: BlInfiniteDataSourceChanged do: [ self initializeSelectionElement ].
 	self matchParent
+]
+
+{ #category : #initialization }
+AlbEditorElement >> initializeSelectionElement [
+
+	selectionElement ifNotNil: [ :se | 
+		se onUninstalledIn: self.
+		se parentDo: [ se removeFromParent ] ].
+	selectionElement := self mode selectionElement.
+	selectionElement ifNotNil: [ :se | se onInstalledIn: self ]
 ]

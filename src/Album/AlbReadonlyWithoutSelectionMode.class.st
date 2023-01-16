@@ -22,3 +22,10 @@ AlbReadonlyWithoutSelectionMode >> defaultShortcuts [
 
 	^ {  }
 ]
+
+{ #category : #initialization }
+AlbReadonlyWithoutSelectionMode >> selectionElement [
+
+	^ nil
+
+]

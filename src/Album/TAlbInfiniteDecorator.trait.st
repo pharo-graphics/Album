@@ -218,6 +218,12 @@ TAlbInfiniteDecorator >> selection [
 	^ self next selection
 ]
 
+{ #category : #'t - infinite editor accessing - selection' }
+TAlbInfiniteDecorator >> selectionColor [
+
+	^ self next selectionColor
+]
+
 { #category : #'t - infinite editor private - view accessing' }
 TAlbInfiniteDecorator >> setRemanents [
 

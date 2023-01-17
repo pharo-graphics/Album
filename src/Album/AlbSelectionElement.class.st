@@ -57,7 +57,7 @@ AlbSelectionElement >> onInstalledIn: anEditorElement [
 AlbSelectionElement >> onLostFocusIn: anEditorElement [  
 
 	| c |
-	c := Color lightGray alpha: 0.1.
+	c := Color lightGray alpha: 0.2.
 	self background: c.
 	self border:	(BlBorder paint: c twiceDarker  width: self borderWidth)
 ]

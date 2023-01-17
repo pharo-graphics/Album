@@ -186,6 +186,12 @@ TAlbInfiniteDecorator >> removeEditorShortcut: aTextEditorInteraction [
 	self next removeEditorShortcut: aTextEditorInteraction
 ]
 
+{ #category : #'t - infinite editor steps - interactions' }
+TAlbInfiniteDecorator >> requestFocus [
+
+	self next requestFocus
+]
+
 { #category : #'t - infinite editor scrolling' }
 TAlbInfiniteDecorator >> scrollToLast [
 	"Scroll instantly to the last segment"

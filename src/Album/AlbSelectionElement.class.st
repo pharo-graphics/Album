@@ -2,39 +2,20 @@ Class {
 	#name : #AlbSelectionElement,
 	#superclass : #AlbTextPortionElement,
 	#instVars : [
-		'editorHandler',
-		'elementHandler',
-		'infiniteHandler'
+		'focusHandler',
+		'blurHandler',
+		'scrollHandler',
+		'extentHandler',
+		'editorChangeHandler',
+		'selectionHandler'
 	],
 	#category : #'Album-UI'
 }
-
-{ #category : #accessing }
-AlbSelectionElement >> borderWidth [
-
-	^ 1
-]
-
-{ #category : #initialization }
-AlbSelectionElement >> defaultBackground [ 
-
-	^ self defaultSelectionColor 
-]
 
 { #category : #'private - infinite element changes' }
 AlbSelectionElement >> extentChangedIn: anInfiniteElement [
 
 	self updateMainSelectionVerticesIn: anInfiniteElement
-]
-
-{ #category : #initialization }
-AlbSelectionElement >> initialize [ 
-
-	super initialize.
-	self vertices: #().
-	self constraintsDo: [ :c | c ignoreByLayout  ].
-	self outskirts: (BlOutskirts centered).
-
 ]
 
 { #category : #'private - focus' }
@@ -47,31 +28,28 @@ AlbSelectionElement >> onGotFocusIn: anEditorElement [
 { #category : #initialization }
 AlbSelectionElement >> onInstalledIn: anEditorElement [
 
-
 	self background: anEditorElement selectionColor.
-	self border:	(BlBorder paint: anEditorElement selectionColor twiceDarker  width: self borderWidth).
-	editorHandler := AlbSelectionEditorHandler new
-		                 selectionElement: self;
-		                 editorElement: anEditorElement;
-		                 yourself.
-	elementHandler := AlbSelectionElementHandler new
-		                  selectionElement: self;
-		                  editorElement: anEditorElement;
-		                  yourself.
-	infiniteHandler := AlbSelectionInfiniteHandler new
-		                   selectionElement: self;
-		                   editorElement: anEditorElement;
-		                   yourself.
-	anEditorElement editor addEventHandler: editorHandler.
-	anEditorElement addEventHandler: elementHandler.
-	anEditorElement infinite addEventHandler: infiniteHandler.
+	self border: (BlBorder paint: anEditorElement selectionColor twiceDarker width: self borderWidth).
+	
+	selectionHandler := BlEventHandler on: AlbSelectionChangedEvent do: [ self selectionChangedIn: anEditorElement ].
+	extentHandler := BlEventHandler on: BlElementExtentChangedEvent do: [ self extentChangedIn: anEditorElement ].
+	scrollHandler := BlEventHandler on: BlElementScrolledEvent do: [ :event | self selectionScrolled: event delta in: anEditorElement].
+	focusHandler := BlEventHandler on: BlFocusEvent do: [ self onGotFocusIn: anEditorElement ].
+	blurHandler := BlEventHandler on: BlBlurEvent do: [ self onLostFocusIn: anEditorElement ].
 
-	anEditorElement infinite
-		when: AlbTextEditorReplacedEvent
-		do: [ :event | 
-			event previous ifNotNil: [ :prev | prev removeEventHandler: editorHandler ].
-			event current ifNotNil: [ :curr | curr addEventHandler: editorHandler ] ].
+	editorChangeHandler := 
+		BlEventHandler 
+			on: AlbTextEditorReplacedEvent 
+			do: [ :event | 
+				event previous ifNotNil: [ :prev | prev removeEventHandler: selectionHandler ].
+				event current ifNotNil: [ :curr | curr addEventHandler: selectionHandler ] ].
 
+	anEditorElement editor addEventHandler: selectionHandler.
+	anEditorElement addEventHandler: extentHandler.
+	anEditorElement infinite addEventHandler: scrollHandler.
+	anEditorElement infinite addEventHandler: focusHandler.
+	anEditorElement infinite addEventHandler: blurHandler.
+	anEditorElement infinite addEventHandler: editorChangeHandler
 
 ]
 
@@ -87,9 +65,13 @@ AlbSelectionElement >> onLostFocusIn: anEditorElement [
 { #category : #initialization }
 AlbSelectionElement >> onUninstalledIn: anEditorElement [
 
-	anEditorElement infinite removeEventHandler: infiniteHandler.
-	anEditorElement editor removeEventHandler: editorHandler.
-	anEditorElement removeEventHandler: elementHandler
+	anEditorElement editor removeEventHandler: selectionHandler.
+	anEditorElement removeEventHandler: extentHandler.
+	anEditorElement infinite removeEventHandler: scrollHandler.
+	anEditorElement infinite removeEventHandler: focusHandler.
+	anEditorElement infinite removeEventHandler: blurHandler.
+	anEditorElement infinite removeEventHandler: editorChangeHandler
+
 ]
 
 { #category : #'private - infinite element changes' }

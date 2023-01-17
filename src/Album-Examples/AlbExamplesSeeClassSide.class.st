@@ -371,7 +371,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 	ed constraintsDo: [ :c | 
 		c vertical resizer: BlLayoutResizer matchParent. 
 		c horizontal resizer: BlLayoutResizer matchParent].
-	ed text: ((String loremIpsum: 10000) asRopedText "fontName: 'Source Code Pro'").
+	ed text: ((String loremIpsum: 100000) asRopedText "fontName: 'Source Code Pro'").
 	
 	hscrollBar := BlHorizontalScrollbarElement new.
 	hscrollBar constraintsDo: [ :c |
@@ -380,6 +380,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 			"c ignored vertical alignLeft."
 			c ignored vertical alignBottom]. 
 	hscrollBar attachTo: ed.
+	ed inspect.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space root addChild: hscrollBar.
@@ -614,6 +615,7 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	ed := AlbEditorElement new.
 	ed withRowNumbers.
 	ed editor: editor.
+	ed inspect.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space show

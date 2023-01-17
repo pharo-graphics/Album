@@ -10,12 +10,6 @@ AlbEditabilityMode >> defaultEditorElementEventHandlers [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #initialization }
-AlbEditabilityMode >> defaultSelectionView [
-
-	^ AlbEditorSelectionView new
-]
-
 { #category : #'shortcut management' }
 AlbEditabilityMode >> defaultShortcuts [
 

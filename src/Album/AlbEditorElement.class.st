@@ -12,7 +12,8 @@ Class {
 	#instVars : [
 		'next',
 		'selectionElement',
-		'oppositeUpdater'
+		'oppositeUpdater',
+		'remanentUpdater'
 	],
 	#category : #'Album-UI'
 }
@@ -53,9 +54,11 @@ AlbEditorElement >> initialize [
 	self next: AlbInfiniteEditorElement new.
 	self installSelectionElement.
 	self installOppositeUpdater.
-	self whenModeChangedDo: [ self modeChanged ].
+	self installRemanentUpdater.
 	self addChild: next.
 	self matchParent.
+	self next whenModeChangedDo: [ self modeChanged ].
+
 ]
 
 { #category : #initialization }
@@ -64,6 +67,14 @@ AlbEditorElement >> installOppositeUpdater [
 	oppositeUpdater ifNotNil: [ oppositeUpdater onUninstalledIn: self ].
 	oppositeUpdater := AlbOppositeUpdater new.
 	oppositeUpdater onInstalledIn: self
+]
+
+{ #category : #initialization }
+AlbEditorElement >> installRemanentUpdater [
+
+	remanentUpdater ifNotNil: [ remanentUpdater onUninstalledIn: self ].
+	remanentUpdater := AlbRemanentUpdater new.
+	remanentUpdater onInstalledIn: self
 ]
 
 { #category : #initialization }
@@ -80,7 +91,8 @@ AlbEditorElement >> installSelectionElement [
 AlbEditorElement >> modeChanged [
 
 	self installSelectionElement.
-	self installOppositeUpdater 
+	self installOppositeUpdater.
+	self installRemanentUpdater 
 ]
 
 { #category : #initialization }

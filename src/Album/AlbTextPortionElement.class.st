@@ -10,11 +10,21 @@ AlbTextPortionElement >> adjacentRectangles: aCollection [
 	self vertices: (self verticesFromRectangles: aCollection)
 ]
 
+{ #category : #accessing }
+AlbTextPortionElement >> borderWidth [
+
+	^ 1
+]
+
 { #category : #initialization }
 AlbTextPortionElement >> initialize [ 
 
 	super initialize.
+	self vertices: #().
 	visuals := BlCustomVisuals new geometry: BlPolygonGeometry new.
+	self constraintsDo: [ :c | c ignoreByLayout  ].
+	self outskirts: (BlOutskirts centered).
+
 
 ]
 

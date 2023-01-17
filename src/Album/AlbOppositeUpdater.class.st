@@ -5,7 +5,8 @@ Class {
 		'currentOppositeTextElement',
 		'extentChangeHandler',
 		'cursorMoveHandler',
-		'scrollHandler'
+		'scrollHandler',
+		'infiniteEditorChangeHandler'
 	],
 	#category : #'Album-UI'
 }
@@ -46,9 +47,20 @@ AlbOppositeUpdater >> onInstalledIn: anEditorElement [
 		                 on: BlElementScrolledEvent
 		                 do: [ :evt | self scrollEventIn: anEditorElement ].
 
+	infiniteEditorChangeHandler := BlEventHandler
+		                               on: AlbTextEditorReplacedEvent
+		                               do: [ :event | 
+			                               event previous ifNotNil: [ :prev | 
+				                               prev removeEventHandler:
+					                               cursorMoveHandler ].
+			                               event current ifNotNil: [ :curr | 
+				                               curr addEventHandler:
+					                               cursorMoveHandler ] ].
+
 	anEditorElement addEventHandler: extentChangeHandler.
 	anEditorElement editor addEventHandler: cursorMoveHandler.
-	anEditorElement infinite addEventHandler: scrollHandler
+	anEditorElement infinite addEventHandler: scrollHandler.
+	anEditorElement infinite addEventHandler: infiniteEditorChangeHandler
 ]
 
 { #category : #'api - install/uninstall  hook' }
@@ -56,13 +68,14 @@ AlbOppositeUpdater >> onUninstalledIn: anEditorElement [
 
 	anEditorElement removeEventHandler: extentChangeHandler.
 	anEditorElement editor removeEventHandler: cursorMoveHandler.
-	anEditorElement infinite removeEventHandler: scrollHandler
+	anEditorElement infinite removeEventHandler: scrollHandler.
+	anEditorElement infinite removeEventHandler: infiniteEditorChangeHandler
 ]
 
 { #category : #accessing }
 AlbOppositeUpdater >> oppositeBackgroundColor [
 
-	^ Color gray alpha: 0.5
+	^ Color gray alpha: 0.3
 ]
 
 { #category : #'infinite element changes' }

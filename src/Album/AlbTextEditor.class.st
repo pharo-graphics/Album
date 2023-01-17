@@ -1015,6 +1015,12 @@ AlbTextEditor >> updater [
 	^ AlbTextEditorUpdater new editor: self
 ]
 
+{ #category : #'view configuration' }
+AlbTextEditor >> whenTextEditedDo: aBlock [
+
+	self when: AlbTextEditedEvent do: aBlock
+]
+
 { #category : #accessing }
 AlbTextEditor >> withoutCacheLimit [
 	 self cacheSize: -1

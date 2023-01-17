@@ -131,7 +131,8 @@ AlbInfiniteEditorElement >> defaultModeEventHandlers [
 { #category : #initialization }
 AlbInfiniteEditorElement >> defaultModeShortcuts [
 
-	^ self mode defaultShortcuts
+	
+	^ self mode ifNil: [ #() ] ifNotNil: [ :m | m defaultShortcuts]
 ]
 
 { #category : #initialization }
@@ -185,6 +186,7 @@ AlbInfiniteEditorElement >> editor: aTextEditor [
 	| prev |
 	prev := self editor.
 	self dataSource: aTextEditor.
+	self setupModeShortcuts.
 	self dispatchEvent: (AlbTextEditorReplacedEvent new previous: prev; current: aTextEditor ; yourself)
 
 ]

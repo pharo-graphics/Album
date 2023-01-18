@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #accessing }
-AlbRowNumberDecoration >> selectionBackgroundColorOf: anItemElement in: anInfiniteElement [
+AlbRowNumberDecoration >> selectionBackgroundOf: anItemElement in: anInfiniteElement [
 
-	^ anInfiniteElement selectionColor alpha: 0.3
+	^ Color gray alpha: 0.2
 ]
 
 { #category : #geometry }

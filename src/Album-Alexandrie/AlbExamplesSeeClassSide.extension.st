@@ -12,9 +12,9 @@ AlbExamplesSeeClassSide class >> alexandrieEditorFor: aText [
 
 	anEditor := AlbEditorElement new.
 	anEditor padding: BlInsets empty.
-	anEditor fitContent.
 	anEditor text: aRopedText.	
 	anEditor wordStencil measurer: self alexandrieFixedMeasurer.
+	anEditor matchParent.
 
 	^ anEditor
 ]

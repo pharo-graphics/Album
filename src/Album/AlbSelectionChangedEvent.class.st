@@ -16,3 +16,9 @@ AlbSelectionChangedEvent >> selection [
 AlbSelectionChangedEvent >> selection: anObject [
 	selection := anObject
 ]
+
+{ #category : #sending }
+AlbSelectionChangedEvent >> sendTo: anHandler [
+
+	anHandler selectionChangedEvent: self
+]

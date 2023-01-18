@@ -394,6 +394,15 @@ AlbTextEditor >> limitedSurroundMap [
 		}
 ]
 
+{ #category : #'model protocol' }
+AlbTextEditor >> modeChanged: aMode [
+
+	self deselecter
+		all;
+		apply;
+		notifyCursorRemoved
+]
+
 { #category : #'text - cursor' }
 AlbTextEditor >> moveCursorTo: aTextIndex [
 	"Moves cursor to a given position without any further action such as cancelling selection"
@@ -447,6 +456,7 @@ AlbTextEditor >> notifyInserted: aText at: aTextIndex [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifySelectionChanged: aSelection [
+
 	self dispatchEvent: (AlbSelectionChangedEvent new selection: aSelection)
 ]
 
@@ -1005,13 +1015,10 @@ AlbTextEditor >> updater [
 	^ AlbTextEditorUpdater new editor: self
 ]
 
-{ #category : #'model protocol' }
-AlbTextEditor >> whenEditionModeChanged: aMode [
+{ #category : #'view configuration' }
+AlbTextEditor >> whenTextEditedDo: aBlock [
 
-	self deselecter
-		all;
-		apply;
-		notifyCursorRemoved
+	self when: AlbTextEditedEvent do: aBlock
 ]
 
 { #category : #accessing }

@@ -10,12 +10,6 @@ AlbEditabilityMode >> defaultEditorElementEventHandlers [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #initialization }
-AlbEditabilityMode >> defaultSelectionView [
-
-	^ AlbEditorSelectionView new
-]
-
 { #category : #'shortcut management' }
 AlbEditabilityMode >> defaultShortcuts [
 
@@ -26,4 +20,10 @@ AlbEditabilityMode >> defaultShortcuts [
 AlbEditabilityMode >> defaultWordStencil [ 
 
 	^ AlbTextWordPieceStencil readOnly
+]
+
+{ #category : #initialization }
+AlbEditabilityMode >> selectionElement [
+
+	^ AlbSelectionElement new
 ]

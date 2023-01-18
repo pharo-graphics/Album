@@ -419,11 +419,6 @@ AlbInfiniteEditorElement >> selectionChanged [
 	"self selectionViewDo: [ :selView | selView selectionChangedIn: self ]"
 ]
 
-{ #category : #'private - view accessing' }
-AlbInfiniteEditorElement >> setRemanents [
-
-]
-
 { #category : #'private - accessing editor' }
 AlbInfiniteEditorElement >> setupModeEventHandlers [
 

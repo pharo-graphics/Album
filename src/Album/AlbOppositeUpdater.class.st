@@ -102,14 +102,14 @@ AlbOppositeUpdater >> updateOppositeFrom: anEditorElement [
 		at: localCursorPos
 		ifPresent: [ :interval | "before  close delimiter"
 			interval first = localCursorPos ifFalse: [ 
-				anEditorElement
+				anEditorElement infinite
 					atTextIndex: interval first + subtext start - 1
 					do: [ :oppositeTextElement :localIdx | 
 						localIdx isZero ifFalse: [ 
 							^ self highlightOpposite: oppositeTextElement from: localIdx - 1 to: localIdx ] ] ].
 			"after open delimiter"
 			interval last = localCursorPos ifFalse: [ 
-				anEditorElement atTextIndex: interval last + subtext start do: [ :oppositeTextElement :localIdx | 
+				anEditorElement infinite atTextIndex: interval last + subtext start do: [ :oppositeTextElement :localIdx | 
 					localIdx isZero ifFalse: [ 
 						^ self highlightOpposite: oppositeTextElement from: localIdx - 1 to: localIdx ] ] ] ]
 		ifAbsent: [  ]

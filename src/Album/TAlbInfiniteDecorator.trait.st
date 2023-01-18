@@ -18,14 +18,6 @@ TAlbInfiniteDecorator >> asScrollableElement [
 	^ self next asScrollableElement
 ]
 
-{ #category : #'t - infinite editor private - view accessing' }
-TAlbInfiniteDecorator >> atTextIndex: aTextIndex do: aBlock [
-
-	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
-
-	self next atTextIndex: aTextIndex do: aBlock
-]
-
 { #category : #'t - infinite editor view - configuration' }
 TAlbInfiniteDecorator >> beEditable [
 
@@ -56,7 +48,7 @@ TAlbInfiniteDecorator >> cursor [
 	^ self next cursor
 ]
 
-{ #category : #'t - infinite editor private - accessing editor' }
+{ #category : #'t - infinite editor accessing - cursor' }
 TAlbInfiniteDecorator >> cursors [
 	<return: #AlbTextEditorCursor>
 	
@@ -77,14 +69,14 @@ TAlbInfiniteDecorator >> deselecter [
 	^ self next deselecter
 ]
 
-{ #category : #'t - infinite editor private - accessing editor' }
+{ #category : #'t - infinite editor accessing - editor' }
 TAlbInfiniteDecorator >> editor [
 	<return: #AlbTextEditor>
 
 	^ self next editor
 ]
 
-{ #category : #'t - infinite editor private - accessing editor' }
+{ #category : #'t - infinite editor accessing - editor' }
 TAlbInfiniteDecorator >> editor: aTextEditor [
 
 	self next editor: aTextEditor.
@@ -168,18 +160,6 @@ TAlbInfiniteDecorator >> onLostFocus [
 
 ]
 
-{ #category : #'t - infinite editor private - view accessing' }
-TAlbInfiniteDecorator >> piecesAndTheirElementsDo: aBlock [
-
-	self next piecesAndTheirElementsDo: aBlock
-]
-
-{ #category : #'t - infinite editor private - view accessing' }
-TAlbInfiniteDecorator >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
-
-	self next piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock
-]
-
 { #category : #'t - infinite editor accessing - editor' }
 TAlbInfiniteDecorator >> removeEditorShortcut: aTextEditorInteraction [
 
@@ -190,13 +170,6 @@ TAlbInfiniteDecorator >> removeEditorShortcut: aTextEditorInteraction [
 TAlbInfiniteDecorator >> requestFocus [
 
 	self next requestFocus
-]
-
-{ #category : #'t - infinite editor scrolling' }
-TAlbInfiniteDecorator >> scrollToLast [
-	"Scroll instantly to the last segment"
-	
-	self next scrollToLast
 ]
 
 { #category : #'t - infinite editor private - accessing editor' }
@@ -228,12 +201,6 @@ TAlbInfiniteDecorator >> selection [
 TAlbInfiniteDecorator >> selectionColor [
 
 	^ self next selectionColor
-]
-
-{ #category : #'t - infinite editor private - view accessing' }
-TAlbInfiniteDecorator >> setRemanents [
-
-	self next setRemanents
 ]
 
 { #category : #'t - infinite editor accessing - text' }
@@ -268,28 +235,10 @@ TAlbInfiniteDecorator >> textElementsDo: aBlock [
 	self next textElementsDo: aBlock
 ]
 
-{ #category : #'t - infinite editor private - view accessing' }
-TAlbInfiniteDecorator >> textElementsSelect: aSelectBlock [
-
-	^ self next textElementsSelect: aSelectBlock
-]
-
 { #category : #'t - infinite editor private - accessing text' }
 TAlbInfiniteDecorator >> textInternalRepresentationChanged [
 
 	self next textInternalRepresentationChanged
-]
-
-{ #category : #'t - infinite editor private - view accessing' }
-TAlbInfiniteDecorator >> textPiecesAndTheirElementsDo: aBlock [
-
-	self next textPiecesAndTheirElementsDo: aBlock
-]
-
-{ #category : #'t - infinite editor private - view accessing' }
-TAlbInfiniteDecorator >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
-
-	self next textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock
 ]
 
 { #category : #'t - infinite editor accessing - text' }

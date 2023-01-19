@@ -194,6 +194,6 @@ AlbRemanentUpdater >> updateRemanentsIn: anEditorElement [
 		                   founds := collector searchAll: remanentString.
 		                   founds do: [ :interval | self remanentInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
 		                   self remanentsUpdatedIn: anEditorElement ]
-			                   forkAt: Processor highIOPriority
+			                   forkAt: Processor userInterruptPriority
 			                   named: 'Album remanent selection updater task' ]
 ]

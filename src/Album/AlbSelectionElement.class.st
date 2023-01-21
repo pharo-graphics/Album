@@ -100,13 +100,10 @@ AlbSelectionElement >> selectionScrolled: aPoint in: anInfiniteElement [
 { #category : #'private - infinite element changes' }
 AlbSelectionElement >> updateMainSelectionVerticesIn: anInfiniteElement [
 
-	| rects |
 	anInfiniteElement ifNil: [ ^ self ].
-	rects := self selectionRectanglesIn: anInfiniteElement.
-	rects
+	(self selectionRectanglesIn: anInfiniteElement)
 		ifEmpty: [ self parentDo: [ :p | self removeFromParent ] ]
-		ifNotEmpty: [ 
+		ifNotEmpty: [ :rects |
 			self adjacentRectangles: rects.
-			self hasParent ifFalse: [ 
-				anInfiniteElement addChild: self ] ]
+			self hasParent ifFalse: [ anInfiniteElement addChild: self ] ]
 ]

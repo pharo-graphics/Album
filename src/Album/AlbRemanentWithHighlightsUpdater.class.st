@@ -1,31 +1,39 @@
 Class {
-	#name : #AlbRemanentUpdater,
+	#name : #AlbRemanentWithHighlightsUpdater,
 	#superclass : #Object,
 	#instVars : [
 		'extentChangeHandler',
 		'cursorMoveHandler',
 		'scrollHandler',
 		'remanents',
+		'remanentString',
 		'monitor',
 		'updateRequestHandler',
 		'updaterProcess',
 		'textEditionHandler',
 		'infiniteEditorChangeHandler',
 		'selectionColor',
-		'selectionHandler',
-		'remanentText'
+		'selectionHandler'
 	],
 	#category : #'Album-UI'
 }
 
 { #category : #'infinite element changes' }
-AlbRemanentUpdater >> extentChangedIn: anInfiniteElement [
+AlbRemanentWithHighlightsUpdater >> extentChangedIn: anInfiniteElement [
 
 	self updateRemanentsIn: anInfiniteElement
 ]
 
+{ #category : #'private - remanent selection' }
+AlbRemanentWithHighlightsUpdater >> highlightRemanent: aPieceElement from: startIdx to: endIdx [
+
+	aPieceElement
+		highlightCategory: #remanent
+		with: (BlTextParagraphHighlight paint: self remanentBackgroundColor from: startIdx to: endIdx)
+]
+
 { #category : #initialization }
-AlbRemanentUpdater >> initialize [ 
+AlbRemanentWithHighlightsUpdater >> initialize [ 
 
 	super initialize.
 	monitor := Monitor new.
@@ -33,11 +41,10 @@ AlbRemanentUpdater >> initialize [
 ]
 
 { #category : #'api - install/uninstall  hook' }
-AlbRemanentUpdater >> onInstalledIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> onInstalledIn: anEditorElement [
 
 
 	selectionColor := anEditorElement selectionColor. 
-
 	selectionHandler := BlEventHandler on: AlbSelectionChangedEvent do: [ self selectionChangedIn: anEditorElement ].
 
 	extentChangeHandler := BlEventHandler
@@ -70,8 +77,8 @@ AlbRemanentUpdater >> onInstalledIn: anEditorElement [
 				curr addEventHandler: updateRequestHandler.
 				curr addEventHandler: textEditionHandler ] ].
 
-	anEditorElement addEventHandler: extentChangeHandler.
 	anEditorElement editor addEventHandler: selectionHandler.
+	anEditorElement addEventHandler: extentChangeHandler.
 	anEditorElement editor addEventHandler: updateRequestHandler.
 	anEditorElement editor addEventHandler: textEditionHandler.
 	anEditorElement infinite addEventHandler: scrollHandler.
@@ -79,10 +86,10 @@ AlbRemanentUpdater >> onInstalledIn: anEditorElement [
 ]
 
 { #category : #'api - install/uninstall  hook' }
-AlbRemanentUpdater >> onUninstalledIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> onUninstalledIn: anEditorElement [
 
-	anEditorElement removeEventHandler: extentChangeHandler.
 	anEditorElement editor removeEventHandler: selectionHandler.
+	anEditorElement removeEventHandler: extentChangeHandler.
 	anEditorElement editor removeEventHandler: updateRequestHandler.
 	anEditorElement editor removeEventHandler: textEditionHandler.
 	anEditorElement infinite removeEventHandler: scrollHandler.
@@ -91,130 +98,115 @@ AlbRemanentUpdater >> onUninstalledIn: anEditorElement [
 
 ]
 
-{ #category : #'private - remanent selection' }
-AlbRemanentUpdater >> remanentInterval: anInterval in: anEditorElement [
+{ #category : #accessing }
+AlbRemanentWithHighlightsUpdater >> remanentBackgroundColor [
 
-	| startIdx endIdx rects rem |
+	^ selectionColor alpha: 0.3
+]
+
+{ #category : #'private - remanent selection' }
+AlbRemanentWithHighlightsUpdater >> remanentInterval: anInterval in: anEditorElement [
+
+	| startIdx endIdx |
 	startIdx := anInterval first.
 	endIdx := anInterval last.
-	rects := Array streamContents: [ :stream | 
-		         anEditorElement
-			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
-			         do: [ :piece :pieceElement | 
-				         | first last origin corner bnds |
-				         ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
-					         ifTrue: [ 
-						         first := startIdx.
-						         last := endIdx ]
-					         ifFalse: [ 
-						         startIdx > piece textStart
-							         ifTrue: [ 
-								         first := startIdx.
-								         last := piece textEnd ]
-							         ifFalse: [ 
-								         first := piece textStart. 
-								         last := endIdx min: piece textEnd ] ].
-							((startIdx -1 to: endIdx) = (anEditorElement selection from to: anEditorElement selection to)) 
-								ifFalse: [ 
-				         			origin := pieceElement screenOriginAt: first - piece textStart - 1.
-				         			corner := pieceElement screenCornerAt: last - piece textStart.
-				         			bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
-				         			stream nextPut: bnds ] ] ].
-	rects ifEmpty: [ ^ self ].
-	rem := AlbRemanentElement new adjacentRectangles: rects; text: self remanentText; interval: anInterval; yourself.
-	remanents add: rem
-]
-
-{ #category : #accessing }
-AlbRemanentUpdater >> remanentString [
-
-	^ self remanentText asString
-]
-
-{ #category : #accessing }
-AlbRemanentUpdater >> remanentText [
-
-	^ remanentText
+	anEditorElement infinite
+		textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
+		do: [ :piece :pieceElement | 
+			| first last |
+			((piece textStart to: piece textEnd) includesAll:
+				 (startIdx to: endIdx))
+				ifTrue: [ 
+					first := startIdx.
+					last := endIdx ]
+				ifFalse: [ 
+					startIdx > piece textStart
+						ifTrue: [ 
+							first := startIdx.
+							last := piece textEnd ]
+						ifFalse: [ 
+							first := piece textStart.
+							last := endIdx min: piece textEnd ] ].
+			((startIdx -1 to: endIdx) = (anEditorElement selection from to: anEditorElement selection to)) 
+				ifFalse: [ 
+					self
+						highlightRemanent: pieceElement
+						from: first - piece textStart - 1
+						to: last - piece textStart.
+					remanents add: pieceElement ] ]
 ]
 
 { #category : #'infinite element changes' }
-AlbRemanentUpdater >> remanentUpdateRequestIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> remanentUpdateRequestIn: anEditorElement [
 
 	self setRemanentsIn: anEditorElement
 
 ]
 
 { #category : #'private - remanent selection' }
-AlbRemanentUpdater >> remanentsUpdatedIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> remanentsUpdatedIn: anEditorElement [
 
 	updaterProcess := nil
 ]
 
 { #category : #'private - remanent selection' }
-AlbRemanentUpdater >> resetRemanents [
+AlbRemanentWithHighlightsUpdater >> resetRemanents [
 
-	remanents do: [ :r | r removeFromParent ].
+	remanents do: [ :r | r resetHighlightsOfCategory: #remanent ].
 	remanents reset
 ]
 
 { #category : #'infinite element changes' }
-AlbRemanentUpdater >> scrollEventIn: anInfiniteElement [
+AlbRemanentWithHighlightsUpdater >> scrollEventIn: anInfiniteElement [
 
 	self updateRemanentsIn: anInfiniteElement
 ]
 
 { #category : #'infinite element changes' }
-AlbRemanentUpdater >> selectionChangedIn: anInfiniteElement [
+AlbRemanentWithHighlightsUpdater >> selectionChangedIn: anInfiniteElement [
 
 	self remanentUpdateRequestIn: anInfiniteElement
 ]
 
 { #category : #'private - remanent selection' }
-AlbRemanentUpdater >> setRemanentsIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> setRemanentsIn: anEditorElement [
 
-	remanentText := anEditorElement selectedText.
+	remanentString := anEditorElement selectedText asString.
 	self terminateRemanentsUpdater.
 	self resetRemanents.
-	self remanentText ifEmpty: [ ^ self ].
+	remanentString ifEmpty: [ ^ self ].
 	self updateRemanentsIn: anEditorElement 
  
 ]
 
 { #category : #'private - remanent selection' }
-AlbRemanentUpdater >> terminateRemanentsUpdater [
+AlbRemanentWithHighlightsUpdater >> terminateRemanentsUpdater [
 
 	updaterProcess ifNotNil: #terminate.
 	updaterProcess := nil
 ]
 
 { #category : #'infinite element changes' }
-AlbRemanentUpdater >> textEditedIn: anInfiniteElement [
+AlbRemanentWithHighlightsUpdater >> textEditedIn: anInfiniteElement [
 
-	self updateRemanentsIn: anInfiniteElement
+	anInfiniteElement whenLayoutedDoOnce: [ self updateRemanentsIn: anInfiniteElement ]
 ]
 
 { #category : #'private - remanent selection' }
-AlbRemanentUpdater >> updateDelay [
-
-	^ 50
-]
-
-{ #category : #'private - remanent selection' }
-AlbRemanentUpdater >> updateRemanentsIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> updateRemanentsIn: anEditorElement [
 
 	| collector subTextOnScreen founds | 
 	monitor critical: [
 		self terminateRemanentsUpdater.
 		self resetRemanents.
-		self remanentText ifNil: [ ^ self ].
-		self remanentText ifEmpty: [ ^ self ].
+		remanentString ifNil: [ ^ self ].
+		remanentString ifEmpty: [ ^ self ].
 		subTextOnScreen := anEditorElement subTextOnScreen.
 		collector := BlIntervalCollector new text: subTextOnScreen asString.
-		updaterProcess := [ (Delay forMilliseconds: self updateDelay) wait.
-		                   founds := collector searchAll: self remanentString.
+		updaterProcess := [ (Delay forMilliseconds: 200) wait.
+		                   founds := collector searchAll: remanentString.
 		                   founds do: [ :interval | self remanentInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
-								 anEditorElement frontLayer addChildren: remanents.
 		                   self remanentsUpdatedIn: anEditorElement ]
-			                   forkAt: Processor systemBackgroundPriority
+			                   forkAt: Processor userBackgroundPriority
 			                   named: 'Album remanent selection updater task' ]
 ]

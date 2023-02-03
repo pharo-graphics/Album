@@ -10,6 +10,12 @@ AlbEditabilityMode >> defaultEditorElementEventHandlers [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #initialization }
+AlbEditabilityMode >> defaultFrontLayerEventHandlers [
+
+	^ self subclassResponsibility 
+]
+
 { #category : #'shortcut management' }
 AlbEditabilityMode >> defaultShortcuts [
 

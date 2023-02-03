@@ -12,6 +12,12 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #accessing }
+AlbSelectionElement >> borderWidth [
+
+	^ 2
+]
+
 { #category : #'private - infinite element changes' }
 AlbSelectionElement >> extentChangedIn: anInfiniteElement [
 
@@ -29,8 +35,12 @@ AlbSelectionElement >> onGotFocusIn: anEditorElement [
 AlbSelectionElement >> onInstalledIn: anEditorElement [
 
 	self background: anEditorElement selectionColor.
-	self border: (BlBorder paint: anEditorElement selectionColor twiceDarker width: self borderWidth).
-	
+	self border: (BlBorderBuilder new 
+		paint: anEditorElement selectionColor twiceDarker; 
+		width: self borderWidth; 
+		lineCap: BlStrokeLineCap round; 
+		build).
+	self outskirts: BlOutskirts centered.
 	selectionHandler := BlEventHandler on: AlbSelectionChangedEvent do: [ self selectionChangedIn: anEditorElement ].
 	extentHandler := BlEventHandler on: BlElementExtentChangedEvent do: [ self extentChangedIn: anEditorElement ].
 	scrollHandler := BlEventHandler on: BlElementScrolledEvent do: [ :event | self selectionScrolled: event delta in: anEditorElement].

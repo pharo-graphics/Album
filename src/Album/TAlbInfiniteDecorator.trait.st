@@ -241,6 +241,12 @@ TAlbInfiniteDecorator >> textInternalRepresentationChanged [
 	self next textInternalRepresentationChanged
 ]
 
+{ #category : #'t - infinite editor private - accessing text' }
+TAlbInfiniteDecorator >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
+
+	self next textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock
+]
+
 { #category : #'t - infinite editor accessing - text' }
 TAlbInfiniteDecorator >> textSnapshot [
 	"Return a snaphost (copy) of the current text.

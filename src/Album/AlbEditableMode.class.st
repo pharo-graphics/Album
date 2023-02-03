@@ -10,10 +10,16 @@ AlbEditableMode >> defaultEditorElementEventHandlers [
 	^ { 
 		  AlbTextEditorMouseHandler new.
 		  AlbTextEditorDoubleClickHandler new.
-		  AlbTextEditorSelectionHandler new.
 		  AlbTextEditorInsertionHandler new.
 		  AlbTextEditorCursorIconHandler new.
 		  AlbTextEditorFocusHandler new }
+]
+
+{ #category : #initialization }
+AlbEditableMode >> defaultFrontLayerEventHandlers [
+
+	^ { 
+		  AlbTextEditorSelectionHandler new }
 ]
 
 { #category : #'shortcut management' }

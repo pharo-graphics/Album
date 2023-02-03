@@ -11,6 +11,12 @@ AlbReadonlyWithoutSelectionMode >> defaultEditorElementEventHandlers [
 ]
 
 { #category : #initialization }
+AlbReadonlyWithoutSelectionMode >> defaultFrontLayerEventHandlers [
+
+	^ {  }
+]
+
+{ #category : #initialization }
 AlbReadonlyWithoutSelectionMode >> defaultSelectionView [
 
 	^ nil

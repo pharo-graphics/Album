@@ -21,7 +21,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 	| anEditor currentIndex from to |
 	anEvent consumed: true.
 
-	anEditor := anEvent currentTarget editor.
+	anEditor := element editor.
 	currentIndex := anEditor navigator findTextIndexAtScreenPosition: anEvent localPosition ifAbsent: [ ^ self ].
 
 	startIndex ifNil: [ startIndex := currentIndex ].
@@ -41,7 +41,7 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	| anEditor |	
 	anEvent consumed: true.
 
-	anEditor := anEvent currentTarget editor.
+	anEditor := element editor.
 	anEditor deselecter all deselect.
 	
 	startIndex := anEditor navigator

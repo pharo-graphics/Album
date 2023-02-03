@@ -13,7 +13,9 @@ Class {
 		'next',
 		'selectionElement',
 		'oppositeUpdater',
-		'remanentUpdater'
+		'remanentUpdater',
+		'modeEventHandlers',
+		'frontLayer'
 	],
 	#category : #'Album-UI'
 }
@@ -22,6 +24,18 @@ Class {
 AlbEditorElement >> defaultBackground [
 
 	^ BlBackground paint: Color white
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultFrontLayer [
+
+	| layer |
+	layer := BlElement new.
+	layer elevation: (BlRelativeElevation elevation: SmallInteger maxVal).
+	layer constraintsDo: [ :c | 
+		c horizontal matchParent.
+		c vertical matchParent ].
+	^ layer
 ]
 
 { #category : #initialization }
@@ -37,15 +51,29 @@ AlbEditorElement >> defaultMargin [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultModeEventHandlers [
+
+	^ self mode defaultFrontLayerEventHandlers.
+
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultPadding [
 
 	^ BlInsets empty
 
 ]
 
+{ #category : #accessing }
+AlbEditorElement >> frontLayer [
+
+	^ frontLayer
+]
+
 { #category : #initialization }
 AlbEditorElement >> initialize [
 	
+	| distributor |
 	super initialize.
 	self layout: self defaultLayout.
 	self background: self defaultBackground.
@@ -56,8 +84,26 @@ AlbEditorElement >> initialize [
 	self installOppositeUpdater.
 	self installRemanentUpdater.
 	self addChild: next.
+	self next whenModeChangedDo: [ self reinstallStructure ].
+	frontLayer := self defaultFrontLayer.
+	self addChild: frontLayer as: #frontLayer.
+	distributor := AlbEditorElementEventDistributor new.
+	self frontLayer addEventHandler: distributor.
+	self infinite addEventHandler: distributor.
 	self matchParent.
-	self next whenModeChangedDo: [ self modeChanged ].
+	self installModeEventHandlers  
+
+]
+
+{ #category : #initialization }
+AlbEditorElement >> installModeEventHandlers [
+
+	self modeEventHandlersDo: [ :e | self removeEventHandler: e ].
+	modeEventHandlers := self defaultModeEventHandlers.
+	self modeEventHandlersDo: [ :e | 
+		self frontLayer addEventHandler: (e
+				 element: self infinite;
+				 yourself) ]	
 
 ]
 
@@ -88,11 +134,18 @@ AlbEditorElement >> installSelectionElement [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> modeChanged [
+AlbEditorElement >> modeEventHandlersDo: aBlock [
+
+	modeEventHandlers ifNotNil: [ modeEventHandlers do: aBlock ]
+]
+
+{ #category : #initialization }
+AlbEditorElement >> reinstallStructure [
 
 	self installSelectionElement.
 	self installOppositeUpdater.
-	self installRemanentUpdater 
+	self installRemanentUpdater.
+	self installModeEventHandlers 
 ]
 
 { #category : #initialization }

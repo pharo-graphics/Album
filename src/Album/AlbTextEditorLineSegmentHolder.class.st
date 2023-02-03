@@ -268,6 +268,11 @@ AlbTextEditorLineSegmentHolder >> screenToCursor: aTransformation [
 ]
 
 { #category : #accessing }
+AlbTextEditorLineSegmentHolder >> segment [
+	^ segment 
+]
+
+{ #category : #accessing }
 AlbTextEditorLineSegmentHolder >> segment: anEditorSegment [
 	segment == anEditorSegment
 		ifTrue: [

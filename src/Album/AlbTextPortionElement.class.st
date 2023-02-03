@@ -16,6 +16,18 @@ AlbTextPortionElement >> borderWidth [
 	^ 1
 ]
 
+{ #category : #accessing }
+AlbTextPortionElement >> defaultBackground [ 
+
+	^ Color transparent 
+]
+
+{ #category : #accessing }
+AlbTextPortionElement >> defaultBorder [
+
+	^ BlBorder paint: Color gray darker width: self borderWidth
+]
+
 { #category : #initialization }
 AlbTextPortionElement >> initialize [ 
 

@@ -796,25 +796,29 @@ AlbTextEditorLineSegmentTest >> test_delete_HACrCr_in_HACrCrBA_at_1_4 [
 AlbTextEditorLineSegmentTest >> test_emptyEditor [
 
 	| aTextEditor aTextEditorElement aSegmentElement aPieceElement |
-	
 	aTextEditor := AlbTextEditor new.
-	
-	self assert: aTextEditor text asString equals: ''.
-	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
-	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
-	
+
+	self assert: aTextEditor privateText asString equals: ''.
+	self
+		assert: aTextEditor segmentCollector computedSegmentsCount
+		equals: 1.
+	self
+		assert: aTextEditor segmentCollector segments first textInterval
+		equals: (0 to: 0).
+
 	aTextEditorElement := AlbEditorElement new.
-	aTextEditorElement size: 600@600.
+	aTextEditorElement size: 600 @ 600.
 	aTextEditorElement editor: aTextEditor.
 	aTextEditorElement forceLayout.
-	
+
 	self assert: aTextEditorElement childrenCount equals: 1.
 
 	aSegmentElement := aTextEditorElement children first.
 	self assert: aSegmentElement childrenCount equals: 1.
-	
+
 	aPieceElement := aSegmentElement children first.
-	self assert: aPieceElement segmentPiece == aTextEditor segmentCollector segments first pieces first.
+	self assert: aPieceElement segmentPiece
+		== aTextEditor segmentCollector segments first pieces first.
 
 	^ aTextEditor
 ]

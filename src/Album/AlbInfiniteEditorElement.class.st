@@ -251,7 +251,7 @@ AlbInfiniteEditorElement >> initialize [
 	self whenLayoutedDo: [ 
 		self geometryChanged.
 		self selectionChanged ].
-	self elevation: ((BlRelativeElevation elevation: SmallInteger maxVal)).
+	self elevation: ((BlRelativeElevation elevation: SmallInteger maxVal - 1)).
 ]
 
 { #category : #'accessing - editor' }

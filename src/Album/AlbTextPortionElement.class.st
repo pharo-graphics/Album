@@ -41,6 +41,12 @@ AlbTextPortionElement >> initialize [
 ]
 
 { #category : #accessing }
+AlbTextPortionElement >> vertices [
+
+	^ self geometry vertices
+]
+
+{ #category : #accessing }
 AlbTextPortionElement >> vertices: aCollectionOfPoints [
 
 	aCollectionOfPoints ifEmpty: [ ^ self ].

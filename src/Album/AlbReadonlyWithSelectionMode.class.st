@@ -27,6 +27,5 @@ AlbReadonlyWithSelectionMode >> defaultShortcuts [
 	^ { 
 		  AlbEditorCopyShortcut new.
 		  AlbEditorSelectAllShortcut new.
-		  AlbEditorRemanentSelectionShortcut new.
 		  AlbEditorDeselectAllShortcut new }
 ]

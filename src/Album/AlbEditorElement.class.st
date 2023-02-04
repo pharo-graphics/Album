@@ -119,7 +119,7 @@ AlbEditorElement >> installOppositeUpdater [
 AlbEditorElement >> installRemanentUpdater [
 
 	remanentUpdater ifNotNil: [ remanentUpdater onUninstalledIn: self ].
-	remanentUpdater := AlbRemanentUpdater new.
+	remanentUpdater := AlbRemanentSelectionUpdater new.
 	remanentUpdater onInstalledIn: self
 ]
 

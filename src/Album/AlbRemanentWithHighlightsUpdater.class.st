@@ -18,10 +18,21 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #'private - remanent selection' }
+AlbRemanentWithHighlightsUpdater >> createPortionsIn: anEditorElement [
+
+	remanentString := anEditorElement selectedText asString.
+	self terminateUpdater.
+	self resetPortions.
+	remanentString ifEmpty: [ ^ self ].
+	self updatePortionsIn: anEditorElement 
+ 
+]
+
 { #category : #'infinite element changes' }
 AlbRemanentWithHighlightsUpdater >> extentChangedIn: anInfiniteElement [
 
-	self updateRemanentsIn: anInfiniteElement
+	self updatePortionsIn: anInfiniteElement
 ]
 
 { #category : #'private - remanent selection' }
@@ -55,12 +66,6 @@ AlbRemanentWithHighlightsUpdater >> onInstalledIn: anEditorElement [
 	scrollHandler := BlEventHandler
 		                 on: BlElementScrolledEvent
 		                 do: [ :evt | self scrollEventIn: anEditorElement ].
-
-	updateRequestHandler := BlEventHandler
-		                        on: AlbRemanentUpdateRequest
-		                        do: [ :evt | 
-		                        self remanentUpdateRequestIn:
-			                        anEditorElement ].
 
 	textEditionHandler := BlEventHandler
 		                      on: AlbTextEditedEvent
@@ -136,17 +141,11 @@ AlbRemanentWithHighlightsUpdater >> remanentInterval: anInterval in: anEditorEle
 					remanents add: pieceElement ] ]
 ]
 
-{ #category : #'infinite element changes' }
-AlbRemanentWithHighlightsUpdater >> remanentUpdateRequestIn: anEditorElement [
-
-	self setRemanentsIn: anEditorElement
-
-]
-
 { #category : #'private - remanent selection' }
-AlbRemanentWithHighlightsUpdater >> remanentsUpdatedIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> resetPortions [
 
-	updaterProcess := nil
+	remanents do: [ :r | r resetHighlightsOfCategory: #remanent ].
+	remanents reset
 ]
 
 { #category : #'private - remanent selection' }
@@ -159,28 +158,17 @@ AlbRemanentWithHighlightsUpdater >> resetRemanents [
 { #category : #'infinite element changes' }
 AlbRemanentWithHighlightsUpdater >> scrollEventIn: anInfiniteElement [
 
-	self updateRemanentsIn: anInfiniteElement
+	self updatePortionsIn: anInfiniteElement
 ]
 
 { #category : #'infinite element changes' }
 AlbRemanentWithHighlightsUpdater >> selectionChangedIn: anInfiniteElement [
 
-	self remanentUpdateRequestIn: anInfiniteElement
+	self updatePortionsIn: anInfiniteElement
 ]
 
 { #category : #'private - remanent selection' }
-AlbRemanentWithHighlightsUpdater >> setRemanentsIn: anEditorElement [
-
-	remanentString := anEditorElement selectedText asString.
-	self terminateRemanentsUpdater.
-	self resetRemanents.
-	remanentString ifEmpty: [ ^ self ].
-	self updateRemanentsIn: anEditorElement 
- 
-]
-
-{ #category : #'private - remanent selection' }
-AlbRemanentWithHighlightsUpdater >> terminateRemanentsUpdater [
+AlbRemanentWithHighlightsUpdater >> terminateUpdater [
 
 	updaterProcess ifNotNil: #terminate.
 	updaterProcess := nil
@@ -189,16 +177,16 @@ AlbRemanentWithHighlightsUpdater >> terminateRemanentsUpdater [
 { #category : #'infinite element changes' }
 AlbRemanentWithHighlightsUpdater >> textEditedIn: anInfiniteElement [
 
-	anInfiniteElement whenLayoutedDoOnce: [ self updateRemanentsIn: anInfiniteElement ]
+	anInfiniteElement whenLayoutedDoOnce: [ self updatePortionsIn: anInfiniteElement ]
 ]
 
 { #category : #'private - remanent selection' }
-AlbRemanentWithHighlightsUpdater >> updateRemanentsIn: anEditorElement [
+AlbRemanentWithHighlightsUpdater >> updatePortionsIn: anEditorElement [
 
 	| collector subTextOnScreen founds | 
 	monitor critical: [
-		self terminateRemanentsUpdater.
-		self resetRemanents.
+		self terminateUpdater.
+		self resetPortions.
 		remanentString ifNil: [ ^ self ].
 		remanentString ifEmpty: [ ^ self ].
 		subTextOnScreen := anEditorElement subTextOnScreen.
@@ -206,7 +194,7 @@ AlbRemanentWithHighlightsUpdater >> updateRemanentsIn: anEditorElement [
 		updaterProcess := [ (Delay forMilliseconds: 200) wait.
 		                   founds := collector searchAll: remanentString.
 		                   founds do: [ :interval | self remanentInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
-		                   self remanentsUpdatedIn: anEditorElement ]
+		                   updaterProcess := nil ]
 			                   forkAt: Processor userBackgroundPriority
 			                   named: 'Album remanent selection updater task' ]
 ]

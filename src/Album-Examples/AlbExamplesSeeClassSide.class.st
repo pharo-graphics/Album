@@ -463,7 +463,6 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 	 , (' ( Source code pro 40 bold ) ' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
 	 , (' Default font 30' asRopedText fontSize: 30)) onAlbum
 		withRowNumbers;
-		"inspect"
 		openInOBlSpace 
 ]
 

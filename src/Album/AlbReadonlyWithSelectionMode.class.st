@@ -10,14 +10,13 @@ AlbReadonlyWithSelectionMode >> defaultEditorElementEventHandlers [
 	^ { 
 		  AlbTextEditorMouseHandler new.
 		  AlbTextEditorDoubleClickHandler new.
-		  AlbTextEditorCursorIconHandler new.
 		  AlbTextEditorFocusHandler new }
 ]
 
 { #category : #initialization }
 AlbReadonlyWithSelectionMode >> defaultFrontLayerEventHandlers [
 
-	^ { 
+	^ {  AlbTextEditorCursorIconHandler new .
 		  AlbTextEditorSelectionHandler new }
 ]
 

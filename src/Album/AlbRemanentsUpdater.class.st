@@ -185,11 +185,12 @@ AlbRemanentsUpdater >> scrollEventIn: anEditorElement [
 ]
 
 { #category : #'infinite element changes' }
-AlbRemanentsUpdater >> selectionChangedIn: anInfiniteElement [
+AlbRemanentsUpdater >> selectionChangedIn: anEditorElement [
 
-	super selectionChangedIn: anInfiniteElement.
-	remanentText := anInfiniteElement selectedText.
-	self createPortionsIn: anInfiniteElement.
+	super selectionChangedIn: anEditorElement.
+	remanentText := anEditorElement selectedText.
+	self createPortionsIn: anEditorElement.
+	self updateOppositeDelimiterIn: anEditorElement
 ]
 
 { #category : #'opposite delimiter' }
@@ -198,6 +199,7 @@ AlbRemanentsUpdater >> updateOppositeDelimiterIn: anEditorElement [
 	oppositeEcho ifNotNil: [
 		oppositeEcho removeFromParent.
 		oppositeEcho := nil ].
+	anEditorElement selection ifNotEmpty: [ ^ self ].
 	oppositeEcho := self createOppositeDelimiterIn: anEditorElement.
 	oppositeEcho ifNotNil: [	anEditorElement addChild: oppositeEcho]
 ]

@@ -871,7 +871,7 @@ AlbTextEditor >> selectedText [
 
 	<return: #BlText>
 	^ self hasSelection
-		  ifTrue: [ self privateText copyFrom: self selection from + 1 to: self selection to ]
+		  ifTrue: [ self privateText from: self selection from + 1 to: self selection to ]
 		  ifFalse: [ self privateText empty ]
 ]
 

@@ -2,6 +2,8 @@ Class {
 	#name : #AlbTextPortionUpdater,
 	#superclass : #Object,
 	#instVars : [
+		'cursorMoveHandler',
+		'selectionHandler',
 		'extentChangeHandler',
 		'scrollHandler',
 		'monitor',
@@ -12,6 +14,10 @@ Class {
 	],
 	#category : #'Album-UI'
 }
+
+{ #category : #'infinite element changes' }
+AlbTextPortionUpdater >> cursorMovedIn: anEditorElement [ 
+]
 
 { #category : #'infinite element changes' }
 AlbTextPortionUpdater >> extentChangedIn: anInfiniteElement [
@@ -31,6 +37,11 @@ AlbTextPortionUpdater >> initialize [
 AlbTextPortionUpdater >> onInstalledIn: anEditorElement [
 
 
+	cursorMoveHandler := BlEventHandler
+		                     on: AlbCursorMovedEvent
+		                     do: [ :evt | 
+		                     self cursorMovedIn: anEditorElement ].
+	selectionHandler := BlEventHandler on: AlbSelectionChangedEvent do: [ self selectionChangedIn: anEditorElement ].
 	extentChangeHandler := BlEventHandler
 		                       on: BlElementExtentChangedEvent
 		                       do: [ :evt | 
@@ -55,6 +66,8 @@ AlbTextPortionUpdater >> onInstalledIn: anEditorElement [
 				curr addEventHandler: textEditionHandler ] ].
 
 	anEditorElement addEventHandler: extentChangeHandler.
+	anEditorElement editor addEventHandler: selectionHandler.
+	anEditorElement editor addEventHandler: cursorMoveHandler.
 	anEditorElement editor addEventHandler: textEditionHandler.
 	anEditorElement infinite addEventHandler: scrollHandler.
 	anEditorElement infinite addEventHandler: infiniteEditorChangeHandler
@@ -65,6 +78,8 @@ AlbTextPortionUpdater >> onUninstalledIn: anEditorElement [
 
 	anEditorElement removeEventHandler: extentChangeHandler.
 	anEditorElement editor removeEventHandler: textEditionHandler.
+	anEditorElement editor removeEventHandler: cursorMoveHandler.
+	anEditorElement editor removeEventHandler: selectionHandler.
 	anEditorElement infinite removeEventHandler: scrollHandler.
 	anEditorElement infinite removeEventHandler: infiniteEditorChangeHandler
 
@@ -85,6 +100,10 @@ AlbTextPortionUpdater >> resetPortions [
 AlbTextPortionUpdater >> scrollEventIn: anInfiniteElement [
 
 	self updatePortionsIn: anInfiniteElement
+]
+
+{ #category : #'infinite element changes' }
+AlbTextPortionUpdater >> selectionChangedIn: anInfiniteElement [
 ]
 
 { #category : #private }

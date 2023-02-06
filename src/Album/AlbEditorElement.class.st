@@ -12,7 +12,6 @@ Class {
 	#instVars : [
 		'next',
 		'selectionElement',
-		'oppositeUpdater',
 		'remanentUpdater',
 		'modeEventHandlers',
 		'frontLayer'
@@ -81,7 +80,6 @@ AlbEditorElement >> initialize [
 	self padding: self defaultPadding.
 	self next: AlbInfiniteEditorElement new.
 	self installSelectionElement.
-	self installOppositeUpdater.
 	self installRemanentUpdater.
 	self addChild: next.
 	self next whenModeChangedDo: [ self reinstallStructure ].
@@ -108,18 +106,10 @@ AlbEditorElement >> installModeEventHandlers [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> installOppositeUpdater [
-
-	oppositeUpdater ifNotNil: [ oppositeUpdater onUninstalledIn: self ].
-	oppositeUpdater := AlbOppositeUpdater new.
-	oppositeUpdater onInstalledIn: self
-]
-
-{ #category : #initialization }
 AlbEditorElement >> installRemanentUpdater [
 
 	remanentUpdater ifNotNil: [ remanentUpdater onUninstalledIn: self ].
-	remanentUpdater := AlbRemanentSelectionUpdater new.
+	remanentUpdater := AlbRemanentsUpdater new.
 	remanentUpdater onInstalledIn: self
 ]
 
@@ -143,7 +133,6 @@ AlbEditorElement >> modeEventHandlersDo: aBlock [
 AlbEditorElement >> reinstallStructure [
 
 	self installSelectionElement.
-	self installOppositeUpdater.
 	self installRemanentUpdater.
 	self installModeEventHandlers 
 ]

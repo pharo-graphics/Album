@@ -20,6 +20,12 @@ AlbTextDecorationElement >> borderWidth [
 	^ 1
 ]
 
+{ #category : #initialization }
+AlbTextDecorationElement >> defaultBackground [ 
+
+	^ Color transparent 
+]
+
 { #category : #accessing }
 AlbTextDecorationElement >> defaultBorder [
 

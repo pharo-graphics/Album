@@ -797,6 +797,7 @@ AlbTextEditor >> restoreText: aText [
 
 	text ifNotNil: [ text unsubscribe: self ].
 	self history setUpToStart.
+	cursor := self defaultCursor.
 
 	text := aText.
 	" then subscribe to internal text state change (insertion/deletion/attribute change) "

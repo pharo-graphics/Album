@@ -2,7 +2,6 @@ Class {
 	#name : #AlbTextDecorationElement,
 	#superclass : #BlElement,
 	#instVars : [
-		'interval',
 		'subtext'
 	],
 	#category : #'Album-UI'
@@ -39,21 +38,8 @@ AlbTextDecorationElement >> initialize [
 	self background: self defaultBackground.
 	self border:	self defaultBorder.
 	self constraintsDo: [ :c | c ignoreByLayout  ].
-	self outskirts: (BlOutskirts centered).
+	self outskirts: BlOutskirts centered
 
-
-]
-
-{ #category : #accessing }
-AlbTextDecorationElement >> interval [
-
-	^ interval
-]
-
-{ #category : #accessing }
-AlbTextDecorationElement >> interval: anInterval [
-
-	interval := anInterval
 ]
 
 { #category : #accessing }

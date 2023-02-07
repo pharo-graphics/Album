@@ -66,23 +66,20 @@ AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 AlbRemanentsUpdater >> createPortionsIn: anEditorElement [
 
 	| collector subTextOnScreen founds |
-	monitor critical: [ 
+	monitor critical: [
 		self terminateUpdater.
 		self resetPortions.
 		self remanentText ifNil: [ ^ self ].
 		self remanentText ifEmpty: [ ^ self ].
 		subTextOnScreen := anEditorElement subTextOnScreen.
 
-		updaterProcess := [ 
+		updaterProcess := [
 		                  (Delay forMilliseconds: self updateDelay) wait.
-		                  collector := BlIntervalCollector new text: subTextOnScreen asString.
+		                  collector := BlIntervalCollector new text:
+			                               subTextOnScreen asString.
 		                  founds := collector searchAll: self remanentString.
-		                  founds do: [ :interval | 
-			                  self
-				                  portionInterval:
-				                  interval + subTextOnScreen textOffset
-				                  in: anEditorElement ].
-		                  anEditorElement frontLayer addChildren: (portions select: [ :r | r hasParent not ]).
+		                  founds do: [ :interval | self portionInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
+		                  anEditorElement frontLayer addChildren: (portions reject: [ :r | r hasParent ]).
 		                  updaterProcess := nil ]
 			                  forkAt: Processor systemBackgroundPriority
 			                  named: 'Album remanent selection updater task' ]
@@ -133,9 +130,10 @@ AlbRemanentsUpdater >> openOppositeDelimiter: oppositeTextElement at: localIdx i
 { #category : #private }
 AlbRemanentsUpdater >> portionInterval: anInterval in: anEditorElement [
 
-	| startIdx endIdx rects rem |
+	| startIdx endIdx rects rem selInterval |
 	startIdx := anInterval first.
 	endIdx := anInterval last.
+	selInterval := anEditorElement selection from to: anEditorElement selection to.
 	rects := Array streamContents: [ :stream | 
 		         anEditorElement
 			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
@@ -153,14 +151,14 @@ AlbRemanentsUpdater >> portionInterval: anInterval in: anEditorElement [
 							         ifFalse: [ 
 								         first := piece textStart. 
 								         last := endIdx min: piece textEnd ] ].
-							((startIdx -1 to: endIdx) = (anEditorElement selection from to: anEditorElement selection to)) 
-								ifFalse: [ 
-				         			origin := pieceElement screenOriginAt: first - piece textStart - 1.
-				         			corner := pieceElement screenCornerAt: last - piece textStart.
-				         			bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
-				         			stream nextPut: bnds ] ] ].
+								(selInterval intersection: (startIdx + 1 to: endIdx )) ifEmpty: [ 
+									((startIdx -1 to: endIdx) = selInterval) ifFalse: [
+				         				origin := pieceElement screenOriginAt: first - piece textStart - 1.
+				         				corner := pieceElement screenCornerAt: last - piece textStart.
+				         				bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
+				         				stream nextPut: bnds ] ] ] ].
 	rects ifEmpty: [ ^ self ].
-	rem := AlbSelectionEcho new adjacentRectangles: rects; subtext: self remanentText; interval: anInterval; yourself.
+	rem := AlbSelectionEcho new adjacentRectangles: rects; subtext: (anEditorElement text from: anInterval first to: anInterval last); yourself.
 	portions add: rem 
 ]
 

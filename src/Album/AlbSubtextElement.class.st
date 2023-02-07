@@ -15,7 +15,7 @@ AlbSubtextElement >> initialize [
 
 	super initialize.
 	self vertices: #().
-	self geometry: BlPolygonGeometry new.
+	self geometry: BlPolygonGeometry new
 
 ]
 

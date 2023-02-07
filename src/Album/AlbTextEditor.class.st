@@ -873,7 +873,7 @@ AlbTextEditor >> selectedText [
 	<return: #BlText>
 	^ self hasSelection
 		  ifTrue: [ self privateText from: self selection from + 1 to: self selection to ]
-		  ifFalse: [ self privateText empty ]
+		  ifFalse: [ self privateText from: 1 to: 0]
 ]
 
 { #category : #'api - modification' }

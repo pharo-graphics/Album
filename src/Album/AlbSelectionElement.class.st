@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbMainSelectionElement,
+	#name : #AlbSelectionElement,
 	#superclass : #AlbSubtextElement,
 	#instVars : [
 		'focusHandler',
@@ -13,20 +13,20 @@ Class {
 }
 
 { #category : #'private - infinite element changes' }
-AlbMainSelectionElement >> extentChangedIn: anInfiniteElement [
+AlbSelectionElement >> extentChangedIn: anInfiniteElement [
 
 	self updateMainSelectionVerticesIn: anInfiniteElement
 ]
 
 { #category : #'private - focus' }
-AlbMainSelectionElement >> onGotFocusIn: anEditorElement [ 
+AlbSelectionElement >> onGotFocusIn: anEditorElement [ 
 
 	self background: anEditorElement selectionColor.
 	self border:	(BlBorder paint: anEditorElement selectionColor twiceDarker  width: self borderWidth)
 ]
 
 { #category : #initialization }
-AlbMainSelectionElement >> onInstalledIn: anEditorElement [
+AlbSelectionElement >> onInstalledIn: anEditorElement [
 
 	self background: anEditorElement selectionColor.
 	self border: (BlBorderBuilder new 
@@ -58,7 +58,7 @@ AlbMainSelectionElement >> onInstalledIn: anEditorElement [
 ]
 
 { #category : #'private - focus' }
-AlbMainSelectionElement >> onLostFocusIn: anEditorElement [  
+AlbSelectionElement >> onLostFocusIn: anEditorElement [  
 
 	| c |
 	c := Color lightGray alpha: 0.4.
@@ -67,7 +67,7 @@ AlbMainSelectionElement >> onLostFocusIn: anEditorElement [
 ]
 
 { #category : #initialization }
-AlbMainSelectionElement >> onUninstalledIn: anEditorElement [
+AlbSelectionElement >> onUninstalledIn: anEditorElement [
 
 	anEditorElement editor removeEventHandler: selectionHandler.
 	anEditorElement removeEventHandler: extentHandler.
@@ -79,13 +79,13 @@ AlbMainSelectionElement >> onUninstalledIn: anEditorElement [
 ]
 
 { #category : #'private - infinite element changes' }
-AlbMainSelectionElement >> selectionChangedIn: anInfiniteElement [
+AlbSelectionElement >> selectionChangedIn: anInfiniteElement [
 
 	self updateMainSelectionVerticesIn: anInfiniteElement.
 ]
 
 { #category : #'private - infinite element changes' }
-AlbMainSelectionElement >> selectionRectanglesIn: anInfiniteElement [
+AlbSelectionElement >> selectionRectanglesIn: anInfiniteElement [
 
 	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
 
@@ -96,19 +96,16 @@ AlbMainSelectionElement >> selectionRectanglesIn: anInfiniteElement [
 ]
 
 { #category : #'private - infinite element changes' }
-AlbMainSelectionElement >> selectionScrolled: aPoint in: anInfiniteElement [
+AlbSelectionElement >> selectionScrolled: aPoint in: anInfiniteElement [
 
 	self updateMainSelectionVerticesIn: anInfiniteElement
 ]
 
 { #category : #'private - infinite element changes' }
-AlbMainSelectionElement >> updateMainSelectionVerticesIn: anInfiniteElement [
+AlbSelectionElement >> updateMainSelectionVerticesIn: anInfiniteElement [
 
 	anInfiniteElement ifNil: [ ^ self ].
 	self subtext: anInfiniteElement selectedText.	
-	self interval: (anInfiniteElement selection 
-		ifEmpty: [0 to: 0] 
-		ifNotEmpty: [ anInfiniteElement selection from + 1 to: anInfiniteElement selection to]).
 	(self selectionRectanglesIn: anInfiniteElement)
 		ifEmpty: [ self parentDo: [ :p | self removeFromParent ] ]
 		ifNotEmpty: [ :rects |

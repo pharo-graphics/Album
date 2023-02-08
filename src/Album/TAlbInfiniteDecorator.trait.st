@@ -283,6 +283,12 @@ TAlbInfiniteDecorator >> withRowNumbers [
 	self next withRowNumbers
 ]
 
+{ #category : #'t - infinite editor view - configuration' }
+TAlbInfiniteDecorator >> withSoftLine [
+
+	self next withSoftLine
+]
+
 { #category : #'t - infinite editor accessing' }
 TAlbInfiniteDecorator >> withoutCacheLimit [
 
@@ -293,6 +299,12 @@ TAlbInfiniteDecorator >> withoutCacheLimit [
 TAlbInfiniteDecorator >> withoutRowNumbers [
 
 	self next withoutRowNumbers
+]
+
+{ #category : #'t - infinite editor view - configuration' }
+TAlbInfiniteDecorator >> withoutSoftLine [
+
+	self next withoutSoftLine
 ]
 
 { #category : #'t - infinite editor private - view accessing' }

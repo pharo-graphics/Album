@@ -71,7 +71,7 @@ AlbEditorElement >> frontLayer [
 
 { #category : #initialization }
 AlbEditorElement >> initialize [
-	
+
 	| distributor |
 	super initialize.
 	self layout: self defaultLayout.
@@ -85,12 +85,14 @@ AlbEditorElement >> initialize [
 	self next whenModeChangedDo: [ self reinstallStructure ].
 	frontLayer := self defaultFrontLayer.
 	self addChild: frontLayer as: #frontLayer.
-	distributor := AlbEditorElementEventDistributor new.
+	distributor := BlSharedEventDistributor new
+		               adjustMousePosition: false;
+		               shareEvents: (Array with: BlMouseEvent );
+		               yourself.
 	self frontLayer addEventHandler: distributor.
 	self infinite addEventHandler: distributor.
 	self matchParent.
-	self installModeEventHandlers  
-
+	self installModeEventHandlers
 ]
 
 { #category : #initialization }

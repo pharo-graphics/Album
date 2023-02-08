@@ -574,6 +574,12 @@ AlbInfiniteEditorElement >> withRowNumbers [
 	self withDecoration: AlbRowNumberDecoration
 ]
 
+{ #category : #'view - configuration' }
+AlbInfiniteEditorElement >> withSoftLine [
+
+	self hMatchParent
+]
+
 { #category : #accessing }
 AlbInfiniteEditorElement >> withoutCacheLimit [
 
@@ -584,6 +590,12 @@ AlbInfiniteEditorElement >> withoutCacheLimit [
 AlbInfiniteEditorElement >> withoutRowNumbers [
 
 	self withoutDecoration: AlbRowNumberDecoration
+]
+
+{ #category : #'view - configuration' }
+AlbInfiniteEditorElement >> withoutSoftLine [
+
+	self hExact: SmallInteger maxVal
 ]
 
 { #category : #'private - view accessing' }

@@ -4,6 +4,13 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #geometry }
+AlbRowNumberDecoration >> numberVerticalHeightIn: anItemElement fontHeight: fontHeight [
+
+	" redefined to have the number on top of a soft line "
+	^ 0
+]
+
 { #category : #accessing }
 AlbRowNumberDecoration >> selectionBackgroundOf: anItemElement in: anInfiniteElement [
 

@@ -198,8 +198,10 @@ AlbInfiniteEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocus
 	super
 		focusables: aBlFocusFinderCandidates
 		along: aBlFocusSearchDirection.
-	aBlFocusFinderCandidates candidates sort: [ :a :b | 
-		a bounds left > b bounds left ]
+		
+	self flag: 'Added then removed because it does not work if the cursor is at the left side'.		
+	"aBlFocusFinderCandidates candidates sort: [ :a :b | 
+		a bounds left > b bounds left ]"
 ]
 
 { #category : #'private - geometry change' }

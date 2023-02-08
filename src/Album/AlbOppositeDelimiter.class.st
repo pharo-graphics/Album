@@ -32,7 +32,7 @@ AlbOppositeDelimiter >> initialize [
 
 	super initialize.
 	self opacity: 0.
-	anim := ((BlOpacityAnimation new opacity: 1.6) duration: 500 milliSeconds).
+	anim := ((BlOpacityAnimation new opacity: 1.6) duration: 300 milliSeconds).
 	self addAnimation: anim
 ]
 

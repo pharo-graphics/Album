@@ -44,7 +44,6 @@ AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 							 at: localIdx
 							 in: anEditorElement) ifNotNil: [ :o |
 							o subtext: (anEditorElement text from: interval first to: interval first).
-							o interval: (interval first to: interval first).
 							^ o ] ] ].
 			"after open delimiter"
 			interval first = cursorPos ifTrue: [
@@ -56,7 +55,6 @@ AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 							 at: localIdx
 							 in: anEditorElement) ifNotNil: [ :o |
 							o subtext: (anEditorElement text from: interval last + 1 to: interval last + 1).
-							o interval: (interval last + 1 to: interval last + 1).
 							^ o ] ] ] ]
 		ifAbsent: [  ].
 	^ nil

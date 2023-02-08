@@ -60,10 +60,7 @@ AlbSelectionElement >> onInstalledIn: anEditorElement [
 { #category : #'private - focus' }
 AlbSelectionElement >> onLostFocusIn: anEditorElement [  
 
-	| c |
-	c := Color lightGray alpha: 0.4.
-	self background: c.
-	self border:	(BlBorder paint: c twiceDarker  width: self borderWidth)
+	self background: (anEditorElement selectionColor alpha: 0.1)
 ]
 
 { #category : #initialization }

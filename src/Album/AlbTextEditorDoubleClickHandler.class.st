@@ -8,9 +8,12 @@ Class {
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	| screenPosition globalTextIndex selecter navigator editor selection |
+	anEvent isConsumed ifTrue: [ ^ self ].
+	anEvent consumed: true.
 	screenPosition := (element
 		                   localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                   fromChild: element) center.
+
 	editor := element editor.
 	navigator := editor navigator.
 	selecter := editor selecter.
@@ -18,10 +21,10 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	globalTextIndex := navigator findTextIndexAtScreenPosition: screenPosition ifAbsent: [ ^ self ].
 
 
-	(globalTextIndex isZero or: [ globalTextIndex = editor privateText size ]) ifTrue: [ 
+	(globalTextIndex isZero or: [ globalTextIndex = editor privateText size ]) ifTrue: [
 		selecter
 			all;
-			apply.
+			apply.		
 		^ self ].
 
 	selection := selecter selection.
@@ -30,7 +33,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	editor surroundMap
 		intervalBetweenDelimitersIn: editor privateText
 		at: globalTextIndex
-		ifPresent: [ :interval | 
+		ifPresent: [ :interval |
 			selecter
 				from: interval first to: interval last;
 				apply.
@@ -38,18 +41,18 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		ifAbsent: [  ].
 
 	" try to select the whole line "
-	element cursor ifNotNil: [ :globalCursor | 
+	element cursor ifNotNil: [ :globalCursor |
 		| delta lineIdx |
 		lineIdx := navigator findTextIndexAtLineStart: globalCursor.
 		delta := lineIdx - globalTextIndex.
-		delta isZero ifTrue: [ 
+		delta isZero ifTrue: [
 			selecter
 				extendToWholeLine;
 				apply.
 			^ self ].
 		lineIdx := navigator findTextIndexAtLineEnd: globalCursor.
 		delta := globalTextIndex - lineIdx.
-		delta isZero ifTrue: [ 
+		delta isZero ifTrue: [
 			selecter
 				extendToWholeLine;
 				apply.

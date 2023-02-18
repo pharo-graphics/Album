@@ -70,11 +70,9 @@ AlbRemanentsUpdater >> createPortionsIn: anEditorElement [
 		self remanentText ifNil: [ ^ self ].
 		self remanentText ifEmpty: [ ^ self ].
 		subTextOnScreen := anEditorElement subTextOnScreen.
-
 		updaterProcess := [
 		                  (Delay forMilliseconds: self updateDelay) wait.
-		                  collector := BlIntervalCollector new text:
-			                               subTextOnScreen asString.
+		                  collector := BlIntervalCollector new text: subTextOnScreen asString.
 		                  founds := collector searchAll: self remanentString.
 		                  founds do: [ :interval | self portionInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
 		                  anEditorElement frontLayer addChildren: (portions reject: [ :r | r hasParent ]).
@@ -150,10 +148,11 @@ AlbRemanentsUpdater >> portionInterval: anInterval in: anEditorElement [
 								         first := piece textStart. 
 								         last := endIdx min: piece textEnd ] ].
 								(selInterval intersection: (startIdx + 1 to: endIdx )) ifEmpty: [ 
-									((startIdx -1 to: endIdx) = selInterval) ifFalse: [
+									((startIdx -1 to: endIdx) = selInterval) ifFalse: [ 
 				         				origin := pieceElement screenOriginAt: first - piece textStart - 1.
 				         				corner := pieceElement screenCornerAt: last - piece textStart.
-				         				bnds := (origin corner: corner) translateBy: pieceElement positionInEditor.
+										bnds := BlBounds fromRectangle: (origin corner: corner).
+										bnds := (anEditorElement infinite localBoundsToMine: bnds fromChild: pieceElement).
 				         				stream nextPut: bnds ] ] ] ].
 	rects ifEmpty: [ ^ self ].
 	rem := AlbSelectionEcho new adjacentRectangles: rects; subtext: (anEditorElement text from: anInterval first to: anInterval last); yourself.

@@ -47,28 +47,30 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 
 	thePieces := segment pieces.
 
-	thePieces withIndexDo: [ :aPiece :eachIndex | 
+	thePieces withIndexDo: [ :aPiece :eachIndex |
 		| thePieceElements |
-		thePieceElements := (aPiece createElement: self infiniteElement)
-			                    asOrderedCollection.
+		thePieceElements := OrderedCollection with:
+			                    (aPiece createElement: self infiniteElement).
 
 		newPieceElements addAll: thePieceElements.
 		pieceElements atPiece: aPiece putElements: thePieceElements ].
 
-	(hasCursor or: [ hasSelection ]) ifTrue: [ 
-		pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
-			(hasCursor and: [hasSelection not and: [self infiniteElement isFocused]]) ifTrue: [ 
-				aPiece
-					setCursor: aPieceElement
-					of: anEditorSegment
-					in: self infiniteElement ].
+	(hasCursor or: [ hasSelection ]) ifTrue: [
+		pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement |
+			(hasCursor and: [
+				 hasSelection not and: [ self infiniteElement isFocused ] ])
+				ifTrue: [
+					aPiece
+						setCursor: aPieceElement
+						of: anEditorSegment
+						in: self infiniteElement ].
 
 			aPiece
 				updateFocus: self infiniteElement isFocused
 				of: aPieceElement
 				in: self infiniteElement.
 
-			hasSelection ifTrue: [ 
+			hasSelection ifTrue: [
 				aPiece
 					updateSelection: aPieceElement
 					of: anEditorSegment
@@ -78,7 +80,7 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 	itemElement addChildren: newPieceElements.
 
 	itemElement
-		constraintsDo: [ :c | 
+		constraintsDo: [ :c |
 			c horizontal resizer:
 					infiniteElement constraints horizontal resizer ];
 		padding: anEditorSegment paragraphMargin

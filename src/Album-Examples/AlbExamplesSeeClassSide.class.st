@@ -440,6 +440,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 
 	ed := tgcaText onAlbum.
 	ed withRowNumbers.
+	ed withoutSoftLine.
 	
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |

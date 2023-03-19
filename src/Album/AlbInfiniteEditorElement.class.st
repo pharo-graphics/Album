@@ -597,7 +597,7 @@ AlbInfiniteEditorElement >> withoutRowNumbers [
 { #category : #'view - configuration' }
 AlbInfiniteEditorElement >> withoutSoftLine [
 
-	self hExact: SmallInteger maxVal
+	self constraintsDo: [ :c | c horizontal fitContent ]
 ]
 
 { #category : #'private - view accessing' }

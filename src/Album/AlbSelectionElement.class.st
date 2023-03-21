@@ -103,9 +103,12 @@ AlbSelectionElement >> updateMainSelectionVerticesIn: anInfiniteElement [
 
 	anInfiniteElement ifNil: [ ^ self ].
 	self subtext: anInfiniteElement selectedText.	
+	"anInfiniteElement text removeAttribute: foregroundAttribute."
 	(self selectionRectanglesIn: anInfiniteElement)
-		ifEmpty: [ self parentDo: [ :p | self removeFromParent ] ]
+		ifEmpty: [ 			
+			self parentDo: [ :p | self removeFromParent ] ]
 		ifNotEmpty: [ :rects |
+			"anInfiniteElement text attribute: foregroundAttribute from: anInfiniteElement selection from + 1 to: anInfiniteElement selection to."
 			self adjacentRectangles: rects.
 			self hasParent ifFalse: [ anInfiniteElement addChild: self ] ]
 ]

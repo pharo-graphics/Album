@@ -519,15 +519,6 @@ AlbTextEditorOperator >> subscribe: anEventHandler [
 ]
 
 { #category : #accessing }
-AlbTextEditorOperator >> telemetry [
-	<return: #BlTelemetry>
-
-	^ self context
-		ifNil: [ BlNullTelemetry uniqueInstance ]
-		ifNotNil: [ :aContext | aContext telemetry ]
-]
-
-{ #category : #accessing }
 AlbTextEditorOperator >> text [
 
 	^ editor privateText

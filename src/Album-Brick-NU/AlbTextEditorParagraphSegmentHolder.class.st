@@ -39,54 +39,28 @@ AlbTextEditorParagraphSegmentHolder >> buildSegment: anEditorSegment [
 	hasCursor := self hasCursor.
 	itemElement text: segment text.
 
-	self infiniteElement telemetry
-		timeSync: [ 'Update segment properties' ]
-		during: [ segment updateSegmentProperties ].
+	segment updateSegmentProperties.
 
 	pieceElements := self newPiecesMap.
 	newPieceElements := OrderedCollection new.
 
-	thePieces := self infiniteElement telemetry
-		timeSync: [ 'Get pieces' ]
-		during: [ segment pieces ].
+	thePieces := segment pieces.
 	
-	self infiniteElement telemetry
-		timeSync: [ 'Create piece elements' ]
-		during: [
-			thePieces withIndexDo: [ :aPiece :eachIndex | 
-				| thePieceElements |
-				
-				thePieceElements := self infiniteElement telemetry
-					timeSync: [ 'Create piece elements at {1}' format: { eachIndex } ]
-					during: [ (aPiece createElement: self infiniteElement) asOrderedCollection ].
-				
-				newPieceElements addAll: thePieceElements.
-				pieceElements atPiece: aPiece putElements: thePieceElements ] ].
+	thePieces withIndexDo: [ :aPiece :eachIndex | 
+		| thePieceElements |				
+		thePieceElements := (aPiece createElement: self infiniteElement) asOrderedCollection.				
+		newPieceElements addAll: thePieceElements.
+		pieceElements atPiece: aPiece putElements: thePieceElements ].
 
-	self infiniteElement telemetry
-		timeSync: [ 'Remove segment children' ]
-		during: [ itemElement removeChildren ].
-
-	self infiniteElement telemetry
-		timeSync: [ 'Add segment children' ]
-		during: [ itemElement addChildren: newPieceElements ].
+	itemElement removeChildren.
+	itemElement addChildren: newPieceElements.
 		
 	(hasCursor or: [ hasSelection ])
 		ifTrue: [
-			self infiniteElement telemetry
-				timeSync: [ 'Set cursor, selection' ]
-				during: [
-						hasCursor
-							ifTrue: [
-								self infiniteElement telemetry
-									timeSync: [ 'Set cursor' ]
-									during: [ self onCursorChanged ].
-						
-						hasSelection
-							ifTrue: [
-								self infiniteElement telemetry
-									timeSync: [ 'Set selection' ]
-									during: [ self onSelectionChanged ] ] ] ] ].
+			hasCursor
+				ifTrue: [ self onCursorChanged ].
+			hasSelection
+				ifTrue: [ self onSelectionChanged ] ].
 
 	itemElement
 		constraintsDo: [ :c | c horizontal resizer: infiniteElement constraints horizontal resizer ];
@@ -176,19 +150,13 @@ AlbTextEditorParagraphSegmentHolder >> onCursorChanged [
 	self
 		assert: [ segment isNotNil ]
 		description: [ 'Segment must be bound!' ].
-	theCursors := itemElement telemetry
-		timeSync: [ 'Compute segment cursors' ]
-		during: [ (self infiniteElement editor cursors allCursors
+	theCursors := (self infiniteElement editor cursors allCursors
 				select: [ :aCursor | aCursor insideSegment: segment ]
 				thenCollect: [ :aCursor | aCursor position - segment textStart ])
-				asSet ].
-	itemElement telemetry
-		timeSync: [ 'Set segment cursors {1}' format: {theCursors} ]
-		during: [ itemElement setCursors: theCursors ].
+				asSet.
+	itemElement setCursors: theCursors.
 	(theCursors isNotEmpty and: [ self infiniteElement isFocused ])
-		ifTrue: [ itemElement telemetry
-				timeSync: [ 'Show segment cursors' ]
-				during: [ itemElement showCursors ] ]
+		ifTrue: [ itemElement showCursors ]
 ]
 
 { #category : #updating }
@@ -256,15 +224,9 @@ AlbTextEditorParagraphSegmentHolder >> screenToCursor: aTransformation [
 AlbTextEditorParagraphSegmentHolder >> segment: anEditorSegment [
 	segment == anEditorSegment
 		ifTrue: [
-			self infiniteElement telemetry
-				timeSync: [ 'Update segment at {1}' format: { anEditorSegment index } ]
-				during: [
-					self infiniteElement ignoreRequestLayoutDuring: [ self updateSegment: anEditorSegment ] ] ]
+			self infiniteElement ignoreRequestLayoutDuring: [ self updateSegment: anEditorSegment ] ]
 		ifFalse: [
-			self infiniteElement telemetry
-				timeSync: [ 'Build segment at {1}' format: { anEditorSegment index } ]
-				during: [
-					self infiniteElement ignoreRequestLayoutDuring: [ self buildSegment: anEditorSegment ] ] ]
+			self infiniteElement ignoreRequestLayoutDuring: [ self buildSegment: anEditorSegment ] ]
 ]
 
 { #category : #'private - accessing' }
@@ -290,7 +252,7 @@ AlbTextEditorParagraphSegmentHolder >> selectionIn: aTextEditor [
 
 { #category : #'private - segment' }
 AlbTextEditorParagraphSegmentHolder >> updateSegment: anEditorSegment [
-	| newPieceElements newPieceMap hasCursor hasSelection |
+	| newPieceElements newPieceMap hasCursor hasSelection thePieces |
 	self
 		assert: [ segment == anEditorSegment ]
 		description: [ 'Can only update the same segment!' ].
@@ -303,65 +265,36 @@ AlbTextEditorParagraphSegmentHolder >> updateSegment: anEditorSegment [
 	
 	newPieceMap := self newPiecesMap.
 	newPieceElements := OrderedCollection new.
-	
-	self infiniteElement telemetry
-		timeSync: [ 'Update piece elements' ]
-		during: [
-			| thePieces |
-			self infiniteElement telemetry
-				timeSync: [ 'Compute pieces' ]
-				during: [ thePieces := segment pieces ].
+
+	thePieces := segment pieces.
 			
-			thePieces do: [ :eachSegmentPiece | 
-				| thePieceElements |
+	thePieces do: [ :eachSegmentPiece | 
+		| thePieceElements |
 				
-				thePieceElements := pieceElements
-					at: eachSegmentPiece
-					pieceAndElementsDo: [ :eachPiece :theSegmentElements |
-						
-						theSegmentElements do: [ :eachSegmentElement |
-							self infiniteElement telemetry
-								timeSync: [ 'Update text of `{1}`' format: { eachPiece } ]
-								during: [ eachPiece updateText: eachSegmentElement of: segment in: self infiniteElement ] ].
-						theSegmentElements ]
-					ifAbsent: [ 
-							self infiniteElement telemetry
-								timeSync: [ 'Create element for `{1}`' format: { eachSegmentPiece } ]
-								during: [ (eachSegmentPiece createElement: self infiniteElement) asOrderedCollection ] ].
+		thePieceElements := pieceElements
+			at: eachSegmentPiece
+			pieceAndElementsDo: [ :eachPiece :theSegmentElements |						
+				theSegmentElements do: [ :eachSegmentElement |
+					eachPiece updateText: eachSegmentElement of: segment in: self infiniteElement ].
+				theSegmentElements ]
+			ifAbsent: [ (eachSegmentPiece createElement: self infiniteElement) asOrderedCollection ].
 			
-				newPieceElements addAll: thePieceElements.
-				newPieceMap atPiece: eachSegmentPiece putElements: thePieceElements ] ].
+		newPieceElements addAll: thePieceElements.
+		newPieceMap atPiece: eachSegmentPiece putElements: thePieceElements ].
 
 	pieceElements := newPieceMap.
 
-	self infiniteElement telemetry
-		timeSync: [ 'Remove children' ]
-		during: [ itemElement removeChildren ].
-
-	self infiniteElement telemetry
-		timeSync: [ 'Add piece elements' ]
-		during: [ itemElement addChildren: newPieceElements ].
+	itemElement removeChildren.
+	itemElement addChildren: newPieceElements.
 		
 	(hasCursor or: [ hasSelection ])
 		ifTrue: [
-			self infiniteElement telemetry
-				timeSync: [ 'Set cursor, selection' ]
-				during: [
-						hasCursor
-							ifTrue: [
-								self infiniteElement telemetry
-									timeSync: [ 'Set cursor' ]
-									during: [ self onCursorChanged ].
-						
-						hasSelection
-							ifTrue: [
-								self infiniteElement telemetry
-									timeSync: [ 'Set selection' ]
-									during: [ self onSelectionChanged ] ] ] ] ].
+			hasCursor
+				ifTrue: [	self onCursorChanged].
+			hasSelection
+				ifTrue: [self onSelectionChanged ] ].
 	
-	self infiniteElement telemetry
-		timeSync: [ 'Set cursor' ]
-		during: [ self onFocusChanged: self infiniteElement isFocused ].
+	self onFocusChanged: self infiniteElement isFocused.
 	
 	itemElement
 		constraintsDo: [ :c | c horizontal resizer: infiniteElement constraints horizontal resizer ];

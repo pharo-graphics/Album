@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextDecorationElement,
-	#superclass : #BlElement,
+	#superclass : #OBlElement,
 	#instVars : [
 		'subtext'
 	],

@@ -238,62 +238,32 @@ AlbTextEditorInserter >> insert [
 				theMovements do: [ :eachMovement | aNavigator move: eachMovement key to: eachMovement value ].
 				aNavigator apply ].
 
-			self telemetry
-				timeSync: [ 
-					'Insert {1} at {2}' format: { 
-							theInsertionStrings asArray.
-							theInsertionIndices asArray } ]
-				during: [ self privateInsertStrings: theInsertionStrings atAll: theInsertionIndices ] ] ].
+		self privateInsertStrings: theInsertionStrings atAll: theInsertionIndices ] ].
 
 	theInsertions reverseDo: [ :eachInsertion | 
 		shouldUpdateCursor ifTrue: [ 
 			eachInsertion
 				at: #surrounding
-				ifPresent: [ :aSurrounding | 
-					self telemetry
-						timeSync: [ 
-							'Update cursor {1} surrounding {2} at {3}' format: { 
-									(eachInsertion at: #string).
-									(aSurrounding at: #string).
-									(eachInsertion at: #requestedIndex) } ]
-						during: [ 
-							self
-								privateUpdateCursorsAfterInsertion: (eachInsertion at: #string)
-								withSurround: (aSurrounding at: #string)
-								at: (eachInsertion at: #requestedIndex) ] ]
+				ifPresent: [ :aSurrounding | 				 
+					self
+						privateUpdateCursorsAfterInsertion: (eachInsertion at: #string)
+						withSurround: (aSurrounding at: #string)
+						at: (eachInsertion at: #requestedIndex) ]
 				ifAbsent: [ 
-					self telemetry
-						timeSync: [ 
-							'Update cursor {1} at {2}' format: { 
-									(eachInsertion at: #string).
-									(eachInsertion at: #requestedIndex) } ]
-						during: [ 
-							self
-								privateUpdateCursorsAfterInsertion: (eachInsertion at: #string)
-								at: (eachInsertion at: #requestedIndex) ] ] ].
+					self
+						privateUpdateCursorsAfterInsertion: (eachInsertion at: #string)
+						at: (eachInsertion at: #requestedIndex) ] ].
+				
 		shouldUpdateSelection ifTrue: [ 
 			eachInsertion
 				at: #surrounding
 				ifPresent: [ :aSurrounding | 
-					self telemetry
-						timeSync: [ 
-							'Update selection {1} surrounding {2} at {3}' format: { 
-									(eachInsertion at: #string).
-									(aSurrounding at: #string).
-									(eachInsertion at: #requestedIndex) } ]
-						during: [ 
-							self
-								updateSelectionAfterInsertion: (eachInsertion at: #string)
-								withSurround: (aSurrounding at: #string)
-								at: (eachInsertion at: #requestedIndex) ] ]
+					self
+						updateSelectionAfterInsertion: (eachInsertion at: #string)
+						withSurround: (aSurrounding at: #string)
+						at: (eachInsertion at: #requestedIndex) ]
 				ifAbsent: [ 
-					self telemetry
-						timeSync: [ 
-							'Update selection {1} at {2}' format: { 
-									(eachInsertion at: #string).
-									(eachInsertion at: #requestedIndex) } ]
-						during: [ 
-						self updateSelectionAfterInsertion: (eachInsertion at: #string) at: (eachInsertion at: #requestedIndex) ] ] ] ]
+					self updateSelectionAfterInsertion: (eachInsertion at: #string) at: (eachInsertion at: #requestedIndex) ] ] ]
 ]
 
 { #category : #testing }
@@ -394,26 +364,19 @@ AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText at: anIndex [
 	self cursor do: [ :aCursor |
 		| aCursorDelta |
 		
-		aCursorDelta := self telemetry
-			timeSync: [
-				'Compute movement for {1} inserting {2} at {3}'
-					format: { aCursor position . aText . anIndex } ]
-			during: [
+		aCursorDelta := 
 				self
 					computeIndexMovement: aCursor position
 					afterInserted: aText
-					at: anIndex ].
+					at: anIndex.
 
 		aCursorDelta isZero
 			ifFalse: [
-				self telemetry
-					timeSync: [ 'Move cursor at {1} by {2}' format: { aCursor position . aCursorDelta } ]
-					during: [
-						editor navigator
-							context: self context;
-							dueTo: self;
-							move: aCursor by: aCursorDelta;
-							apply ] ] ]
+				editor navigator
+					context: self context;
+					dueTo: self;
+					move: aCursor by: aCursorDelta;
+					apply ] ]
 ]
 
 { #category : #private }

@@ -15,10 +15,15 @@ AlbRemanentsUpdater >> closeOppositeDelimiter: oppositeTextElement at: localIdx 
 	| bnds origin corner width |
 	localIdx isZero ifTrue: [ ^ nil ].
 	width := oppositeTextElement characterWidthAtIndex: localIdx.
-	origin := (oppositeTextElement screenOriginAt: localIdx) - (width @ 0).
+	origin := (oppositeTextElement screenOriginAt: localIdx)
+	          - (width @ 0).
 	corner := oppositeTextElement screenCornerAt: localIdx.
-	bnds := ((origin corner: corner) translateBy: oppositeTextElement positionInEditor) expandBy: (1@2 corner: 0@2).
-	^ AlbOppositeDelimiter new relocate: bnds origin; size: bnds extent
+	bnds := ((origin corner: corner) translateBy:
+		         oppositeTextElement positionInEditor) expandBy:
+		        (1 @ 2 corner: 0 @ 2).
+	^ AlbOppositeDelimiter new
+		  position: bnds origin;
+		  size: bnds extent
 ]
 
 { #category : #'opposite delimiter' }
@@ -118,9 +123,14 @@ AlbRemanentsUpdater >> openOppositeDelimiter: oppositeTextElement at: localIdx i
 	localIdx isZero ifTrue: [ ^ nil ].
 	origin := oppositeTextElement screenOriginAt: localIdx - 1.
 	width := oppositeTextElement characterWidthAtIndex: localIdx.
-	corner := (oppositeTextElement screenCornerAt: localIdx - 1) + (width @ 0).
-	bnds := ((origin corner: corner) translateBy: oppositeTextElement positionInEditor) expandBy: (1@2 corner: 0@2).
-	^ AlbOppositeDelimiter new relocate: bnds origin; size: bnds extent
+	corner := (oppositeTextElement screenCornerAt: localIdx - 1)
+	          + (width @ 0).
+	bnds := ((origin corner: corner) translateBy:
+		         oppositeTextElement positionInEditor) expandBy:
+		        (1 @ 2 corner: 0 @ 2).
+	^ AlbOppositeDelimiter new
+		  position: bnds origin;
+		  size: bnds extent
 ]
 
 { #category : #private }

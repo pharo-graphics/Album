@@ -38,7 +38,7 @@ AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer0 [
 	element := text asElement.
 	element measurer: self alexandrieFixedMeasurer.
 	host := BlMorphicWindowHost new.
-	BlSpace new
+	OBlSpace new
 		addChild: element;
 		host: host;
 		title: host asString;
@@ -74,7 +74,7 @@ TTTCCATTCAGATGCGACCCCAGGTCAGGCGGGGCCACCCGCTGAGTTGAGGC'.
 		root addChild: elem ].
 
 	host := BlMorphicWindowHost new.
-	space := BlSpace new
+	space := OBlSpace new
 		         addChild: root;
 		         host: host;
 		         title: host asString;
@@ -90,7 +90,7 @@ AlbExamplesSeeClassSide class >> example_AlexandrieixedMeasurer [
 	| anEditor host |
 	anEditor := self alexandrieEditorFor: 'Hello'.
 	host := BlMorphicWindowHost new.
-	BlSpace new
+	OBlSpace new
 		addChild: anEditor;
 		host: host;
 		title: host asString;

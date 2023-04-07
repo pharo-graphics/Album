@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbCursorElement,
-	#superclass : #BlElement,
+	#superclass : #OBlElement,
 	#instVars : [
 		'textPosition',
 		'blinking',
@@ -18,7 +18,7 @@ AlbCursorElement >> beBlinking: aBoolean [
 { #category : #initialization }
 AlbCursorElement >> defaultBackground [
 
-	^ Color red "alpha: 0.5"
+	^ Color red 
 ]
 
 { #category : #initialization }
@@ -60,7 +60,7 @@ AlbCursorElement >> onGotFocus [
 { #category : #'private - focus' }
 AlbCursorElement >> onLostFocus [
 
-	self background: Color lightGray.
+	self background: Color transparent.
 	self stopBlinkingTask 
 ]
 

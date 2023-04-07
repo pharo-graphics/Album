@@ -135,7 +135,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 	ed text: text.
 		"ed inspect."
 
-	space := BlSpace new.
+	space := OBlSpace new.
 	space addChild: ed.
 	space title: 'editor'.
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorParagraphElement,
-	#superclass : #BlElement,
+	#superclass : #OBlElement,
 	#instVars : [
 		'paragraph',
 		'text',

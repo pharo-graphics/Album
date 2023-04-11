@@ -669,3 +669,7 @@ GGAGGAGGTCTTATCAGAGGCACGTCAACATCTTAAAGATGGCACTTGTGGCTTAGTAGAAGTTGAAAAAGGCGTTT'
 AlbExamplesSeeClassSide class >> wordPadding [
 	^ BlInsets top: 3 bottom: 3
 ]
+
+{ #category : #'see class side' }
+AlbExamplesSeeClassSide >> seeClassSide [
+]

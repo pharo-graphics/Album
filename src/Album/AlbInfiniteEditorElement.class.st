@@ -525,6 +525,12 @@ AlbInfiniteEditorElement >> textInternalRepresentationChanged [
 					 update
 ]
 
+{ #category : #'t - infinite editor accessing - text' }
+AlbInfiniteEditorElement >> textLeft [
+
+	^ self margin left + self padding left 
+]
+
 { #category : #'private - view accessing' }
 AlbInfiniteEditorElement >> textPiecesAndTheirElementsDo: aBlock [
 

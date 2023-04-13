@@ -241,6 +241,12 @@ TAlbInfiniteDecorator >> textInternalRepresentationChanged [
 	self next textInternalRepresentationChanged
 ]
 
+{ #category : #'t - infinite editor accessing - text' }
+TAlbInfiniteDecorator >> textLeft [
+
+	^  self padding left + self next textLeft
+]
+
 { #category : #'t - infinite editor private - accessing text' }
 TAlbInfiniteDecorator >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
 

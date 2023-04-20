@@ -2,8 +2,6 @@ Class {
 	#name : #AlbRemanentsUpdater,
 	#superclass : #AlbTextPortionUpdater,
 	#instVars : [
-		'selectionColor',
-		'remanentText',
 		'oppositeEcho'
 	],
 	#category : #'Album-UI'
@@ -65,30 +63,6 @@ AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 	^ nil
 ]
 
-{ #category : #private }
-AlbRemanentsUpdater >> createPortionsIn: anEditorElement [
-
-	| collector subTextOnScreen founds |
-	monitor critical: [
-		self terminateUpdater.
-		self remanentText ifNil: [ ^ self ].
-		self remanentText ifEmpty: [ ^ self ].
-		subTextOnScreen := anEditorElement enlargedSubTextOnScreen.
-		updaterProcess := [
-		                  (Delay forMilliseconds: self updateDelay) wait.
-								anEditorElement selectedText asString = self remanentString
-									ifTrue: [
-		                  			collector := BlIntervalCollector new text: subTextOnScreen asString.
-		                  			founds := collector searchAll: self remanentString.
-										self resetPortions.
-		                  			founds do: [ :interval |
-											self portionInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
-		                  			anEditorElement frontLayer addChildren: (portions reject: [ :r | r hasParent ])].
-		                  updaterProcess := nil ]
-			                  forkAt: Processor systemBackgroundPriority
-			                  named: 'Album remanent selection updater task' ]
-]
-
 { #category : #'infinite element changes' }
 AlbRemanentsUpdater >> cursorMovedIn: anEditorElement [ 
 
@@ -100,24 +74,10 @@ AlbRemanentsUpdater >> cursorMovedIn: anEditorElement [
 { #category : #'infinite element changes' }
 AlbRemanentsUpdater >> extentChangedIn: anEditorElement [ 
 
-	self resetPortions.
+	self resetPortionsIn: anEditorElement..
 	super extentChangedIn: anEditorElement.
 	self updateOppositeDelimiterIn: anEditorElement
 
-]
-
-{ #category : #'api - install/uninstall  hook' }
-AlbRemanentsUpdater >> onInstalledIn: anEditorElement [
-
-	super onInstalledIn: anEditorElement.
-	selectionColor := anEditorElement selectionColor. 
-
-]
-
-{ #category : #'api - install/uninstall  hook' }
-AlbRemanentsUpdater >> onUninstalledIn: anEditorElement [
-
-	super onUninstalledIn: anEditorElement
 ]
 
 { #category : #'opposite delimiter' }
@@ -137,58 +97,10 @@ AlbRemanentsUpdater >> openOppositeDelimiter: oppositeTextElement at: localIdx i
 		  size: bnds extent
 ]
 
-{ #category : #private }
-AlbRemanentsUpdater >> portionInterval: anInterval in: anEditorElement [
-
-	| startIdx endIdx rects rem selInterval |
-	startIdx := anInterval first.
-	endIdx := anInterval last.
-	selInterval := anEditorElement selection from to: anEditorElement selection to.
-	rects := Array streamContents: [ :stream | 
-		         anEditorElement
-			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
-			         do: [ :piece :pieceElement | 
-				         | first last origin corner bnds |
-				         ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
-					         ifTrue: [ 
-						         first := startIdx.
-						         last := endIdx ]
-					         ifFalse: [ 
-						         startIdx > piece textStart
-							         ifTrue: [ 
-								         first := startIdx.
-								         last := piece textEnd ]
-							         ifFalse: [ 
-								         first := piece textStart. 
-								         last := endIdx min: piece textEnd ] ].
-								(selInterval intersection: (startIdx + 1 to: endIdx )) ifEmpty: [ 
-									((startIdx -1 to: endIdx) = selInterval) ifFalse: [ 
-				         				origin := pieceElement screenOriginAt: first - piece textStart - 1.
-				         				corner := pieceElement screenCornerAt: last - piece textStart.
-										bnds := BlBounds fromRectangle: (origin corner: corner).
-										bnds := (anEditorElement infinite localBoundsToMine: bnds fromChild: pieceElement).
-				         				stream nextPut: bnds ] ] ] ].
-	rects ifEmpty: [ ^ self ].
-	rem := AlbSelectionEcho new adjacentRectangles: rects; subtext: (anEditorElement text from: anInterval first to: anInterval last); yourself.
-	portions add: rem 
-]
-
-{ #category : #accessing }
-AlbRemanentsUpdater >> remanentString [
-
-	^ self remanentText asString
-]
-
-{ #category : #accessing }
-AlbRemanentsUpdater >> remanentText [
-
-	^ remanentText
-]
-
 { #category : #'infinite element changes' }
 AlbRemanentsUpdater >> scrollEventIn: anEditorElement [ 
 
-	self resetPortions.
+	self resetPortionsIn: anEditorElement.
 	super scrollEventIn: anEditorElement.
 	self updateOppositeDelimiterIn: anEditorElement
 
@@ -198,9 +110,7 @@ AlbRemanentsUpdater >> scrollEventIn: anEditorElement [
 AlbRemanentsUpdater >> selectionChangedIn: anEditorElement [
 
 	super selectionChangedIn: anEditorElement.
-	remanentText := anEditorElement selectedText.
-	remanentText ifEmpty: [ ^ self resetPortions ].
-	self createPortionsIn: anEditorElement.
+	self updatePortionsIn: anEditorElement.
 	self updateOppositeDelimiterIn: anEditorElement
 ]
 
@@ -218,6 +128,21 @@ AlbRemanentsUpdater >> updateOppositeDelimiterIn: anEditorElement [
 { #category : #private }
 AlbRemanentsUpdater >> updatePortionsIn: anEditorElement [
 
-	self createPortionsIn: anEditorElement.
-
+	self terminateUpdater.
+	anEditorElement selectedText ifEmpty: [
+		^ self resetPortionsIn: anEditorElement ].
+	updaterProcess := [
+	                  | builder |
+	                  builder := AlbSubtextDecorationBuilder new
+		                             parentElement: anEditorElement;
+		                             fullText: anEditorElement enlargedSubTextOnScreen;
+		                             subtext: anEditorElement selectedText;
+		                             yourself.
+	                  builder createDecorations.
+	                  self resetPortionsIn: anEditorElement.
+	                  portions := builder decorations.
+	                  self setPortionsIn: anEditorElement.
+	                  updaterProcess := nil ]
+		                  forkAt: Processor systemBackgroundPriority
+		                  named: 'Album decoration builder task'
 ]

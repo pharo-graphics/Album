@@ -6,7 +6,6 @@ Class {
 		'selectionHandler',
 		'extentChangeHandler',
 		'scrollHandler',
-		'monitor',
 		'updaterProcess',
 		'textEditionHandler',
 		'infiniteEditorChangeHandler',
@@ -29,7 +28,6 @@ AlbTextPortionUpdater >> extentChangedIn: anInfiniteElement [
 AlbTextPortionUpdater >> initialize [ 
 
 	super initialize.
-	monitor := Monitor new.
 	portions := OrderedCollection new
 ]
 
@@ -89,13 +87,10 @@ AlbTextPortionUpdater >> onUninstalledIn: anEditorElement [
 ]
 
 { #category : #private }
-AlbTextPortionUpdater >> resetPortions [
+AlbTextPortionUpdater >> resetPortionsIn: anEditorElement [
 
-	| rems |
-	rems := portions copy.
-	rems do: [ :r | 
-		r removeFromParent.
-		portions remove: r ]
+	anEditorElement frontLayer removeChildren: portions.
+	portions reset
 ]
 
 { #category : #'infinite element changes' }
@@ -109,6 +104,12 @@ AlbTextPortionUpdater >> selectionChangedIn: anInfiniteElement [
 ]
 
 { #category : #private }
+AlbTextPortionUpdater >> setPortionsIn: anEditorElement [
+
+	anEditorElement frontLayer addChildren: portions
+]
+
+{ #category : #private }
 AlbTextPortionUpdater >> terminateUpdater [
 
 	updaterProcess ifNotNil: #terminate.
@@ -119,12 +120,6 @@ AlbTextPortionUpdater >> terminateUpdater [
 AlbTextPortionUpdater >> textEditedIn: anInfiniteElement [
 
 	self updatePortionsIn: anInfiniteElement
-]
-
-{ #category : #private }
-AlbTextPortionUpdater >> updateDelay [
-
-	^ 0
 ]
 
 { #category : #'infinite element changes' }

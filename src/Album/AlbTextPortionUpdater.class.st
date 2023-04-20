@@ -41,7 +41,9 @@ AlbTextPortionUpdater >> onInstalledIn: anEditorElement [
 		                     on: AlbCursorMovedEvent
 		                     do: [ :evt | 
 		                     self cursorMovedIn: anEditorElement ].
-	selectionHandler := BlEventHandler on: AlbSelectionChangedEvent do: [ self selectionChangedIn: anEditorElement ].
+	selectionHandler := BlEventHandler 
+								on: AlbSelectionChangedEvent 
+								do: [ self selectionChangedIn: anEditorElement ].
 	extentChangeHandler := BlEventHandler
 		                       on: BlElementExtentChangedEvent
 		                       do: [ :evt | 
@@ -122,7 +124,7 @@ AlbTextPortionUpdater >> textEditedIn: anInfiniteElement [
 { #category : #private }
 AlbTextPortionUpdater >> updateDelay [
 
-	^ 50
+	^ 20
 ]
 
 { #category : #'infinite element changes' }

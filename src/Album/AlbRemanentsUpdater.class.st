@@ -71,16 +71,19 @@ AlbRemanentsUpdater >> createPortionsIn: anEditorElement [
 	| collector subTextOnScreen founds |
 	monitor critical: [
 		self terminateUpdater.
-		self resetPortions.
 		self remanentText ifNil: [ ^ self ].
 		self remanentText ifEmpty: [ ^ self ].
 		subTextOnScreen := anEditorElement subTextOnScreen.
 		updaterProcess := [
 		                  (Delay forMilliseconds: self updateDelay) wait.
-		                  collector := BlIntervalCollector new text: subTextOnScreen asString.
-		                  founds := collector searchAll: self remanentString.
-		                  founds do: [ :interval | self portionInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
-		                  anEditorElement frontLayer addChildren: (portions reject: [ :r | r hasParent ]).
+								anEditorElement selectedText asString = self remanentString
+									ifTrue: [
+		                  			collector := BlIntervalCollector new text: subTextOnScreen asString.
+		                  			founds := collector searchAll: self remanentString.
+										self resetPortions.
+		                  			founds do: [ :interval |
+											self portionInterval: interval + subTextOnScreen textOffset in: anEditorElement ].
+		                  			anEditorElement frontLayer addChildren: (portions reject: [ :r | r hasParent ])].
 		                  updaterProcess := nil ]
 			                  forkAt: Processor systemBackgroundPriority
 			                  named: 'Album remanent selection updater task' ]
@@ -97,6 +100,7 @@ AlbRemanentsUpdater >> cursorMovedIn: anEditorElement [
 { #category : #'infinite element changes' }
 AlbRemanentsUpdater >> extentChangedIn: anEditorElement [ 
 
+	self resetPortions.
 	super extentChangedIn: anEditorElement.
 	self updateOppositeDelimiterIn: anEditorElement
 
@@ -184,6 +188,7 @@ AlbRemanentsUpdater >> remanentText [
 { #category : #'infinite element changes' }
 AlbRemanentsUpdater >> scrollEventIn: anEditorElement [ 
 
+	self resetPortions.
 	super scrollEventIn: anEditorElement.
 	self updateOppositeDelimiterIn: anEditorElement
 
@@ -194,6 +199,7 @@ AlbRemanentsUpdater >> selectionChangedIn: anEditorElement [
 
 	super selectionChangedIn: anEditorElement.
 	remanentText := anEditorElement selectedText.
+	remanentText ifEmpty: [ ^ self resetPortions ].
 	self createPortionsIn: anEditorElement.
 	self updateOppositeDelimiterIn: anEditorElement
 ]

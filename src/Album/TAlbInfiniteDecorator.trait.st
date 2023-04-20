@@ -83,6 +83,12 @@ TAlbInfiniteDecorator >> editor: aTextEditor [
 
 ]
 
+{ #category : #'t - infinite editor accessing - text' }
+TAlbInfiniteDecorator >> enlargedSubTextOnScreen [
+	
+	^ self next enlargedSubTextOnScreen 
+]
+
 { #category : #'t - infinite editor focus testing' }
 TAlbInfiniteDecorator >> hasFocus [
 

@@ -191,6 +191,18 @@ AlbInfiniteEditorElement >> editor: aTextEditor [
 
 ]
 
+{ #category : #'accessing - text' }
+AlbInfiniteEditorElement >> enlargedSubTextOnScreen [
+	
+	| interval |
+	interval := self subTextOnScreenInterval.
+	
+	^ self text 
+		from: ((interval first - interval size) max: 1) 
+		to: (((interval last + interval size) max: 0) min: self text size)
+
+]
+
 { #category : #'focus accessing' }
 AlbInfiniteEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDirection [
 	"Sort candidates according the bounds left, to ensure that rightmost are favored for up and down. "

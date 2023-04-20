@@ -73,7 +73,7 @@ AlbRemanentsUpdater >> createPortionsIn: anEditorElement [
 		self terminateUpdater.
 		self remanentText ifNil: [ ^ self ].
 		self remanentText ifEmpty: [ ^ self ].
-		subTextOnScreen := anEditorElement subTextOnScreen.
+		subTextOnScreen := anEditorElement enlargedSubTextOnScreen.
 		updaterProcess := [
 		                  (Delay forMilliseconds: self updateDelay) wait.
 								anEditorElement selectedText asString = self remanentString

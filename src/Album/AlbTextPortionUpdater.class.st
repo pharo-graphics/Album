@@ -124,7 +124,7 @@ AlbTextPortionUpdater >> textEditedIn: anInfiniteElement [
 { #category : #private }
 AlbTextPortionUpdater >> updateDelay [
 
-	^ 20
+	^ 0
 ]
 
 { #category : #'infinite element changes' }

@@ -21,7 +21,7 @@ AlbTextEditorLineSegment >> clearCache [
 { #category : #'pieces - computation' }
 AlbTextEditorLineSegment >> computedPieces [
 	<return: #SequenceableCollection of: #AlbTextEditorAbstractSegmentPiece>
-	^ AlbTextEditorLineSegmentSplitter new splitSegment: self.
+	^ AlbTextEditorSegmentSplitter new splitSegment: self.
 
 ]
 

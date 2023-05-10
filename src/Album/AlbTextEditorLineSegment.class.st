@@ -20,9 +20,9 @@ AlbTextEditorLineSegment >> clearCache [
 
 { #category : #'pieces - computation' }
 AlbTextEditorLineSegment >> computedPieces [
-	<return: #SequenceableCollection of: #AlbTextEditorAbstractSegmentPiece>
-	^ AlbTextEditorSegmentSplitter new splitSegment: self.
 
+	<return: #SequenceableCollection of:	#AlbTextEditorAbstractSegmentPiece>
+	^ self newSplitter splitSegment: self
 ]
 
 { #category : #testing }
@@ -119,6 +119,13 @@ AlbTextEditorLineSegment >> moveTextPiecesBy: aNumber at: aTextIndex [
 										start: aTextPiece textStart
 										"end is start + how many left after deletion"
 										end: aCursorIndex + ((aTextPiece textEnd - aCursorIndex - aNumber abs) max: 0) ] ] ] ]
+]
+
+{ #category : #'pieces - computation' }
+AlbTextEditorLineSegment >> newSplitter [
+
+	^ AlbTextEditorLineSegmentSplitter new
+		  beSeparatorBased; yourself
 ]
 
 { #category : #'attributes - paragraph' }

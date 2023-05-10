@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbTextEditorSegmentSplitter,
+	#name : #AlbTextEditorLineSegmentSplitter,
 	#superclass : #Object,
 	#instVars : [
 		'characterClassifier',
@@ -9,19 +9,19 @@ Class {
 }
 
 { #category : #'splitting configuration' }
-AlbTextEditorSegmentSplitter >> beCharacterBased [
+AlbTextEditorLineSegmentSplitter >> beCharacterBased [
 
 	characterClassifier := self characterBasedClassifier
 ]
 
 { #category : #'splitting configuration' }
-AlbTextEditorSegmentSplitter >> beSeparatorBased [
+AlbTextEditorLineSegmentSplitter >> beSeparatorBased [
 
 	characterClassifier := self separatorBasedClassifier
 ]
 
 { #category : #'splitting configuration' }
-AlbTextEditorSegmentSplitter >> characterBasedClassifier [
+AlbTextEditorLineSegmentSplitter >> characterBasedClassifier [
 
 	"Return a block that compute a type of an item within a segment.
 	Note: return value should be never used explicitely, it is only needed
@@ -34,13 +34,13 @@ AlbTextEditorSegmentSplitter >> characterBasedClassifier [
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentSplitter >> characterClassifier [
+AlbTextEditorLineSegmentSplitter >> characterClassifier [
 
 	^ characterClassifier
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentSplitter >> characterClassifier: aValuable [
+AlbTextEditorLineSegmentSplitter >> characterClassifier: aValuable [
 
 
 	"aValuable compute a type of an item within a segment.
@@ -52,7 +52,7 @@ AlbTextEditorSegmentSplitter >> characterClassifier: aValuable [
 ]
 
 { #category : #initialization }
-AlbTextEditorSegmentSplitter >> defaultCharacterClassifier [
+AlbTextEditorLineSegmentSplitter >> defaultCharacterClassifier [
 
 	"Return a block that compute a type of an item within a segment.
 	Note: return value should be never used explicitely, it is only needed
@@ -62,7 +62,7 @@ AlbTextEditorSegmentSplitter >> defaultCharacterClassifier [
 ]
 
 { #category : #initialization }
-AlbTextEditorSegmentSplitter >> initialize [
+AlbTextEditorLineSegmentSplitter >> initialize [
 
 	super initialize.
 	privateCount := 0.
@@ -71,7 +71,7 @@ AlbTextEditorSegmentSplitter >> initialize [
 ]
 
 { #category : #'private - pieces computation' }
-AlbTextEditorSegmentSplitter >> itemValueType: anObject [
+AlbTextEditorLineSegmentSplitter >> itemValueType: anObject [
 
 	"Return a type of an item within a segment.
 	Note: return value should be never used explicitely, it is only needed
@@ -81,13 +81,13 @@ AlbTextEditorSegmentSplitter >> itemValueType: anObject [
 ]
 
 { #category : #'private - pieces computation' }
-AlbTextEditorSegmentSplitter >> privateCount [
+AlbTextEditorLineSegmentSplitter >> privateCount [
 
 	^  privateCount := privateCount + 1
 ]
 
 { #category : #'private - pieces computation' }
-AlbTextEditorSegmentSplitter >> processPureWords: aTextIterator in: aStream offset: anOffset [
+AlbTextEditorLineSegmentSplitter >> processPureWords: aTextIterator in: aStream offset: anOffset [
 
 	"Process a text within a scope of the given iterator as if it does not contain any adornment attributes
 	nor event handling attributes. At this point we should just split it in words based on the text separator
@@ -105,7 +105,7 @@ AlbTextEditorSegmentSplitter >> processPureWords: aTextIterator in: aStream offs
 ]
 
 { #category : #'private - pieces computation' }
-AlbTextEditorSegmentSplitter >> processSegment: aTextIterator in: aStream offset: anOffset [		
+AlbTextEditorLineSegmentSplitter >> processSegment: aTextIterator in: aStream offset: anOffset [		
 	"Process a text within the scope of the given iterator.
 	We can split text into pieces based on the presence of event handling attributes. 
 	Every combination of event handling elements should be a separate text piece with its own unique visual element"
@@ -122,7 +122,7 @@ AlbTextEditorSegmentSplitter >> processSegment: aTextIterator in: aStream offset
 ]
 
 { #category : #'splitting configuration' }
-AlbTextEditorSegmentSplitter >> separatorBasedClassifier [
+AlbTextEditorLineSegmentSplitter >> separatorBasedClassifier [
 
 	"Return a block that compute a type of an item within a segment.
 	Note: return value should be never used explicitely, it is only needed
@@ -137,7 +137,7 @@ AlbTextEditorSegmentSplitter >> separatorBasedClassifier [
 ]
 
 { #category : #splitting }
-AlbTextEditorSegmentSplitter >> split: aText from: aStartIndex to: anEndIndex [
+AlbTextEditorLineSegmentSplitter >> split: aText from: aStartIndex to: anEndIndex [
 
 	"aStartIndex and anEndIndex are given in cursor coordinates"
 
@@ -150,7 +150,7 @@ AlbTextEditorSegmentSplitter >> split: aText from: aStartIndex to: anEndIndex [
 ]
 
 { #category : #splitting }
-AlbTextEditorSegmentSplitter >> splitSegment: aTextEditorSegment [
+AlbTextEditorLineSegmentSplitter >> splitSegment: aTextEditorSegment [
 
 	| thePieces |
 	thePieces := self
@@ -162,7 +162,7 @@ AlbTextEditorSegmentSplitter >> splitSegment: aTextEditorSegment [
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorSegmentSplitter >> textPiece: aBlSubText from: aTextStart to: aTextEnd [
+AlbTextEditorLineSegmentSplitter >> textPiece: aBlSubText from: aTextStart to: aTextEnd [
 	"Create and return a text segment piece"
 	<return: #AlbTextEditorAbstractSegmentPiece>
 
@@ -174,7 +174,7 @@ AlbTextEditorSegmentSplitter >> textPiece: aBlSubText from: aTextStart to: aText
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentSplitter >> textPieceClass [
+AlbTextEditorLineSegmentSplitter >> textPieceClass [
 	"Create and return a text segment piece"
 
 	^ AlbTextEditorLineSegmentTextPiece

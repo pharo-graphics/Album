@@ -24,6 +24,12 @@ TAlbInfiniteDecorator >> beEditable [
 	self next beEditable
 ]
 
+{ #category : #'t - infinite editor accessing' }
+TAlbInfiniteDecorator >> beForTextField [ 
+
+	self next beForTextField
+]
+
 { #category : #'t - infinite editor view - configuration' }
 TAlbInfiniteDecorator >> beReadonlyWithSelection [
 

@@ -51,6 +51,12 @@ AlbInfiniteEditorElement >> beEditable [
 	self mode: AlbEditableMode new
 ]
 
+{ #category : #'private - accessing editor' }
+AlbInfiniteEditorElement >> beForTextField [
+
+	self editor: AlbTextFieldEditor new
+]
+
 { #category : #'view - configuration' }
 AlbInfiniteEditorElement >> beReadonlyWithSelection [
 

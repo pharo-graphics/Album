@@ -51,12 +51,6 @@ AlbInfiniteEditorElement >> beEditable [
 	self mode: AlbEditableMode new
 ]
 
-{ #category : #'private - accessing editor' }
-AlbInfiniteEditorElement >> beForTextField [
-
-	self editor: AlbTextFieldEditor new
-]
-
 { #category : #'view - configuration' }
 AlbInfiniteEditorElement >> beReadonlyWithSelection [
 
@@ -585,7 +579,7 @@ AlbInfiniteEditorElement >> whenModeChangedDo: aBlock [
 { #category : #'view - configuration' }
 AlbInfiniteEditorElement >> whenTextEditedDo: aBlock [
 
-	self editor when: AlbTextEditedEvent do: aBlock
+	self editor whenTextEditedDo: aBlock
 ]
 
 { #category : #'view - configuration' }

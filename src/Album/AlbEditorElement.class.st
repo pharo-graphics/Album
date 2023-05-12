@@ -38,6 +38,12 @@ AlbEditorElement >> defaultFrontLayer [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> defaultInfiniteElement [  
+
+	^ AlbInfiniteEditorElement new
+]
+
+{ #category : #initialization }
 AlbEditorElement >> defaultLayout [
 
 	^ BlFrameLayout new
@@ -78,7 +84,7 @@ AlbEditorElement >> initialize [
 	self background: self defaultBackground.
 	self margin: self defaultMargin.
 	self padding: self defaultPadding.
-	self next: AlbInfiniteEditorElement new.
+	self next: self defaultInfiniteElement.
 	self installSelectionElement.
 	self installRemanentUpdater.
 	self addChild: next.

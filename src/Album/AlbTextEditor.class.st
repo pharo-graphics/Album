@@ -560,8 +560,6 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 
 	"Is sent after a few strings (or one) are inserted in a text model"
 
-	self assertUIProcess.
-
 	aBlTextStringsInserted strings
 		with: aBlTextStringsInserted finalIndices
 		do: [ :aString :anIndex | self segmentCollector insertedString: aString at: anIndex in: self ].
@@ -581,8 +579,6 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextAttributeAdded: aBlTextAttributeAdded [
 
-	self assertUIProcess.
-
 	self segmentCollector
 		addedAttribute: aBlTextAttributeAdded attribute
 		from: aBlTextAttributeAdded fromIndex
@@ -601,8 +597,6 @@ AlbTextEditor >> onTextAttributeAdded: aBlTextAttributeAdded [
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextAttributesRemoved: aBlTextAttributesRemoved [
 
-	self assertUIProcess.
-
 	self segmentCollector
 		removedAttributesFrom: aBlTextAttributesRemoved fromIndex
 		to: aBlTextAttributesRemoved toIndex
@@ -617,8 +611,6 @@ AlbTextEditor >> onTextReplaced [
 
 	"Is sent after a text instance is replaced with a new one"
 
-	self assertUIProcess.
-
 	self processCursorAttributes.
 	self notifyTextReplaced: self privateText
 ]
@@ -627,8 +619,6 @@ AlbTextEditor >> onTextReplaced [
 AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
 
 	"Is sent after a piece of text was deleted in a text model"
-
-	self assertUIProcess.
 
 	aBlTextsDeleted finalIntervals do: [ :eachInterval | 
 		self segmentCollector deletedFrom: eachInterval first to: eachInterval last in: self ].
@@ -675,7 +665,6 @@ AlbTextEditor >> privateText [
 	
 	<return: #BlText>
 	
-	self assertUIProcess.
 	^ text
 ]
 
@@ -785,7 +774,6 @@ AlbTextEditor >> removeEditorShortcuts: aCollectionOfTextEditorShortcut [
 
 { #category : #'api - save state' }
 AlbTextEditor >> restoreState: aTextEditorMemento [
-	self assertUIProcess.
 
 	aTextEditorMemento restoreStateOf: self
 ]
@@ -819,7 +807,6 @@ AlbTextEditor >> restoreText: aText [
 { #category : #'api - save state' }
 AlbTextEditor >> saveState [
 	<return: #AlbTextEditorMemento>
-	self assertUIProcess.
 	
 	^ (AlbTextEditorCompositeMemento new all) saveStateOf: self
 ]
@@ -827,7 +814,6 @@ AlbTextEditor >> saveState [
 { #category : #'api - save state' }
 AlbTextEditor >> saveState: aTextEditorMemento [
 	<return: #AlbTextEditorMemento>
-	self assertUIProcess.
 	
 	^ aTextEditorMemento saveStateOf: self
 ]
@@ -939,7 +925,6 @@ AlbTextEditor >> text [
 	which would give a copy of the current text"
 	<return: #BlText>
 	
-	self assertUIProcess.
 	self
 		deprecated: 'Please use privateText instead.'
 		transformWith:

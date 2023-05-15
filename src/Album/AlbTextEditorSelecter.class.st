@@ -16,7 +16,6 @@ Class {
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> all [
 	"Select the whole text"
-	self assertUIProcess.
 	
 	self
 		from: 0
@@ -47,7 +46,6 @@ AlbTextEditorSelecter >> extendToIndex: anIndex [
 AlbTextEditorSelecter >> extendToLineEnd [
 	"Extend selection to the end of the line"
 	|  cmd globalCursor delta |
-	self assertUIProcess.
 
 	globalCursor := self cursor.
 	delta := (self findTextIndexAtLineEnd: globalCursor) - globalCursor position.
@@ -64,7 +62,6 @@ AlbTextEditorSelecter >> extendToLineStart [
 	"Extend selection to the start of the line"
 
 	| cmd delta globalCursor |
-	self assertUIProcess.
 
 	globalCursor := self cursor.
 	delta := globalCursor position
@@ -80,7 +77,6 @@ AlbTextEditorSelecter >> extendToLineStart [
 AlbTextEditorSelecter >> extendToNextWordEnd [
 	"Extend selection to the end of the next word"
 	|  theCommands |
-	self assertUIProcess.
 
 	theCommands := self cursors collect: [ :aCursor |
 		| aDelta |
@@ -99,7 +95,6 @@ AlbTextEditorSelecter >> extendToNextWordEnd [
 AlbTextEditorSelecter >> extendToPreviousWordStart [
 	"Extend selection to start of the previous word"
 	|  theCommands |
-	self assertUIProcess.
 
 	theCommands := self cursors collect: [ :aCursor |
 		| aDelta |
@@ -158,7 +153,6 @@ AlbTextEditorSelecter >> findExistingSelectionStartBefore: aTextIndex within: aT
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> from: aFromIndex to: aToIndex [
-	self assertUIProcess.
 
 	commands add: (AlbExtendSelectionCommand new 
 		editor: editor;
@@ -180,7 +174,6 @@ AlbTextEditorSelecter >> initialize [
 AlbTextEditorSelecter >> moveOneDown [
 	"Select and move a cursor one line down"
 	| theCommands theNewCursorPositions theCursorsOnTheLeft theCursorsOnTheRight theCursorsOutside |
-	self assertUIProcess.
 
 	theCommands := OrderedCollection new.
 
@@ -225,7 +218,6 @@ AlbTextEditorSelecter >> moveOneDown [
 AlbTextEditorSelecter >> moveOneToLeft [
 	"Select and move a cursor one character to the left"
 	|  theCommands |
-	self assertUIProcess.
 
 	theCommands := self cursors collect: [ :aCursor |
 		(self
@@ -241,7 +233,6 @@ AlbTextEditorSelecter >> moveOneToLeft [
 AlbTextEditorSelecter >> moveOneToRight [
 	"Select and move a cursor one character to the right"
 	|  theCommands |
-	self assertUIProcess.
 
 	theCommands := self cursors collect: [ :aCursor |
 		(self
@@ -257,7 +248,6 @@ AlbTextEditorSelecter >> moveOneToRight [
 AlbTextEditorSelecter >> moveOneUp [
 	"Select and move a cursor one line up"
 	| theNewCursorPositions theCursorsOnTheLeft theCursorsOnTheRight theCursorsOutside theCommands |
-	self assertUIProcess.
 	
 	theCommands := OrderedCollection new.
 	theNewCursorPositions := (self cursors collect: [ :aCursor |
@@ -422,7 +412,6 @@ AlbTextEditorSelecter >> privateExtendSelectionRightAt: aTextPosition by: anAmou
 
 { #category : #private }
 AlbTextEditorSelecter >> privateFrom: aFromIndex to: aToIndex [
-	self assertUIProcess.
 
 	aFromIndex = aToIndex
 		ifTrue: [ ^ self ].
@@ -499,7 +488,6 @@ AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 AlbTextEditorSelecter >> select [
 
 	| toBeSelected |
-	self assertUIProcess.
 
 	self privatePerformSelectAndDeselectCommands: commands.
 	commands removeAll.
@@ -540,7 +528,6 @@ AlbTextEditorSelecter >> withoutCursorUpdate [
 AlbTextEditorSelecter >> wordAt: aTextIndex [
 	"Select a word or a whitespace at a given text index"
 	| aWordInterval |
-	self assertUIProcess.
 	
 	aWordInterval := self findWordAt: aTextIndex.
 	self from: aWordInterval first to: aWordInterval last

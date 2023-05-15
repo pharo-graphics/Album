@@ -314,7 +314,6 @@ AlbTextEditorOperator >> findWordAt: aTextIndex [
 	"Find a word text interval or a whitespace at a given text index"
 	<return: #Interval>
 	| aTextIterator hasWordToTheLeft hasWordToTheRight shouldBeWord aWordStart aWordEnd aDesiredType |
-	self assertUIProcess.
 	
 	aTextIterator := self text iterator skip: aTextIndex.
 	

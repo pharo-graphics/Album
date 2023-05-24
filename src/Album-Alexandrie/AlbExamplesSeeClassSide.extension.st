@@ -75,23 +75,23 @@ TTTCCATTCAGATGCGACCCCAGGTCAGGCGGGGCCACCCGCTGAGTTGAGGC'.
 
 	host := BlMorphicWindowHost new.
 	space := OBlSpace new
-		         addChild: root;
 		         host: host;
 		         title: host asString;
 		         extent: 800 asPoint.
+	space root
+		         addChild: root.
 	space show
 ]
 
 { #category : #'*Album-Alexandrie' }
 AlbExamplesSeeClassSide class >> example_AlexandrieixedMeasurer [
-
 	" have to understand this ..."
 
 	| anEditor host |
 	anEditor := self alexandrieEditorFor: 'Hello'.
 	host := BlMorphicWindowHost new.
 	OBlSpace new
-		addChild: anEditor;
+		in: [ :sp | sp root addChild: anEditor ];
 		host: host;
 		title: host asString;
 		extent: 200 asPoint;

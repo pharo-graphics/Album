@@ -17,21 +17,24 @@ AlbTextEditorTest >> setUp [
 
 { #category : #tests }
 AlbTextEditorTest >> test_emptyEditor [
-	self assert: textEditor text asString equals: ''.
-	self assert: textEditor segmentCollector computedSegmentsCount equals: 1.
-	self assert: textEditor segmentCollector segments first textInterval equals: (0 to: 0).
+
+	self assert: textEditor privateText asString equals: ''.
+	self
+		assert: textEditor segmentCollector computedSegmentsCount
+		equals: 1.
+	self
+		assert: textEditor segmentCollector segments first textInterval
+		equals: (0 to: 0)
 ]
 
 { #category : #tests }
 AlbTextEditorTest >> test_insertString1 [
 
-	textEditor insertString: 'Z' at: textEditor text size.
+	textEditor insertString: 'Z' at: textEditor privateText size.
 	textEditor insertString: 'A' at: 0.
-	self assert: textEditor text asString equals: 'AZ'.
-	self should: [textEditor insertString: 'A' at: -1] raise: Error.
-	self should: [textEditor insertString: 'A' at: 3] raise: Error.
-
-
+	self assert: textEditor privateText asString equals: 'AZ'.
+	self should: [ textEditor insertString: 'A' at: -1 ] raise: Error.
+	self should: [ textEditor insertString: 'A' at: 3 ] raise: Error
 ]
 
 { #category : #tests }
@@ -55,19 +58,23 @@ AlbTextEditorTest >> test_insertString3 [
 
 { #category : #tests }
 AlbTextEditorTest >> test_oneCharacter [
-	textEditor text: 'A' asRopedText.
-	self assert: textEditor text asString equals: 'A'.
-	self assert: textEditor segmentCollector computedSegmentsCount equals: 1.
-	self assert: textEditor segmentCollector segments first textInterval equals: (0 to: 1).
+
+	textEditor privateText: 'A' asRopedText.
+	self assert: textEditor privateText asString equals: 'A'.
+	self
+		assert: textEditor segmentCollector computedSegmentsCount
+		equals: 1.
+	self
+		assert: textEditor segmentCollector segments first textInterval
+		equals: (0 to: 1)
 ]
 
 { #category : #tests }
 AlbTextEditorTest >> test_textFromString [
-
 	"the editor text can be initialized from a string"
 
-	textEditor text: 'a string'.
-	self assert: textEditor text asString equals: 'a string'.
+	textEditor privateText: 'a string' asRopedText.
+	self assert: textEditor privateText asString equals: 'a string'.
 	"#textSnapshot return a copy of the editor text (to be used in application thread - non-UI process)"
 	self assert: textEditor textSnapshot asString equals: 'a string'
 ]

@@ -168,13 +168,13 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	ed := AlbEditorElement new .
 	ed text: text.
 	ed withRowNumbers; withoutCacheLimit.
-	vscrollBar := BlVerticalScrollbarElement new.
+	vscrollBar := OBlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets right: 2).
 			c ignored horizontal alignRight.
 			c ignored vertical alignBottom]. 
-	vscrollBar attachTo: ed.
+	vscrollBar attachTo: ed infinite.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space root addChild: vscrollBar.
@@ -253,13 +253,13 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 								 , strech name , ' ' , String cr , String cr) asRopedText.
 							text append: t ] ] ] ] ] ].
 	child := text onAlbum.
-	vscrollBar := BlVerticalScrollbarElement new.
+	vscrollBar := OBlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets right: 2).
 			c ignored horizontal alignRight.
 			c ignored vertical alignBottom]. 
-	vscrollBar attachTo: child.
+	vscrollBar attachTo: child infinite.
 	root addChild: child.
 	root addChild: vscrollBar.
 	root openInOBlSpace
@@ -373,13 +373,13 @@ AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 		c horizontal resizer: BlLayoutResizer matchParent].
 	ed text: ((String loremIpsum: 100000) asRopedText "fontName: 'Source Code Pro'").
 	
-	hscrollBar := BlHorizontalScrollbarElement new.
+	hscrollBar := OBlHorizontalScrollbarElement new.
 	hscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets bottom: 2).
 			"c ignored vertical alignLeft."
 			c ignored vertical alignBottom]. 
-	hscrollBar attachTo: ed.
+	hscrollBar attachTo: ed infinite.
 	ed inspect.
 	space := OBlSpace new.
 	space root addChild: ed.
@@ -442,7 +442,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 	ed withRowNumbers.
 	ed withoutSoftLine.
 	
-	vscrollBar := BlVerticalScrollbarElement new.
+	vscrollBar := OBlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets right: 2).
@@ -551,7 +551,7 @@ AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
 	ed constraintsDo: [ :c | 
 		c horizontal fitContent.
 		c vertical fitContent ].
-	space := BlSpace new.
+	space := OBlSpace new.
 	space root addChild: ed.
 	space show
 ]

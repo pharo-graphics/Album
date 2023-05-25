@@ -11,10 +11,10 @@ Class {
 	#classTraits : 'TAlbInfiniteDecorator classTrait + TOBlLayoutResizable classTrait',
 	#instVars : [
 		'next',
-		'selectionElement',
 		'remanentUpdater',
 		'modeEventHandlers',
-		'frontLayer'
+		'frontLayer',
+		'primarySelectionElement'
 	],
 	#category : #'Album-UI'
 }
@@ -85,7 +85,7 @@ AlbEditorElement >> initialize [
 	self margin: self defaultMargin.
 	self padding: self defaultPadding.
 	self next: self defaultInfiniteElement.
-	self installSelectionElement.
+	self installPrimarySelectionElement.
 	self installRemanentUpdater.
 	self addChild: next.
 	self next whenModeChangedDo: [ self reinstallStructure ].
@@ -114,21 +114,21 @@ AlbEditorElement >> installModeEventHandlers [
 ]
 
 { #category : #initialization }
+AlbEditorElement >> installPrimarySelectionElement [
+
+	primarySelectionElement ifNotNil: [ :se | 
+		se onUninstalledIn: self.
+		se parentDo: [ se removeFromParent ] ].
+	primarySelectionElement := self mode primarySelectionElement.
+	primarySelectionElement ifNotNil: [ :se | se onInstalledIn: self ]
+]
+
+{ #category : #initialization }
 AlbEditorElement >> installRemanentUpdater [
 
 	remanentUpdater ifNotNil: [ remanentUpdater onUninstalledIn: self ].
 	remanentUpdater := AlbRemanentsUpdater new.
 	remanentUpdater onInstalledIn: self
-]
-
-{ #category : #initialization }
-AlbEditorElement >> installSelectionElement [
-
-	selectionElement ifNotNil: [ :se | 
-		se onUninstalledIn: self.
-		se parentDo: [ se removeFromParent ] ].
-	selectionElement := self mode selectionElement.
-	selectionElement ifNotNil: [ :se | se onInstalledIn: self ]
 ]
 
 { #category : #initialization }
@@ -140,7 +140,7 @@ AlbEditorElement >> modeEventHandlersDo: aBlock [
 { #category : #initialization }
 AlbEditorElement >> reinstallStructure [
 
-	self installSelectionElement.
+	self installPrimarySelectionElement.
 	self installRemanentUpdater.
 	self installModeEventHandlers 
 ]

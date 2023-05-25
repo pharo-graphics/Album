@@ -30,7 +30,7 @@ AlbReadonlyWithoutSelectionMode >> defaultShortcuts [
 ]
 
 { #category : #initialization }
-AlbReadonlyWithoutSelectionMode >> selectionElement [
+AlbReadonlyWithoutSelectionMode >> primarySelectionElement [
 
 	^ nil
 

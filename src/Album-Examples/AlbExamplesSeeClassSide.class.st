@@ -144,13 +144,41 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 ]
 
 { #category : #'editor examples' }
+AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextDecorationElement [
+
+	| ed space text size start |
+	ed := AlbEditorElement new.
+	text := String loremIpsum asRopedText.
+	text fontSize: 24.
+	ed text: text.
+	size := 10.
+	start := 1.
+	1 to: 25 do: [ :pos | | deco  |
+		deco := AlbSubtextDecorationElement new onInstalledIn: ed; interval: (start to: start + size); yourself.
+		deco background: (Color random alpha: 0.4).
+		deco border: (BlBorder empty).
+		deco when: BlClickEvent do: [ :event | event currentTarget removeFromParent ].
+		deco when: BlMouseEnterEvent do: [ :event | event currentTarget border: (BlBorder paint: Color black width: 1) ].
+		deco when: BlMouseLeaveEvent do: [ :event | event currentTarget border: (BlBorder empty) ].
+		ed frontLayer addChild: deco.
+		start := start + size + 5 ].
+	
+	space := OBlSpace new.
+	space root addChild: ed.
+	space title: 'editor'.
+	space extent: 400@200.
+	space show.
+	^ ed
+]
+
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |
 	ed := AlbEditorElement new.
 	"ed withLineNumbers."
 	ed text: (String loremIpsum asRopedText).
-	space := BlSpace new.
+	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	"ed inspect."
@@ -377,7 +405,6 @@ AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 	hscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets bottom: 2).
-			"c ignored vertical alignLeft."
 			c ignored vertical alignBottom]. 
 	hscrollBar attachTo: ed infinite.
 	ed inspect.

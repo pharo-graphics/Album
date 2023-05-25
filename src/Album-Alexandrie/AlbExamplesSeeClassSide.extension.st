@@ -29,6 +29,21 @@ AlbExamplesSeeClassSide class >> alexandrieFixedMeasurer [
 ]
 
 { #category : #'*Album-Alexandrie' }
+AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer [
+	" have to understand this ..."
+
+	| anEditor host |
+	anEditor := self alexandrieEditorFor: 'Hello'.
+	host := BlMorphicWindowHost new.
+	OBlSpace new
+		in: [ :sp | sp root addChild: anEditor ];
+		host: host;
+		title: host asString;
+		extent: 200 asPoint;
+		show
+]
+
+{ #category : #'*Album-Alexandrie' }
 AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer0 [
 
 	| element text host |
@@ -38,8 +53,7 @@ AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer0 [
 	element := text asElement.
 	element measurer: self alexandrieFixedMeasurer.
 	host := BlMorphicWindowHost new.
-	OBlSpace new
-		addChild: element;
+	OBlSpace new in: [ :sp | sp root addChild: element ];
 		host: host;
 		title: host asString;
 		extent: 200 asPoint;
@@ -81,19 +95,4 @@ TTTCCATTCAGATGCGACCCCAGGTCAGGCGGGGCCACCCGCTGAGTTGAGGC'.
 	space root
 		         addChild: root.
 	space show
-]
-
-{ #category : #'*Album-Alexandrie' }
-AlbExamplesSeeClassSide class >> example_AlexandrieixedMeasurer [
-	" have to understand this ..."
-
-	| anEditor host |
-	anEditor := self alexandrieEditorFor: 'Hello'.
-	host := BlMorphicWindowHost new.
-	OBlSpace new
-		in: [ :sp | sp root addChild: anEditor ];
-		host: host;
-		title: host asString;
-		extent: 200 asPoint;
-		show
 ]

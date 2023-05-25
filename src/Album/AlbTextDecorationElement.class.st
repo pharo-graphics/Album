@@ -1,9 +1,6 @@
 Class {
 	#name : #AlbTextDecorationElement,
 	#superclass : #OBlElement,
-	#instVars : [
-		'subtext'
-	],
 	#category : #'Album-UI'
 }
 
@@ -40,16 +37,4 @@ AlbTextDecorationElement >> initialize [
 	self constraintsDo: [ :c | c ignoreByLayout  ].
 	self outskirts: BlOutskirts centered
 
-]
-
-{ #category : #accessing }
-AlbTextDecorationElement >> subtext [
-
-	^ subtext
-]
-
-{ #category : #accessing }
-AlbTextDecorationElement >> subtext: asubText [
-
-	subtext := asubText
 ]

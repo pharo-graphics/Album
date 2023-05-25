@@ -29,7 +29,7 @@ AlbEditabilityMode >> defaultWordStencil [
 ]
 
 { #category : #initialization }
-AlbEditabilityMode >> selectionElement [
+AlbEditabilityMode >> primarySelectionElement [
 
-	^ AlbSelectionElement new
+	^ AlbPrimarySelectionElement new
 ]

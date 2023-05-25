@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbOppositeDelimiter,
+	#name : #AlbOppositeDelimiterElement,
 	#superclass : #AlbTextDecorationElement,
 	#instVars : [
 		'anim'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #initialization }
-AlbOppositeDelimiter >> borderColor [
+AlbOppositeDelimiterElement >> borderColor [
 
 	^ Color gray
 ]
 
 { #category : #cleanup }
-AlbOppositeDelimiter >> cleanUp [
+AlbOppositeDelimiterElement >> cleanUp [
 
 	anim ifNotNil: [
 		self dequeueTask: anim.
@@ -22,13 +22,13 @@ AlbOppositeDelimiter >> cleanUp [
 ]
 
 { #category : #initialization }
-AlbOppositeDelimiter >> defaultBackground [ 
+AlbOppositeDelimiterElement >> defaultBackground [ 
 
 	^ Color yellow 
 ]
 
 { #category : #initialization }
-AlbOppositeDelimiter >> initialize [
+AlbOppositeDelimiterElement >> initialize [
 
 	super initialize.
 	self opacity: 0.
@@ -37,7 +37,7 @@ AlbOppositeDelimiter >> initialize [
 ]
 
 { #category : #removing }
-AlbOppositeDelimiter >> removeFromParent [ 
+AlbOppositeDelimiterElement >> removeFromParent [ 
 
 	self cleanUp.
 	super removeFromParent 

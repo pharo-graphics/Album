@@ -24,37 +24,11 @@ AlbSubtextDecorationBuilder >> createDecorations [
 { #category : #private }
 AlbSubtextDecorationBuilder >> decorationInterval: anInterval [
 
-	| startIdx endIdx rects rem selInterval |
-	startIdx := anInterval first.
-	endIdx := anInterval last.
-	selInterval := parentElement selection from to: parentElement selection to.
-	rects := Array streamContents: [ :stream | 
-		         parentElement
-			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
-			         do: [ :piece :pieceElement | 
-				         | first last origin corner bnds |
-				         ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
-					         ifTrue: [ 
-						         first := startIdx.
-						         last := endIdx ]
-					         ifFalse: [ 
-						         startIdx > piece textStart
-							         ifTrue: [ 
-								         first := startIdx.
-								         last := piece textEnd ]
-							         ifFalse: [ 
-								         first := piece textStart. 
-								         last := endIdx min: piece textEnd ] ].
-								(selInterval intersection: (startIdx + 1 to: endIdx )) ifEmpty: [ 
-									((startIdx -1 to: endIdx) = selInterval) ifFalse: [ 
-				         				origin := pieceElement screenOriginAt: first - piece textStart - 1.
-				         				corner := pieceElement screenCornerAt: last - piece textStart.
-										bnds := BlBounds fromRectangle: (origin corner: corner).
-										bnds := (parentElement infinite localBoundsToMine: bnds fromChild: pieceElement).
-				         				stream nextPut: bnds ] ] ] ].
-	rects ifEmpty: [ ^ self ].
-	rem := AlbSelectionEcho new adjacentRectangles: rects; subtext: (parentElement text from: anInterval first to: anInterval last); yourself.
-	decorations add: rem 
+	anInterval = (parentElement selection from + 1 to: parentElement selection to) ifTrue: [ ^ self ].
+	decorations add: (AlbSubtextDecorationElement new
+			 editorElement: parentElement;
+			 interval: anInterval;
+			 yourself)
 ]
 
 { #category : #accessing }

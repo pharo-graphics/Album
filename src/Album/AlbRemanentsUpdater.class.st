@@ -19,7 +19,7 @@ AlbRemanentsUpdater >> closeOppositeDelimiter: oppositeTextElement at: localIdx 
 	bnds := ((origin corner: corner) translateBy:
 		         oppositeTextElement positionInEditor) expandBy:
 		        (1 @ 2 corner: 0 @ 2).
-	^ AlbOppositeDelimiter new
+	^ AlbOppositeDelimiterElement new
 		  position: bnds origin;
 		  size: bnds extent
 ]
@@ -45,9 +45,7 @@ AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 						(self
 							 openOppositeDelimiter: textElement
 							 at: localIdx
-							 in: anEditorElement) ifNotNil: [ :o |
-							o subtext: (anEditorElement text from: interval first to: interval first).
-							^ o ] ] ].
+							 in: anEditorElement) ifNotNil: [ :o | ^ o ] ] ].
 			"after open delimiter"
 			interval first = cursorPos ifTrue: [
 				anEditorElement infinite
@@ -56,9 +54,7 @@ AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 						(self
 							 closeOppositeDelimiter: textElement
 							 at: localIdx
-							 in: anEditorElement) ifNotNil: [ :o |
-							o subtext: (anEditorElement text from: interval last + 1 to: interval last + 1).
-							^ o ] ] ] ]
+							 in: anEditorElement) ifNotNil: [ :o | ^ o ] ] ] ]
 		ifAbsent: [  ].
 	^ nil
 ]
@@ -92,7 +88,7 @@ AlbRemanentsUpdater >> openOppositeDelimiter: oppositeTextElement at: localIdx i
 	bnds := ((origin corner: corner) translateBy:
 		         oppositeTextElement positionInEditor) expandBy:
 		        (1 @ 2 corner: 0 @ 2).
-	^ AlbOppositeDelimiter new
+	^ AlbOppositeDelimiterElement new
 		  position: bnds origin;
 		  size: bnds extent
 ]

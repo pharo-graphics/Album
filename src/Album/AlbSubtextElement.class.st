@@ -1,83 +1,65 @@
 Class {
 	#name : #AlbSubtextElement,
-	#superclass : #AlbTextDecorationElement,
+	#superclass : #AlbAbstractSubtextElement,
 	#instVars : [
-		'editorElement',
-		'extentHandler',
-		'scrollHandler'
+		'interval'
 	],
-	#category : #'Album-UI'
+	#category : #'Album-UI-Text-Portion'
 }
 
 { #category : #private }
-AlbSubtextElement >> adjacentRectangles: aCollection [
-
-	self vertices: (OBlVerticesFromRectanglesOperator new verticesFromRectangles: aCollection)
-]
-
-{ #category : #initialization }
 AlbSubtextElement >> computedAdjacentRectangles [
 
-	^ self subclassResponsibility 
-]
-
-{ #category : #accessing }
-AlbSubtextElement >> editorElement [
-
-	^ editorElement
-]
-
-{ #category : #accessing }
-AlbSubtextElement >> editorElement: anEditorElement [
-
-	editorElement := anEditorElement.
-
+	| startIdx endIdx |
+	startIdx := self interval first.
+	endIdx := self interval last.
+	^ Array streamContents: [ :stream | 
+		         editorElement
+			         textPiecesAndTheirElementsWithinIndexInterval: (startIdx to: endIdx)
+			         do: [ :piece :pieceElement | 
+				         | first last origin corner bnds |
+				         ((piece textStart to: piece textEnd) includesAll: (startIdx to: endIdx))
+					         ifTrue: [ 
+						         first := startIdx.
+						         last := endIdx ]
+					         ifFalse: [ 
+						         startIdx > piece textStart
+							         ifTrue: [ 
+								         first := startIdx.
+								         last := piece textEnd ]
+							         ifFalse: [ 
+								         first := piece textStart. 
+								         last := endIdx min: piece textEnd ] ].
+				         				origin := pieceElement screenOriginAt: first - piece textStart - 1.
+				         				corner := pieceElement screenCornerAt: last - piece textStart.
+										bnds := BlBounds fromRectangle: (origin corner: corner).
+										bnds := (editorElement infinite localBoundsToMine: bnds fromChild: pieceElement).
+				         				stream nextPut: bnds ] ]
 ]
 
 { #category : #initialization }
-AlbSubtextElement >> initialize [ 
+AlbSubtextElement >> initialize [
 
 	super initialize.
-	self vertices: #().
-
-
+	interval := 0 to: 0
 ]
 
-{ #category : #'api - install/uninstall  hook' }
-AlbSubtextElement >> onInstalledIn: anEditorElement [
+{ #category : #accessing }
+AlbSubtextElement >> interval [
 
-	self editorElement: anEditorElement.
-	extentHandler := BlEventHandler on: BlElementExtentChangedEvent do: [ self updateVertices ].
-	scrollHandler := BlEventHandler on: BlElementScrolledEvent do: [ :event | self updateVertices ].
-
-	anEditorElement infinite addEventHandler: extentHandler.
-	anEditorElement infinite addEventHandler: scrollHandler.
-
+	^ interval
 ]
 
-{ #category : #'api - install/uninstall  hook' }
-AlbSubtextElement >> onUninstalledIn: anEditorElement [
-	
-	editorElement := nil.
-	anEditorElement infinite removeEventHandler: extentHandler.
-	anEditorElement infinite removeEventHandler: scrollHandler.
+{ #category : #accessing }
+AlbSubtextElement >> interval: anInterval [
 
+	interval := anInterval.
+	self updateVertices 
 ]
 
 { #category : #initialization }
 AlbSubtextElement >> updateVertices [
 
-	self subclassResponsibility 
-]
-
-{ #category : #accessing }
-AlbSubtextElement >> vertices [
-
-	^ self geometry vertices
-]
-
-{ #category : #accessing }
-AlbSubtextElement >> vertices: aCollectionOfPoints [
-
-	self geometry: (BlPolygonGeometry new vertices: aCollectionOfPoints).
+	editorElement ifNil: [ ^ self ].
+	self vertices: (OBlVerticesFromRectanglesOperator new verticesFromRectangles:  self computedAdjacentRectangles)
 ]

@@ -144,7 +144,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 ]
 
 { #category : #'editor examples' }
-AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextDecorationElement [
+AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 
 	| ed space text size start |
 	ed := AlbEditorElement new.
@@ -154,7 +154,8 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextDecorationEl
 	size := 10.
 	start := 1.
 	1 to: 25 do: [ :pos | | deco  |
-		deco := AlbSubtextDecorationElement new onInstalledIn: ed; interval: (start to: start + size); yourself.
+		deco := (AlbSubtextElement editorElement: ed) interval: (start to: start + size); yourself.
+		deco withExtentChangeAdaption.
 		deco background: (Color random alpha: 0.4).
 		deco border: (BlBorder empty).
 		deco when: BlClickEvent do: [ :event | event currentTarget removeFromParent ].
@@ -162,7 +163,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextDecorationEl
 		deco when: BlMouseLeaveEvent do: [ :event | event currentTarget border: (BlBorder empty) ].
 		ed frontLayer addChild: deco.
 		start := start + size + 5 ].
-	
+	ed frontLayer inspect.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.

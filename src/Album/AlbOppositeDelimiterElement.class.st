@@ -1,10 +1,10 @@
 Class {
 	#name : #AlbOppositeDelimiterElement,
-	#superclass : #AlbTextDecorationElement,
+	#superclass : #AlbTextPortionElement,
 	#instVars : [
 		'anim'
 	],
-	#category : #'Album-UI'
+	#category : #'Album-UI-Text-Portion'
 }
 
 { #category : #initialization }

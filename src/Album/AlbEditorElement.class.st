@@ -117,10 +117,9 @@ AlbEditorElement >> installModeEventHandlers [
 AlbEditorElement >> installPrimarySelectionElement [
 
 	primarySelectionElement ifNotNil: [ :se | 
-		se onUninstalledIn: self.
+		se editorElement: nil.
 		se parentDo: [ se removeFromParent ] ].
-	primarySelectionElement := self mode primarySelectionElement.
-	primarySelectionElement ifNotNil: [ :se | se onInstalledIn: self ]
+	primarySelectionElement := self mode primarySelectionElementIn: self
 ]
 
 { #category : #initialization }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'oppositeEcho'
 	],
-	#category : #'Album-UI'
+	#category : #'Album-UI-Text-Portion'
 }
 
 { #category : #'opposite delimiter' }
@@ -129,7 +129,7 @@ AlbRemanentsUpdater >> updatePortionsIn: anEditorElement [
 		^ self resetPortionsIn: anEditorElement ].
 	updaterProcess := [
 	                  | builder |
-	                  builder := AlbSubtextDecorationBuilder new
+	                  builder := AlbSubtextPortionBuilder new
 		                             parentElement: anEditorElement;
 		                             fullText: anEditorElement enlargedSubTextOnScreen;
 		                             subtext: anEditorElement selectedText;

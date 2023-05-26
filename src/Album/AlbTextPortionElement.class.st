@@ -1,35 +1,35 @@
 Class {
-	#name : #AlbTextDecorationElement,
+	#name : #AlbTextPortionElement,
 	#superclass : #OBlElement,
-	#category : #'Album-UI'
+	#category : #'Album-UI-Text-Portion'
 }
 
 { #category : #accessing }
-AlbTextDecorationElement >> borderColor [
+AlbTextPortionElement >> borderColor [
 
 	^ Color black
 ]
 
 { #category : #accessing }
-AlbTextDecorationElement >> borderWidth [
+AlbTextPortionElement >> borderWidth [
 
 	^ 1
 ]
 
 { #category : #initialization }
-AlbTextDecorationElement >> defaultBackground [ 
+AlbTextPortionElement >> defaultBackground [ 
 
 	^ Color transparent 
 ]
 
 { #category : #accessing }
-AlbTextDecorationElement >> defaultBorder [
+AlbTextPortionElement >> defaultBorder [
 
 	^ BlBorder paint: self borderColor width: self borderWidth
 ]
 
 { #category : #initialization }
-AlbTextDecorationElement >> initialize [ 
+AlbTextPortionElement >> initialize [ 
 
 	super initialize.
 	self background: self defaultBackground.

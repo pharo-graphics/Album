@@ -11,7 +11,7 @@ Class {
 		'infiniteEditorChangeHandler',
 		'portions'
 	],
-	#category : #'Album-UI'
+	#category : #'Album-UI-Text-Portion'
 }
 
 { #category : #'infinite element changes' }

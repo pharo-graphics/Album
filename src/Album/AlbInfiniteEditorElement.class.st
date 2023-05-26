@@ -281,6 +281,12 @@ AlbInfiniteEditorElement >> inserter [
 	^ self editor inserter
 ]
 
+{ #category : #'accessing - editor' }
+AlbInfiniteEditorElement >> isEditable [
+
+	^ self mode isEditable
+]
+
 { #category : #'private - view accessing' }
 AlbInfiniteEditorElement >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
@@ -566,6 +572,12 @@ AlbInfiniteEditorElement >> textSnapshot [
 	<return: #BlText>
 
 	^ self editor textSnapshot
+]
+
+{ #category : #'accessing - editor' }
+AlbInfiniteEditorElement >> whenEditorChangedDo: aBlock [
+
+	self when: AlbTextEditorReplacedEvent do: aBlock
 ]
 
 { #category : #'view - configuration' }

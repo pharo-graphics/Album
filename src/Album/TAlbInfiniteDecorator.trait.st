@@ -120,6 +120,12 @@ TAlbInfiniteDecorator >> inserter [
 	^ self next inserter
 ]
 
+{ #category : #'t - infinite editor accessing - editor' }
+TAlbInfiniteDecorator >> isEditable [
+
+	^ self next isEditable
+]
+
 { #category : #'t - infinite editor accessing - mode' }
 TAlbInfiniteDecorator >> mode [
 
@@ -267,6 +273,12 @@ TAlbInfiniteDecorator >> textSnapshot [
 	<return: #BlText>
 
 	^ self next textSnapshot
+]
+
+{ #category : #'t - infinite editor accessing - editor' }
+TAlbInfiniteDecorator >> whenEditorChangedDo: aBlock [
+
+	self next whenEditorChangedDo: aBlock
 ]
 
 { #category : #'t - infinite editor view - configuration' }

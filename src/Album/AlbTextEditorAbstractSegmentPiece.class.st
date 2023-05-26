@@ -19,6 +19,7 @@ AlbTextEditorAbstractSegmentPiece >> addCursor: aPieceElement of: aLineSegment i
 	(globalCursor insideSubText: self of: aLineSegment) ifFalse: [^self ].
 	currentCursor := self globalCursorToLocal: globalCursor.
 	"tell to add the new cursor"
+	anEditorElement isEditable ifFalse: [ ^ self ].
 	self onCursorAdded: currentCursor to: aPieceElement in: anEditorElement
 ]
 

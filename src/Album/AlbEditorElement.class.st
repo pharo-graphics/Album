@@ -87,14 +87,13 @@ AlbEditorElement >> initialize [
 	self installRemanentUpdater.
 	self addChild: next.
 
-	self infinite whenModeChangedDo: [
+	self whenModeChangedDo: [
 		self installPrimarySelectionElement.
 		self installRemanentUpdater.
 		self installModeEventHandlers ].
 
-	self infinite
-		when: AlbTextEditorReplacedEvent
-		do: [ :event | self installRemanentUpdater ].
+	self whenEditorChangedDo: [ :event |
+		self installRemanentUpdater ].
 
 	frontLayer := self defaultFrontLayer.
 	self addChild: frontLayer as: #frontLayer.

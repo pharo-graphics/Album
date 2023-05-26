@@ -3,8 +3,6 @@ Class {
 	#superclass : #AlbTextPortionElement,
 	#instVars : [
 		'editorElement',
-		'extentHandler',
-		'scrollHandler',
 		'updateStrategy'
 	],
 	#category : #'Album-UI-Text-Portion'

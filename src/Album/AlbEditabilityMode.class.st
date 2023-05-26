@@ -28,6 +28,12 @@ AlbEditabilityMode >> defaultWordStencil [
 	^ AlbTextWordPieceStencil readOnly
 ]
 
+{ #category : #testing }
+AlbEditabilityMode >> isEditable [
+
+	^ false
+]
+
 { #category : #initialization }
 AlbEditabilityMode >> primarySelectionElementIn: anEditorElement [
 

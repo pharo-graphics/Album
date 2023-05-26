@@ -556,7 +556,7 @@ AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 	| ed space |
 	ed := AlbEditorElement new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
 	ed withRowNumbers.
-	space := BlSpace new.
+	space := OBlSpace new.
 	space root addChild: ed.
 	space show
 ]

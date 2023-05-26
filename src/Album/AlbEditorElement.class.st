@@ -11,10 +11,8 @@ Class {
 	#classTraits : 'TAlbInfiniteDecorator classTrait + TOBlLayoutResizable classTrait',
 	#instVars : [
 		'next',
-		'remanentUpdater',
 		'modeEventHandlers',
-		'frontLayer',
-		'primarySelectionElement'
+		'frontLayer'
 	],
 	#category : #'Album-UI'
 }
@@ -88,14 +86,21 @@ AlbEditorElement >> initialize [
 	self installPrimarySelectionElement.
 	self installRemanentUpdater.
 	self addChild: next.
-	self infinite whenModeChangedDo: [ self reinstallStructure ].
-	self infinite when: AlbTextEditorReplacedEvent do: [ :event | self installRemanentUpdater ].
+
+	self infinite whenModeChangedDo: [
+		self installPrimarySelectionElement.
+		self installRemanentUpdater.
+		self installModeEventHandlers ].
+
+	self infinite
+		when: AlbTextEditorReplacedEvent
+		do: [ :event | self installRemanentUpdater ].
 
 	frontLayer := self defaultFrontLayer.
 	self addChild: frontLayer as: #frontLayer.
 	distributor := BlSharedEventDistributor new
 		               adjustMousePosition: false;
-		               shareEvents: (Array with: BlMouseEvent );
+		               shareEvents: (Array with: BlMouseEvent);
 		               yourself.
 	self frontLayer addEventHandler: distributor.
 	self infinite addEventHandler: distributor.
@@ -118,32 +123,19 @@ AlbEditorElement >> installModeEventHandlers [
 { #category : #initialization }
 AlbEditorElement >> installPrimarySelectionElement [
 
-	primarySelectionElement ifNotNil: [ :se | 
-		se editorElement: nil.
-		se parentDo: [ se removeFromParent ] ].
-	primarySelectionElement := self mode primarySelectionElementIn: self
+	(self mode primarySelectionElementIn: self) ifNotNil: [ :s | s onInstalled]
 ]
 
 { #category : #initialization }
 AlbEditorElement >> installRemanentUpdater [
 
-	remanentUpdater ifNotNil: [ remanentUpdater onUninstalledIn: self ].
-	remanentUpdater := AlbRemanentsUpdater new.
-	remanentUpdater onInstalledIn: self
+	AlbRemanentsUpdater new onInstalledIn: self
 ]
 
 { #category : #initialization }
 AlbEditorElement >> modeEventHandlersDo: aBlock [
 
 	modeEventHandlers ifNotNil: [ modeEventHandlers do: aBlock ]
-]
-
-{ #category : #initialization }
-AlbEditorElement >> reinstallStructure [
-
-	self installPrimarySelectionElement.
-	self installRemanentUpdater.
-	self installModeEventHandlers 
 ]
 
 { #category : #initialization }

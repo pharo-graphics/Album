@@ -61,3 +61,9 @@ AlbEditableMode >> defaultWordStencil [
 
 	^ AlbTextWordPieceStencil editable
 ]
+
+{ #category : #testing }
+AlbEditableMode >> isEditable [
+
+	^ true
+]

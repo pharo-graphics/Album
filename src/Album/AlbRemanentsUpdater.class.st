@@ -2,7 +2,8 @@ Class {
 	#name : #AlbRemanentsUpdater,
 	#superclass : #AlbTextPortionUpdater,
 	#instVars : [
-		'oppositeEcho'
+		'oppositeEcho',
+		'textReplacedHandler'
 	],
 	#category : #'Album-UI-Text-Portion'
 }
@@ -73,6 +74,25 @@ AlbRemanentsUpdater >> extentChangedIn: anEditorElement [
 	self resetPortionsIn: anEditorElement..
 	super extentChangedIn: anEditorElement.
 	self updateOppositeDelimiterIn: anEditorElement
+
+]
+
+{ #category : #'api - install/uninstall  hook' }
+AlbRemanentsUpdater >> onInstalledIn: anEditorElement [
+
+	super onInstalledIn: anEditorElement.
+	anEditorElement infinite whenModeChangedDo: [ self onUninstalledIn: anEditorElement ].
+	textReplacedHandler := BlEventHandler
+		                       on: AlbTextEditorReplacedEvent
+		                       do: [ :evt | self onUninstalledIn: anEditorElement ].
+	anEditorElement infinite addEventHandler: textReplacedHandler
+]
+
+{ #category : #'api - install/uninstall  hook' }
+AlbRemanentsUpdater >> onUninstalledIn: anEditorElement [
+
+	anEditorElement infinite removeEventHandler: textReplacedHandler.
+	super onUninstalledIn: anEditorElement.
 
 ]
 

@@ -33,10 +33,23 @@ AlbPrimarySelectionElement >> onGotFocus [
 	self border:	(BlBorder paint: editorElement selectionColor twiceDarker  width: self borderWidth)
 ]
 
+{ #category : #'api - install/uninstall  hook' }
+AlbPrimarySelectionElement >> onInstalled [
+
+	self editorElement infinite whenModeChangedDo: [ self onUninstalled ]
+]
+
 { #category : #private }
 AlbPrimarySelectionElement >> onLostFocus [
 
 	self background: (editorElement selectionColor alpha: 0.1)
+]
+
+{ #category : #'api - install/uninstall  hook' }
+AlbPrimarySelectionElement >> onUninstalled [
+
+	updateStrategy onUninstalledIn: self
+
 ]
 
 { #category : #private }

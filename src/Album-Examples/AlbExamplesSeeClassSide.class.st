@@ -593,7 +593,6 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	ed := AlbEditorElement new.
 	ed withRowNumbers.
 	ed editor: editor.
-	ed inspect.
 	space := OBlSpace new.
 	space root addChild: ed.
 	space show

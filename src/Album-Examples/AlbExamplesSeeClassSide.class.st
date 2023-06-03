@@ -163,7 +163,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 		deco when: BlMouseLeaveEvent do: [ :event | event currentTarget border: (BlBorder empty) ].
 		ed frontLayer addChild: deco.
 		start := start + size + 5 ].
-	ed frontLayer inspect.
+
 	space := OBlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.

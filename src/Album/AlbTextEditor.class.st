@@ -330,6 +330,7 @@ AlbTextEditor >> inputFilter [
 
 { #category : #'api - filter' }
 AlbTextEditor >> inputFilter: aTextEditorInputFilter [
+
 	filter := aTextEditorInputFilter
 ]
 

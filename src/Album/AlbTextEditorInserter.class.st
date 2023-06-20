@@ -147,6 +147,7 @@ AlbTextEditorInserter >> initialize [
 
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> inputFilter: aTextEditorInputFilter [
+
 	inputFilter := aTextEditorInputFilter
 ]
 

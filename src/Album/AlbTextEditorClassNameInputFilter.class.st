@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorClassNameInputFilter,
-	#superclass : #AlbTextEditorInputFilter,
+	#superclass : #AlbTextEditorInputFilterDecorator,
 	#category : #'Album-Model-Input-filters'
 }
 
@@ -8,7 +8,7 @@ Class {
 AlbTextEditorClassNameInputFilter >> filter: aString [
 	<return: #String>
 	
-	^ aString select: [ :eachCharacter | 
+	^ (super filter: aString) select: [ :eachCharacter | 
 		eachCharacter isAlphaNumeric or: [ 
  		eachCharacter = $_ ] ]
 ]

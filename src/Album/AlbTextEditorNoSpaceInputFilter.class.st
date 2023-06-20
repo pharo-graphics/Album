@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorNoSpaceInputFilter,
-	#superclass : #AlbTextEditorInputFilter,
+	#superclass : #AlbTextEditorInputFilterDecorator,
 	#category : #'Album-Model-Input-filters'
 }
 
@@ -8,5 +8,5 @@ Class {
 AlbTextEditorNoSpaceInputFilter >> filter: aString [
 	<return: #String>
 	
-	^ aString reject: #isSeparator
+	^ (super filter: aString) reject: #isSeparator
 ]

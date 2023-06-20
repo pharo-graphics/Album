@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorLetterInputFilter,
-	#superclass : #AlbTextEditorInputFilter,
+	#superclass : #AlbTextEditorInputFilterDecorator,
 	#category : #'Album-Model-Input-filters'
 }
 
@@ -8,5 +8,5 @@ Class {
 AlbTextEditorLetterInputFilter >> filter: aString [
 	<return: #String>
 	
-	^ aString select: #isLetter
+	^ (super filter: aString) select: #isLetter
 ]

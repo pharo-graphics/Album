@@ -331,7 +331,7 @@ AlbTextEditor >> inputFilter [
 { #category : #'api - filter' }
 AlbTextEditor >> inputFilter: aTextEditorInputFilter [
 
-	filter := aTextEditorInputFilter
+	filter := aTextEditorInputFilter next: filter
 ]
 
 { #category : #'private - text' }

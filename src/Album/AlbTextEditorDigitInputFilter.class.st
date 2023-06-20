@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorDigitInputFilter,
-	#superclass : #AlbTextEditorInputFilter,
+	#superclass : #AlbTextEditorInputFilterDecorator,
 	#category : #'Album-Model-Input-filters'
 }
 
@@ -8,5 +8,5 @@ Class {
 AlbTextEditorDigitInputFilter >> filter: aString [
 	<return: #String>
 	
-	^ aString select: #isDigit
+	^ (super filter: aString) select: #isDigit
 ]

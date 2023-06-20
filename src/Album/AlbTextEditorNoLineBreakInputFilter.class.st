@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorNoLineBreakInputFilter,
-	#superclass : #AlbTextEditorInputFilter,
+	#superclass : #AlbTextEditorInputFilterDecorator,
 	#category : #'Album-Model-Input-filters'
 }
 
@@ -8,5 +8,5 @@ Class {
 AlbTextEditorNoLineBreakInputFilter >> filter: aString [
 
 	<return: #String>
-	^ aString reject: #isLineBreak
+	^ (super filter: aString) reject: #isLineBreak
 ]

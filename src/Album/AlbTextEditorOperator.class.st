@@ -512,6 +512,7 @@ AlbTextEditorOperator >> selection [
 
 { #category : #'api - event' }
 AlbTextEditorOperator >> subscribe: anEventHandler [
+
 	editor addEventHandler: anEventHandler.
 	subscriptions add: anEventHandler.
 	^ anEventHandler
@@ -525,10 +526,12 @@ AlbTextEditorOperator >> text [
 
 { #category : #'api - event' }
 AlbTextEditorOperator >> unsubscribe [
+
 	subscriptions do: [ :anEventHandler | editor removeEventHandler: anEventHandler ]
 ]
 
 { #category : #'api - event' }
 AlbTextEditorOperator >> when: anEventClass do: aBlock [
+
 	^ self subscribe: (BlEventHandler on: anEventClass do: aBlock)
 ]

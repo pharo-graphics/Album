@@ -29,7 +29,7 @@ AlbTextEditorCursorIconHandler >> eventsToHandle [
 
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseEnterEvent: anEvent [
-element isEditable traceCr.
+
 	anEvent currentTarget mouseCursor: (element isEditable
 			 ifTrue: [ BlCursor overEditableText ]
 			 ifFalse: [ BlCursor default ])

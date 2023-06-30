@@ -28,7 +28,7 @@ AlbCursorElement >> defaultBlinking [
 ]
 
 { #category : #initialization }
-AlbCursorElement >> defaultBurredBackground [
+AlbCursorElement >> defaultBlurredBackground [
 
 	^ Color brown 
 ]
@@ -66,7 +66,7 @@ AlbCursorElement >> onGotFocus [
 { #category : #'private - focus' }
 AlbCursorElement >> onLostFocus [
 
-	self background: self defaultBurredBackground.
+	self background: self defaultBlurredBackground.
 	self stopBlinkingTask 
 ]
 

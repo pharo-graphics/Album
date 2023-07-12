@@ -18,7 +18,7 @@ See the #create comment about the current instance variable
 "
 Class {
 	#name : #AlbCursorStencil,
-	#superclass : #OBlStencil,
+	#superclass : #BlStencil,
 	#instVars : [
 		'currentCursorElement'
 	],

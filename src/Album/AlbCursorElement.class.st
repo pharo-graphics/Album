@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbCursorElement,
-	#superclass : #OBlElement,
+	#superclass : #BlElement,
 	#instVars : [
 		'textPosition',
 		'blinking',

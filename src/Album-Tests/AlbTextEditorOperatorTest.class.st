@@ -109,7 +109,7 @@ AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	
 	anEditor := self test_editorHasNoFocusByDefault.
 	
-	aSpace := OBlSpace new.
+	aSpace := BlSpace new.
 	aSpace host: BlHeadlessHost new.
 	aSpace root addChild: anEditor.
 	anEditor forceLayout.

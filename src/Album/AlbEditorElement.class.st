@@ -6,9 +6,9 @@ Text editing operations are driven by my data source (called textEditor). I also
 "
 Class {
 	#name : #AlbEditorElement,
-	#superclass : #OBlElement,
-	#traits : 'TAlbInfiniteDecorator + TOBlLayoutResizable',
-	#classTraits : 'TAlbInfiniteDecorator classTrait + TOBlLayoutResizable classTrait',
+	#superclass : #BlElement,
+	#traits : 'TAlbInfiniteDecorator + TBlLayoutResizable',
+	#classTraits : 'TAlbInfiniteDecorator classTrait + TBlLayoutResizable classTrait',
 	#instVars : [
 		'next',
 		'modeEventHandlers',

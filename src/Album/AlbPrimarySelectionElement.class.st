@@ -70,6 +70,6 @@ AlbPrimarySelectionElement >> updateVertices [
 	self selectionRectangles 
 		ifEmpty: [ self parentDo: [ :p | self removeFromParent ] ]
 		ifNotEmpty: [ :rects |
-			self vertices: (OBlVerticesFromRectanglesOperator new verticesFromRectangles: rects).
+			self vertices: (BlVerticesFromRectanglesOperator new verticesFromRectangles: rects).
 			self hasParent ifFalse: [ editorElement addChild: self ] ]
 ]

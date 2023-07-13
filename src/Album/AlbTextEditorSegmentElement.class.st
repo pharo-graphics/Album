@@ -7,7 +7,7 @@ Override me for more advanced customizations
 "
 Class {
 	#name : #AlbTextEditorSegmentElement,
-	#superclass : #OBlElement,
+	#superclass : #BlElement,
 	#category : #'Album-UI'
 }
 

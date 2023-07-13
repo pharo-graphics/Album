@@ -4,7 +4,7 @@ I subclass infinite data source in order to be able to smoothly display practica
 "
 Class {
 	#name : #AlbTextEditor,
-	#superclass : #OBlInfiniteDataSource,
+	#superclass : #BlInfiniteDataSource,
 	#classTraits : 'TObservable classTrait',
 	#instVars : [
 		'text',

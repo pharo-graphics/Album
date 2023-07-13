@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbRowNumberDecoration,
-	#superclass : #OBlRowNumberDecoration,
+	#superclass : #BlRowNumberDecoration,
 	#category : #'Album-UI'
 }
 

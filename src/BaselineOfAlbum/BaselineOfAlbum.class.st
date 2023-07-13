@@ -9,15 +9,16 @@ BaselineOfAlbum >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [ 
-		spec baseline: 'OnBloc' with: [ spec repository: 'github://plantec/OnBloc/src' ].
-		"spec baseline: 'Sparta' with: [ spec repository: 'github://pharo-graphics/Sparta:dev-1.0/src' ]."
+		spec
+			baseline: 'Bloc'
+			with: [ 
+				spec repository: 'github://pharo-graphics/bloc/src' ].
 		spec baseline: 'Alexandrie' with: [ spec repository: 'github://pharo-graphics/Alexandrie:master/src' ].
 
 		spec
-			package: #Album with: [ spec requires: #( #OnBloc ) ];
-			package: #'Album-Tests' with: [ spec requires: #( #OnBloc ) ];
-			package: #'Album-Examples' with: [ spec requires: #( #OnBloc ) ];
-			"package: #'Album-Brick-NU' with: [ spec requires: #( #OnBloc ) ];"
-			"package: #'Album-Sparta' with: [ spec requires: #( #OnBloc #Sparta ) ];"
-			package: #'Album-Alexandrie' with: [ spec requires: #( #OnBloc #Alexandrie ) ] ]
+			package: #Album with: [ spec requires: #( #Bloc ) ];
+			package: #'Album-Tests' with: [ spec requires: #( #Bloc ) ];
+			package: #'Album-Examples' with: [ spec requires: #( #Bloc ) ];
+			"package: #'Album-Brick-NU' with: [ spec requires: #( #Bloc ) ];"
+			package: #'Album-Alexandrie' with: [ spec requires: #( #Bloc #Alexandrie ) ] ]
 ]

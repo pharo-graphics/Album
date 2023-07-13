@@ -61,5 +61,5 @@ AlbSubtextElement >> interval: anInterval [
 AlbSubtextElement >> updateVertices [
 
 	editorElement ifNil: [ ^ self ].
-	self vertices: (OBlVerticesFromRectanglesOperator new verticesFromRectangles:  self computedAdjacentRectangles)
+	self vertices: (BlVerticesFromRectanglesOperator new verticesFromRectangles:  self computedAdjacentRectangles)
 ]

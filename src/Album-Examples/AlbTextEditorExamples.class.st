@@ -204,7 +204,7 @@ AlbTextEditorExamples class >> exampleEditor [
 	text := self loremIpsum asRopedText.
 	editor text: text.
 	editorElement editor: editor.
-	space := OBlSpace new.
+	space := BlSpace new.
 	space extent: self extent.
 	space root addChild: editorElement.
 	space show
@@ -226,7 +226,7 @@ AlbTextEditorExamples class >> exampleMethodTextOpen [
 		c horizontal matchParent.
 		c vertical matchParent ].
 
-	space := OBlSpace new.
+	space := BlSpace new.
 	space extent: 800@400.
 	space root addChild: editorElement.
 	space show.
@@ -248,7 +248,7 @@ AlbTextEditorExamples class >> exampleMethodTextOpenEmbedElement [
 		c horizontal matchParent.
 		c vertical matchParent ].
 
-	space := OBlSpace new.
+	space := BlSpace new.
 	space extent: 800@400.
 	space root addChild: editorElement.
 	space show.
@@ -268,7 +268,7 @@ AlbTextEditorExamples class >> exampleTextOpen [
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: editorElement.
 	space root addEventHandler:
 			(BlEventHandler

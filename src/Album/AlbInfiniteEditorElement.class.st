@@ -1,8 +1,8 @@
 Class {
 	#name : #AlbInfiniteEditorElement,
-	#superclass : #OBlInfiniteElement,
-	#traits : 'TObservable + TOBlLayoutResizable',
-	#classTraits : 'TObservable classTrait + TOBlLayoutResizable classTrait',
+	#superclass : #BlInfiniteElement,
+	#traits : 'TObservable + TBlLayoutResizable',
+	#classTraits : 'TObservable classTrait + TBlLayoutResizable classTrait',
 	#instVars : [
 		'#mode => ObservableSlot',
 		'#cursorStencil',
@@ -106,7 +106,7 @@ AlbInfiniteEditorElement >> defaultBackground [
 { #category : #initialization }
 AlbInfiniteEditorElement >> defaultLayout [
 
-	^ OBlInfiniteLinearLayout vertical
+	^ BlInfiniteLinearLayout vertical
 ]
 
 { #category : #initialization }
@@ -144,7 +144,7 @@ AlbInfiniteEditorElement >> defaultPadding [
 { #category : #initialization }
 AlbInfiniteEditorElement >> defaultRecycler [
 
-	^ OBlInfiniteRecycler new
+	^ BlInfiniteRecycler new
 ]
 
 { #category : #initialization }

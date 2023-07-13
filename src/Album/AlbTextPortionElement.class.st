@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextPortionElement,
-	#superclass : #OBlElement,
+	#superclass : #BlElement,
 	#category : #'Album-UI-Text-Portion'
 }
 

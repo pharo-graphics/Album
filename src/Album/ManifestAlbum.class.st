@@ -9,5 +9,5 @@ Class {
 
 { #category : #'code-critics' }
 ManifestAlbum class >> ruleAnySatisfyRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#OBlInfinteSideDecoration #selectionLimitRectangleOf:in: #false)) #'2022-08-30T23:11:35.989869+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#BlInfinteSideDecoration #selectionLimitRectangleOf:in: #false)) #'2022-08-30T23:11:35.989869+02:00') )
 ]

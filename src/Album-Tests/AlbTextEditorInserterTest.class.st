@@ -774,29 +774,24 @@ AlbTextEditorInserterTest >> test_insert_open_close_parentheses_at_cursor_0_sele
 
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_open_close_parentheses_with_selection_and_undo [
-	
-	
+
 	| editorElement editor |
 	editorElement := self test_editorOnEmptyText.
 	editor := editorElement editor.
-	(editor inserter)
+	editor inserter
 		at: 0;
 		string: 'abc';
 		insert.
 	editor selecter all select.
-	(editor inserter)
+	editor inserter
 		atCursor;
 		string: '(';
 		withoutSelectionDelete;
 		surroundings:
-				(AlbTextEditorSurroundMap
-						newFromArray:
-							{'('.
-								')'.
-								nil});
+			(AlbTextEditorSurroundMap newFromArray: { '('. ')'. nil });
 		insert.
-	self assert: editor text asString equals: '(abc)'.
+	self assert: editor privateText asString equals: '(abc)'.
 	editor undo.
-	self assert: editor text asString equals: 'abc'.
+	self assert: editor privateText asString equals: 'abc'.
 	^ editorElement
 ]

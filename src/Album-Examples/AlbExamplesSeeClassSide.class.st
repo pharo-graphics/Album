@@ -135,7 +135,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 	ed text: text.
 		"ed inspect."
 
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 
@@ -164,7 +164,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 		ed frontLayer addChild: deco.
 		start := start + size + 5 ].
 
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space extent: 400@200.
@@ -179,7 +179,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	ed := AlbEditorElement new.
 	"ed withLineNumbers."
 	ed text: (String loremIpsum asRopedText).
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	"ed inspect."
@@ -197,14 +197,14 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 	ed := AlbEditorElement new .
 	ed text: text.
 	ed withRowNumbers; withoutCacheLimit.
-	vscrollBar := OBlVerticalScrollbarElement new.
+	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets right: 2).
 			c ignored horizontal alignRight.
 			c ignored vertical alignBottom]. 
 	vscrollBar attachTo: ed infinite.
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space root addChild: vscrollBar.
 	space show.
@@ -282,7 +282,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 								 , strech name , ' ' , String cr , String cr) asRopedText.
 							text append: t ] ] ] ] ] ].
 	child := text onAlbum.
-	vscrollBar := OBlVerticalScrollbarElement new.
+	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets right: 2).
@@ -365,7 +365,7 @@ broken in GlamorousToolKit but what to do with that ?
 
 	ed text: text.
 	"ed inspect."
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
 	space show.
@@ -402,14 +402,14 @@ AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 		c horizontal resizer: BlLayoutResizer matchParent].
 	ed text: ((String loremIpsum: 100000) asRopedText "fontName: 'Source Code Pro'").
 	
-	hscrollBar := OBlHorizontalScrollbarElement new.
+	hscrollBar := BlHorizontalScrollbarElement new.
 	hscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets bottom: 2).
 			c ignored vertical alignBottom]. 
 	hscrollBar attachTo: ed infinite.
 	ed inspect.
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space root addChild: hscrollBar.
 	space show.
@@ -470,14 +470,14 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 	ed withRowNumbers.
 	ed withoutSoftLine.
 	
-	vscrollBar := OBlVerticalScrollbarElement new.
+	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
 			c ignoreByLayout.
 			c margin: (BlInsets right: 2).
 			c ignored horizontal alignRight.
 			c ignored vertical alignBottom]. 
 	vscrollBar attachTo: ed infinite.
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space root addChild: vscrollBar.
 	space show.
@@ -521,7 +521,7 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 		from: 17
 		to: 30."
 
-	space := BlSpace new.
+	space := BlOSpace new.
 	space root addChild: editorElement.
 	space show
 ]
@@ -533,7 +533,7 @@ AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 	ed := AlbEditorElement new text: String crlf.
 	ed editor segmentCollector inspect.
 	ed withRowNumbers.
-	space := BlSpace new.
+	space := BlOSpace new.
 	space root addChild: ed.
 	space show
 ]
@@ -545,7 +545,7 @@ AlbExamplesSeeClassSide class >> example_WithCrOnly [
 	ed := AlbEditorElement new text: String cr.
 	ed editor segmentCollector inspect.
 	ed withRowNumbers.
-	space := BlSpace new.
+	space := BlOSpace new.
 	space root addChild: ed.
 	space show
 ]
@@ -556,7 +556,7 @@ AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 	| ed space |
 	ed := AlbEditorElement new text: 'Before Cr', String cr, 'Before CrLf', String crlf, 'After'.
 	ed withRowNumbers.
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space show
 ]
@@ -566,7 +566,7 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
 	| ed space |
 	ed := AlbEditorElement new.
-	space := BlSpace new.
+	space := BlOSpace new.
 	space root addChild: ed.
 	space show
 ]
@@ -579,7 +579,7 @@ AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
 	ed constraintsDo: [ :c | 
 		c horizontal fitContent.
 		c vertical fitContent ].
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space show
 ]
@@ -593,7 +593,7 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	ed := AlbEditorElement new.
 	ed withRowNumbers.
 	ed editor: editor.
-	space := OBlSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space show
 ]

@@ -12,7 +12,7 @@ BaselineOfAlbum >> baseline: spec [
 		spec
 			baseline: 'Bloc'
 			with: [ 
-				spec repository: 'github://pharo-graphics/bloc:OnBloc-removal/src' ].
+				spec repository: 'github://pharo-graphics/bloc/src' ].
 		spec baseline: 'Alexandrie' with: [ spec repository: 'github://pharo-graphics/Alexandrie:master/src' ].
 
 		spec

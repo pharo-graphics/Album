@@ -936,7 +936,7 @@ AlbTextEditor >> text [
 
 { #category : #accessing }
 AlbTextEditor >> text: aText [ 
-	| t |
+
 	self
 		deprecated: 'Please use privateText: instead.'
 		transformWith:

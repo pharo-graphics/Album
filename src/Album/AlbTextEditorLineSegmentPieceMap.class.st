@@ -42,20 +42,18 @@ AlbTextEditorLineSegmentPieceMap >> initialize [
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
-	<return: #AlbTextEditorAbstractSegmentPiece or: #Object>
-	map associations do: [ :eachAssociation |
-		(eachAssociation value includes: aBlElement) 
-			ifTrue: [ ^ eachAssociation key ] ].
 
-	^ anAbsentBlock value
+	^ self
+		  pieceForElement: aBlElement
+		  ifPresent: [ :aPiece | ^ aPiece ]
+		  ifAbsent: anAbsentBlock
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifPresent: aBlock ifAbsent: anAbsentBlock [
-	<return: #AlbTextEditorAbstractSegmentPiece or: #Object>
-	map associations do: [ :eachAssociation |
-		(eachAssociation value includes: aBlElement) 
-			ifTrue: [ ^ aBlock value: eachAssociation key ] ].
+
+	map keysAndValuesDo: [ :k :v |
+		(v includes: aBlElement) ifTrue: [ ^ aBlock value: k ] ].
 
 	^ anAbsentBlock value
 ]

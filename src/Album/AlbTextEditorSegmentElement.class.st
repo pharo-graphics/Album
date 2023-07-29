@@ -16,3 +16,9 @@ AlbTextEditorSegmentElement >> initialize [
 	super initialize.
 	self clipChildren: false
 ]
+
+{ #category : #'api - compositing' }
+AlbTextEditorSegmentElement >> wantsSeparateCompositingLayer [
+
+	^ super wantsSeparateCompositingLayer
+]

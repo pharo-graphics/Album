@@ -36,13 +36,6 @@ AlbTextElement >> assertCursorPosition: anIndex [
 		description: [ 'Cursor must be within text bounds (0 is allowed)' ].
 ]
 
-{ #category : #'private - paragraph' }
-AlbTextElement >> createTextParagraph [
-	"Create a text paragraph used to measure and render text"
-
-	^ AlbTextParagraph new segmentPiece: segmentPiece
-]
-
 { #category : #'cursor - accessing' }
 AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBlock [
 
@@ -108,6 +101,13 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 		cursorElement
 			applyLayoutIn: (textPos extent: (cursorElement measuredWidth @ ((cursorElement measuredHeight - self padding height) max: 0.0)))
 			context: aBlElementBoundsUpdateContext
+]
+
+{ #category : #'private - paragraph' }
+AlbTextElement >> newTextParagraph [
+	"Create a text paragraph used to measure and render text"
+
+	^ AlbTextParagraph new segmentPiece: segmentPiece
 ]
 
 { #category : #layout }

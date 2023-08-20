@@ -489,10 +489,12 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 	(' Default font and size' asRopedText
-	 , (' ( Source code pro 40 bold ) ' asRopedText fontSize: 40; fontName: 'Source code pro'; bold) 
-	 , (' Default font 30' asRopedText fontSize: 30)) onAlbum
+	 , (' ( Source code pro 40 bold ) ' asRopedText
+			  fontSize: 40;
+			  fontName: 'Source code pro';
+			  bold) , (' Default font 30' asRopedText fontSize: 30)) onAlbum
 		withRowNumbers;
-		openInOBlSpace 
+		openInSpace
 ]
 
 { #category : #'editor examples' }

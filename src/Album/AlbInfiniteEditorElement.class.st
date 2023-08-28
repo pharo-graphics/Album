@@ -74,6 +74,12 @@ AlbInfiniteEditorElement >> cursor [
 ]
 
 { #category : #'accessing - cursor' }
+AlbInfiniteEditorElement >> cursorColor: aColor [
+
+	self cursorStencil cursorColor: aColor
+]
+
+{ #category : #'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorElement [
 
 	^ cursorStencil currentCursorElement
@@ -83,6 +89,12 @@ AlbInfiniteEditorElement >> cursorElement [
 AlbInfiniteEditorElement >> cursorStencil [
 
 	^ cursorStencil
+]
+
+{ #category : #'accessing - cursor' }
+AlbInfiniteEditorElement >> cursorStencil: aCursorStencil [
+
+	cursorStencil := aCursorStencil
 ]
 
 { #category : #'private - accessing editor' }
@@ -101,6 +113,12 @@ AlbInfiniteEditorElement >> defaulTextEditor [
 AlbInfiniteEditorElement >> defaultBackground [
 
 	^ BlBackground paint: Color transparent
+]
+
+{ #category : #initialization }
+AlbInfiniteEditorElement >> defaultCursorStencil [
+	
+	^ AlbCursorStencil new
 ]
 
 { #category : #initialization }

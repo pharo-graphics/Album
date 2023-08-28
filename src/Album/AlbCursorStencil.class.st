@@ -20,24 +20,48 @@ Class {
 	#name : #AlbCursorStencil,
 	#superclass : #BlStencil,
 	#instVars : [
-		'currentCursorElement'
+		'currentCursorElement',
+		'cursorColor'
 	],
 	#category : #'Album-UI-Stencils'
 }
 
 { #category : #'api - instantiation' }
 AlbCursorStencil >> create [
-
 	"Pay attention: a CursorElement ** must be a singleton **. 
 	If not, dbl clicking will not work because the target of the first click may 
 	be different from the one of the second click"
 
-	currentCursorElement ifNotNil: [ ^ currentCursorElement startBlinkingTask ].
-	^ currentCursorElement := AlbCursorElement new startBlinkingTask
+	currentCursorElement ifNotNil: [
+		^ currentCursorElement startBlinkingTask ].
+	^ currentCursorElement := AlbCursorElement new
+		                          background: self cursorColor;
+		                          startBlinkingTask;
+		                          yourself
 ]
 
 { #category : #accessing }
 AlbCursorStencil >> currentCursorElement [
 
 	^ currentCursorElement
+]
+
+{ #category : #accessing }
+AlbCursorStencil >> cursorColor [
+
+	^ cursorColor
+]
+
+{ #category : #accessing }
+AlbCursorStencil >> cursorColor: aColor [
+
+	cursorColor := aColor.
+	currentCursorElement := nil
+]
+
+{ #category : #initialization }
+AlbCursorStencil >> initialize [ 
+
+	super initialize.
+	cursorColor := Color red
 ]

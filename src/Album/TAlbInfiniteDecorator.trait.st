@@ -49,6 +49,12 @@ TAlbInfiniteDecorator >> cursor [
 ]
 
 { #category : #'t - infinite editor accessing - cursor' }
+TAlbInfiniteDecorator >> cursorColor: aColor [
+
+	self next cursorColor: aColor
+]
+
+{ #category : #'t - infinite editor accessing - cursor' }
 TAlbInfiniteDecorator >> cursors [
 	<return: #AlbTextEditorCursor>
 	

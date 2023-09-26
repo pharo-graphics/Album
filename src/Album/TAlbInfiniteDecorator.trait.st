@@ -89,6 +89,12 @@ TAlbInfiniteDecorator >> editor: aTextEditor [
 
 ]
 
+{ #category : #'t - infinite editor view - configuration' }
+TAlbInfiniteDecorator >> editorDo: aBlock [
+
+	self next editorDo: aBlock
+]
+
 { #category : #'t - infinite editor accessing - text' }
 TAlbInfiniteDecorator >> enlargedSubTextOnScreen [
 	
@@ -111,6 +117,12 @@ TAlbInfiniteDecorator >> hasSelection [
 TAlbInfiniteDecorator >> infinite [
 
 	^ self next infinite
+]
+
+{ #category : #'t - infinite editor accessing' }
+TAlbInfiniteDecorator >> infiniteDo: aBlock [
+
+	aBlock value: self infinite
 ]
 
 { #category : #'t - infinite editor accessing - editor' }
@@ -298,6 +310,7 @@ TAlbInfiniteDecorator >> whenModeChangedDo: aBlock [
 { #category : #'t - infinite editor view - configuration' }
 TAlbInfiniteDecorator >> whenTextEditedDo: aBlock [
 
+	self deprecated: 'Use directly editorDo: [:ed | ed when: AlbTextEditedEvent do: ] instead'. 
 	self next whenTextEditedDo: aBlock
 ]
 

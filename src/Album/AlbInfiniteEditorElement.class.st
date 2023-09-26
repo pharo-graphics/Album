@@ -209,6 +209,12 @@ AlbInfiniteEditorElement >> editor: aTextEditor [
 
 ]
 
+{ #category : #'private - accessing editor' }
+AlbInfiniteEditorElement >> editorDo: aBlock [
+
+	aBlock value: self editor
+]
+
 { #category : #'accessing - text' }
 AlbInfiniteEditorElement >> enlargedSubTextOnScreen [
 	
@@ -625,6 +631,7 @@ AlbInfiniteEditorElement >> whenModeChangedDo: aBlock [
 { #category : #'view - configuration' }
 AlbInfiniteEditorElement >> whenTextEditedDo: aBlock [
 
+	self deprecated: 'Use directly editorDo: [:ed | ed when: AlbTextEditedEvent do: ] instead'. 
 	self editor whenTextEditedDo: aBlock
 ]
 

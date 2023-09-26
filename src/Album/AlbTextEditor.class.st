@@ -473,6 +473,7 @@ AlbTextEditor >> notifyShortcutRemoved: aShortcut [
 
 { #category : #'event firing' }
 AlbTextEditor >> notifyTextEdited: aText [
+
 	self dispatchEvent: (AlbTextEditedEvent new text: aText)
 ]
 
@@ -1005,6 +1006,7 @@ AlbTextEditor >> updater [
 { #category : #'view configuration' }
 AlbTextEditor >> whenTextEditedDo: aBlock [
 
+	self deprecated: 'Use directly when: AlbTextEditedEvent do: instead'. 
 	self when: AlbTextEditedEvent do: aBlock
 ]
 

@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbCursorReachedBoundaryEvent,
-	#superclass : #BlEvent,
+	#name : 'AlbCursorReachedBoundaryEvent',
+	#superclass : 'BlEvent',
 	#instVars : [
 		'cursor',
 		'boundary'
@@ -9,41 +9,43 @@ Class {
 		'Bottom',
 		'Top'
 	],
-	#category : #'Album-Model-Events'
+	#category : 'Album-Model-Events',
+	#package : 'Album',
+	#tag : 'Model-Events'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 AlbCursorReachedBoundaryEvent class >> initialize [
 	Top := #top.
 	Bottom := #bottom
 ]
 
-{ #category : #location }
+{ #category : 'location' }
 AlbCursorReachedBoundaryEvent >> beBottom [
 	boundary := Bottom
 ]
 
-{ #category : #location }
+{ #category : 'location' }
 AlbCursorReachedBoundaryEvent >> beTop [
 	boundary := Top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorReachedBoundaryEvent >> cursor [
 	^ cursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorReachedBoundaryEvent >> cursor: anObject [
 	cursor := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbCursorReachedBoundaryEvent >> isBottom [
 	^ boundary = Bottom
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbCursorReachedBoundaryEvent >> isTop [
 	^ boundary = Top
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextAdornmentAttributeTaskItRenderingStrategy,
-	#superclass : #AlbTextAdornmentAttributeRenderingStrategy,
-	#category : #'Album-Attributes - Support'
+	#name : 'AlbTextAdornmentAttributeTaskItRenderingStrategy',
+	#superclass : 'AlbTextAdornmentAttributeRenderingStrategy',
+	#category : 'Album-Attributes - Support',
+	#package : 'Album',
+	#tag : 'Attributes - Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextAdornmentAttributeTaskItRenderingStrategy >> affect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #BlElement>

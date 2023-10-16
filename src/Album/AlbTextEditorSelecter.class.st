@@ -2,18 +2,20 @@
 When in ""cursor update mode"" I place cursors at the end of each selection
 "
 Class {
-	#name : #AlbTextEditorSelecter,
-	#superclass : #AlbTextEditorOperator,
+	#name : 'AlbTextEditorSelecter',
+	#superclass : 'AlbTextEditorOperator',
 	#instVars : [
 		'selection',
 		'shouldUpdateCursor',
 		'shouldDeselectExisting',
 		'commands'
 	],
-	#category : #'Album-Model-Operators'
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> all [
 	"Select the whole text"
 	
@@ -22,18 +24,18 @@ AlbTextEditorSelecter >> all [
 		to: self text size
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> all: aCompositeSelection [
 	aCompositeSelection do: [ :eachMonotoneSelection |
 		self from: eachMonotoneSelection from to: eachMonotoneSelection to ]
 ]
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorSelecter >> apply [
 	^ self select
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> extendToIndex: anIndex [
 	| cursorPosition |
 	cursorPosition := self cursor position.
@@ -42,7 +44,7 @@ AlbTextEditorSelecter >> extendToIndex: anIndex [
 		ifFalse: [ self from: anIndex to: cursorPosition ]
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> extendToLineEnd [
 	"Extend selection to the end of the line"
 	|  cmd globalCursor delta |
@@ -56,7 +58,7 @@ AlbTextEditorSelecter >> extendToLineEnd [
 	commands add: cmd
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> extendToLineStart [
 
 	"Extend selection to the start of the line"
@@ -73,7 +75,7 @@ AlbTextEditorSelecter >> extendToLineStart [
 	commands add: cmd
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> extendToNextWordEnd [
 	"Extend selection to the end of the next word"
 	|  theCommands |
@@ -91,7 +93,7 @@ AlbTextEditorSelecter >> extendToNextWordEnd [
 	commands addAll: theCommands
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> extendToPreviousWordStart [
 	"Extend selection to start of the previous word"
 	|  theCommands |
@@ -109,7 +111,7 @@ AlbTextEditorSelecter >> extendToPreviousWordStart [
 	commands addAll: theCommands
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> extendToWholeLine [
 
 	"Extend selection to the line"
@@ -119,7 +121,7 @@ AlbTextEditorSelecter >> extendToWholeLine [
 		extendToLineEnd
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> findExistingSelectionEndAfter: aTextIndex within: aTextInterval [
 	| anEndIndex |
 	
@@ -135,7 +137,7 @@ AlbTextEditorSelecter >> findExistingSelectionEndAfter: aTextIndex within: aText
 	^ anEndIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> findExistingSelectionStartBefore: aTextIndex within: aTextInterval [
 	| aStartIndex |
 	
@@ -151,7 +153,7 @@ AlbTextEditorSelecter >> findExistingSelectionStartBefore: aTextIndex within: aT
 	^ aStartIndex
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> from: aFromIndex to: aToIndex [
 
 	commands add: (AlbExtendSelectionCommand new 
@@ -160,7 +162,7 @@ AlbTextEditorSelecter >> from: aFromIndex to: aToIndex [
 		toAddCursor: aToIndex)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorSelecter >> initialize [
 	super initialize.
 
@@ -170,7 +172,7 @@ AlbTextEditorSelecter >> initialize [
 	commands := OrderedCollection new
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> moveOneDown [
 	"Select and move a cursor one line down"
 	| theCommands theNewCursorPositions theCursorsOnTheLeft theCursorsOnTheRight theCursorsOutside |
@@ -214,7 +216,7 @@ AlbTextEditorSelecter >> moveOneDown [
 	commands addAll: theCommands.
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> moveOneToLeft [
 	"Select and move a cursor one character to the left"
 	|  theCommands |
@@ -229,7 +231,7 @@ AlbTextEditorSelecter >> moveOneToLeft [
 	commands addAll: theCommands
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> moveOneToRight [
 	"Select and move a cursor one character to the right"
 	|  theCommands |
@@ -244,7 +246,7 @@ AlbTextEditorSelecter >> moveOneToRight [
 	commands addAll: theCommands
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> moveOneUp [
 	"Select and move a cursor one line up"
 	| theNewCursorPositions theCursorsOnTheLeft theCursorsOnTheRight theCursorsOutside theCommands |
@@ -289,14 +291,14 @@ AlbTextEditorSelecter >> moveOneUp [
 	commands addAll: theCommands.
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> overwrite [
 	"Deselect any selections if they exist and overwrite with the new selection"
 	
 	shouldDeselectExisting := true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> privateDeselectExisting: aSelection [
 	| aDeselecter |
 	
@@ -308,7 +310,7 @@ AlbTextEditorSelecter >> privateDeselectExisting: aSelection [
 	aDeselecter deselect
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> privateExtendSelectionLeftAt: aTextPosition by: anAmount [
 	| hasSelectionAfter toSelect toDeselect aNewSelectionStart |
 
@@ -359,7 +361,7 @@ AlbTextEditorSelecter >> privateExtendSelectionLeftAt: aTextPosition by: anAmoun
 		toDeselect: toDeselect
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> privateExtendSelectionRightAt: aTextPosition by: anAmount [
 	| hasSelectionBefore toSelect toDeselect aNewSelectionEnd |
 
@@ -410,7 +412,7 @@ AlbTextEditorSelecter >> privateExtendSelectionRightAt: aTextPosition by: anAmou
 		toDeselect: toDeselect
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> privateFrom: aFromIndex to: aToIndex [
 
 	aFromIndex = aToIndex
@@ -419,7 +421,7 @@ AlbTextEditorSelecter >> privateFrom: aFromIndex to: aToIndex [
 	selection select: aFromIndex to: aToIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> privatePerformSelectAndDeselectCommands: theCommands [
 	| aDeselecter  |
 
@@ -459,7 +461,7 @@ AlbTextEditorSelecter >> privatePerformSelectAndDeselectCommands: theCommands [
 		aNavigator apply ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 	"Select text within an interval defined by provided from and to indices without any other side effects.
 	Note:
@@ -484,7 +486,7 @@ AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 	editor executeCommand: aCommand
 ]
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorSelecter >> select [
 
 	| toBeSelected |
@@ -509,7 +511,7 @@ AlbTextEditorSelecter >> select [
 	" do not send updateCursors to self here otherwise, navigator moveUp is broken " 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSelecter >> updateCursors [
 	| aNavigator |
 	
@@ -519,12 +521,12 @@ AlbTextEditorSelecter >> updateCursors [
 	aNavigator apply
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> withoutCursorUpdate [
 	shouldUpdateCursor := false
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorSelecter >> wordAt: aTextIndex [
 	"Select a word or a whitespace at a given text index"
 	| aWordInterval |

@@ -1,15 +1,17 @@
 Class {
-	#name : #AlbTextWordPieceHideCursorHandler,
-	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : #'Album-UI-Word'
+	#name : 'AlbTextWordPieceHideCursorHandler',
+	#superclass : 'AlbTextWordPieceUniqueHandler',
+	#category : 'Album-UI-Word',
+	#package : 'Album',
+	#tag : 'UI-Word'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceHideCursorHandler >> eventClass [
 	^ AlbTextEditorHideCursorRequest
 ]
 
-{ #category : #'api - event managing' }
+{ #category : 'api - event managing' }
 AlbTextWordPieceHideCursorHandler >> handleEvent: anEvent [
 	| aTextElement aCursorElement |
 	

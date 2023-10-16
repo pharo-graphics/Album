@@ -1,25 +1,27 @@
 Class {
-	#name : #AlbTextHoverAttribute,
-	#superclass : #AlbTextCrappyEventHandlerAttribute,
+	#name : 'AlbTextHoverAttribute',
+	#superclass : 'AlbTextCrappyEventHandlerAttribute',
 	#instVars : [
 		'enterAction',
 		'leaveAction',
 		'isHovered'
 	],
-	#category : #'Album-Attributes'
+	#category : 'Album-Attributes',
+	#package : 'Album',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextHoverAttribute >> enterAction [
 	^ enterAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextHoverAttribute >> enterAction: anObject [
 	enterAction := anObject
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 AlbTextHoverAttribute >> handleEvent: anEvent [ 
 	"Handle a given event or dispatch it using #sendTo:"
 
@@ -30,7 +32,7 @@ AlbTextHoverAttribute >> handleEvent: anEvent [
 		ifTrue: [ self performLeaveAction: anEvent ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextHoverAttribute >> initialize [
 	super initialize.
 
@@ -39,12 +41,12 @@ AlbTextHoverAttribute >> initialize [
 	isHovered := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextHoverAttribute >> leaveAction [
 	^ leaveAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextHoverAttribute >> leaveAction: aBlock [
 	self 
 		assert: [ aBlock notNil ] 
@@ -53,7 +55,7 @@ AlbTextHoverAttribute >> leaveAction: aBlock [
 	leaveAction := aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextHoverAttribute >> performEnterAction: anEvent [ 
 
 	isHovered ifTrue: [ ^ self ].
@@ -67,7 +69,7 @@ AlbTextHoverAttribute >> performEnterAction: anEvent [
 		value: anEvent wrappedEvent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextHoverAttribute >> performLeaveAction: anEvent [ 
 
 	isHovered ifFalse: [ ^ self ].
@@ -81,7 +83,7 @@ AlbTextHoverAttribute >> performLeaveAction: anEvent [
 		value: anEvent wrappedEvent
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 AlbTextHoverAttribute >> wantsEvent: anEvent [
 	"Return true if I am interested in a given event and want to handle it,
 	false otherwise"

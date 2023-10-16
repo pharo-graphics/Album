@@ -1,18 +1,20 @@
 Class {
-	#name : #AlbTextClickAttribute,
-	#superclass : #AlbTextCrappyEventHandlerAttribute,
+	#name : 'AlbTextClickAttribute',
+	#superclass : 'AlbTextCrappyEventHandlerAttribute',
 	#instVars : [
 		'action'
 	],
-	#category : #'Album-Attributes'
+	#category : 'Album-Attributes',
+	#package : 'Album',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextClickAttribute >> action [
 	^ action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextClickAttribute >> action: aValuable [
 	self 
 		assert: [ aValuable notNil ] 
@@ -21,19 +23,19 @@ AlbTextClickAttribute >> action: aValuable [
 	action := aValuable
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 AlbTextClickAttribute >> handleEvent: anEvent [ 
 	self performAction: anEvent 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextClickAttribute >> initialize [
 	super initialize.
 	
 	action := [ :aTTextEditorTextualPiece :aTextElement :aTextEditor :anEvent | ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextClickAttribute >> performAction: anEvent [
 
 	"first we pass text then the text piece (word) element then the whole text editor and the event itself "
@@ -45,7 +47,7 @@ AlbTextClickAttribute >> performAction: anEvent [
 		value: anEvent wrappedEvent
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 AlbTextClickAttribute >> wantsEvent: anEvent [ 
 	^ anEvent wrappedEvent isKindOf: BlClickEvent
 ]

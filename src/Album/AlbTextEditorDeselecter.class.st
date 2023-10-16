@@ -1,25 +1,27 @@
 Class {
-	#name : #AlbTextEditorDeselecter,
-	#superclass : #AlbTextEditorOperator,
+	#name : 'AlbTextEditorDeselecter',
+	#superclass : 'AlbTextEditorOperator',
 	#instVars : [
 		'selection'
 	],
-	#category : #'Album-Model-Operators'
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorDeselecter >> all [
 	"Deselect the whole text"
 
 	self selection do: [ :aMonotoneSelection | self from: aMonotoneSelection from to: aMonotoneSelection to ]
 ]
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorDeselecter >> apply [
 	^ self deselect
 ]
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorDeselecter >> deselect [
 
 	selection do: [ :aMonotoneSelection | 
@@ -31,19 +33,19 @@ AlbTextEditorDeselecter >> deselect [
 
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorDeselecter >> from: aFromIndex to: aToIndex [
 	selection select: aFromIndex to: aToIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorDeselecter >> initialize [
 	super initialize.
 
 	selection := BlCompositeSelection new
 ]
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorDeselecter >> outsideOfCursor [
 	"Remove all selections that don't contain any existing cursor"
 
@@ -53,7 +55,7 @@ AlbTextEditorDeselecter >> outsideOfCursor [
 				ifFalse: [ self from: aMonotoneSelection from to: aMonotoneSelection to ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorDeselecter >> privateDeselect: aFromTextIndex to: aToTextIndex [
 	"Deselect text within an interval defined by provided from and to indices without any other side effects.
 	Note:

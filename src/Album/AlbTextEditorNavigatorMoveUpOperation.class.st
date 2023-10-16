@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorNavigatorMoveUpOperation,
-	#superclass : #AlbTextEditorNavigatorOperation,
-	#category : #'Album-Model-Operators'
+	#name : 'AlbTextEditorNavigatorMoveUpOperation',
+	#superclass : 'AlbTextEditorNavigatorOperation',
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #matching }
+{ #category : 'matching' }
 AlbTextEditorNavigatorMoveUpOperation >> performOn: aNavigator [
 	| aGlobalTextIndex |
 	

@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbTextEditorHistory,
-	#superclass : #Object,
+	#name : 'AlbTextEditorHistory',
+	#superclass : 'Object',
 	#instVars : [
 		'undoCommands',
 		'redoCommands',
@@ -8,10 +8,12 @@ Class {
 		'shouldGroup',
 		'currentGroup'
 	],
-	#category : #'Album-History'
+	#category : 'Album-History',
+	#package : 'Album',
+	#tag : 'History'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorHistory >> addCommand: aCommand [
 	isEnabled
 		ifFalse: [ ^ self ].
@@ -22,14 +24,14 @@ AlbTextEditorHistory >> addCommand: aCommand [
 	redoCommands removeAll
 ]
 
-{ #category : #'api - history' }
+{ #category : 'api - history' }
 AlbTextEditorHistory >> cursorsMovedFrom: aCollectionOfFromIndices to: aCollectionOfToIndices [
 	self addCommand: (AlbTextEditorHistoryCursorMovementCommand new
 		fromIndices: aCollectionOfFromIndices;
 		toIndices: aCollectionOfToIndices)
 ]
 
-{ #category : #'api - history' }
+{ #category : 'api - history' }
 AlbTextEditorHistory >> deletedTexts: aCollectionOfTexts undo: aCollectionOfUndoIndices redo: aCollectionOfRedoIndices [
 	self addCommand: (AlbTextEditorHistoryDeletionCommand new
 		texts: aCollectionOfTexts;
@@ -37,7 +39,7 @@ AlbTextEditorHistory >> deletedTexts: aCollectionOfTexts undo: aCollectionOfUndo
 		redoIndices: aCollectionOfRedoIndices)
 ]
 
-{ #category : #'api - history' }
+{ #category : 'api - history' }
 AlbTextEditorHistory >> disableDuring: aBlock [
 	| wasEnabled |
 	
@@ -47,7 +49,7 @@ AlbTextEditorHistory >> disableDuring: aBlock [
 	aBlock ensure: [ isEnabled := wasEnabled ]
 ]
 
-{ #category : #'api - history' }
+{ #category : 'api - history' }
 AlbTextEditorHistory >> groupDuring: aBlock [
 	| wasGrouped |
 	
@@ -70,14 +72,14 @@ AlbTextEditorHistory >> groupDuring: aBlock [
 							undoCommands addAll: theCommands ] ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorHistory >> initialize [
 	super initialize.
 	
 	self setUpToStart 
 ]
 
-{ #category : #'api - history' }
+{ #category : 'api - history' }
 AlbTextEditorHistory >> insertedStrings: aCollectionOfStrings undo: aCollectionOfUndoIndices redo: aCollectionOfRedoIndices [
 	self addCommand: (AlbTextEditorHistoryInsertionCommand new
 		strings: aCollectionOfStrings;
@@ -85,13 +87,13 @@ AlbTextEditorHistory >> insertedStrings: aCollectionOfStrings undo: aCollectionO
 		redoIndices: aCollectionOfRedoIndices)
 ]
 
-{ #category : #'api - undo/redo' }
+{ #category : 'api - undo/redo' }
 AlbTextEditorHistory >> redoOn: aTextEditor [
 	redoCommands ifNotEmpty: [ :theCommands |
 		self disableDuring: [ undoCommands add: (theCommands removeLast redoOn: aTextEditor) ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorHistory >> setUpToStart [
 
 	undoCommands := OrderedCollection new.
@@ -104,7 +106,7 @@ AlbTextEditorHistory >> setUpToStart [
 	currentGroup := AlbTextEditorHistoryCompositeCommand new
 ]
 
-{ #category : #'api - undo/redo' }
+{ #category : 'api - undo/redo' }
 AlbTextEditorHistory >> undoOn: aTextEditor [
 	undoCommands ifNotEmpty: [ :theCommands |
 		self disableDuring: [ redoCommands add: (theCommands removeLast undoOn: aTextEditor) ] ]

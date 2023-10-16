@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditableMode,
-	#superclass : #AlbEditabilityMode,
-	#category : #'Album-UI'
+	#name : 'AlbEditableMode',
+	#superclass : 'AlbEditabilityMode',
+	#category : 'Album-UI',
+	#package : 'Album',
+	#tag : 'UI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditableMode >> defaultEditorElementEventHandlers [
-
+self flag: 'AlbTextEditorFocusHandler should e added if album is used on itself (not by ToAlbum)'. 
 	^ { 
 		  AlbTextEditorMouseHandler new.
 		  AlbTextEditorDoubleClickHandler new.
 		  AlbTextEditorInsertionHandler new.
-		  AlbTextEditorFocusHandler new }
+		 " AlbTextEditorFocusHandler new" }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditableMode >> defaultFrontLayerEventHandlers [
 
 	^ {  AlbTextEditorCursorIconHandler new.
 		  AlbTextEditorSelectionHandler new }
 ]
 
-{ #category : #'shortcut management' }
+{ #category : 'shortcut management' }
 AlbEditableMode >> defaultShortcuts [
 
 	^ { 
@@ -56,13 +58,13 @@ AlbEditableMode >> defaultShortcuts [
 		  AlbEditorSelectLineAboveCursorShortcut new }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditableMode >> defaultWordStencil [ 
 
 	^ AlbTextWordPieceStencil editable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbEditableMode >> isEditable [
 
 	^ true

@@ -17,16 +17,18 @@ See the #create comment about the current instance variable
 
 "
 Class {
-	#name : #AlbCursorStencil,
-	#superclass : #BlStencil,
+	#name : 'AlbCursorStencil',
+	#superclass : 'BlStencil',
 	#instVars : [
 		'currentCursorElement',
 		'cursorColor'
 	],
-	#category : #'Album-UI-Stencils'
+	#category : 'Album-UI-Stencils',
+	#package : 'Album',
+	#tag : 'UI-Stencils'
 }
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbCursorStencil >> create [
 	"Pay attention: a CursorElement ** must be a singleton **. 
 	If not, dbl clicking will not work because the target of the first click may 
@@ -40,26 +42,26 @@ AlbCursorStencil >> create [
 		                          yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorStencil >> currentCursorElement [
 
 	^ currentCursorElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorStencil >> cursorColor [
 
 	^ cursorColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorStencil >> cursorColor: aColor [
 
 	cursorColor := aColor.
 	currentCursorElement := nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorStencil >> initialize [ 
 
 	super initialize.

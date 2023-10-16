@@ -1,40 +1,42 @@
 Class {
-	#name : #AlbTextEditorShortcutsMemento,
-	#superclass : #AlbTextEditorMemento,
+	#name : 'AlbTextEditorShortcutsMemento',
+	#superclass : 'AlbTextEditorMemento',
 	#instVars : [
 		'shortcuts'
 	],
-	#category : #'Album-Model-Memento'
+	#category : 'Album-Model-Memento',
+	#package : 'Album',
+	#tag : 'Model-Memento'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorShortcutsMemento >> initialize [
 	super initialize.
 	
 	shortcuts := AlbTextEditorShortcuts new
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorShortcutsMemento >> label [
 	^ 'Shortcuts'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorShortcutsMemento >> order [
 	^ 10
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorShortcutsMemento >> restoreStateOf: aTextEditor [
 	aTextEditor setEditorShortcuts: shortcuts copy
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorShortcutsMemento >> saveStateOf: aTextEditor [
 	shortcuts := aTextEditor editorShortcuts copy
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorShortcutsMemento >> value [
 	^ shortcuts
 ]

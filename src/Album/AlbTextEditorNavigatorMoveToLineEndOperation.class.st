@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorNavigatorMoveToLineEndOperation,
-	#superclass : #AlbTextEditorNavigatorOperation,
-	#category : #'Album-Model-Operators'
+	#name : 'AlbTextEditorNavigatorMoveToLineEndOperation',
+	#superclass : 'AlbTextEditorNavigatorOperation',
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #matching }
+{ #category : 'matching' }
 AlbTextEditorNavigatorMoveToLineEndOperation >> performOn: aNavigator [
 	| aText aTextIterator foundLineBreak |
 	

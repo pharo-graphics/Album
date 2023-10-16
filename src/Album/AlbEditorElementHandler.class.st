@@ -1,13 +1,15 @@
 Class {
-	#name : #AlbEditorElementHandler,
-	#superclass : #BlCustomEventHandler,
+	#name : 'AlbEditorElementHandler',
+	#superclass : 'BlCustomEventHandler',
 	#instVars : [
 		'element'
 	],
-	#category : #'Album-UI-Handlers'
+	#category : 'Album-UI-Handlers',
+	#package : 'Album',
+	#tag : 'UI-Handlers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorElementHandler >> element: anElement [
 
 	element := anElement

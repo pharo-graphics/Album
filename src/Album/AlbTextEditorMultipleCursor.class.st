@@ -1,13 +1,15 @@
 Class {
-	#name : #AlbTextEditorMultipleCursor,
-	#superclass : #AlbTextEditorCursor,
+	#name : 'AlbTextEditorMultipleCursor',
+	#superclass : 'AlbTextEditorCursor',
 	#instVars : [
 		'cursors'
 	],
-	#category : #'Album-Model-Cursor'
+	#category : 'Album-Model-Cursor',
+	#package : 'Album',
+	#tag : 'Model-Cursor'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AlbTextEditorMultipleCursor >> = anotherObject [
 	self == anotherObject
 		ifTrue: [ ^ true ].
@@ -17,48 +19,48 @@ AlbTextEditorMultipleCursor >> = anotherObject [
 	^ anotherObject cursors = self cursors
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 AlbTextEditorMultipleCursor >> add: aSingleCursor [
 	self cursors add: aSingleCursor
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 AlbTextEditorMultipleCursor >> addAll: aCollectionOfSingleCursor [
 	self cursors addAll: aCollectionOfSingleCursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorMultipleCursor >> cursors [
 	<return: #Collection of: #AlbTextEditorCursor>
 
 	^ cursors
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 AlbTextEditorMultipleCursor >> do: aBlock [
 	"Evaluate a given block with all available cursors"
 
 	^ self cursors do: aBlock
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AlbTextEditorMultipleCursor >> hash [
 	^ self class hash bitXor: self cursors hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorMultipleCursor >> initialize [
 	super initialize.
 
 	cursors := OrderedCollection new
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AlbTextEditorMultipleCursor >> postCopy [
 	cursors := cursors collect: [ :cursor | cursor copy ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 AlbTextEditorMultipleCursor >> remove: aSingleCursor [
 	self cursors remove: aSingleCursor
 ]

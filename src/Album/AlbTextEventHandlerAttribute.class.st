@@ -1,15 +1,17 @@
 Class {
-	#name : #AlbTextEventHandlerAttribute,
-	#superclass : #BlTextAttribute,
+	#name : 'AlbTextEventHandlerAttribute',
+	#superclass : 'BlTextAttribute',
 	#traits : 'TBlEventTarget',
 	#classTraits : 'TBlEventTarget classTrait',
 	#instVars : [
 		'eventDispatcher'
 	],
-	#category : #'Album-Attributes'
+	#category : 'Album-Attributes',
+	#package : 'Album',
+	#tag : 'Attributes'
 }
 
-{ #category : #'event management accessing' }
+{ #category : 'event management accessing' }
 AlbTextEventHandlerAttribute >> eventDispatcher [
 	"Return an object responsible for event dispatching"
 	<return: #BlDirectEventDispatcher>
@@ -17,19 +19,19 @@ AlbTextEventHandlerAttribute >> eventDispatcher [
 	^ eventDispatcher 
 ]
 
-{ #category : #'api - event managing' }
+{ #category : 'api - event managing' }
 AlbTextEventHandlerAttribute >> handleEvent: aBlEvent [
 	self dispatchEvent: aBlEvent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEventHandlerAttribute >> initialize [
 	super initialize.
 	eventDispatcher := BlDirectEventDispatcher on: self.
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEventHandlerAttribute >> isEventHandler [
 	"Return true if attribute is designed to handle UI events such as mouse,
 	false otherwise"
@@ -38,7 +40,7 @@ AlbTextEventHandlerAttribute >> isEventHandler [
 	^ true
 ]
 
-{ #category : #'api - event managing' }
+{ #category : 'api - event managing' }
 AlbTextEventHandlerAttribute >> wantsEvent: aBlEvent [
 
 Transcript show: 'wantsEvent: ', aBlEvent asString, ' ^ ', (self eventDispatcher wantsEvent: aBlEvent) asString; cr.

@@ -1,23 +1,25 @@
 Class {
-	#name : #AlbTextEditorNavigatorMoveByOperation,
-	#superclass : #AlbTextEditorNavigatorOperation,
+	#name : 'AlbTextEditorNavigatorMoveByOperation',
+	#superclass : 'AlbTextEditorNavigatorOperation',
 	#instVars : [
 		'delta'
 	],
-	#category : #'Album-Model-Operators'
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorNavigatorMoveByOperation >> delta [
 	^ delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorNavigatorMoveByOperation >> delta: anObject [
 	delta := anObject
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 AlbTextEditorNavigatorMoveByOperation >> performOn: aNavigator [
 	aNavigator privateRegisterForMove: self cursor by: self delta
 ]

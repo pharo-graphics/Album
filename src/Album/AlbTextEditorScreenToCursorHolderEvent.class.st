@@ -1,23 +1,25 @@
 Class {
-	#name : #AlbTextEditorScreenToCursorHolderEvent,
-	#superclass : #AlbTextEditorHolderEvent,
+	#name : 'AlbTextEditorScreenToCursorHolderEvent',
+	#superclass : 'AlbTextEditorHolderEvent',
 	#instVars : [
 		'transformation'
 	],
-	#category : #'Album-Commands-Holder'
+	#category : 'Album-Commands-Holder',
+	#package : 'Album',
+	#tag : 'Commands-Holder'
 }
 
-{ #category : #sending }
+{ #category : 'sending' }
 AlbTextEditorScreenToCursorHolderEvent >> sendTo: aSegmentHolder [
 	aSegmentHolder screenToCursor: self transformation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorScreenToCursorHolderEvent >> transformation [
 	^ transformation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorScreenToCursorHolderEvent >> transformation: anObject [
 	transformation := anObject
 ]

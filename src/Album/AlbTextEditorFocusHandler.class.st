@@ -1,16 +1,18 @@
 Class {
-	#name : #AlbTextEditorFocusHandler,
-	#superclass : #AlbEditorElementHandler,
-	#category : #'Album-UI-Handlers'
+	#name : 'AlbTextEditorFocusHandler',
+	#superclass : 'AlbEditorElementHandler',
+	#category : 'Album-UI-Handlers',
+	#package : 'Album',
+	#tag : 'UI-Handlers'
 }
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorFocusHandler >> blurEvent: anEvent [
 
 	element onLostFocus
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 AlbTextEditorFocusHandler >> eventsToHandle [
 
 	^ { 
@@ -18,7 +20,7 @@ AlbTextEditorFocusHandler >> eventsToHandle [
 		  BlBlurEvent }
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorFocusHandler >> focusEvent: anEvent [
 
 	element onGotFocus

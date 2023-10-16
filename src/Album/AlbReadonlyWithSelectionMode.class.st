@@ -1,26 +1,29 @@
 Class {
-	#name : #AlbReadonlyWithSelectionMode,
-	#superclass : #AlbEditabilityMode,
-	#category : #'Album-UI'
+	#name : 'AlbReadonlyWithSelectionMode',
+	#superclass : 'AlbEditabilityMode',
+	#category : 'Album-UI',
+	#package : 'Album',
+	#tag : 'UI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbReadonlyWithSelectionMode >> defaultEditorElementEventHandlers [
+self flag: 'AlbTextEditorFocusHandler should e added if album is used on itself (not by ToAlbum)'. 
 
 	^ { 
 		  AlbTextEditorMouseHandler new.
 		  AlbTextEditorDoubleClickHandler new.
-		  AlbTextEditorFocusHandler new }
+		  "AlbTextEditorFocusHandler new" }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbReadonlyWithSelectionMode >> defaultFrontLayerEventHandlers [
 
 	^ {  AlbTextEditorCursorIconHandler new .
 		  AlbTextEditorSelectionHandler new }
 ]
 
-{ #category : #'shortcut management' }
+{ #category : 'shortcut management' }
 AlbReadonlyWithSelectionMode >> defaultShortcuts [
 
 	^ { 

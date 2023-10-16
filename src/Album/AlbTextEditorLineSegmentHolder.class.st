@@ -2,8 +2,8 @@
 I am a line segment holder and is responsible for binding `AlbTextEditorLineSegment` with corresponding visual element
 "
 Class {
-	#name : #AlbTextEditorLineSegmentHolder,
-	#superclass : #AlbEditorSegmentHolder,
+	#name : 'AlbTextEditorLineSegmentHolder',
+	#superclass : 'AlbEditorSegmentHolder',
 	#instVars : [
 		'segment',
 		'pieceElements'
@@ -11,27 +11,29 @@ Class {
 	#classInstVars : [
 		'defaultSegmentLayoutBlock'
 	],
-	#category : #'Album-Model-Segment-Text-Line'
+	#category : 'Album-Model-Segment-Text-Line',
+	#package : 'Album',
+	#tag : 'Model-Segment-Text-Line'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 AlbTextEditorLineSegmentHolder class >> cleanUp [
 	super cleanUp.
 	
 	defaultSegmentLayoutBlock := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder class >> defaultSegmentLayout [
 	^ (defaultSegmentLayoutBlock ifNil: [ AlbLineFlowLayout new ]) value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder class >> defaultSegmentLayout: aBlock [
 	defaultSegmentLayoutBlock := aBlock
 ]
 
-{ #category : #'private - segment' }
+{ #category : 'private - segment' }
 AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 
 	| newPieceElements thePieces hasSelection hasCursor |
@@ -86,14 +88,14 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 		padding: anEditorSegment paragraphMargin
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 AlbTextEditorLineSegmentHolder >> cachedPieces [
 	<return: #Collection of: #AlbTextEditorAbstractSegmentPiece>
 	
 	^ pieceElements allPieces
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorLineSegmentHolder >> createSegmentElement [
 	<return: #BlElement>
 
@@ -107,7 +109,7 @@ AlbTextEditorLineSegmentHolder >> createSegmentElement [
 		yourself
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 AlbTextEditorLineSegmentHolder >> explicitScreenToCursor: aTransformation [
 
 	| aBoundsInEditor aPositionInSegment aClosestPieceElement aClosestPiece aTransformedScreenPosition |
@@ -143,7 +145,7 @@ AlbTextEditorLineSegmentHolder >> explicitScreenToCursor: aTransformation [
 	aClosestPiece screenToCursor: aTransformation of: self infiniteElement in: aClosestPieceElement
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 AlbTextEditorLineSegmentHolder >> hasCursor [
 
 	| aTextEditor |
@@ -151,7 +153,7 @@ AlbTextEditorLineSegmentHolder >> hasCursor [
 	^ aTextEditor cursor insideSegment: segment
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 AlbTextEditorLineSegmentHolder >> hasSelection [
 	| aTextEditor textInterval |
 
@@ -165,12 +167,12 @@ AlbTextEditorLineSegmentHolder >> hasSelection [
 	^ false
 ]
 
-{ #category : #'private - segment' }
+{ #category : 'private - segment' }
 AlbTextEditorLineSegmentHolder >> newPiecesMap [
 	^ AlbTextEditorLineSegmentPieceMap new
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AlbTextEditorLineSegmentHolder >> onCursorAdded [
 
 	"Is sent when text editor's cursor changes.
@@ -183,7 +185,7 @@ AlbTextEditorLineSegmentHolder >> onCursorAdded [
 			in: self infiniteElement]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AlbTextEditorLineSegmentHolder >> onCursorRemoved [
 
 	"Is sent when text editor's cursor changes.
@@ -196,7 +198,7 @@ AlbTextEditorLineSegmentHolder >> onCursorRemoved [
 			in: self infiniteElement]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AlbTextEditorLineSegmentHolder >> onFocusChanged: aBoolean [
 	"Is sent when text editor's focus state changes.
 	Segment holder should update text elements accordingly"
@@ -209,7 +211,7 @@ AlbTextEditorLineSegmentHolder >> onFocusChanged: aBoolean [
 		aPiece updateFocus: aBoolean of: aPieceElement in: self infiniteElement ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AlbTextEditorLineSegmentHolder >> onSelectionChanged [
 	"Is sent when text editor's selection changes.
 	Segment holder should update text elements accordingly"
@@ -222,7 +224,7 @@ AlbTextEditorLineSegmentHolder >> onSelectionChanged [
 		aPiece updateSelection: aPieceElement of: segment in: self infiniteElement ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 AlbTextEditorLineSegmentHolder >> onTextChanged [
 
 	"Is sent when text changed in the editor (for example style attributes).
@@ -239,22 +241,22 @@ AlbTextEditorLineSegmentHolder >> onTextChanged [
 			in: self infiniteElement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
 	^ pieceElements pieceForElement: aBlElement ifAbsent: anAbsentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder >> pieceForElement: aBlElement ifPresent: aBlock ifAbsent: anAbsentBlock [
 	^ pieceElements pieceForElement: aBlElement ifPresent: aBlock ifAbsent: anAbsentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder >> piecesAndTheirElementsDo: aBlock [
 	pieceElements piecesAndTheirElementsDo: aBlock
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 AlbTextEditorLineSegmentHolder >> relativeScreenToCursor: aTransformation [	
 	"trying to find a segment that actually contains a given position"
 
@@ -264,17 +266,17 @@ AlbTextEditorLineSegmentHolder >> relativeScreenToCursor: aTransformation [
 				^ aPiece screenToCursor: aTransformation of: self infiniteElement in: aPieceElement ] ]
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 AlbTextEditorLineSegmentHolder >> screenToCursor: aTransformation [
 	aTransformation evaluateOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder >> segment [
 	^ segment 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder >> segment: anEditorSegment [
 	segment == anEditorSegment
 		ifTrue: [
@@ -282,12 +284,12 @@ AlbTextEditorLineSegmentHolder >> segment: anEditorSegment [
 	self buildSegment: anEditorSegment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentHolder >> textInterval [ 
 	^ (segment textStart + 1 min: segment textEnd) to: segment textEnd
 ]
 
-{ #category : #'private - segment' }
+{ #category : 'private - segment' }
 AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 
 	| newPieceElements newPieceMap thePieces |

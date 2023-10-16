@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbTextWordPieceStencil,
-	#superclass : #BlStencil,
+	#name : 'AlbTextWordPieceStencil',
+	#superclass : 'BlStencil',
 	#instVars : [
 		'wordPadding',
 		'wordMargin',
@@ -8,22 +8,24 @@ Class {
 		'readOnly',
 		'measurer'
 	],
-	#category : #'Album-UI-Stencils'
+	#category : 'Album-UI-Stencils',
+	#package : 'Album',
+	#tag : 'UI-Stencils'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextWordPieceStencil class >> editable [
 
 	^ self new beEditable
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextWordPieceStencil class >> readOnly [
 
 	^ self new beReadOnly
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbTextWordPieceStencil >> allEventHandlers [
 
 	^ readOnly
@@ -31,19 +33,19 @@ AlbTextWordPieceStencil >> allEventHandlers [
 		  ifFalse: [ self editableWordPieceEventHandlers ]
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbTextWordPieceStencil >> beEditable [
 
 	readOnly := false
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbTextWordPieceStencil >> beReadOnly [ 
 
 	readOnly := true
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbTextWordPieceStencil >> create [
 
 	| aTextElement |
@@ -56,7 +58,7 @@ AlbTextWordPieceStencil >> create [
 	^ aTextElement
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbTextWordPieceStencil >> createWordElement [
 
 	<return: #AlbTextElements>
@@ -68,7 +70,7 @@ AlbTextWordPieceStencil >> createWordElement [
 	^ wordElement
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbTextWordPieceStencil >> editableWordPieceEventHandlers [
 
 	^ {  "to support event-handling attributes"
@@ -104,27 +106,27 @@ AlbTextWordPieceStencil >> editableWordPieceEventHandlers [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextWordPieceStencil >> initialize [
 	super initialize.
 	readOnly := false.	
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> measurer [
 	<return: #BlTextElementMeasurer>
 
 	^ measurer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> measurer: aBlTextElementMeasurer [
 
 	measurer := aBlTextElementMeasurer
 ]
 
-{ #category : #'api - instantiation' }
+{ #category : 'api - instantiation' }
 AlbTextWordPieceStencil >> readOnlyWordPieceEventHandlers [
 
 	^ {  "to support event-handling attributes"
@@ -154,45 +156,45 @@ AlbTextWordPieceStencil >> readOnlyWordPieceEventHandlers [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextWordPieceStencil >> reset [
 	wordPadding := BlInsets empty.
 	wordMargin := BlInsets empty.
 	segmentPiece := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> segmentPiece [
 	<return: #TAlbTextEditorTextualPiece>
 
 	^ segmentPiece
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> segmentPiece: aTAlbTextEditorTextualPiece [
 	segmentPiece := aTAlbTextEditorTextualPiece
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> wordMargin [
 	<return: #BlInsets>
 
 	^ wordMargin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> wordMargin: aBlInsets [
 	wordMargin := aBlInsets
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> wordPadding [
 	<return: #BlInsets>
 
 	^ wordPadding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceStencil >> wordPadding: aBlInsets [
 	wordPadding := aBlInsets
 ]

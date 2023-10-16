@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbTextReplacingAttribute,
-	#superclass : #AlbTextAdornmentAttribute,
+	#name : 'AlbTextReplacingAttribute',
+	#superclass : 'AlbTextAdornmentAttribute',
 	#instVars : [
 		'replacement',
 		'embellishment',
@@ -9,10 +9,12 @@ Class {
 		'originalString',
 		'replacementString'
 	],
-	#category : #'Album-Attributes'
+	#category : 'Album-Attributes',
+	#package : 'Album',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextReplacingAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #SequenceableCollection of: #BlElement>
@@ -38,17 +40,17 @@ AlbTextReplacingAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 	}
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextReplacingAttribute >> embellishment [
 	^ embellishment
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextReplacingAttribute >> embellishment: anObject [
 	embellishment := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextReplacingAttribute >> initialize [
 	super initialize.
 	
@@ -58,29 +60,29 @@ AlbTextReplacingAttribute >> initialize [
 	margin := BlInsets empty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextReplacingAttribute >> margin [
 	^ margin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextReplacingAttribute >> margin: anObject [
 	margin := anObject
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextReplacingAttribute >> padding [
 	<return: #BlInsets>
 
 	^ padding
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextReplacingAttribute >> padding: anObject [
 	padding := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextReplacingAttribute >> replaceTextInPiece: aTTextEditorTextualPiece [
 	| aNewText anOriginalText |
 	
@@ -97,19 +99,19 @@ AlbTextReplacingAttribute >> replaceTextInPiece: aTTextEditorTextualPiece [
 	^ aTTextEditorTextualPiece copyWithText: aNewText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextReplacingAttribute >> replacement [
 	<return: #AlbTextReplacingAttributeStrategy>
 
 	^ replacement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextReplacingAttribute >> replacement: aTextReplacingAttributeStrategy [
 	replacement := aTextReplacingAttributeStrategy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextReplacingAttribute >> swapString: aString [
 	<return: #String>
 	
@@ -122,12 +124,12 @@ AlbTextReplacingAttribute >> swapString: aString [
 	^ replacementString
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextReplacingAttribute >> withCharacter: aCharacter [
 	self replacement: (AlbTextReplacingAttributeWithCharacterStrategy new character: aCharacter)
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextReplacingAttribute >> withRandomizing [
 	self replacement: (AlbTextReplacingAttributeWithRandomizingStrategy new)
 ]

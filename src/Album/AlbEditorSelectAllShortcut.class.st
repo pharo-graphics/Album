@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorSelectAllShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorSelectAllShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSelectAllShortcut >> description [
 	^ 'Selects all text'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorSelectAllShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination primaryA
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSelectAllShortcut >> name [
 	^ 'Select all'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorSelectAllShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor selecter

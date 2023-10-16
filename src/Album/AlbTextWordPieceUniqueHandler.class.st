@@ -1,20 +1,22 @@
 Class {
-	#name : #AlbTextWordPieceUniqueHandler,
-	#superclass : #AlbTextWordPieceHandler,
+	#name : 'AlbTextWordPieceUniqueHandler',
+	#superclass : 'AlbTextWordPieceHandler',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Album-UI-Word'
+	#category : 'Album-UI-Word',
+	#package : 'Album',
+	#tag : 'UI-Word'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceUniqueHandler class >> cleanUp [
 	super cleanUp.
 	
 	uniqueInstance := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceUniqueHandler class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]

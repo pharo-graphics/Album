@@ -1,25 +1,27 @@
 Class {
-	#name : #AlbTextEditorOperator,
-	#superclass : #Object,
+	#name : 'AlbTextEditorOperator',
+	#superclass : 'Object',
 	#instVars : [
 		'editor',
 		'subscriptions',
 		'context'
 	],
-	#category : #'Album-Model-Operators'
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorOperator >> apply [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #'private - asserting' }
+{ #category : 'private - asserting' }
 AlbTextEditorOperator >> assertUIProcess [
 	editor assertUIProcess
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> characterType: aCharacter [
 	<return: #Symbol>
 
@@ -32,45 +34,45 @@ AlbTextEditorOperator >> characterType: aCharacter [
 	^ #other
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> context: anObject [
 	"An object that understands #telemetry message"
 	context := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> cursor [
 	^ editor cursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> cursor: aCursor [
 	editor cursor: aCursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> cursors [
 
 	^  { self cursor } asSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> editor [
 	^ editor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> editor: aTextEditor [
 
 	editor := aTextEditor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> findLineEndAfter: aTextIndex [
 	<return: #Number>
 	| aText aTextIterator foundLineBreak |
@@ -88,7 +90,7 @@ AlbTextEditorOperator >> findLineEndAfter: aTextIndex [
 	^ aTextIterator position - foundLineBreak asBit
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> findLineStartBefore: aTextIndex [
 	"Please note, I return 0 for the first line"
 	<return: #Number>
@@ -113,7 +115,7 @@ AlbTextEditorOperator >> findLineStartBefore: aTextIndex [
 	^ aTextIterator position + foundLineBreak asBit
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> findLineStartsBetween: aTextStart and: aTextEnd [
 	<return: #Number>
 	| aText aTextIterator |
@@ -127,7 +129,7 @@ AlbTextEditorOperator >> findLineStartsBetween: aTextStart and: aTextEnd [
 				ifTrue: [ aStream nextPut: aTextIterator position ] ] ]
 ]
 
-{ #category : #'api - utility' }
+{ #category : 'api - utility' }
 AlbTextEditorOperator >> findTextIndexAboveCursor: aCursor ifAbsent: anExceptionBlock [
 	"Find a text index one line above the given cursor"
 	<return: #Number>
@@ -147,7 +149,7 @@ AlbTextEditorOperator >> findTextIndexAboveCursor: aCursor ifAbsent: anException
 		ifNil: anExceptionBlock
 ]
 
-{ #category : #'api - utility' }
+{ #category : 'api - utility' }
 AlbTextEditorOperator >> findTextIndexAtCursor: aCursor ifAbsent: anExceptionBlock [
 	"Find a text index one line below the given cursor"
 	<return: #Number>
@@ -173,7 +175,7 @@ AlbTextEditorOperator >> findTextIndexAtCursor: aCursor ifAbsent: anExceptionBlo
 	^ aGlobalTextIndex
 ]
 
-{ #category : #'api - utility' }
+{ #category : 'api - utility' }
 AlbTextEditorOperator >> findTextIndexAtLineEnd: aCursor [
 	"Find a text index at the end of the line where the cursor is located"
 	<return: #Number>
@@ -192,7 +194,7 @@ AlbTextEditorOperator >> findTextIndexAtLineEnd: aCursor [
 	^ aTextIterator position - foundLineBreak asBit
 ]
 
-{ #category : #'api - utility' }
+{ #category : 'api - utility' }
 AlbTextEditorOperator >> findTextIndexAtLineStart: aCursor [
 	"Find a text index at the start of the line where the cursor is located"
 	<return: #Number>
@@ -214,7 +216,7 @@ AlbTextEditorOperator >> findTextIndexAtLineStart: aCursor [
 	^ aTextIterator position + foundLineBreak asBit
 ]
 
-{ #category : #'api - utility' }
+{ #category : 'api - utility' }
 AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition [
 	"Convert screen position to a text index"
 	<return: #Number>
@@ -235,7 +237,7 @@ AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition [
 	^ aGlobalTextIndex
 ]
 
-{ #category : #'api - utility' }
+{ #category : 'api - utility' }
 AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition ifAbsent: anExceptionBlock [
 	"Convert screen position to a text index"
 	<return: #Number>
@@ -260,7 +262,7 @@ AlbTextEditorOperator >> findTextIndexAtScreenPosition: aScreenPosition ifAbsent
 	^ aGlobalTextIndex
 ]
 
-{ #category : #'api - utility' }
+{ #category : 'api - utility' }
 AlbTextEditorOperator >> findTextIndexBelowCursor: aCursor ifAbsent: anExceptionBlock [
 	"Find a text index one line below the given cursor"
 	<return: #Number>
@@ -287,7 +289,7 @@ AlbTextEditorOperator >> findTextIndexBelowCursor: aCursor ifAbsent: anException
 	^ aGlobalTextIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> findWhitespaceOfLineBefore: aTextIndex [
 
 	<return: #String>
@@ -309,7 +311,7 @@ AlbTextEditorOperator >> findWhitespaceOfLineBefore: aTextIndex [
 	^ sp
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> findWordAt: aTextIndex [
 	"Find a word text interval or a whitespace at a given text index"
 	<return: #Interval>
@@ -343,7 +345,7 @@ AlbTextEditorOperator >> findWordAt: aTextIndex [
 	^ aWordStart to: aWordEnd
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> findWordEndAfter: aTextIndex [
 	"Find a text index of the end of the next word after a given text index"
 	| textIterator newPosition aText |
@@ -361,7 +363,7 @@ AlbTextEditorOperator >> findWordEndAfter: aTextIndex [
 	^ newPosition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> findWordStartBefore: aTextIndex [
 	"Find a text index of start of the previous word before a given text index"
 	| newPosition aText |
@@ -377,7 +379,7 @@ AlbTextEditorOperator >> findWordStartBefore: aTextIndex [
 	^ newPosition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> hasSpaceAroundCursor: aCursor [
 	"Answer a boolean indicating whether the characters either side of the cursor are separators (or end of string)"
 	| anIterator |
@@ -393,13 +395,13 @@ AlbTextEditorOperator >> hasSpaceAroundCursor: aCursor [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorOperator >> hasSpaceAroundIndex: anIndex [
 
 	^ self hasSpaceAroundCursor: (AlbTextEditorSingleCursor at: anIndex)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> hasString: aString afterCursor: aCursor [
 	| anIterator |
 	
@@ -420,7 +422,7 @@ AlbTextEditorOperator >> hasString: aString afterCursor: aCursor [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> hasString: aString beforeCursor: aCursor [
 	| anIterator |
 	
@@ -442,45 +444,45 @@ AlbTextEditorOperator >> hasString: aString beforeCursor: aCursor [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorOperator >> initialize [
 	super initialize.
 
 	subscriptions := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorOperator >> isCursorOnTheFirstLine: aCursor [
 	<return: #Boolean>
 
 	^ (self findLineStartBefore: (aCursor position max: self text isNotEmpty asBit)) isZero
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorOperator >> isCursorOnTheLastLine: aCursor [
 	<return: #Boolean>
 
 	^ (self findLineEndAfter: (aCursor position + 1 max: self text isNotEmpty asBit)) = self text size
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorOperator >> isDeleter [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorOperator >> isInserter [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorOperator >> isWordChar: aCharacter [
 	<return: #Number>
 
 	^ aCharacter isAlphaNumeric
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 AlbTextEditorOperator >> notifyCursorAdded: aCursor [
 	| aCommand |
 
@@ -490,12 +492,12 @@ AlbTextEditorOperator >> notifyCursorAdded: aCursor [
 	editor executeCommand: aCommand
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 AlbTextEditorOperator >> notifyCursorRemoved [
 	self notifyCursorRemoved: self cursor
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 AlbTextEditorOperator >> notifyCursorRemoved: aCursor [
 	| aCommand |
 
@@ -505,12 +507,12 @@ AlbTextEditorOperator >> notifyCursorRemoved: aCursor [
 	editor executeCommand: aCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> selection [
 	^ editor selection
 ]
 
-{ #category : #'api - event' }
+{ #category : 'api - event' }
 AlbTextEditorOperator >> subscribe: anEventHandler [
 
 	editor addEventHandler: anEventHandler.
@@ -518,19 +520,19 @@ AlbTextEditorOperator >> subscribe: anEventHandler [
 	^ anEventHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorOperator >> text [
 
 	^ editor privateText
 ]
 
-{ #category : #'api - event' }
+{ #category : 'api - event' }
 AlbTextEditorOperator >> unsubscribe [
 
 	subscriptions do: [ :anEventHandler | editor removeEventHandler: anEventHandler ]
 ]
 
-{ #category : #'api - event' }
+{ #category : 'api - event' }
 AlbTextEditorOperator >> when: anEventClass do: aBlock [
 
 	^ self subscribe: (BlEventHandler on: anEventClass do: aBlock)

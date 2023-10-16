@@ -1,25 +1,27 @@
 Class {
-	#name : #AlbTextEditorCursorRemoveCommand,
-	#superclass : #AlbTextEditorCommand,
+	#name : 'AlbTextEditorCursorRemoveCommand',
+	#superclass : 'AlbTextEditorCommand',
 	#instVars : [
 		'cursor'
 	],
-	#category : #'Album-Commands'
+	#category : 'Album-Commands',
+	#package : 'Album',
+	#tag : 'Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorCursorRemoveCommand >> cursor [
 	<return: #AlbTextEditorSingleCursor>
 
 	^ cursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorCursorRemoveCommand >> cursor: anObject [
 	cursor := anObject
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 AlbTextEditorCursorRemoveCommand >> executeOn: aTextEditor [
 
 	"Attribute handling: some attribute are eventHandlers."
@@ -35,12 +37,12 @@ AlbTextEditorCursorRemoveCommand >> executeOn: aTextEditor [
 		ifNotFound: [  ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorCursorRemoveCommand >> newHolderEvent [
 	^ AlbTextEditorCursorRemovedHolderEvent new context: self context
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 AlbTextEditorCursorRemoveCommand >> processAttributesOn: aTextEditor [
 	| anEditorText thePotentialHandlerTextInterval theEventHandlingAttributes eventHandlingAttributesOutside eventHandlingAttributesInside |
 	self flag: 'what a crap!'.

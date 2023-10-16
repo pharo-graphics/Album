@@ -1,15 +1,17 @@
 Class {
-	#name : #AlbTextEditorInsertionHandler,
-	#superclass : #AlbEditorElementHandler,
-	#category : #'Album-UI-Handlers'
+	#name : 'AlbTextEditorInsertionHandler',
+	#superclass : 'AlbEditorElementHandler',
+	#category : 'Album-UI-Handlers',
+	#package : 'Album',
+	#tag : 'UI-Handlers'
 }
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 AlbTextEditorInsertionHandler >> eventsToHandle [
 	^ { BlTextInputEvent }
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorInsertionHandler >> insert: aString atCursorIn: anEditor context: anElement [
 
 	anEditor surroundMap
@@ -33,7 +35,7 @@ AlbTextEditorInsertionHandler >> insert: aString atCursorIn: anEditor context: a
 				insert ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorInsertionHandler >> textInputEvent: anEvent [
 
 	"we don't want to insert anything if primary modifier key is pressed.

@@ -1,14 +1,16 @@
 Class {
-	#name : #AlbTextEditorUpdateCommand,
-	#superclass : #AlbTextEditorCommand,
+	#name : 'AlbTextEditorUpdateCommand',
+	#superclass : 'AlbTextEditorCommand',
 	#instVars : [
 		'fromIndex',
 		'toIndex'
 	],
-	#category : #'Album-Commands'
+	#category : 'Album-Commands',
+	#package : 'Album',
+	#tag : 'Commands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 AlbTextEditorUpdateCommand >> executeOn: aTextEditor [
 	| changedFrom changedTo |
 	
@@ -31,22 +33,22 @@ AlbTextEditorUpdateCommand >> executeOn: aTextEditor [
 	aTextEditor notifyItemsChanged: (changedFrom to: changedTo)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorUpdateCommand >> fromIndex [
 	^ fromIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorUpdateCommand >> fromIndex: aFromTextIndex [
 	fromIndex := aFromTextIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorUpdateCommand >> toIndex [
 	^ toIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorUpdateCommand >> toIndex: aToTextIndex [
 	toIndex := aToTextIndex
 ]

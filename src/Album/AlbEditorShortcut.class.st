@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbEditorShortcut,
-	#superclass : #BlBasicShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorShortcut',
+	#superclass : 'BlBasicShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorShortcut >> performDueTo: aShortcutEvent [
 
 	"we consume shortcut event before evaluating a custom action in order to give subclasses a chance to not consume the event"
@@ -16,7 +18,7 @@ AlbEditorShortcut >> performDueTo: aShortcutEvent [
 		dueTo: aShortcutEvent
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 	self subclassResponsibility
 ]

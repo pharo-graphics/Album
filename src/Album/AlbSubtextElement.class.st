@@ -1,13 +1,15 @@
 Class {
-	#name : #AlbSubtextElement,
-	#superclass : #AlbAbstractSubtextElement,
+	#name : 'AlbSubtextElement',
+	#superclass : 'AlbAbstractSubtextElement',
 	#instVars : [
 		'interval'
 	],
-	#category : #'Album-UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion',
+	#package : 'Album',
+	#tag : 'UI-Text-Portion'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AlbSubtextElement >> computedAdjacentRectangles [
 
 	| startIdx endIdx |
@@ -37,27 +39,27 @@ AlbSubtextElement >> computedAdjacentRectangles [
 				         				stream nextPut: bnds ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbSubtextElement >> initialize [
 
 	super initialize.
 	interval := 0 to: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbSubtextElement >> interval [
 
 	^ interval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbSubtextElement >> interval: anInterval [
 
 	interval := anInterval.
 	self updateVertices 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbSubtextElement >> updateVertices [
 
 	editorElement ifNil: [ ^ self ].

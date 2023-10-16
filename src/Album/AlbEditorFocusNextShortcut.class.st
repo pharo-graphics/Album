@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorFocusNextShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorFocusNextShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorFocusNextShortcut >> description [
 	^ 'Gives focus to the next focusable element.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorFocusNextShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination arrowRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorFocusNextShortcut >> name [
 	^ 'Focus next'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorFocusNextShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aEditorElement

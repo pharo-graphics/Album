@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorNavigatorMoveToLineStartOperation,
-	#superclass : #AlbTextEditorNavigatorOperation,
-	#category : #'Album-Model-Operators'
+	#name : 'AlbTextEditorNavigatorMoveToLineStartOperation',
+	#superclass : 'AlbTextEditorNavigatorOperation',
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #matching }
+{ #category : 'matching' }
 AlbTextEditorNavigatorMoveToLineStartOperation >> performOn: aNavigator [
 	| aDelta |	
 

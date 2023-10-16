@@ -1,21 +1,23 @@
 Class {
-	#name : #AlbTextEditorShowCursorRequest,
-	#superclass : #AlbTextEditorRequest,
+	#name : 'AlbTextEditorShowCursorRequest',
+	#superclass : 'AlbTextEditorRequest',
 	#instVars : [
 		'cursorPosition',
 		'hasFocus'
 	],
-	#category : #'Album-UI-Requests'
+	#category : 'Album-UI-Requests',
+	#package : 'Album',
+	#tag : 'UI-Requests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorShowCursorRequest >> cursorPosition [
 	<return: #Number>
 
 	^ cursorPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorShowCursorRequest >> cursorPosition: aNumber [
 	
 	self
@@ -25,12 +27,12 @@ AlbTextEditorShowCursorRequest >> cursorPosition: aNumber [
 	cursorPosition := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorShowCursorRequest >> hasFocus [
 	^ hasFocus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorShowCursorRequest >> hasFocus: anObject [
 	hasFocus := anObject
 ]

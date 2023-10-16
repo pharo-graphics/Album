@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorMoveCursorRightShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorMoveCursorRightShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorRightShortcut >> description [
 	^ 'Moves the cursor one letter at a time to the right from the current position and deselects any selected text.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorMoveCursorRightShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination arrowRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorRightShortcut >> name [
 	^ 'Move cursor right'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorMoveCursorRightShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
 
 

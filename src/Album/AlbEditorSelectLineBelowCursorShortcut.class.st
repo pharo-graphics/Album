@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorSelectLineBelowCursorShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorSelectLineBelowCursorShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSelectLineBelowCursorShortcut >> description [
 	^ 'Selects one line at a time below the cursor.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorSelectLineBelowCursorShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination shiftArrowDown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSelectLineBelowCursorShortcut >> name [
 	^ 'Select line below'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorSelectLineBelowCursorShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 	aTextEditor selecter
 		moveOneDown;

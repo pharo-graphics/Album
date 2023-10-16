@@ -1,15 +1,17 @@
 Class {
-	#name : #AlbTextWordPieceShowCursorHandler,
-	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : #'Album-UI-Word'
+	#name : 'AlbTextWordPieceShowCursorHandler',
+	#superclass : 'AlbTextWordPieceUniqueHandler',
+	#category : 'Album-UI-Word',
+	#package : 'Album',
+	#tag : 'UI-Word'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceShowCursorHandler >> eventClass [
 	^ AlbTextEditorShowCursorRequest
 ]
 
-{ #category : #'api - event managing' }
+{ #category : 'api - event managing' }
 AlbTextWordPieceShowCursorHandler >> handleEvent: anEvent [
 
 	| aCursorElement |

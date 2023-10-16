@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorCopyShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorCopyShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorCopyShortcut >> description [
 	^ 'Copies the selection text into the clipboard.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorCopyShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination primaryC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorCopyShortcut >> name [
 	^ 'Copy'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorCopyShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor copySelected

@@ -1,16 +1,18 @@
 Class {
-	#name : #AlbPrimarySelectionElement,
-	#superclass : #AlbAbstractSubtextElement,
-	#category : #'Album-UI-Text-Portion'
+	#name : 'AlbPrimarySelectionElement',
+	#superclass : 'AlbAbstractSubtextElement',
+	#category : 'Album-UI-Text-Portion',
+	#package : 'Album',
+	#tag : 'UI-Text-Portion'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbPrimarySelectionElement >> defaultUpdateStrategy [
 
 	^ AlbPrimarySelectionElementUpdateStrategy new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbPrimarySelectionElement >> initialize [
 
 	super initialize.
@@ -26,33 +28,33 @@ AlbPrimarySelectionElement >> initialize [
 	self outskirts: BlOutskirts centered
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbPrimarySelectionElement >> onGotFocus [
 
 	self background: editorElement selectionColor.
 	self border:	(BlBorder paint: editorElement selectionColor twiceDarker  width: self borderWidth)
 ]
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbPrimarySelectionElement >> onInstalled [
 
 	self editorElement infinite whenModeChangedDo: [ self onUninstalled ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbPrimarySelectionElement >> onLostFocus [
 
 	self background: (editorElement selectionColor alpha: 0.1)
 ]
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbPrimarySelectionElement >> onUninstalled [
 
 	updateStrategy onUninstalledIn: self
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbPrimarySelectionElement >> selectionRectangles [
 
 	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
@@ -63,7 +65,7 @@ AlbPrimarySelectionElement >> selectionRectangles [
 					stream nextPut: ((editorElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: 0 @ (te position y) negated ) ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbPrimarySelectionElement >> updateVertices [
 
 	editorElement ifNil: [ ^ self ].

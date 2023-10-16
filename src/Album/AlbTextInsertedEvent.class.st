@@ -1,14 +1,16 @@
 Class {
-	#name : #AlbTextInsertedEvent,
-	#superclass : #BlEvent,
+	#name : 'AlbTextInsertedEvent',
+	#superclass : 'BlEvent',
 	#instVars : [
 		'text',
 		'index'
 	],
-	#category : #'Album-Model-Events'
+	#category : 'Album-Model-Events',
+	#package : 'Album',
+	#tag : 'Model-Events'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextInsertedEvent class >> text: aBlText at: anIndex [
 	<return: #AlbTextInsertedEvent>
 
@@ -17,22 +19,22 @@ AlbTextInsertedEvent class >> text: aBlText at: anIndex [
 		index: anIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextInsertedEvent >> index [
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextInsertedEvent >> index: aNumber [
 	index := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextInsertedEvent >> text [
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextInsertedEvent >> text: aText [
 	text := aText
 ]

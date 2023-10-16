@@ -2,25 +2,27 @@
 I trigger a focus state update in the text piece
 "
 Class {
-	#name : #AlbTextEditorFocusChangedHolderEvent,
-	#superclass : #AlbTextEditorHolderEvent,
+	#name : 'AlbTextEditorFocusChangedHolderEvent',
+	#superclass : 'AlbTextEditorHolderEvent',
 	#instVars : [
 		'hasFocus'
 	],
-	#category : #'Album-Commands-Holder'
+	#category : 'Album-Commands-Holder',
+	#package : 'Album',
+	#tag : 'Commands-Holder'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorFocusChangedHolderEvent >> hasFocus [
 	^ hasFocus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorFocusChangedHolderEvent >> hasFocus: aBoolean [
 	hasFocus := aBoolean
 ]
 
-{ #category : #sending }
+{ #category : 'sending' }
 AlbTextEditorFocusChangedHolderEvent >> sendTo: aSegmentHolder [
 	aSegmentHolder onFocusChanged: self hasFocus
 ]

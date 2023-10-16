@@ -2,31 +2,33 @@
 I add attributes to a piece of text when user hovers it with a mouse, then I remove those attributes when the mouse is no longer over the text
 "
 Class {
-	#name : #AlbTextHoverStylableAttribute,
-	#superclass : #AlbTextHoverAttribute,
+	#name : 'AlbTextHoverStylableAttribute',
+	#superclass : 'AlbTextHoverAttribute',
 	#instVars : [
 		'attributes'
 	],
-	#category : #'Album-Attributes'
+	#category : 'Album-Attributes',
+	#package : 'Album',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextHoverStylableAttribute >> attribute: aTextAttribute [
 	self attributes: { aTextAttribute }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextHoverStylableAttribute >> attributes [
 	^ attributes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextHoverStylableAttribute >> attributes: aCollectionOfAttributes [
 	"Set a collection of attribtues that should be added when user hover a text with a mouse"
 	attributes := aCollectionOfAttributes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextHoverStylableAttribute >> initialize [
 	super initialize.
 

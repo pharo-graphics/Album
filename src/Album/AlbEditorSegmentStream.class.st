@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbEditorSegmentStream,
-	#superclass : #Object,
+	#name : 'AlbEditorSegmentStream',
+	#superclass : 'Object',
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
@@ -8,28 +8,30 @@ Class {
 		'skip',
 		'stream'
 	],
-	#category : #'Album-Model-Segment'
+	#category : 'Album-Model-Segment',
+	#package : 'Album',
+	#tag : 'Model-Segment'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> collection [
 
 	^ stream contents 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> collection: anObject [
 	stream reset.
 	stream nextPutAll: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorSegmentStream >> defaultLimit [
 
 	^ 500
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorSegmentStream >> initialize [
 	super initialize.
 	
@@ -38,17 +40,17 @@ AlbEditorSegmentStream >> initialize [
 	skip := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> limit [
 	^ limit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> limit: aNumber [
 	limit := aNumber
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 AlbEditorSegmentStream >> nextPut: aTextEditorSegment [
 	self
 		assert: [ self wantsMore ]
@@ -59,7 +61,7 @@ AlbEditorSegmentStream >> nextPut: aTextEditorSegment [
 		ifFalse: [ skip := skip - 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> rawSegments [
 	"Return a collection of streamed text segments.
 	I am an alias to #originalContents allowing us to increase readability BUT you must known what you are doing because returning such an internal state for optimization purpose can have bad effects..."
@@ -69,7 +71,7 @@ AlbEditorSegmentStream >> rawSegments [
 	^ stream originalContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> segments [
 	"Return a collection of streamed text segments."
 	
@@ -78,17 +80,17 @@ AlbEditorSegmentStream >> segments [
 	^ self collection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> size [
 	^ stream size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> skip [
 	^ skip
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorSegmentStream >> skip: aNumber [
 
 	self
@@ -101,12 +103,12 @@ AlbEditorSegmentStream >> skip: aNumber [
 	skip := aNumber
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 AlbEditorSegmentStream >> unlimited [
 	limit := -1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbEditorSegmentStream >> wantsMore [
 	^ limit < 0 or: [self size < limit]
 ]

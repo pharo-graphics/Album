@@ -21,8 +21,8 @@ To facilitate jumping backwards quickly the the manager builds a map of line num
 The limit represents the maximum number of items held by the receiver when an uncached segment is requested (`BrTextEditorSegmentCollector>>#segmentAt:}`).  If segments are added via `BrTextEditorSegmentCollector>>#addSegments:after:}` or `BrTextEditorSegmentCollector>>#addSegments:before:}` the limit may be safely exceeded.
 "
 Class {
-	#name : #AlbTextEditorSegmentCollector,
-	#superclass : #Object,
+	#name : 'AlbTextEditorSegmentCollector',
+	#superclass : 'Object',
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
@@ -33,10 +33,12 @@ Class {
 		'cacheLimit',
 		'lineSplitter'
 	],
-	#category : #'Album-Model-Segment-Text'
+	#category : 'Album-Model-Segment-Text',
+	#package : 'Album',
+	#tag : 'Model-Segment-Text'
 }
 
-{ #category : #'cache - adding / removing' }
+{ #category : 'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments after: aSegment in: aTextEditor [
 	"Add the supplied collection of segments to the receiver after aSegment.
 	This may safely cause the number of cached segments to exceed limit."
@@ -53,7 +55,7 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments after: aSegm
 	aTextEditor notifyItemsInserted: (aCollectionOfSegments first index to: aCollectionOfSegments last index).
 ]
 
-{ #category : #'cache - adding / removing' }
+{ #category : 'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSegment in: aTextEditor [
 	"Add the supplied collection of segments to the receiver before aSegment.
 	This may safely cause the number of cached segments to exceed limit."
@@ -77,7 +79,7 @@ AlbTextEditorSegmentCollector >> addSegments: aCollectionOfSegments before: aSeg
 
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> addedAttribute: anAttribute from: aFromIndex to: aToIndex in: aTextEditor [
 
 	"Is sent after an attribute was added in provided text editor"
@@ -100,7 +102,7 @@ AlbTextEditorSegmentCollector >> addedAttribute: anAttribute from: aFromIndex to
 		update
 ]
 
-{ #category : #'cache - adding / removing' }
+{ #category : 'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> assertSegmentIndicesMustCorrespondToTheInterval [
 	self
 		assert: [ self segments size = segmentsInterval size ]
@@ -119,12 +121,12 @@ AlbTextEditorSegmentCollector >> assertSegmentIndicesMustCorrespondToTheInterval
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> cacheLimit [
 	^ cacheLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> cacheLimit: anInteger [
 	cacheLimit = anInteger ifTrue: [ ^self ].
 	self resetCache.
@@ -132,12 +134,12 @@ AlbTextEditorSegmentCollector >> cacheLimit: anInteger [
 	self computeForwardAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> cacheSize: anInteger [
 	self cacheLimit: anInteger
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> cachedAt: anIndex [
 	"Return a cached segment at an absolute index within editor
 	(I must convert index from editor coordinates to my local cache coordinates)"
@@ -148,7 +150,7 @@ AlbTextEditorSegmentCollector >> cachedAt: anIndex [
 	^ self segments at: aCachedIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> cachedInterval [
 	"Return the interval of the indices of the currently cached segments"
 	<return: #Number>
@@ -156,7 +158,7 @@ AlbTextEditorSegmentCollector >> cachedInterval [
 	^ segmentsInterval
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> cachedSegmentAt: aTextIndex ifFound: aFoundBlock ifNotFound: aNotFoundBlock [
 	| segmentIndex segment |
 
@@ -180,7 +182,7 @@ AlbTextEditorSegmentCollector >> cachedSegmentAt: aTextIndex ifFound: aFoundBloc
 	aFoundBlock cull: segment
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> cachedSegmentIndexAt: aTextIndex [
 	"Return an index of a segment in a collection of cached segments that contains
 	a text item with a given index or return 0 if no such *cached* segment exists.
@@ -215,7 +217,7 @@ AlbTextEditorSegmentCollector >> cachedSegmentIndexAt: aTextIndex [
 						ifFalse: [ 0 ] ] ]
 ]
 
-{ #category : #'cache - adding / removing' }
+{ #category : 'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 
 	| stream newSegments idx currSize seg |
@@ -244,7 +246,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	self computeSubText
 ]
 
-{ #category : #'private - computing' }
+{ #category : 'private - computing' }
 AlbTextEditorSegmentCollector >> computeSegmentAt: anIndex [
 
 	<return: #AlbTextEditorSegment>
@@ -259,7 +261,7 @@ AlbTextEditorSegmentCollector >> computeSegmentAt: anIndex [
 	^ self cachedAt: anIndex
 ]
 
-{ #category : #'private - computing' }
+{ #category : 'private - computing' }
 AlbTextEditorSegmentCollector >> computeSubText [
 	"Recompute subtext according to currently cached segments"
 	| subTextStart subTextEnd |
@@ -280,7 +282,7 @@ AlbTextEditorSegmentCollector >> computeSubText [
 	"self assert: subText asString lines size <= segments size."
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> computedSegmentsCount [
 	"Return amount of cached segments. If segments are not cached,
 	try to cache them and return their amount"
@@ -292,20 +294,20 @@ AlbTextEditorSegmentCollector >> computedSegmentsCount [
 	^ self lastIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorSegmentCollector >> defaultCacheLimit [
 
 	"Arbitrary value "
 	^ 50
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorSegmentCollector >> defaultSplitter [
 
 	^ AlbTextEditorLineSplitter new
 ]
 
-{ #category : #'private - deletion' }
+{ #category : 'private - deletion' }
 AlbTextEditorSegmentCollector >> deleteFrom: aFromIndex segment: aFromSegment to: aToIndex segment: aToSegment in: aTextEditor [
 	"I do the hard work of updating segment structure after deleting a piece of text within provided interval and segments"
 	| shouldMergeWithPrevious aTargetSegment removedLength aNewEnd aNewStart |
@@ -348,7 +350,7 @@ AlbTextEditorSegmentCollector >> deleteFrom: aFromIndex segment: aFromSegment to
 	^ aTargetSegment
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> deletedFrom: aFromIndex to: aToIndex in: aTextEditor [
 	| aFromSegment aToSegment aTargetSegment |
 
@@ -382,7 +384,7 @@ AlbTextEditorSegmentCollector >> deletedFrom: aFromIndex to: aToIndex in: aTextE
 		update
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> end [
 	"Return the index of the last cached item in the text or 0 if nothing is cached"
 	<return: #Number>
@@ -392,7 +394,7 @@ AlbTextEditorSegmentCollector >> end [
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> firstIndex [
 	"Return the index of the first cached segment or 0 if there are no cached segments"
 	<return: #Number>
@@ -402,7 +404,7 @@ AlbTextEditorSegmentCollector >> firstIndex [
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorSegmentCollector >> hasCached [
 	"Return true if there are cached segments, false otherwise"
 	<return: #Boolean>
@@ -410,7 +412,7 @@ AlbTextEditorSegmentCollector >> hasCached [
 	^ segments isNotEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorSegmentCollector >> initialize [
 
 	super initialize.
@@ -421,7 +423,7 @@ AlbTextEditorSegmentCollector >> initialize [
 	self resetCache
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> insertedString: aString at: aTextIndex in: aTextEditor [
 
 	"I am doing a hard work updating editor's segment cache due to inserted string.
@@ -449,7 +451,7 @@ AlbTextEditorSegmentCollector >> insertedString: aString at: aTextIndex in: aTex
 		update
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorSegmentCollector >> isCachedAt: anIndex [
 	"Return true if I have a cached segment at a given index, false otherwise"
 	<return: #Boolean>
@@ -457,7 +459,7 @@ AlbTextEditorSegmentCollector >> isCachedAt: anIndex [
 	^ segmentsInterval rangeIncludes: anIndex
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> lastIndex [
 	"Return the index of the last cached segment or 0 if there are no cached segments"
 	<return: #Number>
@@ -467,7 +469,7 @@ AlbTextEditorSegmentCollector >> lastIndex [
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> moveTextBy: aNumber [
 	"move all segments' subTexts start/end indices by aNumber"
 
@@ -478,7 +480,7 @@ AlbTextEditorSegmentCollector >> moveTextBy: aNumber [
 	self computeSubText
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> moveTextBy: aNumber after: aSegment [
 	"move all segments after the given segment by aNumber"
 
@@ -490,12 +492,12 @@ AlbTextEditorSegmentCollector >> moveTextBy: aNumber after: aSegment [
 	self computeSubText
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSegmentCollector >> newSegmentStream [
 	^ AlbEditorSegmentStream new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSegmentCollector >> newSegments [
 
 	"Return a new empty collection that will be used to store segments"
@@ -504,7 +506,7 @@ AlbTextEditorSegmentCollector >> newSegments [
 	^ OrderedCollection new
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> offsetSegmentIndicesBy: anOffset [
 	"Offset segments' #index by anOffset of all cached segments"
 	
@@ -513,7 +515,7 @@ AlbTextEditorSegmentCollector >> offsetSegmentIndicesBy: anOffset [
 		after: self firstIndex - 1
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> offsetSegmentIndicesBy: anOffset after: aSegmentIndex [
 	"Offset segments' #index by anOffset of all segments after a given segment index.
 	Note: #lastIndex is not valid during execution of this method!"
@@ -532,7 +534,7 @@ AlbTextEditorSegmentCollector >> offsetSegmentIndicesBy: anOffset after: aSegmen
 	segmentsInterval := segmentsInterval first to: segmentsInterval last + anOffset
 ]
 
-{ #category : #'cache - adding / removing' }
+{ #category : 'cache - adding / removing' }
 AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval in: aTextEditor [
 	"Remove all segments within index interval"
 
@@ -545,7 +547,7 @@ AlbTextEditorSegmentCollector >> removeSegmentInterval: anInterval in: aTextEdit
 	aTextEditor notifyItemsRemoved: anInterval
 ]
 
-{ #category : #'text - modifications' }
+{ #category : 'text - modifications' }
 AlbTextEditorSegmentCollector >> removedAttributesFrom: aFromIndex to: aToIndex in: aTextEditor [
 
 	"Is sent after an attributes were removed in provided text editor"
@@ -568,7 +570,7 @@ AlbTextEditorSegmentCollector >> removedAttributesFrom: aFromIndex to: aToIndex 
 		update
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorSegmentCollector >> resetCache [
 
 	segmentsInterval := 0 to: 0.
@@ -576,7 +578,7 @@ AlbTextEditorSegmentCollector >> resetCache [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 	"Return segment at given index"
 	<return: #AlbTextEditorSegment>
@@ -586,14 +588,14 @@ AlbTextEditorSegmentCollector >> segmentAt: anIndex [
 		ifFalse: [ self computeSegmentAt: anIndex ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> segments [
 	<return: #SequenceableCollection of: #AlbTextEditorSegment>
 
 	^ segments
 ]
 
-{ #category : #'private - deletion' }
+{ #category : 'private - deletion' }
 AlbTextEditorSegmentCollector >> shouldMergeDeletingFrom: aFromIndex segment: aFromSegment in: aTextEditor [
 
 	"Return true if we should merge a given segment with the previous if we delete a piece of
@@ -615,19 +617,19 @@ AlbTextEditorSegmentCollector >> shouldMergeDeletingFrom: aFromIndex segment: aF
 	^ aFromIndex - aPreviousSegment textEnd = 1
 ]
 
-{ #category : #'api - splitting' }
+{ #category : 'api - splitting' }
 AlbTextEditorSegmentCollector >> split: aText in: anEditorSegmentStream [
 
 	lineSplitter split: aText in: anEditorSegmentStream
 ]
 
-{ #category : #'api - splitting' }
+{ #category : 'api - splitting' }
 AlbTextEditorSegmentCollector >> split: aText in: anEditorSegmentStream offset: anOffset [
 
 	lineSplitter split: aText in: anEditorSegmentStream offset: anOffset
 ]
 
-{ #category : #'cache - accessing' }
+{ #category : 'cache - accessing' }
 AlbTextEditorSegmentCollector >> start [
 	"Return the index of the first cached item in the text or 0 if nothing is cached"
 	<return: #Number>
@@ -637,25 +639,25 @@ AlbTextEditorSegmentCollector >> start [
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> subText [
 	^ subText 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> text [
 	<return: #BlText>
 
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorSegmentCollector >> text: aText [
 	text := aText.
 	self computeForwardAt: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSegmentCollector >> validateIntegrity: aTextEditor [
 
 	| anIntegrity |
@@ -667,7 +669,7 @@ AlbTextEditorSegmentCollector >> validateIntegrity: aTextEditor [
 	self assert: [ anIntegrity key ] description: [ anIntegrity value key ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSegmentCollector >> validateSegmentsIn: aTextEditor [
 
 	"Validate integrity of the segments.
@@ -732,7 +734,7 @@ AlbTextEditorSegmentCollector >> validateSegmentsIn: aTextEditor [
 	^ true -> 'ok'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextEditorSegmentCollector >> validateTextPieceUniquenessIn: aTextEditor [
 
 	| allTextPieces allGroupedTextPieces |

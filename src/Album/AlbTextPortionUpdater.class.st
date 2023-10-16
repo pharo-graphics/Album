@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbTextPortionUpdater,
-	#superclass : #Object,
+	#name : 'AlbTextPortionUpdater',
+	#superclass : 'Object',
 	#instVars : [
 		'cursorMoveHandler',
 		'selectionHandler',
@@ -11,27 +11,29 @@ Class {
 		'infiniteEditorChangeHandler',
 		'portions'
 	],
-	#category : #'Album-UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion',
+	#package : 'Album',
+	#tag : 'UI-Text-Portion'
 }
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbTextPortionUpdater >> cursorMovedIn: anEditorElement [ 
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbTextPortionUpdater >> extentChangedIn: anInfiniteElement [
 
 	self updatePortionsIn: anInfiniteElement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextPortionUpdater >> initialize [ 
 
 	super initialize.
 	portions := OrderedCollection new
 ]
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbTextPortionUpdater >> onInstalledIn: anEditorElement [
 
 
@@ -73,7 +75,7 @@ AlbTextPortionUpdater >> onInstalledIn: anEditorElement [
 	anEditorElement infinite addEventHandler: infiniteEditorChangeHandler
 ]
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbTextPortionUpdater >> onUninstalledIn: anEditorElement [
 
 	anEditorElement removeEventHandler: extentChangeHandler.
@@ -86,43 +88,43 @@ AlbTextPortionUpdater >> onUninstalledIn: anEditorElement [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextPortionUpdater >> resetPortionsIn: anEditorElement [
 
 	anEditorElement frontLayer removeChildren: portions.
 	portions reset
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbTextPortionUpdater >> scrollEventIn: anInfiniteElement [
 
 	self updatePortionsIn: anInfiniteElement
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbTextPortionUpdater >> selectionChangedIn: anInfiniteElement [
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextPortionUpdater >> setPortionsIn: anEditorElement [
 
 	anEditorElement frontLayer addChildren: portions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbTextPortionUpdater >> terminateUpdater [
 
 	updaterProcess ifNotNil: #terminate.
 	updaterProcess := nil
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbTextPortionUpdater >> textEditedIn: anInfiniteElement [
 
 	self updatePortionsIn: anInfiniteElement
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbTextPortionUpdater >> updatePortionsIn: anEditorElement [
 
 ]

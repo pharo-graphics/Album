@@ -1,6 +1,6 @@
 Class {
-	#name : #AlbInfiniteEditorElement,
-	#superclass : #BlInfiniteElement,
+	#name : 'AlbInfiniteEditorElement',
+	#superclass : 'BlInfiniteElement',
 	#traits : 'TObservable + TBlLayoutResizable',
 	#classTraits : 'TObservable classTrait + TBlLayoutResizable classTrait',
 	#instVars : [
@@ -10,21 +10,23 @@ Class {
 		'#modeEventHandlers',
 		'#modeShortcuts'
 	],
-	#category : #'Album-UI'
+	#category : 'Album-UI',
+	#package : 'Album',
+	#tag : 'UI'
 }
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 AlbInfiniteEditorElement >> addEditorShortcut: aTextEditorInteraction [
 
 	self editor addEditorShortcut: aTextEditorInteraction
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AlbInfiniteEditorElement >> asScrollableElement [
 	^ self
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> atTextIndex: aTextIndex do: aBlock [
 
 	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
@@ -45,160 +47,160 @@ AlbInfiniteEditorElement >> atTextIndex: aTextIndex do: aBlock [
 				 ifAbsent: [ ] ] ]
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> beEditable [
 
 	self mode: AlbEditableMode new
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> beReadonlyWithSelection [
 
 	self mode: AlbReadonlyWithSelectionMode new
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> beReadonlyWithoutSelection [
 
 	self mode: AlbReadonlyWithoutSelectionMode new
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> cacheSize: aNumber [
 	self editor cacheSize: aNumber
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 AlbInfiniteEditorElement >> cursor [
 	^ self editor cursor
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorColor: aColor [
 
 	self cursorStencil cursorColor: aColor
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorElement [
 
 	^ cursorStencil currentCursorElement
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorStencil [
 
 	^ cursorStencil
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorStencil: aCursorStencil [
 
 	cursorStencil := aCursorStencil
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> cursors [
 	<return: #AlbTextEditorCursor>
 	^ self editor cursors
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaulTextEditor [
 
 	^ AlbTextEditor new.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultBackground [
 
 	^ BlBackground paint: Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultCursorStencil [
 	
 	^ AlbCursorStencil new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultLayout [
 
 	^ BlInfiniteLinearLayout vertical
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultMargin [
 
 	^ BlInsets empty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultMode [
 
 	^ AlbEditableMode new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultModeEventHandlers [
 
 	^ self mode defaultEditorElementEventHandlers.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultModeShortcuts [
 
 	
 	^ self mode ifNil: [ #() ] ifNotNil: [ :m | m defaultShortcuts]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultPadding [
 
 	^ BlInsets empty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultRecycler [
 
 	^ BlInfiniteRecycler new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultSystemFontName [
 
 	^ 'Source Code Pro'"AeFontManager defaultFontFamilyName"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> defaultWordStencil [
 
 	^ mode defaultWordStencil
 ]
 
-{ #category : #'editor - operator' }
+{ #category : 'editor - operator' }
 AlbInfiniteEditorElement >> deleter [
 	<return: #AlbTextEditorDeleter>
 
 	^ self editor deleter
 ]
 
-{ #category : #'editor - operator' }
+{ #category : 'editor - operator' }
 AlbInfiniteEditorElement >> deselecter [
 	<return: #AlbTextEditorDeselecter>
 
 	^ self editor deselecter
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> editor [
 	<return: #AlbTextEditor>
 
 	^ self dataSource
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> editor: aTextEditor [
 
 	| prev |
@@ -209,13 +211,13 @@ AlbInfiniteEditorElement >> editor: aTextEditor [
 
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> editorDo: aBlock [
 
 	aBlock value: self editor
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 AlbInfiniteEditorElement >> enlargedSubTextOnScreen [
 	
 	| interval |
@@ -227,7 +229,7 @@ AlbInfiniteEditorElement >> enlargedSubTextOnScreen [
 
 ]
 
-{ #category : #'focus accessing' }
+{ #category : 'focus accessing' }
 AlbInfiniteEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocusSearchDirection [
 	"Sort candidates according the bounds left, to ensure that rightmost are favored for up and down. "
 
@@ -240,7 +242,7 @@ AlbInfiniteEditorElement >> focusables: aBlFocusFinderCandidates along: aBlFocus
 		a bounds left > b bounds left ]"
 ]
 
-{ #category : #'private - geometry change' }
+{ #category : 'private - geometry change' }
 AlbInfiniteEditorElement >> geometryChanged [
 	"My geometry has possibly changed as a result of extent change, scrolling or layout re-computing"
 	
@@ -253,24 +255,24 @@ AlbInfiniteEditorElement >> geometryChanged [
 		pieceElement positionInEditor: (self localPointToMine: self position fromChild: pieceElement) ]
 ]
 
-{ #category : #'focus testing' }
+{ #category : 'focus testing' }
 AlbInfiniteEditorElement >> hasFocus [
 	^ self editor isFocused
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 AlbInfiniteEditorElement >> hasSelection [
 
 	^ self selection isNotEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbInfiniteEditorElement >> infinite [
 
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbInfiniteEditorElement >> initialize [
 	
 	self class initializeSlots: self.
@@ -292,33 +294,33 @@ AlbInfiniteEditorElement >> initialize [
 	self elevation: ((BlRelativeElevation elevation: SmallInteger maxVal - 1)).
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 AlbInfiniteEditorElement >> inputFilter: aTextEditorInputFilter [
 
 	self editor inputFilter: aTextEditorInputFilter
 ]
 
-{ #category : #'editor - operator' }
+{ #category : 'editor - operator' }
 AlbInfiniteEditorElement >> inserter [
 	<return: #AlbTextEditorInserter>
 
 	^ self editor inserter
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 AlbInfiniteEditorElement >> isEditable [
 
 	^ self mode isEditable
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> layoutPositionsRange: anInterval [
 	super layoutPositionsRange: anInterval.
 	"copy this interval to the text editor (data source) to be used by AlbTextEditorCommand"
 	self editor layoutPositionsRange: anInterval
 ]
 
-{ #category : #'accessing - mode' }
+{ #category : 'accessing - mode' }
 AlbInfiniteEditorElement >> mode [
 
 	<return: #BlText>
@@ -326,14 +328,14 @@ AlbInfiniteEditorElement >> mode [
 	^ mode
 ]
 
-{ #category : #'accessing - mode' }
+{ #category : 'accessing - mode' }
 AlbInfiniteEditorElement >> mode: anEditabilityMode [
 
 	mode = anEditabilityMode ifTrue: [ ^ self ].
 	mode := anEditabilityMode
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> modeChanged [
 
 	wordStencil := self defaultWordStencil.
@@ -342,58 +344,58 @@ AlbInfiniteEditorElement >> modeChanged [
 	self setupModeShortcuts
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> modeEventHandlersDo: aBlock [
 
 	modeEventHandlers ifNotNil: [ modeEventHandlers do: aBlock ]
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> modeShortcutsDo: aBlock [
 
 	modeShortcuts ifNotNil: [ modeShortcuts do: aBlock ]
 ]
 
-{ #category : #'event management' }
+{ #category : 'event management' }
 AlbInfiniteEditorElement >> mouseDownEvent: anEvent [
 	self selectionChanged
 ]
 
-{ #category : #'editor - operator' }
+{ #category : 'editor - operator' }
 AlbInfiniteEditorElement >> navigator [
 	<return: #AlbTextEditorNavigator>
 
 	^ self editor navigator
 ]
 
-{ #category : #'hooks - geometry' }
+{ #category : 'hooks - geometry' }
 AlbInfiniteEditorElement >> onExtentChanged [
 	super onExtentChanged.
 	self geometryChanged	
 ]
 
-{ #category : #'focus accessing' }
+{ #category : 'focus accessing' }
 AlbInfiniteEditorElement >> onGotFocus [
 
 	self editor onGotFocus.
 	self cursorElement ifNotNil: [ :c | c onGotFocus ]
 ]
 
-{ #category : #'focus accessing' }
+{ #category : 'focus accessing' }
 AlbInfiniteEditorElement >> onLostFocus [
 
 	self editor onLostFocus.
 	self cursorElement ifNotNil: [:ce | ce onLostFocus]
 ]
 
-{ #category : #'hooks - scrolling' }
+{ #category : 'hooks - scrolling' }
 AlbInfiniteEditorElement >> onScrolled: aPoint [
 	super onScrolled: aPoint.
 	self geometryChanged
 
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> piecesAndTheirElementsDo: aBlock [
 
 	self childrenDo: [ :segmentElement | 
@@ -412,7 +414,7 @@ AlbInfiniteEditorElement >> piecesAndTheirElementsDo: aBlock [
 				 ifAbsent: [  ]) ifNotNil: [ :foundPiece | aBlock value: foundPiece value: element]]]"
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> piecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
 
 	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
@@ -420,12 +422,12 @@ AlbInfiniteEditorElement >> piecesAndTheirElementsWithinIndexInterval: anInterva
 			aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 AlbInfiniteEditorElement >> removeEditorShortcut: aTextEditorInteraction [
 	self editor removeEditorShortcut: aTextEditorInteraction
 ]
 
-{ #category : #'t  - layout resizeable' }
+{ #category : 't  - layout resizeable' }
 AlbInfiniteEditorElement >> resizableConstraintsDo: aBlock [
 	"Perform aBlock with my constraints as argument.
 	Note: After evaluation I request a layout update!
@@ -441,45 +443,45 @@ AlbInfiniteEditorElement >> resizableConstraintsDo: aBlock [
 	self constraintsDo: aBlock
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 AlbInfiniteEditorElement >> scrollToLast [
 	"Scroll instantly to the last segment"
 	
 	self scrollToPosition: self editor segmentCollector computedSegmentsCount
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> segments [
 	^ self editor segmentCollector segments
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 AlbInfiniteEditorElement >> selectedText [
 
 	^ self editor selectedText
 ]
 
-{ #category : #'editor - operator' }
+{ #category : 'editor - operator' }
 AlbInfiniteEditorElement >> selecter [
 	<return: #AlbTextEditorSelecter>
 
 	^ self editor selecter
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 AlbInfiniteEditorElement >> selection [
 	<return: #BlSelection>
 
 	^ self editor selection
 ]
 
-{ #category : #'event management' }
+{ #category : 'event management' }
 AlbInfiniteEditorElement >> selectionChanged [
 
 	"self selectionViewDo: [ :selView | selView selectionChangedIn: self ]"
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> setupModeEventHandlers [
 
 	self modeEventHandlersDo: [ :e | self removeEventHandler: e ].
@@ -491,7 +493,7 @@ AlbInfiniteEditorElement >> setupModeEventHandlers [
 
 ]
 
-{ #category : #'private - accessing editor' }
+{ #category : 'private - accessing editor' }
 AlbInfiniteEditorElement >> setupModeShortcuts [
 
 	self modeShortcutsDo: [ :eachShortcut | self editor removeEditorShortcut: eachShortcut ].
@@ -500,7 +502,7 @@ AlbInfiniteEditorElement >> setupModeShortcuts [
 	
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 AlbInfiniteEditorElement >> subTextOnScreen [
 	
 	| interval |
@@ -509,7 +511,7 @@ AlbInfiniteEditorElement >> subTextOnScreen [
 
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 AlbInfiniteEditorElement >> subTextOnScreenInterval [
 	
 	| holder first last |
@@ -523,7 +525,7 @@ AlbInfiniteEditorElement >> subTextOnScreenInterval [
 
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 AlbInfiniteEditorElement >> text [
 	"Return a text I work with. All modifications to a text must be done from UI thread"
 	<return: #BlText>
@@ -531,19 +533,19 @@ AlbInfiniteEditorElement >> text [
 	^ self editor privateText
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 AlbInfiniteEditorElement >> text: aText [
 
 	aText == self editor privateText ifTrue: [ ^ self ].
 	self editor privateText: aText asRopedText
 ]
 
-{ #category : #'api - editor' }
+{ #category : 'api - editor' }
 AlbInfiniteEditorElement >> textEdited [
 
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> textElementsDo: aBlock [
 
 	self childrenDo: [ :segmentElement | 
@@ -558,7 +560,7 @@ AlbInfiniteEditorElement >> textElementsDo: aBlock [
 				ifAbsent: [  ] ] ]
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> textElementsSelect: aSelectBlock [
 
 	^ Array streamContents: [ :stream | 
@@ -574,7 +576,7 @@ AlbInfiniteEditorElement >> textElementsSelect: aSelectBlock [
 				ifAbsent: [  ] ] ] ]
 ]
 
-{ #category : #'private - accessing text' }
+{ #category : 'private - accessing text' }
 AlbInfiniteEditorElement >> textInternalRepresentationChanged [
 
 	self editor processCursorAttributes.
@@ -583,20 +585,20 @@ AlbInfiniteEditorElement >> textInternalRepresentationChanged [
 					 update
 ]
 
-{ #category : #'t - infinite editor accessing - text' }
+{ #category : 't - infinite editor accessing - text' }
 AlbInfiniteEditorElement >> textLeft [
 
 	^ self margin left + self padding left 
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> textPiecesAndTheirElementsDo: aBlock [
 
 	self piecesAndTheirElementsDo: [ :piece :pieceElement | 
 		piece isText ifTrue: [ aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInterval do: aBlock [
 
 	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
@@ -604,7 +606,7 @@ AlbInfiniteEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInt
 			aBlock value: piece value: pieceElement ] ]
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 AlbInfiniteEditorElement >> textSnapshot [
 	"Return a snaphost (copy) of the current text.
 	I am safe to use from a non-UI thread because the returned text is independent from the
@@ -614,13 +616,13 @@ AlbInfiniteEditorElement >> textSnapshot [
 	^ self editor textSnapshot
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 AlbInfiniteEditorElement >> whenEditorChangedDo: aBlock [
 
 	self when: AlbTextEditorReplacedEvent do: aBlock
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> whenModeChangedDo: aBlock [
 
 	"set a block to perform after that the mode has been chanbed, and its action performed"
@@ -628,57 +630,57 @@ AlbInfiniteEditorElement >> whenModeChangedDo: aBlock [
 	self property: #mode whenChangedDo: aBlock
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> whenTextEditedDo: aBlock [
 
 	self deprecated: 'Use directly editorDo: [:ed | ed when: AlbTextEditedEvent do: ] instead'. 
 	self editor whenTextEditedDo: aBlock
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> whenTextReplacedDo: aBlock [
 
 	self editor when: AlbTextReplacedEvent do: aBlock
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> withRowNumbers [
 
 	self withDecoration: AlbRowNumberDecoration
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> withSoftLine [
 
 	self hMatchParent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbInfiniteEditorElement >> withoutCacheLimit [
 
 	self editor withoutCacheLimit
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> withoutRowNumbers [
 
 	self withoutDecoration: AlbRowNumberDecoration
 ]
 
-{ #category : #'view - configuration' }
+{ #category : 'view - configuration' }
 AlbInfiniteEditorElement >> withoutSoftLine [
 
 	self constraintsDo: [ :c | c horizontal fitContent ]
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> wordStencil [
 
 	<return: #AlbTextWordPieceStencil>
 	^ wordStencil
 ]
 
-{ #category : #'private - view accessing' }
+{ #category : 'private - view accessing' }
 AlbInfiniteEditorElement >> wordStencil: aWordStencil [
 
 	wordStencil := aWordStencil

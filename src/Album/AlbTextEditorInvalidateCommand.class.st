@@ -1,14 +1,16 @@
 Class {
-	#name : #AlbTextEditorInvalidateCommand,
-	#superclass : #AlbTextEditorCommand,
+	#name : 'AlbTextEditorInvalidateCommand',
+	#superclass : 'AlbTextEditorCommand',
 	#instVars : [
 		'fromIndex',
 		'toIndex'
 	],
-	#category : #'Album-Commands'
+	#category : 'Album-Commands',
+	#package : 'Album',
+	#tag : 'Commands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 AlbTextEditorInvalidateCommand >> executeOn: aTextEditor [
 
 	| changedFrom changedTo |
@@ -29,27 +31,27 @@ AlbTextEditorInvalidateCommand >> executeOn: aTextEditor [
 	aTextEditor notifyItems: (changedFrom to: changedTo) event: self newHolderEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInvalidateCommand >> fromIndex [
 	^ fromIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInvalidateCommand >> fromIndex: aFromTextIndex [
 	fromIndex := aFromTextIndex
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorInvalidateCommand >> newHolderEvent [
 	^ AlbTextEditorTextChangedHolderEvent new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInvalidateCommand >> toIndex [
 	^ toIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInvalidateCommand >> toIndex: aToTextIndex [
 	toIndex := aToTextIndex
 ]

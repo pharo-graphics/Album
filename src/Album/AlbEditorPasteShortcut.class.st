@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorPasteShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorPasteShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorPasteShortcut >> description [
 	^ 'Paste a text from the clipboard at the current cursor position and delete any currently selected text.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorPasteShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination primaryV
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorPasteShortcut >> name [
 	^ 'Paste'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorPasteShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor paster

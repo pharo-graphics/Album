@@ -4,21 +4,23 @@ I am a special kind of Flow layout optimized to layout small text piece elements
 I do not support children matching parent. All of them must have either exact of fit content resizing strategies.
 "
 Class {
-	#name : #AlbLineFlowLayout,
-	#superclass : #BlLayout,
+	#name : 'AlbLineFlowLayout',
+	#superclass : 'BlLayout',
 	#instVars : [
 		'lines',
 		'lineSpacing'
 	],
-	#category : #'Album-Layout'
+	#category : 'Album-Layout',
+	#package : 'Album',
+	#tag : 'Layout'
 }
 
-{ #category : #constraints }
+{ #category : 'constraints' }
 AlbLineFlowLayout class >> constraints [
 	^ AlbLineFlowLayoutConstraints new
 ]
 
-{ #category : #measure }
+{ #category : 'measure' }
 AlbLineFlowLayout >> adaptLinesLastElementMeasureToFillLine: anElement [
 
 	"In case a the selection should fill line, each last (soft) line element should be resized to fill the available horizontal space"
@@ -30,7 +32,7 @@ AlbLineFlowLayout >> adaptLinesLastElementMeasureToFillLine: anElement [
 						 + ((anElement measuredWidth - aLine width max: 0.0) @ theLastElement padding height negated)) ] ] ]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 AlbLineFlowLayout >> findClosestChildOf: anElement to: aPoint [
 	<return: #BlElement>
 	| aClosestLine |
@@ -39,7 +41,7 @@ AlbLineFlowLayout >> findClosestChildOf: anElement to: aPoint [
 	^ aClosestLine findClosestChildOf: anElement to: aPoint
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 AlbLineFlowLayout >> findClosestLineTo: aPoint [
 	<return: #AlbFlowLine>
 	| aClosestLine aClosestDistance |
@@ -59,24 +61,24 @@ AlbLineFlowLayout >> findClosestLineTo: aPoint [
 	^ aClosestLine
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbLineFlowLayout >> hasElements [
 	^ lines notNil and: [ lines elements notNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbLineFlowLayout >> hasLines [
 	^ lines notNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbLineFlowLayout >> initialize [
 	super initialize.
 	
 	lineSpacing := 0
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 AlbLineFlowLayout >> layout: anElement in: aRectangle context: aBlElementBoundsUpdateContext [
 	| anOffsetX anOffsetY aLeft aTop |
 
@@ -109,17 +111,17 @@ AlbLineFlowLayout >> layout: anElement in: aRectangle context: aBlElementBoundsU
 	self layoutIgnored: anElement context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbLineFlowLayout >> lineSpacing [
 	^ lineSpacing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbLineFlowLayout >> lineSpacing: anObject [
 	lineSpacing := anObject
 ]
 
-{ #category : #measure }
+{ #category : 'measure' }
 AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 
 	| maxWidth maxHeight aCurrentLine totalContentWidth totalContentHeight measuredWidth textFlow |
@@ -162,12 +164,12 @@ AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 	self measureIgnored: anElement with: anExtentSpec
 ]
 
-{ #category : #'hooks - layout' }
+{ #category : 'hooks - layout' }
 AlbLineFlowLayout >> onCleanUp: anElement [
 	self resetLines
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbLineFlowLayout >> resetLines [
 	lines ifNotNil: [ :theLines | theLines reset ]
 ]

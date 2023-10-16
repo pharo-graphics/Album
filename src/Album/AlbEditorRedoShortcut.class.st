@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorRedoShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorRedoShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorRedoShortcut >> description [
 	^ 'Reverses the undo or advances the document to a more recent state.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorRedoShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination primaryShiftZ
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorRedoShortcut >> name [
 	^ 'Redo'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorRedoShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor redo

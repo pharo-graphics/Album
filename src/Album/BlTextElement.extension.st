@@ -1,11 +1,11 @@
-Extension { #name : #BlTextElement }
+Extension { #name : 'BlTextElement' }
 
-{ #category : #'*Album' }
+{ #category : '*Album' }
 BlTextElement >> positionInEditor [
 	^ self constraints albumTextFlow positionInEditor
 ]
 
-{ #category : #'*Album' }
+{ #category : '*Album' }
 BlTextElement >> positionInEditor: aPoint [
 	self constraints albumTextFlow positionInEditor: aPoint
 ]

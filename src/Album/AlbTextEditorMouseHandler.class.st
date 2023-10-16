@@ -1,16 +1,18 @@
 Class {
-	#name : #AlbTextEditorMouseHandler,
-	#superclass : #AlbEditorElementHandler,
-	#category : #'Album-UI-Handlers'
+	#name : 'AlbTextEditorMouseHandler',
+	#superclass : 'AlbEditorElementHandler',
+	#category : 'Album-UI-Handlers',
+	#package : 'Album',
+	#tag : 'UI-Handlers'
 }
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 AlbTextEditorMouseHandler >> eventsToHandle [
 
 	^ { BlMouseDownEvent }
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 
 	| aNavigator aScreenPosition editor aTextIndex |

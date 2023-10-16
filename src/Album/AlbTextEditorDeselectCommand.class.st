@@ -2,16 +2,18 @@
 I deselect an interval of text from `fromIndex` to `toIndex`
 "
 Class {
-	#name : #AlbTextEditorDeselectCommand,
-	#superclass : #AlbTextEditorCommand,
+	#name : 'AlbTextEditorDeselectCommand',
+	#superclass : 'AlbTextEditorCommand',
 	#instVars : [
 		'fromIndex',
 		'toIndex'
 	],
-	#category : #'Album-Commands'
+	#category : 'Album-Commands',
+	#package : 'Album',
+	#tag : 'Commands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 AlbTextEditorDeselectCommand >> executeOn: aTextEditor [
 
 	aTextEditor selection isEmpty
@@ -22,22 +24,22 @@ AlbTextEditorDeselectCommand >> executeOn: aTextEditor [
 	aTextEditor notifySelectionChanged: aTextEditor selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectCommand >> fromIndex [
 	^ fromIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectCommand >> fromIndex: anObject [
 	fromIndex := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectCommand >> toIndex [
 	^ toIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectCommand >> toIndex: anObject [
 	toIndex := anObject
 ]

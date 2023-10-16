@@ -1,40 +1,42 @@
 Class {
-	#name : #AlbTextEditorHistoryMemento,
-	#superclass : #AlbTextEditorMemento,
+	#name : 'AlbTextEditorHistoryMemento',
+	#superclass : 'AlbTextEditorMemento',
 	#instVars : [
 		'history'
 	],
-	#category : #'Album-Model-Memento'
+	#category : 'Album-Model-Memento',
+	#package : 'Album',
+	#tag : 'Model-Memento'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorHistoryMemento >> initialize [
 	super initialize.
 	
 	history := AlbTextEditorHistory new
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorHistoryMemento >> label [
 	^ 'History'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorHistoryMemento >> order [
 	^ 30
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorHistoryMemento >> restoreStateOf: aTextEditor [
 	aTextEditor history: history
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorHistoryMemento >> saveStateOf: aTextEditor [
 	history := aTextEditor history
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorHistoryMemento >> value [
 	^ history
 ]

@@ -3,32 +3,34 @@ I'm a simple task that manage cursor blinking.
 
 "
 Class {
-	#name : #AlbCursorBlinkingTask,
-	#superclass : #BlRepeatedTask,
+	#name : 'AlbCursorBlinkingTask',
+	#superclass : 'BlRepeatedTask',
 	#instVars : [
 		'cursor'
 	],
-	#category : #'Album-UI'
+	#category : 'Album-UI',
+	#package : 'Album',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorBlinkingTask >> cursor: aCursorElement [
 	cursor := aCursorElement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorBlinkingTask >> defaultBlinkingDelay [ 
 
 	^ 600 milliSeconds 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorBlinkingTask >> initialize [
 	super initialize.
 	self delay: self defaultBlinkingDelay 
 ]
 
-{ #category : #'api - running' }
+{ #category : 'api - running' }
 AlbCursorBlinkingTask >> onRun [
 
 	cursor visibility: (cursor visibility isHidden
@@ -36,7 +38,7 @@ AlbCursorBlinkingTask >> onRun [
 			 ifFalse: [ BlVisibility hidden ])
 ]
 
-{ #category : #'api - running' }
+{ #category : 'api - running' }
 AlbCursorBlinkingTask >> stop [
 	super stop.
 	cursor visibility: BlVisibility visible 

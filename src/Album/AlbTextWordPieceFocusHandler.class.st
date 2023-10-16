@@ -1,15 +1,17 @@
 Class {
-	#name : #AlbTextWordPieceFocusHandler,
-	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : #'Album-UI-Word'
+	#name : 'AlbTextWordPieceFocusHandler',
+	#superclass : 'AlbTextWordPieceUniqueHandler',
+	#category : 'Album-UI-Word',
+	#package : 'Album',
+	#tag : 'UI-Word'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextWordPieceFocusHandler >> eventClass [
 	^ AlbTextEditorFocusRequest
 ]
 
-{ #category : #'api - event managing' }
+{ #category : 'api - event managing' }
 AlbTextWordPieceFocusHandler >> handleEvent: anEvent [
 	anEvent currentTarget showCursor
 ]

@@ -1,55 +1,57 @@
 Class {
-	#name : #AlbTextEditorTextMemento,
-	#superclass : #AlbTextEditorMemento,
+	#name : 'AlbTextEditorTextMemento',
+	#superclass : 'AlbTextEditorMemento',
 	#instVars : [
 		'text'
 	],
-	#category : #'Album-Model-Memento'
+	#category : 'Album-Model-Memento',
+	#package : 'Album',
+	#tag : 'Model-Memento'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorTextMemento >> initialize [
 	super initialize.
 	
 	text := '' asRopedText
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorTextMemento >> isTextMemento [
 	^ true
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorTextMemento >> label [
 	^ 'Text'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorTextMemento >> order [
 	^ 60
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorTextMemento >> restoreStateOf: aTextEditor [
 	aTextEditor restoreText: text copy
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorTextMemento >> saveStateOf: aTextEditor [
 	text := aTextEditor text copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorTextMemento >> text [
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorTextMemento >> text: anObject [
 	text := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorTextMemento >> value [
 	^ text copyWithoutExternalReferences
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorLineSegmentTextPiece,
-	#superclass : #AlbTextEditorAbstractSegmentPiece,
-	#category : #'Album-Model-Segment-Text-Line'
+	#name : 'AlbTextEditorLineSegmentTextPiece',
+	#superclass : 'AlbTextEditorAbstractSegmentPiece',
+	#category : 'Album-Model-Segment-Text-Line',
+	#package : 'Album',
+	#tag : 'Model-Segment-Text-Line'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AlbTextEditorLineSegmentTextPiece >> = anotherObject [
 	self == anotherObject
 		ifTrue: [ ^ true ].
@@ -14,7 +16,7 @@ AlbTextEditorLineSegmentTextPiece >> = anotherObject [
 	^ anotherObject text = self text
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorLineSegmentTextPiece >> createElement: anEditorElement [
 	<return: #BlElement>
 	| anElement |
@@ -27,12 +29,12 @@ AlbTextEditorLineSegmentTextPiece >> createElement: anEditorElement [
 	^ anElement
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AlbTextEditorLineSegmentTextPiece >> hash [
 	^ self class hash bitXor: self text hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorLineSegmentTextPiece >> isText [
 	^ true
 ]

@@ -1,32 +1,34 @@
 Class {
-	#name : #AlbTextEditorUpdater,
-	#superclass : #AlbTextEditorOperator,
+	#name : 'AlbTextEditorUpdater',
+	#superclass : 'AlbTextEditorOperator',
 	#instVars : [
 		'intervals',
 		'shouldRedraw',
 		'shouldRecreate'
 	],
-	#category : #'Album-Model-Operators'
+	#category : 'Album-Model-Operators',
+	#package : 'Album',
+	#tag : 'Model-Operators'
 }
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorUpdater >> all [
 	self from: 1 to: self text size
 ]
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorUpdater >> apply [
 	^ self update 
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorUpdater >> from: aFromTextIndex to: aToTextIndex [
 	"Both from and to indices must be given in text coordinates"
 
 	intervals add: (aFromTextIndex to: aToTextIndex)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorUpdater >> initialize [
 	super initialize.
 	
@@ -35,13 +37,13 @@ AlbTextEditorUpdater >> initialize [
 	shouldRedraw := true
 ]
 
-{ #category : #'api - configuration' }
+{ #category : 'api - configuration' }
 AlbTextEditorUpdater >> redrawOnly [
 	shouldRedraw := true.
 	shouldRecreate := false
 ]
 
-{ #category : #'api - processing' }
+{ #category : 'api - processing' }
 AlbTextEditorUpdater >> update [
 	intervals do: [ :eachInterval |
 		(shouldRecreate not and: [ shouldRedraw ])

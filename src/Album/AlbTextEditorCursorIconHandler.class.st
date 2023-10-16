@@ -1,22 +1,24 @@
 Class {
-	#name : #AlbTextEditorCursorIconHandler,
-	#superclass : #AlbEditorElementHandler,
-	#category : #'Album-UI-Handlers'
+	#name : 'AlbTextEditorCursorIconHandler',
+	#superclass : 'AlbEditorElementHandler',
+	#category : 'Album-UI-Handlers',
+	#package : 'Album',
+	#tag : 'UI-Handlers'
 }
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorCursorIconHandler >> dragEnterEvent: anEvent [
 
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorCursorIconHandler >> dragLeaveEvent: anEvent [
 
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 AlbTextEditorCursorIconHandler >> eventsToHandle [
 	^ {
 		BlDragEnterEvent.
@@ -27,7 +29,7 @@ AlbTextEditorCursorIconHandler >> eventsToHandle [
 	}
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorCursorIconHandler >> mouseEnterEvent: anEvent [
 
 	anEvent currentTarget mouseCursor: (element isEditable
@@ -35,13 +37,13 @@ AlbTextEditorCursorIconHandler >> mouseEnterEvent: anEvent [
 			 ifFalse: [ BlCursor default ])
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorCursorIconHandler >> mouseLeaveEvent: anEvent [
 
 	anEvent currentTarget mouseCursor: BlCursor default
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
 
 	anEvent currentTarget mouseCursor: BlCursor overEditableText

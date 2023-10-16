@@ -1,15 +1,17 @@
 Class {
-	#name : #AlbEditorMoveCursorToLineStartShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorMoveCursorToLineStartShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorToLineStartShortcut >> description [
 	^ 'Moves the cursor to the start of the current line and deselects any selected text.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorMoveCursorToLineStartShortcut >> initialize [
 	super initialize.
 	
@@ -17,12 +19,12 @@ AlbEditorMoveCursorToLineStartShortcut >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorToLineStartShortcut >> name [
 	^ 'Move cursor to the line start'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorMoveCursorToLineStartShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor deselecter

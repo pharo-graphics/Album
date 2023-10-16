@@ -1,40 +1,42 @@
 Class {
-	#name : #AlbTextEditorInputFilterMemento,
-	#superclass : #AlbTextEditorMemento,
+	#name : 'AlbTextEditorInputFilterMemento',
+	#superclass : 'AlbTextEditorMemento',
 	#instVars : [
 		'inputFilter'
 	],
-	#category : #'Album-Model-Memento'
+	#category : 'Album-Model-Memento',
+	#package : 'Album',
+	#tag : 'Model-Memento'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorInputFilterMemento >> initialize [
 	super initialize.
 	
 	inputFilter := AlbTextEditorNoInputFilter new
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorInputFilterMemento >> label [
 	^ 'Input filter'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInputFilterMemento >> order [
 	^ 50
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorInputFilterMemento >> restoreStateOf: aTextEditor [
 	aTextEditor inputFilter: inputFilter
 ]
 
-{ #category : #memento }
+{ #category : 'memento' }
 AlbTextEditorInputFilterMemento >> saveStateOf: aTextEditor [
 	inputFilter := aTextEditor inputFilter
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 AlbTextEditorInputFilterMemento >> value [
 	^ inputFilter
 ]

@@ -1,20 +1,22 @@
 Class {
-	#name : #AlbTextEditorLineSegmentPieceMap,
-	#superclass : #Object,
+	#name : 'AlbTextEditorLineSegmentPieceMap',
+	#superclass : 'Object',
 	#instVars : [
 		'map'
 	],
-	#category : #'Album-Model-Segment-Text-Line'
+	#category : 'Album-Model-Segment-Text-Line',
+	#package : 'Album',
+	#tag : 'Model-Segment-Text-Line'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentPieceMap >> allPieces [
 	"Return all current line segment pieces"
 	
 	^ map keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentPieceMap >> at: aBrTextEditorLineSegmentPiece pieceAndElementsDo: thePieceAndElementsBlock ifAbsent: anAbsentBlock [
 
 	^ map
@@ -26,13 +28,13 @@ AlbTextEditorLineSegmentPieceMap >> at: aBrTextEditorLineSegmentPiece pieceAndEl
 		ifAbsent: anAbsentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentPieceMap >> atPiece: aTextEditorLineSegmentPiece putElements: aCollectionOfElements [
 
 	map at: aTextEditorLineSegmentPiece put: aCollectionOfElements
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorLineSegmentPieceMap >> initialize [
 
 	super initialize.
@@ -40,7 +42,7 @@ AlbTextEditorLineSegmentPieceMap >> initialize [
 	map := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbsentBlock [
 	<return: #AlbTextEditorAbstractSegmentPiece or: #Object>
 	map associations do: [ :eachAssociation |
@@ -50,7 +52,7 @@ AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifAbsent: anAbse
 	^ anAbsentBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifPresent: aBlock ifAbsent: anAbsentBlock [
 	<return: #AlbTextEditorAbstractSegmentPiece or: #Object>
 	map associations do: [ :eachAssociation |
@@ -60,7 +62,7 @@ AlbTextEditorLineSegmentPieceMap >> pieceForElement: aBlElement ifPresent: aBloc
 	^ anAbsentBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorLineSegmentPieceMap >> piecesAndTheirElementsDo: aBlock [
 
 	map keysAndValuesDo: [ :aPiece :thePieceElements |

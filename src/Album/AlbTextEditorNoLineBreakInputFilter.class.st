@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorNoLineBreakInputFilter,
-	#superclass : #AlbTextEditorInputFilterDecorator,
-	#category : #'Album-Model-Input-filters'
+	#name : 'AlbTextEditorNoLineBreakInputFilter',
+	#superclass : 'AlbTextEditorInputFilterDecorator',
+	#category : 'Album-Model-Input-filters',
+	#package : 'Album',
+	#tag : 'Model-Input-filters'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorNoLineBreakInputFilter >> filter: aString [
 
 	<return: #String>

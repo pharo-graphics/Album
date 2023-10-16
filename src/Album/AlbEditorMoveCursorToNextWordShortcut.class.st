@@ -1,23 +1,25 @@
 Class {
-	#name : #AlbEditorMoveCursorToNextWordShortcut,
-	#superclass : #AlbEditorShortcut,
+	#name : 'AlbEditorMoveCursorToNextWordShortcut',
+	#superclass : 'AlbEditorShortcut',
 	#instVars : [
 		'combinationForMacOS'
 	],
-	#category : #'Album-Shortcuts'
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #'api - combination' }
+{ #category : 'api - combination' }
 AlbEditorMoveCursorToNextWordShortcut >> combinationForMacOS [
 	^ combinationForMacOS
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorToNextWordShortcut >> description [
 	^ 'Moves the cursor to the end of the next (or current) word and deselects any selected text.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorMoveCursorToNextWordShortcut >> initialize [
 	super initialize.
 	
@@ -25,12 +27,12 @@ AlbEditorMoveCursorToNextWordShortcut >> initialize [
 	combinationForMacOS := BlKeyCombination builder alt arrowRight build.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorToNextWordShortcut >> name [
 	^ 'Move cursor to the next word'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorMoveCursorToNextWordShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor deselecter

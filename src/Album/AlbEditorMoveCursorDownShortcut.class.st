@@ -1,27 +1,29 @@
 Class {
-	#name : #AlbEditorMoveCursorDownShortcut,
-	#superclass : #AlbEditorShortcut,
-	#category : #'Album-Shortcuts'
+	#name : 'AlbEditorMoveCursorDownShortcut',
+	#superclass : 'AlbEditorShortcut',
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorDownShortcut >> description [
 	^ 'Moves the cursor one line at a time below the current position and deselects any selected text.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorMoveCursorDownShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination arrowDown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorDownShortcut >> name [
 	^ 'Move cursor down'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorMoveCursorDownShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
 
 

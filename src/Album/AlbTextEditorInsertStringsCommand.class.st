@@ -1,35 +1,37 @@
 Class {
-	#name : #AlbTextEditorInsertStringsCommand,
-	#superclass : #AlbTextEditorCommand,
+	#name : 'AlbTextEditorInsertStringsCommand',
+	#superclass : 'AlbTextEditorCommand',
 	#instVars : [
 		'strings',
 		'indices'
 	],
-	#category : #'Album-Commands'
+	#category : 'Album-Commands',
+	#package : 'Album',
+	#tag : 'Commands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 AlbTextEditorInsertStringsCommand >> executeOn: aTextEditor [
 
 	aTextEditor privateText insertStrings: self strings atAll: self indices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInsertStringsCommand >> indices [
 	^ indices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInsertStringsCommand >> indices: anObject [
 	indices := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInsertStringsCommand >> strings [
 	^ strings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorInsertStringsCommand >> strings: anObject [
 	strings := anObject
 ]

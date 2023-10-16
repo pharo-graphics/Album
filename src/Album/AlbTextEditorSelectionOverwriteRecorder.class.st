@@ -1,13 +1,15 @@
 Class {
-	#name : #AlbTextEditorSelectionOverwriteRecorder,
-	#superclass : #AlbTextEditorSelectionRecorder,
+	#name : 'AlbTextEditorSelectionOverwriteRecorder',
+	#superclass : 'AlbTextEditorSelectionRecorder',
 	#instVars : [
 		'compositeSelection'
 	],
-	#category : #'Album-Model-Selection'
+	#category : 'Album-Model-Selection',
+	#package : 'Album',
+	#tag : 'Model-Selection'
 }
 
-{ #category : #selection }
+{ #category : 'selection' }
 AlbTextEditorSelectionOverwriteRecorder >> commit: aTextEditor [
 	"Commit recorded selection intervals in a given text editor"
 	
@@ -20,7 +22,7 @@ AlbTextEditorSelectionOverwriteRecorder >> commit: aTextEditor [
 	compositeSelection := BlCompositeSelection new
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AlbTextEditorSelectionOverwriteRecorder >> deselect: aMonotoneTextSelection in: aTextEditor [
 
 	(AlbTextEditorRecordDeselectionSignal new selection: aMonotoneTextSelection) emit.
@@ -29,14 +31,14 @@ AlbTextEditorSelectionOverwriteRecorder >> deselect: aMonotoneTextSelection in: 
 	aTextEditor updateSelection: aMonotoneTextSelection from to: aMonotoneTextSelection to
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEditorSelectionOverwriteRecorder >> initialize [
 	super initialize.
 	
 	compositeSelection := BlCompositeSelection new
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AlbTextEditorSelectionOverwriteRecorder >> prepare: aTextEditor [
 	
 	compositeSelection := BlCompositeSelection new.
@@ -44,7 +46,7 @@ AlbTextEditorSelectionOverwriteRecorder >> prepare: aTextEditor [
 	aTextEditor selectNone
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AlbTextEditorSelectionOverwriteRecorder >> select: aMonotoneTextSelection in: aTextEditor [
 	"Add a given selection to the list of recorded selections"
 	
@@ -54,7 +56,7 @@ AlbTextEditorSelectionOverwriteRecorder >> select: aMonotoneTextSelection in: aT
 	aTextEditor updateSelection: aMonotoneTextSelection from to: aMonotoneTextSelection to
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 AlbTextEditorSelectionOverwriteRecorder >> selection [
 	<return: #BlSelection>
 

@@ -1,16 +1,18 @@
 Class {
-	#name : #AlbPrimarySelectionElementUpdateStrategy,
-	#superclass : #AlbSubtextElementUpdateOnExtentChangeStrategy,
+	#name : 'AlbPrimarySelectionElementUpdateStrategy',
+	#superclass : 'AlbSubtextElementUpdateOnExtentChangeStrategy',
 	#instVars : [
 		'focusHandler',
 		'blurHandler',
 		'selectionHandler',
 		'editorChangeHandler'
 	],
-	#category : #'Album-UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion',
+	#package : 'Album',
+	#tag : 'UI-Text-Portion'
 }
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbPrimarySelectionElementUpdateStrategy >> onInstalledIn: aSubTextElement [
 
 	super onInstalledIn: aSubTextElement.
@@ -32,7 +34,7 @@ AlbPrimarySelectionElementUpdateStrategy >> onInstalledIn: aSubTextElement [
 	aSubTextElement editorElement infinite addEventHandler: blurHandler
 ]
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbPrimarySelectionElementUpdateStrategy >> onUninstalledIn: aSubTextElement [
 	
 	aSubTextElement editorElement editor removeEventHandler: selectionHandler.

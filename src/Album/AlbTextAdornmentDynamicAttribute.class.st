@@ -20,15 +20,17 @@ For scripting purposes a block closure can be used instead. It can have two opti
 ]]]
 "
 Class {
-	#name : #AlbTextAdornmentDynamicAttribute,
-	#superclass : #AlbTextAdornmentAttribute,
+	#name : 'AlbTextAdornmentDynamicAttribute',
+	#superclass : 'AlbTextAdornmentAttribute',
 	#instVars : [
 		'stencilBuilder'
 	],
-	#category : #'Album-Attributes'
+	#category : 'Album-Attributes',
+	#package : 'Album',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextAdornmentDynamicAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #SequenceableCollection of: #BlElement>
@@ -45,12 +47,12 @@ AlbTextAdornmentDynamicAttribute >> doAffect: aTTextEditorTextualPiece in: anEdi
 	^ aResult asElement asOrderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextAdornmentDynamicAttribute >> stencil: anAdornmentStencilBuilder [
 	stencilBuilder := anAdornmentStencilBuilder "asStencilBuilder: AlbTextAdornmentStencilBuilder"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AlbTextAdornmentDynamicAttribute >> storeOn: aStream [
 	super storeOn: aStream.
 	

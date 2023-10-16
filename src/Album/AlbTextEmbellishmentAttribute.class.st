@@ -1,15 +1,17 @@
 Class {
-	#name : #AlbTextEmbellishmentAttribute,
-	#superclass : #AlbTextAdornmentAttribute,
+	#name : 'AlbTextEmbellishmentAttribute',
+	#superclass : 'AlbTextAdornmentAttribute',
 	#instVars : [
 		'embellishment',
 		'padding',
 		'margin'
 	],
-	#category : #'Album-Attributes'
+	#category : 'Album-Attributes',
+	#package : 'Album',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEmbellishmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #SequenceableCollection of: #BlElement>
@@ -28,17 +30,17 @@ AlbTextEmbellishmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditor
 	}
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextEmbellishmentAttribute >> embellishment [
 	^ embellishment
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextEmbellishmentAttribute >> embellishment: anObject [
 	embellishment := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbTextEmbellishmentAttribute >> initialize [
 	super initialize.
 	
@@ -47,29 +49,29 @@ AlbTextEmbellishmentAttribute >> initialize [
 	margin := BlInsets empty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEmbellishmentAttribute >> margin [
 	^ margin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEmbellishmentAttribute >> margin: anObject [
 	margin := anObject
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextEmbellishmentAttribute >> padding [
 	<return: #BlInsets>
 
 	^ padding
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextEmbellishmentAttribute >> padding: anObject [
 	padding := anObject
 ]
 
-{ #category : #'api - attribute' }
+{ #category : 'api - attribute' }
 AlbTextEmbellishmentAttribute >> roundedBackground: aPaint [
 	self embellishment: [ :anElement |
 		anElement background: aPaint.

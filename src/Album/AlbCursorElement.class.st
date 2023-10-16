@@ -1,39 +1,41 @@
 Class {
-	#name : #AlbCursorElement,
-	#superclass : #BlElement,
+	#name : 'AlbCursorElement',
+	#superclass : 'BlElement',
 	#instVars : [
 		'textPosition',
 		'blinking',
 		'blinkTask'
 	],
-	#category : #'Album-UI'
+	#category : 'Album-UI',
+	#package : 'Album',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorElement >> beBlinking: aBoolean [
 
 	blinking := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorElement >> defaultBackground [
 
 	^ Color red 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorElement >> defaultBlinking [
 
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorElement >> defaultBlurredBackground [
 
 	^ Color brown 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorElement >> initialize [
 
 	super initialize.
@@ -49,13 +51,13 @@ AlbCursorElement >> initialize [
 		c vertical matchParent ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorElement >> newBlinkingTask [
 
 	^ AlbCursorBlinkingTask new cursor: self
 ]
 
-{ #category : #'private - focus' }
+{ #category : 'private - focus' }
 AlbCursorElement >> onGotFocus [
 
 	self background: self defaultBackground.
@@ -63,14 +65,14 @@ AlbCursorElement >> onGotFocus [
 	 
 ]
 
-{ #category : #'private - focus' }
+{ #category : 'private - focus' }
 AlbCursorElement >> onLostFocus [
 
 	self background: self defaultBlurredBackground.
 	self stopBlinkingTask 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorElement >> startBlinkingTask [
 
 	self stopBlinkingTask.
@@ -80,7 +82,7 @@ AlbCursorElement >> startBlinkingTask [
 	self enqueueTask: (blinkTask := self newBlinkingTask)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbCursorElement >> stopBlinkingTask [
 
 	blinkTask ifNotNil: [ 
@@ -90,12 +92,12 @@ AlbCursorElement >> stopBlinkingTask [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorElement >> textPosition [
 	^ textPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbCursorElement >> textPosition: anInteger [
 
 	textPosition := anInteger

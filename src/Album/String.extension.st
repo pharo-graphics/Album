@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Album' }
+{ #category : '*Album' }
 String >> onAlbum [
 	^ AlbEditorElement new text: self 
 ]

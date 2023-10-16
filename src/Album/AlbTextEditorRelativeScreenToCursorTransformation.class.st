@@ -1,59 +1,61 @@
 Class {
-	#name : #AlbTextEditorRelativeScreenToCursorTransformation,
-	#superclass : #AlbTextEditorScreenToCursorTransformation,
+	#name : 'AlbTextEditorRelativeScreenToCursorTransformation',
+	#superclass : 'AlbTextEditorScreenToCursorTransformation',
 	#instVars : [
 		'cursor',
 		'direction'
 	],
-	#category : #'Album-Model-Cursor'
+	#category : 'Album-Model-Cursor',
+	#package : 'Album',
+	#tag : 'Model-Cursor'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> beDown [
 	self direction: #down
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> beUp [
 	self direction: #up
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> cursor [
 	^ cursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> cursor: anObject [
 	cursor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> direction [
 	^ direction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> direction: aSymbol [
 	direction := aSymbol
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 AlbTextEditorRelativeScreenToCursorTransformation >> evaluateOn: anObject [
 	anObject relativeScreenToCursor: self
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 AlbTextEditorRelativeScreenToCursorTransformation >> evaluateOn: anObject for: anEvent [
 	anObject relativeScreenToCursor: self for: anEvent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> isDown [
 	^ self direction = #down
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AlbTextEditorRelativeScreenToCursorTransformation >> isUp [
 	^ self direction = #up
 ]

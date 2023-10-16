@@ -1,14 +1,16 @@
 Class {
-	#name : #AlbRemanentsUpdater,
-	#superclass : #AlbTextPortionUpdater,
+	#name : 'AlbRemanentsUpdater',
+	#superclass : 'AlbTextPortionUpdater',
 	#instVars : [
 		'oppositeEcho',
 		'textReplacedHandler'
 	],
-	#category : #'Album-UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion',
+	#package : 'Album',
+	#tag : 'UI-Text-Portion'
 }
 
-{ #category : #'opposite delimiter' }
+{ #category : 'opposite delimiter' }
 AlbRemanentsUpdater >> closeOppositeDelimiter: oppositeTextElement at: localIdx in: anEditorElement [
 
 	| bnds origin corner width |
@@ -25,7 +27,7 @@ AlbRemanentsUpdater >> closeOppositeDelimiter: oppositeTextElement at: localIdx 
 		  size: bnds extent
 ]
 
-{ #category : #'opposite delimiter' }
+{ #category : 'opposite delimiter' }
 AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 
 	| cursorPos text |
@@ -60,7 +62,7 @@ AlbRemanentsUpdater >> createOppositeDelimiterIn: anEditorElement [
 	^ nil
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbRemanentsUpdater >> cursorMovedIn: anEditorElement [ 
 
 	super cursorMovedIn: anEditorElement.
@@ -68,7 +70,7 @@ AlbRemanentsUpdater >> cursorMovedIn: anEditorElement [
 
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbRemanentsUpdater >> extentChangedIn: anEditorElement [ 
 
 	self resetPortionsIn: anEditorElement..
@@ -77,7 +79,7 @@ AlbRemanentsUpdater >> extentChangedIn: anEditorElement [
 
 ]
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbRemanentsUpdater >> onInstalledIn: anEditorElement [
 
 	super onInstalledIn: anEditorElement.
@@ -88,7 +90,7 @@ AlbRemanentsUpdater >> onInstalledIn: anEditorElement [
 	anEditorElement infinite addEventHandler: textReplacedHandler
 ]
 
-{ #category : #'api - install/uninstall  hook' }
+{ #category : 'api - install/uninstall  hook' }
 AlbRemanentsUpdater >> onUninstalledIn: anEditorElement [
 
 	anEditorElement infinite removeEventHandler: textReplacedHandler.
@@ -96,7 +98,7 @@ AlbRemanentsUpdater >> onUninstalledIn: anEditorElement [
 
 ]
 
-{ #category : #'opposite delimiter' }
+{ #category : 'opposite delimiter' }
 AlbRemanentsUpdater >> openOppositeDelimiter: oppositeTextElement at: localIdx in: anEditorElement [
 
 	| bnds origin corner width |
@@ -113,7 +115,7 @@ AlbRemanentsUpdater >> openOppositeDelimiter: oppositeTextElement at: localIdx i
 		  size: bnds extent
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbRemanentsUpdater >> scrollEventIn: anEditorElement [ 
 
 	self resetPortionsIn: anEditorElement.
@@ -122,7 +124,7 @@ AlbRemanentsUpdater >> scrollEventIn: anEditorElement [
 
 ]
 
-{ #category : #'infinite element changes' }
+{ #category : 'infinite element changes' }
 AlbRemanentsUpdater >> selectionChangedIn: anEditorElement [
 
 	super selectionChangedIn: anEditorElement.
@@ -130,7 +132,7 @@ AlbRemanentsUpdater >> selectionChangedIn: anEditorElement [
 	self updateOppositeDelimiterIn: anEditorElement
 ]
 
-{ #category : #'opposite delimiter' }
+{ #category : 'opposite delimiter' }
 AlbRemanentsUpdater >> updateOppositeDelimiterIn: anEditorElement [
 
 	oppositeEcho ifNotNil: [
@@ -141,7 +143,7 @@ AlbRemanentsUpdater >> updateOppositeDelimiterIn: anEditorElement [
 	oppositeEcho ifNotNil: [	anEditorElement addChild: oppositeEcho]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlbRemanentsUpdater >> updatePortionsIn: anEditorElement [
 
 	self terminateUpdater.

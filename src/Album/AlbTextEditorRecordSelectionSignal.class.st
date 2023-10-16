@@ -1,23 +1,25 @@
 Class {
-	#name : #AlbTextEditorRecordSelectionSignal,
-	#superclass : #Announcement,
+	#name : 'AlbTextEditorRecordSelectionSignal',
+	#superclass : 'Announcement',
 	#instVars : [
 		'selection'
 	],
-	#category : #'Album-Model-Selection'
+	#category : 'Album-Model-Selection',
+	#package : 'Album',
+	#tag : 'Model-Selection'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 AlbTextEditorRecordSelectionSignal >> printOneLineContentsOn: stream [
 	self selection printOn: stream 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRecordSelectionSignal >> selection [
 	^ selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorRecordSelectionSignal >> selection: anObject [
 	selection := anObject
 ]

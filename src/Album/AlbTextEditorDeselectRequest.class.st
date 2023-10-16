@@ -1,29 +1,31 @@
 Class {
-	#name : #AlbTextEditorDeselectRequest,
-	#superclass : #AlbTextEditorRequest,
+	#name : 'AlbTextEditorDeselectRequest',
+	#superclass : 'AlbTextEditorRequest',
 	#instVars : [
 		'fromIndex',
 		'toIndex'
 	],
-	#category : #'Album-UI-Requests'
+	#category : 'Album-UI-Requests',
+	#package : 'Album',
+	#tag : 'UI-Requests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectRequest >> fromIndex [
 	^ fromIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectRequest >> fromIndex: anObject [
 	fromIndex := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectRequest >> toIndex [
 	^ toIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbTextEditorDeselectRequest >> toIndex: anObject [
 	toIndex := anObject
 ]

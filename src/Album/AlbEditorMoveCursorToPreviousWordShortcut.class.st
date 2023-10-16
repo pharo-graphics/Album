@@ -1,23 +1,25 @@
 Class {
-	#name : #AlbEditorMoveCursorToPreviousWordShortcut,
-	#superclass : #AlbEditorShortcut,
+	#name : 'AlbEditorMoveCursorToPreviousWordShortcut',
+	#superclass : 'AlbEditorShortcut',
 	#instVars : [
 		'combinationForMacOS'
 	],
-	#category : #'Album-Shortcuts'
+	#category : 'Album-Shortcuts',
+	#package : 'Album',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #'api - combination' }
+{ #category : 'api - combination' }
 AlbEditorMoveCursorToPreviousWordShortcut >> combinationForMacOS [
 	^ combinationForMacOS
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorToPreviousWordShortcut >> description [
 	^ 'Moves the cursor to the start of the previous (or current) word and deselects any selected text.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlbEditorMoveCursorToPreviousWordShortcut >> initialize [
 	super initialize.
 
@@ -25,12 +27,12 @@ AlbEditorMoveCursorToPreviousWordShortcut >> initialize [
 	combinationForMacOS := BlKeyCombination builder alt arrowLeft build.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorMoveCursorToPreviousWordShortcut >> name [
 	^ 'Move cursor to the previous word'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 AlbEditorMoveCursorToPreviousWordShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor deselecter

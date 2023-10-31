@@ -23,3 +23,9 @@ AlbTextParagraph >> segmentPiece: aSegmentPiece [
 
 	segmentPiece := aSegmentPiece
 ]
+
+{ #category : 'api - compositing' }
+AlbTextParagraph >> wantsSeparateCompositingLayer [
+
+	^ false
+]

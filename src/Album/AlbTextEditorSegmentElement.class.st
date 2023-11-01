@@ -22,5 +22,5 @@ AlbTextEditorSegmentElement >> initialize [
 { #category : 'api - compositing' }
 AlbTextEditorSegmentElement >> wantsSeparateCompositingLayer [
 
-	^ super wantsSeparateCompositingLayer
+	^ false
 ]

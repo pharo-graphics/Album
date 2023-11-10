@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorSurroundMapExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-Editor'
+	#name : 'AlbTextEditorSurroundMapExamples',
+	#superclass : 'Object',
+	#category : 'Album-Examples-Editor',
+	#package : 'Album-Examples',
+	#tag : 'Editor'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorSurroundMapExamples >> surroundSet [
 	<gtExample>
 
@@ -24,7 +26,7 @@ AlbTextEditorSurroundMapExamples >> surroundSet [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorSurroundMapExamples >> surroundSetClosing [
 	<gtExample>
 
@@ -38,7 +40,7 @@ AlbTextEditorSurroundMapExamples >> surroundSetClosing [
 	^opening
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorSurroundMapExamples >> surroundSetClosingAbsent [
 	<gtExample>
 
@@ -52,7 +54,7 @@ AlbTextEditorSurroundMapExamples >> surroundSetClosingAbsent [
 	^definition
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorSurroundMapExamples >> surroundSetOpeningAbsent [
 	<gtExample>
 
@@ -67,7 +69,7 @@ AlbTextEditorSurroundMapExamples >> surroundSetOpeningAbsent [
 	^definition
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorSurroundMapExamples >> surroundSetOpeningConditionRejects [
 	<gtExample>
 
@@ -82,7 +84,7 @@ AlbTextEditorSurroundMapExamples >> surroundSetOpeningConditionRejects [
 	^definition
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorSurroundMapExamples >> surroundSetOpeningPresent [
 	<gtExample>
 

@@ -1,12 +1,14 @@
 Class {
-	#name : #AlbTextEditorLayoutMeasurementExamples,
-	#superclass : #Object,
+	#name : 'AlbTextEditorLayoutMeasurementExamples',
+	#superclass : 'Object',
 	#traits : 'TAlbTextEditorFixedMeasurerExamples',
 	#classTraits : 'TAlbTextEditorFixedMeasurerExamples classTrait',
-	#category : #'Album-Examples-Editor'
+	#category : 'Album-Examples-Editor',
+	#package : 'Album-Examples',
+	#tag : 'Editor'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorLayoutMeasurementExamples >> editorFor: aText [
 	<return: #AlbEditorElement>
 	| anEditor aRopedText |
@@ -36,7 +38,7 @@ AlbTextEditorLayoutMeasurementExamples >> editorFor: aText [
 	^ anEditor
 ]
 
-{ #category : #'examples - measurement' }
+{ #category : 'examples - measurement' }
 AlbTextEditorLayoutMeasurementExamples >> fit_content_Hello [
 	<gtExample>
 	<noTest>
@@ -50,7 +52,7 @@ AlbTextEditorLayoutMeasurementExamples >> fit_content_Hello [
 	^ anEditorElement
 ]
 
-{ #category : #'examples - measurement' }
+{ #category : 'examples - measurement' }
 AlbTextEditorLayoutMeasurementExamples >> fit_content_Hello_World [
 	<gtExample>
 	<noTest>

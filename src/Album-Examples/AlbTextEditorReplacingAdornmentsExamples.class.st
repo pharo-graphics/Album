@@ -18,12 +18,14 @@ They can also overlapp. In this case attributes that end first take precedence o
 
 "
 Class {
-	#name : #AlbTextEditorReplacingAdornmentsExamples,
-	#superclass : #AlbTextEditorAdornmentsExamples,
-	#category : #'Album-Examples-! Documentation'
+	#name : 'AlbTextEditorReplacingAdornmentsExamples',
+	#superclass : 'AlbTextEditorAdornmentsExamples',
+	#category : 'Album-Examples-! Documentation',
+	#package : 'Album-Examples',
+	#tag : '! Documentation'
 }
 
-{ #category : #'examples - replacements' }
+{ #category : 'examples - replacements' }
 AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleOverlappingReplacements [
 	<script>
 	<description: 'Multiple replacements can overlapp. In this case the order of the added elements is defined by the end index of the intervals of the attributes'>
@@ -46,7 +48,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleOver
 	^ (AlbEditorElement new text: aText) openInOBlSpace 
 ]
 
-{ #category : #'examples - replacements' }
+{ #category : 'examples - replacements' }
 AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleReplacementsOnTopEachOther [
 	<script>
 	<description: 'Multiple replacements can stack up. The order of added elements is defined by the order in which the attributes are added'>
@@ -68,7 +70,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleRepl
 	^ aText onAlbum openInOBlSpace 
 ]
 
-{ #category : #'examples - replacements' }
+{ #category : 'examples - replacements' }
 AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementAll [
 	<script>
 	<description: 'Even the whole line of text can be replaced'>
@@ -84,7 +86,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementA
 	^ aText onAlbum openInOBlSpace 
 ]
 
-{ #category : #'examples - replacements' }
+{ #category : 'examples - replacements' }
 AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementFirst [
 	<script>
 	<description: 'We can replace the first word in a sentence'>
@@ -101,7 +103,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementF
 	^ aText onAlbum openInOBlSpace 
 ]
 
-{ #category : #'examples - replacements' }
+{ #category : 'examples - replacements' }
 AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementLast [
 	<script>
 	<description: 'We can replace the last word in a sentence'>
@@ -118,7 +120,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementL
 	^ aText onAlbum openInOBlSpace 
 ]
 
-{ #category : #'examples - replacements' }
+{ #category : 'examples - replacements' }
 AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementMiddle [
 	<script>
 	<description: 'We can replace a word in the middle of a sentence'>

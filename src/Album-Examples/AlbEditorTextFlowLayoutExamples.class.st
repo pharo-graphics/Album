@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbEditorTextFlowLayoutExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-Layout'
+	#name : 'AlbEditorTextFlowLayoutExamples',
+	#superclass : 'Object',
+	#category : 'Album-Examples-Layout',
+	#package : 'Album-Examples',
+	#tag : 'Layout'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbEditorTextFlowLayoutExamples >> container [
 	<gtExample>
 	| anElement |
@@ -23,7 +25,7 @@ AlbEditorTextFlowLayoutExamples >> container [
 	^ anElement
 ]
 
-{ #category : #'examples - layout' }
+{ #category : 'examples - layout' }
 AlbEditorTextFlowLayoutExamples >> container_extent [
 	<gtExample>
 	| aContainer |
@@ -36,7 +38,7 @@ AlbEditorTextFlowLayoutExamples >> container_extent [
 	^ aContainer
 ]
 
-{ #category : #'examples - layout' }
+{ #category : 'examples - layout' }
 AlbEditorTextFlowLayoutExamples >> layout_no_memory_leak [
 	<gtExample>
 	| aContainer |

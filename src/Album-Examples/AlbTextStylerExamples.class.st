@@ -2,26 +2,28 @@
 Hello World *https://gtoolkit.com*
 "
 Class {
-	#name : #AlbTextStylerExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-Editor'
+	#name : 'AlbTextStylerExamples',
+	#superclass : 'Object',
+	#category : 'Album-Examples-Editor',
+	#package : 'Album-Examples',
+	#tag : 'Editor'
 }
 
-{ #category : #'examples - editor' }
+{ #category : 'examples - editor' }
 AlbTextStylerExamples >> codeSnippetStyler [
 	<gtExample>
 
 	^ BlRBTextStyler new classOrMetaClass: BlElement
 ]
 
-{ #category : #'examples - editor' }
+{ #category : 'examples - editor' }
 AlbTextStylerExamples >> editorWithMethod [
 	<gtExample>
 
 	^ self newEditor text: self newMethodText
 ]
 
-{ #category : #'examples - styler strategy' }
+{ #category : 'examples - styler strategy' }
 AlbTextStylerExamples >> editorWithSyncStylerStrategy [
 	<gtExample>
 	| anEditor anEditorElement aStyler theTextAttributes |
@@ -40,21 +42,21 @@ AlbTextStylerExamples >> editorWithSyncStylerStrategy [
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextStylerExamples >> newEditor [
 	<gtExample>
 
 	^ AlbTextEditor new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextStylerExamples >> newMethodText [
 	<gtExample>
 	
 	^ (BlElement >> #applyLayoutSafelyIn:context:) sourceCode asRopedText
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AlbTextStylerExamples >> timeoutMilliseconds [
 	^ 500
 ]

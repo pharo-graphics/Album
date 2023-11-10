@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextCursorAttributeExamples,
-	#superclass : #AlbTextEditorAdornmentsExamples,
-	#category : #'Album-Examples-! Documentation'
+	#name : 'AlbTextCursorAttributeExamples',
+	#superclass : 'AlbTextEditorAdornmentsExamples',
+	#category : 'Album-Examples-! Documentation',
+	#package : 'Album-Examples',
+	#tag : '! Documentation'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 AlbTextCursorAttributeExamples class >> changingForeground [
 	<script>
 	| text |

@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbEditorShortcutExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-Shortcuts'
+	#name : 'AlbEditorShortcutExamples',
+	#superclass : 'Object',
+	#category : 'Album-Examples-Shortcuts',
+	#package : 'Album-Examples',
+	#tag : 'Shortcuts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorShortcutExamples >> deleteOneLetterAfterCursorWithSelection [
 	<gtExample>
 	| anEditorElement anEditor |
@@ -32,7 +34,7 @@ AlbEditorShortcutExamples >> deleteOneLetterAfterCursorWithSelection [
 	^ anEditorElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorShortcutExamples >> deleteOneLetterAfterCursorWithSelectionBeforeCursor [
 	<gtExample>
 	| anEditorElement anEditor |
@@ -57,7 +59,7 @@ AlbEditorShortcutExamples >> deleteOneLetterAfterCursorWithSelectionBeforeCursor
 	^ anEditorElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorShortcutExamples >> deleteOneLetterBeforeCursorWithSelection [
 	<gtExample>
 	| anEditorElement anEditor |
@@ -82,7 +84,7 @@ AlbEditorShortcutExamples >> deleteOneLetterBeforeCursorWithSelection [
 	^ anEditorElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbEditorShortcutExamples >> deleteOneLetterBeforeCursorWithSelectionAfterCursor [
 	<gtExample>
 	| anEditorElement anEditor |

@@ -31,29 +31,31 @@
 
 "
 Class {
-	#name : #AlbTextEditorExamples,
-	#superclass : #Object,
+	#name : 'AlbTextEditorExamples',
+	#superclass : 'Object',
 	#classInstVars : [
 		'loremIpsum'
 	],
-	#category : #'Album-Examples-Editor'
+	#category : 'Album-Examples-Editor',
+	#package : 'Album-Examples',
+	#tag : 'Editor'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> adormentDynamicAttribute [
 	<script>
 	
 	^ self newElement editor: self editorWithAdormentDynamicAttribute
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 AlbTextEditorExamples class >> cleanUp [
 	super cleanUp.
 	
 	loremIpsum := nil 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> editorWithAdormentDynamicAttribute [
 	<gtExample>
 	| editor text |
@@ -72,7 +74,7 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttribute [
 	^ editor
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningEmptyCollection [
 	<gtExample>
 	| editor text |
@@ -87,7 +89,7 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningEmptyC
 	^ editor
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningTwoElements [
 	<script>
 	| editor text |
@@ -110,7 +112,7 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningTwoEle
 	^ editor inspect
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> editorWithAlbumText [
 	<gtExample>
 	| anEditor aText |
@@ -121,7 +123,7 @@ AlbTextEditorExamples class >> editorWithAlbumText [
 	^ anEditor
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> editorWithLastHiddenCharacter [
 	<gtExample>
 	| anEditor |
@@ -132,13 +134,13 @@ AlbTextEditorExamples class >> editorWithLastHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #'examples - editor' }
+{ #category : 'examples - editor' }
 AlbTextEditorExamples class >> editorWithMethod [
 	<gtExample>
 	^ self newEditor text: self newMethodText
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> editorWithSecondHiddenCharacter [
 	<gtExample>
 	| anEditor |
@@ -149,13 +151,14 @@ AlbTextEditorExamples class >> editorWithSecondHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> editorWithText [
+
 	<gtExample>
-	^ self newEditor text: self newText
+	^ self newEditor privateText: self newText
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> elementOnMethodWithSyntaxHighlighting [
 	<gtExample>
 	| element styler text editor |
@@ -170,28 +173,28 @@ AlbTextEditorExamples class >> elementOnMethodWithSyntaxHighlighting [
 	^ element
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> elementWithEditor [
 	<gtExample>
 	
 	^ self newElement editor: self editorWithText
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> elementWithEmptyEditor [
 	<gtExample>
 	
 	^ self newElement editor: (self newEditor text: (' ' asRopedText fontSize: 16; monospace))
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> elementWithMethod [
 	<gtExample>
 	
 	^ self newElement editor: self editorWithMethod
 ]
 
-{ #category : #'examples - comparison' }
+{ #category : 'examples - comparison' }
 AlbTextEditorExamples class >> exampleEditor [
 	| space editorElement editor text |
 	editorElement := AlbEditorElement new.
@@ -210,7 +213,7 @@ AlbTextEditorExamples class >> exampleEditor [
 	space show
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> exampleMethodTextOpen [
 	| space editorElement |
 
@@ -232,7 +235,7 @@ AlbTextEditorExamples class >> exampleMethodTextOpen [
 	space show.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> exampleMethodTextOpenEmbedElement [
 	<script>
 	| space editorElement |
@@ -254,35 +257,33 @@ AlbTextEditorExamples class >> exampleMethodTextOpenEmbedElement [
 	space show.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextEditorExamples class >> exampleTextOpen [
+
 	<script>
 	| space editorElement |
-	
 	editorElement := self elementWithEditor.
-	editorElement editor text attributes: {
-		BlFontSizeAttribute size: 18.
-		BlFontFamilyAttribute named: 'Helvetica Neue'.
-	}.
+	editorElement editor privateText attributes: {
+			(BlFontSizeAttribute size: 18).
+			(BlFontFamilyAttribute named: 'Helvetica Neue') }.
 	editorElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
-	
+
 	space := BlSpace new.
 	space root addChild: editorElement.
-	space root addEventHandler:
-			(BlEventHandler
-				on: BlDoubleClickEvent
-				do: [ :evt | BlElementSelection on: evt target ]).
+	space root addEventHandler: (BlEventHandler
+			 on: BlDoubleClickEvent
+			 do: [ :evt | BlElementSelection on: evt target ]).
 	space show
 ]
 
-{ #category : #'examples - comparison' }
+{ #category : 'examples - comparison' }
 AlbTextEditorExamples class >> extent [
 	^ 600@400
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> insertAStringAfterLastHiddenCharacter [
 	<gtExample>
 	| anEditor |
@@ -292,7 +293,7 @@ AlbTextEditorExamples class >> insertAStringAfterLastHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> insertAStringAfterSecondHiddenCharacter [
 	<gtExample>
 	| anEditor |
@@ -302,7 +303,7 @@ AlbTextEditorExamples class >> insertAStringAfterSecondHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> insertLineFeedString [
 	<gtExample>
 	| anEditor |
@@ -312,7 +313,7 @@ AlbTextEditorExamples class >> insertLineFeedString [
 	^ anEditor
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> insertLineFeedStringAfterLastHiddenCharacter [
 	<gtExample>
 	| anEditor |
@@ -322,7 +323,7 @@ AlbTextEditorExamples class >> insertLineFeedStringAfterLastHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> insertLineFeedStringAfterSecondHiddenCharacter [
 	<gtExample>
 	| anEditor |
@@ -332,7 +333,7 @@ AlbTextEditorExamples class >> insertLineFeedStringAfterSecondHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> insertLineFeedStringBeforeSecondHiddenCharacter [
 	<gtExample>
 	| anEditor |
@@ -342,12 +343,12 @@ AlbTextEditorExamples class >> insertLineFeedStringBeforeSecondHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #'examples - comparison' }
+{ #category : 'examples - comparison' }
 AlbTextEditorExamples class >> loremIpsum [
 	^ self loremIpsum: 1000000
 ]
 
-{ #category : #'examples - comparison' }
+{ #category : 'examples - comparison' }
 AlbTextEditorExamples class >> loremIpsum: aLength [
 	loremIpsum ifNil: [ loremIpsum := Dictionary new ].
 	^ loremIpsum
@@ -355,7 +356,7 @@ AlbTextEditorExamples class >> loremIpsum: aLength [
 			ifAbsentPut: [ String loremIpsum: aLength ]
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> newBeReplaceTextAttribute [
 	<gtExample>
 	^ AlbTextAdornmentDynamicAttribute new
@@ -365,14 +366,14 @@ AlbTextEditorExamples class >> newBeReplaceTextAttribute [
 			background: Color lightGray ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorExamples class >> newEditor [
 	<gtExample>
 
 	^ AlbTextEditor new 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorExamples class >> newElement [
 	<gtExample>
 	
@@ -383,41 +384,41 @@ AlbTextEditorExamples class >> newElement [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorExamples class >> newMethodText [
 	<gtExample>
 	
 	^ (AlbTextEditorExamples class >> #fullDrawOn:) sourceCode asRopedText
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorExamples class >> newText [
 	<gtExample>
 	
 	^ (String loremIpsum: 2000000) asRopedText
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorExamples class >> newThreeLineText [
 	<gtExample>
 	
 	^ ('first' , String cr , 'second' , String cr , 'third') asRopedText
 ]
 
-{ #category : #'examples - editing' }
+{ #category : 'examples - editing' }
 AlbTextEditorExamples class >> simpleString [
 	<gtExample>
 	^ 'Album'
 ]
 
-{ #category : #'examples - embedded' }
+{ #category : 'examples - embedded' }
 AlbTextEditorExamples >> newEditor [
 	<gtExample>
 
 	^ AlbTextEditor new "beLineBased"
 ]
 
-{ #category : #'examples - embedded' }
+{ #category : 'examples - embedded' }
 AlbTextEditorExamples >> newElement [
 	<gtExample>
 	

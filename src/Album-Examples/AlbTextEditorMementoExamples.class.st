@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorMementoExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-Model'
+	#name : 'AlbTextEditorMementoExamples',
+	#superclass : 'Object',
+	#category : 'Album-Examples-Model',
+	#package : 'Album-Examples',
+	#tag : 'Model'
 }
 
-{ #category : #'examples - memento' }
+{ #category : 'examples - memento' }
 AlbTextEditorMementoExamples >> editorRestoreState [
 	<gtExample>
 	| aMemento aTextEditor |
@@ -17,7 +19,7 @@ AlbTextEditorMementoExamples >> editorRestoreState [
 	^ aTextEditor
 ]
 
-{ #category : #'examples - memento' }
+{ #category : 'examples - memento' }
 AlbTextEditorMementoExamples >> editorSaveState [
 	<gtExample>
 	| aTextEditor aMemento |
@@ -28,7 +30,7 @@ AlbTextEditorMementoExamples >> editorSaveState [
 	^ aMemento
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorMementoExamples >> newTextEditor [
 	<gtExample>
 	| aTextEditor |
@@ -37,7 +39,7 @@ AlbTextEditorMementoExamples >> newTextEditor [
 	^ aTextEditor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorMementoExamples >> textEditorWithState [
 	<gtExample>
 	| aTextEditor |

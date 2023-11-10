@@ -16,8 +16,6 @@ AlbTextEditorMouseHandler >> eventsToHandle [
 AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 
 	| aNavigator aScreenPosition editor aTextIndex |
-	"To not create an instance of me for each tiny text element"
-	
 	anEvent primaryButtonPressed ifFalse: [ ^ self ].
 
 	anEvent consumed: true.

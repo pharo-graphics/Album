@@ -1,24 +1,26 @@
 Class {
-	#name : #AlbExamplesSeeClassSide,
-	#superclass : #Object,
+	#name : 'AlbExamplesSeeClassSide',
+	#superclass : 'Object',
 	#classVars : [
 		'BigString'
 	],
-	#category : #'Album-Examples-TRY-HERE'
+	#category : 'Album-Examples-TRY-HERE',
+	#package : 'Album-Examples',
+	#tag : 'TRY-HERE'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbExamplesSeeClassSide class >> ascent [
 	^ -20
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> bigString [
 	"1000000000 is 1Go, ~200 000 pages in LibreOffice - 3 600 000 lines on TextMaker "
 	^ BigString ifNil: [ BigString := String loremIpsum: 1000000000 ]
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> bigStringFromFile [
 	" self bigStringFromFile "
 
@@ -30,7 +32,7 @@ AlbExamplesSeeClassSide class >> bigStringFromFile [
 	stream close
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> bigStringToFile [
 	" self bigStringToFile "
 
@@ -42,18 +44,18 @@ AlbExamplesSeeClassSide class >> bigStringToFile [
 	stream close
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> cleanUp [ 
 	super cleanUp.
 	BigString := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlbExamplesSeeClassSide class >> descent [
 	^ 20
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> embeddedFontsText [
 
 	"
@@ -119,7 +121,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	^ text
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 
 	| ed space text |
@@ -143,7 +145,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 	^ ed
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 
 	| ed space text size start |
@@ -172,7 +174,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 	^ ed
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |
@@ -188,7 +190,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	^ ed
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
 	| ed vscrollBar space text |
@@ -211,7 +213,7 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithAllFonts [
 
 	"
@@ -294,7 +296,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	root openInOBlSpace
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
@@ -308,7 +310,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	ed openInOBlSpace
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 "
 broken in GlamorousToolKit but what to do with that ?
@@ -372,7 +374,7 @@ broken in GlamorousToolKit but what to do with that ?
 	^ text
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithEmbeddedFonts [
 
 	"
@@ -391,7 +393,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	root openInOBlSpace
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 
 	| ed space hscrollBar |
@@ -416,21 +418,21 @@ AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 	^ed
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 
-
 	| aText ed |
-
-	aText := ('Hello', String cr, 'World') asRopedText fontSize: 20.
-	(aText from: 4 to: 4)
-		replacingAdornment: [ BlElement new size: 20@6; background: Color red ].
+	aText := ('Hello' , String cr , 'World') asRopedText fontSize: 20.
+	(aText from: 4 to: 4) replacingAdornment: [
+		BlElement new
+			size: 20 @ 6;
+			background: Color red ].
 	ed := aText onAlbum.
 	ed withRowNumbers.
-	ed openInOBlSpace
+	ed openInSpace
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 
 	| ed t |
@@ -445,7 +447,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 	ed openInOBlSpace
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 
 	| ed tgca tgcaText colorIndex vscrollBar space |
@@ -485,7 +487,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 	
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 	(' Default font and size' asRopedText
@@ -497,7 +499,7 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 		openInSpace
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 
 	| text styler editorElement space clickText hoverText |
@@ -528,7 +530,7 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 	space show
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 
 	| ed space |
@@ -540,7 +542,7 @@ AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 	space show
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithCrOnly [
 
 	| ed space |
@@ -552,7 +554,7 @@ AlbExamplesSeeClassSide class >> example_WithCrOnly [
 	space show
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 
 	| ed space |
@@ -563,7 +565,7 @@ AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 	space show
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
 	| ed space |
@@ -573,20 +575,23 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 	space show
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
 
 	| ed space |
+self flag: 'does not work'.
 	ed := AlbEditorElement new.
-	ed constraintsDo: [ :c | 
+	ed text: 'bla bla'.
+	"ed constraintsDo: [ :c | 
 		c horizontal fitContent.
-		c vertical fitContent ].
+		c vertical fitContent ]."
+	ed fitContent.
 	space := BlSpace new.
 	space root addChild: ed.
 	space show
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 
 	| ed space text editor |
@@ -600,27 +605,27 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	space show
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbExamplesSeeClassSide class >> glyphHeight [
 	^ self ascent abs + self descent
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbExamplesSeeClassSide class >> glyphWidth [
 	^ 30
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbExamplesSeeClassSide class >> lineSpacing [
 	^ 5
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbExamplesSeeClassSide class >> paragraphMargin [
 	^ BlInsets all: 15
 ]
 
-{ #category : #'editor examples' }
+{ #category : 'editor examples' }
 AlbExamplesSeeClassSide class >> tgcaString [
 	^ 'ATTAAAGGTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTT
 AACATAGCAGTGGTGTTACCCGTGAACTCATGCGTGAGCTTAACGGAGGGGCATACACTCGCTATGTCGATAACAAC
@@ -694,11 +699,11 @@ GAGAAAACACACGTCCAACTCAGTTTGCCTGTTTTACAGGTTCGCGACGTGCTCGTACGTGGCTTTGGAGACTCCGT
 GGAGGAGGTCTTATCAGAGGCACGTCAACATCTTAAAGATGGCACTTGTGGCTTAGTAGAAGTTGAAAAAGGCGTTT'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbExamplesSeeClassSide class >> wordPadding [
 	^ BlInsets top: 3 bottom: 3
 ]
 
-{ #category : #'see class side' }
+{ #category : 'see class side' }
 AlbExamplesSeeClassSide >> seeClassSide [
 ]

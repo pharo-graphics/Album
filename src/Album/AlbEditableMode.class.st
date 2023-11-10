@@ -8,12 +8,12 @@ Class {
 
 { #category : 'initialization' }
 AlbEditableMode >> defaultEditorElementEventHandlers [
-self flag: 'AlbTextEditorFocusHandler should e added if album is used on itself (not by ToAlbum)'. 
+
 	^ { 
 		  AlbTextEditorMouseHandler new.
 		  AlbTextEditorDoubleClickHandler new.
 		  AlbTextEditorInsertionHandler new.
-		 " AlbTextEditorFocusHandler new" }
+		  AlbTextEditorFocusHandler new }
 ]
 
 { #category : 'initialization' }

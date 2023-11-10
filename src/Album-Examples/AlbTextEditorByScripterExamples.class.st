@@ -1,10 +1,12 @@
 Class {
-	#name : #AlbTextEditorByScripterExamples,
-	#superclass : #Object,
-	#category : #'Album-Examples-By scripter'
+	#name : 'AlbTextEditorByScripterExamples',
+	#superclass : 'Object',
+	#category : 'Album-Examples-By scripter',
+	#package : 'Album-Examples',
+	#tag : 'By scripter'
 }
 
-{ #category : #'click - adornment element' }
+{ #category : 'click - adornment element' }
 AlbTextEditorByScripterExamples class >> click_adornment_element [
 	<script>
 	| aScripter |
@@ -32,7 +34,7 @@ AlbTextEditorByScripterExamples class >> click_adornment_element [
 	^ aScripter
 ]
 
-{ #category : #'click - empty' }
+{ #category : 'click - empty' }
 AlbTextEditorByScripterExamples class >> click_empty [
 	<script>
 	| aScripter |
@@ -54,20 +56,20 @@ AlbTextEditorByScripterExamples class >> click_empty [
 	^ aScripter
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 AlbTextEditorByScripterExamples class >> scripter [
 	
 	^ BlDevScripter new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorByScripterExamples class >> scripterElement [
 
 	^ AlbEditorElement new
 		text: '' asRopedText
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlbTextEditorByScripterExamples class >> scripterWithElement [
 	| aScripter |
 
@@ -87,7 +89,7 @@ AlbTextEditorByScripterExamples class >> scripterWithElement [
 	^ aScripter
 ]
 
-{ #category : #'click - adornment element' }
+{ #category : 'click - adornment element' }
 AlbTextEditorByScripterExamples class >> textWithAdornment [
 
 	^ 'Hello world

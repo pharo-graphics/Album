@@ -9,12 +9,14 @@ Class: AlbTextAttributesHowToGuide
 `AlbTextAttributesHowToGuide class>>#hideMarkupInText`
 "
 Class {
-	#name : #AlbTextAttributesHowToGuide,
-	#superclass : #Object,
-	#category : #'Album-Examples-! Documentation'
+	#name : 'AlbTextAttributesHowToGuide',
+	#superclass : 'Object',
+	#category : 'Album-Examples-! Documentation',
+	#package : 'Album-Examples',
+	#tag : '! Documentation'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextAttributesHowToGuide class >> hideMarkupInText [
 
 	<script>
@@ -55,7 +57,7 @@ AlbTextAttributesHowToGuide class >> hideMarkupInText [
 	^ (AlbEditorElement new text: text) openInOBlSpace
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AlbTextAttributesHowToGuide class >> linkInText [
 	<script>
 	| text |

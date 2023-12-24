@@ -619,7 +619,9 @@ AlbInfiniteEditorElement >> textSnapshot [
 { #category : 'accessing - editor' }
 AlbInfiniteEditorElement >> whenEditorChangedDo: aBlock [
 
-	self when: AlbTextEditorReplacedEvent do: aBlock
+	self addEventHandler: (BlEventHandler
+			 on: AlbTextEditorReplacedEvent
+			 do: aBlock)
 ]
 
 { #category : 'view - configuration' }
@@ -640,7 +642,9 @@ AlbInfiniteEditorElement >> whenTextEditedDo: aBlock [
 { #category : 'view - configuration' }
 AlbInfiniteEditorElement >> whenTextReplacedDo: aBlock [
 
-	self editor when: AlbTextReplacedEvent do: aBlock
+	self editor addEventHandler: (BlEventHandler
+			 on: AlbTextReplacedEvent
+			 do: aBlock)
 ]
 
 { #category : 'view - configuration' }

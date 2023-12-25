@@ -1,6 +1,6 @@
 Class {
-	#name : 'AlbTextEditorPaster',
-	#superclass : 'AlbTextEditorOperator',
+	#name : #AlbTextEditorPaster,
+	#superclass : #AlbTextEditorOperator,
 	#instVars : [
 		'text',
 		'insertionIndices',
@@ -9,17 +9,15 @@ Class {
 		'shouldDeleteSelected',
 		'inputFilter'
 	],
-	#category : 'Album-Model-Operators',
-	#package : 'Album',
-	#tag : 'Model-Operators'
+	#category : 'Album-Model-Operators'
 }
 
-{ #category : 'api - processing' }
+{ #category : #'api - processing' }
 AlbTextEditorPaster >> apply [
 	^ self paste
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> at: anIndex [
 	"Add a given index as another text paste location"
 
@@ -27,23 +25,23 @@ AlbTextEditorPaster >> at: anIndex [
 		ifFalse: [ insertionIndices add: anIndex ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> atCursor [	
 	self cursor do: [ :aCursor | self at: aCursor position ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> atEnd [
 	"Insert a text at the very end"
 	self at: self text size
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> fromClipboard [
 	self string: Clipboard clipboardText asString
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorPaster >> initialize [
 	super initialize.
 	
@@ -55,12 +53,12 @@ AlbTextEditorPaster >> initialize [
 	inputFilter := AlbTextEditorNoInputFilter new
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> inputFilter: aTextEditorInputFilter [
 	inputFilter := aTextEditorInputFilter
 ]
 
-{ #category : 'api - processing' }
+{ #category : #'api - processing' }
 AlbTextEditorPaster >> paste [
 	| anInserter |
 	
@@ -75,27 +73,27 @@ AlbTextEditorPaster >> paste [
 	anInserter insert
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> string: aString [
 	text := aString
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> text: aText [
 	text := aText
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> withoutCursorUpdate [
 	shouldUpdateCursor := false
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> withoutSelectionDelete [
 	shouldDeleteSelected := false
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorPaster >> withoutSelectionUpdate [
 	shouldUpdateSelection := false
 ]

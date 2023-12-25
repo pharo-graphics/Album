@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbTextEditorCursorAddedHolderEvent',
-	#superclass : 'AlbTextEditorHolderEvent',
-	#category : 'Album-Commands-Holder',
-	#package : 'Album',
-	#tag : 'Commands-Holder'
+	#name : #AlbTextEditorCursorAddedHolderEvent,
+	#superclass : #AlbTextEditorHolderEvent,
+	#category : 'Album-Commands-Holder'
 }
 
-{ #category : 'sending' }
+{ #category : #sending }
 AlbTextEditorCursorAddedHolderEvent >> sendTo: aSegmentHolder [
 	aSegmentHolder onCursorAdded
 ]

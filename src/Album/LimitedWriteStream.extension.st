@@ -1,16 +1,16 @@
-Extension { #name : 'LimitedWriteStream' }
+Extension { #name : #LimitedWriteStream }
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 LimitedWriteStream >> segments [
 	^ self contents
 ]
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 LimitedWriteStream >> unlimited [
 	self limit: Float infinity 
 ]
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 LimitedWriteStream >> wantsMore [
 	^ self size < self limit
 ]

@@ -1,29 +1,27 @@
 Class {
-	#name : 'AlbEditorCutShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorCutShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorCutShortcut >> description [
 	^ 'Cut selected text and save it to the clipboard ready to paste elsewhere.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorCutShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination primaryX
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorCutShortcut >> name [
 	^ 'Cut'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorCutShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor cutSelected

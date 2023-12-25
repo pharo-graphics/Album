@@ -1,37 +1,35 @@
 Class {
-	#name : 'AlbTextEditorSelectionMemento',
-	#superclass : 'AlbTextEditorMemento',
+	#name : #AlbTextEditorSelectionMemento,
+	#superclass : #AlbTextEditorMemento,
 	#instVars : [
 		'selection'
 	],
-	#category : 'Album-Model-Memento',
-	#package : 'Album',
-	#tag : 'Model-Memento'
+	#category : 'Album-Model-Memento'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorSelectionMemento >> initialize [
 	super initialize.
 	
 	selection := BlCompositeSelection new
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSelectionMemento >> isSelectionMemento [
 	^ true
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorSelectionMemento >> label [
 	^ 'Selection'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectionMemento >> order [
 	^ 70
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorSelectionMemento >> restoreStateOf: aTextEditor [
 	aTextEditor deselecter all deselect.
 
@@ -41,22 +39,22 @@ AlbTextEditorSelectionMemento >> restoreStateOf: aTextEditor [
 		select
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorSelectionMemento >> saveStateOf: aTextEditor [
 	selection := aTextEditor selection copy.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectionMemento >> selection [
 	^ selection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectionMemento >> selection: anObject [
 	selection := anObject
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorSelectionMemento >> value [
 	^ selection
 ]

@@ -1,29 +1,27 @@
 Class {
-	#name : 'AlbEditorShiftRightShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorShiftRightShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorShiftRightShortcut >> description [
 	^ 'Shift text at the cursor or if there is selection, the selected lines, one indetation to the right.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorShiftRightShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination tab
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorShiftRightShortcut >> name [
 	^ 'Shift right'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorShiftRightShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor selection isEmpty

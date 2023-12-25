@@ -1,29 +1,27 @@
 Class {
-	#name : 'AlbEditorLineEndingShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorLineEndingShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorLineEndingShortcut >> description [
 	^ 'Inserts a platform specific line ending at the cursor location and indents the new line to match the indentation of the previous line.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorLineEndingShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination return
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorLineEndingShortcut >> name [
 	^ 'Insert line ending'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorLineEndingShortcut >> performOnEditor: aTextEditor element: anEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor inserter

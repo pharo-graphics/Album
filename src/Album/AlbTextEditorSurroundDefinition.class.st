@@ -14,44 +14,42 @@ Some characters, e.g. quotes, should only be inserted if surrounded by spaces.  
 !!!Implementation Points
 "
 Class {
-	#name : 'AlbTextEditorSurroundDefinition',
-	#superclass : 'Object',
+	#name : #AlbTextEditorSurroundDefinition,
+	#superclass : #Object,
 	#instVars : [
 		'openCharacter',
 		'closeCharacter',
 		'condition'
 	],
-	#category : 'Album-Model-Operators',
-	#package : 'Album',
-	#tag : 'Model-Operators'
+	#category : 'Album-Model-Operators'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundDefinition >> closeCharacter [
 	^ closeCharacter
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundDefinition >> closeCharacter: anObject [
 	closeCharacter := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundDefinition >> condition [
 	^ condition
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundDefinition >> condition: anObject [
 	condition := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundDefinition >> openCharacter [
 	^ openCharacter
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundDefinition >> openCharacter: anObject [
 	openCharacter := anObject
 ]

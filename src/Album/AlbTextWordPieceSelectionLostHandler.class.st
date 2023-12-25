@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbTextWordPieceSelectionLostHandler',
-	#superclass : 'AlbTextWordPieceUniqueHandler',
-	#category : 'Album-UI-Word',
-	#package : 'Album',
-	#tag : 'UI-Word'
+	#name : #AlbTextWordPieceSelectionLostHandler,
+	#superclass : #AlbTextWordPieceUniqueHandler,
+	#category : 'Album-UI-Word'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextWordPieceSelectionLostHandler >> eventClass [
 	^ BlElementSelectionLostEvent
 ]
 
-{ #category : 'api - event managing' }
+{ #category : #'api - event managing' }
 AlbTextWordPieceSelectionLostHandler >> handleEvent: anEvent [
 	| aTextEditElement anEditorElement |
 	

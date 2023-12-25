@@ -1,21 +1,19 @@
 Class {
-	#name : 'AlbOppositeDelimiterElement',
-	#superclass : 'AlbTextPortionElement',
+	#name : #AlbOppositeDelimiterElement,
+	#superclass : #AlbTextPortionElement,
 	#instVars : [
 		'anim'
 	],
-	#category : 'Album-UI-Text-Portion',
-	#package : 'Album',
-	#tag : 'UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbOppositeDelimiterElement >> borderColor [
 
 	^ Color gray
 ]
 
-{ #category : 'cleanup' }
+{ #category : #cleanup }
 AlbOppositeDelimiterElement >> cleanUp [
 
 	anim ifNotNil: [
@@ -23,13 +21,13 @@ AlbOppositeDelimiterElement >> cleanUp [
 		anim := nil ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbOppositeDelimiterElement >> defaultBackground [ 
 
 	^ Color yellow 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbOppositeDelimiterElement >> initialize [
 
 	super initialize.
@@ -38,7 +36,7 @@ AlbOppositeDelimiterElement >> initialize [
 	self addAnimation: anim
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 AlbOppositeDelimiterElement >> removeFromParent [ 
 
 	self cleanUp.

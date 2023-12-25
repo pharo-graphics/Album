@@ -1,42 +1,40 @@
 Class {
-	#name : 'AlbTextEditorMemento',
-	#superclass : 'Object',
-	#category : 'Album-Model-Memento',
-	#package : 'Album',
-	#tag : 'Model-Memento'
+	#name : #AlbTextEditorMemento,
+	#superclass : #Object,
+	#category : 'Album-Model-Memento'
 }
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorMemento >> isSelectionMemento [
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorMemento >> isTextMemento [
 	^ false
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorMemento >> label [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorMemento >> order [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorMemento >> restoreStateOf: aTextEditor [
 	self subclassResponsibility
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorMemento >> saveStateOf: aTextEditor [
 	self subclassResponsibility
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorMemento >> value [
 	^ self subclassResponsibility
 ]

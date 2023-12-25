@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbTextEditorDoubleClickHandler',
-	#superclass : 'AlbEditorElementHandler',
-	#category : 'Album-UI-Handlers',
-	#package : 'Album',
-	#tag : 'UI-Handlers'
+	#name : #AlbTextEditorDoubleClickHandler,
+	#superclass : #AlbEditorElementHandler,
+	#category : 'Album-UI-Handlers'
 }
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	| screenPosition globalTextIndex selecter navigator editor selection |
@@ -67,7 +65,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 		apply
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 AlbTextEditorDoubleClickHandler >> eventsToHandle [
 
 	^ { BlDoubleClickEvent }

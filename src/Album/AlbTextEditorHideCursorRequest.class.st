@@ -1,22 +1,20 @@
 Class {
-	#name : 'AlbTextEditorHideCursorRequest',
-	#superclass : 'AlbTextEditorRequest',
+	#name : #AlbTextEditorHideCursorRequest,
+	#superclass : #AlbTextEditorRequest,
 	#instVars : [
 		'cursorPosition'
 	],
-	#category : 'Album-UI-Requests',
-	#package : 'Album',
-	#tag : 'UI-Requests'
+	#category : 'Album-UI-Requests'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHideCursorRequest >> cursorPosition [
 	<return: #Number>
 
 	^ cursorPosition
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHideCursorRequest >> cursorPosition: aNumber [
 	
 	self

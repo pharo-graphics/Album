@@ -5,24 +5,22 @@ We split the whole text into segment in order to support infinite list that is u
 By default segment is a single line: a piece of text between new line characters
 "
 Class {
-	#name : 'AlbTextEditorSegment',
-	#superclass : 'Object',
+	#name : #AlbTextEditorSegment,
+	#superclass : #Object,
 	#traits : 'TAlbTextEditorTextualPiece + TBlDebug',
 	#classTraits : 'TAlbTextEditorTextualPiece classTrait + TBlDebug classTrait',
 	#instVars : [
 		'index'
 	],
-	#category : 'Album-Model-Segment-Text',
-	#package : 'Album',
-	#tag : 'Model-Segment-Text'
+	#category : 'Album-Model-Segment-Text'
 }
 
-{ #category : 'pieces - computation' }
+{ #category : #'pieces - computation' }
 AlbTextEditorSegment >> clearCache [
 	"Clear all caches and make this segment fresh as if it would just be created and initalized"
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSegment >> index [
 	"Return segment index within Editor.
 	Note: index can not be nil"
@@ -35,12 +33,12 @@ AlbTextEditorSegment >> index [
 	^ index
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSegment >> index: aNumber [
 	index := aNumber
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorSegment >> initializeWith: aBlSubText from: aTextStart to: aTextEnd delimiter: aDelimiterLength [
 	self
 		assert: [ aBlSubText isKindOf: BlSubText ]
@@ -56,7 +54,7 @@ AlbTextEditorSegment >> initializeWith: aBlSubText from: aTextStart to: aTextEnd
 	self updateSegmentProperties
 ]
 
-{ #category : 'api - operations' }
+{ #category : #'api - operations' }
 AlbTextEditorSegment >> insert: aCollectionOfSegments [
 	| theSegments theRestLength |
 	<return: #Collection of: #AblTextEditorSegment>
@@ -80,7 +78,7 @@ AlbTextEditorSegment >> insert: aCollectionOfSegments [
 	^ theSegments
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSegment >> isAllLineBreak [
 	"Return true if segment only consists of line break, false otherwise"
 	<return: #Boolean>
@@ -88,21 +86,21 @@ AlbTextEditorSegment >> isAllLineBreak [
 	^ self text allSatisfy: #isLineBreak
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSegment >> isFirstIn: aTextEditor [
 	"Return true if I am absolutely the very first segment (not first cached) in a given text editor"
 
 	^ self index = 1
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSegment >> isLastIn: aTextEditor [
 	"Return true if I am absolutely the very last segment (not last cached) in a given text editor"
 
 	^ self index = aTextEditor segmentCollector segments size
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSegment >> isLineBreak [
 	"Return true if segment only consists of line break, false otherwise"
 	<return: #Boolean>
@@ -110,7 +108,7 @@ AlbTextEditorSegment >> isLineBreak [
 	^ self text anySatisfy: #isLineBreak
 ]
 
-{ #category : 'text - modifications' }
+{ #category : #'text - modifications' }
 AlbTextEditorSegment >> moveTextBy: aNumber [
 	"Move all sub-text pieces (#start and #end) known by the segment by a given amount of indicies.
 	If aNumber is negative sub-texts will be moved to the left (maybe this is a result of a deletion).
@@ -120,10 +118,10 @@ AlbTextEditorSegment >> moveTextBy: aNumber [
 	self start: textStart + aNumber end: textEnd + aNumber
 ]
 
-{ #category : 'text - modifications' }
+{ #category : #'text - modifications' }
 AlbTextEditorSegment >> moveTextPiecesBy: aNumber at: aTextIndex [
 ]
 
-{ #category : 'text - modifications' }
+{ #category : #'text - modifications' }
 AlbTextEditorSegment >> updateSegmentProperties [
 ]

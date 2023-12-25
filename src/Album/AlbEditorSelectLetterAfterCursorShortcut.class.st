@@ -1,29 +1,27 @@
 Class {
-	#name : 'AlbEditorSelectLetterAfterCursorShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorSelectLetterAfterCursorShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectLetterAfterCursorShortcut >> description [
 	^ 'Selects one letter at a time to the right from the cursor.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorSelectLetterAfterCursorShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination shiftArrowRight
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectLetterAfterCursorShortcut >> name [
 	^ 'Select letter to the right'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorSelectLetterAfterCursorShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 	aTextEditor selecter
 		moveOneToRight;

@@ -1,29 +1,27 @@
 Class {
-	#name : 'AlbEditorFocusPreviousShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorFocusPreviousShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorFocusPreviousShortcut >> description [
 	^ 'Gives focus to the previous focusable element.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorFocusPreviousShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination arrowLeft
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorFocusPreviousShortcut >> name [
 	^ 'Focus previous'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorFocusPreviousShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aEditorElement

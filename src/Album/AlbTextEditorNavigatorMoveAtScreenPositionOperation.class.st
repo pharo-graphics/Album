@@ -1,15 +1,13 @@
 Class {
-	#name : 'AlbTextEditorNavigatorMoveAtScreenPositionOperation',
-	#superclass : 'AlbTextEditorNavigatorOperation',
+	#name : #AlbTextEditorNavigatorMoveAtScreenPositionOperation,
+	#superclass : #AlbTextEditorNavigatorOperation,
 	#instVars : [
 		'screenPosition'
 	],
-	#category : 'Album-Model-Operators',
-	#package : 'Album',
-	#tag : 'Model-Operators'
+	#category : 'Album-Model-Operators'
 }
 
-{ #category : 'matching' }
+{ #category : #matching }
 AlbTextEditorNavigatorMoveAtScreenPositionOperation >> performOn: aNavigator [
 	| aGlobalTextIndex |
 	
@@ -22,12 +20,12 @@ AlbTextEditorNavigatorMoveAtScreenPositionOperation >> performOn: aNavigator [
 		to: aGlobalTextIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorNavigatorMoveAtScreenPositionOperation >> screenPosition [
 	^ screenPosition
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorNavigatorMoveAtScreenPositionOperation >> screenPosition: anObject [
 	screenPosition := anObject
 ]

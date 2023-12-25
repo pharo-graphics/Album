@@ -1,24 +1,22 @@
 Class {
-	#name : 'AlbTextEditorCursor',
-	#superclass : 'Object',
-	#category : 'Album-Model-Cursor',
-	#package : 'Album',
-	#tag : 'Model-Cursor'
+	#name : #AlbTextEditorCursor,
+	#superclass : #Object,
+	#category : 'Album-Model-Cursor'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorCursor class >> at: aTextIndex [
 	<return: #AlbTextEditorSingleCursor>
 
 	^ AlbTextEditorSingleCursor at: aTextIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCursor >> allCursors [
 	^ Array streamContents: [ :aStream | self do: [ :aCursor | aStream nextPut: aCursor ] ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> allSatisfy: aBlock [
 	"Evaluate aBlock with all cursor.
 	If aBlock returns false for any element return false, otherwise return true"
@@ -29,7 +27,7 @@ AlbTextEditorCursor >> allSatisfy: aBlock [
 	^ true
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> anySatisfy: aBlock [
 	"Evaluate aBlock with all cursors.
 	If aBlock returns true for any element return true, otherwise return false"
@@ -40,13 +38,13 @@ AlbTextEditorCursor >> anySatisfy: aBlock [
 	^ false
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> collect: aBlock [ 	
 	^ Array streamContents: [ :aStream |
 		self do: [ :anElement | aStream nextPut: (aBlock value: anElement) ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCursor >> cursorsCount [
 	<return: #Number>
 	| aCount |
@@ -56,7 +54,7 @@ AlbTextEditorCursor >> cursorsCount [
 	^ aCount
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> detect: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument. 
 	Answer the first element for which aBlock evaluates to true."
@@ -64,7 +62,7 @@ AlbTextEditorCursor >> detect: aBlock [
 	^ self detect: aBlock ifNone: [self errorNotFound: aBlock]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> detect: aBlock ifFound: foundBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	If some element evaluates aBlock to true, then cull this element into 
@@ -80,7 +78,7 @@ AlbTextEditorCursor >> detect: aBlock ifFound: foundBlock [
 			 ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	If some element evaluates aBlock to true, then cull this element into 
@@ -94,7 +92,7 @@ AlbTextEditorCursor >> detect: aBlock ifFound: foundBlock ifNone: exceptionBlock
 	^ exceptionBlock value	
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> detect: aBlock ifNone: exceptionBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Answer the first element for which aBlock evaluates to true. If none  
@@ -103,21 +101,21 @@ AlbTextEditorCursor >> detect: aBlock ifNone: exceptionBlock [
 	^ self detect: aBlock ifFound: [ :element | element ] ifNone: exceptionBlock
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> do: aBlock [
 	"Evaluate a given block with all available cursors"
 	
 	^ self subclassResponsibility
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> errorNotFound: anObject [
 	"Raise a NotFound exception."
 
 	NotFound signalFor: anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCursor >> first [
 	"Return the first cursor sorted by position. Throw an error if there are no cursors"
 	<return: #AlbTextEditorSingleCursor>
@@ -125,7 +123,7 @@ AlbTextEditorCursor >> first [
 	^ (self allCursors sorted: [ :a :b | a position < b position ]) first
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorCursor >> isEmpty [
 	"Return true if there are no cursors"
 	<return: #Boolean>
@@ -134,7 +132,7 @@ AlbTextEditorCursor >> isEmpty [
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorCursor >> isNotEmpty [
 	"Return true if there is at least one cursor"
 	<return: #Boolean>
@@ -142,7 +140,7 @@ AlbTextEditorCursor >> isNotEmpty [
 	^ self isEmpty not
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorCursor >> isSingle [
 	"Return true if there is exactly *one* cursor"
 	<return: #Boolean>
@@ -150,12 +148,12 @@ AlbTextEditorCursor >> isSingle [
 	^ self cursorsCount = 1
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCursor >> positions [
 	^ self collect: [ :eachCursor | eachCursor position ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorCursor >> select: aBlock [ 	
 	^ Array streamContents: [ :aStream |
 			self do: [ :anElement |

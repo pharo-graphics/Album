@@ -1,20 +1,18 @@
 Class {
-	#name : 'AlbTextEditorRequest',
-	#superclass : 'BlEvent',
+	#name : #AlbTextEditorRequest,
+	#superclass : #BlEvent,
 	#instVars : [
 		'editorElement'
 	],
-	#category : 'Album-UI-Requests',
-	#package : 'Album',
-	#tag : 'UI-Requests'
+	#category : 'Album-UI-Requests'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorRequest >> editorElement [
 	^ editorElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorRequest >> editorElement: anObject [
 	editorElement := anObject
 ]

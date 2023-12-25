@@ -3,8 +3,8 @@ I edit text and provide high level abstractions of essential text editor functio
 I subclass infinite data source in order to be able to smoothly display practically infinite amounts of text.
 "
 Class {
-	#name : 'AlbTextEditor',
-	#superclass : 'BlInfiniteDataSource',
+	#name : #AlbTextEditor,
+	#superclass : #BlInfiniteDataSource,
 	#classTraits : 'TObservable classTrait',
 	#instVars : [
 		'text',
@@ -22,29 +22,27 @@ Class {
 	#classInstVars : [
 		'isDebug'
 	],
-	#category : 'Album-Model',
-	#package : 'Album',
-	#tag : 'Model'
+	#category : 'Album-Model'
 }
 
-{ #category : 'cleanup' }
+{ #category : #cleanup }
 AlbTextEditor class >> cleanUp [
 	super cleanUp.
 	
 	isDebug := nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor class >> isDebug [
 	^ isDebug ifNil: [ false ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor class >> isDebug: aBoolean [
 	isDebug := aBoolean
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> addEditorShortcut: aTextEditorShortcut [
 
 	self editorShortcuts
@@ -53,7 +51,7 @@ AlbTextEditor >> addEditorShortcut: aTextEditorShortcut [
 		ifReplaced: [ :aPreviousEditorShortcut | self onShortcutRemoved: aPreviousEditorShortcut ]
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 AlbTextEditor >> assertUIProcess [
 	"I check if the current process is a UI process of all attached editor elements"
 	| aCurrentProcess myProcess |
@@ -66,18 +64,18 @@ AlbTextEditor >> assertUIProcess [
 				format: { aCurrentProcess asString . myProcess asString }) ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> cacheSize: anInteger [
 	segmentCollector cacheSize: anInteger
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> checkAndSetText: aText [ 
 	self checkText: aText.
 	self text: aText
 ]
 
-{ #category : 'text checking' }
+{ #category : #'text checking' }
 AlbTextEditor >> checkText: aText [
 
 	(aText allSatisfy: [ :aCharacter | 
@@ -86,12 +84,12 @@ AlbTextEditor >> checkText: aText [
 		ifFalse: [ ^ self error: 'Non printable character in text' ]
 ]
 
-{ #category : 'private - selection' }
+{ #category : #'private - selection' }
 AlbTextEditor >> commitSelection [
 	self selectionRecorder commit: self
 ]
 
-{ #category : 'text - copy/paste' }
+{ #category : #'text - copy/paste' }
 AlbTextEditor >> copy: aFromIndex to: aToIndex [
 
 	"Copy text within given text interval to the clipboard"
@@ -99,7 +97,7 @@ AlbTextEditor >> copy: aFromIndex to: aToIndex [
 	Clipboard clipboardText: (self privateText from: aFromIndex + 1 to: aToIndex) asString
 ]
 
-{ #category : 'text - copy/paste' }
+{ #category : #'text - copy/paste' }
 AlbTextEditor >> copySelected [
 	"Copy currently selected text to the clipboard"
 	
@@ -111,26 +109,26 @@ AlbTextEditor >> copySelected [
 		to: self selection to
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> cursor [
 	<return: #AlbTextEditorCursor>
 
 	^ cursor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> cursor: aCursor [
 	<return: #AlbTextEditorCursor>
 
 	cursor := aCursor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> cursors [
 	^  { self cursor } 
 ]
 
-{ #category : 'text - copy/paste' }
+{ #category : #'text - copy/paste' }
 AlbTextEditor >> cut: aFromIndex to: aToIndex [
 	"Copy text within given text interval to the clipboard and remove it from the editor.
 	Note: I update the cursor location and selection"
@@ -142,7 +140,7 @@ AlbTextEditor >> cut: aFromIndex to: aToIndex [
 	self delete: aFromIndex to: aToIndex
 ]
 
-{ #category : 'text - copy/paste' }
+{ #category : #'text - copy/paste' }
 AlbTextEditor >> cutSelected [
 	"Copy currently selected text to the clipboard and remove it from the editor.
 	Note: I update the cursor location and selection"
@@ -155,39 +153,39 @@ AlbTextEditor >> cutSelected [
 		to: self selection to
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> defaultCursor [
 	<return: #AlbTextEditorCursor>
 
 	^ AlbTextEditorSingleCursor new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> defaultSegmentCollector [
 	^ AlbTextEditorSegmentCollector new 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> defaultSelection [
 	<return: #BlSelection>
 
 	^ BlCompositeSelection new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> defaultSelectionRecorder [
 	<return: #AlbTextEditorSelectionRecorder>
 
 	^ AlbTextEditorSelectionOverwriteRecorder new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> defaultText [
 	<return: #BlText>
 	^ BlRopedText string: ''
 ]
 
-{ #category : 'private - text' }
+{ #category : #'private - text' }
 AlbTextEditor >> delete: aFromTextIndex to: aToTextIndex [
 	"I delete a piece of text within a given text interval without cursor or selection update.
 	Note: cursor or selection location after deletion may be invalid!"
@@ -199,12 +197,12 @@ AlbTextEditor >> delete: aFromTextIndex to: aToTextIndex [
 		delete
 ]
 
-{ #category : 'api - modification' }
+{ #category : #'api - modification' }
 AlbTextEditor >> deleter [
 	^ AlbTextEditorDeleter new editor: self
 ]
 
-{ #category : 'private - text' }
+{ #category : #'private - text' }
 AlbTextEditor >> deselect: aFromTextIndex to: aToTextIndex [
 	"Deselect text within an interval defined by provided from and to indices without any other side effects.
 	Note:
@@ -216,38 +214,38 @@ AlbTextEditor >> deselect: aFromTextIndex to: aToTextIndex [
 		deselect
 ]
 
-{ #category : 'api - modification' }
+{ #category : #'api - modification' }
 AlbTextEditor >> deselecter [
 	<return: #AlbTextEditorDeselecter>
 
 	^ AlbTextEditorDeselecter new editor: self
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> editorShortcuts [
 	<return: #AlbTextEditorShortcuts>
 
 	^ shortcuts
 ]
 
-{ #category : 'commands - processing' }
+{ #category : #'commands - processing' }
 AlbTextEditor >> enqueueCommand: aTextEditorCommand [
 	self deprecated: 'Use #executeCommand since there is not queue management and that the command is directly executed'.
 	self executeCommand: aTextEditorCommand
 ]
 
-{ #category : 'commands - processing' }
+{ #category : #'commands - processing' }
 AlbTextEditor >> enqueueHolderCommand: aTextEditorHolderCommand interval: aTextInterval [
 	self deprecated: 'use directly #notifyItems:event: instead'.
 
 ]
 
-{ #category : 'commands - processing' }
+{ #category : #'commands - processing' }
 AlbTextEditor >> executeCommand: aTextEditorCommand [
 	aTextEditorCommand executeOn: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> globalTextIndexToLocal: aTextIndex [
 
 	self segmentCollector
@@ -260,7 +258,7 @@ AlbTextEditor >> globalTextIndexToLocal: aTextIndex [
 	^ nil
 ]
 
-{ #category : 'text - selection' }
+{ #category : #'text - selection' }
 AlbTextEditor >> hasCursors [
 	"Return true of there is at least one cursor, false otherwise"
 	<return: #Boolean>
@@ -268,12 +266,12 @@ AlbTextEditor >> hasCursors [
 	^ self cursors isNotEmpty
 ]
 
-{ #category : 'event handler attributes' }
+{ #category : #'event handler attributes' }
 AlbTextEditor >> hasEventHandlerAttribute [
 	^ hasEventHandlerAttribute ifNil: [ false ]
 ]
 
-{ #category : 'text - selection' }
+{ #category : #'text - selection' }
 AlbTextEditor >> hasSelection [
 	"Return true of there is at least one selected character, false otherwise"
 	<return: #Boolean>
@@ -281,19 +279,19 @@ AlbTextEditor >> hasSelection [
 	^ self selection isNotEmpty
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> history [
 	<return: #AlbTextEditorHistory>
 	
 	^ history
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> history: aTextEditorHistory [
 	history := aTextEditorHistory
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> initialize [
 
 	super initialize.
@@ -314,7 +312,7 @@ AlbTextEditor >> initialize [
 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> initializeText: aText [
 
 	aText when: BlTextStringsInserted send: #onStringsInserted: to: self.
@@ -323,20 +321,20 @@ AlbTextEditor >> initializeText: aText [
 	aText when: BlTextAttributesRemoved send: #onTextAttributesRemoved: to: self
 ]
 
-{ #category : 'api - filter' }
+{ #category : #'api - filter' }
 AlbTextEditor >> inputFilter [
 	<return: #AlbTextEditorInputFilter>
 
 	^ filter
 ]
 
-{ #category : 'api - filter' }
+{ #category : #'api - filter' }
 AlbTextEditor >> inputFilter: aTextEditorInputFilter [
 
 	filter := aTextEditorInputFilter next: filter
 ]
 
-{ #category : 'private - text' }
+{ #category : #'private - text' }
 AlbTextEditor >> insertString: aString at: aTextIndex [
 
 	self inserter
@@ -348,39 +346,39 @@ AlbTextEditor >> insertString: aString at: aTextIndex [
 		insert
 ]
 
-{ #category : 'api - modification' }
+{ #category : #'api - modification' }
 AlbTextEditor >> inserter [
 	^ AlbTextEditorInserter new editor: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> isFocused [
 	<return: #Boolean>
 
 	^ isFocused
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> itemCount [
 	^ segmentCollector computedSegmentsCount
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> itemIdAt: aPosition [
 	^ (segmentCollector segmentAt: aPosition) index
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> layoutPositionsRange [
 	^ layoutPositionsRange ifNil: [ 0 to: 0 ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> layoutPositionsRange: anInterval [
 	layoutPositionsRange := anInterval
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> limitedSurroundMap [
 	"When inserting some special symbols a text editor should surround a cursor or selection with that symbol"
 
@@ -397,7 +395,7 @@ AlbTextEditor >> limitedSurroundMap [
 		}
 ]
 
-{ #category : 'model protocol' }
+{ #category : #'model protocol' }
 AlbTextEditor >> modeChanged: aMode [
 
 	self deselecter
@@ -406,7 +404,7 @@ AlbTextEditor >> modeChanged: aMode [
 		notifyCursorRemoved
 ]
 
-{ #category : 'text - cursor' }
+{ #category : #'text - cursor' }
 AlbTextEditor >> moveCursorTo: aTextIndex [
 	"Moves cursor to a given position without any further action such as cancelling selection"
 	<event: #AlbCursorMovedEvent>
@@ -416,17 +414,17 @@ AlbTextEditor >> moveCursorTo: aTextIndex [
 		apply
 ]
 
-{ #category : 'api - modification' }
+{ #category : #'api - modification' }
 AlbTextEditor >> navigator [
 	^ AlbTextEditorNavigator new editor: self
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditor >> newSegmentCollector [
 	^ self defaultSegmentCollector
 ]
 
-{ #category : 'private - cursor' }
+{ #category : #'private - cursor' }
 AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 
 	"I select and notify those attributes in the given collection that are within any of the cursors"
@@ -445,47 +443,47 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 				(eachAttribute wantsEvent: anEvent) ifTrue: [ eachAttribute handleEvent: anEvent ] ] ]
 ]
 
-{ #category : 'event firing' }
+{ #category : #'event firing' }
 AlbTextEditor >> notifyDeletedFrom: aFromIndex to: aToIndex [
 	self dispatchEvent: (AlbTextDeletedEvent new
 		fromIndex: aFromIndex;
 		toIndex: aToIndex)
 ]
 
-{ #category : 'event firing' }
+{ #category : #'event firing' }
 AlbTextEditor >> notifyInserted: aText at: aTextIndex [
 	self dispatchEvent: (AlbTextInsertedEvent text: aText at: aTextIndex)
 ]
 
-{ #category : 'event firing' }
+{ #category : #'event firing' }
 AlbTextEditor >> notifySelectionChanged: aSelection [
 
 	self dispatchEvent: (AlbSelectionChangedEvent new selection: aSelection)
 ]
 
-{ #category : 'event firing' }
+{ #category : #'event firing' }
 AlbTextEditor >> notifyShortcutAdded: aShortcut [
 	self dispatchEvent: (AlbShortcutAddedEvent new shortcut: aShortcut)
 ]
 
-{ #category : 'event firing' }
+{ #category : #'event firing' }
 AlbTextEditor >> notifyShortcutRemoved: aShortcut [
 	self dispatchEvent: (AlbShortcutRemovedEvent new shortcut: aShortcut)
 ]
 
-{ #category : 'event firing' }
+{ #category : #'event firing' }
 AlbTextEditor >> notifyTextEdited: aText [
 
 	self dispatchEvent: (AlbTextEditedEvent new text: aText)
 ]
 
-{ #category : 'event firing' }
+{ #category : #'event firing' }
 AlbTextEditor >> notifyTextReplaced: aText [
 
 	self dispatchEvent: (AlbTextReplacedEvent new text: aText)
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 AlbTextEditor >> onAttached: anEditorElement [
 	"sent by the element (from dataSource: )"
 	
@@ -494,7 +492,7 @@ AlbTextEditor >> onAttached: anEditorElement [
 	self notifyChanged
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 
 	"I bind a segment at a given position to the provided segment holder"
@@ -514,7 +512,7 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 	self notifyItemsInserted: (aPosition + 1 to: aPosition + segmentCollector lastIndex - previousLastIndex)
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditor >> onCreateHolder: anEditorElement [ 
 	"Create and return a new segment holder of a given type to be used with provided editor element"
 	<return: #AlbEditorSegmentHolder>
@@ -523,7 +521,7 @@ AlbTextEditor >> onCreateHolder: anEditorElement [
 	^ AlbTextEditorLineSegmentHolder new
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 AlbTextEditor >> onDetached: anEditorElement [
 
 	self removeEventHandlersSuchThat: [ :eventHandler | true ].
@@ -531,7 +529,7 @@ AlbTextEditor >> onDetached: anEditorElement [
 
 ]
 
-{ #category : 'private - focus' }
+{ #category : #'private - focus' }
 AlbTextEditor >> onGotFocus [
 
 	isFocused := true.
@@ -539,7 +537,7 @@ AlbTextEditor >> onGotFocus [
 	self executeCommand: (AlbTextEditorFocusChangedCommand new hasFocus: true)
 ]
 
-{ #category : 'private - focus' }
+{ #category : #'private - focus' }
 AlbTextEditor >> onLostFocus [
 	isFocused := false.
 
@@ -547,19 +545,19 @@ AlbTextEditor >> onLostFocus [
 	self executeCommand: (AlbTextEditorFocusChangedCommand new hasFocus: false).
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 AlbTextEditor >> onShortcutAdded: aShortcut [
 
 	self notifyShortcutAdded: aShortcut
 ]
 
-{ #category : 'hooks' }
+{ #category : #hooks }
 AlbTextEditor >> onShortcutRemoved: aShortcut [
 
 	self notifyShortcutRemoved: aShortcut
 ]
 
-{ #category : 'hooks - text modifications' }
+{ #category : #'hooks - text modifications' }
 AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 
 	"Is sent after a few strings (or one) are inserted in a text model"
@@ -580,7 +578,7 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 	self notifyTextEdited: self privateText
 ]
 
-{ #category : 'hooks - text modifications' }
+{ #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextAttributeAdded: aBlTextAttributeAdded [
 
 	self segmentCollector
@@ -598,7 +596,7 @@ AlbTextEditor >> onTextAttributeAdded: aBlTextAttributeAdded [
 	self notifyAttributesWithinCursor: { aBlTextAttributeAdded attribute }
 ]
 
-{ #category : 'hooks - text modifications' }
+{ #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextAttributesRemoved: aBlTextAttributesRemoved [
 
 	self segmentCollector
@@ -610,7 +608,7 @@ AlbTextEditor >> onTextAttributesRemoved: aBlTextAttributesRemoved [
 		to: aBlTextAttributesRemoved toIndex
 ]
 
-{ #category : 'hooks - text modifications' }
+{ #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextReplaced [
 
 	"Is sent after a text instance is replaced with a new one"
@@ -619,7 +617,7 @@ AlbTextEditor >> onTextReplaced [
 	self notifyTextReplaced: self privateText
 ]
 
-{ #category : 'hooks - text modifications' }
+{ #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
 
 	"Is sent after a piece of text was deleted in a text model"
@@ -639,7 +637,7 @@ AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
 	self notifyTextEdited: self privateText
 ]
 
-{ #category : 'text - copy/paste' }
+{ #category : #'text - copy/paste' }
 AlbTextEditor >> paste [
 	"A paste a text from the clipboard at the current cursor position.
 	I delete any currently selected text and update cursor position"
@@ -650,17 +648,17 @@ AlbTextEditor >> paste [
 		paste
 ]
 
-{ #category : 'api - modification' }
+{ #category : #'api - modification' }
 AlbTextEditor >> paster [
 	^ AlbTextEditorPaster new editor: self
 ]
 
-{ #category : 'private - selection' }
+{ #category : #'private - selection' }
 AlbTextEditor >> prepareSelection [
 	self selectionRecorder prepare: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> privateText [
 	"Return a current text in the text editor. All modification to the text
 	are reflected in the UI of the editor. For this reason I must only be
@@ -672,7 +670,7 @@ AlbTextEditor >> privateText [
 	^ text
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> privateText: aText [ 
 
 	text == aText ifTrue: [ ^ self ].
@@ -681,7 +679,7 @@ AlbTextEditor >> privateText: aText [
 	self restoreText: aText
 ]
 
-{ #category : 'private - cursor' }
+{ #category : #'private - cursor' }
 AlbTextEditor >> processCursorAttributes [
 	"I search for the attributes within the whole text that contain (or not contain) any of the cursors and notify about it"
 	| anEnteredEvent aLeavedEvent eventHandlingAttributesOutside eventHandlingAttributesInside |
@@ -724,7 +722,7 @@ AlbTextEditor >> processCursorAttributes [
 			ifTrue: [ eachAttribute handleEvent: anEnteredEvent ] ]
 ]
 
-{ #category : 'private - selection' }
+{ #category : #'private - selection' }
 AlbTextEditor >> recordDeselection: aMonotoneTextSelection [
 	self selectionRecorder deselect: aMonotoneTextSelection in: self.
 	
@@ -734,7 +732,7 @@ AlbTextEditor >> recordDeselection: aMonotoneTextSelection [
 	self moveCursorTo: (self selection + self selectionRecorder selection) to
 ]
 
-{ #category : 'private - selection' }
+{ #category : #'private - selection' }
 AlbTextEditor >> recordSelection: aMonotoneTextSelection [
 	self selectionRecorder select: aMonotoneTextSelection in: self.
 
@@ -744,12 +742,12 @@ AlbTextEditor >> recordSelection: aMonotoneTextSelection [
 	self moveCursorTo: (self selection + self selectionRecorder selection) to
 ]
 
-{ #category : 'text - undo/redo' }
+{ #category : #'text - undo/redo' }
 AlbTextEditor >> redo [
 	history redoOn: self
 ]
 
-{ #category : 'event handler attributes' }
+{ #category : #'event handler attributes' }
 AlbTextEditor >> registerEventHandlerAttribute: anEventHandlerattribute from: aFromIndex to: aToIndex [
 	| eventHandlers |
 	hasEventHandlerAttribute := true.
@@ -758,31 +756,31 @@ AlbTextEditor >> registerEventHandlerAttribute: anEventHandlerattribute from: aF
 	eventHandlers do: [ :eachHandler | self addEventHandler: (BlEventForwarder forwardTo: eachHandler from: anEventHandlerattribute) ]	
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> removeAllEditorShortcuts [
 	self editorShortcuts
 		removeAllShortcutsAndDo: [ :aPreviousShortcut | self onShortcutRemoved: aPreviousShortcut ]
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> removeEditorShortcut: aTextEditorShortcut [
 	self editorShortcuts
 		remove: aTextEditorShortcut
 		ifFound: [ :aPreviousShortcut | self onShortcutRemoved: aPreviousShortcut ]
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> removeEditorShortcuts: aCollectionOfTextEditorShortcut [
 	aCollectionOfTextEditorShortcut do: [ :eachShortcut | self removeEditorShortcut: eachShortcut ]
 ]
 
-{ #category : 'api - save state' }
+{ #category : #'api - save state' }
 AlbTextEditor >> restoreState: aTextEditorMemento [
 
 	aTextEditorMemento restoreStateOf: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> restoreText: aText [
 
 	"before changing the text we must unsubscribe from existing one"
@@ -808,28 +806,28 @@ AlbTextEditor >> restoreText: aText [
 	self notifyChanged
 ]
 
-{ #category : 'api - save state' }
+{ #category : #'api - save state' }
 AlbTextEditor >> saveState [
 	<return: #AlbTextEditorMemento>
 	
 	^ (AlbTextEditorCompositeMemento new all) saveStateOf: self
 ]
 
-{ #category : 'api - save state' }
+{ #category : #'api - save state' }
 AlbTextEditor >> saveState: aTextEditorMemento [
 	<return: #AlbTextEditorMemento>
 	
 	^ aTextEditorMemento saveStateOf: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> segmentCollector [
 	<return: #AlbTextEditorSegmentCollector>
 
 	^ segmentCollector
 ]
 
-{ #category : 'private - text' }
+{ #category : #'private - text' }
 AlbTextEditor >> select: aFromTextIndex to: aToTextIndex [
 	"Select text within an interval defined by provided from and to indices without any other side effects.
 	Note:
@@ -842,7 +840,7 @@ AlbTextEditor >> select: aFromTextIndex to: aToTextIndex [
 		select
 ]
 
-{ #category : 'text - selection' }
+{ #category : #'text - selection' }
 AlbTextEditor >> selectNone [
 	"Deselect the whole text in the editor without any other side effects.
 	Note:
@@ -857,7 +855,7 @@ AlbTextEditor >> selectNone [
 		to: self selection to
 ]
 
-{ #category : 'text - selection' }
+{ #category : #'text - selection' }
 AlbTextEditor >> selectedText [
 
 	<return: #BlText>
@@ -866,35 +864,35 @@ AlbTextEditor >> selectedText [
 		  ifFalse: [ self privateText from: 1 to: 0]
 ]
 
-{ #category : 'api - modification' }
+{ #category : #'api - modification' }
 AlbTextEditor >> selecter [
 	<return: #AlbTextEditorSelecter>
 
 	^ AlbTextEditorSelecter new editor: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> selection [
 	<return: #BlSelection>
 
 	^ selection
 ]
 
-{ #category : 'private - selection' }
+{ #category : #'private - selection' }
 AlbTextEditor >> selection: aTextSelection [
 	selection := aTextSelection.
 	
 	self notifySelectionChanged: selection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> selectionRecorder [
 	<return: #AlbTextEditorSelectionRecorder>
 
 	^ selectionRecorder
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 
 	self removeAllEditorShortcuts.
@@ -902,7 +900,7 @@ AlbTextEditor >> setEditorShortcuts: aTextEditorShortcuts [
 	shortcuts do: [ :aNewEditorShortcut | self onShortcutAdded: aNewEditorShortcut ]
 ]
 
-{ #category : 'api - shortcuts' }
+{ #category : #'api - shortcuts' }
 AlbTextEditor >> surroundMap [
 	"When inserting some special symbols a text editor should surround a cursor or selection with that symbol"
 
@@ -921,7 +919,7 @@ AlbTextEditor >> surroundMap [
 		}
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> text [
 	"Return a current text in the text editor. All modification to the text
 	are reflected in the UI of the editor. For this reason I must only be
@@ -937,7 +935,7 @@ AlbTextEditor >> text [
 	^ text
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> text: aText [ 
 
 	self
@@ -949,7 +947,7 @@ AlbTextEditor >> text: aText [
 	self privateText: aText
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> textSnapshot [
 	"Return a snaphost (copy) of the current text.
 	I am safe to use from a non-UI thread because the returned text is independent from the
@@ -959,7 +957,7 @@ AlbTextEditor >> textSnapshot [
 	^ text copy
 ]
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 AlbTextEditor >> uiProcess [
 
 	| element space |
@@ -973,21 +971,21 @@ AlbTextEditor >> uiProcess [
 	^ nil
 ]
 
-{ #category : 'text - undo/redo' }
+{ #category : #'text - undo/redo' }
 AlbTextEditor >> undo [
 	history undoOn: self
 ]
 
-{ #category : 'event handler attributes' }
+{ #category : #'event handler attributes' }
 AlbTextEditor >> unregisterEventHandlerAttribute: anEventHandlerattribute from: aFromIndex to: aToIndex [
 ]
 
-{ #category : 'event handler attributes' }
+{ #category : #'event handler attributes' }
 AlbTextEditor >> unregisterEventHandlerAttributesFrom: aFromIndex to: aToIndex [
 	Transcript show: 'unregisterEventHandlerAttributesFrom: ', aFromIndex printString, ' to: ', aToIndex printString; cr.
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 AlbTextEditor >> updateSelection: aFromTextIndex to: aToTextIndex [
 	"Update text rendering within an interval defined by provided from and to indices."
 	| aCommand |
@@ -998,21 +996,21 @@ AlbTextEditor >> updateSelection: aFromTextIndex to: aToTextIndex [
 	self executeCommand: aCommand
 ]
 
-{ #category : 'api - modification' }
+{ #category : #'api - modification' }
 AlbTextEditor >> updater [
 	<return: #AlbTextEditorUpdater>
 
 	^ AlbTextEditorUpdater new editor: self
 ]
 
-{ #category : 'view configuration' }
+{ #category : #'view configuration' }
 AlbTextEditor >> whenTextEditedDo: aBlock [
 
 	self deprecated: 'Use directly when: AlbTextEditedEvent do: instead'. 
 	self when: AlbTextEditedEvent do: aBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditor >> withoutCacheLimit [
 	 self cacheSize: -1
 ]

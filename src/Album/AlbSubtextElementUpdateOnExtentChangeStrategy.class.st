@@ -1,16 +1,14 @@
 Class {
-	#name : 'AlbSubtextElementUpdateOnExtentChangeStrategy',
-	#superclass : 'AlbSubtextElementUpdateStrategy',
+	#name : #AlbSubtextElementUpdateOnExtentChangeStrategy,
+	#superclass : #AlbSubtextElementUpdateStrategy,
 	#instVars : [
 		'extentHandler',
 		'scrollHandler'
 	],
-	#category : 'Album-UI-Text-Portion',
-	#package : 'Album',
-	#tag : 'UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion'
 }
 
-{ #category : 'api - install/uninstall  hook' }
+{ #category : #'api - install/uninstall  hook' }
 AlbSubtextElementUpdateOnExtentChangeStrategy >> onInstalledIn: aSubTextElement [
 
 	super onInstalledIn: aSubTextElement.
@@ -22,7 +20,7 @@ AlbSubtextElementUpdateOnExtentChangeStrategy >> onInstalledIn: aSubTextElement 
 
 ]
 
-{ #category : 'api - install/uninstall  hook' }
+{ #category : #'api - install/uninstall  hook' }
 AlbSubtextElementUpdateOnExtentChangeStrategy >> onUninstalledIn: aSubTextElement [
 
 	aSubTextElement editorElement infinite removeEventHandler: extentHandler.

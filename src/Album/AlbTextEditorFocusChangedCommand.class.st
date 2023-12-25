@@ -1,15 +1,13 @@
 Class {
-	#name : 'AlbTextEditorFocusChangedCommand',
-	#superclass : 'AlbTextEditorCommand',
+	#name : #AlbTextEditorFocusChangedCommand,
+	#superclass : #AlbTextEditorCommand,
 	#instVars : [
 		'hasFocus'
 	],
-	#category : 'Album-Commands',
-	#package : 'Album',
-	#tag : 'Commands'
+	#category : 'Album-Commands'
 }
 
-{ #category : 'executing' }
+{ #category : #executing }
 AlbTextEditorFocusChangedCommand >> executeOn: aTextEditor [
 	
 	"send to all visible segment holders"
@@ -17,17 +15,17 @@ AlbTextEditorFocusChangedCommand >> executeOn: aTextEditor [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorFocusChangedCommand >> hasFocus [
 	^ hasFocus
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorFocusChangedCommand >> hasFocus: anObject [
 	hasFocus := anObject
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorFocusChangedCommand >> newHolderEvent [
 	^ AlbTextEditorFocusChangedHolderEvent new
 		hasFocus: self hasFocus

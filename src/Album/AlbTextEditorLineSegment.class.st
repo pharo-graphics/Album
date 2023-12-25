@@ -1,18 +1,16 @@
 Class {
-	#name : 'AlbTextEditorLineSegment',
-	#superclass : 'AlbTextEditorSegment',
+	#name : #AlbTextEditorLineSegment,
+	#superclass : #AlbTextEditorSegment,
 	#instVars : [
 		'pieces',
 		'lineSpacing',
 		'wordPadding',
 		'paragraphMargin'
 	],
-	#category : 'Album-Model-Segment-Text-Line',
-	#package : 'Album',
-	#tag : 'Model-Segment-Text-Line'
+	#category : 'Album-Model-Segment-Text-Line'
 }
 
-{ #category : 'pieces - computation' }
+{ #category : #'pieces - computation' }
 AlbTextEditorLineSegment >> clearCache [
 	"Clear all caches and make this segment fresh as if it would just be created and initalized"
 	super clearCache.
@@ -20,28 +18,28 @@ AlbTextEditorLineSegment >> clearCache [
 	pieces := nil
 ]
 
-{ #category : 'pieces - computation' }
+{ #category : #'pieces - computation' }
 AlbTextEditorLineSegment >> computedPieces [
 
 	<return: #SequenceableCollection of:	#AlbTextEditorAbstractSegmentPiece>
 	^ self newSplitter splitSegment: self
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorLineSegment >> hasPieces [
 	<return: #Boolean>
 
 	^ pieces isNotNil
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorLineSegment >> initialize [
 	super initialize.
 
 	self resetProperties
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorLineSegment >> isLastTextPiece: aSegmentPiece [
 	<return: #Boolean>
 	
@@ -54,19 +52,19 @@ AlbTextEditorLineSegment >> isLastTextPiece: aSegmentPiece [
 	^ false
 ]
 
-{ #category : 'attributes - paragraph' }
+{ #category : #'attributes - paragraph' }
 AlbTextEditorLineSegment >> lineSpacing [
 	<return: #Number>
 
 	^ lineSpacing
 ]
 
-{ #category : 'attributes - paragraph' }
+{ #category : #'attributes - paragraph' }
 AlbTextEditorLineSegment >> lineSpacing: aNumber [
 	lineSpacing := aNumber
 ]
 
-{ #category : 'text - modifications' }
+{ #category : #'text - modifications' }
 AlbTextEditorLineSegment >> moveTextBy: aNumber [
 	super moveTextBy: aNumber.
 
@@ -78,7 +76,7 @@ AlbTextEditorLineSegment >> moveTextBy: aNumber [
 		do: [ :aTextPiece | aTextPiece start: aTextPiece textStart + aNumber end: aTextPiece textEnd + aNumber ]
 ]
 
-{ #category : 'text - modifications' }
+{ #category : #'text - modifications' }
 AlbTextEditorLineSegment >> moveTextPiecesBy: aNumber at: aTextIndex [
 	"aTextIndex is a Text index, not a cursor one!"
 	| aCursorIndex |
@@ -123,26 +121,26 @@ AlbTextEditorLineSegment >> moveTextPiecesBy: aNumber at: aTextIndex [
 										end: aCursorIndex + ((aTextPiece textEnd - aCursorIndex - aNumber abs) max: 0) ] ] ] ]
 ]
 
-{ #category : 'pieces - computation' }
+{ #category : #'pieces - computation' }
 AlbTextEditorLineSegment >> newSplitter [
 
 	^ AlbTextEditorLineSegmentSplitter new
 		  beSeparatorBased; yourself
 ]
 
-{ #category : 'attributes - paragraph' }
+{ #category : #'attributes - paragraph' }
 AlbTextEditorLineSegment >> paragraphMargin [
 	<return: #BlInsets>
 
 	^ paragraphMargin
 ]
 
-{ #category : 'attributes - paragraph' }
+{ #category : #'attributes - paragraph' }
 AlbTextEditorLineSegment >> paragraphMargin: aBlInsets [
 	paragraphMargin := aBlInsets
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorLineSegment >> pieces [
 	<return: #Array of: #AlbTextEditorAbstractSegmentPiece>
 
@@ -151,14 +149,14 @@ AlbTextEditorLineSegment >> pieces [
 		ifFalse: [ pieces := self computedPieces ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorLineSegment >> resetProperties [
 	lineSpacing := 0.
 	wordPadding := BlInsets empty.
 	paragraphMargin := BlInsets empty.
 ]
 
-{ #category : 'text - modifications' }
+{ #category : #'text - modifications' }
 AlbTextEditorLineSegment >> updateSegmentProperties [
 	| theParagraphAttributes |
 	
@@ -169,14 +167,14 @@ AlbTextEditorLineSegment >> updateSegmentProperties [
 		aParagraphAttribute applyOn: self ]
 ]
 
-{ #category : 'attributes - paragraph' }
+{ #category : #'attributes - paragraph' }
 AlbTextEditorLineSegment >> wordPadding [
 	<return: #BlInsets>
 
 	^ wordPadding
 ]
 
-{ #category : 'attributes - paragraph' }
+{ #category : #'attributes - paragraph' }
 AlbTextEditorLineSegment >> wordPadding: aBlInsets [
 	wordPadding := aBlInsets
 ]

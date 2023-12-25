@@ -15,22 +15,20 @@ See AlbTextEditorSurroundDefinition for more information.
 The size of the collection is assumed to be small, so a simple search is done instead of using a Dictionary.
 "
 Class {
-	#name : 'AlbTextEditorSurroundMap',
-	#superclass : 'Object',
+	#name : #AlbTextEditorSurroundMap,
+	#superclass : #Object,
 	#instVars : [
 		'definitions'
 	],
-	#category : 'Album-Model-Operators',
-	#package : 'Album',
-	#tag : 'Model-Operators'
+	#category : 'Album-Model-Operators'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorSurroundMap class >> newFromArray: anArrayOfArray [
 	^ self newFromArrays: { anArrayOfArray }
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorSurroundMap class >> newFromArrays: anArrayOfArray [
 	"When inserting some special symbols a text editor should surround a cursor or selection with that symbol
 	anArrayOfArray is:
@@ -46,19 +44,19 @@ AlbTextEditorSurroundMap class >> newFromArrays: anArrayOfArray [
 	^ self new addDefinitions: theDefinitions.
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 AlbTextEditorSurroundMap >> addDefinition: aTextEditorSurroundDefinition [
 
 	definitions := definitions copyWith: aTextEditorSurroundDefinition
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 AlbTextEditorSurroundMap >> addDefinitions: anArray [
 
 	definitions := definitions, anArray
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundMap >> associations [
 	"Answer an array of openCharacter -> closeCharacter associations"
 
@@ -66,7 +64,7 @@ AlbTextEditorSurroundMap >> associations [
 		definition openCharacter -> definition closeCharacter ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundMap >> closingFor: aCharacter ifPresent: presentBlock ifAbsent: absentBlock [
 	"Answer the matching closing character for the supplied opening character"
 	| definition |
@@ -77,7 +75,7 @@ AlbTextEditorSurroundMap >> closingFor: aCharacter ifPresent: presentBlock ifAbs
 	^presentBlock value: definition closeCharacter.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundMap >> closingFor: aCharacter in: anOperator at: anIndex ifPresent: presentBlock ifAbsent: absentBlock [
 	"Answer the matching closing character for the supplied opening character.
 	If the receiver has a condition block that evaluates to false, execute the absentBlock."
@@ -92,19 +90,19 @@ AlbTextEditorSurroundMap >> closingFor: aCharacter in: anOperator at: anIndex if
 	^presentBlock value: definition closeCharacter.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundMap >> definitions [
 	^definitions
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorSurroundMap >> initialize [ 
 
 	super initialize.
 	definitions := #().
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundMap >> intervalBetweenDelimitersIn: aText at: aPosition ifPresent: aBlockWithIntervalArg ifAbsent: anAbsentBlock [
 
 	" if aString at aPosition is just after of just before a delimiter, then look for the opposite delimiter. If found, then aBlockWithIntervalArg is runned with the interval between delimiters as argument else, anAbsentBlock is runned "
@@ -133,7 +131,7 @@ AlbTextEditorSurroundMap >> intervalBetweenDelimitersIn: aText at: aPosition ifP
 				                                  ifAbsent: [ ^ anAbsentBlock value ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSurroundMap >> openingFor: aCharacter ifPresent: presentBlock ifAbsent: absentBlock [
 	"Answer the matching opening character for the supplied closing character"
 	| definition |
@@ -144,7 +142,7 @@ AlbTextEditorSurroundMap >> openingFor: aCharacter ifPresent: presentBlock ifAbs
 	^presentBlock value: definition openCharacter.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorSurroundMap >> positionOf: aDelim from: startDelim startingAt: aPosition in: aText forward: aBoolean [
 	" scan into a text aText, forward or backward, to search the position of aDelim which is the opposite delim of startDelim."
 	| level here hereChar incr |
@@ -167,7 +165,7 @@ AlbTextEditorSurroundMap >> positionOf: aDelim from: startDelim startingAt: aPos
 	^ 0
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorSurroundMap >> positionOfClosingDelimiter: aDelim startingAt: aPosition in: aText [
 
 	" return the position of the closing delim aDelim "
@@ -182,7 +180,7 @@ AlbTextEditorSurroundMap >> positionOfClosingDelimiter: aDelim startingAt: aPosi
 		  forward: true
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorSurroundMap >> positionOfOpeningDelimiter: aDelim startingAt: aPosition in: aText [
 
 	" return the position of the opening delim aDelim "

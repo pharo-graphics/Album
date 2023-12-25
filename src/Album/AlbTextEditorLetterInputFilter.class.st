@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbTextEditorLetterInputFilter',
-	#superclass : 'AlbTextEditorInputFilterDecorator',
-	#category : 'Album-Model-Input-filters',
-	#package : 'Album',
-	#tag : 'Model-Input-filters'
+	#name : #AlbTextEditorLetterInputFilter,
+	#superclass : #AlbTextEditorInputFilterDecorator,
+	#category : 'Album-Model-Input-filters'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorLetterInputFilter >> filter: aString [
 	<return: #String>
 	

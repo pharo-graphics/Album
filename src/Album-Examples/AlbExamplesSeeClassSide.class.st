@@ -1,26 +1,24 @@
 Class {
-	#name : 'AlbExamplesSeeClassSide',
-	#superclass : 'Object',
+	#name : #AlbExamplesSeeClassSide,
+	#superclass : #Object,
 	#classVars : [
 		'BigString'
 	],
-	#category : 'Album-Examples-TRY-HERE',
-	#package : 'Album-Examples',
-	#tag : 'TRY-HERE'
+	#category : #'Album-Examples-TRY-HERE'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExamplesSeeClassSide class >> ascent [
 	^ -20
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> bigString [
 	"1000000000 is 1Go, ~200 000 pages in LibreOffice - 3 600 000 lines on TextMaker "
 	^ BigString ifNil: [ BigString := String loremIpsum: 1000000000 ]
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> bigStringFromFile [
 	" self bigStringFromFile "
 
@@ -32,7 +30,7 @@ AlbExamplesSeeClassSide class >> bigStringFromFile [
 	stream close
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> bigStringToFile [
 	" self bigStringToFile "
 
@@ -44,18 +42,18 @@ AlbExamplesSeeClassSide class >> bigStringToFile [
 	stream close
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> cleanUp [ 
 	super cleanUp.
 	BigString := nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExamplesSeeClassSide class >> descent [
 	^ 20
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> embeddedFontsText [
 
 	"
@@ -121,7 +119,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	^ text
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 
 	| ed space text |
@@ -145,7 +143,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 	^ ed
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 
 	| ed space text size start |
@@ -155,26 +153,37 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 	ed text: text.
 	size := 10.
 	start := 1.
-	1 to: 25 do: [ :pos | | deco  |
-		deco := (AlbSubtextElement editorElement: ed) interval: (start to: start + size); yourself.
+	1 to: 25 do: [ :pos |
+		| deco |
+		deco := (AlbSubtextElement editorElement: ed)
+			        interval: (start to: start + size);
+			        yourself.
 		deco withExtentChangeAdaption.
 		deco background: (Color random alpha: 0.4).
-		deco border: (BlBorder empty).
-		deco when: BlClickEvent do: [ :event | event currentTarget removeFromParent ].
-		deco when: BlMouseEnterEvent do: [ :event | event currentTarget border: (BlBorder paint: Color black width: 1) ].
-		deco when: BlMouseLeaveEvent do: [ :event | event currentTarget border: (BlBorder empty) ].
+		deco border: BlBorder empty.
+		deco addEventHandler: (BlEventHandler
+				 on: BlClickEvent
+				 do: [ :event | event currentTarget removeFromParent ]).
+		deco addEventHandler: (BlEventHandler
+				 on: BlMouseEnterEvent
+				 do: [ :event |
+					 event currentTarget border:
+						 (BlBorder paint: Color black width: 1) ]).
+		deco addEventHandler: (BlEventHandler
+				 on: BlMouseLeaveEvent
+				 do: [ :event | event currentTarget border: BlBorder empty ]).
 		ed frontLayer addChild: deco.
 		start := start + size + 5 ].
 
 	space := BlSpace new.
 	space root addChild: ed.
 	space title: 'editor'.
-	space extent: 400@200.
+	space extent: 400 @ 200.
 	space show.
 	^ ed
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 
 	| ed space |
@@ -190,7 +199,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithoutAnyDresser [
 	^ ed
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
 	| ed vscrollBar space text |
@@ -213,9 +222,8 @@ AlbExamplesSeeClassSide class >> example_EditorPharoChangesText [
 
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithAllFonts [
-
 	"
 AeFontSlant: normal italic oblique.
 AeFontWeight: black bold extraBlack extraBold extraLight light medium normal semiBold semiLight thin
@@ -223,17 +231,19 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 "
 
 	| aManager allSlants allWeights allStreches root text child allChars vscrollBar |
-	allChars := 'azertyuiopqsdfghjklmwxcvbn' , String cr , 'AZERTYUIOPQSDFGHJKLMWXCVBN' , String cr , '1234567890'
-	            , String cr , '@&é"''(§è!çà)-#°_¨*%£+/.?' , String cr , '€^$`ù=:;,~|'.
+	allChars := 'azertyuiopqsdfghjklmwxcvbn' , String cr
+	            , 'AZERTYUIOPQSDFGHJKLMWXCVBN' , String cr , '1234567890'
+	            , String cr , '@&é"''(§è!çà)-#°_¨*%£+/.?' , String cr
+	            , '€^$`ù=:;,~|'.
 	AeFontManager resetGlobalInstance.
-	aManager := AeFontManager globalInstance .
+	aManager := AeFontManager globalInstance.
 	aManager scanEmbeddedFonts.
 	aManager scanDefaultDirectories.
-	allSlants := { 
+	allSlants := {
 		             BlFontSlant normal.
 		             BlFontSlant italic.
 		             BlFontSlant oblique }.
-	allWeights := { 
+	allWeights := {
 		              BlFontWeight normal.
 		              BlFontWeight light.
 		              BlFontWeight extraLight.
@@ -244,7 +254,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 		              BlFontWeight black.
 		              BlFontWeight extraBlack.
 		              BlFontWeight thin }.
-	allStreches := { 
+	allStreches := {
 		               BlFontStretch normal.
 		               BlFontStretch condensed.
 		               BlFontStretch semiCondensed.
@@ -255,21 +265,21 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 		               BlFontStretch extraExpanded.
 		               BlFontStretch ultraExpanded }.
 
-	root := BlElement new constraintsDo: [ :c | 
+	root := BlElement new constraintsDo: [ :c |
 		        c vertical matchParent.
 		        c horizontal matchParent ].
 	text := '' asRopedText.
-	aManager familyNames do: [ :fname | 
-		allSlants do: [ :slant | 
-			allWeights do: [ :weight | 
-				allStreches do: [ :strech | 
+	aManager familyNames do: [ :fname |
+		allSlants do: [ :slant |
+			allWeights do: [ :weight |
+				allStreches do: [ :strech |
 					(aManager
 						 detectFamilyName: fname
 						 slant: (AeFontSlant perform: slant name asSymbol)
 						 weight: (AeFontWeight perform: weight name asSymbol)
 						 stretch: (AeFontStretch perform: strech name asSymbol)
-						 ifNone: [  ]) in: [ :face | 
-						face ifNotNil: [ 
+						 ifNone: [  ]) in: [ :face |
+						face ifNotNil: [
 							| fontBuilder t |
 							fontBuilder := BlTextFontAndStyleBuilder new.
 							fontBuilder familyName: fname.
@@ -280,23 +290,24 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 							t := allChars copy asRopedText.
 							fontBuilder font applyOnText: t.
 							text append:
-								(String cr , String cr , String cr , fname , ' slant: ' , slant name , ' weight: ' , weight name , ' strech: '
+								(String cr , String cr , String cr , fname , ' slant: '
+								 , slant name , ' weight: ' , weight name , ' strech: '
 								 , strech name , ' ' , String cr , String cr) asRopedText.
 							text append: t ] ] ] ] ] ].
 	child := text onAlbum.
 	vscrollBar := BlVerticalScrollbarElement new.
 	vscrollBar constraintsDo: [ :c |
-			c ignoreByLayout.
-			c margin: (BlInsets right: 2).
-			c ignored horizontal alignRight.
-			c ignored vertical alignBottom]. 
+		c ignoreByLayout.
+		c margin: (BlInsets right: 2).
+		c ignored horizontal alignRight.
+		c ignored vertical alignBottom ].
 	vscrollBar attachTo: child infinite.
 	root addChild: child.
 	root addChild: vscrollBar.
-	root openInOBlSpace
+	root openInSpace
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 
 	| ed |
@@ -310,7 +321,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithBigText [
 	ed openInSpace
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithDynamicAttribute [
 "
 broken in GlamorousToolKit but what to do with that ?
@@ -374,7 +385,7 @@ broken in GlamorousToolKit but what to do with that ?
 	^ text
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithEmbeddedFonts [
 
 	"
@@ -393,7 +404,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	root openInOBlSpace
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 
 	| ed space hscrollBar |
@@ -418,7 +429,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithLorem [
 	^ed
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 
 	| aText ed |
@@ -432,7 +443,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 	ed openInSpace
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 
 	| ed t |
@@ -447,7 +458,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 	ed openInOBlSpace
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 
 	| ed tgca tgcaText colorIndex vscrollBar space |
@@ -487,7 +498,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithTGCA [
 	
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 
 	(' Default font and size' asRopedText
@@ -499,7 +510,7 @@ AlbExamplesSeeClassSide class >> example_RopedTextWithDifferentFontSize [
 		openInSpace
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 
 	| text styler editorElement space clickText hoverText |
@@ -530,7 +541,7 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 	space show
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 
 	| ed space |
@@ -542,7 +553,7 @@ AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 	space show
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithCrOnly [
 
 	| ed space |
@@ -554,7 +565,7 @@ AlbExamplesSeeClassSide class >> example_WithCrOnly [
 	space show
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 
 	| ed space |
@@ -565,7 +576,7 @@ AlbExamplesSeeClassSide class >> example_WithCrWithCrLf [
 	space show
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
 	| ed space |
@@ -575,7 +586,7 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 	space show
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithEmptyTextFitContents [
 
 	| ed space |
@@ -591,7 +602,7 @@ self flag: 'does not work'.
 	space show
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 
 	| ed space text editor |
@@ -605,27 +616,27 @@ AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 	space show
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbExamplesSeeClassSide class >> glyphHeight [
 	^ self ascent abs + self descent
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbExamplesSeeClassSide class >> glyphWidth [
 	^ 30
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbExamplesSeeClassSide class >> lineSpacing [
 	^ 5
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbExamplesSeeClassSide class >> paragraphMargin [
 	^ BlInsets all: 15
 ]
 
-{ #category : 'editor examples' }
+{ #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> tgcaString [
 	^ 'ATTAAAGGTTTATACCTTCCCAGGTAACAAACCAACCAACTTTCGATCTCTTGTAGATCTGTTCTCTAAACGAACTT
 AACATAGCAGTGGTGTTACCCGTGAACTCATGCGTGAGCTTAACGGAGGGGCATACACTCGCTATGTCGATAACAAC
@@ -699,11 +710,11 @@ GAGAAAACACACGTCCAACTCAGTTTGCCTGTTTTACAGGTTCGCGACGTGCTCGTACGTGGCTTTGGAGACTCCGT
 GGAGGAGGTCTTATCAGAGGCACGTCAACATCTTAAAGATGGCACTTGTGGCTTAGTAGAAGTTGAAAAAGGCGTTT'
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbExamplesSeeClassSide class >> wordPadding [
 	^ BlInsets top: 3 bottom: 3
 ]
 
-{ #category : 'see class side' }
+{ #category : #'see class side' }
 AlbExamplesSeeClassSide >> seeClassSide [
 ]

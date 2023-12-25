@@ -4,18 +4,16 @@ I am an attribute which when applied on a text visually replaces some parts of i
 See `AlbTextEditorAdornmentsExamples`
 "
 Class {
-	#name : 'AlbTextAdornmentAttribute',
-	#superclass : 'BlTextAttribute',
+	#name : #AlbTextAdornmentAttribute,
+	#superclass : #BlTextAttribute,
 	#instVars : [
 		'shouldAppend',
 		'renderingStrategy'
 	],
-	#category : 'Album-Attributes',
-	#package : 'Album',
-	#tag : 'Attributes'
+	#category : 'Album-Attributes'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> affect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #SequenceableCollection of: #BlElement>
@@ -23,27 +21,27 @@ AlbTextAdornmentAttribute >> affect: aTTextEditorTextualPiece in: anEditorElemen
 	^ self renderingStrategy affect: aTTextEditorTextualPiece in: anEditorElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> beAppend [
 	shouldAppend := true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> beLazy [
 	self renderingStrategy: AlbTextAdornmentAttributeTaskItRenderingStrategy new.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> beReplace [
 	shouldAppend := false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> beSync [
 	self renderingStrategy: AlbTextAdornmentAttributeSyncRenderingStrategy new.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #SequenceableCollection of: #BlElement>
@@ -51,7 +49,7 @@ AlbTextAdornmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 	^ self subclassResponsibility
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextAdornmentAttribute >> initialize [
 	super initialize.
 	
@@ -59,12 +57,12 @@ AlbTextAdornmentAttribute >> initialize [
 	self renderingStrategy: AlbTextAdornmentAttributeSyncRenderingStrategy new.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextAdornmentAttribute >> initializeLazyElement: aBlLazyElement [
 	"Subclasses can initialize the element"
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextAdornmentAttribute >> isAdornment [
 	"Return true if attribute influences text structure, for examples if it replaces one or more characters
 	with any amount of other arbitrary items, false otherwise"
@@ -73,7 +71,7 @@ AlbTextAdornmentAttribute >> isAdornment [
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextAdornmentAttribute >> isFocusable [
 	"Return true if an element (but not its children) created by the adornment attribute can be focused"
 	<return: #Boolean>
@@ -81,27 +79,27 @@ AlbTextAdornmentAttribute >> isFocusable [
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextAdornmentAttribute >> isStyle [
 	"I am not a text style related attribute"
 
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextAdornmentAttribute >> mayHaveExternalReferences [
 	"Answer if this attribute can have references to some external objects like AST nodes or computation results"
 
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> renderingStrategy [
 	<return: #AlbTextAdornmentAttributeRenderingStrategy>
 	^ renderingStrategy
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttribute >> renderingStrategy: aTextAdornmentAttributeRenderingStrategy [
 	self 
 		assert: [ aTextAdornmentAttributeRenderingStrategy isNotNil ] 
@@ -110,17 +108,17 @@ AlbTextAdornmentAttribute >> renderingStrategy: aTextAdornmentAttributeRendering
 	renderingStrategy := aTextAdornmentAttributeRenderingStrategy
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextAdornmentAttribute >> shouldAppend [
 	^ shouldAppend
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextAdornmentAttribute >> shouldReplace [
 	^ shouldAppend not
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 AlbTextAdornmentAttribute >> storeOn: aStream [
 	super storeOn: aStream.
 	
@@ -130,7 +128,7 @@ AlbTextAdornmentAttribute >> storeOn: aStream [
 		ifFalse: [ #beReplace ]) asString
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 AlbTextAdornmentAttribute >> type [
 	^ self
 ]

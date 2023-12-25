@@ -2,23 +2,21 @@
 I add utility methods related to fixed text measurer
 "
 Trait {
-	#name : 'TAlbTextEditorFixedMeasurerExamples',
-	#category : 'Album-Examples-Editor',
-	#package : 'Album-Examples',
-	#tag : 'Editor'
+	#name : #TAlbTextEditorFixedMeasurerExamples,
+	#category : 'Album-Examples-Editor'
 }
 
-{ #category : 'private - font metrics' }
+{ #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> ascent [
 	^ -20
 ]
 
-{ #category : 'private - font metrics' }
+{ #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> descent [
 	^ 20
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 TAlbTextEditorFixedMeasurerExamples >> editorFor: aText [
 	<return: #AlbEditorElement>
 	| anEditor aRopedText |
@@ -48,7 +46,7 @@ TAlbTextEditorFixedMeasurerExamples >> editorFor: aText [
 	^ anEditor
 ]
 
-{ #category : 'private - instance creation' }
+{ #category : #'private - instance creation' }
 TAlbTextEditorFixedMeasurerExamples >> fixedMeasurer [
 	^ BlSpartaTextElementMockedMeasurer new
 		ascent: self ascent;
@@ -57,27 +55,27 @@ TAlbTextEditorFixedMeasurerExamples >> fixedMeasurer [
 		glyphHeight: self glyphHeight
 ]
 
-{ #category : 'private - font metrics' }
+{ #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> glyphHeight [
 	^ self ascent abs + self descent
 ]
 
-{ #category : 'private - font metrics' }
+{ #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> glyphWidth [
 	^ 30
 ]
 
-{ #category : 'private - font metrics' }
+{ #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> lineSpacing [
 	^ 5
 ]
 
-{ #category : 'private - font metrics' }
+{ #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> paragraphMargin [
 	^ BlInsets all: 15
 ]
 
-{ #category : 'private - font metrics' }
+{ #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> wordPadding [
 	^ BlInsets top: 3 bottom: 3
 ]

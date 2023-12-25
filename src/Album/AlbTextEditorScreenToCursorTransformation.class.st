@@ -1,37 +1,35 @@
 Class {
-	#name : 'AlbTextEditorScreenToCursorTransformation',
-	#superclass : 'Object',
+	#name : #AlbTextEditorScreenToCursorTransformation,
+	#superclass : #Object,
 	#instVars : [
 		'resultBlock',
 		'resultIndex'
 	],
-	#category : 'Album-Model-Cursor',
-	#package : 'Album',
-	#tag : 'Model-Cursor'
+	#category : 'Album-Model-Cursor'
 }
 
-{ #category : 'dispatching' }
+{ #category : #dispatching }
 AlbTextEditorScreenToCursorTransformation >> evaluateOn: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : 'dispatching' }
+{ #category : #dispatching }
 AlbTextEditorScreenToCursorTransformation >> evaluateOn: anObject for: anEvent [
 	self subclassResponsibility
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorScreenToCursorTransformation >> hasResult [
 	^ resultIndex isNotNil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorScreenToCursorTransformation >> transformed: aTextIndex [
 	resultIndex := aTextIndex.
 	resultBlock value: aTextIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorScreenToCursorTransformation >> whenTransformed: aBlock [
 	resultBlock := aBlock
 ]

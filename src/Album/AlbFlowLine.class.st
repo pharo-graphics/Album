@@ -4,8 +4,8 @@ I represent a single line of a flow layout.
 I store reference to the next line in order to avoid unnecessary array of lines creation for a very common case of just one line
 "
 Class {
-	#name : 'AlbFlowLine',
-	#superclass : 'Object',
+	#name : #AlbFlowLine,
+	#superclass : #Object,
 	#instVars : [
 		'elements',
 		'maxWidth',
@@ -17,12 +17,10 @@ Class {
 		'origin',
 		'baseline'
 	],
-	#category : 'Album-Layout',
-	#package : 'Album',
-	#tag : 'Layout'
+	#category : 'Album-Layout'
 }
 
-{ #category : 'adding' }
+{ #category : #adding }
 AlbFlowLine >> add: anElement [
 
 	"Try to assign a given element to this line (if possible) or create a new line.
@@ -44,12 +42,12 @@ AlbFlowLine >> add: anElement [
 		  ifFalse: [ currentLine ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> baseline [
 	^ baseline
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> count [
 	"Return how many lines there are in total"
 	<return: #Number>
@@ -59,7 +57,7 @@ AlbFlowLine >> count [
 		ifFalse: [ 0 ])
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbFlowLine >> distanceTo: aPoint [
 	"Compute the vertical distance from me to a given point"
 	<return: #Number>
@@ -70,7 +68,7 @@ AlbFlowLine >> distanceTo: aPoint [
 	^ (aPoint y - aClampedCoordinate) abs
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbFlowLine >> do: aBlock [
 	"Evaluate aBlock with each of my next lines as the argument"
 
@@ -79,7 +77,7 @@ AlbFlowLine >> do: aBlock [
 		ifTrue: [ nextLine do: aBlock ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> elements [
 	"Return a collection of all elements assigned to this line"
 	<return: #OrderedCollection>
@@ -87,7 +85,7 @@ AlbFlowLine >> elements [
 	^ elements
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> elementsIn: anElement [
 	"Return a collection of all elements assigned to this line"
 	<return: #OrderedCollection>
@@ -95,7 +93,7 @@ AlbFlowLine >> elementsIn: anElement [
 	^ elements ifNil: [ elements := anElement children select: [ :eachChild | eachChild constraints albumTextFlow assignedLine = self ] ]
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbFlowLine >> findClosestChildOf: anElement to: aPoint [
 	<return: #BlElement>
 	
@@ -109,7 +107,7 @@ AlbFlowLine >> findClosestChildOf: anElement to: aPoint [
 		in: (anElement children select: [ :eachChild | eachChild constraints albumTextFlow assignedLine = self ])
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbFlowLine >> findClosestElementTo: aPoint in: aCollectionOfElements [
 	<return: #BlElement>
 	| aClosestElement aClosestDistance |
@@ -129,7 +127,7 @@ AlbFlowLine >> findClosestElementTo: aPoint in: aCollectionOfElements [
 	^ aClosestElement
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbFlowLine >> hasNextLine [
 	"Return true if there is a next line, false otherwise"
 	<return: #Boolean>
@@ -137,7 +135,7 @@ AlbFlowLine >> hasNextLine [
 	^ nextLine isNotNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbFlowLine >> hasSpaceFor: anElement [
 	"Return true if I am able to provide space for a given element.
 	By convention I always allow element to take space if I am empty
@@ -156,7 +154,7 @@ AlbFlowLine >> hasSpaceFor: anElement [
 			ifFalse: [ availableWidth closeTo: aChildWidth epsilon: 0.5 ] ]
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbFlowLine >> height [
 	"Return my height which is equal to the height of the highest element"
 	<return: #Number>
@@ -164,7 +162,7 @@ AlbFlowLine >> height [
 	^ height
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbFlowLine >> initialize [
 
 	super initialize.
@@ -180,7 +178,7 @@ AlbFlowLine >> initialize [
 	pushedQueue := LinkedList new
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbFlowLine >> isEmpty [
 	"Return true if I am an empty line without any element, false otherwise"
 	<return: #Boolean>
@@ -188,13 +186,13 @@ AlbFlowLine >> isEmpty [
 	^ elements isEmpty
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbFlowLine >> lastElementDo: aBlock [
 
 	elements ifNotEmpty: [ :theElements | aBlock value: theElements last ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> maxWidth [
 	"Return maximal width limit for the current line"
 	<return: #Number>
@@ -202,7 +200,7 @@ AlbFlowLine >> maxWidth [
 	^ maxWidth
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> maxWidth: aNumber [
 	"Limit maximal width to the given number"
 
@@ -210,7 +208,7 @@ AlbFlowLine >> maxWidth: aNumber [
 	availableWidth := maxWidth - width
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> nextLine [
 	"Return or create a new next line to which we should continue adding elements"
 	<return: #AlbFlowLine>
@@ -222,19 +220,19 @@ AlbFlowLine >> nextLine [
 			yourself ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> origin [
 	<return: #Point>
 
 	^ origin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> origin: aPoint [
 	origin := aPoint
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbFlowLine >> push: anElement [
 	"Push pushes given element to the end of element's collection
 	and update my geometry properties taking new element into account "
@@ -251,17 +249,17 @@ AlbFlowLine >> push: anElement [
 	baseline := baseline max: (anElement baselineOffset + anElement margin top)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> pushedQueue [
 	^ pushedQueue
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbFlowLine >> pushedQueue: aQueue [
 	pushedQueue := aQueue
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbFlowLine >> reset [
 	elements := nil.
 	pushedQueue := nil.
@@ -269,7 +267,7 @@ AlbFlowLine >> reset [
 	nextLine ifNotNil: [ :aNextLine | aNextLine reset ]
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbFlowLine >> totalHeight [
 	"Return a total height taking into account all next lines"
 	<return: #Number>
@@ -282,7 +280,7 @@ AlbFlowLine >> totalHeight [
 	^ self height + aTotalHeight
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbFlowLine >> totalWidth [
 	"Return a total width taking into account all next lines"
 	<return: #Number>
@@ -295,7 +293,7 @@ AlbFlowLine >> totalWidth [
 	^ self width max: aTotalWidth
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbFlowLine >> width [
 	"Return my width which is a sum of widths of all my elements"
 	<return: #Number>

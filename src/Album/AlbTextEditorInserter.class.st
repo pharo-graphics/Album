@@ -12,8 +12,8 @@ anEditor
 
 "
 Class {
-	#name : 'AlbTextEditorInserter',
-	#superclass : 'AlbTextEditorOperator',
+	#name : #AlbTextEditorInserter,
+	#superclass : #AlbTextEditorOperator,
 	#instVars : [
 		'insertionIndices',
 		'text',
@@ -23,17 +23,15 @@ Class {
 		'inputFilter',
 		'surroundMap'
 	],
-	#category : 'Album-Model-Operators',
-	#package : 'Album',
-	#tag : 'Model-Operators'
+	#category : 'Album-Model-Operators'
 }
 
-{ #category : 'api - processing' }
+{ #category : #'api - processing' }
 AlbTextEditorInserter >> apply [
 	^ self insert
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> at: anIndex [
 	"Add a given index as another text insertion location"
 
@@ -42,18 +40,18 @@ AlbTextEditorInserter >> at: anIndex [
 		ifNone: [ insertionIndices add: (anIndex -> text) ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> atCursor [
 	self cursor do: [ :aCursor | self at: aCursor position ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> atEnd [
 	"Insert a text at the very end"
 	self at: self text size
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> beforeSelectedLines [
 	"We insert text at the beginning of all selected lines"
 	| aCollectionOfLineStarts |
@@ -67,7 +65,7 @@ AlbTextEditorInserter >> beforeSelectedLines [
 	aCollectionOfLineStarts asSet do: [ :anIndex | self at: anIndex ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> computeIndexMovement: anIndex afterInserted: aText at: anInsertionIndex [
 	"Compute by how much a given text index should be moved after a privided text is inserted at a given insertion index"
 	<return: #Number>
@@ -77,7 +75,7 @@ AlbTextEditorInserter >> computeIndexMovement: anIndex afterInserted: aText at: 
 		ifFalse: [ aText size ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> computeSelection: aSelection afterInserted: aText at: anInsertionIndex [
 	<return: #BlSelection>
 
@@ -94,7 +92,7 @@ AlbTextEditorInserter >> computeSelection: aSelection afterInserted: aText at: a
 		to: aSelection to + aText size
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> crLineEndingWithWhitespace [
 	"Insert a Cr line ending
 	additionally adding a whitespace from the previous line according to a cursor"
@@ -104,7 +102,7 @@ AlbTextEditorInserter >> crLineEndingWithWhitespace [
 		ifFalse: [ String cr, (self findWhitespaceOfLineBefore: self cursor first position) ])
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> deleteSelectedText [
 	| aDeleter newInsertionIndices |
 	
@@ -122,14 +120,14 @@ AlbTextEditorInserter >> deleteSelectedText [
 	aDeleter delete
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> indentation [
 	"Insert an indentation (Tab)"
 
 	self text: String tab
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorInserter >> initialize [
 	super initialize.
 	
@@ -147,13 +145,13 @@ AlbTextEditorInserter >> initialize [
 	inputFilter := AlbTextEditorNoInputFilter new
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> inputFilter: aTextEditorInputFilter [
 
 	inputFilter := aTextEditorInputFilter
 ]
 
-{ #category : 'api - processing' }
+{ #category : #'api - processing' }
 AlbTextEditorInserter >> insert [
 
 	| theFilteredTextMap theInsertions theCursorMovements |
@@ -269,19 +267,19 @@ AlbTextEditorInserter >> insert [
 					self updateSelectionAfterInsertion: (eachInsertion at: #string) at: (eachInsertion at: #requestedIndex) ] ] ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorInserter >> isInserter [
 	^ true
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> lineEnding [
 	"Insert a line ending (Cr, Lf or CrLf depending on the current platform)"
 
 	self text: OSPlatform current lineEnding
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> lineEndingWithWhitespace [
 	"Insert a line ending (Cr, Lf or CrLf depending on the current platform)
 	additionally  adding a whitespace from the previous line according to a cursor"
@@ -291,22 +289,22 @@ AlbTextEditorInserter >> lineEndingWithWhitespace [
 		ifFalse: [ OSPlatform current lineEnding, (self findWhitespaceOfLineBefore: self cursor first position) ])
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> onlyAlphaNumeric [
 	self inputFilter: AlbTextEditorAlphaNumericInputFilter new
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> onlyDigits [
 	self inputFilter: AlbTextEditorDigitInputFilter new
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> onlyLetters [
 	self inputFilter: AlbTextEditorLetterInputFilter new
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> privateComputeCursorIndices: aString withSurround: aSurroundString at: aTextIndex [
 	| aLeftIndex aRightIndex |
 
@@ -321,7 +319,7 @@ AlbTextEditorInserter >> privateComputeCursorIndices: aString withSurround: aSur
 	^ { aLeftIndex . aRightIndex }
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> privateComputeInsertionIndices: aString withSurround: aSurroundString at: aTextIndex [
 	| aLeftIndex aRightIndex |
 
@@ -336,7 +334,7 @@ AlbTextEditorInserter >> privateComputeInsertionIndices: aString withSurround: a
 	^ { aLeftIndex . aRightIndex }
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> privateComputeSelectionIndices: aString withSurround: aSurroundString at: aTextIndex [
 	| aLeftIndex aRightIndex |
 
@@ -351,7 +349,7 @@ AlbTextEditorInserter >> privateComputeSelectionIndices: aString withSurround: a
 	^ { aLeftIndex . aRightIndex }
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> privateInsertStrings: aCollectionOfString atAll: aCollectionOfIndices [
 	| aCommand |
 
@@ -362,7 +360,7 @@ AlbTextEditorInserter >> privateInsertStrings: aCollectionOfString atAll: aColle
 	editor executeCommand: aCommand
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText at: anIndex [
 	self cursor do: [ :aCursor |
 		| aCursorDelta |
@@ -382,7 +380,7 @@ AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText at: anIndex [
 					apply ] ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText withSurround: aSurroundText at: aTextIndex [
 	| theIndices |
 
@@ -408,47 +406,47 @@ AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText withSurround:
 				apply ] ]
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorInserter >> shouldDeleteSelected [
 	^ shouldDeleteSelected
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorInserter >> shouldDeleteSelected: aBoolean [
 	shouldDeleteSelected := aBoolean
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorInserter >> shouldUpdateCursor [
 	^ shouldUpdateCursor
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorInserter >> shouldUpdateCursor: anObject [
 	shouldUpdateCursor := anObject
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorInserter >> shouldUpdateSelection [
 	^ shouldUpdateSelection
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 AlbTextEditorInserter >> shouldUpdateSelection: anObject [
 	shouldUpdateSelection := anObject
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> string: aString [
 	self text: aString
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> surroundings: aSurroundMap [
 	surroundMap := aSurroundMap
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> text: aBlText [
 
 	editor checkText: aBlText.
@@ -457,7 +455,7 @@ AlbTextEditorInserter >> text: aBlText [
 		eachAssociation value ifNil: [ eachAssociation value: text ] ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> updateSelectionAfterInsertion: aText at: anIndex [
 	| anExistingSelection |
 
@@ -472,7 +470,7 @@ AlbTextEditorInserter >> updateSelectionAfterInsertion: aText at: anIndex [
 				editor select: aNewSelection from to: aNewSelection to ] ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorInserter >> updateSelectionAfterInsertion: aText withSurround: aSurroundText at: aTextIndex [
 	| anExistingSelection theIndices |
 	
@@ -490,22 +488,22 @@ AlbTextEditorInserter >> updateSelectionAfterInsertion: aText withSurround: aSur
 				editor select: aNewSelection from to: aNewSelection to ] ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> withSelectionDelete [
 	shouldDeleteSelected := true
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> withoutCursorUpdate [
 	shouldUpdateCursor := false
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> withoutSelectionDelete [
 	shouldDeleteSelected := false
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorInserter >> withoutSelectionUpdate [
 	shouldUpdateSelection := false
 ]

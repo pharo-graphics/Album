@@ -1,29 +1,27 @@
 Class {
-	#name : 'AlbEditorMoveCursorUpShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorMoveCursorUpShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorMoveCursorUpShortcut >> description [
 	^ 'Moves the cursor one line at a time above the current position and deselects any selected text.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorMoveCursorUpShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination arrowUp
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorMoveCursorUpShortcut >> name [
 	^ 'Move cursor up'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorMoveCursorUpShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor deselecter

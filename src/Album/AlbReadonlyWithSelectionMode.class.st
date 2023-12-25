@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbReadonlyWithSelectionMode',
-	#superclass : 'AlbEditabilityMode',
-	#category : 'Album-UI',
-	#package : 'Album',
-	#tag : 'UI'
+	#name : #AlbReadonlyWithSelectionMode,
+	#superclass : #AlbEditabilityMode,
+	#category : 'Album-UI'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbReadonlyWithSelectionMode >> defaultEditorElementEventHandlers [
 
 	^ { 
@@ -15,14 +13,14 @@ AlbReadonlyWithSelectionMode >> defaultEditorElementEventHandlers [
 		  AlbTextEditorFocusHandler new }
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbReadonlyWithSelectionMode >> defaultFrontLayerEventHandlers [
 
 	^ {  AlbTextEditorCursorIconHandler new .
 		  AlbTextEditorSelectionHandler new }
 ]
 
-{ #category : 'shortcut management' }
+{ #category : #'shortcut management' }
 AlbReadonlyWithSelectionMode >> defaultShortcuts [
 
 	^ { 

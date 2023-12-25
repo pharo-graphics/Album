@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbEditorMoveCursorToLineEndShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorMoveCursorToLineEndShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorMoveCursorToLineEndShortcut >> description [
 	^ 'Moves the cursor to the end of the current line and deselects any selected text.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorMoveCursorToLineEndShortcut >> initialize [
 	super initialize.
 	
@@ -19,12 +17,12 @@ AlbEditorMoveCursorToLineEndShortcut >> initialize [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorMoveCursorToLineEndShortcut >> name [
 	^ 'Move cursor to the line end'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorMoveCursorToLineEndShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
 	aTextEditor deselecter

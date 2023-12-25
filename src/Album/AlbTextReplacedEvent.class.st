@@ -1,25 +1,23 @@
 Class {
-	#name : 'AlbTextReplacedEvent',
-	#superclass : 'BlEvent',
+	#name : #AlbTextReplacedEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'text'
 	],
-	#category : 'Album-Model-Events',
-	#package : 'Album',
-	#tag : 'Model-Events'
+	#category : 'Album-Model-Events'
 }
 
-{ #category : 'sending' }
+{ #category : #sending }
 AlbTextReplacedEvent >> sendTo: anEventHandler [
 	anEventHandler textReplacedEvent: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextReplacedEvent >> text [
 	^ text
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextReplacedEvent >> text: anObject [
 	text := anObject
 ]

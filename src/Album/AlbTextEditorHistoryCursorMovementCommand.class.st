@@ -1,26 +1,24 @@
 Class {
-	#name : 'AlbTextEditorHistoryCursorMovementCommand',
-	#superclass : 'AlbTextEditorHistoryCommand',
+	#name : #AlbTextEditorHistoryCursorMovementCommand,
+	#superclass : #AlbTextEditorHistoryCommand,
 	#instVars : [
 		'fromIndices',
 		'toIndices'
 	],
-	#category : 'Album-History',
-	#package : 'Album',
-	#tag : 'History'
+	#category : 'Album-History'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryCursorMovementCommand >> fromIndices [
 	^ fromIndices
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryCursorMovementCommand >> fromIndices: anObject [
 	fromIndices := anObject
 ]
 
-{ #category : 'api - undo/redo' }
+{ #category : #'api - undo/redo' }
 AlbTextEditorHistoryCursorMovementCommand >> redoOn: aTextEditor [
 	| aNavigator |
 	
@@ -30,17 +28,17 @@ AlbTextEditorHistoryCursorMovementCommand >> redoOn: aTextEditor [
 	aNavigator apply
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryCursorMovementCommand >> toIndices [
 	^ toIndices
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryCursorMovementCommand >> toIndices: anObject [
 	toIndices := anObject
 ]
 
-{ #category : 'api - undo/redo' }
+{ #category : #'api - undo/redo' }
 AlbTextEditorHistoryCursorMovementCommand >> undoOn: aTextEditor [
 	| aNavigator |
 	

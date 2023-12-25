@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbTextEditorLineSegmentTextListener',
-	#superclass : 'AlbTextWordPieceUniqueHandler',
-	#category : 'Album-UI-Word',
-	#package : 'Album',
-	#tag : 'UI-Word'
+	#name : #AlbTextEditorLineSegmentTextListener,
+	#superclass : #AlbTextWordPieceUniqueHandler,
+	#category : 'Album-UI-Word'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorLineSegmentTextListener >> eventClass [
 	^ BlMouseEvent
 ]
 
-{ #category : 'api - event managing' }
+{ #category : #'api - event managing' }
 AlbTextEditorLineSegmentTextListener >> handleEvent: aBlMouseEvent [
 
 	| aTextElement anEditorElement aLocalPosition aTextIndex anIterator theAttributes textEditor |

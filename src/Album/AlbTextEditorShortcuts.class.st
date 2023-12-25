@@ -1,15 +1,13 @@
 Class {
-	#name : 'AlbTextEditorShortcuts',
-	#superclass : 'Object',
+	#name : #AlbTextEditorShortcuts,
+	#superclass : #Object,
 	#instVars : [
 		'shortcuts'
 	],
-	#category : 'Album-Model',
-	#package : 'Album',
-	#tag : 'Model'
+	#category : 'Album-Model'
 }
 
-{ #category : 'adding / removing' }
+{ #category : #'adding / removing' }
 AlbTextEditorShortcuts >> add: aNewEditorShortcut ifAdded: anAddedBlock ifReplaced: aReplacedBlock [
 	"I add a new interaction shortcut or replace an existing one for the same combination and evaluate aReplacedBlock if it was the case"
 
@@ -24,24 +22,24 @@ AlbTextEditorShortcuts >> add: aNewEditorShortcut ifAdded: anAddedBlock ifReplac
 			anAddedBlock value: aNewEditorShortcut ]
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorShortcuts >> do: aBlock [
 	shortcuts do: aBlock
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorShortcuts >> initialize [
 	super initialize.
 	
 	shortcuts := Dictionary new
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 AlbTextEditorShortcuts >> postCopy [
 	shortcuts := shortcuts copy
 ]
 
-{ #category : 'adding / removing' }
+{ #category : #'adding / removing' }
 AlbTextEditorShortcuts >> remove: anEditorShortcut ifFound: aFoundBlock [
 	
 	shortcuts
@@ -53,7 +51,7 @@ AlbTextEditorShortcuts >> remove: anEditorShortcut ifFound: aFoundBlock [
 					aFoundBlock value: anExistingEditorShortcut ] ]
 ]
 
-{ #category : 'adding / removing' }
+{ #category : #'adding / removing' }
 AlbTextEditorShortcuts >> removeAllShortcutsAndDo: aFoundBlock [
 	| theOldShortcuts |
 	

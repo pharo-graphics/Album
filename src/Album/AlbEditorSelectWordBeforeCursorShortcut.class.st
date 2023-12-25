@@ -1,25 +1,23 @@
 Class {
-	#name : 'AlbEditorSelectWordBeforeCursorShortcut',
-	#superclass : 'AlbEditorShortcut',
+	#name : #AlbEditorSelectWordBeforeCursorShortcut,
+	#superclass : #AlbEditorShortcut,
 	#instVars : [
 		'combinationForMacOS'
 	],
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'api - combination' }
+{ #category : #'api - combination' }
 AlbEditorSelectWordBeforeCursorShortcut >> combinationForMacOS [
 	^ combinationForMacOS
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectWordBeforeCursorShortcut >> description [
 	^ 'Extends the selection from the current cursor position to the beginning of previous word.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorSelectWordBeforeCursorShortcut >> initialize [
 	super initialize.
 	
@@ -27,12 +25,12 @@ AlbEditorSelectWordBeforeCursorShortcut >> initialize [
 	combinationForMacOS := BlKeyCombination builder shift alt arrowLeft build.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectWordBeforeCursorShortcut >> name [
 	^ 'Select previous word'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorSelectWordBeforeCursorShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 	aTextEditor selecter
 		extendToPreviousWordStart;

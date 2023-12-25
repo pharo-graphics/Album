@@ -9,9 +9,7 @@ Adornment attribute can replace a piece of text with arbitrary visual elements o
 # appending ${class:AlbTextEditorAppendingAdornmentsExamples}$
 "
 Class {
-	#name : 'AlbTextEditorAdornmentsExamples',
-	#superclass : 'Object',
-	#category : 'Album-Examples-! Documentation',
-	#package : 'Album-Examples',
-	#tag : '! Documentation'
+	#name : #AlbTextEditorAdornmentsExamples,
+	#superclass : #Object,
+	#category : 'Album-Examples-! Documentation'
 }

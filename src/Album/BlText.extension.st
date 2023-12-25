@@ -1,6 +1,6 @@
-Extension { #name : 'BlText' }
+Extension { #name : #BlText }
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 BlText >> onAlbum [
 	^ AlbEditorElement new text: self 
 ]

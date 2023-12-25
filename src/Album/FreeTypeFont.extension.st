@@ -1,6 +1,6 @@
-Extension { #name : 'FreeTypeFont' }
+Extension { #name : #FreeTypeFont }
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 FreeTypeFont >> averageWidthOf: aCharacter [
 	^ self linearWidthOf: aCharacter
 ]

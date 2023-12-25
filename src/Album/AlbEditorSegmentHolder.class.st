@@ -3,14 +3,12 @@ I am a segment holder and is responsible for binding it to its visual representa
 I am also responsible for caching functionality in order to reduce amount of instantiated objects.
 "
 Class {
-	#name : 'AlbEditorSegmentHolder',
-	#superclass : 'BlInfiniteHolder',
-	#category : 'Album-Model-Segment',
-	#package : 'Album',
-	#tag : 'Model-Segment'
+	#name : #AlbEditorSegmentHolder,
+	#superclass : #BlInfiniteHolder,
+	#category : 'Album-Model-Segment'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorSegmentHolder >> createSegmentElement [
 	"Create and return an that should represent a segment that I will hold.
 	An element can be any of `BlElement withAllSubclasses`"
@@ -19,7 +17,7 @@ AlbEditorSegmentHolder >> createSegmentElement [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSegmentHolder >> editor [
 	"Return the attached text editor instance.
 	Editor can not be nil"
@@ -28,14 +26,14 @@ AlbEditorSegmentHolder >> editor [
 	^ self infiniteElement editor
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorSegmentHolder >> initialize [
 	super initialize.
 
 	itemElement := self createSegmentElement
 ]
 
-{ #category : 'updating' }
+{ #category : #updating }
 AlbEditorSegmentHolder >> onCursorAdded [
 	"Is sent when text editor's cursor changes.
 	Segment holder should update text elements accordingly"
@@ -43,7 +41,7 @@ AlbEditorSegmentHolder >> onCursorAdded [
 	self subclassResponsibility
 ]
 
-{ #category : 'updating' }
+{ #category : #updating }
 AlbEditorSegmentHolder >> onCursorRemoved [
 	"Is sent when text editor's cursor changes.
 	Segment holder should update text elements accordingly"
@@ -51,7 +49,7 @@ AlbEditorSegmentHolder >> onCursorRemoved [
 	self subclassResponsibility
 ]
 
-{ #category : 'updating' }
+{ #category : #updating }
 AlbEditorSegmentHolder >> onFocusChanged: aBoolean [
 	"Is sent when text editor's focus state changes.
 	Segment holder should update text elements accordingly"
@@ -59,7 +57,7 @@ AlbEditorSegmentHolder >> onFocusChanged: aBoolean [
 	self subclassResponsibility
 ]
 
-{ #category : 'updating' }
+{ #category : #updating }
 AlbEditorSegmentHolder >> onSelectionChanged [
 	"Is sent when text editor's selection changes.
 	Segment holder should update text elements accordingly"
@@ -67,7 +65,7 @@ AlbEditorSegmentHolder >> onSelectionChanged [
 	self subclassResponsibility
 ]
 
-{ #category : 'updating' }
+{ #category : #updating }
 AlbEditorSegmentHolder >> onTextChanged [
 	"Is sent when text changed in the editor (for example style attributes).
 	Segment holder should update text elements accordingly"
@@ -75,7 +73,7 @@ AlbEditorSegmentHolder >> onTextChanged [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSegmentHolder >> segment: aEditorSegment [
 
 	^ self subclassResponsibility

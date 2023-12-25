@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbShortcutAddedEvent',
-	#superclass : 'AlbShortcutChangedEvent',
-	#category : 'Album-Model-Events',
-	#package : 'Album',
-	#tag : 'Model-Events'
+	#name : #AlbShortcutAddedEvent,
+	#superclass : #AlbShortcutChangedEvent,
+	#category : 'Album-Model-Events'
 }
 
-{ #category : 'sending' }
+{ #category : #sending }
 AlbShortcutAddedEvent >> sendTo: anEventHandler [
 
 	anEventHandler shortcutAddedEvent: self

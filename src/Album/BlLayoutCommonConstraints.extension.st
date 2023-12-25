@@ -1,6 +1,6 @@
-Extension { #name : 'BlLayoutCommonConstraints' }
+Extension { #name : #BlLayoutCommonConstraints }
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 BlLayoutCommonConstraints >> albumTextFlow [
 	^ self at: AlbLineFlowLayout
 ]

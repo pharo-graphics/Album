@@ -1,6 +1,6 @@
 Class {
-	#name : 'AlbExtendSelectionCommand',
-	#superclass : 'Object',
+	#name : #AlbExtendSelectionCommand,
+	#superclass : #Object,
 	#instVars : [
 		'editor',
 		'toSelect',
@@ -10,17 +10,15 @@ Class {
 		'shouldResetDesiredCoordinate',
 		'toRemoveCursors'
 	],
-	#category : 'Album-Model-Operators',
-	#package : 'Album',
-	#tag : 'Model-Operators'
+	#category : 'Album-Model-Operators'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> editor: anEditor [
 	editor := anEditor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> initialize [
 	super initialize.
 
@@ -32,64 +30,64 @@ AlbExtendSelectionCommand >> initialize [
 	shouldResetDesiredCoordinate := true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> shouldResetDesiredCoordinate [
 	^ shouldResetDesiredCoordinate
 ]
 
-{ #category : 'accessing - cursor' }
+{ #category : #'accessing - cursor' }
 AlbExtendSelectionCommand >> toAddCursor: aPosition [
 	toAddCursor := aPosition
 ]
 
-{ #category : 'accessing - cursor' }
+{ #category : #'accessing - cursor' }
 AlbExtendSelectionCommand >> toAddCursorDo: aBlock [
 	toAddCursor ifNotNil: [ :aPosition | aBlock value: aPosition ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> toDeselect [
 
 	^ toDeselect
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> toDeselect: aCollection [
 	toDeselect := aCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> toDeselectDo: aBlockWithOneArgument [
 	toDeselect do: aBlockWithOneArgument
 ]
 
-{ #category : 'accessing - cursor' }
+{ #category : #'accessing - cursor' }
 AlbExtendSelectionCommand >> toMoveCursor: aCursor by: anAmount [
 	toMoveCursor := aCursor -> anAmount
 ]
 
-{ #category : 'accessing - cursor' }
+{ #category : #'accessing - cursor' }
 AlbExtendSelectionCommand >> toMoveCursorDo: aBlock [
 	toMoveCursor ifNotNil: [ :anAssociation |
 		aBlock value: anAssociation key value: anAssociation value ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> toSelect [
 	^ toSelect
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> toSelect: aCollection [
 	toSelect := aCollection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> toSelectDo: aBlockWithOneArgument [
 	toSelect do: aBlockWithOneArgument
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbExtendSelectionCommand >> withoutResettingDesiredCoordinate [
 	shouldResetDesiredCoordinate := false
 ]

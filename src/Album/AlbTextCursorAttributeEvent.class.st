@@ -1,69 +1,67 @@
 Class {
-	#name : 'AlbTextCursorAttributeEvent',
-	#superclass : 'BlEvent',
+	#name : #AlbTextCursorAttributeEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'interval',
 		'textualPiece',
 		'textEditor',
 		'wrappedEvent'
 	],
-	#category : 'Album-Attributes - Support',
-	#package : 'Album',
-	#tag : 'Attributes - Support'
+	#category : 'Album-Attributes - Support'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> attributeEnd [
 	^ interval last
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> attributeStart [
 	^ interval first
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> interval [
 
 	^ interval
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> interval: anObject [
 
 	interval := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> textEditor [
 
 	^ textEditor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> textEditor: aTextEditor [
 
 	textEditor := aTextEditor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> textualPiece [
 
 	^ textualPiece
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> textualPiece: aTextualPiece [
 
 	textualPiece := aTextualPiece
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> wrappedEvent [
 	^ wrappedEvent ifNil: [ self ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttributeEvent >> wrappedEvent: anEvent [
 
 	wrappedEvent := anEvent

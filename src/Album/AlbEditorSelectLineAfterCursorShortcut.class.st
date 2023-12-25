@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbEditorSelectLineAfterCursorShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorSelectLineAfterCursorShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectLineAfterCursorShortcut >> description [
 	^ 'Extends the selection from the current cursor position to the end of a line.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorSelectLineAfterCursorShortcut >> initialize [
 	super initialize.
 	
@@ -19,12 +17,12 @@ AlbEditorSelectLineAfterCursorShortcut >> initialize [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectLineAfterCursorShortcut >> name [
 	^ 'Select to the end of a line'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorSelectLineAfterCursorShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 	aTextEditor selecter
 		extendToLineEnd;

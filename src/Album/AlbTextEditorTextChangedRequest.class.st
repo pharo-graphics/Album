@@ -1,53 +1,51 @@
 Class {
-	#name : 'AlbTextEditorTextChangedRequest',
-	#superclass : 'AlbTextEditorRequest',
+	#name : #AlbTextEditorTextChangedRequest,
+	#superclass : #AlbTextEditorRequest,
 	#instVars : [
 		'segmentPiece',
 		'text',
 		'textStart',
 		'textEnd'
 	],
-	#category : 'Album-UI-Requests',
-	#package : 'Album',
-	#tag : 'UI-Requests'
+	#category : 'Album-UI-Requests'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> segmentPiece [
 	^ segmentPiece
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> segmentPiece: anObject [
 	segmentPiece := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> text [
 	^ text
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> text: anObject [
 	text := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> textEnd [
 	^ textEnd
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> textEnd: anObject [
 	textEnd := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> textStart [
 	^ textStart
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorTextChangedRequest >> textStart: anObject [
 	textStart := anObject
 ]

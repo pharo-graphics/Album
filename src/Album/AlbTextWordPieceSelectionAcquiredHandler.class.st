@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbTextWordPieceSelectionAcquiredHandler',
-	#superclass : 'AlbTextWordPieceUniqueHandler',
-	#category : 'Album-UI-Word',
-	#package : 'Album',
-	#tag : 'UI-Word'
+	#name : #AlbTextWordPieceSelectionAcquiredHandler,
+	#superclass : #AlbTextWordPieceUniqueHandler,
+	#category : 'Album-UI-Word'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextWordPieceSelectionAcquiredHandler >> eventClass [
 	^ BlElementSelectionAcquiredEvent
 ]
 
-{ #category : 'api - event managing' }
+{ #category : #'api - event managing' }
 AlbTextWordPieceSelectionAcquiredHandler >> handleEvent: anEvent [
 	| anEditorElement aTextElement aGlobalFrom aGlobalTo |
 

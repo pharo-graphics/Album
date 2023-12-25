@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbTextEditorHandler',
-	#superclass : 'AlbEditorElementHandler',
-	#category : 'Album-UI-Handlers',
-	#package : 'Album',
-	#tag : 'UI-Handlers'
+	#name : #AlbTextEditorHandler,
+	#superclass : #AlbEditorElementHandler,
+	#category : 'Album-UI-Handlers'
 }
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 AlbTextEditorHandler >> eventsToHandle [
 
 	^ { 
@@ -16,26 +14,26 @@ AlbTextEditorHandler >> eventsToHandle [
 		  AlbTextEditedEvent }
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorHandler >> shortcutAddedEvent: anEvent [
 
 	element removeShortcutsWithCombination: anEvent shortcut combination.
 	element addShortcut: anEvent shortcut asShortcut
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorHandler >> shortcutRemovedEvent: anEvent [
 
 	element removeShortcutsWithCombination: anEvent shortcut combination
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorHandler >> textEditedEvent: anEvent [
 
 	element textEdited
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorHandler >> textReplacedEvent: anEvent [
 
 	

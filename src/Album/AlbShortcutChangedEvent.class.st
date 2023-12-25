@@ -1,20 +1,18 @@
 Class {
-	#name : 'AlbShortcutChangedEvent',
-	#superclass : 'BlEvent',
+	#name : #AlbShortcutChangedEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'shortcut'
 	],
-	#category : 'Album-Model-Events',
-	#package : 'Album',
-	#tag : 'Model-Events'
+	#category : 'Album-Model-Events'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbShortcutChangedEvent >> shortcut [
 	^ shortcut
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbShortcutChangedEvent >> shortcut: aShortcut [
 	shortcut := aShortcut
 ]

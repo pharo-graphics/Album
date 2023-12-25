@@ -1,20 +1,18 @@
 Class {
-	#name : 'AlbTextEditorScreenToCursorRequest',
-	#superclass : 'AlbTextEditorRequest',
+	#name : #AlbTextEditorScreenToCursorRequest,
+	#superclass : #AlbTextEditorRequest,
 	#instVars : [
 		'transformation'
 	],
-	#category : 'Album-UI-Requests',
-	#package : 'Album',
-	#tag : 'UI-Requests'
+	#category : 'Album-UI-Requests'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorScreenToCursorRequest >> transformation [
 	^ transformation
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorScreenToCursorRequest >> transformation: anObject [
 	transformation := anObject
 ]

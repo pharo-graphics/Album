@@ -1,27 +1,25 @@
 Class {
-	#name : 'AlbTextEditorHistoryDeletionCommand',
-	#superclass : 'AlbTextEditorHistoryCommand',
+	#name : #AlbTextEditorHistoryDeletionCommand,
+	#superclass : #AlbTextEditorHistoryCommand,
 	#instVars : [
 		'texts',
 		'undoIndices',
 		'redoIndices'
 	],
-	#category : 'Album-History',
-	#package : 'Album',
-	#tag : 'History'
+	#category : 'Album-History'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryDeletionCommand >> redoIndices [
 	^ redoIndices
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryDeletionCommand >> redoIndices: anObject [
 	redoIndices := anObject
 ]
 
-{ #category : 'api - undo/redo' }
+{ #category : #'api - undo/redo' }
 AlbTextEditorHistoryDeletionCommand >> redoOn: aTextEditor [
 	| aDeleter |
 	aTextEditor deselecter all deselect.
@@ -34,27 +32,27 @@ AlbTextEditorHistoryDeletionCommand >> redoOn: aTextEditor [
 	aDeleter delete
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryDeletionCommand >> texts [
 	^ texts
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryDeletionCommand >> texts: anObject [
 	texts := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryDeletionCommand >> undoIndices [
 	^ undoIndices
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorHistoryDeletionCommand >> undoIndices: anObject [
 	undoIndices := anObject
 ]
 
-{ #category : 'api - undo/redo' }
+{ #category : #'api - undo/redo' }
 AlbTextEditorHistoryDeletionCommand >> undoOn: aTextEditor [
 	| anInserter |
 	aTextEditor deselecter all deselect.

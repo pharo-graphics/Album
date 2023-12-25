@@ -1,16 +1,14 @@
 Class {
-	#name : 'AlbAbstractSubtextElement',
-	#superclass : 'AlbTextPortionElement',
+	#name : #AlbAbstractSubtextElement,
+	#superclass : #AlbTextPortionElement,
 	#instVars : [
 		'editorElement',
 		'updateStrategy'
 	],
-	#category : 'Album-UI-Text-Portion',
-	#package : 'Album',
-	#tag : 'UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbAbstractSubtextElement class >> editorElement: anEditorElement [
 
 	^ (self basicNew editorElement: anEditorElement)
@@ -18,13 +16,13 @@ AlbAbstractSubtextElement class >> editorElement: anEditorElement [
 		  yourself
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbAbstractSubtextElement >> defaultGeometry [
 
 	^ BlPolygonGeometry new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbAbstractSubtextElement >> defaultUpdateStrategy [
 
 	^ AlbSubtextElementNoUpdateStrategy new.
@@ -32,19 +30,19 @@ AlbAbstractSubtextElement >> defaultUpdateStrategy [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbAbstractSubtextElement >> editorElement [
 
 	^ editorElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbAbstractSubtextElement >> editorElement: anEditorElement [
 
 	editorElement := anEditorElement
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbAbstractSubtextElement >> initialize [ 
 
 	super initialize.
@@ -53,7 +51,7 @@ AlbAbstractSubtextElement >> initialize [
 	self initializeUpdateStrategy
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbAbstractSubtextElement >> initializeUpdateStrategy [
 
 	self updateStrategy: self defaultUpdateStrategy
@@ -61,7 +59,7 @@ AlbAbstractSubtextElement >> initializeUpdateStrategy [
 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbAbstractSubtextElement >> updateStrategy: aSubTextUpdateStrategy [
 
 	updateStrategy ifNotNil: [ updateStrategy onUninstalledIn: self ].
@@ -72,31 +70,31 @@ AlbAbstractSubtextElement >> updateStrategy: aSubTextUpdateStrategy [
 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbAbstractSubtextElement >> updateVertices [
 
 	self subclassResponsibility 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbAbstractSubtextElement >> vertices [
 
 	^ self geometry vertices
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbAbstractSubtextElement >> vertices: aCollectionOfPoints [
 
 	self geometry: (BlPolygonGeometry new vertices: aCollectionOfPoints).
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 AlbAbstractSubtextElement >> withExtentChangeAdaption [
 
 	self updateStrategy: AlbSubtextElementUpdateOnExtentChangeStrategy new
 ]
 
-{ #category : 'configuration' }
+{ #category : #configuration }
 AlbAbstractSubtextElement >> withoutAdaption [
 
 	self updateStrategy: AlbSubtextElementNoUpdateStrategy new

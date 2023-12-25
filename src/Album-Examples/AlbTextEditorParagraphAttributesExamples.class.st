@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbTextEditorParagraphAttributesExamples',
-	#superclass : 'Object',
-	#category : 'Album-Examples-Editor',
-	#package : 'Album-Examples',
-	#tag : 'Editor'
+	#name : #AlbTextEditorParagraphAttributesExamples,
+	#superclass : #Object,
+	#category : 'Album-Examples-Editor'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorParagraphAttributesExamples >> editorElement [
 	<gtExample>
 	| textEditor editorElement |
@@ -21,7 +19,7 @@ AlbTextEditorParagraphAttributesExamples >> editorElement [
 	^ editorElement
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorParagraphAttributesExamples >> helloEditor [
 	<gtExample>
 	| anEditorElement |
@@ -45,7 +43,7 @@ AlbTextEditorParagraphAttributesExamples >> helloEditor [
 	^ anEditorElement
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorParagraphAttributesExamples >> helloText [
 	<gtExample>
 	| aText |

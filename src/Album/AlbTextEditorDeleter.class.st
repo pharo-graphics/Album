@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbTextEditorDeleter',
-	#superclass : 'AlbTextEditorOperator',
+	#name : #AlbTextEditorDeleter,
+	#superclass : #AlbTextEditorOperator,
 	#instVars : [
 		'deletionIntervals',
 		'shouldUpdateCursor',
 		'shouldUpdateSelection'
 	],
-	#category : 'Album-Model-Operators',
-	#package : 'Album',
-	#tag : 'Model-Operators'
+	#category : 'Album-Model-Operators'
 }
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> afterCursor [
 	"Delete all text after all cursors"
 
@@ -21,12 +19,12 @@ AlbTextEditorDeleter >> afterCursor [
 			to: self text size ]
 ]
 
-{ #category : 'api - processing' }
+{ #category : #'api - processing' }
 AlbTextEditorDeleter >> apply [
 	^ self delete
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> beforeCursor [
 	"Delete all text before the cursors"
 		
@@ -36,14 +34,14 @@ AlbTextEditorDeleter >> beforeCursor [
 			to: aCursor position ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorDeleter >> computeCursorMovement: aCursor [
 	"Cumpute by how much a given cursor should be moved after text deletion within current deletion intervals"
 
 	^ self computeIndexMovement: aCursor position
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorDeleter >> computeIndexMovement: anIndex [
 	"Compute by how much a given text index should be moved after text deletion within current deletion intervals"
 	| aCursorDelta |
@@ -59,7 +57,7 @@ AlbTextEditorDeleter >> computeIndexMovement: anIndex [
 	^ aCursorDelta
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorDeleter >> computeSelectionMovement: aMonotoneSelection [
 	"Cumpute by how much a given selection should be moved after text deletion within current deletion intervals.
 	Note: a given monotone selection must not overlap with any deletion intervals"
@@ -76,7 +74,7 @@ AlbTextEditorDeleter >> computeSelectionMovement: aMonotoneSelection [
 	^ aSelectionDelta
 ]
 
-{ #category : 'api - processing' }
+{ #category : #'api - processing' }
 AlbTextEditorDeleter >> delete [
 	"Perform deletion operation"
 
@@ -89,7 +87,7 @@ AlbTextEditorDeleter >> delete [
 	deletionIntervals reverseDo: [ :aMonotoneSelection | self privateDelete: aMonotoneSelection from to: aMonotoneSelection to]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> from: aFromIndex to: aToIndex [
 	"Mark a text interval given by from an to indices as the one to be deleted in cursor coordinates"
 
@@ -99,7 +97,7 @@ AlbTextEditorDeleter >> from: aFromIndex to: aToIndex [
 	deletionIntervals select: aFromIndex to: aToIndex
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorDeleter >> initialize [
 	super initialize.
 	
@@ -108,12 +106,12 @@ AlbTextEditorDeleter >> initialize [
 	shouldUpdateSelection := true
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorDeleter >> isDeleter [
 	^ true
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneAfterCursor [
 	"Delete one symbol after the cursors"
 		
@@ -123,7 +121,7 @@ AlbTextEditorDeleter >> oneAfterCursor [
 			to: ((aCursor position + 1) min: self text size) ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneAfterCursorIfOutsideOfSelection [
 	"Delete one symbol after the cursors but only if there is no selection nearby"
 		
@@ -135,14 +133,14 @@ AlbTextEditorDeleter >> oneAfterCursorIfOutsideOfSelection [
 					to: ((aCursor position + 1) min: self text size) ] ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneBeforeCursor [
 	"Delete one symbol before the cursor"
 
 	self cursor do: [ :aCursor | self oneBeforeCursor: aCursor ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneBeforeCursor: aCursor [
 	"Delete one symbol before the specified cursor "
 
@@ -151,7 +149,7 @@ AlbTextEditorDeleter >> oneBeforeCursor: aCursor [
 		to: aCursor position
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneBeforeCursorIfOutsideOfSelection [
 	"Delete one symbol before the cursor but only if there is no selection nearby"
 
@@ -160,7 +158,7 @@ AlbTextEditorDeleter >> oneBeforeCursorIfOutsideOfSelection [
 			ifFalse: [ self oneBeforeCursor: aCursor ] ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorDeleter >> privateDelete: aFromTextIndex to: aToTextIndex [
 
 	"I delete a piece of text within a given text interval without cursor or selection update.
@@ -181,14 +179,14 @@ AlbTextEditorDeleter >> privateDelete: aFromTextIndex to: aToTextIndex [
 	self editor executeCommand: aCommand
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> selected [
 	"Mark currenty selected text as the one to be deleted"
 
 	self selection do: [ :aMonotoneSelection | self from: aMonotoneSelection from to: aMonotoneSelection to ]
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> surroundings: aDictionaryOrArray [
 	"Delete the surrounding around each cursor (if there is any) but only if the cursor is not part of the selection"
 	| theAssociations |
@@ -211,7 +209,7 @@ AlbTextEditorDeleter >> surroundings: aDictionaryOrArray [
 							to: aCursor position + aReplacement value size ] ] ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorDeleter >> updateCursors [
 	
 	self cursor do: [ :aCursor |
@@ -224,7 +222,7 @@ AlbTextEditorDeleter >> updateCursors [
 				apply ] ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorDeleter >> updateSelection [
 	| aSelectionCopy newSelection |
 	
@@ -243,12 +241,12 @@ AlbTextEditorDeleter >> updateSelection [
 	self editor selection: newSelection
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> withoutCursorUpdate [
 	shouldUpdateCursor := false
 ]
 
-{ #category : 'api - configuration' }
+{ #category : #'api - configuration' }
 AlbTextEditorDeleter >> withoutSelectionUpdate [
 	shouldUpdateSelection := false
 ]

@@ -1,15 +1,13 @@
 Class {
-	#name : 'AlbTextEditorSelectionHandler',
-	#superclass : 'AlbEditorElementHandler',
+	#name : #AlbTextEditorSelectionHandler,
+	#superclass : #AlbEditorElementHandler,
 	#instVars : [
 		'startIndex'
 	],
-	#category : 'Album-UI-Handlers',
-	#package : 'Album',
-	#tag : 'UI-Handlers'
+	#category : 'Album-UI-Handlers'
 }
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
 	anEvent consumed: true.
@@ -17,7 +15,7 @@ AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
 	| anEditor currentIndex from to |
@@ -38,7 +36,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 	element selectionChanged
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	| anEditor |	
 	anEvent consumed: true.
@@ -52,7 +50,7 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	element selectionChanged
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 AlbTextEditorSelectionHandler >> eventsToHandle [
 	^ { BlDragEvent . BlDragStartEvent. BlDragEndEvent}
 ]

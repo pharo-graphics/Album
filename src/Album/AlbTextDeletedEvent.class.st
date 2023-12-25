@@ -1,16 +1,14 @@
 Class {
-	#name : 'AlbTextDeletedEvent',
-	#superclass : 'BlEvent',
+	#name : #AlbTextDeletedEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'fromIndex',
 		'toIndex'
 	],
-	#category : 'Album-Model-Events',
-	#package : 'Album',
-	#tag : 'Model-Events'
+	#category : 'Album-Model-Events'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextDeletedEvent class >> from: aFromIndex to: aToIndex [
 	<return: #AlbTextDeletedEvent>
 
@@ -19,22 +17,22 @@ AlbTextDeletedEvent class >> from: aFromIndex to: aToIndex [
 		toIndex: aToIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextDeletedEvent >> fromIndex [
 	^ fromIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextDeletedEvent >> fromIndex: anObject [
 	fromIndex := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextDeletedEvent >> toIndex [
 	^ toIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextDeletedEvent >> toIndex: anObject [
 	toIndex := anObject
 ]

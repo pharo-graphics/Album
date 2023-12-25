@@ -6,20 +6,18 @@ Users may customize me by changing segment's layout, margin, padding or visual p
 Override me for more advanced customizations
 "
 Class {
-	#name : 'AlbTextEditorSegmentElement',
-	#superclass : 'BlElement',
-	#category : 'Album-UI',
-	#package : 'Album',
-	#tag : 'UI'
+	#name : #AlbTextEditorSegmentElement,
+	#superclass : #BlElement,
+	#category : 'Album-UI'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorSegmentElement >> initialize [ 
 	super initialize.
 	self clipChildren: false
 ]
 
-{ #category : 'api - compositing' }
+{ #category : #'api - compositing' }
 AlbTextEditorSegmentElement >> wantsSeparateCompositingLayer [
 
 	^ false

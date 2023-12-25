@@ -1,32 +1,30 @@
 Class {
-	#name : 'AlbTextEditorCommand',
-	#superclass : 'Object',
+	#name : #AlbTextEditorCommand,
+	#superclass : #Object,
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
 		'context'
 	],
-	#category : 'Album-Commands',
-	#package : 'Album',
-	#tag : 'Commands'
+	#category : 'Album-Commands'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCommand >> context [
 	^ context
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCommand >> context: anObject [
 	context := anObject
 ]
 
-{ #category : 'executing' }
+{ #category : #executing }
 AlbTextEditorCommand >> executeOn: aTextEditor [
 	self subclassResponsibility
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorCommand >> newHolderCommand [ 
 	self deprecated: 'use #newHolderEvent since I return an event'.
 

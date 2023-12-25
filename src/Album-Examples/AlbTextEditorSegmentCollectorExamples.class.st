@@ -1,15 +1,13 @@
 Class {
-	#name : 'AlbTextEditorSegmentCollectorExamples',
-	#superclass : 'Object',
+	#name : #AlbTextEditorSegmentCollectorExamples,
+	#superclass : #Object,
 	#instVars : [
 		'largeFile'
 	],
-	#category : 'Album-Examples-Editor',
-	#package : 'Album-Examples',
-	#tag : 'Editor'
+	#category : 'Album-Examples-Editor'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextEditorSegmentCollectorExamples >> deleteLargeFile [
 
 	largeFile ifNotNil: 
@@ -17,7 +15,7 @@ AlbTextEditorSegmentCollectorExamples >> deleteLargeFile [
 		largeFile := nil ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSegmentCollectorExamples >> largeFile [
 	<gtExample>
 
@@ -31,14 +29,14 @@ AlbTextEditorSegmentCollectorExamples >> largeFile [
 		largeFile ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSegmentCollectorExamples >> largeFileRope [
 
 	^ BlRopedText file: self largeFile
 		"self largeFile contents asRopedText"
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorSegmentCollectorExamples >> segmentAt142 [
 	"Retrieve the segment at 1.42 times the cache limit.
 	This tests accessing the cache outside its initial contents.
@@ -55,7 +53,7 @@ AlbTextEditorSegmentCollectorExamples >> segmentAt142 [
 	self assert: actual equals: expected.
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorSegmentCollectorExamples >> segmentAt200and262 [
 	"Retrieve the segment at line 200, followed by the segment at line 262.
 	This tests re-using part of the previously cached items where the index of the segments collection is not the same as the line number"
@@ -77,7 +75,7 @@ AlbTextEditorSegmentCollectorExamples >> segmentAt200and262 [
 
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorSegmentCollectorExamples >> segmentAt242and42 [
 	"Retrieve the segment at line 2.42 times the cache limit, followed by the segment at line 42.
 	This tests #computeBackwardAt:."
@@ -109,7 +107,7 @@ AlbTextEditorSegmentCollectorExamples >> segmentAt242and42 [
 
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorSegmentCollectorExamples >> segmentAt42 [
 	"Retrieve the segment at line 42.
 	Assumes the cache limit is always greater than 42."
@@ -122,7 +120,7 @@ AlbTextEditorSegmentCollectorExamples >> segmentAt42 [
 	self assert: actual equals: expected.
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorSegmentCollectorExamples >> segmentAt80and120 [
 	"Retrieve the segment at 0.8 times the cache limit, followed by the segment at 1.2 times the cache limit.
 	This tests re-using part of the previously cached items"
@@ -144,13 +142,13 @@ AlbTextEditorSegmentCollectorExamples >> segmentAt80and120 [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSegmentCollectorExamples >> segmentCollector [
 
 	^ self textEditor segmentCollector
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSegmentCollectorExamples >> textEditor [ 
 	| aTextEditor |
 

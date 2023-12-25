@@ -1,40 +1,38 @@
 Class {
-	#name : 'AlbTextEditorStylerMemento',
-	#superclass : 'AlbTextEditorMemento',
+	#name : #AlbTextEditorStylerMemento,
+	#superclass : #AlbTextEditorMemento,
 	#instVars : [
 		'styler'
 	],
-	#category : 'Album-Model-Memento',
-	#package : 'Album',
-	#tag : 'Model-Memento'
+	#category : 'Album-Model-Memento'
 }
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorStylerMemento >> label [
 	^ 'Styler'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorStylerMemento >> order [
 	^ 40
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorStylerMemento >> restoreStateOf: aTextEditor [
 	aTextEditor styler: styler
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorStylerMemento >> saveStateOf: aTextEditor [
 	styler := aTextEditor styler
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorStylerMemento >> styler: anObject [
 	styler := anObject
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorStylerMemento >> value [
 	^ styler
 ]

@@ -1,15 +1,13 @@
 Class {
-	#name : 'AlbTextReplacingAttributeWithRandomizingStrategy',
-	#superclass : 'AlbTextReplacingAttributeStrategy',
+	#name : #AlbTextReplacingAttributeWithRandomizingStrategy,
+	#superclass : #AlbTextReplacingAttributeStrategy,
 	#instVars : [
 		'special'
 	],
-	#category : 'Album-Attributes - Support',
-	#package : 'Album',
-	#tag : 'Attributes - Support'
+	#category : 'Album-Attributes - Support'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextReplacingAttributeWithRandomizingStrategy >> initialize [
 	super initialize.
 	
@@ -20,7 +18,7 @@ AlbTextReplacingAttributeWithRandomizingStrategy >> initialize [
 		   with: Character times))
 ]
 
-{ #category : 'replacing' }
+{ #category : #replacing }
 AlbTextReplacingAttributeWithRandomizingStrategy >> replaceCharacter: aCharacter [
 
 	aCharacter isDigit
@@ -37,17 +35,17 @@ AlbTextReplacingAttributeWithRandomizingStrategy >> replaceCharacter: aCharacter
 	^ aCharacter
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextReplacingAttributeWithRandomizingStrategy >> special [
 	^ special
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextReplacingAttributeWithRandomizingStrategy >> special: anObject [
 	special := anObject
 ]
 
-{ #category : 'replacing' }
+{ #category : #replacing }
 AlbTextReplacingAttributeWithRandomizingStrategy >> swapString: aString [
 	<return: #String>
 	

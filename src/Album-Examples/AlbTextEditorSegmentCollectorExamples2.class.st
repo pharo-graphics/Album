@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbTextEditorSegmentCollectorExamples2',
-	#superclass : 'Object',
-	#category : 'Album-Examples-Editor',
-	#package : 'Album-Examples',
-	#tag : 'Editor'
+	#name : #AlbTextEditorSegmentCollectorExamples2,
+	#superclass : #Object,
+	#category : 'Album-Examples-Editor'
 }
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorSegmentCollectorExamples2 >> retrieveLimitPlusOne [
 	<gtExample>
 	| string limit editor collector |
@@ -34,7 +32,7 @@ AlbTextEditorSegmentCollectorExamples2 >> retrieveLimitPlusOne [
 
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 AlbTextEditorSegmentCollectorExamples2 >> retrieveWithinLimit [
 	<gtExample>
 	| string cacheLimit limit editor collector |

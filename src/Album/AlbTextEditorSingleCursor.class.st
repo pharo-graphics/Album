@@ -1,22 +1,20 @@
 Class {
-	#name : 'AlbTextEditorSingleCursor',
-	#superclass : 'AlbTextEditorCursor',
+	#name : #AlbTextEditorSingleCursor,
+	#superclass : #AlbTextEditorCursor,
 	#instVars : [
 		'position',
 		'isVisible',
 		'desiredCoordinate'
 	],
-	#category : 'Album-Model-Cursor',
-	#package : 'Album',
-	#tag : 'Model-Cursor'
+	#category : 'Album-Model-Cursor'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor class >> at: aTextIndex [
 	^ self new position: aTextIndex
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 AlbTextEditorSingleCursor >> = anotherObject [
 	self == anotherObject
 		ifTrue: [ ^ true ].
@@ -26,36 +24,36 @@ AlbTextEditorSingleCursor >> = anotherObject [
 	^ anotherObject position = self position
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor >> desiredCoordinate [
 	<return: #Number>
 
 	^ desiredCoordinate
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor >> desiredCoordinate: aNumber [
 	desiredCoordinate := aNumber
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 AlbTextEditorSingleCursor >> do: aBlock [
 	aBlock value: self
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSingleCursor >> hasDesiredCoordinate [
 	<return: #Boolean>
 
 	^ desiredCoordinate isNotNil
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 AlbTextEditorSingleCursor >> hash [
 	^ self class hash bitXor: self position hash
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorSingleCursor >> initialize [
 	super initialize.
 	
@@ -65,7 +63,7 @@ AlbTextEditorSingleCursor >> initialize [
 	isVisible := false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSingleCursor >> insideSegment: aSegment [
 	"Return true if I am inside of a given segment"
 	<return: #Boolean>
@@ -73,7 +71,7 @@ AlbTextEditorSingleCursor >> insideSegment: aSegment [
 	^ self position between: aSegment textStart and: aSegment textEnd
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 AlbTextEditorSingleCursor >> insideSubText: aTextEditorSegmentPiece of: aSegment [
 	"Return true if I am inside a given subtext, false otherwise"
 	<return: #Boolean>
@@ -84,7 +82,7 @@ AlbTextEditorSingleCursor >> insideSubText: aTextEditorSegmentPiece of: aSegment
 			and: [ self position between: aSegment textStart and: aSegment textEnd ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor >> isVisible [
 	"Return true if this cursor should be visible, false otherwise"
 	<return: #Boolean>
@@ -92,12 +90,12 @@ AlbTextEditorSingleCursor >> isVisible [
 	^ isVisible
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor >> isVisible: aBoolean [
 	isVisible := aBoolean
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor >> position [
 	"Return position of the cursor within the text"
 	<return: #Number>
@@ -105,7 +103,7 @@ AlbTextEditorSingleCursor >> position [
 	^ position
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor >> position: anIndex [
 	self
 		assert: [ anIndex >= 0 ]
@@ -114,7 +112,7 @@ AlbTextEditorSingleCursor >> position: anIndex [
 	position := anIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSingleCursor >> resetDesiredCoordinate [
 	desiredCoordinate := nil
 ]

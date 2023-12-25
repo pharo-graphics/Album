@@ -1,16 +1,14 @@
 Class {
-	#name : 'AlbTextElement',
-	#superclass : 'BlTextElement',
+	#name : #AlbTextElement,
+	#superclass : #BlTextElement,
 	#instVars : [
 		'cursorElement',
 		'segmentPiece'
 	],
-	#category : 'Album-UI',
-	#package : 'Album',
-	#tag : 'UI'
+	#category : 'Album-UI'
 }
 
-{ #category : 'cursor - management' }
+{ #category : #'cursor - management' }
 AlbTextElement >> addCursorAt: aTextPosition inEditorElement: anEditorElement [
 
 	<return: #AlbCursorElement>
@@ -23,12 +21,12 @@ AlbTextElement >> addCursorAt: aTextPosition inEditorElement: anEditorElement [
 		  cursorElement ]
 ]
 
-{ #category : 'cursor - asserting' }
+{ #category : #'cursor - asserting' }
 AlbTextElement >> assertCursor: aCursorElement [
 	self assertCursorPosition: aCursorElement textPosition
 ]
 
-{ #category : 'cursor - asserting' }
+{ #category : #'cursor - asserting' }
 AlbTextElement >> assertCursorPosition: anIndex [
 	self
 		assert: [ self text isNotEmpty or: [ anIndex isZero ] ]
@@ -38,7 +36,7 @@ AlbTextElement >> assertCursorPosition: anIndex [
 		description: [ 'Cursor must be within text bounds (0 is allowed)' ].
 ]
 
-{ #category : 'cursor - accessing' }
+{ #category : #'cursor - accessing' }
 AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBlock [
 
 	cursorElement ifNil: [ ^ aNoneBlock value ].
@@ -47,7 +45,7 @@ AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBloc
 	^ aFoundBlock value: cursorElement
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextElement >> defaultMinWidth [
 
 	"to ensure that the clickable area is width enough event in case of fitContent"
@@ -55,13 +53,13 @@ AlbTextElement >> defaultMinWidth [
 	^ 2
 ]
 
-{ #category : 'cursor - accessing' }
+{ #category : #'cursor - accessing' }
 AlbTextElement >> hasCursor [
 
 	^ cursorElement notNil
 ]
 
-{ #category : 'cursor - accessing' }
+{ #category : #'cursor - accessing' }
 AlbTextElement >> hasCursorAt: aTextPosition [
 	"Return true if cursor at a given position exists"
 	<return: #Boolean>
@@ -72,13 +70,13 @@ AlbTextElement >> hasCursorAt: aTextPosition [
 		ifNone: [ false ]
 ]
 
-{ #category : 'cursor - management' }
+{ #category : #'cursor - management' }
 AlbTextElement >> hideCursor [
 	cursorElement ifNil: [ ^self ].
 	cursorElement visibility: BlVisibility gone
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextElement >> initialize [
 
 	super initialize.
@@ -86,7 +84,7 @@ AlbTextElement >> initialize [
 	self clipChildren: false.
 ]
 
-{ #category : 'layout' }
+{ #category : #layout }
 AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 		| cursorPos textPosX maxTextPosX minTextPosX textPos |
 		cursorElement ifNil: [ ^self ].
@@ -105,20 +103,20 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 			context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : 'private - paragraph' }
+{ #category : #'private - paragraph' }
 AlbTextElement >> newTextParagraph [
 	"Create a text paragraph used to measure and render text"
 
 	^ AlbTextParagraph new segmentPiece: segmentPiece
 ]
 
-{ #category : 'layout' }
+{ #category : #layout }
 AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 	super onLayout: aBounds context: aBlElementBoundsUpdateContext.	
 	self layoutCursor: aBounds context: aBlElementBoundsUpdateContext
 ]
 
-{ #category : 'cursor - management' }
+{ #category : #'cursor - management' }
 AlbTextElement >> removeCursorAt: aTextIndex [
 	"Remove cursor at a goven position"
 
@@ -131,14 +129,14 @@ AlbTextElement >> removeCursorAt: aTextIndex [
 		ifNone: [ self error: 'Cursor at ', aTextIndex asString, ' does not exist' ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextElement >> segmentPiece [
 	<return: #TAlbTextEditorTextualPiece>
 
 	^ segmentPiece
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextElement >> segmentPiece: aSegmentPiece [
 
 	segmentPiece := aSegmentPiece.
@@ -146,13 +144,13 @@ AlbTextElement >> segmentPiece: aSegmentPiece [
 	self text: (aSegmentPiece text copyFrom: 1 to: aSegmentPiece text size)
 ]
 
-{ #category : 'cursor - management' }
+{ #category : #'cursor - management' }
 AlbTextElement >> showCursor [
 	cursorElement ifNil: [ ^self ].
 	cursorElement visibility: BlVisibility visible
 ]
 
-{ #category : 'text - accessing' }
+{ #category : #'text - accessing' }
 AlbTextElement >> textEnd [
 	"Return an index of the last character of a subtext that I represent"
 	<return: #Number>
@@ -160,7 +158,7 @@ AlbTextElement >> textEnd [
 	^ segmentPiece textEnd
 ]
 
-{ #category : 'text - accessing' }
+{ #category : #'text - accessing' }
 AlbTextElement >> textStart [
 	"Return an index of the first character of a subtext that I represent"
 	<return: #Number>

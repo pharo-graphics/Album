@@ -1,12 +1,10 @@
 Class {
-	#name : 'AlbTextFieldEditor',
-	#superclass : 'AlbTextEditor',
-	#category : 'Album-Model',
-	#package : 'Album',
-	#tag : 'Model'
+	#name : #AlbTextFieldEditor,
+	#superclass : #AlbTextEditor,
+	#category : 'Album-Model'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextFieldEditor >> defaultSegmentCollector [
 
 	^ AlbTextFieldEditorSegmentCollector new 

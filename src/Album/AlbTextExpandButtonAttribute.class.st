@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbTextExpandButtonAttribute',
-	#superclass : 'AlbTextAdornmentAttribute',
+	#name : #AlbTextExpandButtonAttribute,
+	#superclass : #AlbTextAdornmentAttribute,
 	#instVars : [
 		'isExpanded',
 		'attributesCreatingBlock',
 		'createdAttributes'
 	],
-	#category : 'Album-Attributes',
-	#package : 'Album',
-	#tag : 'Attributes'
+	#category : 'Album-Attributes'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextExpandButtonAttribute >> applyExpandedOrCollapsedAttributesOn: aTTextEditorTextualPiece in: aTextEditor [
 	"Add attributes if expanded and remove if collapsed"
 	| aText |
@@ -24,17 +22,17 @@ AlbTextExpandButtonAttribute >> applyExpandedOrCollapsedAttributesOn: aTTextEdit
 		ifTrue: [ self createAttributesAffect: aText in: aTextEditor ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextExpandButtonAttribute >> attributesCreatingBlock [
 	^ attributesCreatingBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextExpandButtonAttribute >> attributesCreatingBlock: aBlock [
 	attributesCreatingBlock := aBlock
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextExpandButtonAttribute >> createAttributesAffect: aText in: aTextEditor [
 	createdAttributes := (attributesCreatingBlock
 		cull: aText
@@ -42,17 +40,17 @@ AlbTextExpandButtonAttribute >> createAttributesAffect: aText in: aTextEditor [
 	aText attributes: createdAttributes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextExpandButtonAttribute >> createdAttributes [
 	^ createdAttributes
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextExpandButtonAttribute >> createdAttributes: aCollection [
 	createdAttributes := aCollection
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextExpandButtonAttribute >> initialize [
 	super initialize.
 	
@@ -63,17 +61,17 @@ AlbTextExpandButtonAttribute >> initialize [
 	createdAttributes := OrderedCollection new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextExpandButtonAttribute >> isExpanded [
 	^ isExpanded
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextExpandButtonAttribute >> isExpanded: aBoolean [
 	isExpanded := aBoolean
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextExpandButtonAttribute >> toggleExpandedOrCollapsedAttributesOn: aTTextEditorTextualPiece in: aTextEditor [
 	self isExpanded: isExpanded not.
 	self applyExpandedOrCollapsedAttributesOn: aTTextEditorTextualPiece in: aTextEditor

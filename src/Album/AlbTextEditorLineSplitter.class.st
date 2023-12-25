@@ -2,19 +2,17 @@
 I split a piece of text into line segments `BrTextEditorLineSegment`
 "
 Class {
-	#name : 'AlbTextEditorLineSplitter',
-	#superclass : 'AlbTextEditorSplitter',
-	#category : 'Album-Model-Segment-Text-Line',
-	#package : 'Album',
-	#tag : 'Model-Segment-Text-Line'
+	#name : #AlbTextEditorLineSplitter,
+	#superclass : #AlbTextEditorSplitter,
+	#category : 'Album-Model-Segment-Text-Line'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorLineSplitter >> newSegment [
 	^ AlbTextEditorLineSegment new
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorLineSplitter >> newSegment: aBlText from: aStartIndex to: anEndIndex delimited: aDelimiterIndex offset: anOffset [
 	| aSubText anAbsoluteTextStart anAbsoluteTextEnd |
 	"aStartIndex and anEndIndex are given in text coordinates"
@@ -33,7 +31,7 @@ AlbTextEditorLineSplitter >> newSegment: aBlText from: aStartIndex to: anEndInde
 		delimiter: aDelimiterIndex - anEndIndex
 ]
 
-{ #category : 'api - splitting' }
+{ #category : #'api - splitting' }
 AlbTextEditorLineSplitter >> split: aText in: aEditorSegmentStream offset: anOffset [
 
 	| anIterator |

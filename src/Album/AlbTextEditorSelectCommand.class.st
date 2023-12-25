@@ -3,18 +3,16 @@ I select an interval of text from ===fromIndex=== to ===toIndex===.
 I do not remove existing selections, I just add new one on top merging overlapping intervals
 "
 Class {
-	#name : 'AlbTextEditorSelectCommand',
-	#superclass : 'AlbTextEditorCommand',
+	#name : #AlbTextEditorSelectCommand,
+	#superclass : #AlbTextEditorCommand,
 	#instVars : [
 		'fromIndex',
 		'toIndex'
 	],
-	#category : 'Album-Commands',
-	#package : 'Album',
-	#tag : 'Commands'
+	#category : 'Album-Commands'
 }
 
-{ #category : 'executing' }
+{ #category : #executing }
 AlbTextEditorSelectCommand >> executeOn: aTextEditor [
 
 	self fromIndex = self toIndex
@@ -25,22 +23,22 @@ AlbTextEditorSelectCommand >> executeOn: aTextEditor [
 	aTextEditor notifySelectionChanged: aTextEditor selection
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectCommand >> fromIndex [
 	^ fromIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectCommand >> fromIndex: anObject [
 	fromIndex := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectCommand >> toIndex [
 	^ toIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectCommand >> toIndex: anObject [
 	toIndex := anObject
 ]

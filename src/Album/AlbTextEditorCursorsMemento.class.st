@@ -1,37 +1,35 @@
 Class {
-	#name : 'AlbTextEditorCursorsMemento',
-	#superclass : 'AlbTextEditorMemento',
+	#name : #AlbTextEditorCursorsMemento,
+	#superclass : #AlbTextEditorMemento,
 	#instVars : [
 		'cursors'
 	],
-	#category : 'Album-Model-Memento',
-	#package : 'Album',
-	#tag : 'Model-Memento'
+	#category : 'Album-Model-Memento'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCursorsMemento >> cursors: anObject [
 	cursors := anObject
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextEditorCursorsMemento >> initialize [
 	super initialize.
 	
 	cursors := AlbTextEditorMultipleCursor new
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorCursorsMemento >> label [
 	^ 'Cursors'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorCursorsMemento >> order [
 	^ 80
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorCursorsMemento >> restoreStateOf: aTextEditor [
 	aTextEditor navigator
 		withoutResettingDesiredCoordinate;
@@ -40,12 +38,12 @@ AlbTextEditorCursorsMemento >> restoreStateOf: aTextEditor [
 		apply
 ]
 
-{ #category : 'memento' }
+{ #category : #memento }
 AlbTextEditorCursorsMemento >> saveStateOf: aTextEditor [
 	cursors := aTextEditor cursors copy
 ]
 
-{ #category : 'evaluating' }
+{ #category : #evaluating }
 AlbTextEditorCursorsMemento >> value [
 	^ cursors
 ]

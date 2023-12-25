@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbTextWordPieceScreenToCursorHandler',
-	#superclass : 'AlbTextWordPieceUniqueHandler',
-	#category : 'Album-UI-Word',
-	#package : 'Album',
-	#tag : 'UI-Word'
+	#name : #AlbTextWordPieceScreenToCursorHandler,
+	#superclass : #AlbTextWordPieceUniqueHandler,
+	#category : 'Album-UI-Word'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextWordPieceScreenToCursorHandler >> eventClass [
 	^ AlbTextEditorScreenToCursorRequest
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbTextWordPieceScreenToCursorHandler >> explicitScreenToCursor: aTransformation for: anEvent [
 	| aLocalPosition aLocalTextIndex aGobaltextIndex |
 		
@@ -22,7 +20,7 @@ AlbTextWordPieceScreenToCursorHandler >> explicitScreenToCursor: aTransformation
 	aTransformation transformed: aGobaltextIndex
 ]
 
-{ #category : 'api - event managing' }
+{ #category : #'api - event managing' }
 AlbTextWordPieceScreenToCursorHandler >> handleEvent: anEvent [
 
 	| aTextElement |
@@ -33,7 +31,7 @@ AlbTextWordPieceScreenToCursorHandler >> handleEvent: anEvent [
 	anEvent transformation evaluateOn: self for: anEvent
 ]
 
-{ #category : 'geometry' }
+{ #category : #geometry }
 AlbTextWordPieceScreenToCursorHandler >> relativeScreenToCursor: aTransformation for: anEvent [
 	"I do the hard work of finding a text element above or below a cursor that should be moved up or down and transfer cursor inside of it
 	based on the current location of the cursor or on desired coordinate within the text editor"

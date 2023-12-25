@@ -2,18 +2,16 @@
 I do the hard job of visually updating selection by requesting segment holders to partially update themselves
 "
 Class {
-	#name : 'AlbTextEditorSelectionUpdateCommand',
-	#superclass : 'AlbTextEditorCommand',
+	#name : #AlbTextEditorSelectionUpdateCommand,
+	#superclass : #AlbTextEditorCommand,
 	#instVars : [
 		'fromIndex',
 		'toIndex'
 	],
-	#category : 'Album-Commands',
-	#package : 'Album',
-	#tag : 'Commands'
+	#category : 'Album-Commands'
 }
 
-{ #category : 'executing' }
+{ #category : #executing }
 AlbTextEditorSelectionUpdateCommand >> executeOn: aTextEditor [
 
 	| changedFrom changedTo |
@@ -33,27 +31,27 @@ AlbTextEditorSelectionUpdateCommand >> executeOn: aTextEditor [
 	aTextEditor notifyItems: (changedFrom to: changedTo) event: self newHolderEvent
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectionUpdateCommand >> fromIndex [
 	^ fromIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectionUpdateCommand >> fromIndex: anObject [
 	fromIndex := anObject
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbTextEditorSelectionUpdateCommand >> newHolderEvent [
 	^ AlbTextEditorSelectionChangedHolderEvent new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectionUpdateCommand >> toIndex [
 	^ toIndex
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorSelectionUpdateCommand >> toIndex: anObject [
 	toIndex := anObject
 ]

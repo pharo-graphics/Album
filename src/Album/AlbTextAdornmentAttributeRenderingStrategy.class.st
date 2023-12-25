@@ -1,30 +1,28 @@
 Class {
-	#name : 'AlbTextAdornmentAttributeRenderingStrategy',
-	#superclass : 'Object',
+	#name : #AlbTextAdornmentAttributeRenderingStrategy,
+	#superclass : #Object,
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
 	#instVars : [
 		'attribute'
 	],
-	#category : 'Album-Attributes - Support',
-	#package : 'Album',
-	#tag : 'Attributes - Support'
+	#category : 'Album-Attributes - Support'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttributeRenderingStrategy >> affect: aTTextEditorTextualPiece in: anEditorElement [
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #BlElement>
 	^ self subclassResponsibility 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttributeRenderingStrategy >> attribute [
 	<return: #AlbTextAdornmentAttribute>
 	^ attribute
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextAdornmentAttributeRenderingStrategy >> attribute: aTextAdornmentAttribute [
 	self 
 		assert: [ aTextAdornmentAttribute isNotNil ] 

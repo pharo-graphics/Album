@@ -3,24 +3,22 @@ Allows users to react to the cursor movement within the editor.
 `AlbTextCursorAttributeExamples>>#changingForeground`
 "
 Class {
-	#name : 'AlbTextCursorAttribute',
-	#superclass : 'AlbTextCrappyEventHandlerAttribute',
+	#name : #AlbTextCursorAttribute,
+	#superclass : #AlbTextCrappyEventHandlerAttribute,
 	#instVars : [
 		'enterAction',
 		'leaveAction',
 		'isInside'
 	],
-	#category : 'Album-Attributes',
-	#package : 'Album',
-	#tag : 'Attributes'
+	#category : 'Album-Attributes'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttribute >> enterAction [
 	^ enterAction
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttribute >> enterAction: aBlock [
 	"A Block in a form [ :aTextEditor :anEvent :aTextStart :aTextEnd | ]"
 	self 
@@ -30,7 +28,7 @@ AlbTextCursorAttribute >> enterAction: aBlock [
 	enterAction := aBlock
 ]
 
-{ #category : 'events' }
+{ #category : #events }
 AlbTextCursorAttribute >> handleEvent: anEvent [ 
 	"Handle a given event or dispatch it using #sendTo:"
 
@@ -41,7 +39,7 @@ AlbTextCursorAttribute >> handleEvent: anEvent [
 		ifTrue: [ self performLeaveAction: anEvent ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextCursorAttribute >> initialize [
 	super initialize.
 
@@ -50,12 +48,12 @@ AlbTextCursorAttribute >> initialize [
 	isInside := nil
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttribute >> leaveAction [
 	^ leaveAction
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextCursorAttribute >> leaveAction: aBlock [
 	"A Block in a form [ :aTextEditor :anEvent :aTextStart :aTextEnd | ]"
 	self 
@@ -65,7 +63,7 @@ AlbTextCursorAttribute >> leaveAction: aBlock [
 	leaveAction := aBlock
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextCursorAttribute >> performEnterAction: anEvent [
 
 	isInside = true ifTrue: [ ^ self ].
@@ -79,7 +77,7 @@ AlbTextCursorAttribute >> performEnterAction: anEvent [
 		value: anEvent attributeEnd
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbTextCursorAttribute >> performLeaveAction: anEvent [ 
 
 	isInside = false ifTrue: [ ^ self ].
@@ -93,7 +91,7 @@ AlbTextCursorAttribute >> performLeaveAction: anEvent [
 		value: anEvent attributeEnd
 ]
 
-{ #category : 'events' }
+{ #category : #events }
 AlbTextCursorAttribute >> wantsEvent: anEvent [ 
 	"Return true if I am interested in a given event and want to handle it,
 	false otherwise"

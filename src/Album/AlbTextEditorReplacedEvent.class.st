@@ -1,34 +1,32 @@
 Class {
-	#name : 'AlbTextEditorReplacedEvent',
-	#superclass : 'BlEvent',
+	#name : #AlbTextEditorReplacedEvent,
+	#superclass : #BlEvent,
 	#instVars : [
 		'previous',
 		'current'
 	],
-	#category : 'Album-UI-Requests',
-	#package : 'Album',
-	#tag : 'UI-Requests'
+	#category : 'Album-UI-Requests'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorReplacedEvent >> current [
 
 	^ current
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorReplacedEvent >> current: aTextEditor [
 
 	current := aTextEditor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorReplacedEvent >> previous [
 
 	^ previous
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextEditorReplacedEvent >> previous: aTextEditor [
 
 	previous := aTextEditor

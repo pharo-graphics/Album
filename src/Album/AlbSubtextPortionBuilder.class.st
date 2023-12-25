@@ -1,18 +1,16 @@
 Class {
-	#name : 'AlbSubtextPortionBuilder',
-	#superclass : 'Object',
+	#name : #AlbSubtextPortionBuilder,
+	#superclass : #Object,
 	#instVars : [
 		'subtext',
 		'fullText',
 		'parentElement',
 		'decorations'
 	],
-	#category : 'Album-UI-Text-Portion',
-	#package : 'Album',
-	#tag : 'UI-Text-Portion'
+	#category : 'Album-UI-Text-Portion'
 }
 
-{ #category : 'building' }
+{ #category : #building }
 AlbSubtextPortionBuilder >> createDecorations [
 
 	| collector founds |
@@ -23,7 +21,7 @@ AlbSubtextPortionBuilder >> createDecorations [
 	founds do: [ :interval | self decorationInterval: interval + fullText textOffset ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbSubtextPortionBuilder >> decorationInterval: anInterval [
 
 	anInterval = (parentElement selection from + 1 to: parentElement selection to) ifTrue: [ ^ self ].
@@ -32,33 +30,33 @@ AlbSubtextPortionBuilder >> decorationInterval: anInterval [
 			 yourself)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbSubtextPortionBuilder >> decorations [
 
 	^ decorations
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbSubtextPortionBuilder >> fullText: aSubtext [
 
 	fullText := aSubtext
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbSubtextPortionBuilder >> initialize [ 
 
 	super initialize.
 	decorations := OrderedCollection new
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbSubtextPortionBuilder >> parentElement: anObject [
 
 	parentElement := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbSubtextPortionBuilder >> subtext: aSubtext [
 
 	subtext := aSubtext

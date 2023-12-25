@@ -1,29 +1,27 @@
 Class {
-	#name : 'AlbEditorLoseFocusShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorLoseFocusShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorLoseFocusShortcut >> description [
 	^ 'Loses focus.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorLoseFocusShortcut >> initialize [
 	super initialize.
 	
 	combination := BlKeyCombination escape
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorLoseFocusShortcut >> name [
 	^ 'Lose focus'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorLoseFocusShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 	aEditorElement loseFocus
 ]

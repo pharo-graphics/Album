@@ -1,17 +1,15 @@
 Class {
-	#name : 'AlbEditorSelectLineBeforeCursorShortcut',
-	#superclass : 'AlbEditorShortcut',
-	#category : 'Album-Shortcuts',
-	#package : 'Album',
-	#tag : 'Shortcuts'
+	#name : #AlbEditorSelectLineBeforeCursorShortcut,
+	#superclass : #AlbEditorShortcut,
+	#category : 'Album-Shortcuts'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectLineBeforeCursorShortcut >> description [
 	^ 'Extends the selection from the current cursor position to the beginning of a line.'
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorSelectLineBeforeCursorShortcut >> initialize [
 	super initialize.
 	
@@ -19,12 +17,12 @@ AlbEditorSelectLineBeforeCursorShortcut >> initialize [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorSelectLineBeforeCursorShortcut >> name [
 	^ 'Select to the beginning of a line'
 ]
 
-{ #category : 'evaluation' }
+{ #category : #evaluation }
 AlbEditorSelectLineBeforeCursorShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 	aTextEditor selecter
 		extendToLineStart;

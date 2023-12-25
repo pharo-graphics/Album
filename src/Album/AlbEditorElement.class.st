@@ -5,8 +5,8 @@ Text editing operations are driven by my data source (called textEditor). I also
 
 "
 Class {
-	#name : 'AlbEditorElement',
-	#superclass : 'BlElement',
+	#name : #AlbEditorElement,
+	#superclass : #BlElement,
 	#traits : 'TAlbInfiniteDecorator + TBlLayoutResizable',
 	#classTraits : 'TAlbInfiniteDecorator classTrait + TBlLayoutResizable classTrait',
 	#instVars : [
@@ -14,18 +14,16 @@ Class {
 		'modeEventHandlers',
 		'frontLayer'
 	],
-	#category : 'Album-UI',
-	#package : 'Album',
-	#tag : 'UI'
+	#category : 'Album-UI'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> defaultBackground [
 
 	^ BlBackground paint: Color white
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> defaultFrontLayer [
 
 	| layer |
@@ -38,45 +36,45 @@ self flag: 'Check elevation use'.
 	^ layer
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> defaultInfiniteElement [  
 
 	^ AlbInfiniteEditorElement new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> defaultLayout [
 
 	^ BlFrameLayout new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> defaultMargin [
 
 	^ BlInsets empty
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> defaultModeEventHandlers [
 
 	^ self mode defaultFrontLayerEventHandlers.
 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> defaultPadding [
 
 	^ BlInsets empty
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbEditorElement >> frontLayer [
 
 	^ frontLayer
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> initialize [
 
 	| distributor |
@@ -110,7 +108,7 @@ AlbEditorElement >> initialize [
 	self installModeEventHandlers
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> installModeEventHandlers [
 
 	self modeEventHandlersDo: [ :e | self removeEventHandler: e ].
@@ -122,25 +120,25 @@ AlbEditorElement >> installModeEventHandlers [
 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> installPrimarySelectionElement [
 
 	(self mode primarySelectionElementIn: self) ifNotNil: [ :s | s onInstalled]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> installRemanentUpdater [
 
 	AlbRemanentsUpdater new onInstalledIn: self
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> modeEventHandlersDo: aBlock [
 
 	modeEventHandlers ifNotNil: [ modeEventHandlers do: aBlock ]
 ]
 
-{ #category : 't  - layout resizeable' }
+{ #category : #'t  - layout resizeable' }
 AlbEditorElement >> resizableConstraintsDo: aBlock [
 	"Perform aBlock with my constraints as argument.
 	Note: After evaluation I request a layout update!
@@ -156,7 +154,7 @@ AlbEditorElement >> resizableConstraintsDo: aBlock [
 	self constraintsDo: aBlock
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbEditorElement >> selectionColor [
 
 	^  (Color

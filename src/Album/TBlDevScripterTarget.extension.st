@@ -1,11 +1,11 @@
-Extension { #name : 'TBlDevScripterTarget' }
+Extension { #name : #TBlDevScripterTarget }
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 TBlDevScripterTarget >> onAlbTextEditorText [
 	self onChildFromMessage: #text
 ]
 
-{ #category : '*Album' }
+{ #category : #'*Album' }
 TBlDevScripterTarget >> onAlbum [
 	^ self onChildFromMessage: #editor
 ]

@@ -1,14 +1,12 @@
 Class {
-	#name : 'AlbEmbeddedEditorExamples',
-	#superclass : 'AlbTextEditorExamples',
+	#name : #AlbEmbeddedEditorExamples,
+	#superclass : #AlbTextEditorExamples,
 	#traits : 'TAlbTextEditorFixedMeasurerExamples',
 	#classTraits : 'TAlbTextEditorFixedMeasurerExamples classTrait',
-	#category : 'Album-Examples-Editor',
-	#package : 'Album-Examples',
-	#tag : 'Editor'
+	#category : 'Album-Examples-Editor'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 AlbEmbeddedEditorExamples >> editorFor: aText [
 	<return: #AlbEditorElement>
 	| anEditor aRopedText |
@@ -37,7 +35,7 @@ AlbEmbeddedEditorExamples >> editorFor: aText [
 	^ anEditor
 ]
 
-{ #category : 'examples - embedded' }
+{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> editorWithEmbeddedEditor [
 
 	<gtExample>
@@ -47,19 +45,19 @@ AlbEmbeddedEditorExamples >> editorWithEmbeddedEditor [
 	^ ed
 ]
 
-{ #category : 'examples - embedded' }
+{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> elementWithEmbeddedEditor [
 	<gtExample>
 	
 	^ self newElement editor: self editorWithEmbeddedEditor
 ]
 
-{ #category : 'private - instance creation' }
+{ #category : #'private - instance creation' }
 AlbEmbeddedEditorExamples >> embeddedEditorText [
 	^ 'Hello world' asRopedText
 ]
 
-{ #category : 'examples - embedded' }
+{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> embeddedTextEditorElement [
 	"<gtExample>"
 	| anEditorElement |
@@ -83,12 +81,12 @@ AlbEmbeddedEditorExamples >> embeddedTextEditorElement [
 	^ anEditorElement
 ]
 
-{ #category : 'private - instance creation' }
+{ #category : #'private - instance creation' }
 AlbEmbeddedEditorExamples >> mainEditorText [
 	^ self newThreeLineText fontSize: 20
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 AlbEmbeddedEditorExamples >> makeFixedMeasurement: aTextEditor [
 
 	aTextEditor
@@ -101,14 +99,14 @@ AlbEmbeddedEditorExamples >> makeFixedMeasurement: aTextEditor [
 			aTextElement ]
 ]
 
-{ #category : 'examples - embedded' }
+{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> newThreeLineText [
 	<gtExample>
 	
 	^ ('first' , String cr , 'second' , String cr , 'third') asRopedText
 ]
 
-{ #category : 'examples - embedded' }
+{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
 	<script: 'self new textWithEmbeddedEditor'>
 	| aText |

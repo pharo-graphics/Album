@@ -1,32 +1,30 @@
 Class {
-	#name : 'AlbTextReplacingAttributeWithCharacterStrategy',
-	#superclass : 'AlbTextReplacingAttributeStrategy',
+	#name : #AlbTextReplacingAttributeWithCharacterStrategy,
+	#superclass : #AlbTextReplacingAttributeStrategy,
 	#instVars : [
 		'character'
 	],
-	#category : 'Album-Attributes - Support',
-	#package : 'Album',
-	#tag : 'Attributes - Support'
+	#category : 'Album-Attributes - Support'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextReplacingAttributeWithCharacterStrategy >> character [
 	^ character
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 AlbTextReplacingAttributeWithCharacterStrategy >> character: anObject [
 	character := anObject
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 AlbTextReplacingAttributeWithCharacterStrategy >> initialize [
 	super initialize.
 	
 	character := $*
 ]
 
-{ #category : 'replacing' }
+{ #category : #replacing }
 AlbTextReplacingAttributeWithCharacterStrategy >> swapString: aString [
 	<return: #String>
 	

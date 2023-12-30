@@ -27,9 +27,7 @@ AlbEditorElement >> defaultBackground [
 AlbEditorElement >> defaultFrontLayer [
 
 	| layer |
-self flag: 'Check elevation use'.
 	layer := BlElement new.
-	"layer elevation: (BlRelativeElevation elevation: SmallInteger maxVal)."
 	layer constraintsDo: [ :c | 
 		c horizontal matchParent.
 		c vertical matchParent ].
@@ -88,22 +86,26 @@ AlbEditorElement >> initialize [
 	self installRemanentUpdater.
 	self addChild: next.
 
-	self whenModeChangedDo: [
-		self installPrimarySelectionElement.
-		self installRemanentUpdater.
-		self installModeEventHandlers ].
+	self addEventHandler: (BlEventHandler
+			 on: AlbInfiniteEditorModeChangedEvent
+			 do: [ 
+				 self installPrimarySelectionElement.
+				 self installRemanentUpdater.
+				 self installModeEventHandlers ]).
 
-	self whenEditorChangedDo: [ :event |
-		self installRemanentUpdater ].
+	self whenEditorChangedDo: [ :event | self installRemanentUpdater ].
 
 	frontLayer := self defaultFrontLayer.
 	self addChild: frontLayer as: #frontLayer.
 	distributor := BlSharedEventDistributor new
 		               adjustMousePosition: false;
-		               shareEvents: (Array with: BlMouseEvent);
+		               shareEvents: {
+				               BlMouseEvent.
+				               AlbInfiniteEditorModeChangedEvent };
 		               yourself.
 	self frontLayer addEventHandler: distributor.
 	self infinite addEventHandler: distributor.
+	self addEventHandler: distributor.
 	self matchParent.
 	self installModeEventHandlers
 ]

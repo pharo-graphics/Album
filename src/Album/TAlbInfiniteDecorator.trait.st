@@ -297,14 +297,6 @@ TAlbInfiniteDecorator >> whenEditorChangedDo: aBlock [
 ]
 
 { #category : #'t - infinite editor view - configuration' }
-TAlbInfiniteDecorator >> whenModeChangedDo: aBlock [
-
-	"set a block to perform after that the mode has been chanbed, and its action performed"
-
-	self next whenModeChangedDo: aBlock
-]
-
-{ #category : #'t - infinite editor view - configuration' }
 TAlbInfiniteDecorator >> whenTextEditedDo: aBlock [
 
 	self deprecated: 'Use directly editorDo: [:ed | ed when: AlbTextEditedEvent do: ] instead'. 

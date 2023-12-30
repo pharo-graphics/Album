@@ -6,7 +6,7 @@ Class {
 		'blinking',
 		'blinkTask'
 	],
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #accessing }
@@ -30,7 +30,7 @@ AlbCursorElement >> defaultBlinking [
 { #category : #initialization }
 AlbCursorElement >> defaultBlurredBackground [
 
-	^ Color brown 
+	^ Color transparent 
 ]
 
 { #category : #initialization }

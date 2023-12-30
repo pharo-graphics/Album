@@ -1,7 +1,10 @@
 Class {
 	#name : #AlbPrimarySelectionElement,
 	#superclass : #AlbAbstractSubtextElement,
-	#category : 'Album-UI-Text-Portion'
+	#instVars : [
+		'modeChangedEventHandler'
+	],
+	#category : #'Album-UI-Text-Portion'
 }
 
 { #category : #initialization }
@@ -36,7 +39,10 @@ AlbPrimarySelectionElement >> onGotFocus [
 { #category : #'api - install/uninstall  hook' }
 AlbPrimarySelectionElement >> onInstalled [
 
-	self editorElement infinite whenModeChangedDo: [ self onUninstalled ]
+	modeChangedEventHandler := BlEventHandler
+			 on: AlbInfiniteEditorModeChangedEvent
+			 do: [ self onUninstalled ].
+	self editorElement addEventHandler: modeChangedEventHandler
 ]
 
 { #category : #private }
@@ -48,6 +54,7 @@ AlbPrimarySelectionElement >> onLostFocus [
 { #category : #'api - install/uninstall  hook' }
 AlbPrimarySelectionElement >> onUninstalled [
 
+	self editorElement removeEventHandler: modeChangedEventHandler.
 	updateStrategy onUninstalledIn: self
 
 ]

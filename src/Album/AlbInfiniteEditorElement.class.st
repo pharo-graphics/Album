@@ -1,16 +1,16 @@
 Class {
 	#name : #AlbInfiniteEditorElement,
 	#superclass : #BlInfiniteElement,
-	#traits : 'TObservable + TBlLayoutResizable',
-	#classTraits : 'TObservable classTrait + TBlLayoutResizable classTrait',
+	#traits : 'TBlLayoutResizable',
+	#classTraits : 'TBlLayoutResizable classTrait',
 	#instVars : [
-		'#mode => ObservableSlot',
-		'#cursorStencil',
-		'#wordStencil',
-		'#modeEventHandlers',
-		'#modeShortcuts'
+		'mode',
+		'cursorStencil',
+		'wordStencil',
+		'modeEventHandlers',
+		'modeShortcuts'
 	],
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #'accessing - editor' }
@@ -272,24 +272,25 @@ AlbInfiniteEditorElement >> infinite [
 
 { #category : #initialization }
 AlbInfiniteEditorElement >> initialize [
-	
-	self class initializeSlots: self.
+
 	super initialize.
-	
+
 	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
 	self editor: self defaulTextEditor.
 
-	" action when  mode change (Observable slot) "
-	self whenModeChangedDo: [ :m | self modeChanged ].
-	mode := self defaultMode.
+	self addEventHandler: (BlEventHandler
+			 on: AlbInfiniteEditorModeChangedEvent
+			 do: [ self modeChanged ]).
+	self mode: self defaultMode.
 	self matchParent.
 	self margin: self defaultMargin.
 	self padding: self defaultPadding.
-	self whenLayoutedDo: [ 
+	self whenLayoutedDo: [
 		self geometryChanged.
 		self selectionChanged ].
-	self elevation: ((BlRelativeElevation elevation: SmallInteger maxVal - 1)).
+	self elevation:
+		(BlRelativeElevation elevation: SmallInteger maxVal - 1)
 ]
 
 { #category : #'accessing - editor' }
@@ -330,7 +331,8 @@ AlbInfiniteEditorElement >> mode [
 AlbInfiniteEditorElement >> mode: anEditabilityMode [
 
 	mode = anEditabilityMode ifTrue: [ ^ self ].
-	mode := anEditabilityMode
+	mode := anEditabilityMode.
+	self dispatchEvent: AlbInfiniteEditorModeChangedEvent new
 ]
 
 { #category : #'view - configuration' }
@@ -620,14 +622,6 @@ AlbInfiniteEditorElement >> whenEditorChangedDo: aBlock [
 	self addEventHandler: (BlEventHandler
 			 on: AlbTextEditorReplacedEvent
 			 do: aBlock)
-]
-
-{ #category : #'view - configuration' }
-AlbInfiniteEditorElement >> whenModeChangedDo: aBlock [
-
-	"set a block to perform after that the mode has been chanbed, and its action performed"
-
-	self property: #mode whenChangedDo: aBlock
 ]
 
 { #category : #'view - configuration' }

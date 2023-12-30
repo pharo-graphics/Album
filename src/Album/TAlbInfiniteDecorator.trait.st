@@ -1,9 +1,6 @@
 Trait {
 	#name : #TAlbInfiniteDecorator,
-	#instVars : [
-		'next'
-	],
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #'t - infinite editor accessing - editor' }
@@ -168,13 +165,13 @@ TAlbInfiniteDecorator >> navigator [
 { #category : #'t - infinite editor accessing' }
 TAlbInfiniteDecorator >> next [
 
-	^ next
+	^ self explicitRequirement 
 ]
 
 { #category : #'t - infinite editor accessing' }
 TAlbInfiniteDecorator >> next: aDecoratorOrInfinite [
 
-	next := aDecoratorOrInfinite
+	self explicitRequirement 
 ]
 
 { #category : #'t - infinite editor focus accessing' }

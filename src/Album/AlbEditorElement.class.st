@@ -14,7 +14,7 @@ Class {
 		'modeEventHandlers',
 		'frontLayer'
 	],
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }
@@ -136,6 +136,18 @@ AlbEditorElement >> installRemanentUpdater [
 AlbEditorElement >> modeEventHandlersDo: aBlock [
 
 	modeEventHandlers ifNotNil: [ modeEventHandlers do: aBlock ]
+]
+
+{ #category : #'t - infinite editor accessing' }
+AlbEditorElement >> next [
+
+	^ next
+]
+
+{ #category : #'t - infinite editor accessing' }
+AlbEditorElement >> next: aDecoratorOrInfinite [
+
+	next := aDecoratorOrInfinite
 ]
 
 { #category : #'t  - layout resizeable' }

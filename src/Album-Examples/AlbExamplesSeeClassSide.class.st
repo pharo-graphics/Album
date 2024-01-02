@@ -158,7 +158,7 @@ AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithSubtextElement [
 		deco := (AlbSubtextElement editorElement: ed)
 			        interval: (start to: start + size);
 			        yourself.
-		deco withExtentChangeAdaption.
+		deco addEventHandler: AlbSubtextElementEventHandler new.
 		deco background: (Color random alpha: 0.4).
 		deco border: BlBorder empty.
 		deco addEventHandler: (BlEventHandler
@@ -605,12 +605,11 @@ self flag: 'does not work'.
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_WithHelloWorld [
 
-	| ed space text editor |
+	| ed space text |
 	text := 'Hello World' asRopedText fontSize: 40.
-	editor := AlbTextEditor new privateText: text.
 	ed := AlbEditorElement new.
 	ed withRowNumbers.
-	ed editor: editor.
+	ed text: text.
 	space := BlSpace new.
 	space root addChild: ed.
 	space show

@@ -104,33 +104,21 @@ AlbInfiniteEditorElement >> cursors [
 ]
 
 { #category : #initialization }
-AlbInfiniteEditorElement >> defaulTextEditor [
-
-	^ AlbTextEditor new.
-]
-
-{ #category : #initialization }
-AlbInfiniteEditorElement >> defaultBackground [
-
-	^ BlBackground paint: Color transparent
-]
-
-{ #category : #initialization }
 AlbInfiniteEditorElement >> defaultCursorStencil [
 	
 	^ AlbCursorStencil new
 ]
 
 { #category : #initialization }
-AlbInfiniteEditorElement >> defaultLayout [
+AlbInfiniteEditorElement >> defaultDataSource [ 
 
-	^ BlInfiniteLinearLayout vertical
+	^ self defaultTextEditor 
 ]
 
 { #category : #initialization }
-AlbInfiniteEditorElement >> defaultMargin [
+AlbInfiniteEditorElement >> defaultLayout [
 
-	^ BlInsets empty
+	^ BlInfiniteLinearLayout vertical
 ]
 
 { #category : #initialization }
@@ -150,13 +138,7 @@ AlbInfiniteEditorElement >> defaultModeEventHandlers [
 AlbInfiniteEditorElement >> defaultModeShortcuts [
 
 	
-	^ self mode ifNil: [ #() ] ifNotNil: [ :m | m defaultShortcuts]
-]
-
-{ #category : #initialization }
-AlbInfiniteEditorElement >> defaultPadding [
-
-	^ BlInsets empty
+	^ self mode defaultShortcuts
 ]
 
 { #category : #initialization }
@@ -166,9 +148,9 @@ AlbInfiniteEditorElement >> defaultRecycler [
 ]
 
 { #category : #initialization }
-AlbInfiniteEditorElement >> defaultSystemFontName [
+AlbInfiniteEditorElement >> defaultTextEditor [
 
-	^ 'Source Code Pro'"AeFontManager defaultFontFamilyName"
+	^ AlbTextEditor new.
 ]
 
 { #category : #initialization }
@@ -201,12 +183,7 @@ AlbInfiniteEditorElement >> editor [
 { #category : #'private - accessing editor' }
 AlbInfiniteEditorElement >> editor: aTextEditor [
 
-	| prev |
-	prev := self editor.
-	self dataSource: aTextEditor.
-	self setupModeShortcuts.
-	self dispatchEvent: (AlbTextEditorReplacedEvent new previous: prev; current: aTextEditor ; yourself)
-
+	^ (BlImmutableObjectChangeError object: self) signal
 ]
 
 { #category : #'private - accessing editor' }
@@ -275,22 +252,16 @@ AlbInfiniteEditorElement >> initialize [
 
 	super initialize.
 
-	self background: self defaultBackground.
 	cursorStencil := AlbCursorStencil new.
-	self editor: self defaulTextEditor.
 
 	self addEventHandler: (BlEventHandler
-			 on: AlbInfiniteEditorModeChangedEvent
+			 on: AlbInfiniteModeChangedEvent
 			 do: [ self modeChanged ]).
+			
 	self mode: self defaultMode.
 	self matchParent.
-	self margin: self defaultMargin.
-	self padding: self defaultPadding.
-	self whenLayoutedDo: [
-		self geometryChanged.
-		self selectionChanged ].
-	self elevation:
-		(BlRelativeElevation elevation: SmallInteger maxVal - 1)
+
+	self elevation: (BlRelativeElevation elevation: SmallInteger maxVal - 1)
 ]
 
 { #category : #'accessing - editor' }
@@ -332,7 +303,7 @@ AlbInfiniteEditorElement >> mode: anEditabilityMode [
 
 	mode = anEditabilityMode ifTrue: [ ^ self ].
 	mode := anEditabilityMode.
-	self dispatchEvent: AlbInfiniteEditorModeChangedEvent new
+	self dispatchEvent: AlbInfiniteModeChangedEvent new
 ]
 
 { #category : #'view - configuration' }
@@ -424,6 +395,7 @@ AlbInfiniteEditorElement >> piecesAndTheirElementsWithinIndexInterval: anInterva
 
 { #category : #'accessing - editor' }
 AlbInfiniteEditorElement >> removeEditorShortcut: aTextEditorInteraction [
+
 	self editor removeEditorShortcut: aTextEditorInteraction
 ]
 
@@ -614,14 +586,6 @@ AlbInfiniteEditorElement >> textSnapshot [
 	<return: #BlText>
 
 	^ self editor textSnapshot
-]
-
-{ #category : #'accessing - editor' }
-AlbInfiniteEditorElement >> whenEditorChangedDo: aBlock [
-
-	self addEventHandler: (BlEventHandler
-			 on: AlbTextEditorReplacedEvent
-			 do: aBlock)
 ]
 
 { #category : #'view - configuration' }

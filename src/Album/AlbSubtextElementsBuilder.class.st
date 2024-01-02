@@ -1,5 +1,5 @@
 Class {
-	#name : #AlbSubtextPortionBuilder,
+	#name : #AlbSubtextElementsBuilder,
 	#superclass : #Object,
 	#instVars : [
 		'subtext',
@@ -7,11 +7,11 @@ Class {
 		'parentElement',
 		'decorations'
 	],
-	#category : 'Album-UI-Text-Portion'
+	#category : #'Album-UI-Text-Portion'
 }
 
 { #category : #building }
-AlbSubtextPortionBuilder >> createDecorations [
+AlbSubtextElementsBuilder >> createDecorations [
 
 	| collector founds |
 	subtext ifNil: [ ^ self ].
@@ -22,7 +22,7 @@ AlbSubtextPortionBuilder >> createDecorations [
 ]
 
 { #category : #private }
-AlbSubtextPortionBuilder >> decorationInterval: anInterval [
+AlbSubtextElementsBuilder >> decorationInterval: anInterval [
 
 	anInterval = (parentElement selection from + 1 to: parentElement selection to) ifTrue: [ ^ self ].
 	decorations add: ((AlbSubtextElement  editorElement: parentElement)
@@ -31,33 +31,33 @@ AlbSubtextPortionBuilder >> decorationInterval: anInterval [
 ]
 
 { #category : #accessing }
-AlbSubtextPortionBuilder >> decorations [
+AlbSubtextElementsBuilder >> decorations [
 
 	^ decorations
 
 ]
 
 { #category : #accessing }
-AlbSubtextPortionBuilder >> fullText: aSubtext [
+AlbSubtextElementsBuilder >> fullText: aSubtext [
 
 	fullText := aSubtext
 ]
 
 { #category : #initialization }
-AlbSubtextPortionBuilder >> initialize [ 
+AlbSubtextElementsBuilder >> initialize [ 
 
 	super initialize.
 	decorations := OrderedCollection new
 ]
 
 { #category : #accessing }
-AlbSubtextPortionBuilder >> parentElement: anObject [
+AlbSubtextElementsBuilder >> parentElement: anObject [
 
 	parentElement := anObject
 ]
 
 { #category : #accessing }
-AlbSubtextPortionBuilder >> subtext: aSubtext [
+AlbSubtextElementsBuilder >> subtext: aSubtext [
 
 	subtext := aSubtext
 ]

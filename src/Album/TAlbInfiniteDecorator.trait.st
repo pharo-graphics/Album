@@ -79,13 +79,6 @@ TAlbInfiniteDecorator >> editor [
 	^ self next editor
 ]
 
-{ #category : #'t - infinite editor accessing - editor' }
-TAlbInfiniteDecorator >> editor: aTextEditor [
-
-	self next editor: aTextEditor.
-
-]
-
 { #category : #'t - infinite editor view - configuration' }
 TAlbInfiniteDecorator >> editorDo: aBlock [
 
@@ -193,12 +186,6 @@ TAlbInfiniteDecorator >> removeEditorShortcut: aTextEditorInteraction [
 	self next removeEditorShortcut: aTextEditorInteraction
 ]
 
-{ #category : #'t - infinite editor steps - interactions' }
-TAlbInfiniteDecorator >> requestFocus [
-
-	self next requestFocus
-]
-
 { #category : #'t - infinite editor private - accessing editor' }
 TAlbInfiniteDecorator >> segments [
 	^ self next segments
@@ -288,12 +275,6 @@ TAlbInfiniteDecorator >> textSnapshot [
 	<return: #BlText>
 
 	^ self next textSnapshot
-]
-
-{ #category : #'t - infinite editor accessing - editor' }
-TAlbInfiniteDecorator >> whenEditorChangedDo: aBlock [
-
-	self next whenEditorChangedDo: aBlock
 ]
 
 { #category : #'t - infinite editor view - configuration' }

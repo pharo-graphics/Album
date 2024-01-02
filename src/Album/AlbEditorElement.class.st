@@ -11,17 +11,14 @@ Class {
 	#classTraits : 'TAlbInfiniteDecorator classTrait + TBlLayoutResizable classTrait',
 	#instVars : [
 		'next',
-		'modeEventHandlers',
-		'frontLayer'
+		'frontLayer',
+		'primarySelectionElementClass',
+		'primarySelectionElement',
+		'modeFrontLayerEventHandlers',
+		'modeRemanentSubtextEventHandlers'
 	],
 	#category : #'Album-UI'
 }
-
-{ #category : #initialization }
-AlbEditorElement >> defaultBackground [
-
-	^ BlBackground paint: Color white
-]
 
 { #category : #initialization }
 AlbEditorElement >> defaultFrontLayer [
@@ -32,6 +29,13 @@ AlbEditorElement >> defaultFrontLayer [
 		c horizontal matchParent.
 		c vertical matchParent ].
 	^ layer
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultFrontLayerEventHandlers [
+
+	^ self mode defaultFrontLayerEventHandlers.
+
 ]
 
 { #category : #initialization }
@@ -47,23 +51,18 @@ AlbEditorElement >> defaultLayout [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> defaultMargin [
+AlbEditorElement >> defaultRemanentSubtextEventHandlers [
 
-	^ BlInsets empty
-]
-
-{ #category : #initialization }
-AlbEditorElement >> defaultModeEventHandlers [
-
-	^ self mode defaultFrontLayerEventHandlers.
+	^ self mode defaultRemanentSubtextEventHandlers
 
 ]
 
-{ #category : #initialization }
-AlbEditorElement >> defaultPadding [
+{ #category : #'selection changing' }
+AlbEditorElement >> dispatchPrimarySelectionInvalidateEvent [
+	" dispatch to primary selection, to myself to reach remanents updater to all frontLayer children "
 
-	^ BlInsets empty
-
+	self withAllChildrenBreadthFirstDo: [ :child |
+		child dispatchEvent: AlbSubtextElementInvalidateEvent new ]
 ]
 
 { #category : #accessing }
@@ -78,22 +77,12 @@ AlbEditorElement >> initialize [
 	| distributor |
 	super initialize.
 	self layout: self defaultLayout.
-	self background: self defaultBackground.
-	self margin: self defaultMargin.
-	self padding: self defaultPadding.
 	self next: self defaultInfiniteElement.
-	self installPrimarySelectionElement.
-	self installRemanentUpdater.
+	self setupPrimarySelectionElement.
+	self setupTextEditor.
 	self addChild: next.
 
-	self addEventHandler: (BlEventHandler
-			 on: AlbInfiniteEditorModeChangedEvent
-			 do: [ 
-				 self installPrimarySelectionElement.
-				 self installRemanentUpdater.
-				 self installModeEventHandlers ]).
-
-	self whenEditorChangedDo: [ :event | self installRemanentUpdater ].
+	self addEventHandler: AlbEditorElementEventHandler new.
 
 	frontLayer := self defaultFrontLayer.
 	self addChild: frontLayer as: #frontLayer.
@@ -101,43 +90,36 @@ AlbEditorElement >> initialize [
 		               adjustMousePosition: false;
 		               shareEvents: {
 				               BlMouseEvent.
-				               AlbInfiniteEditorModeChangedEvent };
+				               BlElementScrolledEvent.
+				               AlbTextEditedEvent.
+				               AlbInfiniteModeChangedEvent };
 		               yourself.
+	" to handle the mouse events that are dispatcehd to the front layer "
 	self frontLayer addEventHandler: distributor.
 	self infinite addEventHandler: distributor.
 	self addEventHandler: distributor.
 	self matchParent.
-	self installModeEventHandlers
+	self setupModeEventHandlers
 ]
 
 { #category : #initialization }
-AlbEditorElement >> installModeEventHandlers [
+AlbEditorElement >> modeFrontLayerEventHandlersDo: aBlock [
 
-	self modeEventHandlersDo: [ :e | self removeEventHandler: e ].
-	modeEventHandlers := self defaultModeEventHandlers.
-	self modeEventHandlersDo: [ :e | 
-		self frontLayer addEventHandler: (e
-				 element: self infinite;
-				 yourself) ]	
-
+	modeFrontLayerEventHandlers ifNotNil: [ modeFrontLayerEventHandlers do: aBlock ] 
 ]
 
 { #category : #initialization }
-AlbEditorElement >> installPrimarySelectionElement [
+AlbEditorElement >> modeRemanentSubtextEventHandlersDo: aBlock [
 
-	(self mode primarySelectionElementIn: self) ifNotNil: [ :s | s onInstalled]
+	modeRemanentSubtextEventHandlers ifNotNil: [ modeRemanentSubtextEventHandlers do: aBlock ] 
 ]
 
 { #category : #initialization }
-AlbEditorElement >> installRemanentUpdater [
+AlbEditorElement >> newPrimarySelectionElement [
 
-	AlbRemanentsUpdater new onInstalledIn: self
-]
-
-{ #category : #initialization }
-AlbEditorElement >> modeEventHandlersDo: aBlock [
-
-	modeEventHandlers ifNotNil: [ modeEventHandlers do: aBlock ]
+	^ self primarySelectionElementClass new
+		  editorElement: self;
+		  yourself
 ]
 
 { #category : #'t - infinite editor accessing' }
@@ -150,6 +132,36 @@ AlbEditorElement >> next [
 AlbEditorElement >> next: aDecoratorOrInfinite [
 
 	next := aDecoratorOrInfinite
+]
+
+{ #category : #accessing }
+AlbEditorElement >> primarySelectionElement [
+
+	^ primarySelectionElement
+]
+
+{ #category : #initialization }
+AlbEditorElement >> primarySelectionElementClass [
+
+	^ primarySelectionElementClass ifNil: [
+		  primarySelectionElementClass := AlbPrimarySelectionElement ]
+]
+
+{ #category : #initialization }
+AlbEditorElement >> primarySelectionElementClass: aSelectionElementClass [
+	" aSelectionElementClass is AlbPrimarySelectionElement or one of it subclass "
+
+	primarySelectionElementClass = aSelectionElementClass ifTrue: [
+		^ self ].
+	primarySelectionElementClass := aSelectionElementClass.
+	self dispatchEvent: AlbPrimarySelectionElementClassChangedEvent new
+]
+
+{ #category : #accessing }
+AlbEditorElement >> primarySelectionElementDo: aValuable [
+
+	primarySelectionElement ifNil: [ ^ self ].
+	aValuable value: primarySelectionElement
 ]
 
 { #category : #'t  - layout resizeable' }
@@ -169,11 +181,36 @@ AlbEditorElement >> resizableConstraintsDo: aBlock [
 ]
 
 { #category : #initialization }
-AlbEditorElement >> selectionColor [
+AlbEditorElement >> setupModeEventHandlers [
 
-	^  (Color
-		  r: 0.9530791788856305
-		  g: 0.8084066471163245
-		  b: 0.1906158357771261
-		  alpha: 1.0)
+	self modeFrontLayerEventHandlersDo: [ :handler |
+		self frontLayer removeEventHandler: handler ].
+	modeFrontLayerEventHandlers := self defaultFrontLayerEventHandlers.
+	self modeFrontLayerEventHandlersDo: [ :handler |
+		self frontLayer addEventHandler: (handler
+				 element: self infinite;
+				 yourself) ].
+
+	self modeRemanentSubtextEventHandlersDo: [ :handler |
+		self removeEventHandler: handler ].
+	modeRemanentSubtextEventHandlers := self defaultRemanentSubtextEventHandlers.
+	self modeRemanentSubtextEventHandlersDo: [ :handler |
+		self addEventHandler: handler ]
+]
+
+{ #category : #initialization }
+AlbEditorElement >> setupPrimarySelectionElement [
+
+	primarySelectionElement ifNotNil: [ :pse | pse removeFromParent ].
+	primarySelectionElement := self newPrimarySelectionElement.
+	primarySelectionElement ifNotNil: [ :pse | self addChild: pse ]
+]
+
+{ #category : #initialization }
+AlbEditorElement >> setupTextEditor [
+
+	self editor addEventHandler: (BlEventHandler
+			 on: AlbSelectionChangedEvent
+			 do: [ :event |
+				 self dispatchPrimarySelectionInvalidateEvent ])
 ]

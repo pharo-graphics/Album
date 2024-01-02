@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditableMode,
 	#superclass : #AlbEditabilityMode,
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }
@@ -17,8 +17,15 @@ AlbEditableMode >> defaultEditorElementEventHandlers [
 { #category : #initialization }
 AlbEditableMode >> defaultFrontLayerEventHandlers [
 
-	^ {  AlbTextEditorCursorIconHandler new.
-		  AlbTextEditorSelectionHandler new }
+	^ { AlbTextEditorSelectionHandler new }
+]
+
+{ #category : #initialization }
+AlbEditableMode >> defaultRemanentSubtextEventHandlers [
+
+	^ {
+		  AlbSubtextElementsUpdater new.
+		  AlbOppositeDelimiterUpdater new }
 ]
 
 { #category : #'shortcut management' }

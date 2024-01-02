@@ -1,11 +1,11 @@
 Class {
 	#name : #AlbInfiniteTextFieldElement,
 	#superclass : #AlbInfiniteEditorElement,
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }
-AlbInfiniteTextFieldElement >> defaulTextEditor [
+AlbInfiniteTextFieldElement >> defaultTextEditor [
 
 	^ AlbTextFieldEditor new.
 ]

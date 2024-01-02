@@ -1,13 +1,14 @@
 Class {
 	#name : #AlbTextEditorDoubleClickHandler,
 	#superclass : #AlbEditorElementHandler,
-	#category : 'Album-UI-Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'event handling' }
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	| screenPosition globalTextIndex selecter navigator editor selection |
+
 	anEvent isConsumed ifTrue: [ ^ self ].
 	anEvent consumed: true.
 	screenPosition := (element

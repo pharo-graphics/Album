@@ -1,82 +1,54 @@
 Class {
 	#name : #AlbPrimarySelectionElement,
 	#superclass : #AlbAbstractSubtextElement,
-	#instVars : [
-		'modeChangedEventHandler'
-	],
 	#category : #'Album-UI-Text-Portion'
 }
 
-{ #category : #initialization }
-AlbPrimarySelectionElement >> defaultUpdateStrategy [
+{ #category : #accessing }
+AlbPrimarySelectionElement >> defaultBackground [
 
-	^ AlbPrimarySelectionElementUpdateStrategy new
+	^ (Color
+		   r: 0.9530791788856305
+		   g: 0.8084066471163245
+		   b: 0.1906158357771261
+		   alpha: 1.0) asBlBackground
+]
+
+{ #category : #initialization }
+AlbPrimarySelectionElement >> defaultBorder [ 
+
+	^ (BlBorderBuilder new
+			 paint: self defaultBackground paint color twiceDarker;
+			 width: self borderWidth;
+			 lineCap: BlStrokeLineCap round;
+			 build).
 ]
 
 { #category : #initialization }
 AlbPrimarySelectionElement >> initialize [
 
 	super initialize.
-	
-	self background: self editorElement selectionColor.
-	
-	self border: (BlBorderBuilder new 
-		paint: self editorElement selectionColor twiceDarker; 
-		width: self borderWidth; 
-		lineCap: BlStrokeLineCap round; 
-		build).
-		
-	self outskirts: BlOutskirts centered
-]
-
-{ #category : #private }
-AlbPrimarySelectionElement >> onGotFocus [
-
-	self background: editorElement selectionColor.
-	self border:	(BlBorder paint: editorElement selectionColor twiceDarker  width: self borderWidth)
-]
-
-{ #category : #'api - install/uninstall  hook' }
-AlbPrimarySelectionElement >> onInstalled [
-
-	modeChangedEventHandler := BlEventHandler
-			 on: AlbInfiniteEditorModeChangedEvent
-			 do: [ self onUninstalled ].
-	self editorElement addEventHandler: modeChangedEventHandler
-]
-
-{ #category : #private }
-AlbPrimarySelectionElement >> onLostFocus [
-
-	self background: (editorElement selectionColor alpha: 0.1)
-]
-
-{ #category : #'api - install/uninstall  hook' }
-AlbPrimarySelectionElement >> onUninstalled [
-
-	self editorElement removeEventHandler: modeChangedEventHandler.
-	updateStrategy onUninstalledIn: self
-
+	self outskirts: BlOutskirts inside.
+	self addEventHandler: AlbSubtextElementEventHandler new
 ]
 
 { #category : #private }
 AlbPrimarySelectionElement >> selectionRectangles [
-
 	"return all selections rectangles from coordinate system of text elements with selection to my local coordinates"
 
-	^ Array streamContents: [ :stream | 
-		  editorElement textElementsDo: [ :te | 
-			  te selectionRectangles do: [ :r | 
-					stream nextPut: ((editorElement localBoundsToMine: (BlBounds fromRectangle: r) fromChild: te) translateBy: 0 @ (te position y) negated ) ] ] ]
+	editorElement mode
+		ifWithPrimarySelectionDo: [
+			^ Array streamContents: [ :stream |
+				  editorElement textElementsDo: [ :te |
+					  te selectionRectangles do: [ :r |
+						  stream nextPut: ((editorElement
+								    localBoundsToMine: (BlBounds fromRectangle: r)
+								    fromChild: te) translateBy: 0 @ te position y negated) ] ] ] ]
+		ifNot: [ ^ #(  ) ]
 ]
 
 { #category : #initialization }
 AlbPrimarySelectionElement >> updateVertices [
 
-	editorElement ifNil: [ ^ self ].
-	self selectionRectangles 
-		ifEmpty: [ self parentDo: [ :p | self removeFromParent ] ]
-		ifNotEmpty: [ :rects |
-			self vertices: (BlVerticesFromRectanglesOperator new verticesFromRectangles: rects).
-			self hasParent ifFalse: [ editorElement addChild: self ] ]
+	self vertices: ( BlVerticesFromRectanglesOperator new verticesFromRectangles: self selectionRectangles )
 ]

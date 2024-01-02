@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'startIndex'
 	],
-	#category : 'Album-UI-Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'event handling' }
@@ -52,5 +52,9 @@ AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 
 { #category : #'api - accessing' }
 AlbTextEditorSelectionHandler >> eventsToHandle [
-	^ { BlDragEvent . BlDragStartEvent. BlDragEndEvent}
+
+	^ {
+		  BlDragEvent.
+		  BlDragStartEvent.
+		  BlDragEndEvent }
 ]

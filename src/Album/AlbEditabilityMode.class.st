@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditabilityMode,
 	#superclass : #Object,
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }
@@ -12,6 +12,12 @@ AlbEditabilityMode >> defaultEditorElementEventHandlers [
 
 { #category : #initialization }
 AlbEditabilityMode >> defaultFrontLayerEventHandlers [
+
+	^ self subclassResponsibility 
+]
+
+{ #category : #initialization }
+AlbEditabilityMode >> defaultRemanentSubtextEventHandlers [
 
 	^ self subclassResponsibility 
 ]
@@ -29,13 +35,35 @@ AlbEditabilityMode >> defaultWordStencil [
 ]
 
 { #category : #testing }
+AlbEditabilityMode >> ifEditableDo: aBlock [
+
+	self isEditable ifFalse: [ ^ self ].
+	aBlock value
+]
+
+{ #category : #testing }
+AlbEditabilityMode >> ifWithPrimarySelectionDo: aBlock [
+
+	self ifWithPrimarySelectionDo: aBlock ifNot: [  ]
+]
+
+{ #category : #testing }
+AlbEditabilityMode >> ifWithPrimarySelectionDo: aBlock ifNot: aNoteBlock [
+
+	self isWithPrimarySelection ifFalse: [
+		aNoteBlock value.
+		^ self ].
+	aBlock value
+]
+
+{ #category : #testing }
 AlbEditabilityMode >> isEditable [
 
 	^ false
 ]
 
-{ #category : #initialization }
-AlbEditabilityMode >> primarySelectionElementIn: anEditorElement [
+{ #category : #testing }
+AlbEditabilityMode >> isWithPrimarySelection [
 
-	^ AlbPrimarySelectionElement editorElement: anEditorElement
+	^ true
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbReadonlyWithoutSelectionMode,
 	#superclass : #AlbEditabilityMode,
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }
@@ -12,6 +12,12 @@ AlbReadonlyWithoutSelectionMode >> defaultEditorElementEventHandlers [
 
 { #category : #initialization }
 AlbReadonlyWithoutSelectionMode >> defaultFrontLayerEventHandlers [
+
+	^ {  }
+]
+
+{ #category : #initialization }
+AlbReadonlyWithoutSelectionMode >> defaultRemanentSubtextEventHandlers [
 
 	^ {  }
 ]
@@ -29,9 +35,8 @@ AlbReadonlyWithoutSelectionMode >> defaultShortcuts [
 	^ {  }
 ]
 
-{ #category : #initialization }
-AlbReadonlyWithoutSelectionMode >> primarySelectionElementIn: anEditorElement [
+{ #category : #testing }
+AlbReadonlyWithoutSelectionMode >> isWithPrimarySelection [
 
-	^ nil
-
+	^ false
 ]

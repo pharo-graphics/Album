@@ -5,7 +5,7 @@ Class {
 		'cursorElement',
 		'segmentPiece'
 	],
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #'cursor - management' }
@@ -14,7 +14,7 @@ AlbTextElement >> addCursorAt: aTextPosition inEditorElement: anEditorElement [
 	<return: #AlbCursorElement>
 	^ self cursorAt: aTextPosition ifFound: #yourself ifNone: [ 
 		  cursorElement ifNil: [ 
-			  cursorElement := anEditorElement cursorStencil asElement.
+			  cursorElement := anEditorElement cursorElement.
 			  cursorElement removeFromParent.
 			  self addChild: cursorElement ].
 		  cursorElement textPosition: aTextPosition.

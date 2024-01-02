@@ -5,7 +5,7 @@ Class {
 	#classTraits : 'TBlLayoutResizable classTrait',
 	#instVars : [
 		'mode',
-		'cursorStencil',
+		'cursorElement',
 		'wordStencil',
 		'modeEventHandlers',
 		'modeShortcuts'
@@ -74,27 +74,27 @@ AlbInfiniteEditorElement >> cursor [
 ]
 
 { #category : #'accessing - cursor' }
+AlbInfiniteEditorElement >> cursorBackground [
+
+	^ self cursorElement background
+]
+
+{ #category : #'accessing - cursor' }
+AlbInfiniteEditorElement >> cursorBackground: aBackground [
+
+	self cursorElement focusedBackground: aBackground
+]
+
+{ #category : #'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorColor: aColor [
 
-	self cursorStencil cursorColor: aColor
+	self cursorBackground: aColor
 ]
 
 { #category : #'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorElement [
 
-	^ cursorStencil currentCursorElement
-]
-
-{ #category : #'accessing - cursor' }
-AlbInfiniteEditorElement >> cursorStencil [
-
-	^ cursorStencil
-]
-
-{ #category : #'accessing - cursor' }
-AlbInfiniteEditorElement >> cursorStencil: aCursorStencil [
-
-	cursorStencil := aCursorStencil
+	^ cursorElement startBlinkingTask; yourself
 ]
 
 { #category : #'private - accessing editor' }
@@ -104,9 +104,9 @@ AlbInfiniteEditorElement >> cursors [
 ]
 
 { #category : #initialization }
-AlbInfiniteEditorElement >> defaultCursorStencil [
-	
-	^ AlbCursorStencil new
+AlbInfiniteEditorElement >> defaultCursorBackground [
+
+	^ Color red
 ]
 
 { #category : #initialization }
@@ -251,9 +251,20 @@ AlbInfiniteEditorElement >> infinite [
 AlbInfiniteEditorElement >> initialize [
 
 	super initialize.
-	cursorStencil := AlbCursorStencil new.			
+	self initializeCursorElement.
 	self mode: self defaultMode.
 	self matchParent
+]
+
+{ #category : #initialization }
+AlbInfiniteEditorElement >> initializeCursorElement [
+	"Pay attention: a CursorElement ** must be a unique ** inside an editor element. 
+	If not, dbl clicking will not work because the target of the first click may 
+	be different from the one of the second click"
+
+	cursorElement := AlbCursorElement new
+		                 background: self defaultCursorBackground;
+		                 yourself
 ]
 
 { #category : #initialization }

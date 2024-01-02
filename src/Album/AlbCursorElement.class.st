@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'textPosition',
 		'blinking',
-		'blinkTask'
+		'blinkTask',
+		'focusedBackground'
 	],
 	#category : #'Album-UI'
 }
@@ -13,12 +14,6 @@ Class {
 AlbCursorElement >> beBlinking: aBoolean [
 
 	blinking := aBoolean
-]
-
-{ #category : #initialization }
-AlbCursorElement >> defaultBackground [
-
-	^ Color red 
 ]
 
 { #category : #initialization }
@@ -33,12 +28,25 @@ AlbCursorElement >> defaultBlurredBackground [
 	^ Color transparent 
 ]
 
+{ #category : #accessing }
+AlbCursorElement >> focusedBackground [
+
+	^ focusedBackground ifNil: [ focusedBackground := Color red ]
+]
+
+{ #category : #accessing }
+AlbCursorElement >> focusedBackground: aBackground [
+
+	focusedBackground := aBackground.
+	self background: aBackground
+	
+]
+
 { #category : #initialization }
 AlbCursorElement >> initialize [
 
 	super initialize.
 	
-	self background: self defaultBackground.
 	textPosition := 0.
 	self beBlinking: self defaultBlinking.
 	self focusability: BlFocusability none.
@@ -58,7 +66,7 @@ AlbCursorElement >> newBlinkingTask [
 { #category : #'private - focus' }
 AlbCursorElement >> onGotFocus [
 
-	self background: self defaultBackground.
+	self background: self focusedBackground.
 	self startBlinkingTask 
 	 
 ]

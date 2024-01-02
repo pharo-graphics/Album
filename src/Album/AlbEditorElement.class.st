@@ -211,7 +211,7 @@ AlbEditorElement >> setupPrimarySelectionElement [
 
 	primarySelectionElement ifNotNil: [ :pse | pse removeFromParent ].
 	primarySelectionElement := self newPrimarySelectionElement.
-	primarySelectionElement ifNotNil: [ :pse | self addChild: pse ]
+	primarySelectionElement ifNotNil: [ :pse | self frontLayer addChild: pse ]
 ]
 
 { #category : #initialization }

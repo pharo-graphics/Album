@@ -251,17 +251,18 @@ AlbInfiniteEditorElement >> infinite [
 AlbInfiniteEditorElement >> initialize [
 
 	super initialize.
+	cursorStencil := AlbCursorStencil new.			
+	self mode: self defaultMode.
+	self matchParent
+]
 
-	cursorStencil := AlbCursorStencil new.
+{ #category : #initialization }
+AlbInfiniteEditorElement >> initializeEventHandlers [
 
+	super initializeEventHandlers.
 	self addEventHandler: (BlEventHandler
 			 on: AlbInfiniteModeChangedEvent
-			 do: [ self modeChanged ]).
-			
-	self mode: self defaultMode.
-	self matchParent.
-
-	self elevation: (BlRelativeElevation elevation: SmallInteger maxVal - 1)
+			 do: [ self modeChanged ])
 ]
 
 { #category : #'accessing - editor' }

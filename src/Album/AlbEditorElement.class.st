@@ -77,29 +77,36 @@ AlbEditorElement >> initialize [
 	| distributor |
 	super initialize.
 	self layout: self defaultLayout.
+	self matchParent.
 	self next: self defaultInfiniteElement.
-	self setupPrimarySelectionElement.
 	self setupTextEditor.
-	self addChild: next.
-
-	self addEventHandler: AlbEditorElementEventHandler new.
 
 	frontLayer := self defaultFrontLayer.
 	self addChild: frontLayer as: #frontLayer.
+	self addChild: self next as: #infiniteEditor.
+
+	" the editor element must be over the front layer "
+	self next elevation: (BlRelativeElevation elevation: 2).
+	self frontLayer elevation: (BlRelativeElevation elevation: 1).
+
+	self setupPrimarySelectionElement.
+	self setupModeEventHandlers.
+	self addEventHandler: AlbEditorElementEventHandler new.
 	distributor := BlSharedEventDistributor new
 		               adjustMousePosition: false;
 		               shareEvents: {
 				               BlMouseEvent.
 				               BlElementScrolledEvent.
 				               AlbTextEditedEvent.
-				               AlbInfiniteModeChangedEvent };
+				               AlbInfiniteModeChangedEvent.
+				               BlFocusEvent.
+				               BlBlurEvent };
 		               yourself.
 	" to handle the mouse events that are dispatcehd to the front layer "
 	self frontLayer addEventHandler: distributor.
-	self infinite addEventHandler: distributor.
+	self next addEventHandler: distributor.
 	self addEventHandler: distributor.
-	self matchParent.
-	self setupModeEventHandlers
+
 ]
 
 { #category : #initialization }

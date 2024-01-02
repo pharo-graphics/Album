@@ -167,19 +167,6 @@ TAlbInfiniteDecorator >> next: aDecoratorOrInfinite [
 	self explicitRequirement 
 ]
 
-{ #category : #'t - infinite editor focus accessing' }
-TAlbInfiniteDecorator >> onGotFocus [
-
-	self next onGotFocus
-]
-
-{ #category : #'t - infinite editor focus accessing' }
-TAlbInfiniteDecorator >> onLostFocus [
-
-	self next onLostFocus.
-
-]
-
 { #category : #'t - infinite editor accessing - editor' }
 TAlbInfiniteDecorator >> removeEditorShortcut: aTextEditorInteraction [
 

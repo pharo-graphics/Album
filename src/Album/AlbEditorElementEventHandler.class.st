@@ -4,6 +4,12 @@ Class {
 	#category : #'Album-UI'
 }
 
+{ #category : #'event handling' }
+AlbEditorElementEventHandler >> blurEvent: anEvent [
+
+	anEvent currentTarget primarySelectionElement dispatchEvent: anEvent copy
+]
+
 { #category : #'element handlers' }
 AlbEditorElementEventHandler >> elementExtentChangedEvent: anEvent [
 
@@ -23,7 +29,19 @@ AlbEditorElementEventHandler >> elementScrolledEvent: anEvent [
 { #category : #'api - accessing' }
 AlbEditorElementEventHandler >> eventsToHandle [
 
-	^ { AlbInfiniteModeChangedEvent. AlbPrimarySelectionElementClassChangedEvent. BlElementExtentChangedEvent. BlElementScrolledEvent }
+	^ {
+		  AlbInfiniteModeChangedEvent.
+		  AlbPrimarySelectionElementClassChangedEvent.
+		  BlElementExtentChangedEvent.
+		  BlElementScrolledEvent.
+		  BlFocusEvent.
+		  BlBlurEvent }
+]
+
+{ #category : #'event handling' }
+AlbEditorElementEventHandler >> focusEvent: anEvent [
+
+	anEvent currentTarget primarySelectionElement dispatchEvent: anEvent copy
 ]
 
 { #category : #'event handling' }

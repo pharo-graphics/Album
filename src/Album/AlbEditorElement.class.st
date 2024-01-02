@@ -125,6 +125,7 @@ AlbEditorElement >> modeRemanentSubtextEventHandlersDo: aBlock [
 AlbEditorElement >> newPrimarySelectionElement [
 
 	^ self primarySelectionElementClass new
+		  elevation: (BlRelativeElevation elevation: 1);
 		  editorElement: self;
 		  yourself
 ]

@@ -28,7 +28,6 @@ AlbPrimarySelectionElement >> defaultBorder [
 AlbPrimarySelectionElement >> initialize [
 
 	super initialize.
-	self outskirts: BlOutskirts inside.
 	self addEventHandler: AlbSubtextElementEventHandler new
 ]
 

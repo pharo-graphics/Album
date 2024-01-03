@@ -94,7 +94,7 @@ AlbInfiniteEditorElement >> cursorColor: aColor [
 { #category : #'accessing - cursor' }
 AlbInfiniteEditorElement >> cursorElement [
 
-	^ cursorElement startBlinkingTask; yourself
+	^ cursorElement
 ]
 
 { #category : #'private - accessing editor' }
@@ -361,14 +361,18 @@ AlbInfiniteEditorElement >> onExtentChanged [
 AlbInfiniteEditorElement >> onGotFocus [
 
 	self editor onGotFocus.
-	self cursorElement ifNotNil: [ :c | c onGotFocus ]
+	self cursorElement onGotFocus.
+	self cursorElement hasParent ifFalse: [
+		self selecter
+			from: 0 to: 0;
+			select ]
 ]
 
 { #category : #'focus accessing' }
 AlbInfiniteEditorElement >> onLostFocus [
 
 	self editor onLostFocus.
-	self cursorElement ifNotNil: [:ce | ce onLostFocus]
+	self cursorElement onLostFocus
 ]
 
 { #category : #'hooks - scrolling' }

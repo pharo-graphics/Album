@@ -68,6 +68,28 @@ AlbInfiniteEditorElement >> cacheSize: aNumber [
 	self editor cacheSize: aNumber
 ]
 
+{ #category : #completion }
+AlbInfiniteEditorElement >> completeFromString: aString [
+
+	| insertPos wordStart prefixSize suffix |
+	insertPos := self cursor position.
+	self navigator
+		moveToStartPreviousWord;
+		apply.
+	wordStart := self cursor position.
+	prefixSize := insertPos - wordStart.
+	suffix := aString copyFrom: prefixSize + 1 to: aString size.
+	self navigator
+		moveBy: prefixSize;
+		apply.
+	self inserter
+		text: suffix;
+		apply.
+	self selecter
+		from: insertPos to: insertPos + suffix size;
+		apply
+]
+
 { #category : #'accessing - cursor' }
 AlbInfiniteEditorElement >> cursor [
 	^ self editor cursor

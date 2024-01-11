@@ -39,6 +39,12 @@ TAlbInfiniteDecorator >> cacheSize: aNumber [
 	self next cacheSize: aNumber
 ]
 
+{ #category : #'t - infinite editor completing' }
+TAlbInfiniteDecorator >> completeFromString: aString [
+
+	self next completeFromString: aString
+]
+
 { #category : #'t - infinite editor accessing - cursor' }
 TAlbInfiniteDecorator >> cursor [
 

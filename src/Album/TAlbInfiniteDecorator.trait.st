@@ -179,6 +179,12 @@ TAlbInfiniteDecorator >> removeEditorShortcut: aTextEditorInteraction [
 	self next removeEditorShortcut: aTextEditorInteraction
 ]
 
+{ #category : #'t - infinite editor accessing' }
+TAlbInfiniteDecorator >> rootAlbumElement: anAlbumElement [
+
+	self next rootAlbumElement: anAlbumElement
+]
+
 { #category : #'t - infinite editor private - accessing editor' }
 TAlbInfiniteDecorator >> segments [
 	^ self next segments

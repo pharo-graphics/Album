@@ -453,6 +453,18 @@ AlbInfiniteEditorElement >> resizableConstraintsDo: aBlock [
 	self constraintsDo: aBlock
 ]
 
+{ #category : #accessing }
+AlbInfiniteEditorElement >> rootAlbumElement [
+
+	^ self userData at: #rootAlbumElement 
+]
+
+{ #category : #accessing }
+AlbInfiniteEditorElement >> rootAlbumElement: anAlbumElement [
+
+	self userData at: #rootAlbumElement put: anAlbumElement.
+]
+
 { #category : #scrolling }
 AlbInfiniteEditorElement >> scrollToLast [
 	"Scroll instantly to the last segment"

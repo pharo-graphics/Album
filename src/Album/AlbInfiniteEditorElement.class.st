@@ -69,7 +69,7 @@ AlbInfiniteEditorElement >> cacheSize: aNumber [
 ]
 
 { #category : #completion }
-AlbInfiniteEditorElement >> completeFromString: aString [
+AlbInfiniteEditorElement >> completeWordSuffixFromString: aString [
 
 	| insertPos wordStart prefixSize suffix |
 	insertPos := self cursor position.

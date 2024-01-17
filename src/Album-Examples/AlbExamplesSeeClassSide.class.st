@@ -536,7 +536,7 @@ AlbExamplesSeeClassSide class >> example_WithClickAndHoverAttributes [
 		from: 17
 		to: 30."
 
-	space := BlOSpace new.
+	space := BlSpace new.
 	space root addChild: editorElement.
 	space show
 ]
@@ -548,7 +548,7 @@ AlbExamplesSeeClassSide class >> example_WithCrLfOnly [
 	ed := AlbEditorElement new text: String crlf.
 	ed editor segmentCollector inspect.
 	ed withRowNumbers.
-	space := BlOSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space show
 ]
@@ -560,7 +560,7 @@ AlbExamplesSeeClassSide class >> example_WithCrOnly [
 	ed := AlbEditorElement new text: String cr.
 	ed editor segmentCollector inspect.
 	ed withRowNumbers.
-	space := BlOSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space show
 ]
@@ -581,7 +581,7 @@ AlbExamplesSeeClassSide class >> example_WithEmptyText [
 
 	| ed space |
 	ed := AlbEditorElement new.
-	space := BlOSpace new.
+	space := BlSpace new.
 	space root addChild: ed.
 	space show
 ]

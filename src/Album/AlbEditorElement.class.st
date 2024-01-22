@@ -61,7 +61,9 @@ AlbEditorElement >> defaultRemanentSubtextEventHandlers [
 AlbEditorElement >> dispatchPrimarySelectionInvalidateEvent [
 	" dispatch to primary selection, to myself to reach remanents updater to all frontLayer children "
 
-	self withAllChildrenBreadthFirstDo: [ :child |
+	self withAllChildrenDo: [ :child | 
+		child dispatchEvent: AlbSubtextElementInvalidateEvent new ].
+	self frontLayer childrenDo: [ :child | 
 		child dispatchEvent: AlbSubtextElementInvalidateEvent new ]
 ]
 

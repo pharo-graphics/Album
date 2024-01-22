@@ -22,6 +22,7 @@ AlbEditorElementEventHandler >> elementExtentChangedEvent: anEvent [
 AlbEditorElementEventHandler >> elementScrolledEvent: anEvent [
 
 	| target |
+	anEvent delta isZero ifTrue: [ ^ self ].
 	target := anEvent currentTarget.
 	target dispatchPrimarySelectionInvalidateEvent
 ]
@@ -30,6 +31,7 @@ AlbEditorElementEventHandler >> elementScrolledEvent: anEvent [
 AlbEditorElementEventHandler >> eventsToHandle [
 
 	^ {
+		  BlMouseUpEvent.
 		  AlbInfiniteModeChangedEvent.
 		  AlbPrimarySelectionElementClassChangedEvent.
 		  BlElementExtentChangedEvent.
@@ -50,6 +52,14 @@ AlbEditorElementEventHandler >> infiniteModeChangedEvent: anEvent [
 	| target |
 	target := anEvent currentTarget.
 	target setupModeEventHandlers.
+	target dispatchPrimarySelectionInvalidateEvent
+]
+
+{ #category : #'element handlers' }
+AlbEditorElementEventHandler >> mouseUpEvent: anEvent [
+
+	| target |
+	target := anEvent currentTarget.
 	target dispatchPrimarySelectionInvalidateEvent
 ]
 

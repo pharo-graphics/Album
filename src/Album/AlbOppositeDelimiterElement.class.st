@@ -4,10 +4,10 @@ Class {
 	#instVars : [
 		'anim'
 	],
-	#category : 'Album-UI-Text-Portion'
+	#category : #'Album-UI-Text-Portion'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 AlbOppositeDelimiterElement >> borderColor [
 
 	^ Color gray
@@ -36,7 +36,7 @@ AlbOppositeDelimiterElement >> initialize [
 	self addAnimation: anim
 ]
 
-{ #category : #removing }
+{ #category : #'children add/remove' }
 AlbOppositeDelimiterElement >> removeFromParent [ 
 
 	self cleanUp.

@@ -106,5 +106,6 @@ AlbCursorElement >> textPosition [
 { #category : #accessing }
 AlbCursorElement >> textPosition: anInteger [
 
+	self fireEvent: AlbCursorElementMovedEvent new.
 	textPosition := anInteger
 ]

@@ -59,10 +59,19 @@ AlbOppositeDelimiterUpdater >> createOppositeDelimiterIn: anEditorElement [
 	^ nil
 ]
 
+{ #category : #'event handling' }
+AlbOppositeDelimiterUpdater >> cursorElementMovedEvent: anEvent [
+
+	self updateOppositeDelimiterIn: anEvent currentTarget.
+]
+
 { #category : #'api - accessing' }
 AlbOppositeDelimiterUpdater >> eventsToHandle [
 
-	^ { AlbSubtextElementInvalidateEvent. AlbInfiniteModeChangedEvent }
+	^ {
+		  AlbSubtextElementInvalidateEvent.
+		  AlbInfiniteModeChangedEvent.
+		  AlbCursorElementMovedEvent }
 ]
 
 { #category : #'event handling' }

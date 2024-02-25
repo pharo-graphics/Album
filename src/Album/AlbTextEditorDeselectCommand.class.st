@@ -8,7 +8,7 @@ Class {
 		'fromIndex',
 		'toIndex'
 	],
-	#category : 'Album-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #executing }
@@ -19,7 +19,7 @@ AlbTextEditorDeselectCommand >> executeOn: aTextEditor [
 
 	aTextEditor selection deselect: self fromIndex to: self toIndex.
 	aTextEditor updateSelection: self fromIndex to: self toIndex.
-	aTextEditor notifySelectionChanged: aTextEditor selection
+	aTextEditor notifyPrimarySelectionChanged: aTextEditor selection
 ]
 
 { #category : #accessing }

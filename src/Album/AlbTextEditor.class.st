@@ -22,7 +22,7 @@ Class {
 	#classInstVars : [
 		'isDebug'
 	],
-	#category : 'Album-Model'
+	#category : #'Album-Model'
 }
 
 { #category : #cleanup }
@@ -456,7 +456,7 @@ AlbTextEditor >> notifyInserted: aText at: aTextIndex [
 ]
 
 { #category : #'event firing' }
-AlbTextEditor >> notifySelectionChanged: aSelection [
+AlbTextEditor >> notifyPrimarySelectionChanged: aSelection [
 
 	self dispatchEvent: (AlbSelectionChangedEvent new selection: aSelection)
 ]
@@ -882,7 +882,7 @@ AlbTextEditor >> selection [
 AlbTextEditor >> selection: aTextSelection [
 	selection := aTextSelection.
 	
-	self notifySelectionChanged: selection
+	self notifyPrimarySelectionChanged: selection
 ]
 
 { #category : #accessing }

@@ -99,6 +99,7 @@ AlbEditorElement >> initialize [
 		               shareEvents: {
 				               BlMouseEvent.
 				               BlElementScrolledEvent.
+				               AlbTextInsertedEvent.
 				               AlbTextEditedEvent.
 				               AlbInfiniteModeChangedEvent.
 				               BlFocusEvent.
@@ -107,8 +108,7 @@ AlbEditorElement >> initialize [
 	" to handle the mouse events that are dispatcehd to the front layer "
 	self frontLayer addEventHandler: distributor.
 	self next addEventHandler: distributor.
-	self addEventHandler: distributor.
-
+	self addEventHandler: distributor
 ]
 
 { #category : #initialization }

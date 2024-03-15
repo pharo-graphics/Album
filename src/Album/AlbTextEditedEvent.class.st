@@ -2,9 +2,10 @@ Class {
 	#name : #AlbTextEditedEvent,
 	#superclass : #BlEvent,
 	#instVars : [
-		'text'
+		'text',
+		'sourceEvent'
 	],
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #sending }

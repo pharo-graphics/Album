@@ -2,8 +2,7 @@ Class {
 	#name : #AlbTextEditedEvent,
 	#superclass : #BlEvent,
 	#instVars : [
-		'text',
-		'sourceEvent'
+		'text'
 	],
 	#category : #'Album-Model-Events'
 }

@@ -5,7 +5,7 @@ Class {
 		'text',
 		'index'
 	],
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #'instance creation' }
@@ -15,6 +15,12 @@ AlbTextInsertedEvent class >> text: aBlText at: anIndex [
 	^ self new
 		text: aBlText;
 		index: anIndex
+]
+
+{ #category : #accessing }
+AlbTextInsertedEvent >> endIndex [
+
+	^ self index + self text size
 ]
 
 { #category : #accessing }

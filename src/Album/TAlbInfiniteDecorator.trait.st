@@ -15,6 +15,13 @@ TAlbInfiniteDecorator >> asScrollableElement [
 	^ self next asScrollableElement
 ]
 
+{ #category : #'t - infinite editor private - accessing text' }
+TAlbInfiniteDecorator >> atTextIndex: aTextIndex do: aBlock [
+
+	" aBlock takes 2 arguments : the local text element and the local text index within the local text element"
+	self next atTextIndex: aTextIndex do: aBlock
+]
+
 { #category : #'t - infinite editor view - configuration' }
 TAlbInfiniteDecorator >> beEditable [
 
@@ -55,6 +62,12 @@ TAlbInfiniteDecorator >> cursor [
 TAlbInfiniteDecorator >> cursorColor: aColor [
 
 	self next cursorColor: aColor
+]
+
+{ #category : #'t - infinite editor accessing - cursor' }
+TAlbInfiniteDecorator >> cursorElement [
+
+	^ self next cursorElement
 ]
 
 { #category : #'t - infinite editor accessing - cursor' }

@@ -11,6 +11,14 @@ AlbEditorElementEventHandler >> blurEvent: anEvent [
 ]
 
 { #category : #'element handlers' }
+AlbEditorElementEventHandler >> cursorElementMovedEvent: anEvent [
+
+	| target |
+	target := anEvent currentTarget.
+	target dispatchPrimarySelectionInvalidateEvent
+]
+
+{ #category : #'element handlers' }
 AlbEditorElementEventHandler >> elementExtentChangedEvent: anEvent [
 
 	| target |
@@ -31,7 +39,7 @@ AlbEditorElementEventHandler >> elementScrolledEvent: anEvent [
 AlbEditorElementEventHandler >> eventsToHandle [
 
 	^ {
-		  BlMouseUpEvent.
+		  AlbCursorElementMovedEvent.
 		  AlbInfiniteModeChangedEvent.
 		  AlbPrimarySelectionElementClassChangedEvent.
 		  BlElementExtentChangedEvent.
@@ -52,14 +60,6 @@ AlbEditorElementEventHandler >> infiniteModeChangedEvent: anEvent [
 	| target |
 	target := anEvent currentTarget.
 	target setupModeEventHandlers.
-	target dispatchPrimarySelectionInvalidateEvent
-]
-
-{ #category : #'element handlers' }
-AlbEditorElementEventHandler >> mouseUpEvent: anEvent [
-
-	| target |
-	target := anEvent currentTarget.
 	target dispatchPrimarySelectionInvalidateEvent
 ]
 

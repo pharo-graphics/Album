@@ -54,7 +54,8 @@ AlbCursorElement >> initialize [
 	self preventMouseEvents.
 	self constraintsDo: [ :c | 
 		c horizontal exact: 2.
-		c vertical matchParent ]
+		c vertical matchParent ].
+	self addEventHandler: AlbCursorElementEventHandler new
 ]
 
 { #category : #initialization }
@@ -106,6 +107,5 @@ AlbCursorElement >> textPosition [
 { #category : #accessing }
 AlbCursorElement >> textPosition: anInteger [
 
-	self fireEvent: AlbCursorElementMovedEvent new.
 	textPosition := anInteger
 ]

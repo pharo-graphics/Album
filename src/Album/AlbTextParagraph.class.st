@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'segmentPiece'
 	],
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #'paragraph - measuring' }
@@ -20,10 +20,4 @@ AlbTextParagraph >> emptySpan [
 AlbTextParagraph >> segmentPiece: aSegmentPiece [
 
 	segmentPiece := aSegmentPiece
-]
-
-{ #category : #'api - compositing' }
-AlbTextParagraph >> wantsSeparateCompositingLayer [
-
-	^ false
 ]

@@ -100,6 +100,7 @@ AlbEditorElement >> initialize [
 				               BlMouseEvent.
 				               BlElementScrolledEvent.
 				               AlbTextInsertedEvent.
+				               AlbTextDeletedEvent.
 				               AlbTextEditedEvent.
 				               AlbInfiniteModeChangedEvent.
 				               BlFocusEvent.

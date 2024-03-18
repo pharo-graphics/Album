@@ -18,9 +18,9 @@ AlbTextInsertedEvent class >> text: aBlText at: anIndex [
 ]
 
 { #category : #accessing }
-AlbTextInsertedEvent >> endIndex [
+AlbTextInsertedEvent >> fromIndex [
 
-	^ self index + self text size
+	^ self index
 ]
 
 { #category : #accessing }
@@ -33,6 +33,12 @@ AlbTextInsertedEvent >> index: aNumber [
 	index := aNumber
 ]
 
+{ #category : #sending }
+AlbTextInsertedEvent >> sendTo: anEventHandler [
+
+	anEventHandler textInsertedEvent: self
+]
+
 { #category : #accessing }
 AlbTextInsertedEvent >> text [
 	^ text
@@ -41,4 +47,10 @@ AlbTextInsertedEvent >> text [
 { #category : #accessing }
 AlbTextInsertedEvent >> text: aText [
 	text := aText
+]
+
+{ #category : #accessing }
+AlbTextInsertedEvent >> toIndex [
+
+	^ self index + self text size
 ]

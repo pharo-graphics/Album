@@ -108,10 +108,11 @@ AlbOppositeDelimiterUpdater >> subtextElementInvalidateEvent: anEvent [
 { #category : #'opposite delimiter' }
 AlbOppositeDelimiterUpdater >> updateOppositeDelimiterIn: anEditorElement [
 
-	oppositeDelim ifNotNil: [
-		oppositeDelim removeFromParent.
-		oppositeDelim := nil ].
-	anEditorElement selection ifNotEmpty: [ ^ self ].
-	oppositeDelim := self createOppositeDelimiterIn: anEditorElement.
-	oppositeDelim ifNotNil: [	anEditorElement addChild: oppositeDelim]
+	anEditorElement enqueueTask: (BlTaskAction new action: [
+			 oppositeDelim ifNotNil: [
+				 oppositeDelim removeFromParent.
+				 oppositeDelim := nil ].
+			 anEditorElement selection ifNotEmpty: [ ^ self ].
+			 oppositeDelim := self createOppositeDelimiterIn: anEditorElement.
+			 oppositeDelim ifNotNil: [ anEditorElement addChild: oppositeDelim ] ])
 ]

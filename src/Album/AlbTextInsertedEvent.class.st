@@ -18,12 +18,6 @@ AlbTextInsertedEvent class >> text: aBlText at: anIndex [
 ]
 
 { #category : #accessing }
-AlbTextInsertedEvent >> fromIndex [
-
-	^ self index
-]
-
-{ #category : #accessing }
 AlbTextInsertedEvent >> index [
 	^ index
 ]

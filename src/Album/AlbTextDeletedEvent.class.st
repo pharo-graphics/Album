@@ -34,12 +34,6 @@ AlbTextDeletedEvent >> sendTo: anObject [
 ]
 
 { #category : #accessing }
-AlbTextDeletedEvent >> startIndex [
-
-	^ self fromIndex
-]
-
-{ #category : #accessing }
 AlbTextDeletedEvent >> toIndex [
 	^ toIndex
 ]

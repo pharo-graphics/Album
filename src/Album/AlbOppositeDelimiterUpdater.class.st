@@ -112,7 +112,7 @@ AlbOppositeDelimiterUpdater >> updateOppositeDelimiterIn: anEditorElement [
 			 oppositeDelim ifNotNil: [
 				 oppositeDelim removeFromParent.
 				 oppositeDelim := nil ].
-			 anEditorElement selection ifNotEmpty: [ ^ self ].
-			 oppositeDelim := self createOppositeDelimiterIn: anEditorElement.
-			 oppositeDelim ifNotNil: [ anEditorElement addChild: oppositeDelim ] ])
+			 anEditorElement selection ifEmpty: [ 
+			 	oppositeDelim := self createOppositeDelimiterIn: anEditorElement.
+			 	oppositeDelim ifNotNil: [ anEditorElement addChild: oppositeDelim ] ] ])
 ]

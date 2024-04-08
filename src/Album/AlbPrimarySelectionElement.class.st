@@ -25,6 +25,12 @@ AlbPrimarySelectionElement >> defaultBorder [
 ]
 
 { #category : #initialization }
+AlbPrimarySelectionElement >> defaultGeometry [
+
+	^ BlRoundedPolygonGeometry new radius: 6 
+]
+
+{ #category : #initialization }
 AlbPrimarySelectionElement >> initialize [
 
 	super initialize.

@@ -56,5 +56,5 @@ AlbAbstractSubtextElement >> vertices [
 { #category : #accessing }
 AlbAbstractSubtextElement >> vertices: aCollectionOfPoints [
 
-	self geometry: (BlPolygonGeometry new vertices: aCollectionOfPoints).
+	self geometry: (self defaultGeometry vertices: aCollectionOfPoints).
 ]

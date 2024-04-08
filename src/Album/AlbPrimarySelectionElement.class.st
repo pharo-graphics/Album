@@ -27,14 +27,15 @@ AlbPrimarySelectionElement >> defaultBorder [
 { #category : #initialization }
 AlbPrimarySelectionElement >> defaultGeometry [
 
-	^ BlRoundedPolygonGeometry new radius: 6 
+	^ BlPolygonGeometry new
 ]
 
 { #category : #initialization }
 AlbPrimarySelectionElement >> initialize [
 
 	super initialize.
-	self addEventHandler: AlbSubtextElementEventHandler new
+	self addEventHandler: AlbSubtextElementEventHandler new.
+	self border: self defaultBorder 
 ]
 
 { #category : #private }

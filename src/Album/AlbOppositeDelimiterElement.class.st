@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 AlbOppositeDelimiterElement >> borderColor [
 
-	^ Color gray
+	^ Color yellow twiceDarker
 ]
 
 { #category : #cleanup }
@@ -28,9 +28,16 @@ AlbOppositeDelimiterElement >> defaultBackground [
 ]
 
 { #category : #initialization }
+AlbOppositeDelimiterElement >> defaultGeometry [
+
+	^ BlRoundedRectangleGeometry cornerRadius: 3
+]
+
+{ #category : #initialization }
 AlbOppositeDelimiterElement >> initialize [
 
 	super initialize.
+	self geometry: self defaultGeometry.
 	self opacity: 0.
 	anim := ((BlOpacityAnimation new opacity: 1.6) duration: 300 milliSeconds).
 	self addAnimation: anim

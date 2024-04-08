@@ -59,19 +59,12 @@ AlbOppositeDelimiterUpdater >> createOppositeDelimiterIn: anEditorElement [
 	^ nil
 ]
 
-{ #category : #'event handling' }
-AlbOppositeDelimiterUpdater >> cursorElementMovedEvent: anEvent [
-
-	self updateOppositeDelimiterIn: anEvent currentTarget.
-]
-
 { #category : #'api - accessing' }
 AlbOppositeDelimiterUpdater >> eventsToHandle [
 
 	^ {
 		  AlbSubtextElementInvalidateEvent.
-		  AlbInfiniteModeChangedEvent.
-		  AlbCursorElementMovedEvent }
+		  AlbInfiniteModeChangedEvent }
 ]
 
 { #category : #'event handling' }
@@ -115,10 +108,11 @@ AlbOppositeDelimiterUpdater >> subtextElementInvalidateEvent: anEvent [
 { #category : #'opposite delimiter' }
 AlbOppositeDelimiterUpdater >> updateOppositeDelimiterIn: anEditorElement [
 
-	oppositeDelim ifNotNil: [
-		oppositeDelim removeFromParent.
-		oppositeDelim := nil ].
-	anEditorElement selection ifNotEmpty: [ ^ self ].
-	oppositeDelim := self createOppositeDelimiterIn: anEditorElement.
-	oppositeDelim ifNotNil: [	anEditorElement addChild: oppositeDelim]
+	anEditorElement enqueueTask: (BlTaskAction new action: [
+			 oppositeDelim ifNotNil: [
+				 oppositeDelim removeFromParent.
+				 oppositeDelim := nil ].
+			 anEditorElement selection ifEmpty: [ 
+			 	oppositeDelim := self createOppositeDelimiterIn: anEditorElement.
+			 	oppositeDelim ifNotNil: [ anEditorElement addChild: oppositeDelim ] ] ])
 ]

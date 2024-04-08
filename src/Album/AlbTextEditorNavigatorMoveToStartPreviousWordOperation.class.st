@@ -4,7 +4,7 @@ I move a cursor to the beginning of the current word when in the middle of a wor
 Class {
 	#name : #AlbTextEditorNavigatorMoveToStartPreviousWordOperation,
 	#superclass : #AlbTextEditorNavigatorOperation,
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #matching }
@@ -13,5 +13,5 @@ AlbTextEditorNavigatorMoveToStartPreviousWordOperation >> performOn: aNavigator 
 	
 	aNavigator
 		privateRegisterForMove: self cursor
-		to: (aNavigator findWordStartBefore: self cursor position) 
+		to: (aNavigator findWordEnlargedStartBefore: self cursor position) 
 ]

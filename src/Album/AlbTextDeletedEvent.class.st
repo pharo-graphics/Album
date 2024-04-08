@@ -5,7 +5,7 @@ Class {
 		'fromIndex',
 		'toIndex'
 	],
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #'instance creation' }
@@ -25,6 +25,12 @@ AlbTextDeletedEvent >> fromIndex [
 { #category : #accessing }
 AlbTextDeletedEvent >> fromIndex: anObject [
 	fromIndex := anObject
+]
+
+{ #category : #sending }
+AlbTextDeletedEvent >> sendTo: anObject [
+
+	anObject textDeletedEvent: self
 ]
 
 { #category : #accessing }

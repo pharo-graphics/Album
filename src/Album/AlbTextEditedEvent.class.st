@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'text'
 	],
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #sending }

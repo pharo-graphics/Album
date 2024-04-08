@@ -8,17 +8,11 @@ Override me for more advanced customizations
 Class {
 	#name : #AlbTextEditorSegmentElement,
 	#superclass : #BlElement,
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #initialization }
 AlbTextEditorSegmentElement >> initialize [ 
 	super initialize.
 	self clipChildren: false
-]
-
-{ #category : #'api - compositing' }
-AlbTextEditorSegmentElement >> wantsSeparateCompositingLayer [
-
-	^ false
 ]

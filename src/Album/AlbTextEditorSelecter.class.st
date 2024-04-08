@@ -10,7 +10,7 @@ Class {
 		'shouldDeselectExisting',
 		'commands'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'api - configuration' }
@@ -99,7 +99,7 @@ AlbTextEditorSelecter >> extendToPreviousWordStart [
 	theCommands := self cursors collect: [ :aCursor |
 		| aDelta |
 		
-		aDelta := aCursor position - (self findWordStartBefore: aCursor position).
+		aDelta := aCursor position - (self findWordEnlargedStartBefore: aCursor position).
 		(self
 			privateExtendSelectionLeftAt: aCursor position
 			by: aDelta)
@@ -529,6 +529,6 @@ AlbTextEditorSelecter >> wordAt: aTextIndex [
 	"Select a word or a whitespace at a given text index"
 	| aWordInterval |
 	
-	aWordInterval := self findWordAt: aTextIndex.
+	aWordInterval := self findWordEnlargedIntervalAt: aTextIndex.
 	self from: aWordInterval first to: aWordInterval last
 ]

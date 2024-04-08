@@ -5,7 +5,7 @@ Class {
 		'text',
 		'index'
 	],
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #'instance creation' }
@@ -27,6 +27,12 @@ AlbTextInsertedEvent >> index: aNumber [
 	index := aNumber
 ]
 
+{ #category : #sending }
+AlbTextInsertedEvent >> sendTo: anEventHandler [
+
+	anEventHandler textInsertedEvent: self
+]
+
 { #category : #accessing }
 AlbTextInsertedEvent >> text [
 	^ text
@@ -35,4 +41,10 @@ AlbTextInsertedEvent >> text [
 { #category : #accessing }
 AlbTextInsertedEvent >> text: aText [
 	text := aText
+]
+
+{ #category : #accessing }
+AlbTextInsertedEvent >> toIndex [
+
+	^ self index + self text size
 ]

@@ -6,7 +6,7 @@ Class {
 		'subscriptions',
 		'context'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'api - processing' }
@@ -310,7 +310,25 @@ AlbTextEditorOperator >> findWhitespaceOfLineBefore: aTextIndex [
 ]
 
 { #category : #private }
-AlbTextEditorOperator >> findWordAt: aTextIndex [
+AlbTextEditorOperator >> findWordEndAfter: aTextIndex [
+	"Find a text index of the end of the next word after a given text index"
+	| textIterator newPosition aText |
+
+	newPosition := aTextIndex.
+	aText := self text.
+
+	textIterator := aText iterator: (newPosition max: 1) to: aText size.
+	[ textIterator hasNext and: [ newPosition = aTextIndex ] ] whileTrue: [
+		| skip |
+		skip := textIterator peek isSeparator.
+		textIterator nextWord.
+		skip ifFalse: [ newPosition := textIterator position ] ].
+
+	^ newPosition
+]
+
+{ #category : #private }
+AlbTextEditorOperator >> findWordEnlargedIntervalAt: aTextIndex [ 
 	"Find a word text interval or a whitespace at a given text index"
 	<return: #Interval>
 	| aTextIterator hasWordToTheLeft hasWordToTheRight shouldBeWord aWordStart aWordEnd aDesiredType |
@@ -344,25 +362,7 @@ AlbTextEditorOperator >> findWordAt: aTextIndex [
 ]
 
 { #category : #private }
-AlbTextEditorOperator >> findWordEndAfter: aTextIndex [
-	"Find a text index of the end of the next word after a given text index"
-	| textIterator newPosition aText |
-
-	newPosition := aTextIndex.
-	aText := self text.
-
-	textIterator := aText iterator: (newPosition max: 1) to: aText size.
-	[ textIterator hasNext and: [ newPosition = aTextIndex ] ] whileTrue: [
-		| skip |
-		skip := textIterator peek isSeparator.
-		textIterator nextWord.
-		skip ifFalse: [ newPosition := textIterator position ] ].
-
-	^ newPosition
-]
-
-{ #category : #private }
-AlbTextEditorOperator >> findWordStartBefore: aTextIndex [
+AlbTextEditorOperator >> findWordEnlargedStartBefore: aTextIndex [
 	"Find a text index of start of the previous word before a given text index"
 	| newPosition aText |
 	
@@ -375,6 +375,48 @@ AlbTextEditorOperator >> findWordStartBefore: aTextIndex [
 		[ newPosition := newPosition - 1 ].
 	
 	^ newPosition
+]
+
+{ #category : #private }
+AlbTextEditorOperator >> findWordIntervalAt: aTextIndex [ 
+	"Find a word text interval or a whitespace at a given text index"
+	<return: #Interval>
+	| aTextIterator hasWordToTheLeft hasWordToTheRight shouldBeWord aWordStart aWordEnd aDesiredType |
+
+	aTextIterator := self text iterator skip: aTextIndex.
+	hasWordToTheLeft := aTextIterator hasPrevious and: [ self isWordChar: aTextIterator peer ].
+	hasWordToTheRight := aTextIterator hasNext and: [ self isWordChar: aTextIterator peek ].
+	shouldBeWord := hasWordToTheLeft.
+
+	aWordStart := aTextIndex.
+	aWordEnd := aTextIndex.
+	shouldBeWord ifFalse: [ ^ aWordStart to: aWordEnd - 1 ].	
+	aTextIterator := self text iterator skip: aTextIndex.
+	aTextIterator hasPrevious ifTrue: [
+		aTextIterator
+			previousSegment: [ :eachCharacter | self characterType: eachCharacter ]
+			indicesDo: [ :aStart :anEnd :aType |
+				((aType = #word and: [ shouldBeWord ]) or: [ (aDesiredType isNil or: [ aType = aDesiredType ] ) ])
+					ifTrue: [ aWordStart := aStart ] ] ].
+
+	^ aWordStart to: aWordEnd
+]
+
+{ #category : #private }
+AlbTextEditorOperator >> findWordStartBefore: aTextIndex [
+	"Find a text index of start of the previous word before a given text index"
+
+	| newPosition aText |
+	aText := self text.
+	newPosition := aTextIndex - 1.
+	newPosition := newPosition max: 0.
+
+	[ newPosition = 0 or: [ (aText at: newPosition) isSeparator ] ]
+		whileFalse: [ newPosition := newPosition - 1 ].
+
+	^ newPosition = 0
+		  ifTrue: [ newPosition ]
+		  ifFalse: [ newPosition + 1 ]
 ]
 
 { #category : #private }

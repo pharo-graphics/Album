@@ -7,18 +7,8 @@ Class {
 		'newIndex',
 		'dueTo'
 	],
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
-
-{ #category : #'instance creation' }
-AlbCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNewIndex [
-	<return: #AlbCursorMovedEvent>
-
-	^ self new
-		cursor: aCursor;
-		oldIndex: anOldIndex;
-		newIndex: aNewIndex
-]
 
 { #category : #'instance creation' }
 AlbCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNewIndex dueTo: aTextEditorOperator [
@@ -75,4 +65,10 @@ AlbCursorMovedEvent >> oldIndex [
 { #category : #accessing }
 AlbCursorMovedEvent >> oldIndex: aNumber [
 	oldIndex := aNumber
+]
+
+{ #category : #sending }
+AlbCursorMovedEvent >> sendTo: anObject [
+
+	anObject cursorMovedEvent: self
 ]

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'special'
 	],
-	#category : 'Album-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #initialization }

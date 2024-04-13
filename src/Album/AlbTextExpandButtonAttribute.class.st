@@ -6,7 +6,7 @@ Class {
 		'attributesCreatingBlock',
 		'createdAttributes'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #private }

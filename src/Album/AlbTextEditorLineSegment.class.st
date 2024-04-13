@@ -7,7 +7,7 @@ Class {
 		'wordPadding',
 		'paragraphMargin'
 	],
-	#category : 'Album-Model-Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #'pieces - computation' }

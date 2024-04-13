@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorFocusNextShortcut,
 	#superclass : #AlbEditorShortcut,
-	#category : 'Album-Shortcuts'
+	#category : #'Album-Shortcuts'
 }
 
 { #category : #accessing }

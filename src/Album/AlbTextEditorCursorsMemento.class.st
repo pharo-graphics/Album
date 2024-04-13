@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cursors'
 	],
-	#category : 'Album-Model-Memento'
+	#category : #'Album-Model-Memento'
 }
 
 { #category : #accessing }

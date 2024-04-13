@@ -21,7 +21,7 @@ Class {
 		'closeCharacter',
 		'condition'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #accessing }

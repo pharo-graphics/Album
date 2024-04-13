@@ -5,7 +5,7 @@ Class {
 		'fromIndices',
 		'toIndices'
 	],
-	#category : 'Album-History'
+	#category : #'Album-History'
 }
 
 { #category : #accessing }

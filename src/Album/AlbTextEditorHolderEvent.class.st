@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'context'
 	],
-	#category : 'Album-Commands-Holder'
+	#category : #'Album-Commands-Holder'
 }
 
 { #category : #accessing }

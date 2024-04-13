@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'position'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #matching }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'paragraphMargin'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #'instance creation' }

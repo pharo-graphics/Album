@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shortcuts'
 	],
-	#category : 'Album-Model-Memento'
+	#category : #'Album-Model-Memento'
 }
 
 { #category : #initialization }

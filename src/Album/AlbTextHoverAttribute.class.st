@@ -6,7 +6,7 @@ Class {
 		'leaveAction',
 		'isHovered'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }

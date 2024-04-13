@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'lineSpacing'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #'instance creation' }

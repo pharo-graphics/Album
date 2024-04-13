@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'commands'
 	],
-	#category : 'Album-History'
+	#category : #'Album-History'
 }
 
 { #category : #initialization }

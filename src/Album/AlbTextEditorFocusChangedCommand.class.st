@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'hasFocus'
 	],
-	#category : 'Album-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #executing }

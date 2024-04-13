@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorInsertionHandler,
 	#superclass : #AlbEditorElementHandler,
-	#category : 'Album-UI-Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'api - accessing' }
@@ -45,7 +45,7 @@ AlbTextEditorInsertionHandler >> textInputEvent: anEvent [
 
 	anEvent modifiers isPrimaryModifier ifTrue: [ ^ self ].
 
-	anEvent consumed: true.
+	anEvent consume.
 	
 	self
 		insert: anEvent text asString

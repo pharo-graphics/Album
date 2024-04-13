@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'transformation'
 	],
-	#category : 'Album-Commands-Holder'
+	#category : #'Album-Commands-Holder'
 }
 
 { #category : #sending }

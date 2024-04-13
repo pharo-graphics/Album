@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'editorElement'
 	],
-	#category : 'Album-UI-Requests'
+	#category : #'Album-UI-Requests'
 }
 
 { #category : #accessing }

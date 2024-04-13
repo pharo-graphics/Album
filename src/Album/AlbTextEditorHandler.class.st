@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorHandler,
 	#superclass : #AlbEditorElementHandler,
-	#category : 'Album-UI-Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'api - accessing' }

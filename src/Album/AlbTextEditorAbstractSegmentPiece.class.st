@@ -7,7 +7,7 @@ Class {
 		'segment',
 		'currentCursor'
 	],
-	#category : 'Album-Model-Segment'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #updating }

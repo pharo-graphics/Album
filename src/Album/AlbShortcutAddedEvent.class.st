@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbShortcutAddedEvent,
 	#superclass : #AlbShortcutChangedEvent,
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #sending }

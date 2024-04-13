@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorSplitter,
 	#superclass : #Object,
-	#category : 'Album-Model-Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #'api - splitting' }

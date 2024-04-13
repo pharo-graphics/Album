@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextWordPieceSelectionLostHandler,
 	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : 'Album-UI-Word'
+	#category : #'Album-UI-Word'
 }
 
 { #category : #accessing }
@@ -19,7 +19,7 @@ AlbTextWordPieceSelectionLostHandler >> handleEvent: anEvent [
 		ifFound: #yourself
 		ifNone: [ ^ self ].
 
-	anEvent consumed: true.
+	anEvent consume.
 
 	aTextEditElement := anEvent currentTarget.
 

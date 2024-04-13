@@ -10,7 +10,7 @@ Class {
 		'shouldResetDesiredCoordinate',
 		'toRemoveCursors'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #accessing }

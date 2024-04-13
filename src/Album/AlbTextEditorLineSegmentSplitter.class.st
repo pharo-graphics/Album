@@ -5,7 +5,7 @@ Class {
 		'characterClassifier',
 		'privateCount'
 	],
-	#category : 'Album-Model-Segment'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #'splitting configuration' }

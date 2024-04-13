@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Album-UI-Word'
+	#category : #'Album-UI-Word'
 }
 
 { #category : #accessing }

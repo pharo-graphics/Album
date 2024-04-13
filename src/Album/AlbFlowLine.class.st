@@ -17,7 +17,7 @@ Class {
 		'origin',
 		'baseline'
 	],
-	#category : 'Album-Layout'
+	#category : #'Album-Layout'
 }
 
 { #category : #adding }

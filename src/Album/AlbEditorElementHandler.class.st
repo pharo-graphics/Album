@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'element'
 	],
-	#category : 'Album-UI-Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #accessing }

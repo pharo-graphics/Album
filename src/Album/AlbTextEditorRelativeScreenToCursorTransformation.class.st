@@ -5,7 +5,7 @@ Class {
 		'cursor',
 		'direction'
 	],
-	#category : 'Album-Model-Cursor'
+	#category : #'Album-Model-Cursor'
 }
 
 { #category : #accessing }

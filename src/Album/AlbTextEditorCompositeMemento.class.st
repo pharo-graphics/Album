@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'mementos'
 	],
-	#category : 'Album-Model-Memento'
+	#category : #'Album-Model-Memento'
 }
 
 { #category : #'api - memento' }

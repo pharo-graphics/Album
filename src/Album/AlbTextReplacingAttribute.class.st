@@ -9,7 +9,7 @@ Class {
 		'originalString',
 		'replacementString'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }

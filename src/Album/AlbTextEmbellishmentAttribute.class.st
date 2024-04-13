@@ -6,7 +6,7 @@ Class {
 		'padding',
 		'margin'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }

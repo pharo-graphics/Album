@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'text'
 	],
-	#category : 'Album-Model-Memento'
+	#category : #'Album-Model-Memento'
 }
 
 { #category : #initialization }

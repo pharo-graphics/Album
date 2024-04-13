@@ -4,7 +4,7 @@ I split a piece of text into line segments `BrTextEditorLineSegment`
 Class {
 	#name : #AlbTextEditorLineSplitter,
 	#superclass : #AlbTextEditorSplitter,
-	#category : 'Album-Model-Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #'instance creation' }

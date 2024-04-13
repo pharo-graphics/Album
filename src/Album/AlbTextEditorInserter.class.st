@@ -23,7 +23,7 @@ Class {
 		'inputFilter',
 		'surroundMap'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'api - processing' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorCursor,
 	#superclass : #Object,
-	#category : 'Album-Model-Cursor'
+	#category : #'Album-Model-Cursor'
 }
 
 { #category : #'instance creation' }

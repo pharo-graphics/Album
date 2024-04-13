@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextWordPieceSelectionAcquiredHandler,
 	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : 'Album-UI-Word'
+	#category : #'Album-UI-Word'
 }
 
 { #category : #accessing }
@@ -19,7 +19,7 @@ AlbTextWordPieceSelectionAcquiredHandler >> handleEvent: anEvent [
 		ifFound: #yourself
 		ifNone: [ ^ self ].
 
-	anEvent consumed: true.
+	anEvent consume.
 
 	aTextElement := anEvent currentTarget.
 	

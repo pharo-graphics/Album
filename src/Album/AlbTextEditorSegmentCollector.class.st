@@ -33,7 +33,7 @@ Class {
 		'cacheLimit',
 		'lineSplitter'
 	],
-	#category : 'Album-Model-Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #'cache - adding / removing' }

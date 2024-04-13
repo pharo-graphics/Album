@@ -8,7 +8,7 @@ Class {
 		'skip',
 		'stream'
 	],
-	#category : 'Album-Model-Segment'
+	#category : #'Album-Model-Segment'
 }
 
 { #category : #accessing }

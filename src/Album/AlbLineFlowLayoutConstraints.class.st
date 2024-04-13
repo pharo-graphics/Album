@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'ShouldFillLine'
 	],
-	#category : 'Album-Layout'
+	#category : #'Album-Layout'
 }
 
 { #category : #asserting }

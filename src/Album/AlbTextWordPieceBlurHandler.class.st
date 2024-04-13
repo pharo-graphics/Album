@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextWordPieceBlurHandler,
 	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : 'Album-UI-Word'
+	#category : #'Album-UI-Word'
 }
 
 { #category : #'api - event managing' }

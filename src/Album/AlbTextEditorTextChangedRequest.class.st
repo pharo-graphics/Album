@@ -7,7 +7,7 @@ Class {
 		'textStart',
 		'textEnd'
 	],
-	#category : 'Album-UI-Requests'
+	#category : #'Album-UI-Requests'
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'hasFocus'
 	],
-	#category : 'Album-Commands-Holder'
+	#category : #'Album-Commands-Holder'
 }
 
 { #category : #accessing }

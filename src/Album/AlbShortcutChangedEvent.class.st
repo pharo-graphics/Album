@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shortcut'
 	],
-	#category : 'Album-Model-Events'
+	#category : #'Album-Model-Events'
 }
 
 { #category : #accessing }

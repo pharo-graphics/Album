@@ -1,14 +1,14 @@
 Class {
 	#name : #AlbEditorShortcut,
 	#superclass : #BlBasicShortcut,
-	#category : 'Album-Shortcuts'
+	#category : #'Album-Shortcuts'
 }
 
 { #category : #evaluation }
 AlbEditorShortcut >> performDueTo: aShortcutEvent [
 
 	"we consume shortcut event before evaluating a custom action in order to give subclasses a chance to not consume the event"
-	aShortcutEvent consumed: true.
+	aShortcutEvent consume.
 
 	self
 		performOnEditor: aShortcutEvent currentTarget editor

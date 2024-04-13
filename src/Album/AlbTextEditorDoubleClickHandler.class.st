@@ -10,7 +10,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	| screenPosition globalTextIndex selecter navigator editor selection |
 
 	anEvent isConsumed ifTrue: [ ^ self ].
-	anEvent consumed: true.
+	anEvent consume.
 	screenPosition := (element
 		                   localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                   fromChild: element) center.

@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbTextEditorBlurRequest,
 	#superclass : #AlbTextEditorRequest,
-	#category : 'Album-UI-Requests'
+	#category : #'Album-UI-Requests'
 }

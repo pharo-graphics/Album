@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'screenPosition'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #matching }

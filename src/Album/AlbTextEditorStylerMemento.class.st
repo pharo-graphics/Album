@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'styler'
 	],
-	#category : 'Album-Model-Memento'
+	#category : #'Album-Model-Memento'
 }
 
 { #category : #evaluating }

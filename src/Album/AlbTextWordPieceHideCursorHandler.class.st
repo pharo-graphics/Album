@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextWordPieceHideCursorHandler,
 	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : 'Album-UI-Word'
+	#category : #'Album-UI-Word'
 }
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 { #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
-	anEvent consumed: true.
+	anEvent consume.
 	element selectionChanged
 
 ]
@@ -19,7 +19,7 @@ AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
 	| anEditor currentIndex from to |
-	anEvent consumed: true.
+	anEvent consume.
 
 	anEditor := element editor.
 	currentIndex := anEditor navigator findTextIndexAtScreenPosition: anEvent localPosition ifAbsent: [ ^ self ].
@@ -39,7 +39,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 { #category : #'event handling' }
 AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	| anEditor |	
-	anEvent consumed: true.
+	anEvent consume.
 
 	anEditor := element editor.
 	anEditor deselecter all deselect.

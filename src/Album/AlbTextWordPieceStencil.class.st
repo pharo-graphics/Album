@@ -8,7 +8,7 @@ Class {
 		'readOnly',
 		'measurer'
 	],
-	#category : 'Album-UI-Stencils'
+	#category : #'Album-UI-Stencils'
 }
 
 { #category : #'instance creation' }

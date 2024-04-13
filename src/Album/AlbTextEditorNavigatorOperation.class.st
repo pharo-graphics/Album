@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cursor'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'instance creation' }

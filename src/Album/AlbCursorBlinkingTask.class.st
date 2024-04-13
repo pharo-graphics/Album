@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'cursor'
 	],
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #accessing }

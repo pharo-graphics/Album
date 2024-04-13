@@ -4,7 +4,7 @@ Please describe the package using the class comment of the included manifest cla
 Class {
 	#name : #ManifestAlbum,
 	#superclass : #PackageManifest,
-	#category : 'Album-Manifest'
+	#category : #'Album-Manifest'
 }
 
 { #category : #'code-critics' }

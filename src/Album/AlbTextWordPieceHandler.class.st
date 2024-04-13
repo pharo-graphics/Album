@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextWordPieceHandler,
 	#superclass : #BlBasicEventHandler,
-	#category : 'Album-UI-Word'
+	#category : #'Album-UI-Word'
 }
 
 { #category : #accessing }

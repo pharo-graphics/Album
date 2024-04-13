@@ -10,7 +10,7 @@ Class {
 		'leaveAction',
 		'isInside'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }

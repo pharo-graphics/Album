@@ -5,7 +5,7 @@ Class {
 		'cursorPosition',
 		'hasFocus'
 	],
-	#category : 'Album-UI-Requests'
+	#category : #'Album-UI-Requests'
 }
 
 { #category : #accessing }

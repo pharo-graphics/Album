@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorHistoryCommand,
 	#superclass : #Object,
-	#category : 'Album-History'
+	#category : #'Album-History'
 }
 
 { #category : #testing }

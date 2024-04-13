@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextFieldEditorLineSplitter,
 	#superclass : #AlbTextEditorLineSplitter,
-	#category : 'Album-Model-Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #'instance creation' }

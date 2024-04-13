@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorMemento,
 	#superclass : #Object,
-	#category : 'Album-Model-Memento'
+	#category : #'Album-Model-Memento'
 }
 
 { #category : #testing }

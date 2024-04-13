@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'attribute'
 	],
-	#category : 'Album-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #accessing }

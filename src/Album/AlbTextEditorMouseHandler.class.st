@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorMouseHandler,
 	#superclass : #AlbEditorElementHandler,
-	#category : 'Album-UI-Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'api - accessing' }
@@ -16,7 +16,7 @@ AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 	| aNavigator aScreenPosition editor aTextIndex |
 	anEvent primaryButtonPressed ifFalse: [ ^ self ].
 
-	anEvent consumed: true.
+	anEvent consume.
 	aScreenPosition := (element
 		                    localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                    fromChild: anEvent currentTarget) center.

@@ -1,5 +1,5 @@
 Class {
 	#name : #AlbTextCursorAttributeEnterEvent,
 	#superclass : #AlbTextCursorAttributeEvent,
-	#category : 'Album-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }

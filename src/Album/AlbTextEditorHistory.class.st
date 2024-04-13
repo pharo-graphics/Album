@@ -8,7 +8,7 @@ Class {
 		'shouldGroup',
 		'currentGroup'
 	],
-	#category : 'Album-History'
+	#category : #'Album-History'
 }
 
 { #category : #private }

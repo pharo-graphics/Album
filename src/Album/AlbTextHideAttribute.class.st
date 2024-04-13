@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextHideAttribute,
 	#superclass : #AlbTextAdornmentAttribute,
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }

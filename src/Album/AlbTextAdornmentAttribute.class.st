@@ -10,7 +10,7 @@ Class {
 		'shouldAppend',
 		'renderingStrategy'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #accessing }

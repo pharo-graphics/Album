@@ -6,7 +6,7 @@ Class {
 		'undoIndices',
 		'redoIndices'
 	],
-	#category : 'Album-History'
+	#category : #'Album-History'
 }
 
 { #category : #accessing }

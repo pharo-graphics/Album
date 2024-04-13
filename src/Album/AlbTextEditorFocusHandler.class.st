@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorFocusHandler,
 	#superclass : #AlbEditorElementHandler,
-	#category : 'Album-UI-Handlers'
+	#category : #'Album-UI-Handlers'
 }
 
 { #category : #'event handling' }

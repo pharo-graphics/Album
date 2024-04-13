@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorCursorRemovedHolderEvent,
 	#superclass : #AlbTextEditorHolderEvent,
-	#category : 'Album-Commands-Holder'
+	#category : #'Album-Commands-Holder'
 }
 
 { #category : #sending }

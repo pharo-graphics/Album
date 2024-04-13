@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'compositeSelection'
 	],
-	#category : 'Album-Model-Selection'
+	#category : #'Album-Model-Selection'
 }
 
 { #category : #selection }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'combinationForMacOS'
 	],
-	#category : 'Album-Shortcuts'
+	#category : #'Album-Shortcuts'
 }
 
 { #category : #'api - combination' }

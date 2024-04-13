@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'wordPadding'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #'instance creation' }

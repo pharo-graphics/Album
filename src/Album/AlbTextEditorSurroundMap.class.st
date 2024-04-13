@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'definitions'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'instance creation' }

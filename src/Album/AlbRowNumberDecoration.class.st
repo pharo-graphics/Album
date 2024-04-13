@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbRowNumberDecoration,
 	#superclass : #BlRowNumberDecoration,
-	#category : 'Album-UI'
+	#category : #'Album-UI'
 }
 
 { #category : #geometry }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'next'
 	],
-	#category : 'Album-Model-Input-filters'
+	#category : #'Album-Model-Input-filters'
 }
 
 { #category : #'instance creation' }

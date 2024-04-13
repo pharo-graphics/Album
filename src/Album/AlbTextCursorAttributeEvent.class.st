@@ -7,7 +7,7 @@ Class {
 		'textEditor',
 		'wrappedEvent'
 	],
-	#category : 'Album-Attributes - Support'
+	#category : #'Album-Attributes - Support'
 }
 
 { #category : #accessing }

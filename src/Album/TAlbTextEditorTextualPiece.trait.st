@@ -6,7 +6,7 @@ Trait {
 		'textEnd',
 		'delimiterLength'
 	],
-	#category : 'Album-Model-Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #'text - copying' }

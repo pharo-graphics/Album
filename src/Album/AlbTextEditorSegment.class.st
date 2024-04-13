@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : 'Album-Model-Segment-Text'
+	#category : #'Album-Model-Segment-Text'
 }
 
 { #category : #'pieces - computation' }

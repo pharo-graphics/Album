@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorLineSegmentTextListener,
 	#superclass : #AlbTextWordPieceUniqueHandler,
-	#category : 'Album-UI-Word'
+	#category : #'Album-UI-Word'
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'eventDispatcher'
 	],
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #'event management accessing' }

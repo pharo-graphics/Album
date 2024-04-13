@@ -5,7 +5,7 @@ Class {
 		'fromIndex',
 		'toIndex'
 	],
-	#category : 'Album-UI-Requests'
+	#category : #'Album-UI-Requests'
 }
 
 { #category : #accessing }

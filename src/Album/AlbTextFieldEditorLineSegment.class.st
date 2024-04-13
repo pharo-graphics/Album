@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextFieldEditorLineSegment,
 	#superclass : #AlbTextEditorLineSegment,
-	#category : 'Album-Model-Segment-Text-Line'
+	#category : #'Album-Model-Segment-Text-Line'
 }
 
 { #category : #'pieces - computation' }

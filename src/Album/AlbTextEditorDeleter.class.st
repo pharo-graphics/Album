@@ -6,7 +6,7 @@ Class {
 		'shouldUpdateCursor',
 		'shouldUpdateSelection'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'api - configuration' }

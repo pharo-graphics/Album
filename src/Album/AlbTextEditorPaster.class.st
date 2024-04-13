@@ -9,7 +9,7 @@ Class {
 		'shouldDeleteSelected',
 		'inputFilter'
 	],
-	#category : 'Album-Model-Operators'
+	#category : #'Album-Model-Operators'
 }
 
 { #category : #'api - processing' }

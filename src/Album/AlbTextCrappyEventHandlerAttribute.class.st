@@ -5,7 +5,7 @@ Is the superclass of all attributes with the ability to handle some text events 
 Class {
 	#name : #AlbTextCrappyEventHandlerAttribute,
 	#superclass : #BlTextAttribute,
-	#category : 'Album-Attributes'
+	#category : #'Album-Attributes'
 }
 
 { #category : #events }

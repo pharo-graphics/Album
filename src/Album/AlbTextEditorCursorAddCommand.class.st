@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cursor'
 	],
-	#category : 'Album-Commands'
+	#category : #'Album-Commands'
 }
 
 { #category : #accessing }

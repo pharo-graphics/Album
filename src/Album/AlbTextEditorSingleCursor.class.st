@@ -6,7 +6,7 @@ Class {
 		'isVisible',
 		'desiredCoordinate'
 	],
-	#category : 'Album-Model-Cursor'
+	#category : #'Album-Model-Cursor'
 }
 
 { #category : #accessing }

@@ -1,6 +1,8 @@
 Class {
 	#name : #AlbTextPortionElement,
 	#superclass : #BlElement,
+	#traits : 'TBlLayoutResizable',
+	#classTraits : 'TBlLayoutResizable classTrait',
 	#category : #'Album-UI-Text-Portion'
 }
 

@@ -363,7 +363,7 @@ AlbInfiniteEditorElement >> modeShortcutsDo: aBlock [
 
 { #category : #'event management' }
 AlbInfiniteEditorElement >> mouseDownEvent: anEvent [
-	self selectionChanged
+
 ]
 
 { #category : #'editor - operator' }
@@ -388,6 +388,13 @@ AlbInfiniteEditorElement >> onGotFocus [
 		self selecter
 			from: 0 to: 0;
 			select ]
+]
+
+{ #category : #'hooks - layout' }
+AlbInfiniteEditorElement >> onLayoutDone [
+
+	super onLayoutDone.
+	self geometryChanged
 ]
 
 { #category : #'focus accessing' }
@@ -587,8 +594,8 @@ AlbInfiniteEditorElement >> textInternalRepresentationChanged [
 
 	self editor processCursorAttributes.
 	self editor updater
-					 all;
-					 update
+		all;
+		update
 ]
 
 { #category : #'t - infinite editor accessing - text' }
@@ -610,6 +617,12 @@ AlbInfiniteEditorElement >> textPiecesAndTheirElementsWithinIndexInterval: anInt
 	self textPiecesAndTheirElementsDo: [ :piece :pieceElement | 
 		(piece textEnd < anInterval first or: [ piece textStart > (anInterval last)]) ifFalse: [ 
 			aBlock value: piece value: pieceElement ] ]
+]
+
+{ #category : #'api - editor' }
+AlbInfiniteEditorElement >> textReplaced [
+
+	self editor notifyPrimarySelectionChanged: self selection
 ]
 
 { #category : #'accessing - text' }

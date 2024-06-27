@@ -14,6 +14,7 @@ AlbSelectionChangedEvent >> selection [
 
 { #category : #accessing }
 AlbSelectionChangedEvent >> selection: anObject [
+
 	selection := anObject
 ]
 

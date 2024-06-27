@@ -881,7 +881,6 @@ AlbTextEditor >> selection [
 { #category : #'private - selection' }
 AlbTextEditor >> selection: aTextSelection [
 	selection := aTextSelection.
-	
 	self notifyPrimarySelectionChanged: selection
 ]
 

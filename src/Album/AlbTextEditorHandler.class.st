@@ -36,5 +36,5 @@ AlbTextEditorHandler >> textEditedEvent: anEvent [
 { #category : #'event handling' }
 AlbTextEditorHandler >> textReplacedEvent: anEvent [
 
-	
+	element textReplaced
 ]

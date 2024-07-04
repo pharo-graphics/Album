@@ -63,7 +63,6 @@ AlbTextWordPieceStencil >> createWordElement [
 	| wordElement |
 	wordElement := AlbTextElement new.
 	measurer ifNotNil: [ wordElement measurer: measurer ].
-	wordElement editorMeasurement.
 	self allEventHandlers do: [ :e | wordElement addEventHandler: e ].
 	^ wordElement
 ]

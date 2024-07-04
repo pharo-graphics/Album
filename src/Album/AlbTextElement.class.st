@@ -84,6 +84,12 @@ AlbTextElement >> initialize [
 	self clipChildren: false.
 ]
 
+{ #category : #initialization }
+AlbTextElement >> initializeMeasurement [
+
+	self editorMeasurement
+]
+
 { #category : #layout }
 AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 		| cursorPos textPosX maxTextPosX minTextPosX textPos |

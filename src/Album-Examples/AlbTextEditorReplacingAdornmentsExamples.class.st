@@ -20,7 +20,7 @@ They can also overlapp. In this case attributes that end first take precedence o
 Class {
 	#name : #AlbTextEditorReplacingAdornmentsExamples,
 	#superclass : #AlbTextEditorAdornmentsExamples,
-	#category : 'Album-Examples-! Documentation'
+	#category : #'Album-Examples-! Documentation'
 }
 
 { #category : #'examples - replacements' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'largeFile'
 	],
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #private }

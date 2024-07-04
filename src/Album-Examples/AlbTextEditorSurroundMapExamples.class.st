@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorSurroundMapExamples,
 	#superclass : #Object,
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #examples }

@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorParagraphAttributesExamples,
 	#superclass : #Object,
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #'instance creation' }

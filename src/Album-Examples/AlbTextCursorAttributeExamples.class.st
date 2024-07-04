@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextCursorAttributeExamples,
 	#superclass : #AlbTextEditorAdornmentsExamples,
-	#category : 'Album-Examples-! Documentation'
+	#category : #'Album-Examples-! Documentation'
 }
 
 { #category : #public }

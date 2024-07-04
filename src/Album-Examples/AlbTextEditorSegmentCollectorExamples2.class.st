@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorSegmentCollectorExamples2,
 	#superclass : #Object,
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #examples }

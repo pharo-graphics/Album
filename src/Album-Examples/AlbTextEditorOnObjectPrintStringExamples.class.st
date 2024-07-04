@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorOnObjectPrintStringExamples,
 	#superclass : #AlbTextEditorExamples,
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #'example - Object>>#printString' }

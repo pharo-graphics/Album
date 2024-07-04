@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorShortcutExamples,
 	#superclass : #Object,
-	#category : 'Album-Examples-Shortcuts'
+	#category : #'Album-Examples-Shortcuts'
 }
 
 { #category : #accessing }

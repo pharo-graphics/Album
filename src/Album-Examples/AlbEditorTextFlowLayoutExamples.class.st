@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbEditorTextFlowLayoutExamples,
 	#superclass : #Object,
-	#category : 'Album-Examples-Layout'
+	#category : #'Album-Examples-Layout'
 }
 
 { #category : #'instance creation' }

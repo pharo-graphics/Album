@@ -11,7 +11,7 @@ Class: AlbTextAttributesHowToGuide
 Class {
 	#name : #AlbTextAttributesHowToGuide,
 	#superclass : #Object,
-	#category : 'Album-Examples-! Documentation'
+	#category : #'Album-Examples-! Documentation'
 }
 
 { #category : #examples }

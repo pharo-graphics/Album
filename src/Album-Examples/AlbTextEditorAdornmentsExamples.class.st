@@ -11,5 +11,5 @@ Adornment attribute can replace a piece of text with arbitrary visual elements o
 Class {
 	#name : #AlbTextEditorAdornmentsExamples,
 	#superclass : #Object,
-	#category : 'Album-Examples-! Documentation'
+	#category : #'Album-Examples-! Documentation'
 }

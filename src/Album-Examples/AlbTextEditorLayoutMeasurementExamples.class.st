@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TAlbTextEditorFixedMeasurerExamples',
 	#classTraits : 'TAlbTextEditorFixedMeasurerExamples classTrait',
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #'instance creation' }

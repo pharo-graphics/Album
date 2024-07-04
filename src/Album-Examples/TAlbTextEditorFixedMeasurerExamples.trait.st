@@ -3,7 +3,7 @@ I add utility methods related to fixed text measurer
 "
 Trait {
 	#name : #TAlbTextEditorFixedMeasurerExamples,
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #'private - font metrics' }

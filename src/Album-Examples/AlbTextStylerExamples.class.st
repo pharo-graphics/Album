@@ -4,14 +4,16 @@ Hello World *https://gtoolkit.com*
 Class {
 	#name : #AlbTextStylerExamples,
 	#superclass : #Object,
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #'examples - editor' }
 AlbTextStylerExamples >> codeSnippetStyler [
-	<gtExample>
+	<sampleInstance>
 
-	^ BlRBTextStyler new classOrMetaClass: BlElement
+	^ BlPharoCodeStyler new
+		  classOrMetaClass: BlElement;
+		  yourself
 ]
 
 { #category : #'examples - editor' }

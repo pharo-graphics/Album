@@ -1,7 +1,7 @@
 Class {
 	#name : #AlbTextEditorByScripterExamples,
 	#superclass : #Object,
-	#category : 'Album-Examples-By scripter'
+	#category : #'Album-Examples-By scripter'
 }
 
 { #category : #'click - adornment element' }

@@ -36,7 +36,7 @@ Class {
 	#classInstVars : [
 		'loremIpsum'
 	],
-	#category : 'Album-Examples-Editor'
+	#category : #'Album-Examples-Editor'
 }
 
 { #category : #examples }
@@ -163,7 +163,7 @@ AlbTextEditorExamples class >> elementOnMethodWithSyntaxHighlighting [
 	text := self newMethodText.
 	element := self newElement.
 	editor := self newEditor.
-	styler := BlRBTextStyler new.
+	styler := BlPharoCodeStyler new.
 	styler classOrMetaClass: Object.
 	editor styler: styler.
 	editor text: text.

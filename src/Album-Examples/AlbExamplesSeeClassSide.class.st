@@ -447,15 +447,15 @@ AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 AlbExamplesSeeClassSide class >> example_EditorWithSegNumbers [
 
 	| ed t |
-	"The insertion bogue arise around 342225"
-	"100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
-	t := String streamContents: [ :stream | 
-		1 to: 400000 do: [ :l | 
-			stream << l asString << ': 1234567890'; lf ] ].
-	ed := (t asRopedText
-		       fontSize: 16) onAlbum.
+	"The insertion bogue arise around 342225""100000000 is ~20 000 pages in LibreOffice - 360 000 lines on TextMaker "
+	t := String streamContents: [ :stream |
+		     1 to: 400000 do: [ :l |
+			     (stream << l asString)
+				     << ': 1234567890';
+				     lf ] ].
+	ed := (t asRopedText fontSize: 16) onAlbum.
 	ed withRowNumbers.
-	ed openInOBlSpace
+	ed openInSpace
 ]
 
 { #category : #'editor examples' }

@@ -98,7 +98,7 @@ AlbTextEditorLineSegmentHolder >> createSegmentElement [
 	<return: #BlElement>
 
 	^ AlbTextEditorSegmentElement new
-		beInSeparateCompositionLayer;
+		"beInSeparateCompositionLayer;"
 		layout: self class defaultSegmentLayout;
 		focusability: BlFocusability after;
 		constraintsDo: [ :c |

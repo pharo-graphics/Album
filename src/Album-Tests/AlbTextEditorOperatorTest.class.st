@@ -123,7 +123,7 @@ AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	self assert: anEditor hasFocus.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0).
 	
-	aSpace removeChild: anEditor.
+	aSpace root removeChild: anEditor.
 	
 	^ anEditor
 ]

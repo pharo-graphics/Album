@@ -11,12 +11,8 @@ BaselineOfAlbum >> baseline: spec [
 	spec for: #common do: [ 
 		spec
 			baseline: 'Bloc'
-			with: [ spec repository: 'github://pharo-graphics/Bloc:master/src' ].
+			with: [ spec repository: 'github://pharo-graphics/Bloc:v2.0.0/src' ].
 
-"		spec
-			baseline: 'Alexandrie'
-			with: [ spec repository: 'github://pharo-graphics/Alexandrie:master/src' ].
-"
 		spec
 			package: #Album with: [ spec requires: #( #Bloc ) ];
 			package: #'Album-Tests' with: [ spec requires: #( #Album ) ];

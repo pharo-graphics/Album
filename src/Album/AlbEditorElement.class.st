@@ -20,12 +20,6 @@ Class {
 	#category : #'Album-UI'
 }
 
-{ #category : #'api - layout' }
-AlbEditorElement >> constraintsDo: aBlock [
-
-	self sizeConstraintsDo: aBlock
-]
-
 { #category : #initialization }
 AlbEditorElement >> defaultFrontLayer [
 

@@ -82,7 +82,7 @@ AlbTextEditorLineSegmentHolder >> buildSegment: anEditorSegment [
 	itemElement
 		constraintsDo: [ :c |
 			c horizontal resizer:
-					infiniteElement constraints horizontal resizer ];
+					self infiniteElement constraints horizontal resizer ];
 		padding: anEditorSegment paragraphMargin
 ]
 
@@ -291,7 +291,6 @@ AlbTextEditorLineSegmentHolder >> textInterval [
 AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 
 	| newPieceElements newPieceMap thePieces |
-
 	self
 		assert: [ segment == anEditorSegment ]
 		description: [ 'Can only update the same segment!' ].
@@ -306,24 +305,24 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 
 	thePieces := segment pieces.
 
-	thePieces do: [ :eachSegmentPiece | 
+	thePieces do: [ :eachSegmentPiece |
 		| thePieceElements |
 		thePieceElements := pieceElements
 			                    at: eachSegmentPiece
-			                    pieceAndElementsDo: [ 
-				                    :eachPiece 
+			                    pieceAndElementsDo: [
+				                    :eachPiece
 				                    :theSegmentElements | "We should transfer the knowledge of the cursor to the new segment piece,
 						otherwise the cursor may not be removed from the corresponding elements
 						https://github.com/feenkcom/gtoolkit/issues/892"
 				                    eachSegmentPiece currentCursor:
 					                    eachPiece currentCursor.
-				                    theSegmentElements do: [ :eachSegmentElement | 
+				                    theSegmentElements do: [ :eachSegmentElement |
 					                    eachPiece
 						                    updateText: eachSegmentElement
 						                    of: segment
 						                    in: self infiniteElement ].
 				                    theSegmentElements ]
-			                    ifAbsent: [ 
+			                    ifAbsent: [
 				                    (eachSegmentPiece createElement:
 					                     self infiniteElement) asOrderedCollection ].
 
@@ -332,14 +331,14 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 
 	pieceElements := newPieceMap.
 
-	"first remove the cursor, else it can be added before being removed".
-	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+	"first remove the cursor, else it can be added before being removed"
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement |
 		aPiece
 			removeCursor: aPieceElement
 			of: anEditorSegment
-			in: self infiniteElement].
-		
-	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement | 
+			in: self infiniteElement ].
+
+	pieceElements piecesAndTheirElementsDo: [ :aPiece :aPieceElement |
 		aPiece
 			addCursor: aPieceElement
 			of: anEditorSegment
@@ -351,7 +350,7 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 		aPiece
 			updateFocus: self infiniteElement isFocused
 			of: aPieceElement
-			in: self infiniteElement].
+			in: self infiniteElement ].
 
 	itemElement removeChildren.
 	self flag: 'Until I understand why they can have parent'.
@@ -359,8 +358,8 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 	itemElement addChildren: newPieceElements.
 
 	itemElement
-		constraintsDo: [ :c | 
+		constraintsDo: [ :c |
 			c horizontal resizer:
-					infiniteElement constraints horizontal resizer ];
+					self infiniteElement constraints horizontal resizer ];
 		padding: anEditorSegment paragraphMargin
 ]

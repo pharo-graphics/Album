@@ -17,6 +17,7 @@ AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 	anEvent primaryButtonPressed ifFalse: [ ^ self ].
 
 	anEvent consume.
+	element isEnabled ifFalse: [ ^ self ].
 	aScreenPosition := (element
 		                    localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
 		                    fromChild: anEvent currentTarget) center.

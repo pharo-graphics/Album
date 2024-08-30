@@ -11,6 +11,8 @@ Class {
 AlbTextEditorSelectionHandler >> dragEndEvent: anEvent [
 
 	anEvent consume.
+	element isEnabled ifFalse: [ ^ self ].
+
 	element selectionChanged
 
 ]
@@ -20,6 +22,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 
 	| anEditor currentIndex from to |
 	anEvent consume.
+	element isEnabled ifFalse: [ ^ self ].
 
 	anEditor := element editor.
 	currentIndex := anEditor navigator findTextIndexAtScreenPosition: anEvent localPosition ifAbsent: [ ^ self ].
@@ -40,6 +43,7 @@ AlbTextEditorSelectionHandler >> dragEvent: anEvent [
 AlbTextEditorSelectionHandler >> dragStartEvent: anEvent [
 	| anEditor |	
 	anEvent consume.
+	element isEnabled ifFalse: [ ^ self ].
 
 	anEditor := element editor.
 	anEditor deselecter all deselect.

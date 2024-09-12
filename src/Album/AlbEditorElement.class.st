@@ -102,9 +102,7 @@ AlbEditorElement >> initialize [
 				               AlbTextInsertedEvent.
 				               AlbTextDeletedEvent.
 				               AlbTextEditedEvent.
-				               AlbInfiniteModeChangedEvent.
-				               BlFocusEvent.
-				               BlBlurEvent };
+				               AlbInfiniteModeChangedEvent};
 		               yourself.
 	" to handle the mouse events that are dispatcehd to the front layer "
 	self frontLayer addEventHandler: distributor.

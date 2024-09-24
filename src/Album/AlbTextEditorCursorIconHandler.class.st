@@ -18,19 +18,20 @@ AlbTextEditorCursorIconHandler >> dragLeaveEvent: anEvent [
 
 { #category : #'api - accessing' }
 AlbTextEditorCursorIconHandler >> eventsToHandle [
+
 	^ {
-		BlDragEnterEvent.
-		BlDragLeaveEvent.
-		BlMouseEnterEvent.
-		BlMouseLeaveEvent.
-		BlMouseOverEvent 
-	}
+		  BlDragEnterEvent.
+		  BlDragLeaveEvent.
+		  BlMouseEnterEvent.
+		  BlMouseLeaveEvent.
+		  BlMouseOverEvent }
 ]
 
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseEnterEvent: anEvent [
 
-	anEvent currentTarget mouseCursor: (element isEditable
+	anEvent currentTarget mouseCursor:
+		((element isEnabled and: [ element isEditable ])
 			 ifTrue: [ Cursor overEditableText ]
 			 ifFalse: [ Cursor normal ])
 ]
@@ -44,5 +45,6 @@ AlbTextEditorCursorIconHandler >> mouseLeaveEvent: anEvent [
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
 
+	element isEnabled ifFalse: [ ^ self ].
 	anEvent currentTarget mouseCursor: Cursor overEditableText
 ]

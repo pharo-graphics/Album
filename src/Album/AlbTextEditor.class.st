@@ -398,10 +398,11 @@ AlbTextEditor >> limitedSurroundMap [
 { #category : #'model protocol' }
 AlbTextEditor >> modeChanged: aMode [
 
-	self deselecter
+	self flag: 'trying to do nothing to not lose the selection'.
+	"self deselecter
 		all;
 		apply;
-		notifyCursorRemoved
+		notifyCursorRemoved"
 ]
 
 { #category : #'text - cursor' }

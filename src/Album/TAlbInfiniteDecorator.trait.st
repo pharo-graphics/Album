@@ -9,12 +9,6 @@ TAlbInfiniteDecorator >> addEditorShortcut: aTextEditorInteraction [
 	self next addEditorShortcut: aTextEditorInteraction
 ]
 
-{ #category : #'t - infinite editor converting' }
-TAlbInfiniteDecorator >> asScrollableElement [
-
-	^ self next asScrollableElement
-]
-
 { #category : #'t - infinite editor private - accessing text' }
 TAlbInfiniteDecorator >> atTextIndex: aTextIndex do: aBlock [
 

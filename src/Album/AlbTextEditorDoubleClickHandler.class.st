@@ -11,6 +11,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	anEvent isConsumed ifTrue: [ ^ self ].
 	anEvent consume.
+	element isEnabled ifFalse: [ ^ self ].
 
 	screenPosition := (element
 		                   localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)

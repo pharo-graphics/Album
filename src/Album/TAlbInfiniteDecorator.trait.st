@@ -104,12 +104,6 @@ TAlbInfiniteDecorator >> enlargedSubTextOnScreen [
 	^ self next enlargedSubTextOnScreen 
 ]
 
-{ #category : #'t - infinite editor focus testing' }
-TAlbInfiniteDecorator >> hasFocus [
-
-	^ self next hasFocus
-]
-
 { #category : #'t - infinite editor accessing - selection' }
 TAlbInfiniteDecorator >> hasSelection [
 

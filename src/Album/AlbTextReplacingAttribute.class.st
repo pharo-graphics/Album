@@ -24,7 +24,7 @@ AlbTextReplacingAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 		segmentPiece: (self replaceTextInPiece: aTTextEditorTextualPiece)) asElement.
 
 	aReplacementTextElement removeEventHandler: AlbTextWordPieceTextChangeHandler uniqueInstance.
-	aReplacementTextElement when: AlbTextEditorTextChangedRequest do: [ :anEvent |
+	aReplacementTextElement addEventHandlerOn: AlbTextEditorTextChangedRequest do: [ :anEvent |
 		| aHiddenSegmentPiece |
 		aHiddenSegmentPiece := self replaceTextInPiece: anEvent segmentPiece.
 		anEvent currentTarget segmentPiece: aHiddenSegmentPiece

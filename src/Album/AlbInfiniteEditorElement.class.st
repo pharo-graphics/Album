@@ -273,7 +273,6 @@ AlbInfiniteEditorElement >> infinite [
 AlbInfiniteEditorElement >> initialize [
 
 	super initialize.
-	self initializeCursorElement.
 	self mode: self defaultMode.
 	self matchParent
 ]
@@ -284,6 +283,7 @@ AlbInfiniteEditorElement >> initializeCursorElement [
 	If not, dbl clicking will not work because the target of the first click may 
 	be different from the one of the second click"
 
+	cursorElement ifNotNil: [ cursorElement removeFromParent ].
 	cursorElement := AlbCursorElement new
 		                 background: self defaultCursorBackground;
 		                 yourself
@@ -337,6 +337,7 @@ AlbInfiniteEditorElement >> mode: anEditabilityMode [
 
 	mode = anEditabilityMode ifTrue: [ ^ self ].
 	mode := anEditabilityMode.
+	self initializeCursorElement.
 	self dispatchEvent: AlbInfiniteModeChangedEvent new
 ]
 
@@ -383,11 +384,7 @@ AlbInfiniteEditorElement >> onExtentChanged [
 AlbInfiniteEditorElement >> onGotFocus [
 
 	self editor onGotFocus.
-	self cursorElement onGotFocus.
-	self cursorElement hasParent ifFalse: [
-		self selecter
-			from: 0 to: 0;
-			select ]
+	self cursorElement onGotFocusIn: self
 ]
 
 { #category : #'hooks - layout' }
@@ -401,7 +398,7 @@ AlbInfiniteEditorElement >> onLayoutDone [
 AlbInfiniteEditorElement >> onLostFocus [
 
 	self editor onLostFocus.
-	self cursorElement onLostFocus
+	self cursorElement onLostFocusIn: self
 ]
 
 { #category : #'hooks - scrolling' }

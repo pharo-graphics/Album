@@ -65,18 +65,24 @@ AlbCursorElement >> newBlinkingTask [
 ]
 
 { #category : #'private - focus' }
-AlbCursorElement >> onGotFocus [
+AlbCursorElement >> onGotFocusIn: anEditorElement [
 
-	self background: self focusedBackground.
-	self startBlinkingTask 
-	 
+	anEditorElement isEditable
+		ifTrue: [
+			self background: self focusedBackground.
+			self startBlinkingTask ]
+		ifFalse: [
+			self stopBlinkingTask.
+			self background: BlBackground transparent ]
 ]
 
 { #category : #'private - focus' }
-AlbCursorElement >> onLostFocus [
+AlbCursorElement >> onLostFocusIn: anEditorElement [
 
-	self background: self defaultBlurredBackground.
-	self stopBlinkingTask 
+	anEditorElement isEditable
+		ifTrue: [ self background: self defaultBlurredBackground ]
+		ifFalse: [ self background: BlBackground transparent ].
+	self stopBlinkingTask
 ]
 
 { #category : #initialization }

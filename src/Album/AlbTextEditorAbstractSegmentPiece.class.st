@@ -215,13 +215,15 @@ AlbTextEditorAbstractSegmentPiece >> updateText: aTextElement of: aLineSegment i
 { #category : #'api - geometry' }
 AlbTextEditorAbstractSegmentPiece >> wordMargin [
 	<return: #BlInsets>
-	| aHalfOfLineSpacing |
+	"| aHalfOfLineSpacing |"
 	
-	aHalfOfLineSpacing := (self segment lineSpacing / 2.0) floor.
-
+	self flag: 'Changed so that the height computed for a ToTextField (or one line ToAlbum) is the same as the height computed for a ToLabel'.
+	^ BlInsets empty
+	
+	"aHalfOfLineSpacing := (self segment lineSpacing / 2.0) floor.
 	^ BlInsets
 		top: aHalfOfLineSpacing
-		bottom: (self segment lineSpacing - aHalfOfLineSpacing)
+		bottom: (self segment lineSpacing - aHalfOfLineSpacing)"
 ]
 
 { #category : #'api - geometry' }

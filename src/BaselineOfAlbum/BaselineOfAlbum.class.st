@@ -24,5 +24,5 @@ BaselineOfAlbum >> declareBlocOn: spec [
 
 	spec
 		baseline: 'Bloc'
-		with: [ spec repository: 'github://pharo-graphics/Bloc:master/src' ]
+		with: [ spec repository: 'github://pharo-graphics/Bloc:v2.2.0/src' ]
 ]

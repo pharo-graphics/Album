@@ -97,11 +97,6 @@ AlbTextEditorOperatorTest >> piecesWithCursorIn: anEditorElement [
 		thenCollect: [ :eachCursor | eachCursor parent ]
 ]
 
-{ #category : #'private - events' }
-AlbTextEditorOperatorTest >> subscribe: anEventClass do: aBlock for: anElement [
-	anElement when: anEventClass do: aBlock
-]
-
 { #category : #focus }
 AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	

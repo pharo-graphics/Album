@@ -487,8 +487,6 @@ AlbInfiniteEditorElement >> selection [
 
 { #category : #'event management' }
 AlbInfiniteEditorElement >> selectionChanged [
-
-	"self selectionViewDo: [ :selView | selView selectionChangedIn: self ]"
 ]
 
 { #category : #'private - accessing editor' }

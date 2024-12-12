@@ -205,5 +205,6 @@ AlbEditorElement >> setupTextEditor [
 	self editor addEventHandler: (BlEventHandler
 			 on: AlbSelectionChangedEvent
 			 do: [ :event |
-				 self dispatchPrimarySelectionInvalidateEvent ])
+				 self dispatchPrimarySelectionInvalidateEvent.
+				 self dispatchEvent: event copy ])
 ]

@@ -38,7 +38,8 @@ AlbTextEditorPaster >> atEnd [
 
 { #category : #'api - configuration' }
 AlbTextEditorPaster >> fromClipboard [
-	self string: Clipboard clipboardText asString
+
+	self string: Clipboard clipboardText asString.
 ]
 
 { #category : #initialization }
@@ -56,6 +57,12 @@ AlbTextEditorPaster >> initialize [
 { #category : #'api - configuration' }
 AlbTextEditorPaster >> inputFilter: aTextEditorInputFilter [
 	inputFilter := aTextEditorInputFilter
+]
+
+{ #category : #testing }
+AlbTextEditorPaster >> isEmpty [ 
+
+	^ text isEmpty
 ]
 
 { #category : #'api - processing' }

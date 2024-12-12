@@ -36,7 +36,8 @@ AlbPrimarySelectionElement >> initialize [
 
 	super initialize.
 	self addEventHandler: AlbSubtextElementEventHandler new.
-	self border: self defaultBorder 
+	self border: self defaultBorder.
+	self focusability: BlFocusability none.
 ]
 
 { #category : #private }

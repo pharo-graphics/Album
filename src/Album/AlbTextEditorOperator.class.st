@@ -500,9 +500,11 @@ AlbTextEditorOperator >> isCursorOnTheFirstLine: aCursor [
 
 { #category : #testing }
 AlbTextEditorOperator >> isCursorOnTheLastLine: aCursor [
-	<return: #Boolean>
 
-	^ (self findLineEndAfter: (aCursor position + 1 max: self text isNotEmpty asBit)) = self text size
+	<return: #Boolean>
+	| pos |
+	pos := aCursor position + 1 max: self text isNotEmpty asBit.
+	^ (self findLineEndAfter: pos) = self text size
 ]
 
 { #category : #testing }

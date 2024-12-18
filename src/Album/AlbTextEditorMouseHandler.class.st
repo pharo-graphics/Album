@@ -18,29 +18,33 @@ AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 
 	anEvent consume.
 	aScreenPosition := (element
-		                    localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
+		                    localBoundsToMine:
+		                    (BlBounds
+			                     origin: anEvent localPosition
+			                     extent: 0.0 @ 0.0)
 		                    fromChild: anEvent currentTarget) center.
 	editor := element editor.
 	aNavigator := editor navigator.
-	aTextIndex := aNavigator findTextIndexAtScreenPosition: aScreenPosition ifAbsent: [ nil ].
+	aTextIndex := aNavigator
+		              findTextIndexAtScreenPosition: aScreenPosition
+		              ifAbsent: [ nil ].
 
 	anEvent modifiers isShift
-		ifTrue: [ 
-			aTextIndex ifNotNil: [ 
+		ifTrue: [
+			aTextIndex ifNotNil: [
 				(editor selection contains: aTextIndex)
-					ifTrue: [ 
+					ifTrue: [
 						editor deselecter
 							from: aTextIndex to: editor selection indices last;
 							deselect ]
-					ifFalse: [ 
+					ifFalse: [
 						editor selecter
 							extendToIndex: aTextIndex;
 							select ] ] ]
-		ifFalse: [ 
-			(element hasFocus ) ifTrue: [ 
-				editor deselecter all deselect ] ].
+		ifFalse: [
+		element hasFocus ifTrue: [ editor deselecter all deselect ] ].
 	aNavigator moveToScreenPosition: aScreenPosition.
-	element requestFocus.
+	element isEnabled ifTrue: [ element requestFocus ].
 	aNavigator apply.
 
 	anEvent sendTo: element

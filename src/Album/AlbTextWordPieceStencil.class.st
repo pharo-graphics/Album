@@ -26,11 +26,12 @@ AlbTextWordPieceStencil class >> readOnly [
 { #category : #'api - instantiation' }
 AlbTextWordPieceStencil >> allEventHandlers [
 
-	"^ readOnly
+	
+	self flag: 'To Check if it works when a #beReadonlyWithSelection is followed by a #beEditable sent'.
+	^ readOnly
 		  ifTrue: [ self readOnlyWordPieceEventHandlers ]
-		  ifFalse: [ self editableWordPieceEventHandlers ]"
-	self flag: 'previous version does not work when a #beReadonlyWithSelection is followed by a #beEditable sent. This is the case in ToAlbumSkin>>enabledSkinEvent: and #disabledSkinEvent:'.
-	^ self editableWordPieceEventHandlers
+		  ifFalse: [ self editableWordPieceEventHandlers ]
+	"^ self editableWordPieceEventHandlers"
 ]
 
 { #category : #'api - instantiation' }

@@ -15,7 +15,6 @@ BaselineOfAlbum >> baseline: spec [
 			package: #Album with: [ spec requires: #( #Bloc ) ];
 			package: #'Album-Tests' with: [ spec requires: #( #Album ) ];
 			package: #'Album-Examples' with: [ spec requires: #( #'Album-Tests' ) ];
-			"package: #'Album-Brick-NU' with: [ spec requires: #( #Bloc ) ];"
 			package: #'Album-Alexandrie' with: [ spec requires: #( #'Album-Examples' ) ] ]
 ]
 
@@ -24,5 +23,5 @@ BaselineOfAlbum >> declareBlocOn: spec [
 
 	spec
 		baseline: 'Bloc'
-		with: [ spec repository: 'github://pharo-graphics/Bloc:master/src' ]
+		with: [ spec repository: 'github://pharo-graphics/Bloc:v2.3.0/src' ]
 ]

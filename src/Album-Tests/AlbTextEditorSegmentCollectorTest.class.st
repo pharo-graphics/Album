@@ -18,16 +18,16 @@ AlbTextEditorSegmentCollectorTest class >> fileName [
 
 { #category : #tests }
 AlbTextEditorSegmentCollectorTest class >> openEditor [
+
 	<script>
 	| ed file textEditor t |
 	file := self fileName asFileReference.
 	t := BlRopedText file: file.
-	textEditor := AlbTextEditor new text: t.
+	textEditor := AlbTextEditor new privateText: t.
 	textEditor segmentCollector cacheLimit: 60.
 	ed := AlbEditorElement new.
 	ed editor: textEditor.
-	ed openInOBlSpace 
-	
+	ed openInSpace
 ]
 
 { #category : #tests }

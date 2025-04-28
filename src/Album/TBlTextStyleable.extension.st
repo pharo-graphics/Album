@@ -71,6 +71,12 @@ TBlTextStyleable >> roundedBackground: aPaint [
 ]
 
 { #category : #'*Album' }
+TBlTextStyleable >> selectionForeground: aBlPaint [
+
+	self attributesBuilder attribute: (BlSelectedTextForegroundAttribute paint: aBlPaint)
+]
+
+{ #category : #'*Album' }
 TBlTextStyleable >> wordPadding: anInsets [
 	self attributesBuilder attribute: (AlbTextParagraphWordPaddingAttribute wordPadding: anInsets)
 ]

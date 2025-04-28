@@ -401,7 +401,7 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 	text := self embeddedFontsText.
 	child := text onAlbum.
 	root addChild: child.
-	root openInOBlSpace
+	root openInSpace
 ]
 
 { #category : #'editor examples' }

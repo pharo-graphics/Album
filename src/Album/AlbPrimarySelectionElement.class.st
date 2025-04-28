@@ -1,6 +1,9 @@
 Class {
 	#name : #AlbPrimarySelectionElement,
 	#superclass : #AlbAbstractSubtextElement,
+	#instVars : [
+		'selectedText'
+	],
 	#category : #'Album-UI-Text-Portion'
 }
 
@@ -58,5 +61,13 @@ AlbPrimarySelectionElement >> selectionRectangles [
 { #category : #initialization }
 AlbPrimarySelectionElement >> updateVertices [
 
-	self vertices: ( BlVerticesFromRectanglesOperator new verticesFromRectangles: self selectionRectangles )
+	self vertices:
+		(BlVerticesFromRectanglesOperator new verticesFromRectangles:
+			 self selectionRectangles).
+	self flag: 'Experimental selection foreground'.
+	selectedText asString = editorElement selectedText asString ifTrue: [ ^ self ].
+	selectedText := editorElement selectedText copy.
+	editorElement text clearAttributesOfClass: BlSelectedTextForegroundAttribute.
+	editorElement selectedText selectionForeground: Color white.
+	
 ]

@@ -323,8 +323,9 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 						                    in: self infiniteElement ].
 				                    theSegmentElements ]
 			                    ifAbsent: [
-				                    (eachSegmentPiece createElement:
-					                     self infiniteElement) asOrderedCollection ].
+				                    OrderedCollection with:
+					                    (eachSegmentPiece createElement:
+						                     self infiniteElement) ].
 
 		newPieceElements addAll: thePieceElements.
 		newPieceMap atPiece: eachSegmentPiece putElements: thePieceElements ].

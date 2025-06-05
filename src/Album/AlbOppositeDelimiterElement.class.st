@@ -39,7 +39,14 @@ AlbOppositeDelimiterElement >> initialize [
 	super initialize.
 	self geometry: self defaultGeometry.
 	self opacity: 0.
-	anim := ((BlOpacityAnimation new opacity: 1.6) duration: 300 milliSeconds).
+	anim := BlSequentialAnimation
+		        with:
+		        ((BlOpacityAnimation new opacity: 3.6) duration:
+			         300 milliSeconds)
+		        with:
+		        ((BlOpacityAnimation new opacity: 0.3) duration:
+			         300 milliSeconds).
+	anim onFinishedDo: [self border: Color orange].
 	self addAnimation: anim
 ]
 

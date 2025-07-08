@@ -21,7 +21,7 @@ AlbOppositeDelimiterUpdater >> closeOppositeDelimiter: oppositeTextElement at: l
 		        (1 @ 2 corner: 0 @ 2).
 	^ AlbOppositeDelimiterElement new
 		  position: bnds origin;
-		  size: bnds extent
+		  extent: bnds extent
 ]
 
 { #category : #'opposite delimiter' }
@@ -96,7 +96,7 @@ AlbOppositeDelimiterUpdater >> openOppositeDelimiter: oppositeTextElement at: lo
 		        (1 @ 2 corner: 0 @ 2).
 	^ AlbOppositeDelimiterElement new
 		  position: bnds origin;
-		  size: bnds extent
+		  extent: bnds extent
 ]
 
 { #category : #'event handling' }

@@ -34,13 +34,13 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleOver
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color blue ].
 	(aText from: 5 to: 9)
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color red ].
 
 	^ (AlbEditorElement new text: aText) openInOBlSpace 
@@ -57,12 +57,12 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleRepl
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color red ];
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color blue ].
 
 	^ aText onAlbum openInOBlSpace 
@@ -78,7 +78,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementA
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color gray ].
 
 	^ aText onAlbum openInOBlSpace 
@@ -95,7 +95,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementF
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color blue ].
 			
 	^ aText onAlbum openInOBlSpace 
@@ -112,7 +112,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementL
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color gray ].
 			
 	^ aText onAlbum openInOBlSpace 
@@ -129,7 +129,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementM
 		replacingAdornment: [
 			BlElement new
 				geometry: BlEllipseGeometry new;
-				size: 20@20;
+				extent: 20@20;
 				background: Color red ].
 
 	^ aText onAlbum openInOBlSpace 

@@ -24,7 +24,7 @@ AlbTextEmbellishmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditor
 	
 	^ {
 		aReplacementTextElement.
-		BlElement new size: 0@0
+		BlElement new extent: 0@0
 	}
 ]
 

@@ -64,7 +64,7 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttribute [
 			AlbTextAdornmentDynamicAttribute new 
 				stencil: [ 
 					BlElement new 
-						size: 70 @ 50; 
+						extent: 70 @ 50; 
 						margin: (BlInsets all: 5);
 						background: Color red ] }
 		from: 1
@@ -98,11 +98,11 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningTwoEle
 			AlbTextAdornmentDynamicAttribute new 
 				stencil: [ 
 					{ BlElement new 
-						size: 70 @ 50; 
+						extent: 70 @ 50; 
 						margin: (BlInsets all: 5);
 						background: Color red.
 					BlElement new 
-						size: 70 @ 50; 
+						extent: 70 @ 50; 
 						margin: (BlInsets all: 5);
 						background: Color green } ] }
 		from: 1
@@ -236,15 +236,24 @@ AlbTextEditorExamples class >> exampleMethodTextOpen [
 { #category : #examples }
 AlbTextEditorExamples class >> exampleMethodTextOpenEmbedElement [
 	<script>
-	| space editorElement |
 
+	| space editorElement |
 	editorElement := self elementWithMethod.
-	editorElement editor text attributes: {
-		BlFontSizeAttribute size: 18.
-	}.
-	editorElement editor text attributes: {
-		AlbTextAdornmentDynamicAttribute new stencil: [ BlElement new size: 70 @ 50; background: Color red; yourself ]
-	} from: 30 to: 30.
+
+	editorElement editor text
+		attributes: { BlFontSizeAttribute size: 18 }.
+
+	editorElement editor text
+		attributes: {
+			AlbTextAdornmentDynamicAttribute new
+				stencil: [
+					BlElement new
+						extent: 70 @ 50;
+						background: Color red;
+						yourself ];
+				yourself
+		} from: 30 to: 30.
+
 	editorElement constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
@@ -360,7 +369,7 @@ AlbTextEditorExamples class >> newBeReplaceTextAttribute [
 	^ AlbTextAdornmentDynamicAttribute new
 		beReplace;
 		stencil: [ BlElement new 
-			size: 10@10; 
+			extent: 10@10; 
 			background: Color lightGray ]
 ]
 
@@ -386,7 +395,7 @@ AlbTextEditorExamples class >> newElement [
 AlbTextEditorExamples class >> newMethodText [
 	<gtExample>
 	
-	^ (AlbTextEditorExamples class >> #fullDrawOn:) sourceCode asRopedText
+	^ (Integer >> #bitAnd:) sourceCode asRopedText
 ]
 
 { #category : #'instance creation' }

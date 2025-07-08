@@ -34,7 +34,7 @@ AlbTextReplacingAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 	
 	^ {
 		aReplacementTextElement.
-		BlElement new size: 0@0
+		BlElement new extent: 0@0
 	}
 ]
 

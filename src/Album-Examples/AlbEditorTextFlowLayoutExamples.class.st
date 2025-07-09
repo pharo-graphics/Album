@@ -16,7 +16,7 @@ AlbEditorTextFlowLayoutExamples >> container [
 			c vertical fitContent ];
 		addChildren: (20 timesCollect: [
 			BlElement new
-				size: 75@30;
+				extent: 75@30;
 				margin: (BlInsets all: 4);
 				background: (Color random alpha: 0.5) ]).
 			

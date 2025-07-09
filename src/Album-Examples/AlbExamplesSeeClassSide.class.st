@@ -365,10 +365,10 @@ broken in GlamorousToolKit but what to do with that ?
 		stencil: [  {  
 			BlElement new
 				background: (Color gray alpha: 0.4);
-				size: 20@100.
+				extent: 20@100.
 			BlElement new
 				background: (Color red alpha: 0.4);
-				size: 20@10. } ].
+				extent: 20@10. } ].
 
 	text := 'Hello >' asRopedText attribute: attribute.
 	ed := AlbEditorElement new "dresser: AlbTextAreaDresser new".
@@ -436,7 +436,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithReplacingAdornment [
 	aText := ('Hello' , String cr , 'World') asRopedText fontSize: 20.
 	(aText from: 4 to: 4) replacingAdornment: [
 		BlElement new
-			size: 20 @ 6;
+			extent: 20 @ 6;
 			background: Color red ].
 	ed := aText onAlbum.
 	ed withRowNumbers.

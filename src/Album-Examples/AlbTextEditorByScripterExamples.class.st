@@ -93,7 +93,7 @@ AlbTextEditorByScripterExamples class >> textWithAdornment [
 	^ 'Hello world
 Next line with ' asRopedText, ('adornment' asRopedText appendingAdornment: [
 	BlElement new
-		size: 200@100;
+		extent: 200@100;
 		background: (Color gray alpha: 0.2);
 		id: #adornment ]), ' element' asRopedText
 ]

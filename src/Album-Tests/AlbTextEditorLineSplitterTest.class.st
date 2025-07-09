@@ -10,7 +10,7 @@ AlbTextEditorLineSplitterTest >> beReplaceTextAttribute [
 	^ AlbTextAdornmentDynamicAttribute new
 		beReplace;
 		stencil: [ BlElement new 
-			size: 10@10; 
+			extent: 10@10; 
 			background: Color lightGray ]
 ]
 
@@ -29,10 +29,10 @@ AlbTextEditorLineSplitterTest >> beReplaceTextAttributeReturningTwoElements [
 		beReplace;
 		stencil: [ 
 			{ BlElement new 
-				size: 10@10; 
+				extent: 10@10; 
 				background: Color lightGray.
 			 BlElement new 
-				size: 10@10; 
+				extent: 10@10; 
 				background: Color gray } ]
 ]
 
@@ -455,7 +455,7 @@ AlbTextEditorLineSplitterTest >> test_split_HelloSpaceWorldWithReplacementOfSpac
 	| aText aSplitter aStream |
 
 	aText := ('Hello World') asRopedText.
-	(aText from: 5 to: 7) replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
+	(aText from: 5 to: 7) replacingAdornment: [ BlElement new extent: 6@6; background: Color red ].
 
 	aSplitter := self textLineSplitter.
 	aStream := self textSegmentStream.

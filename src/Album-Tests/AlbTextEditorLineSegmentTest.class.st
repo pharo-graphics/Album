@@ -807,7 +807,7 @@ AlbTextEditorLineSegmentTest >> test_emptyEditor [
 		equals: (0 to: 0).
 
 	aTextEditorElement := AlbEditorElement new.
-	aTextEditorElement size: 600 @ 600.
+	aTextEditorElement extent: 600 @ 600.
 	aTextEditorElement editor: aTextEditor.
 	aTextEditorElement forceLayout.
 
@@ -2522,7 +2522,7 @@ AlbTextEditorLineSegmentTest >> text_HelloCrWorldCr_WithAppendingAfterWorld [
 
 	aText := ('Hello', String cr, 'World', String cr) asRopedText fontSize: 20.
 	(aText from: 7 to: 11)
-		appendingAdornment: [ BlElement new size: 6@6; background: Color red ].
+		appendingAdornment: [ BlElement new extent: 6@6; background: Color red ].
 		
 	^ aText
 ]
@@ -2534,7 +2534,7 @@ AlbTextEditorLineSegmentTest >> text_HelloCrWorldCr_WithReplacementOfWorld [
 
 	aText := ('Hello', String cr, 'World', String cr) asRopedText fontSize: 20.
 	(aText from: 7 to: 11)
-		replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
+		replacingAdornment: [ BlElement new extent: 6@6; background: Color red ].
 		
 	^ aText
 ]
@@ -2546,7 +2546,7 @@ AlbTextEditorLineSegmentTest >> text_HelloCrWorld_WithReplacementAndAppendingOfW
 
 	aText := self text_HelloCrWorld_WithReplacementOfWorld.
 	(aText from: 7 to: 11)
-		appendingAdornment: [ BlElement new size: 6@6; background: Color blue ].
+		appendingAdornment: [ BlElement new extent: 6@6; background: Color blue ].
 		
 	^ aText
 ]
@@ -2558,7 +2558,7 @@ AlbTextEditorLineSegmentTest >> text_HelloCrWorld_WithReplacementOfWorld [
 
 	aText := ('Hello', String cr, 'World') asRopedText fontSize: 20.
 	(aText from: 7 to: 11)
-		replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
+		replacingAdornment: [ BlElement new extent: 6@6; background: Color red ].
 		
 	^ aText
 ]
@@ -2570,7 +2570,7 @@ AlbTextEditorLineSegmentTest >> text_HelloSpaceWorld_WithReplacementOfSpace [
 
 	aText := ('Hello World') asRopedText fontSize: 20.
 	(aText from: 6 to: 6)
-		replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
+		replacingAdornment: [ BlElement new extent: 6@6; background: Color red ].
 		
 	^ aText
 ]
@@ -2591,7 +2591,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_1_WithAppending [
 
 	aText appendingAdornment: [
 		BlElement new
-			size: 20@20;
+			extent: 20@20;
 			background: (Color gray alpha: 0.5);
 			geometry: BlEllipseGeometry new ].
 
@@ -2614,7 +2614,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_Smart_World_WithAppending [
 		bold;
 		appendingAdornment: [
 			BlElement new
-				size: 16@16;
+				extent: 16@16;
 				background: (Color black alpha: 0.5);
 				geometry: BlEllipseGeometry new ].
 	
@@ -2623,7 +2623,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_Smart_World_WithAppending [
 		bold;
 		appendingAdornment: [
 			BlElement new
-				size: 16@16;
+				extent: 16@16;
 				background: (Color gray alpha: 0.5);
 				geometry: BlEllipseGeometry new ].
 
@@ -2632,7 +2632,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_Smart_World_WithAppending [
 		bold;
 		appendingAdornment: [
 			BlElement new
-				size: 16@16;
+				extent: 16@16;
 				background: (Color lightGray alpha: 0.5);
 				geometry: BlEllipseGeometry new ].
 
@@ -2653,7 +2653,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_World_Cr_WithReplacement [
 
 	aText := ('Hello', String cr, String cr, 'World', String cr) asRopedText fontSize: 20.
 	(aText from: 8 to: 12)
-		replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
+		replacingAdornment: [ BlElement new extent: 6@6; background: Color red ].
 		
 	^ aText
 ]
@@ -2665,7 +2665,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementAndAppendingOfLi
 
 	aText := self text_Hello_World_WithReplacementOfLineBreak.
 	(aText from: 4 to: 8)
-		appendingAdornment: [ BlElement new size: 6@6; background: Color blue ].	
+		appendingAdornment: [ BlElement new extent: 6@6; background: Color blue ].	
 	
 	^ aText
 ]
@@ -2677,7 +2677,7 @@ AlbTextEditorLineSegmentTest >> text_Hello_World_WithReplacementOfLineBreak [
 
 	aText := ('Hello', String cr, 'World') asRopedText fontSize: 20.
 	(aText from: 4 to: 8)
-		replacingAdornment: [ BlElement new size: 6@6; background: Color red ].
+		replacingAdornment: [ BlElement new extent: 6@6; background: Color red ].
 		
 	^ aText
 ]

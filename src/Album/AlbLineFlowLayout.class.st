@@ -153,7 +153,7 @@ AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 	totalContentWidth := anElement padding width + lines totalWidth.
 	totalContentHeight := anElement padding height + lines totalHeight + (lines count - 1 * lineSpacing).
 
-	anElement measuredExtent: (anExtentSpec sizeFor: totalContentWidth @ totalContentHeight).
+	anElement measuredExtent: (anExtentSpec extentFor: totalContentWidth @ totalContentHeight).
 
 	"check the shouldFillLine setting"
 	textFlow := anElement constraints albumTextFlow.

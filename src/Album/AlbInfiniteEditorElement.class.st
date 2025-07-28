@@ -374,12 +374,6 @@ AlbInfiniteEditorElement >> navigator [
 	^ self editor navigator
 ]
 
-{ #category : #'hooks - geometry' }
-AlbInfiniteEditorElement >> onExtentChanged [
-	super onExtentChanged.
-	self geometryChanged	
-]
-
 { #category : #'focus accessing' }
 AlbInfiniteEditorElement >> onGotFocus [
 
@@ -399,13 +393,6 @@ AlbInfiniteEditorElement >> onLostFocus [
 
 	self editor onLostFocus.
 	self cursorElement onLostFocusIn: self
-]
-
-{ #category : #'hooks - scrolling' }
-AlbInfiniteEditorElement >> onScrolled: aPoint [
-	super onScrolled: aPoint.
-	self geometryChanged
-
 ]
 
 { #category : #'private - view accessing' }

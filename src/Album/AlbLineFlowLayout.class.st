@@ -25,7 +25,7 @@ AlbLineFlowLayout >> adaptLinesLastElementMeasureToFillLine: anElement [
 
 	lines do: [ :aLine | 
 		aLine lastElementDo: [ :theLastElement | 
-			(theLastElement isKindOf: BlTextElement) ifTrue: [ 
+			theLastElement isTextElement ifTrue: [ 
 				theLastElement measure: (BlExtentMeasurementSpec exact: theLastElement measuredExtent
 						 + ((anElement measuredWidth - aLine width max: 0.0) @ theLastElement padding height negated)) ] ] ]
 ]
@@ -140,7 +140,7 @@ AlbLineFlowLayout >> measure: anElement with: anExtentSpec [
 	"measure children and distribute them in lines"
 	aCurrentLine := lines.
 	anElement children accountedByLayout do: [ :aChildElement | 
-		(aChildElement isKindOf: BlTextElement) ifTrue: [ aChildElement textFlow offsetFromSegmentStart: measuredWidth ].
+		aChildElement isTextElement ifTrue: [ aChildElement textFlow offsetFromSegmentStart: measuredWidth ].
 		self measureChildWithMargins: aChildElement parentSpec: anExtentSpec.
 		measuredWidth := measuredWidth + aChildElement measuredWidth.
 		aCurrentLine := aCurrentLine add: aChildElement ].

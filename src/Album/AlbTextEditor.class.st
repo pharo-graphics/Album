@@ -510,7 +510,8 @@ AlbTextEditor >> onBindHolder: aSegmentHolder at: aPosition [
 	(aPosition = segmentCollector lastIndex and: [ segmentCollector end < segmentCollector text size ]) ifFalse: [ ^ self ].
 	previousLastIndex := segmentCollector lastIndex.
 	segmentCollector computeForwardAt: aPosition + 1.
-	self notifyItemsInserted: (aPosition + 1 to: aPosition + segmentCollector lastIndex - previousLastIndex)
+	self flag: 'The next commented expression causes an layout error. To be checked because removing it seems to be ok'.
+	"self notifyItemsInserted: (aPosition + 1 to: aPosition + segmentCollector lastIndex - previousLastIndex)"
 ]
 
 { #category : #'instance creation' }

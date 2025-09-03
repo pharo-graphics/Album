@@ -43,7 +43,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleOver
 				extent: 20@20;
 				background: Color red ].
 
-	^ (AlbEditorElement new text: aText) openInOBlSpace 
+	^ (AlbEditorElement new text: aText) openInSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -65,7 +65,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithMultipleRepl
 				extent: 20@20;
 				background: Color blue ].
 
-	^ aText onAlbum openInOBlSpace 
+	^ aText onAlbum openInSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -81,7 +81,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementA
 				extent: 20@20;
 				background: Color gray ].
 
-	^ aText onAlbum openInOBlSpace 
+	^ aText onAlbum openInSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -98,7 +98,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementF
 				extent: 20@20;
 				background: Color blue ].
 			
-	^ aText onAlbum openInOBlSpace 
+	^ aText onAlbum openInSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -115,7 +115,7 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementL
 				extent: 20@20;
 				background: Color gray ].
 			
-	^ aText onAlbum openInOBlSpace 
+	^ aText onAlbum openInSpace 
 ]
 
 { #category : #'examples - replacements' }
@@ -132,5 +132,5 @@ AlbTextEditorReplacingAdornmentsExamples class >> singleLineTextWithReplacementM
 				extent: 20@20;
 				background: Color red ].
 
-	^ aText onAlbum openInOBlSpace 
+	^ aText onAlbum openInSpace 
 ]

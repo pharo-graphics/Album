@@ -26,7 +26,7 @@ AlbTextEditorSegmentCollectorTest class >> openEditor [
 	textEditor segmentCollector cacheLimit: 60.
 	ed := AlbEditorElement new.
 	ed editor: textEditor.
-	ed openInOBlSpace 
+	ed openInSpace 
 	
 ]
 

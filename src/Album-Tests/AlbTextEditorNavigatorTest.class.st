@@ -11,7 +11,7 @@ AlbTextEditorNavigatorTest >> cursor_moveToNextWord_in_cursors_at_0 [
 	| anEditor theAddedEvents theMovedEvents theRemovedEvents |
 	
 	anEditor := self test_cursor_add_at_0_in_multi_lines.
-	anEditor openInOBlSpace.
+	anEditor openInSpace.
 	true ifTrue: [ ^self ].
 	theAddedEvents := OrderedCollection new.
 	theMovedEvents := OrderedCollection new.

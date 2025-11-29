@@ -1,12 +1,15 @@
 Class {
 	#name : #AlbEditorTextFlowLayoutExamples,
-	#superclass : #Object,
+	#superclass : #TestCase,
 	#category : #'Album-Examples-Layout'
 }
 
 { #category : #'instance creation' }
-AlbEditorTextFlowLayoutExamples >> container [
-	<gtExample>
+AlbEditorTextFlowLayoutExamples >> testContainer [
+	
+	<demo>
+	<sampleInstance>
+	
 	| anElement |
 	
 	anElement := BlElement new
@@ -24,24 +27,25 @@ AlbEditorTextFlowLayoutExamples >> container [
 ]
 
 { #category : #'examples - layout' }
-AlbEditorTextFlowLayoutExamples >> container_extent [
-	<gtExample>
+AlbEditorTextFlowLayoutExamples >> testContainerExtent [
+	<demo>
+	<sampleInstance>
+	
 	| aContainer |
-	
-	aContainer := self container.
+	aContainer := self testContainer.
 	aContainer forceLayout.
-	
 	self assert: aContainer extent equals: 500.0@182.0.
-	
 	^ aContainer
 ]
 
 { #category : #'examples - layout' }
-AlbEditorTextFlowLayoutExamples >> layout_no_memory_leak [
-	<gtExample>
+AlbEditorTextFlowLayoutExamples >> testLayoutNoMemoryLeak [
+	<demo>
+	<sampleInstance>
+	
 	| aContainer |
 	
-	aContainer := self container_extent.
+	aContainer := self testContainerExtent.
 	
 	self assert: aContainer layout hasLines.
 	self assert: aContainer layout hasElements.

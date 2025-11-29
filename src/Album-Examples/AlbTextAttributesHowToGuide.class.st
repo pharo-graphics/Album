@@ -57,7 +57,8 @@ AlbTextAttributesHowToGuide class >> hideMarkupInText [
 
 { #category : #examples }
 AlbTextAttributesHowToGuide class >> linkInText [
-	<script>
+	"Do not execute me blindly I loop forever. "
+	
 	| text |
 	text := 'You can click on this.' asRopedText.
 	(text from: 9 to: 13)

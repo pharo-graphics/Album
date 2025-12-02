@@ -46,15 +46,6 @@ TAlbTextEditorFixedMeasurerExamples >> editorFor: aText [
 	^ anEditor
 ]
 
-{ #category : #'private - instance creation' }
-TAlbTextEditorFixedMeasurerExamples >> fixedMeasurer [
-	^ BlSpartaTextElementMockedMeasurer new
-		ascent: self ascent;
-		descent: self descent;
-		glyphWidth: self glyphWidth;
-		glyphHeight: self glyphHeight
-]
-
 { #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> glyphHeight [
 	^ self ascent abs + self descent

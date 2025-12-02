@@ -121,7 +121,8 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 
 { #category : #'editor examples' }
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
-
+	<demo>
+	<sampleInstance>
 	| ed space text |
 	ed := AlbEditorElement new.
 	text := ('AB', String tab, String tab, 'CD') asRopedText.

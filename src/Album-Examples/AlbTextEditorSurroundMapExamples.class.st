@@ -1,12 +1,11 @@
 Class {
 	#name : #AlbTextEditorSurroundMapExamples,
-	#superclass : #Object,
+	#superclass : #TestCase,
 	#category : #'Album-Examples-Editor'
 }
 
 { #category : #examples }
 AlbTextEditorSurroundMapExamples >> surroundSet [
-	<gtExample>
 
 	| definitions |
 
@@ -20,16 +19,14 @@ AlbTextEditorSurroundMapExamples >> surroundSet [
 					closeCharacter: each second;
 					condition: each third ].
 	^ AlbTextEditorSurroundMap new
-		addDefinitions: definitions.
+		addDefinitions: definitions
 
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> surroundSetClosing [
-	<gtExample>
+AlbTextEditorSurroundMapExamples >> testSurroundSetClosing [
 
 	| opening |
-
 	opening := self surroundSet
 		openingFor: $' 
 		ifPresent: [ :def | def ] 
@@ -39,11 +36,9 @@ AlbTextEditorSurroundMapExamples >> surroundSetClosing [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> surroundSetClosingAbsent [
-	<gtExample>
+AlbTextEditorSurroundMapExamples >> testSurroundSetClosingAbsent [
 
 	| definition |
-
 	definition := self surroundSet
 		openingFor: $x
 		ifPresent: [ :def | def ] 
@@ -53,8 +48,7 @@ AlbTextEditorSurroundMapExamples >> surroundSetClosingAbsent [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> surroundSetOpeningAbsent [
-	<gtExample>
+AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningAbsent [
 
 	| definition |
 
@@ -68,11 +62,9 @@ AlbTextEditorSurroundMapExamples >> surroundSetOpeningAbsent [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> surroundSetOpeningConditionRejects [
-	<gtExample>
+AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningConditionRejects [
 
 	| definition |
-
 	definition := self surroundSet
 		closingFor: $"
 		in: self at: 0
@@ -83,9 +75,8 @@ AlbTextEditorSurroundMapExamples >> surroundSetOpeningConditionRejects [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> surroundSetOpeningPresent [
-	<gtExample>
-
+AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningPresent [
+	
 	| closing |
 
 	closing := self surroundSet

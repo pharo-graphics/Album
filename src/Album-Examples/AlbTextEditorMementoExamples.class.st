@@ -1,59 +1,45 @@
 Class {
 	#name : #AlbTextEditorMementoExamples,
-	#superclass : #Object,
+	#superclass : #TestCase,
 	#category : #'Album-Examples-Model'
 }
 
 { #category : #'examples - memento' }
-AlbTextEditorMementoExamples >> editorRestoreState [
-	<gtExample>
-	| aMemento aTextEditor |
-	
-	aMemento := self editorSaveState.
-	aTextEditor := self newTextEditor.
-	
-	aTextEditor restoreState: aMemento.
-	
-	^ aTextEditor
-]
-
-{ #category : #'examples - memento' }
 AlbTextEditorMementoExamples >> editorSaveState [
-	<gtExample>
+	
 	| aTextEditor aMemento |
 	
-	aTextEditor := self textEditorWithState.
+	aTextEditor := self testEditorWithState.
 	aMemento := aTextEditor saveState.
 	
 	^ aMemento
 ]
 
-{ #category : #'instance creation' }
-AlbTextEditorMementoExamples >> newTextEditor [
-	<gtExample>
-	| aTextEditor |
-
-	aTextEditor := AlbTextEditor new.
+{ #category : #'examples - memento' }
+AlbTextEditorMementoExamples >> testEditorRestoreState [
+	
+	| aMemento aTextEditor |
+	aMemento := self editorSaveState.
+	aTextEditor :=  AlbTextEditor new.
+	aTextEditor restoreState: aMemento.
 	^ aTextEditor
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorMementoExamples >> textEditorWithState [
-	<gtExample>
-	| aTextEditor |
+AlbTextEditorMementoExamples >> testEditorWithState [
 
-	aTextEditor := AlbTextEditor new
-		text: 'Hello world' asRopedText.
-	
+	| aTextEditor |
+	aTextEditor := AlbTextEditor new privateText: 'Hello world' asRopedText.
+
 	aTextEditor navigator
 		moveTo: 1;
 		moveTo: 9;
-		apply.	
+		apply.
 
 	aTextEditor selecter
 		from: 3 to: 8;
 		withoutCursorUpdate;
 		select.
-	
+
 	^ aTextEditor
 ]

@@ -36,7 +36,8 @@ AlbTextEditorTextMemento >> restoreStateOf: aTextEditor [
 
 { #category : #memento }
 AlbTextEditorTextMemento >> saveStateOf: aTextEditor [
-	text := aTextEditor text copy
+
+	text := aTextEditor privateText copy
 ]
 
 { #category : #accessing }

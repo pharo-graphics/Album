@@ -142,8 +142,8 @@ AlbTextEditorSegmentCollector >> cachedAt: anIndex [
 	"Return a cached segment at an absolute index within editor
 	(I must convert index from editor coordinates to my local cache coordinates)"
 	<return: #AlbTextEditorSegment>
+	
 	| aCachedIndex |
-
 	aCachedIndex := anIndex - segmentsInterval first + 1.
 	^ self segments at: aCachedIndex
 ]

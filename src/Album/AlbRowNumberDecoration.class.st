@@ -23,8 +23,8 @@ AlbRowNumberDecoration >> selectionLimitRectangleOf: anItemElement in: anInfinit
 	" Select lines with cursor or with an element at left which has a selection that start at 0 "
 	(anItemElement children
 		 select: [ :e | 
-			 (e isKindOf: BlTextElement) and: [ 
-				 e hasCursor or: [ e bounds inParent left isZero and: [ e selection isNotEmpty and: [ e selection from isZero ] ] ] ] ]
+			 e isTextElement and: [ 
+				 e hasCursor or: [ e selection isNotEmpty and: [ e selection from isZero and: [ e bounds inParent left isZero ] ] ] ] ]
 		 thenCollect: [ :e | e textFlow assignedLine ]) in: [ :l | 
 		l ifEmpty: [ ^ nil ].
 		^ 0 @ l first origin y corner: self computedBounds width - self gap @ (l last origin y + l last height) ]

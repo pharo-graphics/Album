@@ -89,7 +89,7 @@ AlbEditorElement >> initialize [
 
 	" the editor element must be over the front layer "
 	self next elevation: (BlRelativeElevation elevation: 2).
-	self frontLayer elevation: (BlRelativeElevation elevation: 1).
+	self frontLayer elevation: (BlRelativeElevation elevation: 3).
 
 	self setupPrimarySelectionElement.
 	self setupModeEventHandlers.

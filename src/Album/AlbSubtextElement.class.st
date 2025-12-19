@@ -61,7 +61,9 @@ AlbSubtextElement >> interval: anInterval [
 { #category : #initialization }
 AlbSubtextElement >> updateVertices [
 
+	editorElement whenLayoutedDoOnce: [ 
 	self vertices:
 		(BlVerticesFromRectanglesOperator new verticesFromRectangles:
-			 self computedAdjacentRectangles)
+			 self computedAdjacentRectangles) ].
+	editorElement requestLayout
 ]

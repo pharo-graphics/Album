@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #initialization }
+AlbEditableMode >> defaultBeneathLayerEventHandlers [
+
+	^ {  }
+]
+
+{ #category : #initialization }
 AlbEditableMode >> defaultEditorElementEventHandlers [
 
 	^ { 

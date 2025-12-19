@@ -433,7 +433,7 @@ AlbExamplesSeeClassSide class >> example_EditorWithSubtextElement [
 		deco := (AlbSubtextElement editorElement: ed)
 			        interval: (start to: start + size);
 			        yourself.
-		"deco addEventHandler: AlbSubtextElementEventHandler new."
+		deco addEventHandler: AlbSubtextElementEventHandler new.
 		deco addEventHandler: (BlEventHandler
 				 on: BlMouseEnterEvent
 				 do: [ :event |

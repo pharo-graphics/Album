@@ -15,10 +15,36 @@ Class {
 		'primarySelectionElementClass',
 		'primarySelectionElement',
 		'modeFrontLayerEventHandlers',
-		'modeRemanentSubtextEventHandlers'
+		'modeRemanentSubtextEventHandlers',
+		'beneathLayer',
+		'modeBeneathLayerEventHandlers'
 	],
 	#category : #'Album-UI'
 }
+
+{ #category : #accessing }
+AlbEditorElement >> beneathLayer [
+
+	^ beneathLayer
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultBeneathLayer [
+
+	| layer |
+	layer := BlElement new.
+	layer constraintsDo: [ :c | 
+		c horizontal matchParent.
+		c vertical matchParent ].
+	^ layer
+]
+
+{ #category : #initialization }
+AlbEditorElement >> defaultBeneathLayerEventHandlers [
+
+	^ self mode defaultBeneathLayerEventHandlers.
+
+]
 
 { #category : #initialization }
 AlbEditorElement >> defaultFrontLayer [
@@ -63,6 +89,8 @@ AlbEditorElement >> dispatchPrimarySelectionInvalidateEvent [
 
 	self withAllChildrenDo: [ :child | 
 		child dispatchEvent: AlbSubtextElementInvalidateEvent new ].
+	self beneathLayer childrenDo: [ :child | 
+		child dispatchEvent: AlbSubtextElementInvalidateEvent new ].
 	self frontLayer childrenDo: [ :child | 
 		child dispatchEvent: AlbSubtextElementInvalidateEvent new ]
 ]
@@ -83,13 +111,16 @@ AlbEditorElement >> initialize [
 	self next: self defaultInfiniteElement.
 	self setupTextEditor.
 
+	beneathLayer := self defaultBeneathLayer.
 	frontLayer := self defaultFrontLayer.
-	self addChild: frontLayer as: #frontLayer.
+	self addChild: beneathLayer as: #beneathLayer.
 	self addChild: self next as: #infiniteEditor.
+	self addChild: frontLayer as: #frontLayer.
 
 	" the editor element must be over the front layer "
 	self next elevation: (BlRelativeElevation elevation: 2).
 	self frontLayer elevation: (BlRelativeElevation elevation: 3).
+	self beneathLayer elevation: (BlRelativeElevation elevation: 1).
 
 	self setupPrimarySelectionElement.
 	self setupModeEventHandlers.
@@ -108,6 +139,12 @@ AlbEditorElement >> initialize [
 	self frontLayer addEventHandler: distributor.
 	self next addEventHandler: distributor.
 	self addEventHandler: distributor
+]
+
+{ #category : #initialization }
+AlbEditorElement >> modeBeneathLayerEventHandlersDo: aBlock [
+
+	modeBeneathLayerEventHandlers ifNotNil: [ modeBeneathLayerEventHandlers do: aBlock ] 
 ]
 
 { #category : #initialization }
@@ -178,9 +215,16 @@ AlbEditorElement >> setupModeEventHandlers [
 
 	self modeFrontLayerEventHandlersDo: [ :handler |
 		self frontLayer removeEventHandler: handler ].
+	self modeBeneathLayerEventHandlersDo: [ :handler |
+		self beneathLayer removeEventHandler: handler ].
 	modeFrontLayerEventHandlers := self defaultFrontLayerEventHandlers.
+	modeBeneathLayerEventHandlers := self defaultBeneathLayerEventHandlers.
 	self modeFrontLayerEventHandlersDo: [ :handler |
 		self frontLayer addEventHandler: (handler
+				 element: self infinite;
+				 yourself) ].
+	self modeBeneathLayerEventHandlersDo: [ :handler |
+		self beneathLayer addEventHandler: (handler
 				 element: self infinite;
 				 yourself) ].
 
@@ -196,7 +240,7 @@ AlbEditorElement >> setupPrimarySelectionElement [
 
 	primarySelectionElement ifNotNil: [ :pse | pse removeFromParent ].
 	primarySelectionElement := self newPrimarySelectionElement.
-	primarySelectionElement ifNotNil: [ :pse | self frontLayer addChild: pse ]
+	primarySelectionElement ifNotNil: [ :pse | self beneathLayer addChild: pse ]
 ]
 
 { #category : #initialization }

@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #initialization }
+AlbReadonlyWithSelectionMode >> defaultBeneathLayerEventHandlers [
+
+	^ {  }
+]
+
+{ #category : #initialization }
 AlbReadonlyWithSelectionMode >> defaultEditorElementEventHandlers [
 
 	^ { 

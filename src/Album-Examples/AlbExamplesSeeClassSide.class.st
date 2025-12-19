@@ -429,23 +429,18 @@ AlbExamplesSeeClassSide class >> example_EditorWithSubtextElement [
 	size := 10.
 	start := 10.
 	10 timesRepeat: [
-			| deco badge |
+			| deco  |
 			deco := (AlbSubtextElement editorElement: ed)
 				        interval: (start to: start + size);
 				        yourself.
+			deco background: (Color red alpha: 0.2).
 			deco addEventHandler: AlbSubtextElementEventHandler new.
 			deco addEventHandler: (BlEventHandler
 					 on: BlMouseEnterEvent
-					 do: [ :event | deco border: Color black ]).
+					 do: [ :event | deco border: Color red ]).
 			deco addEventHandler: (BlEventHandler
 					 on: BlMouseLeaveEvent
 					 do: [ :event | deco border: BlBorder empty ]).
-			badge := ToNumericalBadge new
-				         atBottomRight;
-				         count: start;
-				         overflowCount: 1000;
-				         yourself.
-			badge attachToElement: deco.
 			ed frontLayer addChild: deco.
 			start := start + size + 50 ].
 

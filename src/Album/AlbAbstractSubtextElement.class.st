@@ -57,4 +57,5 @@ AlbAbstractSubtextElement >> vertices [
 AlbAbstractSubtextElement >> vertices: aCollectionOfPoints [
 
 	self geometry: (self defaultGeometry vertices: aCollectionOfPoints).
+	self notifyPositionChanged
 ]

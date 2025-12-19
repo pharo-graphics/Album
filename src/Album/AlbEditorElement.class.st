@@ -33,6 +33,7 @@ AlbEditorElement >> defaultBeneathLayer [
 
 	| layer |
 	layer := BlElement new.
+	layer layout: BlBasicLayout new.
 	layer constraintsDo: [ :c | 
 		c horizontal matchParent.
 		c vertical matchParent ].
@@ -51,6 +52,7 @@ AlbEditorElement >> defaultFrontLayer [
 
 	| layer |
 	layer := BlElement new.
+	layer layout: BlBasicLayout new.
 	layer constraintsDo: [ :c | 
 		c horizontal matchParent.
 		c vertical matchParent ].

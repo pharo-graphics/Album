@@ -143,6 +143,15 @@ AlbEditorElement >> initialize [
 	self addEventHandler: distributor
 ]
 
+{ #category : #accessing }
+AlbEditorElement >> lineIndexAtTextIndex: aCharacterIndex [
+
+	self
+		atTextIndex: aCharacterIndex
+		do: [ :textElement :localPos | ^ textElement lineIndex ].
+	^ nil
+]
+
 { #category : #initialization }
 AlbEditorElement >> modeBeneathLayerEventHandlersDo: aBlock [
 

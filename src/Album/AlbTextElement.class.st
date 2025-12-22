@@ -109,6 +109,12 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 			context: aBlElementBoundsUpdateContext
 ]
 
+{ #category : #accessing }
+AlbTextElement >> lineIndex [ 
+
+	^ self parent holder position
+]
+
 { #category : #'private - paragraph' }
 AlbTextElement >> newTextParagraph [
 	"Create a text paragraph used to measure and render text"

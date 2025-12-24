@@ -141,6 +141,12 @@ TAlbInfiniteDecorator >> isEditable [
 	^ self next isEditable
 ]
 
+{ #category : #'t - infinite editor accessing' }
+TAlbInfiniteDecorator >> lineIndexAtTextIndex: aCharacterIndex [
+
+	^ self next lineIndexAtTextIndex: aCharacterIndex
+]
+
 { #category : #'t - infinite editor accessing - mode' }
 TAlbInfiniteDecorator >> mode [
 

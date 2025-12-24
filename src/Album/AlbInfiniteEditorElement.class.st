@@ -324,6 +324,15 @@ AlbInfiniteEditorElement >> layoutPositionsRange: anInterval [
 	self editor layoutPositionsRange: anInterval
 ]
 
+{ #category : #accessing }
+AlbInfiniteEditorElement >> lineIndexAtTextIndex: aCharacterIndex [
+
+	self
+		atTextIndex: aCharacterIndex
+		do: [ :textElement :localPos | ^ textElement lineIndex ].
+	^ nil
+]
+
 { #category : #'accessing - mode' }
 AlbInfiniteEditorElement >> mode [
 

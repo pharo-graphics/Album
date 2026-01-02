@@ -119,7 +119,7 @@ TAlbInfiniteDecorator >> infinite [
 { #category : #'t - infinite editor accessing' }
 TAlbInfiniteDecorator >> infiniteDo: aBlock [
 
-	aBlock value: self infinite
+	^ aBlock value: self infinite
 ]
 
 { #category : #'t - infinite editor accessing - editor' }

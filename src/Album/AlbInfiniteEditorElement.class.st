@@ -1,8 +1,6 @@
 Class {
 	#name : #AlbInfiniteEditorElement,
 	#superclass : #BlInfiniteElement,
-	#traits : 'TBlLayoutResizable',
-	#classTraits : 'TBlLayoutResizable classTrait',
 	#instVars : [
 		'mode',
 		'cursorElement',

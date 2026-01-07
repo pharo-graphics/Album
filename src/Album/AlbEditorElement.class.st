@@ -7,8 +7,8 @@ Text editing operations are driven by my data source (called textEditor). I also
 Class {
 	#name : #AlbEditorElement,
 	#superclass : #BlElement,
-	#traits : 'TAlbInfiniteDecorator + TBlLayoutResizable',
-	#classTraits : 'TAlbInfiniteDecorator classTrait + TBlLayoutResizable classTrait',
+	#traits : 'TAlbInfiniteDecorator',
+	#classTraits : 'TAlbInfiniteDecorator classTrait',
 	#instVars : [
 		'next',
 		'frontLayer',

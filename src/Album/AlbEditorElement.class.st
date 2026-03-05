@@ -33,6 +33,7 @@ AlbEditorElement >> defaultBeneathLayer [
 
 	| layer |
 	layer := BlElement new.
+	layer preventMouseEvents.
 	layer layout: BlBasicLayout new.
 	layer constraintsDo: [ :c | 
 		c horizontal matchParent.
@@ -52,6 +53,7 @@ AlbEditorElement >> defaultFrontLayer [
 
 	| layer |
 	layer := BlElement new.
+	layer preventMouseEvents.
 	layer layout: BlBasicLayout new.
 	layer constraintsDo: [ :c | 
 		c horizontal matchParent.

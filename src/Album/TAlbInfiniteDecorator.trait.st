@@ -180,6 +180,13 @@ TAlbInfiniteDecorator >> next: aDecoratorOrInfinite [
 	self explicitRequirement 
 ]
 
+{ #category : #'t - infinite editor accessing' }
+TAlbInfiniteDecorator >> primarySelectionElementClass: aClass [ 
+
+	self next primarySelectionElementClass: aClass 
+
+]
+
 { #category : #'t - infinite editor accessing - editor' }
 TAlbInfiniteDecorator >> removeEditorShortcut: aTextEditorInteraction [
 

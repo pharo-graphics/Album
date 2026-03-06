@@ -296,7 +296,7 @@ AlbTextEditorSegmentCollector >> computedSegmentsCount [
 AlbTextEditorSegmentCollector >> defaultCacheLimit [
 
 	"Arbitrary value "
-	^ 50
+	^ 5000
 ]
 
 { #category : #initialization }

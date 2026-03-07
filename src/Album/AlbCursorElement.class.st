@@ -19,7 +19,7 @@ AlbCursorElement >> beBlinking: aBoolean [
 { #category : #initialization }
 AlbCursorElement >> defaultBlinking [
 
-	^ true
+	^ false
 ]
 
 { #category : #initialization }

@@ -108,3 +108,22 @@ AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo3 [
 	self assert: editor privateText asString equals: 'X'.
 	^ editorElement
 ]
+
+{ #category : #tests }
+AlbTextEditorHistoryTest >> test_replace_text_from_inserted_event [
+
+	| editorElement editor |
+	editorElement := '' asRopedText onAlbum.
+	editor := editorElement editor.
+	editor addEventHandler: (BlEventHandler
+		on: AlbTextInsertedEvent
+		do: [ :evt |
+			editorElement text: (String new: evt text size withAll: $*) asRopedText ]).
+
+	editor inserter
+		at: 0;
+		string: 'A';
+		insert.
+
+	self assert: editor privateText asString equals: '*'
+]

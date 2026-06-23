@@ -62,11 +62,11 @@ AlbTextEditorHistory >> groupDuring: aBlock [
 		shouldGroup := wasGrouped.
 		shouldGroup ifFalse: [
 			currentGroup commands
-				ifEmpty: [ undoCommands remove: currentGroup ]
+				ifEmpty: [ undoCommands remove: currentGroup ifAbsent: [ ] ]
 				ifNotEmpty: [ :theCommands |
 					theCommands size = 1
 						ifTrue: [
-							undoCommands remove: currentGroup.
+							undoCommands remove: currentGroup ifAbsent: [ ].
 							undoCommands addAll: theCommands ] ] ] ]
 ]
 

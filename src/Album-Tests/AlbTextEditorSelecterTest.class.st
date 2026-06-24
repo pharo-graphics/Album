@@ -49,12 +49,12 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 		select.
 
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: self multilineText size).
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: self multilineText size).
+	self assert: anEditor cursor position equals: self multilineText size.
 
 	anEditorElement text: 'hello'.
 
 	self assert: anEditor selection isEmpty.
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0.
 	
 	anEditor selecter
 		all
@@ -63,7 +63,7 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 	anEditorElement text: 'hi'.
 
 	self assert: anEditor selection isEmpty.
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0
 ]
 
 { #category : #'from to' }
@@ -79,7 +79,7 @@ AlbTextEditorSelecterTest >> test_select_from_0_to_5 [
 		select.
 		
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 5).
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 5).
+	self assert: anEditor cursor position equals: 5
 ]
 
 { #category : #'from to' }
@@ -103,7 +103,7 @@ AlbTextEditorSelecterTest >> test_select_from_0_to_5_in_steps [
 		select.
 
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 5).
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 5).
+	self assert: anEditor cursor position equals: 5
 ]
 
 { #category : #move }
@@ -123,7 +123,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 		assert: anEditor selection allSelections
 		equals: { BlSelection from: 6 to: 12 }.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 12).
+	self assert: anEditor cursor position equals: 12
 ]
 
 { #category : #move }
@@ -146,7 +146,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6_thenUp [
 	self 
 		assert: anEditor selection isEmpty.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 6).
+	self assert: anEditor cursor position equals: 6
 ]
 
 { #category : #move }
@@ -164,7 +164,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_0 [
 		assert: anEditor selectedText asString 
 		equals: ''.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0
 ]
 
 { #category : #move }
@@ -186,7 +186,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4 [
 	self 
 		assert: anEditor selectedText asString 
 		equals: 'u'.
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 3).
+	self assert: anEditor cursor position equals: 3.
 
 	
 	^ anEditor
@@ -230,7 +230,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6 [
 		assert: anEditor selectedText asString 
 		equals: 'e'.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 7).
+	self assert: anEditor cursor position equals: 7.
 	
 	^ anEditor
 ]
@@ -253,7 +253,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd [
 		assert: anEditor selectedText asString 
 		equals: 'er'.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 8).
+	self assert: anEditor cursor position equals: 8.
 
 	^ anEditor
 ]
@@ -275,7 +275,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd_t
 		assert: anEditor selectedText asString 
 		equals: 'er river'.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 14).
+	self assert: anEditor cursor position equals: 14
 ]
 
 { #category : #move }
@@ -295,7 +295,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordS
 		assert: anEditor selectedText asString 
 		equals: 'summ'.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 2).
+	self assert: anEditor cursor position equals: 2.
 	
 	^ anEditor
 ]
@@ -317,7 +317,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordS
 		assert: anEditor selectedText asString 
 		equals: 'A summ'.
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0
 ]
 
 { #category : #move }
@@ -334,7 +334,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_End [
 	self 
 		assert: anEditor selectedText asString 
 		equals: ''.
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: anEditor text size ).
+	self assert: anEditor cursor position equals: anEditor text size
 ]
 
 { #category : #move }
@@ -354,7 +354,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 6 to: 35).
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 6).
+	self assert: anEditor cursor position equals: 6.
 	
 	^ anEditor
 ]
@@ -371,7 +371,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35_thenDown [
 
 	self assert: anEditor selection isEmpty.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 35).
+	self assert: anEditor cursor position equals: 35
 ]
 
 { #category : #move }
@@ -399,7 +399,7 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceLeft_at_1 [
 	self 
 		assert: anEditor selectedText asString 
 		equals: 'A'.
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0
 ]
 
 { #category : #move }
@@ -424,7 +424,7 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceRight_at_End [
 		assert: anEditor selectedText asString 
 		equals: '.'.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: anEditor text size ).
+	self assert: anEditor cursor position equals: anEditor text size
 ]
 
 { #category : #word }
@@ -441,7 +441,7 @@ AlbTextEditorSelecterTest >> test_select_word_at_0 [
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 1).
 	self assert: anEditor selectedText asString equals: 'A'.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 1).
+	self assert: anEditor cursor position equals: 1
 ]
 
 { #category : #word }
@@ -458,7 +458,7 @@ AlbTextEditorSelecterTest >> test_select_word_at_1 [
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 1).
 	self assert: anEditor selectedText asString equals: 'A'.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 1).
+	self assert: anEditor cursor position equals: 1
 ]
 
 { #category : #word }
@@ -475,7 +475,7 @@ AlbTextEditorSelecterTest >> test_select_word_at_2 [
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 2 to: 8).
 	self assert: anEditor selectedText asString equals: 'summer'.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 8).
+	self assert: anEditor cursor position equals: 8
 ]
 
 { #category : #word }
@@ -493,5 +493,5 @@ AlbTextEditorSelecterTest >> test_select_word_at_2_and_10 [
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 2 to: 8; select: 9 to: 14).
 	self assert: anEditor selectedText asString equals: 'summer river'.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 14).
+	self assert: anEditor cursor position equals: 14
 ]

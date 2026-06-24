@@ -922,9 +922,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_half_in_multiline 
 		apply;
 		unsubscribe.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0.
 
-	self assert: theMovedEvents isEmpty.
+	self assert: theMovedEvents isEmpty
 ]
 
 { #category : #'move to screen' }
@@ -943,9 +943,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_in_multiline [
 		apply;
 		unsubscribe.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0.
 	
-	self assert: theMovedEvents isEmpty.
+	self assert: theMovedEvents isEmpty
 ]
 
 { #category : #'move to screen' }
@@ -964,9 +964,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_middle_in_multiline [
 		apply;
 		unsubscribe.
 		
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
+	self assert: anEditor cursor position equals: 0.
 	
-	self assert: theMovedEvents isEmpty.
+	self assert: theMovedEvents isEmpty
 ]
 
 { #category : #'move to screen' }
@@ -986,12 +986,12 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_multiline
 		apply;
 		unsubscribe.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 1).
+	self assert: anEditor cursor position equals: 1.
 
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 1).
 	self assert: theMovedEvents first oldIndex equals: 0.
-	self assert: theMovedEvents first newIndex equals: 1.
+	self assert: theMovedEvents first newIndex equals: 1
 ]
 
 { #category : #'move to screen' }
@@ -1010,12 +1010,12 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_41_right_in_multiline [
 		apply;
 		unsubscribe.
 
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 41).
+	self assert: anEditor cursor position equals: 41.
 
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 41).
 	self assert: theMovedEvents first oldIndex equals: 0.
-	self assert: theMovedEvents first newIndex equals: 41.
+	self assert: theMovedEvents first newIndex equals: 41
 ]
 
 { #category : #'move to' }

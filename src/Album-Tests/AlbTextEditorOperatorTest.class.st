@@ -23,22 +23,12 @@ AlbTextEditorOperatorTest >> editorFor: aText [
 
 	anEditor := AlbEditorElement new.
 	anEditor padding: BlInsets empty.
-	anEditor fitContent.
+	anEditor exact: 1000@1000.
+	anEditor
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
 	anEditor text: aRopedText.
 	
-"	BlDevCrossover on: anEditor.
-	
-	anEditor editor
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencilBuilder editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-			aTextElement ].
-	
-"	anEditor requestFocus.
 	anEditor forceLayout.
 
 	^ anEditor

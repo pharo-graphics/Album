@@ -19,27 +19,22 @@ AlbTextEditorSelecterTest >> test_select_all_in_empty [
 ]
 
 { #category : #all }
-AlbTextEditorSelecterTest >> test_select_all_in_empty_with_curor [
+AlbTextEditorSelecterTest >> test_select_all_in_empty_with_cursor [
 	
 	| anEditor |
-
 	anEditor := self test_editorOnEmptyText.
 
 	anEditor navigator
 		addAt: 0;
 		apply.
 	
-	self assert: anEditor cursors isNotEmpty.
-	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 0 }.
+	self assert: anEditor cursor position equals: 0.
 	self assert: anEditor selection isEmpty.
 
 	anEditor selecter all select.
 
-	self assert: anEditor cursors isNotEmpty.
-	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 0 }.
-	self assert: anEditor selection isEmpty.
-
-	^ anEditor
+	self assert: anEditor cursor position equals: 0.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #all }

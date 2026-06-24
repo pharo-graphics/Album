@@ -200,11 +200,12 @@ AlbTextEditorNavigator >> privateMoveCursor: aCursor to: aTextIndex [
 	self selection ifEmpty: [ self notifyCursorAdded: aCursor ].
 
 	"now tell everyone interested that the cursor has moved"
-	editor dispatchEvent: (AlbCursorMovedEvent
+	prevIndex ~= aCursor position ifTrue: [
+		editor dispatchEvent: (AlbCursorMovedEvent
 			 cursor: aCursor
 			 from: prevIndex
 			 to: aCursor position
-			 dueTo: (dueTo ifNil: [ self ]))
+			 dueTo: (dueTo ifNil: [ self ])) ]
 ]
 
 { #category : #'private - accessing' }

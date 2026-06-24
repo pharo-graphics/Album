@@ -1224,7 +1224,7 @@ AlbTextEditorNavigatorTest >> test_cursor_move_from_1_to_2_does_not_rebuild_edit
 
 	anEditor := self test_cursor_add_at_1_does_not_rebuild_editor.
 
-	thePreviousSegments := anEditor children
+	thePreviousSegments := anEditor infinite children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: thePreviousSegments size equals: 11.
 
@@ -1237,9 +1237,9 @@ AlbTextEditorNavigatorTest >> test_cursor_move_from_1_to_2_does_not_rebuild_edit
 
 	anEditor forceLayout.
 
-	self assert: anEditor cursors equals: { AlbTextEditorSingleCursor new position: 2 }.
+	self assert: anEditor cursor position equals: 2.
 	
-	theNewSegments := anEditor children
+	theNewSegments := anEditor infinite children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: theNewSegments size equals: 11.
 	
@@ -1247,7 +1247,5 @@ AlbTextEditorNavigatorTest >> test_cursor_move_from_1_to_2_does_not_rebuild_edit
 	self assert: theNewTextPieces size equals: 63.
 	
 	self assert: thePreviousSegments equals: theNewSegments.
-	self assert: thePreviousTextPieces equals: theNewTextPieces.
-	
-	^ anEditor
+	self assert: thePreviousTextPieces equals: theNewTextPieces
 ]

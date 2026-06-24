@@ -1,8 +1,6 @@
 "
 I'm an infinite element for text viewing and editing. I support scrolling, selection and other classical text editing features.
 Text editing operations are driven by my data source (called textEditor). I also own a view model (viewModel) that serve as an interface for clients applicative model (such as a browser as an example).
-
-
 "
 Class {
 	#name : #AlbEditorElement,

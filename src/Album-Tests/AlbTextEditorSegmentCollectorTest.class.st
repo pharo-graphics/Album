@@ -251,7 +251,7 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile4_cacheLimit50 [
 { #category : #accessing }
 AlbTextEditorSegmentCollectorTest >> textEditorWithCacheLimit: anInteger [
 
-	textEditor := AlbTextEditor new privateText: self fileRope.
+	textEditor := AlbTextEditor new text: self fileRope.
 	textEditor segmentCollector cacheLimit: anInteger.
 
 	^ textEditor

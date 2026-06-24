@@ -166,10 +166,10 @@ AlbTextEditorDeleter >> privateDelete: aFromTextIndex to: aToTextIndex [
 
 	| aCommand |
 	self
-		assert: [ aFromTextIndex >= 0 and: [ aFromTextIndex <= self editor privateText size ] ]
+		assert: [ aFromTextIndex >= 0 and: [ aFromTextIndex <= self editor text size ] ]
 		description: [ 'From deletion index must be within interval [0... text size]' ].
 	self
-		assert: [ aToTextIndex >= 0 and: [ aToTextIndex <= self editor privateText size ] ]
+		assert: [ aToTextIndex >= 0 and: [ aToTextIndex <= self editor text size ] ]
 		description: [ 'To deletion index must be within interval [0... text size]' ].
 	self assert: [ aToTextIndex >= aFromTextIndex ] description: [ 'To index must be greater or equal from index' ].
 

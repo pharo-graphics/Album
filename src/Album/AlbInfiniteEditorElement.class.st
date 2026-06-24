@@ -532,14 +532,14 @@ AlbInfiniteEditorElement >> text [
 	"Return a text I work with. All modifications to a text must be done from UI thread"
 	<return: #BlText>
 
-	^ self editor privateText
+	^ self editor text
 ]
 
 { #category : #'accessing - text' }
 AlbInfiniteEditorElement >> text: aText [
 
-	aText == self editor privateText ifTrue: [ ^ self ].
-	self editor privateText: aText asRopedText
+	aText == self editor text ifTrue: [ ^ self ].
+	self editor text: aText asRopedText
 ]
 
 { #category : #'api - editor' }

@@ -287,13 +287,14 @@ AlbTextEditor >> hasSelection [
 
 { #category : #accessing }
 AlbTextEditor >> history [
-	<return: #AlbTextEditorHistory>
+	"Return my `AlbTextEditorHistory`"
 	
 	^ history
 ]
 
 { #category : #accessing }
 AlbTextEditor >> history: aTextEditorHistory [
+
 	history := aTextEditorHistory
 ]
 
@@ -301,21 +302,18 @@ AlbTextEditor >> history: aTextEditorHistory [
 AlbTextEditor >> initialize [
 
 	super initialize.
-	
+
 	hasEventHandlerAttribute := false.
 	filter := AlbTextEditorNoInputFilter new.
 	cursor := self defaultCursor.
 	selection := self defaultSelection.
-	selectionRecorder := self defaultSelectionRecorder.		
+	selectionRecorder := self defaultSelectionRecorder.
 	shortcuts := AlbTextEditorShortcuts new.
 	history := AlbTextEditorHistory new.
-	
+
 	isFocused := false.
-	
-	self privateText: self defaultText.
 
-
-
+	self text: self defaultText
 ]
 
 { #category : #initialization }
@@ -329,7 +327,7 @@ AlbTextEditor >> initializeText: aText [
 
 { #category : #'api - filter' }
 AlbTextEditor >> inputFilter [
-	<return: #AlbTextEditorInputFilter>
+	"Answer my `AlbTextEditorInputFilter`"
 
 	^ filter
 ]
@@ -359,7 +357,6 @@ AlbTextEditor >> inserter [
 
 { #category : #accessing }
 AlbTextEditor >> isFocused [
-	<return: #Boolean>
 
 	^ isFocused
 ]
@@ -567,12 +564,12 @@ AlbTextEditor >> onShortcutRemoved: aShortcut [
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
-
 	"Is sent after a few strings (or one) are inserted in a text model"
 
 	aBlTextStringsInserted strings
 		with: aBlTextStringsInserted finalIndices
-		do: [ :aString :anIndex | self segmentCollector insertedString: aString at: anIndex in: self ].
+		do: [ :aString :anIndex |
+			self segmentCollector insertedString: aString at: anIndex in: self ].
 
 	history
 		insertedStrings: aBlTextStringsInserted strings
@@ -581,9 +578,10 @@ AlbTextEditor >> onStringsInserted: aBlTextStringsInserted [
 
 	aBlTextStringsInserted strings
 		with: aBlTextStringsInserted finalIndices
-		do: [ :aString :anIndex | self notifyInserted: aString asRopedText at: anIndex ].
+		do: [ :aString :anIndex |
+			self notifyInserted: aString asRopedText at: anIndex ].
 
-	self notifyTextEdited: self privateText
+	self notifyTextEdited: self text
 ]
 
 { #category : #'hooks - text modifications' }
@@ -618,31 +616,34 @@ AlbTextEditor >> onTextAttributesRemoved: aBlTextAttributesRemoved [
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextReplaced [
-
 	"Is sent after a text instance is replaced with a new one"
 
 	self processCursorAttributes.
-	self notifyTextReplaced: self privateText
+	self notifyTextReplaced: self text
 ]
 
 { #category : #'hooks - text modifications' }
 AlbTextEditor >> onTextsDeleted: aBlTextsDeleted [
-
 	"Is sent after a piece of text was deleted in a text model"
 
-	aBlTextsDeleted finalIntervals do: [ :eachInterval | 
-		self segmentCollector deletedFrom: eachInterval first to: eachInterval last in: self ].
+	aBlTextsDeleted finalIntervals do: [ :eachInterval |
+			self segmentCollector
+				deletedFrom: eachInterval first
+				to: eachInterval last
+				in: self ].
 
 	history
-		deletedTexts: (aBlTextsDeleted texts collect: [ :eachText | eachText copyWithoutExternalReferences ])
+		deletedTexts: (aBlTextsDeleted texts collect: [ :eachText |
+				 eachText copyWithoutExternalReferences ])
 		undo: (aBlTextsDeleted finalIntervals collect: #first)
 		redo: (aBlTextsDeleted requestedIntervals collect: #first).
 	"text attributes may reference objects such as computation results in the editor and therefore we
 		should remove such attributes"
 
-	aBlTextsDeleted finalIntervals do: [ :eachInterval | self notifyDeletedFrom: eachInterval first to: eachInterval last ].
+	aBlTextsDeleted finalIntervals do: [ :eachInterval |
+		self notifyDeletedFrom: eachInterval first to: eachInterval last ].
 
-	self notifyTextEdited: self privateText
+	self notifyTextEdited: self text
 ]
 
 { #category : #'text - copy/paste' }
@@ -668,23 +669,22 @@ AlbTextEditor >> prepareSelection [
 
 { #category : #accessing }
 AlbTextEditor >> privateText [
-	"Return a current text in the text editor. All modification to the text
-	are reflected in the UI of the editor. For this reason I must only be
-	used from a UI thread. To access a text from a non-UI thread use #textSnapshot
-	which would give a copy of the current text."
-	
-	<return: #BlText>
-	
-	^ text
+	self
+		deprecated: 'Please use text instead.'
+		transformWith:
+			'`@receiver privateText'
+				-> '`@receiver text'.
+	^ self text
 ]
 
 { #category : #accessing }
 AlbTextEditor >> privateText: aText [ 
-
-	text == aText ifTrue: [ ^ self ].
-	"when reducing the text size we should update the selection and cursor positions"
-	text ifNotNil: [ self selectNone ].
-	self restoreText: aText
+	self
+		deprecated: 'Please use text: instead.'
+		transformWith:
+			'`@receiver privateText: `@statements1'
+				-> '`@receiver text: `@statements1'.
+	self text: aText
 ]
 
 { #category : #'private - cursor' }
@@ -868,8 +868,9 @@ AlbTextEditor >> selectedText [
 
 	<return: #BlText>
 	^ self hasSelection
-		  ifTrue: [ self privateText from: self selection from + 1 to: self selection to ]
-		  ifFalse: [ self privateText from: 1 to: 0]
+		  ifTrue: [
+		  self text from: self selection from + 1 to: self selection to ]
+		  ifFalse: [ self text from: 1 to: 0 ]
 ]
 
 { #category : #'api - modification' }
@@ -934,24 +935,16 @@ AlbTextEditor >> text [
 	which would give a copy of the current text"
 	<return: #BlText>
 	
-	self
-		deprecated: 'Please use privateText instead.'
-		transformWith:
-			'`@receiver text'
-				-> '`@receiver privateText'.
 	^ text
 ]
 
 { #category : #accessing }
 AlbTextEditor >> text: aText [ 
 
-	self
-		deprecated: 'Please use privateText: instead.'
-		transformWith:
-			'`@receiver text: `@statements1'
-				-> '`@receiver privateText: `@statements1'.
-
-	self privateText: aText
+	text == aText ifTrue: [ ^ self ].
+	"when reducing the text size we should update the selection and cursor positions"
+	text ifNotNil: [ self selectNone ].
+	self restoreText: aText
 ]
 
 { #category : #accessing }

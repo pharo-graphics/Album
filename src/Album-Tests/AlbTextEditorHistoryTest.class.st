@@ -14,9 +14,9 @@ AlbTextEditorHistoryTest >> test_insert_one_char_and_undo [
 		at: 0;
 		string: 'A';
 		insert.
-	self assert: editor privateText asString equals: 'A'.
+	self assert: editor text asString equals: 'A'.
 	editor undo.
-	self assert: editor privateText asString equals: ''.
+	self assert: editor text asString equals: ''.
 	^ editorElement
 ]
 
@@ -32,7 +32,7 @@ AlbTextEditorHistoryTest >> test_insert_one_char_and_undo_then_redo [
 		insert.
 	editor undo.
 	editor redo.
-	self assert: editor privateText asString equals: 'A'.
+	self assert: editor text asString equals: 'A'.
 	^ editorElement
 ]
 
@@ -54,9 +54,9 @@ AlbTextEditorHistoryTest >> test_insert_open_close_parentheses_with_selection_an
 		surroundings:
 			(AlbTextEditorSurroundMap newFromArray: { '('. ')'. nil });
 		insert.
-	self assert: editor privateText asString equals: '(abc)'.
+	self assert: editor text asString equals: '(abc)'.
 	editor undo.
-	self assert: editor privateText asString equals: 'abc'.
+	self assert: editor text asString equals: 'abc'.
 	^ editorElement
 ]
 
@@ -67,7 +67,7 @@ AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo2 [
 	s := 'to be selected and removed'.
 	editorElement := s asRopedText onAlbum.
 	editor := editorElement editor.
-	self assert: editor privateText asString equals: s.
+	self assert: editor text asString equals: s.
 	editor selecter
 		all;
 		select.
@@ -75,11 +75,11 @@ AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo2 [
 		selected;
 		delete.
 
-	self assert: editor privateText asString equals: ''.
+	self assert: editor text asString equals: ''.
 	editor undo.
-	self assert: editor privateText asString equals: s.
+	self assert: editor text asString equals: s.
 	editor redo.
-	self assert: editor privateText asString equals: ''.
+	self assert: editor text asString equals: ''.
 	^ editorElement
 ]
 
@@ -90,22 +90,22 @@ AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo3 [
 	s := 'to be selected and removed'.
 	editorElement := s asRopedText onAlbum.
 	editor := editorElement editor.
-	self assert: editor privateText asString equals: s.
+	self assert: editor text asString equals: s.
 	editor selecter
 		all;
 		select.
 	editor inserter
 		string: 'X';
 		insert.
-	self assert: editor privateText asString equals: 'X'.
+	self assert: editor text asString equals: 'X'.
 	editor undo.
-	self assert: editor privateText isEmpty.
+	self assert: editor text isEmpty.
 	editor undo.
-	self assert: editor privateText asString equals: s.
+	self assert: editor text asString equals: s.
 	editor redo.
-	self assert: editor privateText isEmpty.
+	self assert: editor text isEmpty.
 	editor redo.
-	self assert: editor privateText asString equals: 'X'.
+	self assert: editor text asString equals: 'X'.
 	^ editorElement
 ]
 
@@ -125,5 +125,5 @@ AlbTextEditorHistoryTest >> test_replace_text_from_inserted_event [
 		string: 'A';
 		insert.
 
-	self assert: editor privateText asString equals: '*'
+	self assert: editor text asString equals: '*'
 ]

@@ -790,8 +790,8 @@ AlbTextEditorInserterTest >> test_insert_open_close_parentheses_with_selection_a
 		surroundings:
 			(AlbTextEditorSurroundMap newFromArray: { '('. ')'. nil });
 		insert.
-	self assert: editor privateText asString equals: '(abc)'.
+	self assert: editor text asString equals: '(abc)'.
 	editor undo.
-	self assert: editor privateText asString equals: 'abc'.
+	self assert: editor text asString equals: 'abc'.
 	^ editorElement
 ]

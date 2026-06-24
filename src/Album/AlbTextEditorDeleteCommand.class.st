@@ -11,7 +11,7 @@ Class {
 { #category : #executing }
 AlbTextEditorDeleteCommand >> executeOn: aTextEditor [
 
-	aTextEditor privateText delete: (self fromIndex + 1 min: self toIndex) to: self toIndex
+	aTextEditor text delete: (self fromIndex + 1 min: self toIndex) to: self toIndex
 ]
 
 { #category : #accessing }

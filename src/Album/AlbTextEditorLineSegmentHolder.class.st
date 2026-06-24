@@ -119,7 +119,7 @@ AlbTextEditorLineSegmentHolder >> explicitScreenToCursor: aTransformation [
 
 	"if location is below the last segment then the index is text size"
 	((segment isLastIn: self editor) and: [ aTransformedScreenPosition y > aBoundsInEditor bottom ]) ifTrue: [ 
-		^ aTransformation transformed: self editor privateText size ].
+		^ aTransformation transformed: self editor text size ].
 
 	"not in this segment, ignoring"
 	(aTransformedScreenPosition y between: aBoundsInEditor top and: aBoundsInEditor bottom) ifFalse: [ ^ self ].

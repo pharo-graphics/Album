@@ -44,7 +44,8 @@ AlbTextEditorSelecterTest >> test_select_all_in_empty_with_curor [
 
 { #category : #all }
 AlbTextEditorSelecterTest >> test_select_all_reduced [
-	"There was a bug, that if a new text is smaller than the existing selection, then things can go wrong"
+	"There was a bug, that if a new text is smaller than the existing selection, then things can go wrong.
+	Now, replacing the text clears the selection completely and resets the cursor to 0."
 	
 	| anEditor |
 
@@ -58,8 +59,8 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 
 	anEditor text: 'hello'.
 
-	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 5).
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 5 ).
+	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
 	
 	anEditor selecter
 		all
@@ -67,8 +68,8 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 
 	anEditor text: 'hi'.
 
-	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 2).
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 2 ).
+	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
 
 	^ anEditor
 ]

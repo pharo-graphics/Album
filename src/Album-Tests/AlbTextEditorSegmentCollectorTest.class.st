@@ -13,21 +13,20 @@ Class {
 
 { #category : #tests }
 AlbTextEditorSegmentCollectorTest class >> fileName [
-	^ 'AlbumTestFile.txt' 
+
+	^ 'AlbumTestFile.txt'
 ]
 
 { #category : #tests }
 AlbTextEditorSegmentCollectorTest class >> openEditor [
 	<script>
-	| ed file textEditor t |
+
+	| editorElement file |
 	file := self fileName asFileReference.
-	t := BlRopedText file: file.
-	textEditor := AlbTextEditor new text: t.
-	textEditor segmentCollector cacheLimit: 60.
-	ed := AlbEditorElement new.
-	ed editor: textEditor.
-	ed openInSpace 
-	
+	editorElement := AlbEditorElement new.
+	editorElement text: (BlRopedText file: file).
+	editorElement editor segmentCollector cacheLimit: 60.
+	editorElement openInSpace 
 ]
 
 { #category : #tests }

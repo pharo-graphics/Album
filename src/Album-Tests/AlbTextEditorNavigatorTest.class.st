@@ -1053,7 +1053,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_empty [
 		unsubscribe.
 
 	self assert: anEditor cursors isNotEmpty.
-	self assert: anEditor cursor equals: AlbTextEditorCursor first.
+	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 1).
 
 	self assert: theMovedEvents isEmpty.
 

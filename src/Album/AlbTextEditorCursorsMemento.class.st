@@ -31,11 +31,11 @@ AlbTextEditorCursorsMemento >> order [
 
 { #category : #memento }
 AlbTextEditorCursorsMemento >> restoreStateOf: aTextEditor [
-	aTextEditor navigator
-		withoutResettingDesiredCoordinate;
-		removeAll;
-		addAll: cursors;
-		apply
+	cursors ifNotEmpty: [
+		aTextEditor navigator
+			withoutResettingDesiredCoordinate;
+			moveTo: cursors first position;
+			apply ]
 ]
 
 { #category : #memento }

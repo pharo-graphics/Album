@@ -64,6 +64,12 @@ AlbTextEditor >> assertUIProcess [
 				format: { aCurrentProcess asString . myProcess asString }) ].
 ]
 
+{ #category : #'private - filter' }
+AlbTextEditor >> basicInputFilter: aTextEditorInputFilter [
+
+	filter := aTextEditorInputFilter
+]
+
 { #category : #accessing }
 AlbTextEditor >> cacheSize: anInteger [
 	segmentCollector cacheSize: anInteger

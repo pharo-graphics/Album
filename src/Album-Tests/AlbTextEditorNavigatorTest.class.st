@@ -109,9 +109,10 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_twice_in_somet
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_multi_lines [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -121,7 +122,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_multi_lines [
 		apply;
 		unsubscribe.
 		
-	anEditor forceLayout.
+	anEditorElement forceLayout.
 
 	self assert: anEditor cursor position equals: 0.
 	
@@ -133,11 +134,11 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_0_in_multi_lines [
 { #category : #performance }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_does_not_rebuild_editor [
 	
-	| anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces |
-	
-	anEditor := self test_editorOnMultilineText.
+	| anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces anEditorElement |
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
-	thePreviousSegments := anEditor next children
+	thePreviousSegments := anEditorElement infinite children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: thePreviousSegments size equals: 11.
 	
@@ -148,11 +149,11 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_does_not_rebuild_editor [
 		moveTo: 1;
 		apply.
 
-	anEditor forceLayout.
+	anEditorElement forceLayout.
 
 	self assert: anEditor cursor position equals: 1.
 	
-	theNewSegments := anEditor next children
+	theNewSegments := anEditorElement infinite children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: theNewSegments size equals: 11.
 	
@@ -162,7 +163,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_does_not_rebuild_editor [
 	self assert: thePreviousSegments equals: theNewSegments.
 	self assert: thePreviousTextPieces equals: theNewTextPieces.
 	
-	^ anEditor
+	^ anEditorElement
 ]
 
 { #category : #add }
@@ -218,9 +219,10 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA_CR_BB [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
 	theMovedEvents := OrderedCollection new.
 
@@ -230,7 +232,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 		apply;
 		unsubscribe.
 
-	anEditor forceLayout.
+	anEditorElement forceLayout.
 
 	self assert: anEditor cursor position equals: 1.
 	
@@ -245,9 +247,10 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
 	theMovedEvents := OrderedCollection new.
 
@@ -257,7 +260,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 		apply;
 		unsubscribe.
 
-	anEditor forceLayout.
+	anEditorElement forceLayout.
 
 	self assert: anEditor cursor position equals: 2.
 	
@@ -272,9 +275,9 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 	
-	| anEditor  theMovedEvents |
-	
-	anEditor := self test_editorOnMultilineText.
+	| anEditor  theMovedEvents anEditorElement |
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 	anEditor navigator
@@ -283,7 +286,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 		apply;
 		unsubscribe.
 		
-	anEditor forceLayout.
+	anEditorElement forceLayout.
 		
 	self assert: anEditor cursor position equals: 68.
 	
@@ -292,15 +295,16 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 		AlbTextEditorSingleCursor new position: 68.
 	}.
 	
-	^ anEditor
+	^ anEditorElement
 ]
 
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText..
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor..
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -393,39 +397,42 @@ AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated_bulk [
 { #category : #accessing }
 AlbTextEditorNavigatorTest >> test_cursor_is_not_on_last_line [
 	
-	| anEditor aNavigator |
-	anEditor := self test_editorOnMultilineText.
-	aNavigator := anEditor editor navigator 
+	| anEditor aNavigator anEditorElement |
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	aNavigator := anEditor navigator 
 		moveTo: 186; 
 		apply;
 		unsubscribe.
-	self assert: (aNavigator isCursorOnTheLastLine: anEditor editor cursor) not.
+	self assert: (aNavigator isCursorOnTheLastLine: anEditor cursor) not.
 	^ anEditor
 ]
 
 { #category : #accessing }
 AlbTextEditorNavigatorTest >> test_cursor_is_on_last_line_when_at_the_end [
 	
-	| anEditor aNavigator |
-	anEditor := self test_editorOnMultilineText.
-	aNavigator := anEditor editor navigator 
+	| anEditor aNavigator anEditorElement |
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	aNavigator := anEditor navigator 
 		moveTo: 202; 
 		apply;
 		unsubscribe.
-	self assert: (aNavigator isCursorOnTheLastLine: anEditor editor cursor ).
+	self assert: (aNavigator isCursorOnTheLastLine: anEditor cursor ).
 	^ anEditor
 ]
 
 { #category : #accessing }
 AlbTextEditorNavigatorTest >> test_cursor_is_on_last_line_when_before_the_first_character [
 	
-	| anEditor aNavigator |
-	anEditor := self test_editorOnMultilineText.
-	aNavigator := anEditor editor navigator 
+	| anEditor aNavigator anEditorElement |
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	aNavigator := anEditor navigator 
 		moveTo: 187; 
 		apply;
 		unsubscribe.
-	self assert: (aNavigator isCursorOnTheLastLine: anEditor editor cursor ).
+	self assert: (aNavigator isCursorOnTheLastLine: anEditor cursor ).
 	^ anEditor
 ]
 
@@ -462,9 +469,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
 { #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -487,9 +495,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 { #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor navigator
 		moveTo: 1;
 		apply.
@@ -515,9 +524,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 { #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_201 [
 	
-	| anEditor  theMovedEvents  |
+	| anEditor  theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor navigator
 		moveTo: 201;
 		apply.
@@ -568,9 +578,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_28 [
 { #category : #'move to line end' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -800,9 +811,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_41 [
 { #category : #'move to line start' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -948,9 +960,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_8 [
 { #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_half_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
 	theMovedEvents := OrderedCollection new.
 
@@ -970,9 +983,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_half_in_multiline 
 { #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -992,9 +1006,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_left_in_multiline [
 { #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_middle_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -1014,8 +1029,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_middle_in_multiline [
 { #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_multiline [
 
-	| anEditor theMovedEvents |
-	anEditor := self test_editorOnMultilineText.
+	| anEditor theMovedEvents anEditorElement |
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
 	theMovedEvents := OrderedCollection new.
 
@@ -1040,9 +1056,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_multiline
 { #category : #'move to screen' }
 AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_41_right_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
 	theMovedEvents := OrderedCollection new.
 
@@ -1065,9 +1082,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_41_right_in_multiline [
 { #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -1087,9 +1105,10 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_0_in_multiline [
 { #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_190_in_multiline [
 	
-	| anEditor theMovedEvents |
+	| anEditor theMovedEvents anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	
 	theMovedEvents := OrderedCollection new.
 
@@ -1137,28 +1156,27 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_1_in_cursors_at_0 [
 { #category : #'move to' }
 AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
 	
-	| anEditor  theMovedEvents   |
-	
-	anEditor := self test_cursor_add_at_68_in_multiline.
+	| anEditorElement theMovedEvents |
+	anEditorElement := self test_cursor_add_at_68_in_multiline.
 	
 	theMovedEvents := OrderedCollection new.
 
-	anEditor navigator
+	anEditorElement navigator
 		whenMoved: [ :anEvent | theMovedEvents add: anEvent ];
 		moveTo: 67;
 		apply;
 		unsubscribe.
 	
-	anEditor forceLayout.
+	anEditorElement forceLayout.
 	
-	self assert: anEditor cursor position equals: 67.
+	self assert: anEditorElement cursor position equals: 67.
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 67).
 	self assert: theMovedEvents first oldIndex equals: 68.
 	self assert: theMovedEvents first newIndex equals: 67.
 		
-	^ anEditor
+	^ anEditorElement
 ]
 
 { #category : #'move up' }
@@ -1194,26 +1212,28 @@ AlbTextEditorNavigatorTest >> test_cursor_moveUp_in_cursors_at_1 [
 { #category : #performance }
 AlbTextEditorNavigatorTest >> test_cursor_move_from_1_to_2_does_not_rebuild_editor [
 	
-	| anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces |
+	| anEditorElement anEditor thePreviousSegments theNewSegments thePreviousTextPieces theNewTextPieces |
 
-	anEditor := self test_cursor_add_at_1_does_not_rebuild_editor.
+	anEditorElement := self test_cursor_add_at_1_does_not_rebuild_editor.
+	anEditor := anEditorElement editor.
 
-	thePreviousSegments := anEditor infinite children
+	thePreviousSegments := anEditorElement infinite children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: thePreviousSegments size equals: 11.
 
-	thePreviousTextPieces := thePreviousSegments flatCollect: [ :eachSegment | eachSegment children asArray ].
+	thePreviousTextPieces := thePreviousSegments
+		flatCollect: [ :eachSegment | eachSegment children asArray ].
 	self assert: thePreviousTextPieces size equals: 63.
 
 	anEditor navigator
 		moveTo: 2;
 		apply.
 
-	anEditor forceLayout.
+	anEditorElement forceLayout.
 
 	self assert: anEditor cursor position equals: 2.
 	
-	theNewSegments := anEditor infinite children
+	theNewSegments := anEditorElement infinite children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: theNewSegments size equals: 11.
 	

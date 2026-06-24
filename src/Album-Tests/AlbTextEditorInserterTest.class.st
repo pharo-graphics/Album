@@ -33,10 +33,11 @@ AlbTextEditorInserterTest >> test_big_text_insert_cr_twice_at_0 [
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_filter_insert_Hello123Symbols_onlyAlphaNumeric [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.	
-	anEditor editor moveCursorTo: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.	
+	anEditor moveCursorTo: 0.
 
 	anEditor inserter
 		at: 0;
@@ -54,10 +55,11 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123Symbols_onlyAlphaNumeric
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyDigits [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.	
-	anEditor editor moveCursorTo: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.	
+	anEditor moveCursorTo: 0.
 
 	anEditor inserter
 		at: 0;
@@ -75,10 +77,11 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyDigits [
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.	
-	anEditor editor moveCursorTo: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.	
+	anEditor moveCursorTo: 0.
 
 	anEditor inserter
 		at: 0;
@@ -96,9 +99,10 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	"Album is mono cursor, only last moveTo is actually done"
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor navigator
 		moveTo: 0;
 		moveTo: 1;
@@ -119,11 +123,12 @@ AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 0.
 	
 	anEditor inserter
 		at: 0;
@@ -140,11 +145,12 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_0 
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_1 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 1.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 1.
 
 	anEditor inserter
 		at: 0;
@@ -161,13 +167,14 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_1 
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 10.
 	
-	anEditor editor select: 0 to: 1. "A"
-	anEditor editor select: 8 to: 14. " river"
+	anEditor select: 0 to: 1. "A"
+	anEditor select: 8 to: 14. " river"
 
 	anEditor inserter
 		at: 0;
@@ -184,12 +191,13 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 10.
-	anEditor editor select: 0 to: 1. "A"
-	anEditor editor select: 8 to: 14. " river"
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 10.
+	anEditor select: 0 to: 1. "A"
+	anEditor select: 8 to: 14. " river"
 
 	anEditor inserter
 		at: 0;
@@ -210,12 +218,13 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 10.
-	anEditor editor select: 0 to: 1. "A"
-	anEditor editor select: 8 to: 14. " river"
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 10.
+	anEditor select: 0 to: 1. "A"
+	anEditor select: 8 to: 14. " river"
 
 	anEditor inserter
 		at: 0;
@@ -237,12 +246,13 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1_and_8_to_14_no_delete_no_selection_no_cursor [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 10.
-	anEditor editor select: 0 to: 1. "A"
-	anEditor editor select: 8 to: 14. " river"
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 10.
+	anEditor select: 0 to: 1. "A"
+	anEditor select: 8 to: 14. " river"
 
 	anEditor inserter
 		at: 0;
@@ -265,11 +275,12 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_5_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 5.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 5.
+	anEditor select: 0 to: 0.
 
 	anEditor inserter
 		at: 0;
@@ -286,11 +297,12 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_5_selection_0_to_0 
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_0_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 0.
 	
 	anEditor inserter
 		at: 1;
@@ -307,11 +319,12 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_0_selection_0_to_0 
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_1_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 1.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 1.
+	anEditor select: 0 to: 0.
 
 	anEditor inserter
 		at: 1;
@@ -377,9 +390,10 @@ AlbTextEditorInserterTest >> test_insert_indentation2 [
 { #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_1 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor selecter
 		from: 0 to: 1;
 		select.
@@ -401,9 +415,10 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_0_to_1 [
 { #category : #indentation }
 AlbTextEditorInserterTest >> test_insert_indentation_selection_1_to_2 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor selecter
 		from: 1 to: 2;
 		select.
@@ -425,11 +440,12 @@ AlbTextEditorInserterTest >> test_insert_indentation_selection_1_to_2 [
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_and_3_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 0.
 	
 	anEditor navigator
 		moveTo: 1;
@@ -452,11 +468,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_and_3
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 0.
 	
 	anEditor navigator
 		moveTo: 1;
@@ -478,11 +495,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_selec
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_3_selection_0_to_1_withoutSelectionDelete [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 1.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 1.
 		
 	anEditor inserter
 		atCursor;
@@ -504,11 +522,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_3_selec
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 0.
 	
 	anEditor inserter
 		atCursor;
@@ -526,11 +545,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_1 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 1.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 1.
 	
 	anEditor inserter
 		atCursor;
@@ -548,11 +568,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0_to_1_withoutSelectionDelete [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 1.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 1.
 	
 	anEditor inserter
 		atCursor;
@@ -574,11 +595,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_2_to_8_withoutSelectionDelete [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 2 to: 8.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 2 to: 8.
 	
 	anEditor inserter
 		atCursor;
@@ -600,11 +622,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_2
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_10_selection_2_to_8_withoutSelectionDelete [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 10.
-	anEditor editor select: 2 to: 8.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 10.
+	anEditor select: 2 to: 8.
 	
 	anEditor inserter
 		atCursor;
@@ -630,11 +653,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_10_selection_
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorAccountingSelection_withoutSelectionDelete [
 	"I make sure that selected text gets surrounded if it is described in condition"
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 1.
-	anEditor editor select: 1 to: 2.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 1.
+	anEditor select: 1 to: 2.
 	
 	anEditor inserter
 		atCursor;
@@ -660,11 +684,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1_to_2_withOperatorNotAccountingSelection_withoutSelectionDelete [
 	"I make sure that selected text is not surrounded if it is selected and when it is not described in operator"
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 1.
-	anEditor editor select: 1 to: 2.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 1.
+	anEditor select: 1 to: 2.
 	
 	anEditor inserter
 		atCursor;
@@ -689,11 +714,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_2_selection_2_to_8_withoutSelectionDelete [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 2.
-	anEditor editor select: 2 to: 8.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 2.
+	anEditor select: 2 to: 8.
 	
 	anEditor inserter
 		atCursor;
@@ -718,11 +744,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_2_selection_2
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_8_selection_2_to_8_withoutSelectionDelete [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 8.
-	anEditor editor select: 2 to: 8.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 8.
+	anEditor select: 2 to: 8.
 	
 	anEditor inserter
 		atCursor;
@@ -747,11 +774,12 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_8_selection_2
 { #category : #insertion }
 AlbTextEditorInserterTest >> test_insert_open_close_parentheses_at_cursor_0_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 0.
 
 	anEditor inserter
 		atCursor;

@@ -42,9 +42,10 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 	"There was a bug, that if a new text is smaller than the existing selection, then things can go wrong.
 	Now, replacing the text clears the selection completely and resets the cursor to 0."
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor selecter
 		all
 		select.
@@ -52,7 +53,7 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: self multilineText size).
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: self multilineText size).
 
-	anEditor text: 'hello'.
+	anEditorElement text: 'hello'.
 
 	self assert: anEditor selection isEmpty.
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
@@ -61,7 +62,7 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 		all
 		select.
 
-	anEditor text: 'hi'.
+	anEditorElement text: 'hi'.
 
 	self assert: anEditor selection isEmpty.
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
@@ -72,9 +73,10 @@ AlbTextEditorSelecterTest >> test_select_all_reduced [
 { #category : #'from to' }
 AlbTextEditorSelecterTest >> test_select_from_0_to_5 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
 	anEditor selecter
 		from: 0 to: 5;
@@ -89,9 +91,10 @@ AlbTextEditorSelecterTest >> test_select_from_0_to_5 [
 { #category : #'from to' }
 AlbTextEditorSelecterTest >> test_select_from_0_to_5_in_steps [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 
 	anEditor selecter
 		from: 0 to: 1;
@@ -114,10 +117,11 @@ AlbTextEditorSelecterTest >> test_select_from_0_to_5_in_steps [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := anEditor := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
-	anEditor editor moveCursorTo: 6.
+	anEditorElement := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 6.
 	
 	anEditor selecter
 		moveOneDown;
@@ -135,10 +139,11 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6_thenUp [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 6.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 6.
 	
 	anEditor selecter
 		moveOneDown;
@@ -159,15 +164,16 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6_thenUp [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
 	anEditor selecter moveOneToLeft; select.
 	self 
 		assert: anEditor selection isEmpty.
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: ''.
 	
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
@@ -177,10 +183,11 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_0 [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 4.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 4.
 	
 	anEditor selecter
 		moveOneToLeft;
@@ -190,7 +197,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4 [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 3 to: 4).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'u'.
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 3).
 
@@ -212,7 +219,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4_extendToNextWordEnd [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 4 to: 8).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'mmer'.
 
 	^ anEditor
@@ -221,10 +228,11 @@ AlbTextEditorSelecterTest >> test_select_moveOneLeft_at_4_extendToNextWordEnd [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 6.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 6.
 	
 	anEditor selecter
 		moveOneToRight;
@@ -234,7 +242,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6 [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 6 to: 7).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'e'.
 	
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 7).
@@ -257,7 +265,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 6 to: 8).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'er'.
 	
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 8).
@@ -279,7 +287,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToNextWordEnd_t
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 6 to: 14).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'er river'.
 	
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 14).
@@ -301,7 +309,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordS
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 2 to: 6).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'summ'.
 	
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 2).
@@ -323,7 +331,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordS
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 0 to: 6).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'A summ'.
 	
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
@@ -334,15 +342,16 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_6_extendToPreviousWordS
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneRight_at_End [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: anEditor text size.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: anEditor text size.
 	anEditor selecter moveOneToRight; select.
 	self 
 		assert: anEditor selection isEmpty.
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: ''.
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: anEditor text size ).
 
@@ -352,10 +361,11 @@ AlbTextEditorSelecterTest >> test_select_moveOneRight_at_End [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self editorFor: self multilineText.
-	anEditor editor moveCursorTo: 35.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 35.
 	
 	anEditor selecter
 		moveOneUp;
@@ -365,7 +375,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 6 to: 35).
 	
-	self assert: anEditor cursor position equals: 6.
+	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 6).
 	
 	^ anEditor
 ]
@@ -390,16 +400,17 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35_thenDown [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveTwiceLeft_at_1 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 1.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 1.
 	
 	anEditor selecter
 		moveOneToLeft
 		select.
 
-	anEditor editor moveCursorTo: 0.
+	anEditor moveCursorTo: 0.
 	
 	anEditor selecter
 		moveOneToLeft;
@@ -409,7 +420,7 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceLeft_at_1 [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: 0 to: 1).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: 'A'.
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 0).
 	^ anEditor
@@ -418,12 +429,13 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceLeft_at_1 [
 { #category : #move }
 AlbTextEditorSelecterTest >> test_select_moveTwiceRight_at_End [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: anEditor text size - 1.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: anEditor text size - 1.
 	anEditor selecter moveOneToRight; select.
-	anEditor editor moveCursorTo: anEditor text size.
+	anEditor moveCursorTo: anEditor text size.
 	
 	anEditor selecter
 		moveOneToRight;
@@ -433,7 +445,7 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceRight_at_End [
 		assert: anEditor selection 
 		equals: (BlCompositeSelection new select: anEditor text size - 1 to: anEditor text size).
 	self 
-		assert: anEditor editor selectedText asString 
+		assert: anEditor selectedText asString 
 		equals: '.'.
 
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: anEditor text size ).
@@ -444,15 +456,16 @@ AlbTextEditorSelecterTest >> test_select_moveTwiceRight_at_End [
 { #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor selecter
 		wordAt: 0;
 		select.
 
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 1).
-	self assert: anEditor editor selectedText asString equals: 'A'.
+	self assert: anEditor selectedText asString equals: 'A'.
 
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 1).
 
@@ -462,15 +475,16 @@ AlbTextEditorSelecterTest >> test_select_word_at_0 [
 { #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_1 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor selecter
 		wordAt: 1;
 		select.
 
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 1).
-	self assert: anEditor editor selectedText asString equals: 'A'.
+	self assert: anEditor selectedText asString equals: 'A'.
 
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 1).
 
@@ -480,15 +494,16 @@ AlbTextEditorSelecterTest >> test_select_word_at_1 [
 { #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_2 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor selecter
 		wordAt: 2;
 		select.
 
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 2 to: 8).
-	self assert: anEditor editor selectedText asString equals: 'summer'.
+	self assert: anEditor selectedText asString equals: 'summer'.
 
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 8).
 
@@ -498,16 +513,17 @@ AlbTextEditorSelecterTest >> test_select_word_at_2 [
 { #category : #word }
 AlbTextEditorSelecterTest >> test_select_word_at_2_and_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
 	anEditor selecter
 		wordAt: 2;
 		wordAt: 10;
 		select.
 
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 2 to: 8; select: 9 to: 14).
-	self assert: anEditor editor selectedText asString equals: 'summer river'.
+	self assert: anEditor selectedText asString equals: 'summer river'.
 
 	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 14).
 

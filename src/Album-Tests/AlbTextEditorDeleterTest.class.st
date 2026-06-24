@@ -7,11 +7,12 @@ Class {
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_0 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 0.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 0.
 
 	anEditor deleter
 		from: 0 to: 0;
@@ -27,11 +28,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_0 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 10.
 	
 	anEditor deleter
 		from: 0 to: 0;
@@ -47,11 +49,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_10 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_1_cursorAt_0_selection_0_to_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 10.
 	
 	anEditor deleter
 		from: 0 to: 1;
@@ -67,11 +70,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_1_cursorAt_0_selection_0_to_10 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 10.
 	
 	anEditor deleter
 		from: 0 to: 28;
@@ -87,11 +91,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_10 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_28 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 28.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 28.
 	
 	anEditor deleter
 		from: 0 to: 28;
@@ -107,11 +112,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_28 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_29 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 29.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 29.
 	
 	anEditor deleter
 		from: 0 to: 28;
@@ -127,11 +133,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_29 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 38.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 38.
 
 	anEditor deleter
 		from: 0 to: 28;
@@ -147,12 +154,13 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38_and_48_to_50 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 0.
-	anEditor editor select: 0 to: 38.
-	anEditor editor select: 48 to: 50.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 0.
+	anEditor select: 0 to: 38.
+	anEditor select: 48 to: 50.
 
 	anEditor deleter
 		from: 0 to: 28;
@@ -168,11 +176,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38_and
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_10_selection_0_to_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 10.
-	anEditor editor select: 0 to: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 10.
+	anEditor select: 0 to: 10.
 	
 	anEditor deleter
 		from: 0 to: 28;
@@ -188,11 +197,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_10_selection_0_to_10 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_28_selection_0_to_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 28.
-	anEditor editor select: 0 to: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 28.
+	anEditor select: 0 to: 10.
 	
 	anEditor deleter
 		from: 0 to: 28;
@@ -208,11 +218,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_28_selection_0_to_10 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_29_selection_0_to_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 29.
-	anEditor editor select: 0 to: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 29.
+	anEditor select: 0 to: 10.
 
 	anEditor deleter
 		from: 0 to: 28;
@@ -228,11 +239,12 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_29_selection_0_to_10 [
 { #category : #deletion }
 AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_38_selection_0_to_10 [
 	
-	| anEditor |
+	| anEditor anEditorElement |
 	
-	anEditor := self test_editorOnMultilineText.
-	anEditor editor moveCursorTo: 38.
-	anEditor editor select: 0 to: 10.
+	anEditorElement := self newEditorElementWithMultilineText.
+	anEditor := anEditorElement editor.
+	anEditor moveCursorTo: 38.
+	anEditor select: 0 to: 10.
 
 	anEditor deleter
 		from: 0 to: 28;

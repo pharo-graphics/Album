@@ -75,6 +75,11 @@ The color and scent of the wisteria
 Seems far away.' asRopedText
 ]
 
+{ #category : #'instance creation' }
+AlbTextEditorOperatorTest >> newEditorElementWithMultilineText [
+	^ self editorFor: self multilineText
+]
+
 { #category : #'private - font metrics' }
 AlbTextEditorOperatorTest >> paragraphMargin [
 	^ BlInsets all: 15 
@@ -167,18 +172,16 @@ AlbTextEditorOperatorTest >> test_editorOnEmptyText [
 	^ anEditorElement
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'utility - tests' }
 AlbTextEditorOperatorTest >> test_editorOnMultilineText [
 	
 	| anEditor anEditorElement |
 	
-	anEditorElement := self editorFor: self multilineText.
+	anEditorElement := self newEditorElementWithMultilineText.
 	anEditor := anEditorElement editor.
 	
 	self assert: anEditor cursor notNil.
-	self assert: anEditor selection isEmpty.
-	
-	^ anEditorElement
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #'utility - tests' }

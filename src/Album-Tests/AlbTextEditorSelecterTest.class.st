@@ -359,7 +359,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
 	
 	| anEditor |
 
-	anEditor := self test_editorOnMultilineText.
+	anEditor := self editorFor: self multilineText.
 	anEditor editor moveCursorTo: 35.
 	
 	anEditor selecter
@@ -368,9 +368,9 @@ AlbTextEditorSelecterTest >> test_select_moveOneUp_at_35 [
 	
 	self 
 		assert: anEditor selection 
-		equals: (BlCompositeSelection new select: 5 to: 35).
+		equals: (BlCompositeSelection new select: 6 to: 35).
 	
-	self assert: anEditor cursor equals: (AlbTextEditorCursor at: 5).
+	self assert: anEditor cursor position equals: 6.
 	
 	^ anEditor
 ]

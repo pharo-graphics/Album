@@ -44,8 +44,8 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123Symbols_onlyAlphaNumeric
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello123', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 8 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 8.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -64,8 +64,8 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyDigits [
 		insert.
 
 	self assert: anEditor text asString equals: ('123', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 3 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 3.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -84,8 +84,8 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 5 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 5.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -126,8 +126,8 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_0 
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 5 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 5.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -146,8 +146,8 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_0_selection_0_to_1 
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', (self multilineText from: 2 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 5 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 5.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -168,8 +168,8 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', (self multilineText from: 2 to: 7) asString, (self multilineText from: 14 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 12 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 12.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -190,11 +190,11 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 15 ).
+	self assert: anEditor cursor position equals: 15.
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 5 to: 6.
 		BlSelection from: 13 to: 19.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -216,11 +216,11 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 15 ).
+	self assert: anEditor cursor position equals: 15.
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 0 to: 1.
 		BlSelection from: 8 to: 14.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -243,11 +243,11 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_10_selection_0_to_1
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 10 ).
+	self assert: anEditor cursor position equals: 10.
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 0 to: 1.
 		BlSelection from: 8 to: 14.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -266,8 +266,8 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_0_cursorAt_5_selection_0_to_0 
 		insert.
 
 	self assert: anEditor text asString equals: ('Hello', self multilineText asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 10 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 10.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -286,8 +286,8 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_0_selection_0_to_0 
 		insert.
 
 	self assert: anEditor text asString equals: (self multilineText first asString, 'Hello', ((self multilineText from: 2 to: self multilineText size) asString)).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 0.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -306,8 +306,8 @@ AlbTextEditorInserterTest >> test_insert_Hello_at_1_cursorAt_1_selection_0_to_0 
 		insert.
 
 	self assert: anEditor text asString equals: (self multilineText first asString, 'Hello', ((self multilineText from: 2 to: self multilineText size) asString)).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 6 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 6.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #indentation }
@@ -423,8 +423,8 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_and_3
 		insert.
 
 	self assert: anEditor text asString equals: ((self multilineText from: 1 to: 3) asString, '()', (self multilineText from: 4 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 4 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 4.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -448,8 +448,8 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_1_selec
 		insert.
 
 	self assert: anEditor text asString equals: (self multilineText from: 1 to: 1) asString, '()', (self multilineText from: 2 to: self multilineText size) asString.
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 2 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 2.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -470,11 +470,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_and_3_selec
 		insert.
 
 	self assert: anEditor text asString equals: (('(', (self multilineText from: 1 to: 1) asString),')', (self multilineText from: 2 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 1).
+	self assert: anEditor cursor position equals: 1.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 1 to: 2.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -494,8 +494,8 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 		insert.
 
 	self assert: anEditor text asString equals: ('()', self multilineText asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 1 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 1.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -515,8 +515,8 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 		insert.
 
 	self assert: anEditor text asString equals: ('()', (self multilineText from: 2 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 1 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 1.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }
@@ -537,11 +537,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_0
 		insert.
 
 	self assert: anEditor text asString equals: ('(',self multilineText first asString,')', (self multilineText from: 2 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 1 ).
+	self assert: anEditor cursor position equals: 1.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 1 to: 2.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -562,11 +562,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_0_selection_2
 		insert.
 
 	self assert: anEditor text asString equals: ('()', self multilineText  asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 1 ).
+	self assert: anEditor cursor position equals: 1.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 4 to: 10.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -590,11 +590,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_10_selection_
 		(self multilineText from: 1 to: 10) asString,
 		'()',
 		(self multilineText from: 11 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 11 ).
+	self assert: anEditor cursor position equals: 11.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 2 to: 8.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -619,11 +619,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1
 
 	self assert: anEditor text asString equals:
 		(self multilineText first asString, '(',self multilineText second asString,')', (self multilineText from: 3 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 2 ).
+	self assert: anEditor cursor position equals: 2.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 2 to: 3.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -648,11 +648,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_1_selection_1
 
 	self assert: anEditor text asString equals:
 		(self multilineText first asString, '(', (self multilineText from: 2 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 2 ).
+	self assert: anEditor cursor position equals: 2.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 2 to: 3.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -676,11 +676,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_2_selection_2
 		(self multilineText from: 1 to: 2) asString,
 		'(', (self multilineText from: 3 to: 8) asString, ')',
 		(self multilineText from: 9 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 3 ).
+	self assert: anEditor cursor position equals: 3.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 3 to: 9.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -704,11 +704,11 @@ AlbTextEditorInserterTest >> test_insert_openParentheses_at_cursor_8_selection_2
 		(self multilineText from: 1 to: 2) asString,
 		'(', (self multilineText from: 3 to: 8) asString, ')',
 		(self multilineText from: 9 to: self multilineText size) asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 9 ).
+	self assert: anEditor cursor position equals: 9.
 
 	self assert: anEditor selection allSelections equals: {
 		BlSelection from: 3 to: 9.
-	}.
+	}
 ]
 
 { #category : #insertion }
@@ -734,8 +734,8 @@ AlbTextEditorInserterTest >> test_insert_open_close_parentheses_at_cursor_0_sele
 		insert.
 
 	self assert: anEditor text asString equals: ('()', self multilineText asString).
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 2 ).
-	self assert: anEditor selection isEmpty.
+	self assert: anEditor cursor position equals: 2.
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #insertion }

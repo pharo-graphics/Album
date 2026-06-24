@@ -23,7 +23,7 @@ AlbTextEditorNavigatorTest >> cursor_moveToNextWord_in_cursors_at_0 [
 	self assert: anEditor cursor position equals: 8.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 8).
+	self assert: theMovedEvents first cursor position equals: 8.
 	self assert: theMovedEvents first oldIndex equals: 0.
 	self assert: theMovedEvents first newIndex equals: 8.
 	
@@ -46,13 +46,13 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_in_something [
 		moveTo: 0;
 		apply.
 
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 0 ).
+	self assert: anEditor cursor position equals: 0.
 
 	anEditor navigator
 		moveToEndNextWord;
 		apply.
 
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 9 ).
+	self assert: anEditor cursor position equals: 9.
 	^ anEditor
 ]
 
@@ -66,7 +66,7 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt0_moveNextWord_twice_in_something
 		moveToEndNextWord;
 		apply.
 
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 14 ).
+	self assert: anEditor cursor position equals: 14
 ]
 
 { #category : #showroom }
@@ -79,13 +79,13 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_in_something [
 		moveTo: 9;
 		apply.
 
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 9 ).
+	self assert: anEditor cursor position equals: 9.
 
 	anEditor navigator
 		moveToStartPreviousWord;
 		apply.
 
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 0 ).
+	self assert: anEditor cursor position equals: 0.
 	^ anEditor
 ]
 
@@ -100,7 +100,7 @@ AlbTextEditorNavigatorTest >> test_cursor_addAt9_movePreviousWord_twice_in_somet
 		moveToStartPreviousWord;
 		apply.
 
-	self assert: anEditor cursor equals: ( AlbTextEditorSingleCursor new position: 0 ).
+	self assert: anEditor cursor position equals: 0
 ]
 
 { #category : #add }
@@ -445,12 +445,12 @@ AlbTextEditorNavigatorTest >> test_cursor_moveDown_in_cursors_at_190 [
 	self assert: anEditor cursor position equals: 202.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 202).
+	self assert: theMovedEvents first cursor position equals: 202.
 	self assert: theMovedEvents first oldIndex equals: 190.
 	self assert: theMovedEvents first newIndex equals: 202.
 	self assert: theReachBoudnaryEvents size equals: 1.
-	self assert: theReachBoudnaryEvents first cursor equals: (AlbTextEditorSingleCursor new position: 202).
-	self assert: theReachBoudnaryEvents first isBottom.
+	self assert: theReachBoudnaryEvents first cursor position equals: 202.
+	self assert: theReachBoudnaryEvents first isBottom
 ]
 
 { #category : #'move to line end' }
@@ -472,9 +472,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_0 [
 	self assert: anEditor cursor position equals: 28.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 28).
+	self assert: theMovedEvents first cursor position equals: 28.
 	self assert: theMovedEvents first oldIndex equals: 0.
-	self assert: theMovedEvents first newIndex equals: 28.
+	self assert: theMovedEvents first newIndex equals: 28
 ]
 
 { #category : #'move to line end' }
@@ -499,9 +499,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_1 [
 	self assert: anEditor cursor position equals: 28.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 28).
+	self assert: theMovedEvents first cursor position equals: 28.
 	self assert: theMovedEvents first oldIndex equals: 1.
-	self assert: theMovedEvents first newIndex equals: 28.
+	self assert: theMovedEvents first newIndex equals: 28
 ]
 
 { #category : #'move to line end' }
@@ -526,9 +526,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineEnd_in_cursors_at_201 [
 	self assert: anEditor cursor position equals: 202.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 202).
+	self assert: theMovedEvents first cursor position equals: 202.
 	self assert: theMovedEvents first oldIndex equals: 201.
-	self assert: theMovedEvents first newIndex equals: 202.
+	self assert: theMovedEvents first newIndex equals: 202
 ]
 
 { #category : #'move to line end' }
@@ -611,9 +611,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_1 [
 	self assert: anEditor cursor position equals: 0.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 0).
+	self assert: theMovedEvents first cursor position equals: 0.
 	self assert: theMovedEvents first oldIndex equals: 1.
-	self assert: theMovedEvents first newIndex equals: 0.
+	self assert: theMovedEvents first newIndex equals: 0
 ]
 
 { #category : #'move to line start' }
@@ -637,9 +637,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_27 [
 	self assert: anEditor cursor position equals: 0.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 0).
+	self assert: theMovedEvents first cursor position equals: 0.
 	self assert: theMovedEvents first oldIndex equals: 27.
-	self assert: theMovedEvents first newIndex equals: 0.
+	self assert: theMovedEvents first newIndex equals: 0
 ]
 
 { #category : #'move to line start' }
@@ -663,9 +663,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_28 [
 	self assert: anEditor cursor position equals: 0.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 0).
+	self assert: theMovedEvents first cursor position equals: 0.
 	self assert: theMovedEvents first oldIndex equals: 28.
-	self assert: theMovedEvents first newIndex equals: 0.
+	self assert: theMovedEvents first newIndex equals: 0
 ]
 
 { #category : #'move to line start' }
@@ -712,9 +712,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_30 [
 	self assert: anEditor cursor position equals: 29.
 
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 29).
+	self assert: theMovedEvents first cursor position equals: 29.
 	self assert: theMovedEvents first oldIndex equals: 30.
-	self assert: theMovedEvents first newIndex equals: 29.
+	self assert: theMovedEvents first newIndex equals: 29
 ]
 
 { #category : #'move to line start' }
@@ -738,9 +738,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_40 [
 	self assert: anEditor cursor position equals: 29.
 
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 29).
+	self assert: theMovedEvents first cursor position equals: 29.
 	self assert: theMovedEvents first oldIndex equals: 40.
-	self assert: theMovedEvents first newIndex equals: 29.
+	self assert: theMovedEvents first newIndex equals: 29
 ]
 
 { #category : #'move to line start' }
@@ -764,9 +764,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToLineStart_in_cursors_at_41 [
 	self assert: anEditor cursor position equals: 29.
 
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 29).
+	self assert: theMovedEvents first cursor position equals: 29.
 	self assert: theMovedEvents first oldIndex equals: 41.
-	self assert: theMovedEvents first newIndex equals: 29.
+	self assert: theMovedEvents first newIndex equals: 29
 ]
 
 { #category : #'move to line start' }
@@ -808,9 +808,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_0 [
 	self assert: anEditor cursor position equals: 1.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 1).
+	self assert: theMovedEvents first cursor position equals: 1.
 	self assert: theMovedEvents first oldIndex equals: 0.
-	self assert: theMovedEvents first newIndex equals: 1.
+	self assert: theMovedEvents first newIndex equals: 1
 ]
 
 { #category : #'move to line end' }
@@ -831,9 +831,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToNextWord_in_cursors_at_1 [
 	self assert: anEditor cursor position equals: 8.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 8).
+	self assert: theMovedEvents first cursor position equals: 8.
 	self assert: theMovedEvents first oldIndex equals: 1.
-	self assert: theMovedEvents first newIndex equals: 8.
+	self assert: theMovedEvents first newIndex equals: 8
 ]
 
 { #category : #'move to line end' }
@@ -854,9 +854,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_1 [
 	self assert: anEditor cursor position equals: 0.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 0).
+	self assert: theMovedEvents first cursor position equals: 0.
 	self assert: theMovedEvents first oldIndex equals: 1.
-	self assert: theMovedEvents first newIndex equals: 0.
+	self assert: theMovedEvents first newIndex equals: 0
 ]
 
 { #category : #'move to line end' }
@@ -877,9 +877,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_2 [
 	self assert: anEditor cursor position equals: 0.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 0).
+	self assert: theMovedEvents first cursor position equals: 0.
 	self assert: theMovedEvents first oldIndex equals: 2.
-	self assert: theMovedEvents first newIndex equals: 0.
+	self assert: theMovedEvents first newIndex equals: 0
 ]
 
 { #category : #'move to line end' }
@@ -901,9 +901,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_8 [
 			includes: (AlbTextEditorSingleCursor new position: 2 )).
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 2).
+	self assert: theMovedEvents first cursor position equals: 2.
 	self assert: theMovedEvents first oldIndex equals: 8.
-	self assert: theMovedEvents first newIndex equals: 2.
+	self assert: theMovedEvents first newIndex equals: 2
 ]
 
 { #category : #'move to screen' }
@@ -989,7 +989,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_1_right_half_in_multiline
 	self assert: anEditor cursor position equals: 1.
 
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 1).
+	self assert: theMovedEvents first cursor position equals: 1.
 	self assert: theMovedEvents first oldIndex equals: 0.
 	self assert: theMovedEvents first newIndex equals: 1
 ]
@@ -1013,7 +1013,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToScreen_41_right_in_multiline [
 	self assert: anEditor cursor position equals: 41.
 
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 41).
+	self assert: theMovedEvents first cursor position equals: 41.
 	self assert: theMovedEvents first oldIndex equals: 0.
 	self assert: theMovedEvents first newIndex equals: 41
 ]
@@ -1083,7 +1083,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_1_in_cursors_at_0 [
 	self assert: anEditor cursor position equals: 1.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 1).
+	self assert: theMovedEvents first cursor position equals: 1.
 	self assert: theMovedEvents first oldIndex equals: 0.
 	self assert: theMovedEvents first newIndex equals: 1.
 	
@@ -1109,9 +1109,9 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_67_in_cursors_at_68 [
 	self assert: anEditorElement cursor position equals: 67.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 67).
+	self assert: theMovedEvents first cursor position equals: 67.
 	self assert: theMovedEvents first oldIndex equals: 68.
-	self assert: theMovedEvents first newIndex equals: 67.
+	self assert: theMovedEvents first newIndex equals: 67
 ]
 
 { #category : #'move up' }
@@ -1134,12 +1134,12 @@ AlbTextEditorNavigatorTest >> test_cursor_moveUp_in_cursors_at_1 [
 	self assert: anEditor cursor position equals: 0.
 	
 	self assert: theMovedEvents size equals: 1.
-	self assert: theMovedEvents first cursor equals: (AlbTextEditorSingleCursor new position: 0).
+	self assert: theMovedEvents first cursor position equals: 0.
 	self assert: theMovedEvents first oldIndex equals: 1.
 	self assert: theMovedEvents first newIndex equals: 0.
 	self assert: theReachBoudnaryEvents size equals: 1.
-	self assert: theReachBoudnaryEvents first cursor equals: (AlbTextEditorSingleCursor new position: 0).
-	self assert: theReachBoudnaryEvents first isTop.
+	self assert: theReachBoudnaryEvents first cursor position equals: 0.
+	self assert: theReachBoudnaryEvents first isTop
 ]
 
 { #category : #performance }

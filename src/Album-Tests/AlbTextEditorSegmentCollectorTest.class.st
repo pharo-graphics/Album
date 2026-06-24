@@ -45,14 +45,6 @@ AlbTextEditorSegmentCollectorTest >> assertSegmentIndicesMustCorrespondToTheInte
 				satisfy := satisfy and: [ eachSegment index = anExpectedIndex ]	].
 			satisfy ]
 		description: [ 'Segment indices must correspond to the interval' ].
-
-		
-	
-	
-	
-	
-
-	
 ]
 
 { #category : #accessing }
@@ -122,7 +114,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile2_cacheLimit50 [
 	self segmentTestBlock valueWithArguments: {seg. '2: 1234567890'. 14. 27.  1}.
 	seg := self segments third.
 	self segmentTestBlock valueWithArguments: {seg. ''. 28. 28 .0}
-	
 ]
 
 { #category : #tests }
@@ -137,10 +128,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile400_cacheLimit20_computeForwar
 	segIdx := self segmentCollector cachedSegmentIndexAt: 330.
 	seg := self segments at: segIdx.
 	self segmentTestBlock valueWithArguments: {seg. '23: 1234567890'. 321. 335 .1 }.
-
-
-	
-
 ]
 
 { #category : #tests }
@@ -151,10 +138,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile400_cacheLimit20_computeForwar
 	self assert: self segments size equals: 20.
 	self segmentCollector computeForwardAt: 15.
 	self assertSegmentIndicesMustCorrespondToTheInterval.
-
-
-	
-
 ]
 
 { #category : #tests }
@@ -169,13 +152,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile400_cacheLimit20_computeForwar
 	segIdx := self segmentCollector cachedSegmentIndexAt: 330.
 	seg := self segments at: segIdx.
 	self segmentTestBlock valueWithArguments: {seg. '23: 1234567890'. 321. 335 .1 }.
-
-
-	
-	
-	
-
-	
 ]
 
 { #category : #tests }
@@ -193,8 +169,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile4_cacheLimit3 [
 	self segmentTestBlock valueWithArguments: {seg. '2: 1234567890'. 14. 27. 1 }.
 	seg := self segments third.
 	self segmentTestBlock valueWithArguments: {seg. '3: 1234567890'. 28. 41 .1 }.
-
-	
 ]
 
 { #category : #tests }
@@ -215,13 +189,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile4_cacheLimit3_computeForwardAt
 	segIdx := self segmentCollector cachedSegmentIndexAt: 33.
 	seg := self segments at: segIdx.
 	self segmentTestBlock valueWithArguments: {seg. '3: 1234567890'. 28. 41 .1 }.
-
-
-	
-	
-	
-
-	
 ]
 
 { #category : #tests }
@@ -243,9 +210,6 @@ AlbTextEditorSegmentCollectorTest >> test_loadFile4_cacheLimit50 [
 	self segmentTestBlock valueWithArguments: {seg. '4: 1234567890'. 42. 55 .1 }.
 	seg := self segments fifth.
 	self segmentTestBlock valueWithArguments: {seg. ''. 56. 56 .0}
-
-
-	
 ]
 
 { #category : #accessing }

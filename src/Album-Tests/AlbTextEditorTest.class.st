@@ -41,8 +41,6 @@ AlbTextEditorTest >> test_insertString1 [
 AlbTextEditorTest >> test_insertString2 [
 
 	self should: [textEditor insertString: Character backspace asString at: 0] raise: Error.
-
-
 ]
 
 { #category : #tests }
@@ -83,5 +81,4 @@ AlbTextEditorTest >> test_textFromString [
 AlbTextEditorTest >> test_textFromStringWithNonPrintableCharacter [
 	"non printable character test"
 	self should: [textEditor checkAndSetText: Character backspace asString] raise: Error.
-
 ]

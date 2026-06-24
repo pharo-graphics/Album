@@ -52,5 +52,4 @@ AlbEditorStructureTest >> test_segments_count0 [
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: segments size equals: 2.
 
-
 ]

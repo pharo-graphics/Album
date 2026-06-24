@@ -114,8 +114,6 @@ AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0).
 	
 	aSpace root removeChild: anEditor.
-	
-	^ anEditor
 ]
 
 { #category : #focus }
@@ -193,8 +191,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceInEmptyAt_0 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
 
 	self assert: whitespace equals: ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -206,8 +202,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_0 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -219,8 +213,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_1 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -232,8 +224,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_2 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -245,8 +235,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_3 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 3.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -258,8 +246,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_4 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 4.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -271,8 +257,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_at_5 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 5.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -284,8 +268,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_6 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 6.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -297,8 +279,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_7 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 7.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -310,8 +290,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_World_at_8 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 8.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -323,8 +301,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_6 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 6.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -336,8 +312,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_7 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 7.
 
 	self assert: whitespace = ' '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -349,8 +323,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_Hello_cr_space_World_at_8 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 8.
 
 	self assert: whitespace = ' '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -362,8 +334,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_0 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -375,8 +345,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_1 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
 
 	self assert: whitespace = ' '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -388,8 +356,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_Hello_at_2 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
 
 	self assert: whitespace = ' '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -401,8 +367,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_0 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -414,8 +378,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_at_1 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
 
 	self assert: whitespace = ' '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -427,8 +389,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_0 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -440,8 +400,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_1 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
 
 	self assert: whitespace = ' '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -453,8 +411,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_space_at_2 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
 
 	self assert: whitespace = '  '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -466,8 +422,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_0 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 0.
 
 	self assert: whitespace = ''.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -479,8 +433,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_1 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 1.
 
 	self assert: whitespace = ' '.
-
-	^ whitespace
 ]
 
 { #category : #'utility - tests' }
@@ -492,8 +444,6 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_2 [
 	whitespace := editor inserter findWhitespaceOfLineBefore: 2.
 
 	self assert: whitespace = (' ' , String tab).
-
-	^ whitespace
 ]
 
 { #category : #'private - events' }

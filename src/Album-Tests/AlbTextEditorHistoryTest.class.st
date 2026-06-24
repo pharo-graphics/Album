@@ -17,7 +17,6 @@ AlbTextEditorHistoryTest >> test_insert_one_char_and_undo [
 	self assert: editor text asString equals: 'A'.
 	editor undo.
 	self assert: editor text asString equals: ''.
-	^ editorElement
 ]
 
 { #category : #tests }
@@ -33,7 +32,6 @@ AlbTextEditorHistoryTest >> test_insert_one_char_and_undo_then_redo [
 	editor undo.
 	editor redo.
 	self assert: editor text asString equals: 'A'.
-	^ editorElement
 ]
 
 { #category : #tests }
@@ -57,7 +55,6 @@ AlbTextEditorHistoryTest >> test_insert_open_close_parentheses_with_selection_an
 	self assert: editor text asString equals: '(abc)'.
 	editor undo.
 	self assert: editor text asString equals: 'abc'.
-	^ editorElement
 ]
 
 { #category : #tests }
@@ -80,7 +77,6 @@ AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo2 [
 	self assert: editor text asString equals: s.
 	editor redo.
 	self assert: editor text asString equals: ''.
-	^ editorElement
 ]
 
 { #category : #tests }
@@ -106,7 +102,6 @@ AlbTextEditorHistoryTest >> test_insert_select_remove_and_undo_then_redo3 [
 	self assert: editor text isEmpty.
 	editor redo.
 	self assert: editor text asString equals: 'X'.
-	^ editorElement
 ]
 
 { #category : #tests }

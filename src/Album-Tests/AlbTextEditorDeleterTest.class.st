@@ -21,8 +21,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_0 [
 	self assert: anEditor text asString equals: (self multilineText asString).
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection isEmpty.
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -42,8 +40,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_0_cursorAt_0_selection_0_to_10 [
 	self assert: anEditor text asString equals: (self multilineText asString).
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 10).
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -63,8 +59,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_1_cursorAt_0_selection_0_to_10 [
 	self assert: anEditor text asString equals: (self multilineText from: 2 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 9).
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -84,8 +78,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_10 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection isEmpty.
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -105,8 +97,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_28 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection isEmpty.
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -126,8 +116,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_29 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 1).
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -147,8 +135,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 10).
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -169,8 +155,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_0_selection_0_to_38_and
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection equals: (BlCompositeSelection new select: 0 to: 10; select: 20 to: 22).
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -190,8 +174,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_10_selection_0_to_10 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection isEmpty.
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -211,8 +193,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_28_selection_0_to_10 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
 	self assert: anEditor selection isEmpty.
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -232,8 +212,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_29_selection_0_to_10 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 1 ).
 	self assert: anEditor selection isEmpty.
-
-	^ anEditor
 ]
 
 { #category : #deletion }
@@ -253,8 +231,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_28_cursorAt_38_selection_0_to_10 [
 	self assert: anEditor text asString equals: (self multilineText from: 29 to: self multilineText size) asString.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 10 ).
 	self assert: anEditor selection isEmpty.
-
-	^ anEditor
 ]
 
 { #category : #'deletion special' }
@@ -269,8 +245,6 @@ AlbTextEditorDeleterTest >> test_delete_0_to_5_from_HelloCr [
 		delete.
 
 	self assert: anEditor text asString equals: String cr.
-
-	^ anEditor
 ]
 
 { #category : #'deletion special' }
@@ -289,8 +263,6 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_0_from_parenthesis_open_
 
 	self assert: anEditor text asString equals: '()'.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
-
-	^ anEditor
 ]
 
 { #category : #'deletion special' }
@@ -309,8 +281,6 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_
 
 	self assert: anEditor text asString equals: ''.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
-
-	^ anEditor
 ]
 
 { #category : #'deletion special' }
@@ -329,8 +299,6 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_
 
 	self assert: anEditor text asString equals: ')'.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 0 ).
-
-	^ anEditor
 ]
 
 { #category : #'deletion special' }
@@ -349,8 +317,6 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 
 	self assert: anEditor text asString equals: '()'.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 2 ).
-
-	^ anEditor
 ]
 
 { #category : #'deletion special' }
@@ -374,8 +340,6 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 
 	self assert: anEditor text asString equals: '()'.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 2 ).
-
-	^ anEditor
 ]
 
 { #category : #'deletion special' }
@@ -394,6 +358,4 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 
 	self assert: anEditor text asString equals: '('.
 	self assert: anEditor cursor equals: (AlbTextEditorSingleCursor new position: 1 ).
-
-	^ anEditor
 ]

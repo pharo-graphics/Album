@@ -315,7 +315,7 @@ AlbTextEditorInserterTest >> test_insert_indentation [
 	
 	| anEditor |
 
-	anEditor := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
+	anEditor := self newEditorElement: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
 	anEditor selecter
 		from: 0 to: 11;
 		select.
@@ -337,7 +337,7 @@ AlbTextEditorInserterTest >> test_insert_indentation2 [
 	
 	| anEditor |
 
-	anEditor := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
+	anEditor := self newEditorElement: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
 	anEditor selecter
 		from: 3 to: 13;
 		select.

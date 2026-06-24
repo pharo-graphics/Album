@@ -6,21 +6,21 @@ Class {
 
 { #category : #'example - Object>>#printString' }
 AlbTextEditorOnObjectPrintStringExamples >> editorOnObjectPrintString [
-	<gtExample>
+	<sampleInstance>
 
 	^ self newEditor text: self textObjectPrintString
 ]
 
 { #category : #'example - Object>>#printString' }
 AlbTextEditorOnObjectPrintStringExamples >> elementOnObjectPrintString [
-	<gtExample>
+	<sampleInstance>
 	
 	^ self newElement editor: self editorOnObjectPrintString
 ]
 
 { #category : #'example - Object>>#printString' }
 AlbTextEditorOnObjectPrintStringExamples >> textObjectPrintString [
-	<gtExample>
+	<sampleInstance>
 	
 	^ (Object>>#printString) sourceCode asRopedText monospace
 ]

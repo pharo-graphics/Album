@@ -15,26 +15,6 @@ AlbTextEditorOperatorTest >> descent [
 ]
 
 { #category : #'instance creation' }
-AlbTextEditorOperatorTest >> editorFor: aText [
-	
-	| anEditor aRopedText |
-
-	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
-
-	anEditor := AlbEditorElement new.
-	anEditor padding: BlInsets empty.
-	anEditor exact: 1000@1000.
-	anEditor
-		wordStencil: (AlbTextWordPieceStencil editable
-			measurer: self fixedMeasurer).
-	anEditor text: aRopedText.
-	
-	anEditor forceLayout.
-
-	^ anEditor
-]
-
-{ #category : #'instance creation' }
 AlbTextEditorOperatorTest >> fixedMeasurer [
 	^ BATextElementMockedMeasurer new
 		ascent: self ascent;
@@ -76,8 +56,29 @@ Seems far away.' asRopedText
 ]
 
 { #category : #'instance creation' }
+AlbTextEditorOperatorTest >> newEditorElement: aText [
+	
+	| anEditor aRopedText |
+
+	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
+
+	anEditor := AlbEditorElement new.
+	anEditor padding: BlInsets empty.
+	anEditor exact: 1000@1000.
+	anEditor
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
+	anEditor text: aRopedText.
+	
+	anEditor forceLayout.
+
+	^ anEditor
+]
+
+{ #category : #'instance creation' }
 AlbTextEditorOperatorTest >> newEditorElementWithMultilineText [
-	^ self editorFor: self multilineText
+
+	^ self newEditorElement: self multilineText
 ]
 
 { #category : #'private - font metrics' }
@@ -133,7 +134,7 @@ AlbTextEditorOperatorTest >> test_editorOnAA [
 	
 	| anEditor anEditorElement |
 	
-	anEditorElement := self editorFor: 'AA' asRopedText.
+	anEditorElement := self newEditorElement: 'AA' asRopedText.
 	anEditor := anEditorElement editor.
 	
 	self assert: anEditor cursor notNil.
@@ -147,7 +148,7 @@ AlbTextEditorOperatorTest >> test_editorOnAA_CR_BB [
 	
 	| anEditor anEditorElement |
 	
-	anEditorElement := self editorFor: ('AA', String cr, 'BB' ) asRopedText.
+	anEditorElement := self newEditorElement: ('AA', String cr, 'BB' ) asRopedText.
 	anEditor := anEditorElement editor.
 	
 	self assert: anEditor cursor notNil.
@@ -161,7 +162,7 @@ AlbTextEditorOperatorTest >> test_editorOnEmptyText [
 	
 	| anEditor anEditorElement |
 	
-	anEditorElement := self editorFor: '' asRopedText.
+	anEditorElement := self newEditorElement: '' asRopedText.
 	anEditor := anEditorElement editor.
 	
 	self assert: anEditor cursor notNil.

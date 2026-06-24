@@ -111,7 +111,7 @@ AlbTextEditorSelecterTest >> test_select_moveOneDown_at_6 [
 	
 	| anEditor anEditorElement |
 
-	anEditorElement := self editorFor: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
+	anEditorElement := self newEditorElement: 'AAAAA', String cr, 'BBBBB', String cr, 'CCCCC'.
 	anEditor := anEditorElement editor.
 	anEditor moveCursorTo: 6.
 	

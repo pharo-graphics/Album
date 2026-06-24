@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbEditorShortcutExamples,
-	#superclass : #Object,
+	#superclass : #BlExamplesTest,
 	#category : #'Album-Examples-Shortcuts'
 }
 

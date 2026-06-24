@@ -238,7 +238,7 @@ AlbTextEditorDeleterTest >> test_delete_0_to_5_from_HelloCr [
 	
 	| anEditor |
 	
-	anEditor := self editorFor: 'hello', String cr.
+	anEditor := self newEditorElement: 'hello', String cr.
 
 	anEditor deleter
 		from: 0 to: 5;
@@ -252,7 +252,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_0_from_parenthesis_open_
 	
 	| anEditor |
 	
-	anEditor := self editorFor: '()'.
+	anEditor := self newEditorElement: '()'.
 	anEditor navigator
 		moveTo: 0;
 		apply.
@@ -270,7 +270,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_
 	
 	| anEditor |
 	
-	anEditor := self editorFor: '()'.
+	anEditor := self newEditorElement: '()'.
 	anEditor navigator
 		moveTo: 1;
 		apply.
@@ -288,7 +288,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_1_from_parenthesis_open_
 	
 	| anEditor |
 	
-	anEditor := self editorFor: '())'.
+	anEditor := self newEditorElement: '())'.
 	anEditor navigator
 		moveTo: 1;
 		apply.
@@ -306,7 +306,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 	
 	| anEditor |
 	
-	anEditor := self editorFor: '()'.
+	anEditor := self newEditorElement: '()'.
 	anEditor navigator
 		moveTo: 2;
 		apply.
@@ -324,7 +324,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 	
 	| anEditor |
 	
-	anEditor := self editorFor: '()'.
+	anEditor := self newEditorElement: '()'.
 	
 	anEditor selecter
 		from: 1 to: 2;
@@ -347,7 +347,7 @@ AlbTextEditorDeleterTest >> test_surroundings_delete_at_2_from_parenthesis_open_
 	
 	| anEditor |
 	
-	anEditor := self editorFor: '(()'.
+	anEditor := self newEditorElement: '(()'.
 	anEditor navigator
 		moveTo: 2;
 		apply.

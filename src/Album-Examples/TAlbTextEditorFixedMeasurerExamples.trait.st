@@ -16,12 +16,31 @@ TAlbTextEditorFixedMeasurerExamples >> descent [
 	^ 20
 ]
 
-{ #category : #'instance creation' }
-TAlbTextEditorFixedMeasurerExamples >> editorFor: aText [
-	<return: #AlbEditorElement>
-	| anEditor aRopedText |
+{ #category : #'private - font metrics' }
+TAlbTextEditorFixedMeasurerExamples >> glyphHeight [
+	^ self ascent abs + self descent
+]
 
-	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
+{ #category : #'private - font metrics' }
+TAlbTextEditorFixedMeasurerExamples >> glyphWidth [
+	^ 30
+]
+
+{ #category : #'private - font metrics' }
+TAlbTextEditorFixedMeasurerExamples >> lineSpacing [
+	^ 5
+]
+
+{ #category : #'instance creation' }
+TAlbTextEditorFixedMeasurerExamples >> newEditorElement: aText [
+
+	| anEditor aRopedText |
+	aRopedText :=
+		aText asRopedText
+			lineSpacing: self lineSpacing;
+			paragraphMargin: self paragraphMargin;
+			wordPadding: self wordPadding;
+			yourself.
 
 	anEditor := AlbEditorElement new.
 	anEditor padding: BlInsets empty.
@@ -44,21 +63,6 @@ TAlbTextEditorFixedMeasurerExamples >> editorFor: aText [
 	anEditor forceLayout.
 
 	^ anEditor
-]
-
-{ #category : #'private - font metrics' }
-TAlbTextEditorFixedMeasurerExamples >> glyphHeight [
-	^ self ascent abs + self descent
-]
-
-{ #category : #'private - font metrics' }
-TAlbTextEditorFixedMeasurerExamples >> glyphWidth [
-	^ 30
-]
-
-{ #category : #'private - font metrics' }
-TAlbTextEditorFixedMeasurerExamples >> lineSpacing [
-	^ 5
 ]
 
 { #category : #'private - font metrics' }

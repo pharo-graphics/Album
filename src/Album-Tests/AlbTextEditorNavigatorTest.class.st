@@ -33,7 +33,7 @@ AlbTextEditorNavigatorTest >> cursor_moveToNextWord_in_cursors_at_0 [
 { #category : #showroom }
 AlbTextEditorNavigatorTest >> editorOnSomeThing [
 
-	^ self editorFor: 'SomeThing todo here'
+	^ self newEditorElement: 'SomeThing todo here'
 ]
 
 { #category : #showroom }
@@ -324,7 +324,7 @@ AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated [
 	
 	| anEditor thePiecesWithCursor |
 	
-	anEditor := self editorFor: 'Hello World'.
+	anEditor := self newEditorElement: 'Hello World'.
 	
 	anEditor navigator
 		moveTo: 5;
@@ -360,7 +360,7 @@ AlbTextEditorNavigatorTest >> test_cursor_is_not_duplicated_bulk [
 	
 	| anEditor thePiecesWithCursor |
 	
-	anEditor := self editorFor: 'Hello World'.
+	anEditor := self newEditorElement: 'Hello World'.
 	
 	anEditor navigator
 		moveTo: 5;

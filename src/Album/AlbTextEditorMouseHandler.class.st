@@ -45,7 +45,7 @@ AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 			(element hasFocus or: [ element isEditable not ]) ifTrue: [
 				editor deselecter all deselect ] ].
 	aNavigator moveToScreenPosition: aScreenPosition.
-	(element isEnabled and: [ element isEditable ]) ifTrue: [
+	element isEditable ifTrue: [
 		element requestFocus.
 		anEvent consume ].
 	aNavigator apply.

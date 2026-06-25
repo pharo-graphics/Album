@@ -31,7 +31,7 @@ AlbTextEditorCursorIconHandler >> eventsToHandle [
 AlbTextEditorCursorIconHandler >> mouseEnterEvent: anEvent [
 
 	anEvent currentTarget mouseCursor:
-		((element isEnabled and: [ element isEditable ])
+		(element isEditable
 			 ifTrue: [ Cursor overEditableText ]
 			 ifFalse: [ Cursor normal ])
 ]
@@ -45,6 +45,5 @@ AlbTextEditorCursorIconHandler >> mouseLeaveEvent: anEvent [
 { #category : #'event handling' }
 AlbTextEditorCursorIconHandler >> mouseOverEvent: anEvent [
 
-	element isEnabled ifFalse: [ ^ self ].
 	anEvent currentTarget mouseCursor: Cursor overEditableText
 ]

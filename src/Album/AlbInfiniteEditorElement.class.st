@@ -6,7 +6,8 @@ Class {
 		'cursorElement',
 		'wordStencil',
 		'modeEventHandlers',
-		'modeShortcuts'
+		'modeShortcuts',
+		'isEnabled'
 	],
 	#category : #'Album-UI'
 }
@@ -265,6 +266,7 @@ AlbInfiniteEditorElement >> infinite [
 AlbInfiniteEditorElement >> initialize [
 
 	super initialize.
+	isEnabled := true.
 	self mode: self defaultMode.
 	self matchParent
 ]
@@ -307,6 +309,18 @@ AlbInfiniteEditorElement >> inserter [
 AlbInfiniteEditorElement >> isEditable [
 
 	^ self mode isEditable
+]
+
+{ #category : #testing }
+AlbInfiniteEditorElement >> isEnabled [
+
+	^ isEnabled ifNil: [ true ]
+]
+
+{ #category : #accessing }
+AlbInfiniteEditorElement >> isEnabled: aBoolean [
+
+	isEnabled := aBoolean
 ]
 
 { #category : #'private - view accessing' }

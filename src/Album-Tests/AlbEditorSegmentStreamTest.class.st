@@ -23,7 +23,6 @@ AlbEditorSegmentStreamTest >> test_basic_nextPut [
 	self assert: stream size equals: 1.
 	self assert: stream size < stream limit.
 	self assert: stream wantsMore
-	
 ]
 
 { #category : #tests }
@@ -37,7 +36,6 @@ AlbEditorSegmentStreamTest >> test_nextPut_beyond_limit [
 	self assert: stream size equals: lim.
 	self assert: stream wantsMore not.
 	self should: [stream nextPut: $B] raise: Error.
-	
 ]
 
 { #category : #tests }

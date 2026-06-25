@@ -6,49 +6,15 @@ Class {
 	#category : #'Album-Examples-Editor'
 }
 
-{ #category : #'instance creation' }
-AlbEmbeddedEditorExamples >> editorFor: aText [
-	<return: #AlbEditorElement>
-	| anEditor aRopedText |
-
-	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
-
-	anEditor := AlbEditorElement new.
-	anEditor padding: BlInsets empty.
-	anEditor fitContent.
-	anEditor text: aRopedText.
-	
-	BlDevCrossover on: anEditor.
-	
-	anEditor 	wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-			aTextElement ].
-	
-	anEditor requestFocus.
-
-	^ anEditor
-]
-
-{ #category : #'examples - embedded' }
-AlbEmbeddedEditorExamples >> editorWithEmbeddedEditor [
-
-	<gtExample>
-	| ed |
-	ed := self newEditor privateText: self textWithEmbeddedEditor.
-	self makeFixedMeasurement: ed.
-	^ ed
-]
-
 { #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> elementWithEmbeddedEditor [
-	<gtExample>
+	<sampleInstance>
+	<demo>
 	
-	^ self newElement editor: self editorWithEmbeddedEditor
+	^ self newElement 
+		text: self textWithEmbeddedEditor;
+		in: [ :ed | self makeFixedMeasurement: ed ];
+		yourself
 ]
 
 { #category : #'private - instance creation' }
@@ -89,28 +55,55 @@ AlbEmbeddedEditorExamples >> mainEditorText [
 AlbEmbeddedEditorExamples >> makeFixedMeasurement: aTextEditor [
 
 	aTextEditor
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement ]
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer)
+]
+
+{ #category : #'instance creation' }
+AlbEmbeddedEditorExamples >> newEditorElement: aText [
+
+	| anEditor aRopedText |
+	aRopedText :=
+		aText asRopedText
+			lineSpacing: self lineSpacing;
+			paragraphMargin: self paragraphMargin;
+			wordPadding: self wordPadding;
+			yourself.
+
+	anEditor := AlbEditorElement new.
+	anEditor padding: BlInsets empty.
+	anEditor fitContent.
+	anEditor text: aRopedText.
+	
+	BlDevCrossover on: anEditor.
+	
+	anEditor 	wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
+	
+	anEditor requestFocus.
+
+	^ anEditor
 ]
 
 { #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> newThreeLineText [
-	<gtExample>
 	
 	^ ('first' , String cr , 'second' , String cr , 'third') asRopedText
 ]
 
 { #category : #'examples - embedded' }
-AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
-	<script: 'self new textWithEmbeddedEditor'>
-	| aText |
+AlbEmbeddedEditorExamples >> open [
+	<script: 'self new open'>
 
+	self elementWithEmbeddedEditor openInNewSpace
+]
+
+{ #category : #'examples - embedded' }
+AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
+
+	| aText |
 	aText := self mainEditorText.
+
 	(aText from: 5 to: 5) attribute:
 		(AlbTextAdornmentDynamicAttribute new
 			beAppend;
@@ -121,7 +114,7 @@ AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
 					border: (BlBorder paint: Color gray);
 					background: (Color gray alpha: 0.2).
 
-				anEditorElement editor text: self embeddedEditorText.
+				anEditorElement text: self embeddedEditorText.
 				self makeFixedMeasurement: anEditorElement editor.
 				anEditorElement ]).
 

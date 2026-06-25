@@ -51,8 +51,6 @@ AlbTextEditorLineSplitterTest >> test_splitSub_Hello_from_HabaHelloFoo [
 	self assert: aStream segments size equals: 1.
 	self assert: aStream segments first textStart equals: 0.
 	self assert: aStream segments first textEnd equals: 5.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -85,8 +83,6 @@ AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtributeReturningEmpty
 	
 	self assert: aStream segments second textStart equals: 6.
 	self assert: aStream segments second textEnd equals: 6.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -118,8 +114,6 @@ AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtributeReturningTwoEl
 	
 	self assert: aStream segments second textStart equals: 6.
 	self assert: aStream segments second textEnd equals: 6.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -151,8 +145,6 @@ AlbTextEditorLineSplitterTest >> test_split_BeReplacedTextAtribute_FollowedByLf 
 	
 	self assert: aStream segments second textStart equals: 6.
 	self assert: aStream segments second textEnd equals: 6.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -178,8 +170,6 @@ AlbTextEditorLineSplitterTest >> test_split_Cr [
 	self assert: aSegment textEnd equals: 1.
 	self assert: aSegment textEndDelimited equals: 1.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -211,8 +201,6 @@ AlbTextEditorLineSplitterTest >> test_split_CrCr [
 	self assert: aSegment textEnd equals: 2.
 	self assert: aSegment textEndDelimited equals: 2.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -238,8 +226,6 @@ AlbTextEditorLineSplitterTest >> test_split_CrLf [
 	self assert: aSegment textEnd equals: 2.
 	self assert: aSegment textEndDelimited equals: 2.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -272,8 +258,6 @@ AlbTextEditorLineSplitterTest >> test_split_CrLfCrLf [
 	self assert: aSegment textEnd equals: 4.
 	self assert: aSegment textEndDelimited equals: 4.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -298,8 +282,6 @@ AlbTextEditorLineSplitterTest >> test_split_Cra [
 	self assert: aSegment textStart equals: 1.
 	self assert: aSegment textEnd equals: 2.
 	self assert: aSegment text asString equals: 'a'.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -328,8 +310,6 @@ AlbTextEditorLineSplitterTest >> test_split_CraCr [
 	self assert: aSegment textStart equals: 3.
 	self assert: aSegment textEnd equals: 3.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -358,8 +338,6 @@ AlbTextEditorLineSplitterTest >> test_split_CraCrLf [
 	self assert: aSegment textStart equals: 4.
 	self assert: aSegment textEnd equals: 4.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -388,8 +366,6 @@ AlbTextEditorLineSplitterTest >> test_split_CraCrLfb [
 	self assert: aSegment textStart equals: 4.
 	self assert: aSegment textEnd equals: 5.
 	self assert: aSegment text asString equals: 'b'.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -426,8 +402,6 @@ AlbTextEditorLineSplitterTest >> test_split_CraCrLfbLf [
 	self assert: aSegment textStart equals: 6.
 	self assert: aSegment textEnd equals: 6.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -446,8 +420,6 @@ AlbTextEditorLineSplitterTest >> test_split_Hello [
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 5.
 	self assert: aSegment text asString equals: 'Hello'.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -465,8 +437,6 @@ AlbTextEditorLineSplitterTest >> test_split_HelloSpaceWorldWithReplacementOfSpac
 	self assert: aStream segments size equals: 1.
 	self assert: aStream segments first textStart equals: 0.
 	self assert: aStream segments first textEnd equals: 11.
-
-	^ aStream
 ]
 
 { #category : #'split subtext' }
@@ -483,8 +453,6 @@ AlbTextEditorLineSplitterTest >> test_split_Hello_from_HabaHelloFoo [
 	self assert: aStream segments size equals: 1.
 	self assert: aStream segments first textStart equals: 0.
 	self assert: aStream segments first textEnd equals: 5.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -503,8 +471,6 @@ AlbTextEditorLineSplitterTest >> test_split_a [
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 1.
 	self assert: aSegment text asString equals: 'a'.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -523,8 +489,6 @@ AlbTextEditorLineSplitterTest >> test_split_empty [
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #split }
@@ -558,8 +522,6 @@ AlbTextEditorLineSplitterTest >> test_split_haCrCrbaCr [
 	self assert: aSegment textStart equals: 7.
 	self assert: aSegment textEnd equals: 7.
 	self assert: aSegment text asString equals: ''.
-
-	^ aStream
 ]
 
 { #category : #accessing }

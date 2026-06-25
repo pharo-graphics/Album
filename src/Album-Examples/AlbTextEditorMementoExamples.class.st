@@ -29,7 +29,7 @@ AlbTextEditorMementoExamples >> testEditorRestoreState [
 AlbTextEditorMementoExamples >> testEditorWithState [
 
 	| aTextEditor |
-	aTextEditor := AlbTextEditor new privateText: 'Hello world' asRopedText.
+	aTextEditor := AlbTextEditor new text: 'Hello world' asRopedText.
 
 	aTextEditor navigator
 		moveTo: 1;

@@ -26,7 +26,7 @@ AlbTextEditorInputFilterMemento >> order [
 
 { #category : #memento }
 AlbTextEditorInputFilterMemento >> restoreStateOf: aTextEditor [
-	aTextEditor inputFilter: inputFilter
+	aTextEditor basicInputFilter: inputFilter
 ]
 
 { #category : #memento }

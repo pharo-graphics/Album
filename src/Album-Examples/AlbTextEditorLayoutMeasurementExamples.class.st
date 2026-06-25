@@ -6,43 +6,13 @@ Class {
 	#category : #'Album-Examples-Editor'
 }
 
-{ #category : #'instance creation' }
-AlbTextEditorLayoutMeasurementExamples >> editorFor: aText [
-	<return: #AlbEditorElement>
-	| anEditor aRopedText |
-
-	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
-
-	anEditor := AlbEditorElement new.
-	anEditor padding: BlInsets empty.
-	anEditor fitContent.
-	anEditor text: aRopedText.
-	
-	BlDevCrossover on: anEditor.
-	
-	anEditor  
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-			aTextElement ].
-	
-	anEditor requestFocus.
-	anEditor forceLayout.
-
-	^ anEditor
-]
-
 { #category : #'examples - measurement' }
 AlbTextEditorLayoutMeasurementExamples >> fit_content_Hello [
 	<gtExample>
 	<noTest>
 	| anEditorElement |
 
-	anEditorElement := self editorFor: 'Hello'.
+	anEditorElement := self newEditorElement: 'Hello'.
 
 "	self assert: anEditorElement width equals: (5 * self glyphWidth) + (self paragraphMargin width).
 	self assert: anEditorElement height equals: self glyphHeight + (self wordPadding height) + (self lineSpacing * 0) + (self paragraphMargin height).
@@ -56,10 +26,38 @@ AlbTextEditorLayoutMeasurementExamples >> fit_content_Hello_World [
 	<noTest>
 	| anEditorElement |
 
-	anEditorElement := self editorFor: 'Hello World'.
+	anEditorElement := self newEditorElement: 'Hello World'.
 
 	self assert: anEditorElement width equals: (11 * self glyphWidth) + (self paragraphMargin width).
 	self assert: anEditorElement height equals: self glyphHeight + (self wordPadding height) + (self lineSpacing * 0) + (self paragraphMargin height).
 
 	^ anEditorElement
+]
+
+{ #category : #'instance creation' }
+AlbTextEditorLayoutMeasurementExamples >> newEditorElement: aText [
+
+	| anEditor aRopedText |
+	aRopedText :=
+		aText asRopedText
+			lineSpacing: self lineSpacing;
+			paragraphMargin: self paragraphMargin;
+			wordPadding: self wordPadding;
+			yourself.
+
+	anEditor := AlbEditorElement new.
+	anEditor padding: BlInsets empty.
+	anEditor fitContent.
+	anEditor text: aRopedText.
+	
+	BlDevCrossover on: anEditor.
+	
+	anEditor  
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
+	
+	anEditor requestFocus.
+	anEditor forceLayout.
+
+	^ anEditor
 ]

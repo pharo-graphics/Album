@@ -6,7 +6,6 @@ Class {
 
 { #category : #'instance creation' }
 AlbTextEditorCursor class >> at: aTextIndex [
-	<return: #AlbTextEditorSingleCursor>
 
 	^ AlbTextEditorSingleCursor at: aTextIndex
 ]

@@ -20,15 +20,14 @@ AlbTextEditorSegmentCollectorExamples2 >> testRetrieveLimitPlusOne [
 	collector := editor segmentCollector.
 	collector cacheLimit: limit.
 
-	self assert: (collector segmentAt: limit+1) asString
+	self assert: (collector segmentAt: limit+1) text asString
 			equals: 'Line ', (limit+1 printPaddedWith: $0 to: 3).
-	self assert: (collector segmentAt: 1) asString
+	self assert: (collector segmentAt: 1) text asString
 			equals: 'Line 001'.
-	self assert: (collector segmentAt: limit+1) asString
+	self assert: (collector segmentAt: limit+1) text asString
 			equals: 'Line ', (limit+1 printPaddedWith: $0 to: 3).
-	self assert: (collector segmentAt: limit) asString
-			equals: 'Line ', (limit printPaddedWith: $0 to: 3).
-
+	self assert: (collector segmentAt: limit) text asString
+			equals: 'Line ', (limit printPaddedWith: $0 to: 3)
 ]
 
 { #category : #examples }
@@ -48,11 +47,11 @@ AlbTextEditorSegmentCollectorExamples2 >> testRetrieveWithinLimit [
 						          << (i printPaddedWith: $0 to: 3);
 						          lf ] ].
 
-	editor privateText: string asRopedText.
+	editor text: string asRopedText.
 	collector := editor segmentCollector.
 	collector cacheLimit: cacheLimit.
 
-	self assert: (collector segmentAt: 1) asString equals: 'Line 001'.
-	self assert: (collector segmentAt: limit) asString equals: 'Line ' , (limit printPaddedWith: $0 to: 3).
-	self assert: (collector segmentAt: limit // 2) asString equals: 'Line ' , (limit // 2 printPaddedWith: $0 to: 3)
+	self assert: (collector segmentAt: 1) text asString equals: 'Line 001'.
+	self assert: (collector segmentAt: limit) text asString equals: 'Line ' , (limit printPaddedWith: $0 to: 3).
+	self assert: (collector segmentAt: limit // 2) text asString equals: 'Line ' , (limit // 2 printPaddedWith: $0 to: 3)
 ]

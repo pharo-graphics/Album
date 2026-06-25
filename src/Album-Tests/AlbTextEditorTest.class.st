@@ -12,13 +12,14 @@ Class {
 
 { #category : #initialization }
 AlbTextEditorTest >> setUp [
-	textEditor := AlbTextEditor new.
+
+	textEditor := AlbTextEditor new
 ]
 
 { #category : #tests }
 AlbTextEditorTest >> test_emptyEditor [
 
-	self assert: textEditor privateText asString equals: ''.
+	self assert: textEditor text asString equals: ''.
 	self
 		assert: textEditor segmentCollector computedSegmentsCount
 		equals: 1.
@@ -30,9 +31,9 @@ AlbTextEditorTest >> test_emptyEditor [
 { #category : #tests }
 AlbTextEditorTest >> test_insertString1 [
 
-	textEditor insertString: 'Z' at: textEditor privateText size.
+	textEditor insertString: 'Z' at: textEditor text size.
 	textEditor insertString: 'A' at: 0.
-	self assert: textEditor privateText asString equals: 'AZ'.
+	self assert: textEditor text asString equals: 'AZ'.
 	self should: [ textEditor insertString: 'A' at: -1 ] raise: Error.
 	self should: [ textEditor insertString: 'A' at: 3 ] raise: Error
 ]
@@ -41,8 +42,6 @@ AlbTextEditorTest >> test_insertString1 [
 AlbTextEditorTest >> test_insertString2 [
 
 	self should: [textEditor insertString: Character backspace asString at: 0] raise: Error.
-
-
 ]
 
 { #category : #tests }
@@ -59,8 +58,8 @@ AlbTextEditorTest >> test_insertString3 [
 { #category : #tests }
 AlbTextEditorTest >> test_oneCharacter [
 
-	textEditor privateText: 'A' asRopedText.
-	self assert: textEditor privateText asString equals: 'A'.
+	textEditor text: 'A' asRopedText.
+	self assert: textEditor text asString equals: 'A'.
 	self
 		assert: textEditor segmentCollector computedSegmentsCount
 		equals: 1.
@@ -73,8 +72,8 @@ AlbTextEditorTest >> test_oneCharacter [
 AlbTextEditorTest >> test_textFromString [
 	"the editor text can be initialized from a string"
 
-	textEditor privateText: 'a string' asRopedText.
-	self assert: textEditor privateText asString equals: 'a string'.
+	textEditor text: 'a string' asRopedText.
+	self assert: textEditor text asString equals: 'a string'.
 	"#textSnapshot return a copy of the editor text (to be used in application thread - non-UI process)"
 	self assert: textEditor textSnapshot asString equals: 'a string'
 ]
@@ -83,5 +82,4 @@ AlbTextEditorTest >> test_textFromString [
 AlbTextEditorTest >> test_textFromStringWithNonPrintableCharacter [
 	"non printable character test"
 	self should: [textEditor checkAndSetText: Character backspace asString] raise: Error.
-
 ]

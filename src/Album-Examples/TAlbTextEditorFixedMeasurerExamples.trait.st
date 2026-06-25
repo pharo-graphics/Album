@@ -17,33 +17,12 @@ TAlbTextEditorFixedMeasurerExamples >> descent [
 ]
 
 { #category : #'instance creation' }
-TAlbTextEditorFixedMeasurerExamples >> editorFor: aText [
-	<return: #AlbEditorElement>
-	| anEditor aRopedText |
-
-	aRopedText := aText asRopedText lineSpacing: self lineSpacing; paragraphMargin: self paragraphMargin; wordPadding: self wordPadding.
-
-	anEditor := AlbEditorElement new.
-	anEditor padding: BlInsets empty.
-	anEditor fitContent.
-	anEditor text: aRopedText.
-	
-	BlDevCrossover on: anEditor.
-	
-	anEditor  
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-			aTextElement ].
-	
-	anEditor requestFocus.
-	anEditor forceLayout.
-
-	^ anEditor
+TAlbTextEditorFixedMeasurerExamples >> fixedMeasurer [
+	^ BATextElementMockedMeasurer new
+		ascent: self ascent;
+		descent: self descent;
+		glyphWidth: self glyphWidth;
+		glyphHeight: self glyphHeight
 ]
 
 { #category : #'private - font metrics' }
@@ -59,6 +38,34 @@ TAlbTextEditorFixedMeasurerExamples >> glyphWidth [
 { #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> lineSpacing [
 	^ 5
+]
+
+{ #category : #'instance creation' }
+TAlbTextEditorFixedMeasurerExamples >> newEditorElement: aText [
+
+	| anEditor aRopedText |
+	aRopedText :=
+		aText asRopedText
+			lineSpacing: self lineSpacing;
+			paragraphMargin: self paragraphMargin;
+			wordPadding: self wordPadding;
+			yourself.
+
+	anEditor := AlbEditorElement new.
+	anEditor padding: BlInsets empty.
+	anEditor fitContent.
+	anEditor text: aRopedText.
+	
+	BlDevCrossover on: anEditor.
+	
+	anEditor  
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
+	
+	anEditor requestFocus.
+	anEditor forceLayout.
+
+	^ anEditor
 ]
 
 { #category : #'private - font metrics' }

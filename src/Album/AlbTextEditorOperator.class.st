@@ -565,7 +565,7 @@ AlbTextEditorOperator >> subscribe: anEventHandler [
 { #category : #accessing }
 AlbTextEditorOperator >> text [
 
-	^ editor privateText
+	^ editor text
 ]
 
 { #category : #'api - event' }

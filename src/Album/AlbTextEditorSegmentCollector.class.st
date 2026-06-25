@@ -429,12 +429,12 @@ AlbTextEditorSegmentCollector >> insertedString: aString at: aTextIndex in: aTex
 	a point in doing it in OOP style, procedural way fits quite well"
 
 	| currentSegment stream newSegments |
-	self assert: [ aTextEditor privateText isNotEmpty ] description: [ 'Text can not be empty here' ].
+	self assert: [ aTextEditor text isNotEmpty ] description: [ 'Text can not be empty here' ].
 	self assert: [ aString isNotEmpty ] description: [ 'String must not be empty' ].
 
 	stream := self newSegmentStream.
 
-	self split: (aTextEditor privateText from: aTextIndex + 1 to: aTextIndex + aString size) in: stream offset: aTextIndex.
+	self split: (aTextEditor text from: aTextIndex + 1 to: aTextIndex + aString size) in: stream offset: aTextIndex.
 
 	self cachedSegmentAt: aTextIndex ifFound: [ :aSegment | currentSegment := aSegment ] ifNotFound: [ ^ self ].
 

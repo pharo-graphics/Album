@@ -8,10 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-AlbTextEditorLineSegmentTest >> segmentStream [
+AlbTextEditorLineSegmentTest >> newEmptyTextEditor [
 
-	
-	^ AlbEditorSegmentStream new
+	^ AlbTextEditor new
 ]
 
 { #category : #cursor }
@@ -38,8 +37,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_0 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment) not.
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -67,8 +64,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_1 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment) not.
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -96,8 +91,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_2 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment) not.
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -125,8 +118,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_3 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment) not.
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -155,8 +146,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_4 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment) not.
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -184,8 +173,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_5 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment).
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -213,8 +200,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_6 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment).
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -242,8 +227,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_7 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment).
-
-	^ aTextEditor
 ]
 
 { #category : #cursor }
@@ -271,8 +254,6 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_8 [
 	self assert: (aCursor
 		insideSubText: aSegment pieces first
 		of: aSegment) not.
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -287,8 +268,6 @@ AlbTextEditorLineSegmentTest >> test_delete_ACrCr_in_HACrCrBA_at_2_4 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 3).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -303,8 +282,6 @@ AlbTextEditorLineSegmentTest >> test_delete_A_in_A_at_1_1 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -319,8 +296,6 @@ AlbTextEditorLineSegmentTest >> test_delete_A_in_BA_at_2_2 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 1).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -336,8 +311,6 @@ AlbTextEditorLineSegmentTest >> test_delete_A_in_BCrA_at_3_3 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 1).
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (2 to: 2).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -352,8 +325,6 @@ AlbTextEditorLineSegmentTest >> test_delete_BA_in_BA_at_1_2 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -373,8 +344,6 @@ AlbTextEditorLineSegmentTest >> test_delete_B_in_BA_at_1_1 [
 	
 	theNewPieces := aTextEditor segmentCollector segments first pieces.
 	self assert: theOldPieces equals: theNewPieces.
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -390,7 +359,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrB_in_HACrCrBA_at_4_5 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 2).
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (3 to: 4).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -407,8 +375,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_1 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (1 to: 3).
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (4 to: 6).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 3).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -424,8 +390,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_2 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 2).
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (3 to: 5).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -441,8 +405,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_3 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 1).
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (2 to: 4).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -458,8 +420,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_4 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (1 to: 3).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -474,8 +434,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_5 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 2).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -490,8 +448,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_6 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 1).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -506,8 +462,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_0_7 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -523,8 +477,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_1_7 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (1 to: 1).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -541,8 +493,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_2_7 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (1 to: 1).
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (2 to: 2).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 3).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -559,8 +509,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_3_7 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (1 to: 1).
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (2 to: 3).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 3).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -577,8 +525,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_4_7 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (1 to: 1).
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (2 to: 4).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 3).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -596,8 +542,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_5_7 [
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (2 to: 4).
 	self assert: aTextEditor segmentCollector segments fourth textInterval equals: (5 to: 5).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 4).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -615,8 +559,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_6_7 [
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (2 to: 4).
 	self assert: aTextEditor segmentCollector segments fourth textInterval equals: (5 to: 6).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 4).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -634,8 +576,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCrCDCrBA_in_CrCrCDCrBA_at_7_7 [
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (2 to: 4).
 	self assert: aTextEditor segmentCollector segments fourth textInterval equals: (5 to: 7).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 4).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -650,8 +590,6 @@ AlbTextEditorLineSegmentTest >> test_delete_CrCr_in_HACrCrBA_at_3_4 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 4).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -666,8 +604,6 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BACr_at_3_3 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 2).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -682,8 +618,6 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_BCrA_at_2_2 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 2).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -698,8 +632,6 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_Cr_at_1_1 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -723,8 +655,6 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_3_3 [
 	self assert: aRemovedEvent position equals: 2.
 	
 	aTextEditor removeEventHandler: aRemovedListener.
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -740,8 +670,6 @@ AlbTextEditorLineSegmentTest >> test_delete_Cr_in_HACrCrBA_at_4_4 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 2).
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (3 to: 5).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -756,8 +684,6 @@ AlbTextEditorLineSegmentTest >> test_delete_HACrCrBA_in_HACrCrBA_at_1_6 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 0).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -772,8 +698,6 @@ AlbTextEditorLineSegmentTest >> test_delete_HACrCrB_in_HACrCrBA_at_1_5 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 1).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #deletion }
@@ -788,17 +712,18 @@ AlbTextEditorLineSegmentTest >> test_delete_HACrCr_in_HACrCrBA_at_1_4 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 2).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #accessing }
 AlbTextEditorLineSegmentTest >> test_emptyEditor [
 
-	| aTextEditor aTextEditorElement aSegmentElement aPieceElement |
-	aTextEditor := AlbTextEditor new.
+	| aTextEditor aTextEditorElement aSegmentElement aPieceElement aVisualEditor |
 
-	self assert: aTextEditor privateText asString equals: ''.
+	aTextEditorElement := AlbEditorElement new.
+	aTextEditorElement forceLayout.
+	aTextEditor := aTextEditorElement editor.
+
+	self assert: aTextEditor text asString equals: ''.
 	self
 		assert: aTextEditor segmentCollector computedSegmentsCount
 		equals: 1.
@@ -806,21 +731,16 @@ AlbTextEditorLineSegmentTest >> test_emptyEditor [
 		assert: aTextEditor segmentCollector segments first textInterval
 		equals: (0 to: 0).
 
-	aTextEditorElement := AlbEditorElement new.
-	aTextEditorElement extent: 600 @ 600.
-	aTextEditorElement editor: aTextEditor.
-	aTextEditorElement forceLayout.
+	aVisualEditor := aTextEditorElement infinite.
+	self assert: aVisualEditor childrenCount equals: 1.
 
-	self assert: aTextEditorElement childrenCount equals: 1.
-
-	aSegmentElement := aTextEditorElement children first.
+	aSegmentElement := aVisualEditor children first.
 	self assert: aSegmentElement childrenCount equals: 1.
 
 	aPieceElement := aSegmentElement children first.
-	self assert: aPieceElement segmentPiece
-		== aTextEditor segmentCollector segments first pieces first.
-
-	^ aTextEditor
+	self
+		assert: aPieceElement segmentPiece
+		identicalTo: aTextEditor segmentCollector segments first pieces first
 ]
 
 { #category : #insertion }
@@ -836,16 +756,13 @@ AlbTextEditorLineSegmentTest >> test_insert_000_in_HABA_at_2 [
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 7).
 	self assert: aTextEditor segmentCollector segments first text asString equals: 'HA000BA'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_A_inEmptyAt_0 [
 
 	| aTextEditor |
-	
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: 'A' at: 0.
 	
@@ -873,8 +790,6 @@ AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrBA_At_3 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (3 to: 6).
 	self assert: aTextEditor segmentCollector segments second text asString equals: 'ABA'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -894,8 +809,6 @@ AlbTextEditorLineSegmentTest >> test_insert_A_in_HACrCrBA_At_3 [
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (5 to: 7).
 	self assert: aTextEditor segmentCollector segments third text asString equals: 'BA'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 3).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1011,15 +924,13 @@ AlbTextEditorLineSegmentTest >> test_insert_E_in_Hello_World_at_2 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	self assert: aTextEditor segmentCollector segments first textInterval equals: (0 to: 12).
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 1).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
 
 	| aTextEditor aSegment |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: 'HABA' at: 0.
 	
@@ -1039,7 +950,7 @@ AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
 AlbTextEditorLineSegmentTest >> test_insert_Hello_World_inEmptyAt_0 [
 
 	| aTextEditor |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 
 	aTextEditor insertString: 'Hello World' at: 0.
 
@@ -1055,7 +966,7 @@ AlbTextEditorLineSegmentTest >> test_insert_Hello_World_inEmptyAt_0 [
 AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
 
 	| aTextEditor |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 
 	aTextEditor insertString: 'Hello' at: 0.
 
@@ -1071,7 +982,7 @@ AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
 AlbTextEditorLineSegmentTest >> test_insert_Lf_inEmptyAt_0 [
 
 	| aTextEditor aSegment |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: String lf at: 0.
 	
@@ -1079,13 +990,11 @@ AlbTextEditorLineSegmentTest >> test_insert_Lf_inEmptyAt_0 [
 	self assert: aTextEditor text asString equals: String lf.
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 2.
 	
-	aSegment := aTextEditor segmentCollector segments at: 1.
+	aSegment := aTextEditor segmentCollector segments first.
 	self assert: aSegment textInterval equals: (0 to: 0).
 	self assert: aSegment textEndDelimited equals: 1.
 
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1132,15 +1041,13 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_inCrAt_1 [
 	self assert: anInsertedEvent position equals: 3.
 	
 	aTextEditor removeEventHandler: anInsertedListener.
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_inEmptyAt_0 [
 
 	| aTextEditor |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: String cr at: 0.
 
@@ -1273,8 +1180,6 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_CrCDCrBA_At_1 [
 	self assert: aTextEditor segmentCollector segments fourth textInterval equals: (5 to: 7).
 	self assert: aTextEditor segmentCollector segments fourth text asString equals: 'BA'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 4).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1292,8 +1197,6 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_0 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (1 to: 5).
 	self assert: aTextEditor segmentCollector segments second text asString equals: 'HABA'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1311,8 +1214,6 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_1 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (2 to: 5).
 	self assert: aTextEditor segmentCollector segments second text asString equals: 'ABA'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1355,8 +1256,6 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_3 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (4 to: 5).
 	self assert: aTextEditor segmentCollector segments second text asString equals: 'A'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1374,8 +1273,6 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_4 [
 	self assert: aTextEditor segmentCollector segments second textInterval equals: (5 to: 5).
 	self assert: aTextEditor segmentCollector segments second text asString equals: ''.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1437,8 +1334,6 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HeCrllo_At_3 [
 	self assert: aTextEditor segmentCollector segments third textInterval equals: (4 to: 7).
 	self assert: aTextEditor segmentCollector segments third text asString equals: 'llo'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 3).
-
-	^ aTextEditor
 ]
 
 { #category : #insertion }
@@ -1500,8 +1395,6 @@ AlbTextEditorLineSegmentTest >> test_insert_haCrCrbaCr_inHelloAt_2 [
 	self assert: aTextEditor segmentCollector segments fourth textInterval equals: (9 to: 12).
 	self assert: aTextEditor segmentCollector segments fourth text asString equals: 'llo'.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 4).
-
-	^ aTextEditor
 ]
 
 { #category : #overwrite }
@@ -1569,8 +1462,6 @@ AlbTextEditorLineSegmentTest >> test_overwrite_Hello_World_with_S_in_Hello_World
 	self assert: (theOldPieces third isKindOf: AlbTextEditorLineSegmentTextPiece).
 	self assert: theOldPieces third textStart equals: 0.
 	self assert: theOldPieces third textEnd equals: 0.
-	
-	^ aTextEditor
 ]
 
 { #category : #overwrite }
@@ -1646,8 +1537,6 @@ AlbTextEditorLineSegmentTest >> test_overwrite_World_with_S_in_Hello_World [
 	self assert: (theOldPieces third isKindOf: AlbTextEditorLineSegmentTextPiece).
 	self assert: theOldPieces third textStart equals: 6.
 	self assert: theOldPieces third textEnd equals: 6.
-	
-	^ aTextEditor
 ]
 
 { #category : #overwrite }
@@ -1723,8 +1612,6 @@ AlbTextEditorLineSegmentTest >> test_overwrite_d_with_S_in_Hello_World [
 	self assert: (theOldPieces third isKindOf: AlbTextEditorLineSegmentTextPiece).
 	self assert: theOldPieces third textStart equals: 6.
 	self assert: theOldPieces third textEnd equals: 10.
-	
-	^ aTextEditor
 ]
 
 { #category : #overwrite }
@@ -1792,8 +1679,6 @@ AlbTextEditorLineSegmentTest >> test_overwrite_llo_World_with_S_in_Hello_World [
 	self assert: (theOldPieces third isKindOf: AlbTextEditorLineSegmentTextPiece).
 	self assert: theOldPieces third textStart equals: 2.
 	self assert: theOldPieces third textEnd equals: 2.
-	
-	^ aTextEditor
 ]
 
 { #category : #pieces }
@@ -1825,8 +1710,6 @@ AlbTextEditorLineSegmentTest >> test_pieces_HelloCr [
 	self assert: aPiece textStart equals: 6.
 	self assert: aPiece textEnd equals: 6.
 	self assert: (aPiece globalTextIndexToLocal: 6) equals: 0.
-	
-	^ aTextEditor
 ]
 
 { #category : #pieces }
@@ -1858,8 +1741,6 @@ AlbTextEditorLineSegmentTest >> test_pieces_HelloCrLf [
 	self assert: aPiece textStart equals: 7.
 	self assert: aPiece textEnd equals: 7.
 	self assert: (aPiece globalTextIndexToLocal: 6) equals: 0.
-	
-	^ aTextEditor
 ]
 
 { #category : #pieces }
@@ -1897,8 +1778,6 @@ AlbTextEditorLineSegmentTest >> test_pieces_Hello_World [
 	self assert: (thePieces third globalTextIndexToLocal: 9) equals: 3.
 	self assert: (thePieces third globalTextIndexToLocal: 10) equals: 4.
 	self assert: (thePieces third globalTextIndexToLocal: 11) equals: 5.
-	
-	^ aTextEditor
 ]
 
 { #category : #scope }
@@ -1914,8 +1793,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_0_t
 	self assert: aSegment textInterval equals: (0 to: 11).
 	self assert: aSegment textLength equals: 11.
 	self assert: aSegment text asString equals: 'Hello', String cr, 'World'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -1931,8 +1808,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_0_t
 	self assert: aSegment textInterval equals: (0 to: 5).
 	self assert: aSegment textLength equals: 5.
 	self assert: aSegment text asString equals: 'Hello'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -1948,8 +1823,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_0_t
 	self assert: aSegment textInterval equals: (0 to: 6).
 	self assert: aSegment textLength equals: 6.
 	self assert: aSegment text asString equals: 'Hello', String cr.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -1965,8 +1838,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_1_t
 	self assert: aSegment textInterval equals: (1 to: 5).
 	self assert: aSegment textLength equals: 4.
 	self assert: aSegment text asString equals: 'ello'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -1982,8 +1853,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_0_to_5_to_be_3_t
 	self assert: aSegment textInterval equals: (3 to: 5).
 	self assert: aSegment textLength equals: 2.
 	self assert: aSegment text asString equals: 'lo'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -1999,8 +1868,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_6_to_11_to_be_0_
 	self assert: aSegment textInterval equals: (0 to: 11).
 	self assert: aSegment textLength equals: 11.
 	self assert: aSegment text asString equals: 'Hello', String cr, 'World'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2016,8 +1883,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_HelloCrWorld_6_to_11_to_be_6_
 	self assert: aSegment textInterval equals: (6 to: 11).
 	self assert: aSegment textLength equals: 5.
 	self assert: aSegment text asString equals: 'World'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2033,8 +1898,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be
 	self assert: aSegment textInterval equals: (0 to: 11).
 	self assert: aSegment textLength equals: 11.
 	self assert: aSegment text asString equals: 'Hello', String cr, 'World'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2050,8 +1913,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be
 	self assert: aSegment textInterval equals: (0 to: 5).
 	self assert: aSegment textLength equals: 5.
 	self assert: aSegment text asString equals: 'Hello'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2067,8 +1928,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be
 	self assert: aSegment textInterval equals: (0 to: 6).
 	self assert: aSegment textLength equals: 6.
 	self assert: aSegment text asString equals: 'Hello', String cr.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2084,8 +1943,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be
 	self assert: aSegment textInterval equals: (1 to: 5).
 	self assert: aSegment textLength equals: 4.
 	self assert: aSegment text asString equals: 'ello'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2101,8 +1958,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_0_to_5_to_be
 	self assert: aSegment textInterval equals: (3 to: 5).
 	self assert: aSegment textLength equals: 2.
 	self assert: aSegment text asString equals: 'lo'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2118,8 +1973,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_6_to_11_to_b
 	self assert: aSegment textInterval equals: (0 to: 11).
 	self assert: aSegment textLength equals: 11.
 	self assert: aSegment text asString equals: 'Hello', String cr, 'World'.
-	
-	^ aSegment
 ]
 
 { #category : #scope }
@@ -2135,8 +1988,6 @@ AlbTextEditorLineSegmentTest >> test_scope_segment_sub_HelloCrWorld_6_to_11_to_b
 	self assert: aSegment textInterval equals: (6 to: 11).
 	self assert: aSegment textLength equals: 5.
 	self assert: aSegment text asString equals: 'World'.
-	
-	^ aSegment
 ]
 
 { #category : #segments }
@@ -2144,8 +1995,8 @@ AlbTextEditorLineSegmentTest >> test_segment_Cr_at_0 [
 
 	| aTextEditor aSegment |
 	
-	aTextEditor := self test_emptyEditor.
-	aTextEditor text: String cr.
+	aTextEditor := self newEmptyTextEditor.
+	aTextEditor text: String cr asRopedText.
 	aTextEditor segmentCollector
 		cachedSegmentAt: 0
 		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
@@ -2156,8 +2007,6 @@ AlbTextEditorLineSegmentTest >> test_segment_Cr_at_0 [
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment delimiterLength equals: 1.
 	self assert: aSegment text asString  equals: ''.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2197,8 +2046,7 @@ AlbTextEditorLineSegmentTest >> test_segment_HelloCrWorld_6_to_11 [
 AlbTextEditorLineSegmentTest >> test_segment_in_Empty_at_0 [
 
 	| aTextEditor aSegment |
-	
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 0
@@ -2209,9 +2057,7 @@ AlbTextEditorLineSegmentTest >> test_segment_in_Empty_at_0 [
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment delimiterLength equals: 0.
-	self assert: aSegment text asString  equals: ''.
-
-	^ aTextEditor
+	self assert: aSegment text asString  equals: ''
 ]
 
 { #category : #segments }
@@ -2227,8 +2073,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_0 [
 		ifNotFound: [].
 
 	self assert: aSegment index equals: 1.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2244,8 +2088,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_1 [
 		ifNotFound: [].
 
 	self assert: aSegment index equals: 1.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2266,8 +2108,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_2 [
 	self assert: aSegment text asString equals: ('HA').
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 2.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2288,8 +2128,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_3 [
 	self assert: aSegment text asString equals: ''.
 	self assert: aSegment textStart equals: 3.
 	self assert: aSegment textEnd equals: 3.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2309,8 +2147,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_4 [
 	self assert: aSegment text asString equals: ('').
 	self assert: aSegment textStart equals: 3.
 	self assert: aSegment textEnd equals: 3.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2326,8 +2162,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_5 [
 		ifNotFound: [].
 
 	self assert: aSegment index equals: 3.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2343,8 +2177,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_6 [
 		ifNotFound: [].
 
 	self assert: aSegment index equals: 3.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2361,8 +2193,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_7 [
 		ifNotFound: [].
 
 	self assert: aSegment index equals: 3.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2380,8 +2210,6 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_8 [
 		ifNotFound: [ notFoundFlag := true ].
 
 	self assert: notFoundFlag.
-
-	^ aTextEditor
 ]
 
 { #category : #segments }
@@ -2427,90 +2255,77 @@ AlbTextEditorLineSegmentTest >> text_1234506789 [
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_A [
 
-	
 	^ BlSubText text: 'A' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACr [
 
-	
 	^ BlSubText text: ('A' , String cr) asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrB [
 
-	
 	^ BlSubText text: ('A' , String cr , 'B') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrBCrC [
 
-	
 	^ BlSubText text: ('A' , String cr , 'B' , String cr , 'C') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrCr [
 
-	
 	^ BlSubText text: ('A' , String cr , String cr) asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrCrB [
 
-	
 	^ BlSubText text: ('A' , String cr , String cr , 'B') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_BA [
 
-	
 	^ BlSubText text: 'BA' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_BCA [
 
-	
 	^ BlSubText text: 'BCA' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_Cr [
 
-	
 	^ BlSubText text: String cr asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_CrA [
 
-	
 	^ BlSubText text: (String cr , 'A') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_HABA [
 
-	
 	^ BlSubText text: 'HABA' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_Hello [
 
-	
 	^ BlSubText text: 'Hello' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_HelloCrWorld [
-
 
 	^ ('Hello', String cr, 'World') asRopedText
 ]
@@ -2642,7 +2457,6 @@ AlbTextEditorLineSegmentTest >> text_Hello_Smart_World_WithAppending [
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_Hello_World [
 
-	
 	^ BlSubText text: 'Hello World' asRopedText
 ]
 

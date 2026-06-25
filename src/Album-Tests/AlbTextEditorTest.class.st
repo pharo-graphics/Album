@@ -12,7 +12,8 @@ Class {
 
 { #category : #initialization }
 AlbTextEditorTest >> setUp [
-	textEditor := AlbTextEditor new.
+
+	textEditor := AlbTextEditor new
 ]
 
 { #category : #tests }

@@ -14,7 +14,9 @@ Class {
 { #category : #'instance creation' }
 AlbTextWordPieceStencil class >> editable [
 
-	^ self new beEditable
+	^ self new
+		  beEditable;
+		  yourself
 ]
 
 { #category : #'instance creation' }

@@ -170,7 +170,7 @@ AlbInfiniteEditorElement >> defaultRecycler [
 { #category : #initialization }
 AlbInfiniteEditorElement >> defaultTextEditor [
 
-	^ AlbTextEditor new.
+	^ AlbTextEditor new
 ]
 
 { #category : #initialization }

@@ -7,5 +7,5 @@ Class {
 { #category : #initialization }
 AlbInfiniteTextFieldElement >> defaultTextEditor [
 
-	^ AlbTextFieldEditor new.
+	^ AlbTextFieldEditor new
 ]

@@ -54,12 +54,6 @@ AlbTextEditorOperator >> cursor: aCursor [
 ]
 
 { #category : #accessing }
-AlbTextEditorOperator >> cursors [
-
-	^  { self cursor } asSet
-]
-
-{ #category : #accessing }
 AlbTextEditorOperator >> editor [
 	^ editor
 ]

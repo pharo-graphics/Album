@@ -131,6 +131,9 @@ AlbTextEditor >> cursor: aCursor [
 
 { #category : #accessing }
 AlbTextEditor >> cursors [
+
+	self deprecated: 'Use #cursor'.
+
 	^  { self cursor } 
 ]
 

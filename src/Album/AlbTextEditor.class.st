@@ -264,14 +264,6 @@ AlbTextEditor >> globalTextIndexToLocal: aTextIndex [
 	^ nil
 ]
 
-{ #category : #'text - selection' }
-AlbTextEditor >> hasCursors [
-	"Return true of there is at least one cursor, false otherwise"
-	<return: #Boolean>
-	
-	^ self cursors isNotEmpty
-]
-
 { #category : #'event handler attributes' }
 AlbTextEditor >> hasEventHandlerAttribute [
 	^ hasEventHandlerAttribute ifNil: [ false ]
@@ -442,7 +434,7 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 	self text
 		findAttributesSuchThat: [ :eachAttribute | theEventHandlingAttributes includes: eachAttribute ]
 		indicesDo: [ :aStart :anEnd :eachAttribute | 
-			(self cursors anySatisfy: [ :eachCursor | eachCursor position between: aStart and: anEnd ]) ifTrue: [ 
+			(self cursor position between: aStart and: anEnd) ifTrue: [
 				anEvent interval: (aStart to: anEnd).
 				(eachAttribute wantsEvent: anEvent) ifTrue: [ eachAttribute handleEvent: anEvent ] ] ]
 ]
@@ -705,7 +697,7 @@ AlbTextEditor >> processCursorAttributes [
 		findAttributesSuchThat: [ :eachAttribute | eachAttribute isEventHandler ]
 		indicesDo: [ :aStart :anEnd :anAttribute |
 			(self isFocused and: [
-				self cursors anySatisfy: [ :eachCursor | eachCursor position between: aStart and: anEnd ] ])
+				self cursor position between: aStart and: anEnd ])
 					ifTrue: [ eventHandlingAttributesInside add: anAttribute -> (aStart to: anEnd) ]
 					ifFalse: [ eventHandlingAttributesOutside add: anAttribute -> (aStart to: anEnd) ] ].
 

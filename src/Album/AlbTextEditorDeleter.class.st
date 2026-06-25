@@ -11,12 +11,13 @@ Class {
 
 { #category : #'api - configuration' }
 AlbTextEditorDeleter >> afterCursor [
-	"Delete all text after all cursors"
+	"Delete all text after the cursor"
 
-	self cursor do: [ :aCursor |
-		self
-			from: aCursor position
-			to: self text size ]
+	| aCursor |
+	aCursor := self cursor.
+	self
+		from: aCursor position
+		to: self text size
 ]
 
 { #category : #'api - processing' }
@@ -26,12 +27,13 @@ AlbTextEditorDeleter >> apply [
 
 { #category : #'api - configuration' }
 AlbTextEditorDeleter >> beforeCursor [
-	"Delete all text before the cursors"
+	"Delete all text before the cursor"
 		
-	self cursor do: [ :aCursor |
-		self
-			from: 0
-			to: aCursor position ]
+	| aCursor |
+	aCursor := self cursor.
+	self
+		from: 0
+		to: aCursor position
 ]
 
 { #category : #private }
@@ -113,31 +115,33 @@ AlbTextEditorDeleter >> isDeleter [
 
 { #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneAfterCursor [
-	"Delete one symbol after the cursors"
+	"Delete one symbol after the cursor"
 		
-	self cursor do: [ :aCursor |
-		self
-			from: aCursor position
-			to: ((aCursor position + 1) min: self text size) ]
+	| aCursor |
+	aCursor := self cursor.
+	self
+		from: aCursor position
+		to: ((aCursor position + 1) min: self text size)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneAfterCursorIfOutsideOfSelection [
-	"Delete one symbol after the cursors but only if there is no selection nearby"
+	"Delete one symbol after the cursor but only if there is no selection nearby"
 		
-	self cursor do: [ :aCursor |
-		(self selection contains: aCursor position)
-			ifFalse: [
-				self
-					from: aCursor position
-					to: ((aCursor position + 1) min: self text size) ] ]
+	| aCursor |
+	aCursor := self cursor.
+	(self selection contains: aCursor position)
+		ifFalse: [
+			self
+				from: aCursor position
+				to: ((aCursor position + 1) min: self text size) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorDeleter >> oneBeforeCursor [
 	"Delete one symbol before the cursor"
 
-	self cursor do: [ :aCursor | self oneBeforeCursor: aCursor ]
+	self oneBeforeCursor: self cursor
 ]
 
 { #category : #'api - configuration' }
@@ -153,9 +157,10 @@ AlbTextEditorDeleter >> oneBeforeCursor: aCursor [
 AlbTextEditorDeleter >> oneBeforeCursorIfOutsideOfSelection [
 	"Delete one symbol before the cursor but only if there is no selection nearby"
 
-	self cursor do: [ :aCursor |
-		(self selection contains: aCursor position)
-			ifFalse: [ self oneBeforeCursor: aCursor ] ]
+	| aCursor |
+	aCursor := self cursor.
+	(self selection contains: aCursor position)
+		ifFalse: [ self oneBeforeCursor: aCursor ]
 ]
 
 { #category : #private }
@@ -188,38 +193,37 @@ AlbTextEditorDeleter >> selected [
 
 { #category : #'api - configuration' }
 AlbTextEditorDeleter >> surroundings: aDictionaryOrArray [
-	"Delete the surrounding around each cursor (if there is any) but only if the cursor is not part of the selection"
-	| theAssociations |
+	"Delete the surrounding around the cursor (if there is any) but only if the cursor is not part of the selection"
+	| theAssociations aCursor |
 	
 	theAssociations := aDictionaryOrArray isArray
 		ifFalse: [ aDictionaryOrArray associations ]
 		ifTrue: [ aDictionaryOrArray ].
 	
-	
-	self cursor do: [ :aCursor |
-		(self selection contains: aCursor position)
-			ifFalse: [
-				theAssociations
-					detect: [ :eachReplacement |
-						(self hasString: eachReplacement key beforeCursor: aCursor)
-							and: [ self hasString: eachReplacement value afterCursor: aCursor ] ]
-					ifFound: [ :aReplacement |
-						self
-							from: aCursor position - aReplacement key size
-							to: aCursor position + aReplacement value size ] ] ]
+	aCursor := self cursor.
+	(self selection contains: aCursor position)
+		ifFalse: [
+			theAssociations
+				detect: [ :eachReplacement |
+					(self hasString: eachReplacement key beforeCursor: aCursor)
+						and: [ self hasString: eachReplacement value afterCursor: aCursor ] ]
+				ifFound: [ :aReplacement |
+					self
+						from: aCursor position - aReplacement key size
+						to: aCursor position + aReplacement value size ] ]
 ]
 
 { #category : #private }
 AlbTextEditorDeleter >> updateCursors [
+	| aCursor aCursorDelta |
 	
-	self cursor do: [ :aCursor |
-		| aCursorDelta |
-		aCursorDelta := self computeCursorMovement: aCursor.
-		aCursorDelta isZero
-			ifFalse: [ self editor navigator
-				dueTo: self;
-				move: aCursor by: aCursorDelta;
-				apply ] ]
+	aCursor := self cursor.
+	aCursorDelta := self computeCursorMovement: aCursor.
+	aCursorDelta isZero
+		ifFalse: [ self editor navigator
+			dueTo: self;
+			move: aCursor by: aCursorDelta;
+			apply ]
 ]
 
 { #category : #private }

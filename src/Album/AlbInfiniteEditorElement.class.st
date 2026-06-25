@@ -117,12 +117,6 @@ AlbInfiniteEditorElement >> cursorElement [
 	^ cursorElement
 ]
 
-{ #category : #'private - accessing editor' }
-AlbInfiniteEditorElement >> cursors [
-	<return: #AlbTextEditorCursor>
-	^ self editor cursors
-]
-
 { #category : #initialization }
 AlbInfiniteEditorElement >> defaultCursorBackground [
 

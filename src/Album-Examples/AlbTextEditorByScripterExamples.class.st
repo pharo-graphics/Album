@@ -20,7 +20,7 @@ AlbTextEditorByScripterExamples class >> click_adornment_element [
 		play.
 
 	aScripter check
-		value: [ :aAlbTextEditor | aAlbTextEditor cursors positions ] equals: #();
+		value: [ :aAlbTextEditor | aAlbTextEditor cursor position ] equals: 0;
 		onAlbum;
 		play.
 
@@ -42,7 +42,7 @@ AlbTextEditorByScripterExamples class >> click_empty [
 	aScripter click onSelf; play.
 
 	aScripter check
-		value: [ :aAlbTextEditor | aAlbTextEditor cursors positions ] equals: #(0);
+		value: [ :aAlbTextEditor | aAlbTextEditor cursor position ] equals: 0;
 		onAlbum;
 		play.
 
@@ -75,7 +75,7 @@ AlbTextEditorByScripterExamples class >> scripterWithElement [
 	aScripter element: self scripterElement.
 	
 	aScripter check
-		value: [ :aAlbTextEditor | aAlbTextEditor cursors positions ] equals: #();
+		value: [ :aAlbTextEditor | aAlbTextEditor cursor position ] equals: 0;
 		onAlbum;
 		play.
 

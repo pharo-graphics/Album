@@ -296,12 +296,11 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 
 { #category : #add }
 AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_multiline [
-	
+
 	| anEditor theMovedEvents anEditorElement |
-	
 	anEditorElement := self newEditorElementWithMultilineText.
-	anEditor := anEditorElement editor..
-	
+	anEditor := anEditorElement editor.
+
 	theMovedEvents := OrderedCollection new.
 
 	anEditor navigator
@@ -310,11 +309,8 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_8_in_multiline [
 		apply;
 		unsubscribe.
 
-	self assert: anEditor cursors equals: {
-		AlbTextEditorSingleCursor new position: 8.
-	}.
-	
-	self assert: theMovedEvents size = 1.
+	self assert: anEditor cursor position equals: 8.
+	self assert: theMovedEvents size equals: 1.
 
 	^ anEditor
 ]
@@ -897,8 +893,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveToPreviousWord_in_cursors_at_8 [
 		apply;
 		unsubscribe.
 		
-	self assert: (anEditor cursors 
-			includes: (AlbTextEditorSingleCursor new position: 2 )).
+	self assert: anEditor cursor position equals: 2.
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: theMovedEvents first cursor position equals: 2.

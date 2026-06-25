@@ -48,7 +48,7 @@ TAlbInfiniteDecorator >> completeWordSuffixFromString: aString [
 
 { #category : #'t - infinite editor accessing - cursor' }
 TAlbInfiniteDecorator >> cursor [
-
+	
 	^ self next cursor
 ]
 
@@ -62,13 +62,6 @@ TAlbInfiniteDecorator >> cursorColor: aColor [
 TAlbInfiniteDecorator >> cursorElement [
 
 	^ self next cursorElement
-]
-
-{ #category : #'t - infinite editor accessing - cursor' }
-TAlbInfiniteDecorator >> cursors [
-	<return: #AlbTextEditorCursor>
-	
-	^ self next cursors
 ]
 
 { #category : #'t - infinite editor editor - operator' }

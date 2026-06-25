@@ -15,7 +15,7 @@ AlbTextEditorCompositeMemento >> addMemento: aMemento [
 { #category : #'api - memento' }
 AlbTextEditorCompositeMemento >> all [
 	self
-		cursors;
+		cursor;
 		history;
 		inputFilter;
 		mode;
@@ -25,8 +25,8 @@ AlbTextEditorCompositeMemento >> all [
 ]
 
 { #category : #'api - memento' }
-AlbTextEditorCompositeMemento >> cursors [
-	mementos add: AlbTextEditorCursorsMemento new
+AlbTextEditorCompositeMemento >> cursor [
+	mementos add: AlbTextEditorCursorMemento new
 ]
 
 { #category : #'api - memento' }

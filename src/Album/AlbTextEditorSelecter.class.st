@@ -76,37 +76,33 @@ AlbTextEditorSelecter >> extendToLineStart [
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToNextWordEnd [
 	"Extend selection to the end of the next word"
-	|  theCommands |
+	| aCursor aDelta cmd |
 
-	theCommands := self cursors collect: [ :aCursor |
-		| aDelta |
-		
-		aDelta := (self findWordEndAfter: aCursor position) - aCursor position.
-		(self
+	aCursor := self cursor.
+	aDelta := (self findWordEndAfter: aCursor position) - aCursor position.
+	cmd := (self
 			privateExtendSelectionRightAt: aCursor position
 			by: aDelta)
 				toMoveCursor: aCursor
-				by: aDelta ].
+				by: aDelta.
 	
-	commands addAll: theCommands
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToPreviousWordStart [
 	"Extend selection to start of the previous word"
-	|  theCommands |
+	| aCursor aDelta cmd |
 
-	theCommands := self cursors collect: [ :aCursor |
-		| aDelta |
-		
-		aDelta := aCursor position - (self findWordEnlargedStartBefore: aCursor position).
-		(self
+	aCursor := self cursor.
+	aDelta := aCursor position - (self findWordEnlargedStartBefore: aCursor position).
+	cmd := (self
 			privateExtendSelectionLeftAt: aCursor position
 			by: aDelta)
 				toMoveCursor: aCursor
-				by: aDelta negated ].
+				by: aDelta negated.
 	
-	commands addAll: theCommands
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }
@@ -173,120 +169,99 @@ AlbTextEditorSelecter >> initialize [
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneDown [
 	"Select and move a cursor one line down"
-	| theCommands theNewCursorPositions theCursorsOnTheLeft theCursorsOnTheRight theCursorsOutside |
+	| aCursor newCursorPosition cmd |
 
-	theCommands := OrderedCollection new.
+	aCursor := self cursor.
+	newCursorPosition := self
+		findTextIndexBelowCursor: aCursor
+		ifAbsent: [
+			(self isCursorOnTheLastLine: aCursor)
+				ifTrue: [ self text size ]
+				ifFalse: [ aCursor position ] ].
 
-	theNewCursorPositions := (self cursors collect: [ :aCursor |
-		aCursor -> (self
-			findTextIndexBelowCursor: aCursor
-			ifAbsent: [
-				(self isCursorOnTheLastLine: aCursor)
-					ifTrue: [ self text size ]
-					ifFalse: [ aCursor position ] ]) ]) as: OrderedIdentityDictionary.
-
-	theCursorsOnTheLeft := self cursors
-		select: [ :aCursor | self selection anySatisfy: [ :aSelection | aCursor position = aSelection from ] ].
-
-	theCursorsOnTheRight := self cursors
-		select: [ :aCursor | self selection anySatisfy: [ :aSelection | aCursor position = aSelection to ] ].
-
-	theCursorsOutside := self cursors
-		select: [ :aCursor | (self selection anySatisfy: [ :aSelection | aCursor position between: aSelection from and: aSelection to ]) not ].
-
-	theCursorsOnTheLeft do: [ :aCursor |
-		| aDelta |
-		aDelta := (theNewCursorPositions at: aCursor) - aCursor position.
-		theCommands add: (AlbExtendSelectionCommand new 
-			editor: editor;
-			toDeselect: { BlSelection from: aCursor position to: (theNewCursorPositions at: aCursor) };
-			toMoveCursor: aCursor by: aDelta) ].
-
-	theCursorsOnTheRight, theCursorsOutside do: [ :aCursor | 
-		| aDelta |
-		aDelta := ((theNewCursorPositions at: aCursor) min: self text size) - aCursor position.
-		theCommands add: (AlbExtendSelectionCommand new 
-			editor: editor;
-			toSelect: { BlSelection from: aCursor position to: ((theNewCursorPositions at: aCursor) min: self text size) };
-			toMoveCursor: aCursor by: aDelta;
-			withoutResettingDesiredCoordinate) ].
+	(self selection anySatisfy: [ :aSelection | aCursor position = aSelection from ])
+		ifTrue: [
+			| aDelta |
+			aDelta := newCursorPosition - aCursor position.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toDeselect: { BlSelection from: aCursor position to: newCursorPosition };
+				toMoveCursor: aCursor by: aDelta ]
+		ifFalse: [
+			| aDelta |
+			aDelta := (newCursorPosition min: self text size) - aCursor position.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toSelect: { BlSelection from: aCursor position to: (newCursorPosition min: self text size) };
+				toMoveCursor: aCursor by: aDelta;
+				withoutResettingDesiredCoordinate ].
 		
-	commands addAll: theCommands.
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneToLeft [
 	"Select and move a cursor one character to the left"
-	|  theCommands |
+	| cmd aCursor |
 
-	theCommands := self cursors collect: [ :aCursor |
-		(self
+	aCursor := self cursor.
+	cmd := (self
 			privateExtendSelectionLeftAt: aCursor position
 			by: 1)
 				toMoveCursor: aCursor
-				by: -1 ].
+				by: -1.
 			
-	commands addAll: theCommands
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneToRight [
 	"Select and move a cursor one character to the right"
-	|  theCommands |
+	| cmd aCursor |
 
-	theCommands := self cursors collect: [ :aCursor |
-		(self
+	aCursor := self cursor.
+	cmd := (self
 			privateExtendSelectionRightAt: aCursor position
 			by: 1)
 				toMoveCursor: aCursor
-				by: 1 ].
+				by: 1.
 	
-	commands addAll: theCommands
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneUp [
 	"Select and move a cursor one line up"
-	| theNewCursorPositions theCursorsOnTheLeft theCursorsOnTheRight theCursorsOutside theCommands |
+	| aCursor newCursorPosition cmd |
 	
-	theCommands := OrderedCollection new.
-	theNewCursorPositions := (self cursors collect: [ :aCursor |
-		aCursor -> (self
-			findTextIndexAboveCursor: aCursor
-			ifAbsent: [
-				(self isCursorOnTheFirstLine: aCursor)
-					ifTrue: [ 0 ]
-					ifFalse: [ aCursor position ] ]) ]) as: OrderedIdentityDictionary.
-
-	theCursorsOnTheLeft := self cursors
-		select: [ :aCursor | self selection anySatisfy: [ :aSelection | aCursor position = aSelection from ] ].
-		
-	theCursorsOnTheRight := self cursors
-		select: [ :aCursor | self selection anySatisfy: [ :aSelection | aCursor position = aSelection to ] ].
-	
-	theCursorsOutside := self cursors
-		select: [ :aCursor | (self selection anySatisfy: [ :aSelection | aCursor position between: aSelection from and: aSelection to ]) not ].
+	aCursor := self cursor.
+	newCursorPosition := self
+		findTextIndexAboveCursor: aCursor
+		ifAbsent: [
+			(self isCursorOnTheFirstLine: aCursor)
+				ifTrue: [ 0 ]
+				ifFalse: [ aCursor position ] ].
 
 	"the cursor is on the right side of the selection, we should deselect from the new potential position to its current location"
-	theCursorsOnTheRight do: [ :aCursor |
-		| aDelta |
-		aDelta := aCursor position - (theNewCursorPositions at: aCursor).
-		theCommands add: (AlbExtendSelectionCommand new 
-			editor: editor;
-			toDeselect: { BlSelection from: (theNewCursorPositions at: aCursor) to: aCursor position };
-			toMoveCursor: aCursor by: aDelta negated) ].
-	
-	"the cursor is on the left side of the selection or is not inside any selection, we should extend it to the new potential location"
-	theCursorsOnTheLeft, theCursorsOutside do: [ :aCursor | 
-		| aDelta |
-		aDelta := aCursor position - (theNewCursorPositions at: aCursor).
-		theCommands add: (AlbExtendSelectionCommand new 
-			editor: editor;
-			toSelect: { BlSelection from: (theNewCursorPositions at: aCursor) to: aCursor position };
-			toMoveCursor: aCursor by: aDelta negated;
-			withoutResettingDesiredCoordinate) ].
+	(self selection anySatisfy: [ :aSelection | aCursor position = aSelection to ])
+		ifTrue: [
+			| aDelta |
+			aDelta := aCursor position - newCursorPosition.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toDeselect: { BlSelection from: newCursorPosition to: aCursor position };
+				toMoveCursor: aCursor by: aDelta negated ]
+		ifFalse: [
+			"the cursor is on the left side of the selection or is not inside any selection, we should extend it to the new potential location"
+			| aDelta |
+			aDelta := aCursor position - newCursorPosition.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toSelect: { BlSelection from: newCursorPosition to: aCursor position };
+				toMoveCursor: aCursor by: aDelta negated;
+				withoutResettingDesiredCoordinate ].
 
-	commands addAll: theCommands.
+	commands add: cmd
 ]
 
 { #category : #'api - configuration' }

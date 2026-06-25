@@ -42,14 +42,14 @@ AlbTextEditorCursorAddCommand >> newHolderEvent [
 
 { #category : #executing }
 AlbTextEditorCursorAddCommand >> processAttributesOn: aTextEditor [
+
 	| anEditorText thePotentialHandlerTextInterval theEventHandlingAttributes eventHandlingAttributesOutside eventHandlingAttributesInside |
 	self flag: 'what a crap!'.
-	aTextEditor hasEventHandlerAttribute ifFalse: [ ^self ].
+	aTextEditor hasEventHandlerAttribute ifFalse: [ ^ self ].
 	anEditorText := aTextEditor text.
-	self cursor position > anEditorText size
-		ifTrue: [ ^ self ].
-	self cursor position <= 0
-		ifTrue: [ ^ self ].
+	self cursor position > anEditorText size ifTrue: [ ^ self ].
+	self cursor position <= 0 ifTrue: [ ^ self ].
+
 	"only chars to the left from the cursor handle cursor events"
 	thePotentialHandlerTextInterval := self cursor position to: self cursor position.
 
@@ -66,26 +66,37 @@ AlbTextEditorCursorAddCommand >> processAttributesOn: aTextEditor [
 	anEditorText
 		findAttributes: theEventHandlingAttributes
 		indicesDo: [ :eachEventHandlerStart :eachEventHandlerEnd :eachEventHandlerAttribute |
-			aTextEditor cursors do: [ :eachCursor |
-				(eachCursor position between: eachEventHandlerStart and: eachEventHandlerEnd)
-					ifTrue: [ eventHandlingAttributesInside add: eachEventHandlerAttribute -> (eachEventHandlerStart to: eachEventHandlerEnd) ]
-					ifFalse: [ eventHandlingAttributesOutside add: eachEventHandlerAttribute -> (eachEventHandlerStart to: eachEventHandlerEnd) ] ] ].
+			(aTextEditor cursor position between: eachEventHandlerStart and: eachEventHandlerEnd)
+				ifTrue: [
+					eventHandlingAttributesInside
+						add: eachEventHandlerAttribute ->
+							(eachEventHandlerStart to: eachEventHandlerEnd) ]
+				ifFalse: [
+					eventHandlingAttributesOutside
+						add: eachEventHandlerAttribute ->
+							(eachEventHandlerStart to: eachEventHandlerEnd) ] ].
 	
 	eventHandlingAttributesOutside do: [ :eachEventHandlerAttributeAndInterval |
 		| eachAttribute eachInterval anEvent |
-		
 		eachAttribute := eachEventHandlerAttributeAndInterval key.
 		eachInterval := eachEventHandlerAttributeAndInterval value.
-		anEvent := AlbTextCursorAttributeLeaveEvent new textEditor: aTextEditor; interval: eachInterval.
-		(eachAttribute wantsEvent: anEvent)
-			ifTrue: [ eachAttribute handleEvent: anEvent ] ].
+		anEvent :=
+			AlbTextCursorAttributeLeaveEvent new
+				textEditor: aTextEditor;
+				interval: eachInterval;
+				yourself.
+		(eachAttribute wantsEvent: anEvent) ifTrue: [
+			eachAttribute handleEvent: anEvent ] ].
 
 	eventHandlingAttributesInside do: [ :eachEventHandlerAttributeAndInterval |
 		| eachAttribute eachInterval anEvent |
-		
 		eachAttribute := eachEventHandlerAttributeAndInterval key.
 		eachInterval := eachEventHandlerAttributeAndInterval value.
-		anEvent := AlbTextCursorAttributeEnterEvent new textEditor: aTextEditor; interval: eachInterval.
-		(eachAttribute wantsEvent: anEvent)
-			ifTrue: [ eachAttribute handleEvent: anEvent ] ]
+		anEvent :=
+			AlbTextCursorAttributeEnterEvent new
+				textEditor: aTextEditor;
+				interval: eachInterval;
+				yourself.
+		(eachAttribute wantsEvent: anEvent) ifTrue: [
+			eachAttribute handleEvent: anEvent ] ]
 ]

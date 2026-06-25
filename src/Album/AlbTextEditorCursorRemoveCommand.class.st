@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 AlbTextEditorCursorRemoveCommand >> cursor [
-	<return: #AlbTextEditorSingleCursor>
+	<return: #AlbTextEditorCursor>
 
 	^ cursor
 ]
@@ -69,10 +69,9 @@ AlbTextEditorCursorRemoveCommand >> processAttributesOn: aTextEditor [
 	anEditorText
 		findAttributes: theEventHandlingAttributes
 		indicesDo: [ :eachEventHandlerStart :eachEventHandlerEnd :eachEventHandlerAttribute |
-			aTextEditor cursors do: [ :eachCursor |
-				(eachCursor position between: eachEventHandlerStart and: eachEventHandlerEnd)
-					ifTrue: [ eventHandlingAttributesInside add: eachEventHandlerAttribute -> (eachEventHandlerStart to: eachEventHandlerEnd) ]
-					ifFalse: [ eventHandlingAttributesOutside add: eachEventHandlerAttribute -> (eachEventHandlerStart to: eachEventHandlerEnd) ] ] ].
+			(aTextEditor cursor position between: eachEventHandlerStart and: eachEventHandlerEnd)
+				ifTrue: [ eventHandlingAttributesInside add: eachEventHandlerAttribute -> (eachEventHandlerStart to: eachEventHandlerEnd) ]
+				ifFalse: [ eventHandlingAttributesOutside add: eachEventHandlerAttribute -> (eachEventHandlerStart to: eachEventHandlerEnd) ] ].
 	
 	eventHandlingAttributesOutside do: [ :eachEventHandlerAttributeAndInterval |
 		| eachAttribute eachInterval anEvent |

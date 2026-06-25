@@ -86,14 +86,14 @@ AlbTextEditorNavigator >> move: aCursor to: aTextPosition [
 AlbTextEditorNavigator >> moveBy: aDelta [
 	"Move all cursors by a given delta. The operation is only applied on existing cursor, not the ones that will be added"
 
-	self cursor do: [ :aCursor | operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: aCursor) delta: aDelta) ]
+	operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: self cursor) delta: aDelta)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveDown [
 	"Move all cursors down one line"
 
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveDownOperation cursor: aCursor) ]
+	operations add: (AlbTextEditorNavigatorMoveDownOperation cursor: self cursor)
 ]
 
 { #category : #'api - configuration' }
@@ -127,21 +127,21 @@ AlbTextEditorNavigator >> moveTo: aTextPosition [
 AlbTextEditorNavigator >> moveToEndNextWord [
 	"Move all cursors to the end of the next word"
 
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveToEndNextWordOperation cursor: aCursor) ]
+	operations add: (AlbTextEditorNavigatorMoveToEndNextWordOperation cursor: self cursor)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveToLineEnd [
 	"Move all cursors to the end of their corresponding lines"
 
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveToLineEndOperation cursor: aCursor) ]
+	operations add: (AlbTextEditorNavigatorMoveToLineEndOperation cursor: self cursor)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveToLineStart [
 	"Move all cursors to the start of their corresponding lines"
 
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveToLineStartOperation cursor: aCursor) ]
+	operations add: (AlbTextEditorNavigatorMoveToLineStartOperation cursor: self cursor)
 ]
 
 { #category : #'api - configuration' }
@@ -154,26 +154,27 @@ AlbTextEditorNavigator >> moveToScreenPosition: aScreenPosition [
 AlbTextEditorNavigator >> moveToStartPreviousWord [
 	"Move all cursors to the start of the previous word"
 
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveToStartPreviousWordOperation cursor: aCursor) ]
+	operations add: (AlbTextEditorNavigatorMoveToStartPreviousWordOperation cursor: self cursor)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveUp [
 	"Move all cursors up one line"
 
-	self cursor do: [ :aCursor | operations add: (AlbTextEditorNavigatorMoveUpOperation cursor: aCursor) ]
+	operations add: (AlbTextEditorNavigatorMoveUpOperation cursor: self cursor)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveWithin: anInterval [
 	"Move all cursors so that they end up within a given text interval.
 	The operation is only applied on existing cursor, not the ones that will be added"
+	| aCursor |
 
-	self cursor do: [ :aCursor |
-		aCursor position < anInterval first
-			ifTrue: [ self move: aCursor to: anInterval first ]
-			ifFalse: [ aCursor position > anInterval last
-				ifTrue: [ self move: aCursor to: anInterval last ] ] ]
+	aCursor := self cursor.
+	aCursor position < anInterval first
+		ifTrue: [ self move: aCursor to: anInterval first ]
+		ifFalse: [ aCursor position > anInterval last
+			ifTrue: [ self move: aCursor to: anInterval last ] ]
 ]
 
 { #category : #'private - accessing' }

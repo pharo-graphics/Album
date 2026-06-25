@@ -48,9 +48,8 @@ AlbTextEditorDeselecter >> outsideOfCursor [
 	"Remove all selections that don't contain any existing cursor"
 
 	self selection do: [ :aMonotoneSelection |
-		self cursors do: [ :aCursor |
-			(aCursor position = aMonotoneSelection from or: [ aCursor position = aMonotoneSelection to ])
-				ifFalse: [ self from: aMonotoneSelection from to: aMonotoneSelection to ] ] ]
+		(self cursor position = aMonotoneSelection from or: [ self cursor position = aMonotoneSelection to ])
+			ifFalse: [ self from: aMonotoneSelection from to: aMonotoneSelection to ] ]
 ]
 
 { #category : #private }

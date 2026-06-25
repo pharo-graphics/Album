@@ -27,7 +27,7 @@ AlbTextEditorPaster >> at: anIndex [
 
 { #category : #'api - configuration' }
 AlbTextEditorPaster >> atCursor [	
-	self cursor do: [ :aCursor | self at: aCursor position ]
+	self at: self cursor position
 ]
 
 { #category : #'api - configuration' }

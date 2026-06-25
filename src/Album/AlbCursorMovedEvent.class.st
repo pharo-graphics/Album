@@ -23,7 +23,7 @@ AlbCursorMovedEvent class >> cursor: aCursor from: anOldIndex to: aNewIndex dueT
 
 { #category : #accessing }
 AlbCursorMovedEvent >> cursor [
-	<return: #AlbTextEditorSingleCursor>
+	<return: #AlbTextEditorCursor>
 
 	^ cursor
 ]

@@ -32,7 +32,7 @@ AlbTextEditorAbstractSegmentPiece >> createElement: anEditorElement [
 { #category : #'api - cursor' }
 AlbTextEditorAbstractSegmentPiece >> currentCursor [
 	"local cursor within this segment piece"
-	<return: #AlbTextEditorSingleCursor>
+	<return: #AlbTextEditorCursor>
 	
 	^ currentCursor
 ]
@@ -47,7 +47,7 @@ AlbTextEditorAbstractSegmentPiece >> currentCursor: aCursor [
 { #category : #'api - cursor' }
 AlbTextEditorAbstractSegmentPiece >> globalCursorToLocal: aSingleCursor [
 	"Convert a global cursor as specified in the editor to a local one"
-	<return: #AlbTextEditorSingleCursor>
+	<return: #AlbTextEditorCursor>
 	| aLocalCursor |
 	
 	aLocalCursor := aSingleCursor copy.

@@ -18,7 +18,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_0 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 0.
+	aCursor := AlbTextEditorCursor position: 0.
 	
 	"cursor is in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -45,7 +45,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_1 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 1.
+	aCursor := AlbTextEditorCursor position: 1.
 	
 	"cursor is in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -72,7 +72,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_2 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 2.
+	aCursor := AlbTextEditorCursor position: 2.
 	
 	"cursor is in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -99,7 +99,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_3 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 3.
+	aCursor := AlbTextEditorCursor position: 3.
 
 	"cursor is not in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -127,7 +127,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_4 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 4.
+	aCursor := AlbTextEditorCursor position: 4.
 
 	"cursor is not in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -154,7 +154,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_5 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 5.
+	aCursor := AlbTextEditorCursor position: 5.
 
 	"cursor is not in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -181,7 +181,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_6 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 6.
+	aCursor := AlbTextEditorCursor position: 6.
 
 	"cursor is not in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -208,7 +208,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_7 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 7.
+	aCursor := AlbTextEditorCursor position: 7.
 
 	"cursor is not in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.
@@ -235,7 +235,7 @@ AlbTextEditorLineSegmentTest >> test_cursor_in_HACrCrLfBA_at_8 [
 	| aTextEditor aSegment aCursor |
 
 	aTextEditor := self test_insert_NewLineCrLf_in_HACrBA_At_3.
-	aCursor := AlbTextEditorSingleCursor new position: 8.
+	aCursor := AlbTextEditorCursor position: 8.
 
 	"cursor is not in the first segment"
 	aSegment := aTextEditor segmentCollector segments first.

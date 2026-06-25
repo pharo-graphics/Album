@@ -42,7 +42,7 @@ AlbTextEditorInserter >> at: anIndex [
 
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> atCursor [
-	self cursor do: [ :aCursor | self at: aCursor position ]
+	self at: self cursor position
 ]
 
 { #category : #'api - configuration' }
@@ -97,9 +97,7 @@ AlbTextEditorInserter >> crLineEndingWithWhitespace [
 	"Insert a Cr line ending
 	additionally adding a whitespace from the previous line according to a cursor"
 
-	self text: (self cursor isEmpty
-		ifTrue: [ String cr ]
-		ifFalse: [ String cr, (self findWhitespaceOfLineBefore: self cursor first position) ])
+	self text: String cr, (self findWhitespaceOfLineBefore: self cursor position)
 ]
 
 { #category : #private }
@@ -200,12 +198,11 @@ AlbTextEditorInserter >> insert [
 				surroundMap
 					openingFor: eachAssociation value
 					ifPresent: [ :aLeftSurroundText | 
-						(self hasString: eachAssociation value afterCursor: (AlbTextEditorSingleCursor at: anIndex))
+						(self hasString: eachAssociation value afterCursor: (AlbTextEditorCursor position: anIndex))
 							ifTrue: [ 
 								shouldUpdateCursor ifTrue: [ 
-									self cursors do: [ :eachCursor | 
-										eachCursor position = anIndex ifTrue: [ 
-											theCursorMovements add: eachCursor -> (anIndex + eachAssociation value size) ] ] ] ]
+									self cursor position = anIndex ifTrue: [ 
+										theCursorMovements add: self cursor -> (anIndex + eachAssociation value size) ] ] ]
 							ifFalse: [ 
 								theInsertions add: { 
 										(#index -> anIndex).
@@ -284,9 +281,7 @@ AlbTextEditorInserter >> lineEndingWithWhitespace [
 	"Insert a line ending (Cr, Lf or CrLf depending on the current platform)
 	additionally  adding a whitespace from the previous line according to a cursor"
 
-	self text: (self cursor isEmpty
-		ifTrue: [ OSPlatform current lineEnding ]
-		ifFalse: [ OSPlatform current lineEnding, (self findWhitespaceOfLineBefore: self cursor first position) ])
+	self text: OSPlatform current lineEnding, (self findWhitespaceOfLineBefore: self cursor position)
 ]
 
 { #category : #'api - configuration' }
@@ -362,48 +357,46 @@ AlbTextEditorInserter >> privateInsertStrings: aCollectionOfString atAll: aColle
 
 { #category : #private }
 AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText at: anIndex [
-	self cursor do: [ :aCursor |
-		| aCursorDelta |
-		
-		aCursorDelta := 
-				self
-					computeIndexMovement: aCursor position
-					afterInserted: aText
-					at: anIndex.
+	| aCursor aCursorDelta |
+	
+	aCursor := self cursor.
+	aCursorDelta := 
+			self
+				computeIndexMovement: aCursor position
+				afterInserted: aText
+				at: anIndex.
 
-		aCursorDelta isZero
-			ifFalse: [
-				editor navigator
-					context: self context;
-					dueTo: self;
-					move: aCursor by: aCursorDelta;
-					apply ] ]
+	aCursorDelta isZero
+		ifFalse: [
+			editor navigator
+				context: self context;
+				dueTo: self;
+				move: aCursor by: aCursorDelta;
+				apply ]
 ]
 
 { #category : #private }
 AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText withSurround: aSurroundText at: aTextIndex [
-	| theIndices |
+	| theIndices aCursor aCursorDelta |
 
 	theIndices := self privateComputeCursorIndices: aText withSurround: aSurroundText at: aTextIndex.
 
-	self cursor do: [ :aCursor |
-		| aCursorDelta |
-					
-		aCursorDelta := self
-			computeIndexMovement: aCursor position
-			afterInserted: aText
-			at: theIndices first.
-	
-		aCursorDelta := aCursorDelta + (self
-			computeIndexMovement: aCursor position
-			afterInserted: aSurroundText
-			at: theIndices second + aText size).
+	aCursor := self cursor.
+	aCursorDelta := self
+		computeIndexMovement: aCursor position
+		afterInserted: aText
+		at: theIndices first.
 
-		aCursorDelta isZero
-			ifFalse: [ editor navigator
-				dueTo: self;
-				move: aCursor by: aCursorDelta;
-				apply ] ]
+	aCursorDelta := aCursorDelta + (self
+		computeIndexMovement: aCursor position
+		afterInserted: aSurroundText
+		at: theIndices second + aText size).
+
+	aCursorDelta isZero
+		ifFalse: [ editor navigator
+			dueTo: self;
+			move: aCursor by: aCursorDelta;
+			apply ]
 ]
 
 { #category : #'private - accessing' }

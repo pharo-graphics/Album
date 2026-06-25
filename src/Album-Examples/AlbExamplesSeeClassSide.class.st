@@ -321,7 +321,6 @@ broken in GlamorousToolKit but what to do with that ?
 	cache := Dictionary new.
 	
 	attribute := AlbTextAdornmentDynamicAttribute new
-		beSync;
 		"beAppend;"
 		stencil: [  {  
 			BlElement new

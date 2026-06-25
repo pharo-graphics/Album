@@ -149,10 +149,7 @@ AlbTextEditorSegmentCollectorExamples >> segmentCollector [
 ]
 
 { #category : #accessing }
-AlbTextEditorSegmentCollectorExamples >> textEditor [ 
-	| aTextEditor |
+AlbTextEditorSegmentCollectorExamples >> textEditor [
 
-	aTextEditor := AlbTextEditor new text: self largeFileRope.
-		
-	^ aTextEditor
+	^ AlbTextEditor new text: self largeFileRope
 ]

@@ -53,14 +53,8 @@ AlbTextEditorLayoutMeasurementExamples >> newEditorElement: aText [
 	BlDevCrossover on: anEditor.
 	
 	anEditor  
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-			aTextElement ].
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
 	
 	anEditor requestFocus.
 	anEditor forceLayout.

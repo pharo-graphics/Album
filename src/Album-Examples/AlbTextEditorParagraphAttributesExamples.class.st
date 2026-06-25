@@ -5,12 +5,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-AlbTextEditorParagraphAttributesExamples >> editorElement [
+AlbTextEditorParagraphAttributesExamples >> newEditorElement [
 
-	| textEditor editorElement |
-	textEditor := AlbTextEditor new.
+	| editorElement |
 	editorElement := AlbEditorElement new.
-	editorElement editor: textEditor.
 	editorElement constraintsDo: [ :c |
 		c horizontal fitContent.
 		c vertical fitContent ].
@@ -22,11 +20,8 @@ AlbTextEditorParagraphAttributesExamples >> editorElement [
 AlbTextEditorParagraphAttributesExamples >> testHelloEditor [
 
 	| anEditorElement |
-	self skip.
-	"editor: does not exist so skip it for now.
-	"
-	anEditorElement := self editorElement.
-	anEditorElement editor text: self testHelloText.
+	anEditorElement := self newEditorElement.
+	anEditorElement text: self testHelloText.
 	
 	anEditorElement forceLayout.
 
@@ -41,16 +36,13 @@ AlbTextEditorParagraphAttributesExamples >> testHelloEditor [
 		equals: (BlInsets top: 10 bottom: 10).
 	self
 		assert: anEditorElement editor segmentCollector segments first paragraphMargin
-		equals: (BlInsets top: 15 left: 20 bottom: 15 right: 20).
-
-	^ anEditorElement
+		equals: (BlInsets top: 15 left: 20 bottom: 15 right: 20)
 ]
 
 { #category : #examples }
 AlbTextEditorParagraphAttributesExamples >> testHelloText [
 
 	| aText |
-
 	aText := 'Hello' asRopedText
 		fontSize: 20;
 		lineSpacing: 20;

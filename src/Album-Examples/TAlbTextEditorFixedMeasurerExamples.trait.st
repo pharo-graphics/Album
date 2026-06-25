@@ -16,6 +16,15 @@ TAlbTextEditorFixedMeasurerExamples >> descent [
 	^ 20
 ]
 
+{ #category : #'instance creation' }
+TAlbTextEditorFixedMeasurerExamples >> fixedMeasurer [
+	^ BATextElementMockedMeasurer new
+		ascent: self ascent;
+		descent: self descent;
+		glyphWidth: self glyphWidth;
+		glyphHeight: self glyphHeight
+]
+
 { #category : #'private - font metrics' }
 TAlbTextEditorFixedMeasurerExamples >> glyphHeight [
 	^ self ascent abs + self descent
@@ -50,14 +59,8 @@ TAlbTextEditorFixedMeasurerExamples >> newEditorElement: aText [
 	BlDevCrossover on: anEditor.
 	
 	anEditor  
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-			aTextElement ].
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
 	
 	anEditor requestFocus.
 	anEditor forceLayout.

@@ -7,20 +7,14 @@ Class {
 }
 
 { #category : #'examples - embedded' }
-AlbEmbeddedEditorExamples >> editorWithEmbeddedEditor [
-	<sampleInstance>
-
-	| ed |
-	ed := self newEditor text: self textWithEmbeddedEditor.
-	self makeFixedMeasurement: ed.
-	^ ed
-]
-
-{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> elementWithEmbeddedEditor [
 	<sampleInstance>
+	<demo>
 	
-	^ self newElement editor: self editorWithEmbeddedEditor
+	^ self newElement 
+		text: self textWithEmbeddedEditor;
+		in: [ :ed | self makeFixedMeasurement: ed ];
+		yourself
 ]
 
 { #category : #'private - instance creation' }
@@ -61,13 +55,8 @@ AlbEmbeddedEditorExamples >> mainEditorText [
 AlbEmbeddedEditorExamples >> makeFixedMeasurement: aTextEditor [
 
 	aTextEditor
-		wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement ]
+		wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer)
 ]
 
 { #category : #'instance creation' }
@@ -88,14 +77,8 @@ AlbEmbeddedEditorExamples >> newEditorElement: aText [
 	
 	BlDevCrossover on: anEditor.
 	
-	anEditor 	wordStencil: [ :aTAlbTextEditorTextualPiece |
-			| aTextElement |
-			aTextElement := AlbTextWordPieceStencil editable
-				segmentPiece: aTAlbTextEditorTextualPiece;
-				asElement.
-			aTextElement measurer: self fixedMeasurer.
-			aTextElement measurer textOffset: aTAlbTextEditorTextualPiece textStart.
-			aTextElement ].
+	anEditor 	wordStencil: (AlbTextWordPieceStencil editable
+			measurer: self fixedMeasurer).
 	
 	anEditor requestFocus.
 
@@ -109,12 +92,18 @@ AlbEmbeddedEditorExamples >> newThreeLineText [
 ]
 
 { #category : #'examples - embedded' }
+AlbEmbeddedEditorExamples >> open [
+	<script: 'self new open'>
+
+	self elementWithEmbeddedEditor openInNewSpace
+]
+
+{ #category : #'examples - embedded' }
 AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
-	<sampleInstance>
 
 	| aText |
-
 	aText := self mainEditorText.
+
 	(aText from: 5 to: 5) attribute:
 		(AlbTextAdornmentDynamicAttribute new
 			beAppend;
@@ -125,7 +114,7 @@ AlbEmbeddedEditorExamples >> textWithEmbeddedEditor [
 					border: (BlBorder paint: Color gray);
 					background: (Color gray alpha: 0.2).
 
-				anEditorElement editor text: self embeddedEditorText.
+				anEditorElement text: self embeddedEditorText.
 				self makeFixedMeasurement: anEditorElement editor.
 				anEditorElement ]).
 

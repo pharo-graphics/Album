@@ -27,8 +27,7 @@ AlbTextEditorSegmentCollectorExamples2 >> testRetrieveLimitPlusOne [
 	self assert: (collector segmentAt: limit+1) text asString
 			equals: 'Line ', (limit+1 printPaddedWith: $0 to: 3).
 	self assert: (collector segmentAt: limit) text asString
-			equals: 'Line ', (limit printPaddedWith: $0 to: 3).
-
+			equals: 'Line ', (limit printPaddedWith: $0 to: 3)
 ]
 
 { #category : #examples }

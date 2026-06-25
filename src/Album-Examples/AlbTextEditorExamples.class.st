@@ -33,33 +33,16 @@
 Class {
 	#name : #AlbTextEditorExamples,
 	#superclass : #Object,
-	#classInstVars : [
-		'loremIpsum'
-	],
 	#category : #'Album-Examples-Editor'
 }
 
 { #category : #examples }
-AlbTextEditorExamples class >> adormentDynamicAttribute [
-	<script>
-	
-	^ self newElement editor: self editorWithAdormentDynamicAttribute
-]
-
-{ #category : #cleanup }
-AlbTextEditorExamples class >> cleanUp [
-	super cleanUp.
-	
-	loremIpsum := nil 
-]
-
-{ #category : #examples }
 AlbTextEditorExamples class >> editorWithAdormentDynamicAttribute [
-	<gtExample>
-	| editor text |
+	<sampleInstance>
+
+	| text |
 	text := self newThreeLineText.
-	editor := self newEditor text: text.
-	editor text
+	text
 		attributes: { 
 			AlbTextAdornmentDynamicAttribute new 
 				stencil: [ 
@@ -69,31 +52,33 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttribute [
 						background: Color red ] }
 		from: 1
 		to: text size.
-	^ editor
+
+	^ self newElement text: text; yourself
 ]
 
 { #category : #examples }
 AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningEmptyCollection [
-	<gtExample>
-	| editor text |
+	<sampleInstance>
+
+	| text |
 	text := self newThreeLineText.
-	editor := self newEditor text: text.
-	editor text
+	text
 		attributes: { 
 			AlbTextAdornmentDynamicAttribute new 
 				stencil: [ #() ] }
 		from: 1
 		to: text size.
-	^ editor
+
+	^ self newElement text: text; yourself
 ]
 
 { #category : #examples }
 AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningTwoElements [
-	<script>
-	| editor text |
+	<sampleInstance>
+
+	| text |
 	text := self newThreeLineText.
-	editor := self newEditor text: text.
-	editor text
+	text
 		attributes: { 
 			AlbTextAdornmentDynamicAttribute new 
 				stencil: [ 
@@ -107,18 +92,17 @@ AlbTextEditorExamples class >> editorWithAdormentDynamicAttributeReturningTwoEle
 						background: Color green } ] }
 		from: 1
 		to: 2.
-	^ editor inspect
+
+	^ self newElement text: text; yourself
 ]
 
 { #category : #'examples - editing' }
 AlbTextEditorExamples class >> editorWithAlbumText [
-	<gtExample>
-	| anEditor aText |
-	anEditor := self newEditor.
-	aText := self simpleString asRopedText.
-	anEditor text: aText.
-	self assert: anEditor text equals: aText.
-	^ anEditor
+	<sampleInstance>
+
+	^ self newElement
+		text: self simpleString asRopedText;
+		yourself
 ]
 
 { #category : #'examples - editing' }
@@ -132,12 +116,6 @@ AlbTextEditorExamples class >> editorWithLastHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #'examples - editor' }
-AlbTextEditorExamples class >> editorWithMethod [
-	<gtExample>
-	^ self newEditor text: self newMethodText
-]
-
 { #category : #'examples - editing' }
 AlbTextEditorExamples class >> editorWithSecondHiddenCharacter [
 	<gtExample>
@@ -149,62 +127,19 @@ AlbTextEditorExamples class >> editorWithSecondHiddenCharacter [
 	^ anEditor
 ]
 
-{ #category : #examples }
-AlbTextEditorExamples class >> editorWithText [
-
-	<gtExample>
-	^ self newEditor privateText: self newText
-]
-
-{ #category : #examples }
-AlbTextEditorExamples class >> elementOnMethodWithSyntaxHighlighting [
-	<gtExample>
-	| element styler text editor |
-	text := self newMethodText.
-	element := self newElement.
-	editor := self newEditor.
-	styler := BlPharoCodeStyler new.
-	styler classOrMetaClass: Object.
-	editor styler: styler.
-	editor text: text.
-	element editor: editor.
-	^ element
-]
-
-{ #category : #examples }
-AlbTextEditorExamples class >> elementWithEditor [
-	<gtExample>
-	
-	^ self newElement editor: self editorWithText
-]
-
-{ #category : #examples }
-AlbTextEditorExamples class >> elementWithEmptyEditor [
-	<gtExample>
-	
-	^ self newElement editor: (self newEditor text: (' ' asRopedText fontSize: 16; monospace))
-]
-
-{ #category : #examples }
-AlbTextEditorExamples class >> elementWithMethod [
-	<gtExample>
-	
-	^ self newElement editor: self editorWithMethod
-]
-
 { #category : #'examples - comparison' }
-AlbTextEditorExamples class >> exampleEditor [
-	| space editorElement editor text |
+AlbTextEditorExamples class >> exampleLoremIpsum [
+
+	| space editorElement text |
 	editorElement := AlbEditorElement new.
 	editorElement
 		constraintsDo:
 			[ :c | 
 			c horizontal matchParent.
 			c vertical matchParent ].
-	editor := AlbTextEditor new.
 	text := self loremIpsum asRopedText.
-	editor text: text.
-	editorElement editor: editor.
+	editorElement text: text.
+
 	space := BlSpace new.
 	space extent: self extent.
 	space root addChild: editorElement.
@@ -212,33 +147,11 @@ AlbTextEditorExamples class >> exampleEditor [
 ]
 
 { #category : #examples }
-AlbTextEditorExamples class >> exampleMethodTextOpen [
-	| space editorElement |
-
-	editorElement :=  self elementOnMethodWithSyntaxHighlighting.
-	editorElement editor text attributes: {
-		(BlFontSizeAttribute size: 18) beNotOverwritableByStyler.
-	}.
-	editorElement editor text attributes: {
-		AlbTextHoverStylableAttribute new beNotOverwritableByStyler.
-		AlbTextClickAttribute new beNotOverwritableByStyler
-	} from: 39 to: 42.
-	editorElement constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-
-	space := BlSpace new.
-	space extent: 800@400.
-	space root addChild: editorElement.
-	space show.
-]
-
-{ #category : #examples }
 AlbTextEditorExamples class >> exampleMethodTextOpenEmbedElement [
 	<script>
 
 	| space editorElement |
-	editorElement := self elementWithMethod.
+	editorElement := self newElement.
 
 	editorElement editor text
 		attributes: { BlFontSizeAttribute size: 18 }.
@@ -261,21 +174,21 @@ AlbTextEditorExamples class >> exampleMethodTextOpenEmbedElement [
 	space := BlSpace new.
 	space extent: 800@400.
 	space root addChild: editorElement.
-	space show.
+	space show
 ]
 
 { #category : #examples }
 AlbTextEditorExamples class >> exampleTextOpen [
-
 	<script>
+
 	| space editorElement |
-	editorElement := self elementWithEditor.
-	editorElement editor privateText attributes: {
+	editorElement := self newElement.
+	editorElement editor text attributes: {
 			(BlFontSizeAttribute size: 18).
 			(BlFontFamilyAttribute named: 'Helvetica Neue') }.
 	editorElement constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
+			c horizontal matchParent.
+			c vertical matchParent ].
 
 	space := BlSpace new.
 	space root addChild: editorElement.
@@ -287,7 +200,8 @@ AlbTextEditorExamples class >> exampleTextOpen [
 
 { #category : #'examples - comparison' }
 AlbTextEditorExamples class >> extent [
-	^ 600@400
+
+	^ 600 @ 400
 ]
 
 { #category : #'examples - editing' }
@@ -365,24 +279,23 @@ AlbTextEditorExamples class >> loremIpsum: aLength [
 
 { #category : #'examples - editing' }
 AlbTextEditorExamples class >> newBeReplaceTextAttribute [
-	<gtExample>
+
 	^ AlbTextAdornmentDynamicAttribute new
 		beReplace;
 		stencil: [ BlElement new 
 			extent: 10@10; 
-			background: Color lightGray ]
+			background: Color lightGray ];
+		yourself
 ]
 
 { #category : #'instance creation' }
 AlbTextEditorExamples class >> newEditor [
-	<gtExample>
 
 	^ AlbTextEditor new 
 ]
 
 { #category : #'instance creation' }
 AlbTextEditorExamples class >> newElement [
-	<gtExample>
 	
 	^ AlbEditorElement new
 		constraintsDo: [ :c | 
@@ -393,41 +306,30 @@ AlbTextEditorExamples class >> newElement [
 
 { #category : #'instance creation' }
 AlbTextEditorExamples class >> newMethodText [
-	<gtExample>
 	
 	^ (Integer >> #bitAnd:) sourceCode asRopedText
 ]
 
 { #category : #'instance creation' }
 AlbTextEditorExamples class >> newText [
-	<gtExample>
 	
 	^ (String loremIpsum: 2000000) asRopedText
 ]
 
 { #category : #'instance creation' }
 AlbTextEditorExamples class >> newThreeLineText [
-	<gtExample>
 	
 	^ ('first' , String cr , 'second' , String cr , 'third') asRopedText
 ]
 
 { #category : #'examples - editing' }
 AlbTextEditorExamples class >> simpleString [
-	<gtExample>
+
 	^ 'Album'
 ]
 
 { #category : #'examples - embedded' }
-AlbTextEditorExamples >> newEditor [
-	<gtExample>
-
-	^ AlbTextEditor new "beLineBased"
-]
-
-{ #category : #'examples - embedded' }
 AlbTextEditorExamples >> newElement [
-	<gtExample>
 	
 	^ AlbEditorElement new
 		constraintsDo: [ :c | 

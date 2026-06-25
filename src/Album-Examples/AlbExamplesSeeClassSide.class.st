@@ -123,25 +123,18 @@ AeFontStretch: condensed expanded extraCondensed extraExpanded normal semiConden
 AlbExamplesSeeClassSide class >> example_EditorAsTextAreaWithHighlight [
 	<demo>
 	<sampleInstance>
-	| ed space text |
-	ed := AlbEditorElement new.
+
+	| text |
 	text := ('AB', String tab, String tab, 'CD') asRopedText.
 	text attribute: (BlTextBackgroundAttribute paint: (Color blue alpha: 0.3)) from: 1 to: 1.
 	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 3 to: 6.
 	text attribute: (BlTextBackgroundAttribute paint: (Color yellow alpha: 0.5)) from: 2 to: 2.
 	text attribute: (BlTextBackgroundAttribute paint: (Color red alpha: 0.3)) from: 3 to: 3.
-	text
-		fontSize: 24;
-		fontName: 'Helvetica Neue'.
-	ed text: text.
-		"ed inspect."
+	text fontSize: 24.
 
-	space := BlSpace new.
-	space root addChild: ed.
-	space title: 'editor'.
-
-	space show.
-	^ ed
+	^ AlbEditorElement new
+			text: text;
+			yourself
 ]
 
 { #category : #'editor examples' }

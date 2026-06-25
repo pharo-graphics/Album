@@ -232,7 +232,6 @@ AlbTextEditor >> deselecter [
 
 { #category : #'api - shortcuts' }
 AlbTextEditor >> editorShortcuts [
-	<return: #AlbTextEditorShortcuts>
 
 	^ shortcuts
 ]

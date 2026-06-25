@@ -183,7 +183,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA [
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
-		AlbTextEditorSingleCursor new position: 1.
+		AlbTextEditorCursor position: 1.
 	}.	
 	^ anEditor
 ]
@@ -208,7 +208,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_AA_CR_BB [
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
-		AlbTextEditorSingleCursor new position: 1.
+		AlbTextEditorCursor position: 1.
 	}.	
 ]
 
@@ -234,7 +234,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_1_in_multiline [
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
-		AlbTextEditorSingleCursor new position: 1.
+		AlbTextEditorCursor position: 1.
 	}.
 	
 	^ anEditor
@@ -262,7 +262,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_2_in_multiline [
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
-		AlbTextEditorSingleCursor new position: 2.
+		AlbTextEditorCursor position: 2.
 	}.
 	
 	^ anEditor
@@ -288,7 +288,7 @@ AlbTextEditorNavigatorTest >> test_cursor_add_at_68_in_multiline [
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
-		AlbTextEditorSingleCursor new position: 68.
+		AlbTextEditorCursor position: 68.
 	}.
 	
 	^ anEditorElement
@@ -1054,7 +1054,7 @@ AlbTextEditorNavigatorTest >> test_cursor_moveTo_190_in_multiline [
 	
 	self assert: theMovedEvents size equals: 1.
 	self assert: (theMovedEvents collect: #cursor) asArray equals: {
-		AlbTextEditorSingleCursor new position: 190.
+		AlbTextEditorCursor position: 190.
 	}.
 	
 	^ anEditor

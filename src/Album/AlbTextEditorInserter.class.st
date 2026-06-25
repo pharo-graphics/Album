@@ -198,7 +198,7 @@ AlbTextEditorInserter >> insert [
 				surroundMap
 					openingFor: eachAssociation value
 					ifPresent: [ :aLeftSurroundText | 
-						(self hasString: eachAssociation value afterCursor: (AlbTextEditorSingleCursor at: anIndex))
+						(self hasString: eachAssociation value afterCursor: (AlbTextEditorCursor position: anIndex))
 							ifTrue: [ 
 								shouldUpdateCursor ifTrue: [ 
 									self cursor position = anIndex ifTrue: [ 

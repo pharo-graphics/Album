@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 AlbTextEditorCursorRemoveCommand >> cursor [
-	<return: #AlbTextEditorSingleCursor>
+	<return: #AlbTextEditorCursor>
 
 	^ cursor
 ]

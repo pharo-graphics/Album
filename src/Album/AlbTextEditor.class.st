@@ -163,7 +163,7 @@ AlbTextEditor >> cutSelected [
 AlbTextEditor >> defaultCursor [
 	<return: #AlbTextEditorCursor>
 
-	^ AlbTextEditorSingleCursor new
+	^ AlbTextEditorCursor new
 ]
 
 { #category : #initialization }

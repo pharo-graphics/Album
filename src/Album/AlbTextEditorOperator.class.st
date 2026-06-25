@@ -438,7 +438,7 @@ AlbTextEditorOperator >> hasSpaceAroundCursor: aCursor [
 { #category : #testing }
 AlbTextEditorOperator >> hasSpaceAroundIndex: anIndex [
 
-	^ self hasSpaceAroundCursor: (AlbTextEditorSingleCursor at: anIndex)
+	^ self hasSpaceAroundCursor: (AlbTextEditorCursor position: anIndex)
 ]
 
 { #category : #private }

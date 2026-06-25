@@ -8,10 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-AlbTextEditorLineSegmentTest >> segmentStream [
+AlbTextEditorLineSegmentTest >> newEmptyTextEditor [
 
-	
-	^ AlbEditorSegmentStream new
+	^ AlbTextEditor new
 ]
 
 { #category : #cursor }
@@ -719,9 +718,10 @@ AlbTextEditorLineSegmentTest >> test_delete_HACrCr_in_HACrCrBA_at_1_4 [
 AlbTextEditorLineSegmentTest >> test_emptyEditor [
 
 	| aTextEditor aTextEditorElement aSegmentElement aPieceElement aVisualEditor |
+
 	aTextEditorElement := AlbEditorElement new.
-	aTextEditor := aTextEditorElement editor.
 	aTextEditorElement forceLayout.
+	aTextEditor := aTextEditorElement editor.
 
 	self assert: aTextEditor text asString equals: ''.
 	self
@@ -738,10 +738,9 @@ AlbTextEditorLineSegmentTest >> test_emptyEditor [
 	self assert: aSegmentElement childrenCount equals: 1.
 
 	aPieceElement := aSegmentElement children first.
-	self assert: aPieceElement segmentPiece
-		== aTextEditor segmentCollector segments first pieces first.
-
-	^ aTextEditor
+	self
+		assert: aPieceElement segmentPiece
+		identicalTo: aTextEditor segmentCollector segments first pieces first
 ]
 
 { #category : #insertion }
@@ -763,8 +762,7 @@ AlbTextEditorLineSegmentTest >> test_insert_000_in_HABA_at_2 [
 AlbTextEditorLineSegmentTest >> test_insert_A_inEmptyAt_0 [
 
 	| aTextEditor |
-	
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: 'A' at: 0.
 	
@@ -932,7 +930,7 @@ AlbTextEditorLineSegmentTest >> test_insert_E_in_Hello_World_at_2 [
 AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
 
 	| aTextEditor aSegment |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: 'HABA' at: 0.
 	
@@ -952,7 +950,7 @@ AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
 AlbTextEditorLineSegmentTest >> test_insert_Hello_World_inEmptyAt_0 [
 
 	| aTextEditor |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 
 	aTextEditor insertString: 'Hello World' at: 0.
 
@@ -968,7 +966,7 @@ AlbTextEditorLineSegmentTest >> test_insert_Hello_World_inEmptyAt_0 [
 AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
 
 	| aTextEditor |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 
 	aTextEditor insertString: 'Hello' at: 0.
 
@@ -984,7 +982,7 @@ AlbTextEditorLineSegmentTest >> test_insert_Hello_inEmptyAt_0 [
 AlbTextEditorLineSegmentTest >> test_insert_Lf_inEmptyAt_0 [
 
 	| aTextEditor aSegment |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: String lf at: 0.
 	
@@ -992,7 +990,7 @@ AlbTextEditorLineSegmentTest >> test_insert_Lf_inEmptyAt_0 [
 	self assert: aTextEditor text asString equals: String lf.
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 2.
 	
-	aSegment := aTextEditor segmentCollector segments at: 1.
+	aSegment := aTextEditor segmentCollector segments first.
 	self assert: aSegment textInterval equals: (0 to: 0).
 	self assert: aSegment textEndDelimited equals: 1.
 
@@ -1049,7 +1047,7 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_inCrAt_1 [
 AlbTextEditorLineSegmentTest >> test_insert_NewLine_inEmptyAt_0 [
 
 	| aTextEditor |
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor insertString: String cr at: 0.
 
@@ -1997,7 +1995,7 @@ AlbTextEditorLineSegmentTest >> test_segment_Cr_at_0 [
 
 	| aTextEditor aSegment |
 	
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	aTextEditor text: String cr asRopedText.
 	aTextEditor segmentCollector
 		cachedSegmentAt: 0
@@ -2048,8 +2046,7 @@ AlbTextEditorLineSegmentTest >> test_segment_HelloCrWorld_6_to_11 [
 AlbTextEditorLineSegmentTest >> test_segment_in_Empty_at_0 [
 
 	| aTextEditor aSegment |
-	
-	aTextEditor := self test_emptyEditor.
+	aTextEditor := self newEmptyTextEditor.
 	
 	aTextEditor segmentCollector
 		cachedSegmentAt: 0
@@ -2060,7 +2057,7 @@ AlbTextEditorLineSegmentTest >> test_segment_in_Empty_at_0 [
 	self assert: aSegment textStart equals: 0.
 	self assert: aSegment textEnd equals: 0.
 	self assert: aSegment delimiterLength equals: 0.
-	self assert: aSegment text asString  equals: ''.
+	self assert: aSegment text asString  equals: ''
 ]
 
 { #category : #segments }
@@ -2258,90 +2255,77 @@ AlbTextEditorLineSegmentTest >> text_1234506789 [
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_A [
 
-	
 	^ BlSubText text: 'A' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACr [
 
-	
 	^ BlSubText text: ('A' , String cr) asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrB [
 
-	
 	^ BlSubText text: ('A' , String cr , 'B') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrBCrC [
 
-	
 	^ BlSubText text: ('A' , String cr , 'B' , String cr , 'C') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrCr [
 
-	
 	^ BlSubText text: ('A' , String cr , String cr) asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_ACrCrB [
 
-	
 	^ BlSubText text: ('A' , String cr , String cr , 'B') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_BA [
 
-	
 	^ BlSubText text: 'BA' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_BCA [
 
-	
 	^ BlSubText text: 'BCA' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_Cr [
 
-	
 	^ BlSubText text: String cr asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_CrA [
 
-	
 	^ BlSubText text: (String cr , 'A') asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_HABA [
 
-	
 	^ BlSubText text: 'HABA' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_Hello [
 
-	
 	^ BlSubText text: 'Hello' asRopedText
 ]
 
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_HelloCrWorld [
-
 
 	^ ('Hello', String cr, 'World') asRopedText
 ]
@@ -2473,7 +2457,6 @@ AlbTextEditorLineSegmentTest >> text_Hello_Smart_World_WithAppending [
 { #category : #'accessing - text' }
 AlbTextEditorLineSegmentTest >> text_Hello_World [
 
-	
 	^ BlSubText text: 'Hello World' asRopedText
 ]
 

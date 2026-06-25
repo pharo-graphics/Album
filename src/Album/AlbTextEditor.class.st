@@ -100,7 +100,7 @@ AlbTextEditor >> copy: aFromIndex to: aToIndex [
 
 	"Copy text within given text interval to the clipboard"
 
-	Clipboard clipboardText: (self privateText from: aFromIndex + 1 to: aToIndex) asString
+	Clipboard clipboardText: (self text from: aFromIndex + 1 to: aToIndex) asString
 ]
 
 { #category : #'text - copy/paste' }
@@ -439,7 +439,7 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 	anEvent := AlbTextCursorAttributeEnterEvent new textEditor: self.
 	theEventHandlingAttributes := (aCollectionOfAttributes select: [ :eachAttribute | eachAttribute isEventHandler ]) asSet.
 
-	self privateText
+	self text
 		findAttributesSuchThat: [ :eachAttribute | theEventHandlingAttributes includes: eachAttribute ]
 		indicesDo: [ :aStart :anEnd :eachAttribute | 
 			(self cursors anySatisfy: [ :eachCursor | eachCursor position between: aStart and: anEnd ]) ifTrue: [ 

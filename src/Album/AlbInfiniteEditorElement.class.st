@@ -619,13 +619,6 @@ AlbInfiniteEditorElement >> textSnapshot [
 ]
 
 { #category : #'view - configuration' }
-AlbInfiniteEditorElement >> whenTextEditedDo: aBlock [
-
-	self deprecated: 'Use directly editorDo: [:ed | ed when: AlbTextEditedEvent do: ] instead'. 
-	self editor whenTextEditedDo: aBlock
-]
-
-{ #category : #'view - configuration' }
 AlbInfiniteEditorElement >> whenTextReplacedDo: aBlock [
 
 	self editor addEventHandler: (BlEventHandler

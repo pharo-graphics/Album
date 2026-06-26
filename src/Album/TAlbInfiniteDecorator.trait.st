@@ -284,13 +284,6 @@ TAlbInfiniteDecorator >> textSnapshot [
 ]
 
 { #category : #'t - infinite editor view - configuration' }
-TAlbInfiniteDecorator >> whenTextEditedDo: aBlock [
-
-	self deprecated: 'Use directly editorDo: [:ed | ed when: AlbTextEditedEvent do: ] instead'. 
-	self next whenTextEditedDo: aBlock
-]
-
-{ #category : #'t - infinite editor view - configuration' }
 TAlbInfiniteDecorator >> whenTextReplacedDo: aBlock [
 
 	self next whenTextReplacedDo: aBlock

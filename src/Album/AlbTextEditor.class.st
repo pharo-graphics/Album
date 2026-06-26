@@ -237,18 +237,6 @@ AlbTextEditor >> editorShortcuts [
 ]
 
 { #category : #'commands - processing' }
-AlbTextEditor >> enqueueCommand: aTextEditorCommand [
-	self deprecated: 'Use #executeCommand since there is not queue management and that the command is directly executed'.
-	self executeCommand: aTextEditorCommand
-]
-
-{ #category : #'commands - processing' }
-AlbTextEditor >> enqueueHolderCommand: aTextEditorHolderCommand interval: aTextInterval [
-	self deprecated: 'use directly #notifyItems:event: instead'.
-
-]
-
-{ #category : #'commands - processing' }
 AlbTextEditor >> executeCommand: aTextEditorCommand [
 	aTextEditorCommand executeOn: self
 ]
@@ -995,13 +983,6 @@ AlbTextEditor >> updater [
 	<return: #AlbTextEditorUpdater>
 
 	^ AlbTextEditorUpdater new editor: self
-]
-
-{ #category : #'view configuration' }
-AlbTextEditor >> whenTextEditedDo: aBlock [
-
-	self deprecated: 'Use directly when: AlbTextEditedEvent do: instead'. 
-	self when: AlbTextEditedEvent do: aBlock
 ]
 
 { #category : #accessing }

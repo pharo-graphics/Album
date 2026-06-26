@@ -23,9 +23,3 @@ AlbTextEditorCommand >> context: anObject [
 AlbTextEditorCommand >> executeOn: aTextEditor [
 	self subclassResponsibility
 ]
-
-{ #category : #'instance creation' }
-AlbTextEditorCommand >> newHolderCommand [ 
-	self deprecated: 'use #newHolderEvent since I return an event'.
-
-]

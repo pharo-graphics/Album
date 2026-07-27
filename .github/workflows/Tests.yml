@@ -14,11 +14,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-latest ]  # ubuntu-latest, macos-latest
-        smalltalk: [ Pharo64-13, Pharo64-14 ]
+        smalltalk: [ Pharo64-14, Pharo64-15 ]
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.smalltalk }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-image: ${{ matrix.smalltalk }}

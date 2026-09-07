@@ -8,14 +8,12 @@ Class {
 AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 
 	| screenPosition globalTextIndex selecter navigator editor selection |
-
 	anEvent isConsumed ifTrue: [ ^ self ].
 	anEvent consume.
-	element isEnabled ifFalse: [ ^ self ].
+	self isElementEnabled ifFalse: [ ^ self ].
 
-	screenPosition := (element
-		                   localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0)
-		                   fromChild: element) center.
+	screenPosition := (element localBoundsToMine: (BlBounds origin: anEvent localPosition extent: 0.0 @ 0.0) fromChild: element)
+		                  center.
 
 	editor := element editor.
 	navigator := editor navigator.
@@ -27,7 +25,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 	(globalTextIndex isZero or: [ globalTextIndex = editor text size ]) ifTrue: [
 		selecter
 			all;
-			apply.		
+			apply.
 		^ self ].
 
 	selection := selecter selection.
@@ -41,7 +39,7 @@ AlbTextEditorDoubleClickHandler >> doubleClickEvent: anEvent [
 				from: interval first to: interval last;
 				apply.
 			^ self ]
-		ifAbsent: [  ].
+		ifAbsent: [ ].
 
 	" try to select the whole line "
 	element cursor ifNotNil: [ :globalCursor |

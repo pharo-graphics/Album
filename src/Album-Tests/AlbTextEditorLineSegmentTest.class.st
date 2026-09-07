@@ -937,7 +937,7 @@ AlbTextEditorLineSegmentTest >> test_insert_HABA_inEmptyAt_0 [
 	self assert: aTextEditor text asString equals: 'HABA'.
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 1.
 	
-	aSegment := aTextEditor segmentCollector segments at: 1.
+	aSegment := aTextEditor segmentCollector segments first.
 	self assert: aSegment textInterval equals: (0 to: 4).
 	self assert: aSegment textEndDelimited equals: 4.
 
@@ -1228,12 +1228,12 @@ AlbTextEditorLineSegmentTest >> test_insert_NewLine_in_HABA_At_2 [
 	self assert: aTextEditor segmentCollector computedSegmentsCount equals: 2.
 	self assert: aTextEditor segmentCollector cachedInterval equals: (1 to: 2).
 	
-	aSegment := aTextEditor segmentCollector segments at: 1.
+	aSegment := aTextEditor segmentCollector segments first.
 	self assert: aSegment textInterval equals: (0 to: 2).
 	self assert: aSegment textEndDelimited equals: 3.
 	self assert: aSegment text asString equals: 'HA'.
 
-	aSegment := aTextEditor segmentCollector segments at: 2.
+	aSegment := aTextEditor segmentCollector segments second.
 	self assert: aSegment textInterval equals: (3 to: 5).
 	self assert: aSegment textEndDelimited equals: 5.
 	self assert: aSegment text asString equals: 'BA'.

@@ -34,7 +34,7 @@ AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer [
 
 	| anEditor host |
 	anEditor := self alexandrieEditorFor: 'Hello'.
-	host := BlMorphicWindowHost new.
+	host := BlMorphicWindowHost default.
 	BlSpace new
 		in: [ :sp | sp root addChild: anEditor ];
 		host: host;
@@ -52,7 +52,7 @@ AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer0 [
 		        fontName: 'Helvetica Neue'.
 	element := text asElement.
 	element measurer: self alexandrieFixedMeasurer.
-	host := BlMorphicWindowHost new.
+	host := BlMorphicWindowHost default.
 	BlSpace new in: [ :sp | sp root addChild: element ];
 		host: host;
 		title: host asString;
@@ -87,7 +87,7 @@ TTTCCATTCAGATGCGACCCCAGGTCAGGCGGGGCCACCCGCTGAGTTGAGGC'.
 		elem measurer: (BATextElementMockedMeasurer new).
 		root addChild: elem ].
 
-	host := BlMorphicWindowHost new.
+	host := BlMorphicWindowHost default.
 	space := BlSpace new
 		         host: host;
 		         title: host asString;

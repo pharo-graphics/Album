@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbEditorStructureTest,
-	#superclass : #TestCase,
+	#superclass : #BlSpaceTestCase,
 	#instVars : [
 		'editor'
 	],
@@ -9,47 +9,41 @@ Class {
 
 { #category : #initialization }
 AlbEditorStructureTest >> setUp [
+
+	super setUp.
+	space extent: 400 @ 300.
 	editor := AlbInfiniteEditorElement new.
+	editor exact: 400 @ 300.
+	space deferAndSettle: [ space root addChild: editor ]
 ]
 
 { #category : #segments }
 AlbEditorStructureTest >> test_segments_count0 [
 	
 	| segments |
-	
 
 	segments := editor children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
-	self assert: segments size equals: 0.
+	self assert: segments size equals: 1.
 	
-	editor text: 'A'.
-	self assert: editor children size isZero.
-
-	editor forceLayout.
+	space deferAndSettle: [ editor text: 'A' ].
 	self assert: editor children size equals: 1.
 
 	segments := editor children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: segments size equals: 1.
 	
-	editor text: 'A A'.
-	self assert: editor children size equals: 1.
-
-	editor forceLayout.
+	space deferAndSettle: [ editor text: 'A A' ].
 	self assert: editor children size equals: 1.
 
 	segments := editor children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
 	self assert: segments size equals: 1.
 	
-	editor text: 'A A', String cr.
-	self assert: editor children size equals: 1.
-
-	editor forceLayout.
+	space deferAndSettle: [ editor text: 'A A', String cr ].
 	self assert: editor children size equals: 2.
 
 	segments := editor children
 		select: [ :eachChild | eachChild isKindOf: AlbTextEditorSegmentElement ].	
-	self assert: segments size equals: 2.
-
+	self assert: editor children size equals: 2
 ]

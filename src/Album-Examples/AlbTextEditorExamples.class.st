@@ -33,6 +33,9 @@
 Class {
 	#name : #AlbTextEditorExamples,
 	#superclass : #Object,
+	#classInstVars : [
+		'loremIpsum'
+	],
 	#category : #'Album-Examples-Editor'
 }
 
@@ -271,6 +274,7 @@ AlbTextEditorExamples class >> loremIpsum [
 
 { #category : #'examples - comparison' }
 AlbTextEditorExamples class >> loremIpsum: aLength [
+
 	loremIpsum ifNil: [ loremIpsum := Dictionary new ].
 	^ loremIpsum
 			at: aLength asString asSymbol

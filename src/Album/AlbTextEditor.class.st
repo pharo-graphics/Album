@@ -55,13 +55,14 @@ AlbTextEditor >> addEditorShortcut: aTextEditorShortcut [
 AlbTextEditor >> assertUIProcess [
 	"I check if the current process is a UI process of all attached editor elements"
 	| aCurrentProcess myProcess |
-	Bloc debugModeEnabled ifFalse: [ ^self ].
+	self deprecated: 'Process assertion in Album is deprecated and will be removed.'.
+	Bloc debugModeEnabled ifFalse: [ ^ self ].
 	aCurrentProcess := Processor activeProcess.	
 	myProcess := self uiProcess.
-	myProcess ifNil: [ ^self ].
+	myProcess ifNil: [ ^ self ].
 	myProcess == aCurrentProcess
 		ifFalse: [ AlbEditorWrongThreadError signal: ('I am running from a non-UI process ({1}) expected ({2})'
-				format: { aCurrentProcess asString . myProcess asString }) ].
+				format: { aCurrentProcess asString . myProcess asString }) ]
 ]
 
 { #category : #'private - filter' }
@@ -943,14 +944,15 @@ AlbTextEditor >> textSnapshot [
 AlbTextEditor >> uiProcess [
 
 	| element space |
+	self deprecated: '#uiProcess in Album is deprecated and will be removed.'.
+
 	element := AlbEditorElement allSubInstances
 		           detect: [ :editorElement | editorElement editor == self ]
 		           ifNone: [ ^ nil ].
 	space := element isAttachedToSceneGraph
 		         ifTrue: [ element space ]
 		         ifFalse: [ ^ nil ].
-	space host uiProcessDo: [ :process | ^ process ].
-	^ nil
+	^ space pulseProcess
 ]
 
 { #category : #'text - undo/redo' }

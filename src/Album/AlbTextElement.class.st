@@ -112,7 +112,8 @@ AlbTextElement >> layoutCursor: aBounds context: aBlElementBoundsUpdateContext [
 { #category : #accessing }
 AlbTextElement >> lineIndex [ 
 
-	^ self parent holder position
+	self hasParent ifFalse: [ ^ nil ].
+	^ self parent constraints infinite holder position
 ]
 
 { #category : #'private - paragraph' }

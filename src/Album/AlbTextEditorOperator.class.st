@@ -16,6 +16,9 @@ AlbTextEditorOperator >> apply [
 
 { #category : #'private - asserting' }
 AlbTextEditorOperator >> assertUIProcess [
+
+	self deprecated: '#assertUIProcess in Album is deprecated and will be removed.'.
+
 	editor assertUIProcess
 ]
 

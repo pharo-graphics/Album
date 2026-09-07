@@ -1,6 +1,6 @@
 Class {
 	#name : #AlbTextEditorOperatorTest,
-	#superclass : #TestCase,
+	#superclass : #BlSpaceTestCase,
 	#category : #'Album-Tests-Operators'
 }
 
@@ -16,6 +16,7 @@ AlbTextEditorOperatorTest >> descent [
 
 { #category : #'instance creation' }
 AlbTextEditorOperatorTest >> fixedMeasurer [
+
 	^ BATextElementMockedMeasurer new
 		ascent: self ascent;
 		descent: self descent;
@@ -40,8 +41,7 @@ AlbTextEditorOperatorTest >> lineSpacing [
 
 { #category : #'instance creation' }
 AlbTextEditorOperatorTest >> multilineText [
-	
-	
+
 	^ 'A summer river being crossed
 how pleasing
 with sandals in my hands!
@@ -70,7 +70,8 @@ AlbTextEditorOperatorTest >> newEditorElement: aText [
 			measurer: self fixedMeasurer).
 	anEditor text: aRopedText.
 	
-	anEditor forceLayout.
+	space ifNotNil: [
+		space deferAndSettle: [ space root addChild: anEditor ] ].
 
 	^ anEditor
 ]
@@ -96,25 +97,17 @@ AlbTextEditorOperatorTest >> piecesWithCursorIn: anEditorElement [
 { #category : #focus }
 AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	
-	| anEditor aSpace |
-	
+	| anEditor |
 	anEditor := self test_editorHasNoFocusByDefault.
-	
-	aSpace := BlSpace new.
-	aSpace host: BlHeadlessHost new.
-	aSpace root addChild: anEditor.
-	anEditor forceLayout.
-	
+	space deferAndSettle: [ space root addChild: anEditor ].
+
 	self assert: anEditor cursor notNil.
-	
-	anEditor requestFocus.
-	aSpace pulse.
-	
+
+	space deferAndSettle: [ anEditor requestFocus ].
+
 	self assert: anEditor isFocused.
 	self assert: anEditor hasFocus.
-	self assert: anEditor cursor position equals: 0.
-	
-	aSpace root removeChild: anEditor
+	self assert: anEditor cursor position equals: 0
 ]
 
 { #category : #focus }
@@ -161,14 +154,12 @@ AlbTextEditorOperatorTest >> test_editorOnAA_CR_BB [
 AlbTextEditorOperatorTest >> test_editorOnEmptyText [
 	
 	| anEditor anEditorElement |
-	
+
 	anEditorElement := self newEditorElement: '' asRopedText.
 	anEditor := anEditorElement editor.
 	
 	self assert: anEditor cursor notNil.
-	self assert: anEditor selection isEmpty.
-	
-	^ anEditorElement
+	self assert: anEditor selection isEmpty
 ]
 
 { #category : #'utility - tests' }
@@ -425,10 +416,13 @@ AlbTextEditorOperatorTest >> test_findWhitespaceIn_space_tab_at_2 [
 
 { #category : #'private - events' }
 AlbTextEditorOperatorTest >> unsubscribe: anEventClass from: anElement [
-	anElement removeEventHandlersSuchThat: [ :anEventHandler | (anEventHandler isKindOf: BlEventHandler) and: [ anEventHandler eventClass = anEventClass ] ]
+
+	anElement removeEventHandlersSuchThat: [ :anEventHandler |
+		(anEventHandler isKindOf: BlEventHandler) and: [ anEventHandler eventClass = anEventClass ] ]
 ]
 
 { #category : #'private - font metrics' }
-AlbTextEditorOperatorTest >> wordPadding [  
+AlbTextEditorOperatorTest >> wordPadding [
+
 	^ BlInsets top: 3 bottom: 3
 ]

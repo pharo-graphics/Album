@@ -183,13 +183,14 @@ AlbFlowLine >> isEmpty [
 	"Return true if I am an empty line without any element, false otherwise"
 	<return: #Boolean>
 
-	^ elements isEmpty
+	^ elements isNil or: [ elements isEmpty ]
 ]
 
 { #category : #enumerating }
 AlbFlowLine >> lastElementDo: aBlock [
 
-	elements ifNotEmpty: [ :theElements | aBlock value: theElements last ]
+	elements ifNotNil: [ :theElements |
+		theElements ifNotEmpty: [ aBlock value: theElements last ] ]
 ]
 
 { #category : #accessing }
@@ -238,6 +239,7 @@ AlbFlowLine >> push: anElement [
 	and update my geometry properties taking new element into account "
 
 	| textFlow |
+	elements ifNil: [ elements := OrderedCollection new ].
 	elements addLast: anElement.
 	textFlow := anElement constraints albumTextFlow.
 	textFlow assignToLine: self.
@@ -245,13 +247,13 @@ AlbFlowLine >> push: anElement [
 	width := width + (anElement measuredWidth + anElement margin width).
 	height := height max: (anElement measuredHeight + anElement margin height).
 	availableWidth := maxWidth - width.
-	
+
 	baseline := baseline max: (anElement baselineOffset + anElement margin top)
 ]
 
 { #category : #accessing }
 AlbFlowLine >> pushedQueue [
-	^ pushedQueue
+	^ pushedQueue ifNil: [ pushedQueue := LinkedList new ]
 ]
 
 { #category : #accessing }

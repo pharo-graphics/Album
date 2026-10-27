@@ -26,8 +26,10 @@ AlbTextEditorPaster >> at: anIndex [
 ]
 
 { #category : #'api - configuration' }
-AlbTextEditorPaster >> atCursor [	
-	self at: self cursor position
+AlbTextEditorPaster >> atCursor [
+	"Paste at every cursor"
+
+	editor cursors do: [ :eachCursor | self at: eachCursor position ]
 ]
 
 { #category : #'api - configuration' }

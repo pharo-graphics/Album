@@ -6,7 +6,8 @@ Class {
 
 { #category : #accessing }
 AlbEditorDeselectAllShortcut >> description [
-	^ 'Deselects any currently selected text.'
+
+	^ 'Deselects any currently selected text and keeps only the primary cursor.'
 ]
 
 { #category : #initialization }
@@ -24,5 +25,6 @@ AlbEditorDeselectAllShortcut >> name [
 { #category : #evaluation }
 AlbEditorDeselectAllShortcut >> performOnEditor: aTextEditor element: aEditorElement dueTo: aShortcutEvent [
 
-	aTextEditor selectNone
+	aTextEditor selectNone.
+	aTextEditor removeSecondaryCursors
 ]

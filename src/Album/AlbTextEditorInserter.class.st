@@ -42,7 +42,9 @@ AlbTextEditorInserter >> at: anIndex [
 
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> atCursor [
-	self at: self cursor position
+	"Insert at every cursor"
+
+	editor cursors do: [ :eachCursor | self at: eachCursor position ]
 ]
 
 { #category : #'api - configuration' }
@@ -95,9 +97,12 @@ AlbTextEditorInserter >> computeSelection: aSelection afterInserted: aText at: a
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> crLineEndingWithWhitespace [
 	"Insert a Cr line ending
-	additionally adding a whitespace from the previous line according to a cursor"
+	additionally adding a whitespace from the previous line according to each insertion location"
 
-	self text: String cr, (self findWhitespaceOfLineBefore: self cursor position)
+	insertionIndices ifEmpty: [ ^ self text: String cr , (self findWhitespaceOfLineBefore: self cursor position) ].
+	insertionIndices do: [ :eachAssociation |
+		eachAssociation value: String cr , (self findWhitespaceOfLineBefore: eachAssociation key) ].
+	text := insertionIndices first value
 ]
 
 { #category : #private }
@@ -201,8 +206,8 @@ AlbTextEditorInserter >> insert [
 						(self hasString: eachAssociation value afterCursor: (AlbTextEditorCursor position: anIndex))
 							ifTrue: [ 
 								shouldUpdateCursor ifTrue: [ 
-									self cursor position = anIndex ifTrue: [ 
-										theCursorMovements add: self cursor -> (anIndex + eachAssociation value size) ] ] ]
+									(editor cursors detect: [ :each | each position = anIndex ] ifNone: [ nil ]) ifNotNil: [ :aCursor | 
+										theCursorMovements add: aCursor -> (anIndex + eachAssociation value size) ] ] ]
 							ifFalse: [ 
 								theInsertions add: { 
 										(#index -> anIndex).
@@ -279,9 +284,12 @@ AlbTextEditorInserter >> lineEnding [
 { #category : #'api - configuration' }
 AlbTextEditorInserter >> lineEndingWithWhitespace [
 	"Insert a line ending (Cr, Lf or CrLf depending on the current platform)
-	additionally  adding a whitespace from the previous line according to a cursor"
+	additionally adding a whitespace from the previous line according to each insertion location"
 
-	self text: OSPlatform current lineEnding, (self findWhitespaceOfLineBefore: self cursor position)
+	insertionIndices ifEmpty: [ ^ self text: OSPlatform current lineEnding , (self findWhitespaceOfLineBefore: self cursor position) ].
+	insertionIndices do: [ :eachAssociation |
+		eachAssociation value: OSPlatform current lineEnding , (self findWhitespaceOfLineBefore: eachAssociation key) ].
+	text := insertionIndices first value
 ]
 
 { #category : #'api - configuration' }
@@ -357,46 +365,48 @@ AlbTextEditorInserter >> privateInsertStrings: aCollectionOfString atAll: aColle
 
 { #category : #private }
 AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText at: anIndex [
-	| aCursor aCursorDelta |
-	
-	aCursor := self cursor.
-	aCursorDelta := 
-			self
-				computeIndexMovement: aCursor position
-				afterInserted: aText
-				at: anIndex.
 
-	aCursorDelta isZero
-		ifFalse: [
-			editor navigator
-				context: self context;
-				dueTo: self;
-				move: aCursor by: aCursorDelta;
-				apply ]
+	| aNavigator hasMoves |
+	aNavigator := editor navigator
+		context: self context;
+		dueTo: self;
+		yourself.
+	hasMoves := false.
+	editor cursors do: [ :eachCursor |
+		| aCursorDelta |
+		aCursorDelta := self
+			computeIndexMovement: eachCursor position
+			afterInserted: aText
+			at: anIndex.
+		aCursorDelta isZero ifFalse: [
+			hasMoves := true.
+			aNavigator move: eachCursor by: aCursorDelta ] ].
+	hasMoves ifTrue: [ aNavigator apply ]
 ]
 
 { #category : #private }
 AlbTextEditorInserter >> privateUpdateCursorsAfterInsertion: aText withSurround: aSurroundText at: aTextIndex [
-	| theIndices aCursor aCursorDelta |
 
+	| theIndices aNavigator hasMoves |
 	theIndices := self privateComputeCursorIndices: aText withSurround: aSurroundText at: aTextIndex.
-
-	aCursor := self cursor.
-	aCursorDelta := self
-		computeIndexMovement: aCursor position
-		afterInserted: aText
-		at: theIndices first.
-
-	aCursorDelta := aCursorDelta + (self
-		computeIndexMovement: aCursor position
-		afterInserted: aSurroundText
-		at: theIndices second + aText size).
-
-	aCursorDelta isZero
-		ifFalse: [ editor navigator
-			dueTo: self;
-			move: aCursor by: aCursorDelta;
-			apply ]
+	aNavigator := editor navigator
+		dueTo: self;
+		yourself.
+	hasMoves := false.
+	editor cursors do: [ :eachCursor |
+		| aCursorDelta |
+		aCursorDelta := self
+			computeIndexMovement: eachCursor position
+			afterInserted: aText
+			at: theIndices first.
+		aCursorDelta := aCursorDelta + (self
+			computeIndexMovement: eachCursor position
+			afterInserted: aSurroundText
+			at: theIndices second + aText size).
+		aCursorDelta isZero ifFalse: [
+			hasMoves := true.
+			aNavigator move: eachCursor by: aCursorDelta ] ].
+	hasMoves ifTrue: [ aNavigator apply ]
 ]
 
 { #category : #'private - accessing' }

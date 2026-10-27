@@ -29,6 +29,15 @@ AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 		              findTextIndexAtScreenPosition: aScreenPosition
 		              ifAbsent: [ nil ].
 
+	"Alt (Option on macOS) click toggles an additional cursor"
+	(anEvent modifiers isAlt and: [ aTextIndex notNil and: [ element isEditable ] ]) ifTrue: [
+		editor deselecter all deselect.
+		(editor cursors anySatisfy: [ :each | each position = aTextIndex ])
+			ifTrue: [ aNavigator removeCursorAt: aTextIndex ]
+			ifFalse: [ aNavigator addCursorAt: aTextIndex ].
+		element requestFocus.
+		aNavigator apply.
+		^ self ].
 	anEvent modifiers isShift
 		ifTrue: [
 			aTextIndex ifNotNil: [

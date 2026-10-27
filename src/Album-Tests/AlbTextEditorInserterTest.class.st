@@ -92,7 +92,7 @@ AlbTextEditorInserterTest >> test_filter_insert_Hello123_onlyLetters [
 AlbTextEditorInserterTest >> test_insert_Hello_atCursorAt_0_and_1_selection_no [
 	
 	| anEditor anEditorElement |
-	"Album is mono cursor, only last moveTo is actually done"
+	"moveTo: keeps a single cursor, so only the last moveTo: counts (see AlbMultiCursorTest for #addCursorAt:)"
 	anEditorElement := self newEditorElementWithMultilineText.
 	anEditor := anEditorElement editor.
 	anEditor navigator

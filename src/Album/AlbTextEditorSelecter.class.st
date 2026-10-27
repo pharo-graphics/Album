@@ -463,6 +463,8 @@ AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 AlbTextEditorSelecter >> select [
 
 	| toBeSelected |
+	"selections are not combined with multiple cursors: selecting keeps the primary cursor only"
+	editor removeSecondaryCursors.
 
 	self privatePerformSelectAndDeselectCommands: commands.
 	commands removeAll.

@@ -20,11 +20,18 @@ AlbTextEditorHistoryCursorMovementCommand >> fromIndices: anObject [
 
 { #category : #'api - undo/redo' }
 AlbTextEditorHistoryCursorMovementCommand >> redoOn: aTextEditor [
+
+	self restoreCursorsAt: toIndices on: aTextEditor
+]
+
+{ #category : #private }
+AlbTextEditorHistoryCursorMovementCommand >> restoreCursorsAt: aCollectionOfIndices on: aTextEditor [
+
 	| aNavigator |
-	
+	aCollectionOfIndices ifEmpty: [ ^ self ].
 	aNavigator := aTextEditor navigator.
-	fromIndices do: [ :eachIndex | aNavigator removeAt: eachIndex ].
-	toIndices do: [ :eachIndex | aNavigator moveTo: eachIndex ].
+	aNavigator moveTo: aCollectionOfIndices first.
+	aCollectionOfIndices allButFirst do: [ :eachIndex | aNavigator addCursorAt: eachIndex ].
 	aNavigator apply
 ]
 
@@ -40,10 +47,6 @@ AlbTextEditorHistoryCursorMovementCommand >> toIndices: anObject [
 
 { #category : #'api - undo/redo' }
 AlbTextEditorHistoryCursorMovementCommand >> undoOn: aTextEditor [
-	| aNavigator |
-	
-	aNavigator := aTextEditor navigator.
-	toIndices do: [ :eachIndex | aNavigator removeAt: eachIndex ].
-	fromIndices do: [ :eachIndex | aNavigator moveTo: eachIndex ].
-	aNavigator apply
+
+	self restoreCursorsAt: fromIndices on: aTextEditor
 ]

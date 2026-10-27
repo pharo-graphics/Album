@@ -147,7 +147,7 @@ AlbTextEditorLineSegmentHolder >> hasCursor [
 
 	| aTextEditor |
 	aTextEditor := self infiniteElement editor.
-	^ aTextEditor cursor insideSegment: segment
+	^ aTextEditor cursors anySatisfy: [ :eachCursor | eachCursor insideSegment: segment ]
 ]
 
 { #category : #'private - testing' }
@@ -315,6 +315,8 @@ AlbTextEditorLineSegmentHolder >> updateSegment: anEditorSegment [
 						https://github.com/feenkcom/gtoolkit/issues/892"
 				                    eachSegmentPiece currentCursor:
 					                    eachPiece currentCursor.
+				                    eachSegmentPiece currentCursors:
+					                    eachPiece currentCursors.
 				                    theSegmentElements do: [ :eachSegmentElement |
 					                    eachPiece
 						                    updateText: eachSegmentElement

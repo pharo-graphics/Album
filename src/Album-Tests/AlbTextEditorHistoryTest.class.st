@@ -5,6 +5,24 @@ Class {
 }
 
 { #category : #tests }
+AlbTextEditorHistoryTest >> test_insert_at_two_indices_and_undo_then_redo [
+
+	| editorElement editor |
+	editorElement := 'abcdef' asRopedText onAlbum.
+	editor := editorElement editor.
+	editor inserter
+		at: 1;
+		at: 3;
+		string: 'X';
+		insert.
+	self assert: editor text asString equals: 'aXbcXdef'.
+	editor undo.
+	self assert: editor text asString equals: 'abcdef'.
+	editor redo.
+	self assert: editor text asString equals: 'aXbcXdef'
+]
+
+{ #category : #tests }
 AlbTextEditorHistoryTest >> test_insert_one_char_and_undo [
 
 	| editorElement editor |
@@ -55,6 +73,30 @@ AlbTextEditorHistoryTest >> test_insert_open_close_parentheses_with_selection_an
 	self assert: editor text asString equals: '(abc)'.
 	editor undo.
 	self assert: editor text asString equals: 'abc'.
+]
+
+{ #category : #tests }
+AlbTextEditorHistoryTest >> test_insert_open_close_parentheses_with_selection_and_undo_then_redo [
+
+	| editorElement editor |
+	editorElement := '' asRopedText onAlbum.
+	editor := editorElement editor.
+	editor inserter
+		at: 0;
+		string: 'abc';
+		insert.
+	editor selecter all select.
+	editor inserter
+		atCursor;
+		string: '(';
+		withoutSelectionDelete;
+		surroundings: (AlbTextEditorSurroundMap newFromArray: { '('. ')'. nil });
+		insert.
+	self assert: editor text asString equals: '(abc)'.
+	editor undo.
+	self assert: editor text asString equals: 'abc'.
+	editor redo.
+	self assert: editor text asString equals: '(abc)'
 ]
 
 { #category : #tests }

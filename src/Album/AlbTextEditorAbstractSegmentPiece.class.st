@@ -5,21 +5,16 @@ Class {
 	#classTraits : 'TAlbTextEditorTextualPiece classTrait',
 	#instVars : [
 		'segment',
-		'currentCursor'
+		'currentCursor',
+		'currentCursors'
 	],
 	#category : #'Album-Model-Segment'
 }
 
 { #category : #updating }
 AlbTextEditorAbstractSegmentPiece >> addCursor: aPieceElement of: aLineSegment in: anEditorElement [
-	| globalCursor |
-	"if text editor cursor is currently within this segment piece then convert it to a local one"
 
-	globalCursor := anEditorElement cursor.
-	(globalCursor insideSubText: self of: aLineSegment) ifFalse: [^self ].
-	currentCursor := self globalCursorToLocal: globalCursor.
-	"tell to add the new cursor"
-	self onCursorAdded: currentCursor to: aPieceElement in: anEditorElement
+	self syncCursors: aPieceElement of: aLineSegment in: anEditorElement
 ]
 
 { #category : #'instance creation' }
@@ -42,6 +37,19 @@ AlbTextEditorAbstractSegmentPiece >> currentCursor: aCursor [
 	"local cursor within this segment piece"
 	
 	currentCursor := aCursor
+]
+
+{ #category : #accessing }
+AlbTextEditorAbstractSegmentPiece >> currentCursors [
+	"Return the local cursors displayed by this piece, as associations local cursor -> isPrimary"
+
+	^ currentCursors
+]
+
+{ #category : #accessing }
+AlbTextEditorAbstractSegmentPiece >> currentCursors: aCollection [
+
+	currentCursors := aCollection
 ]
 
 { #category : #'api - cursor' }
@@ -72,6 +80,16 @@ AlbTextEditorAbstractSegmentPiece >> isText [
 	^ false
 ]
 
+{ #category : #cursor }
+AlbTextEditorAbstractSegmentPiece >> localCursorsOf: aLineSegment in: anEditorElement [
+	"Return the editor cursors located in this piece, converted to local ones, as associations local cursor -> isPrimary"
+
+	| aPrimaryCursor |
+	aPrimaryCursor := anEditorElement editor cursor.
+	^ (anEditorElement editor cursors select: [ :eachCursor | eachCursor insideSubText: self of: aLineSegment ])
+		collect: [ :eachCursor | (self globalCursorToLocal: eachCursor) -> (eachCursor == aPrimaryCursor) ]
+]
+
 { #category : #'cursor - hooks' }
 AlbTextEditorAbstractSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in: anEditorElement [
 	"Is sent when a cursor is added to a given piece element within provided editor element"
@@ -81,6 +99,17 @@ AlbTextEditorAbstractSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in
 			editorElement: anEditorElement;
 			hasFocus: anEditorElement isFocused;
 			cursorPosition: aCursor position)
+]
+
+{ #category : #cursor }
+AlbTextEditorAbstractSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in: anEditorElement primary: isPrimary [
+	"Is sent when a cursor is added to a given piece element within provided editor element"
+
+	aPieceElement dispatchEvent: (AlbTextEditorShowCursorRequest new
+		 editorElement: anEditorElement;
+		 hasFocus: anEditorElement isFocused;
+		 cursorPosition: aCursor position;
+		 isPrimary: isPrimary)
 ]
 
 { #category : #'cursor - hooks' }
@@ -96,9 +125,10 @@ AlbTextEditorAbstractSegmentPiece >> onCursorRemoved: aCursor from: aPieceElemen
 { #category : #updating }
 AlbTextEditorAbstractSegmentPiece >> removeCursor: aPieceElement of: aLineSegment in: anEditorElement [
 
-	currentCursor ifNil: [ ^ self ].
-	self onCursorRemoved: currentCursor from: aPieceElement in: anEditorElement.
-	"update the current cursor"
+	currentCursors
+		ifNotNil: [ :theCursors | theCursors do: [ :each | self onCursorRemoved: each key from: aPieceElement in: anEditorElement ] ]
+		ifNil: [ currentCursor ifNotNil: [ self onCursorRemoved: currentCursor from: aPieceElement in: anEditorElement ] ].
+	currentCursors := nil.
 	currentCursor := nil
 ]
 
@@ -123,44 +153,36 @@ AlbTextEditorAbstractSegmentPiece >> segment: anObject [
 
 { #category : #updating }
 AlbTextEditorAbstractSegmentPiece >> setCursor: aPieceElement of: aLineSegment in: anEditorElement [
-	| aFocusRequest localCursor globalCursor |
-	"get the global cursor "
-	globalCursor := anEditorElement cursor.
-	"if text editor cursor is currently within this segment piece then convert it to a local one"
-	(globalCursor insideSubText: self of: aLineSegment) ifTrue: [ localCursor := self globalCursorToLocal: globalCursor ].
-	
-	"update current cursors"
-	currentCursor := localCursor.
 
-	"tell to add new cursors"
-	currentCursor ifNotNil: [ self onCursorAdded: currentCursor to: aPieceElement in: anEditorElement ].
-
+	| aFocusRequest |
+	self syncCursors: aPieceElement of: aLineSegment in: anEditorElement.
 	"set the focus"
 	aFocusRequest := anEditorElement isFocused
 		ifTrue: [ AlbTextEditorFocusRequest new ]
 		ifFalse: [ AlbTextEditorBlurRequest new ].
-	aPieceElement
-		dispatchEvent: (aFocusRequest editorElement: anEditorElement)
+	aPieceElement dispatchEvent: (aFocusRequest editorElement: anEditorElement)
+]
+
+{ #category : #cursor }
+AlbTextEditorAbstractSegmentPiece >> syncCursors: aPieceElement of: aLineSegment in: anEditorElement [
+	"Display exactly the editor cursors located in this piece"
+
+	self removeCursor: aPieceElement of: aLineSegment in: anEditorElement.
+	currentCursors := self localCursorsOf: aLineSegment in: anEditorElement.
+	currentCursors ifEmpty: [ ^ currentCursors := nil ].
+	currentCursor := (currentCursors detect: [ :each | each value ] ifNone: [ currentCursors first ]) key.
+	currentCursors do: [ :each |
+		self
+			onCursorAdded: each key
+			to: aPieceElement
+			in: anEditorElement
+			primary: each value ]
 ]
 
 { #category : #updating }
 AlbTextEditorAbstractSegmentPiece >> updateCursor: aPieceElement of: aLineSegment in: anEditorElement [
-	| globalCursor localCursor |
-self flag: 'to be checked because of failing tests AlbTextEditorNavigatorTest>>test_cursor_add_at_1_in_multiline'.
-	"if text editor cursor is currently within this segment piece then convert it to a local one"
 
-	globalCursor := anEditorElement cursor.
-
-	(globalCursor insideSubText: self of: aLineSegment) ifTrue: [ localCursor := self globalCursorToLocal: globalCursor ].
-	
-	"tell to remove the deleted cursor"
-	currentCursor ifNotNil: [ self onCursorRemoved: currentCursor from: aPieceElement in: anEditorElement ].
-
-	"update the current cursor"
-	currentCursor := localCursor.
-
-	"tell to add the new cursor"
-	currentCursor ifNotNil: [ self onCursorAdded: currentCursor to: aPieceElement in: anEditorElement ]
+	self syncCursors: aPieceElement of: aLineSegment in: anEditorElement
 ]
 
 { #category : #updating }

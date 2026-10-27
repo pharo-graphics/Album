@@ -3,7 +3,8 @@ Class {
 	#superclass : #AlbTextEditorRequest,
 	#instVars : [
 		'cursorPosition',
-		'hasFocus'
+		'hasFocus',
+		'isPrimary'
 	],
 	#category : #'Album-UI-Requests'
 }
@@ -33,4 +34,16 @@ AlbTextEditorShowCursorRequest >> hasFocus [
 { #category : #accessing }
 AlbTextEditorShowCursorRequest >> hasFocus: anObject [
 	hasFocus := anObject
+]
+
+{ #category : #accessing }
+AlbTextEditorShowCursorRequest >> isPrimary [
+
+	^ isPrimary ifNil: [ true ]
+]
+
+{ #category : #accessing }
+AlbTextEditorShowCursorRequest >> isPrimary: aBoolean [
+
+	isPrimary := aBoolean
 ]

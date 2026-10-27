@@ -67,18 +67,39 @@ AlbTextEditorPaster >> isEmpty [
 	^ text isEmpty
 ]
 
+{ #category : #private }
+AlbTextEditorPaster >> linesPerInsertion [
+	"Return one line of the pasted text per insertion location, in text order, when there are
+	several locations and exactly as many lines. Return an empty collection otherwise:
+	the whole text is then pasted at every location"
+
+	| theLines |
+	insertionIndices size > 1
+		ifFalse: [ ^ #() ].
+	theLines := text asString lines.
+	^ theLines size = insertionIndices size
+		ifTrue: [ theLines ]
+		ifFalse: [ #() ]
+]
+
 { #category : #'api - processing' }
 AlbTextEditorPaster >> paste [
-	| anInserter |
-	
+
+	| anInserter theLines |
 	anInserter := editor inserter.
 	anInserter inputFilter: inputFilter.
 	anInserter text: text.
 	anInserter shouldDeleteSelected: shouldDeleteSelected.
 	anInserter shouldUpdateCursor: shouldUpdateCursor.
 	anInserter shouldUpdateSelection: shouldUpdateSelection.
-	insertionIndices do: [ :anIndex | anInserter at: anIndex ].
-
+	theLines := self linesPerInsertion.
+	theLines
+		ifEmpty: [ insertionIndices do: [ :anIndex | anInserter at: anIndex ] ]
+		ifNotEmpty: [
+			insertionIndices with: theLines do: [ :anIndex :aLine |
+				anInserter
+					text: aLine;
+					at: anIndex ] ].
 	anInserter insert
 ]
 

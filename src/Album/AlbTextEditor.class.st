@@ -116,14 +116,11 @@ AlbTextEditor >> copy: aFromIndex to: aToIndex [
 
 { #category : #'text - copy/paste' }
 AlbTextEditor >> copySelected [
-	"Copy currently selected text to the clipboard"
-	
+	"Copy currently selected text to the clipboard. Several selections are copied one per line"
+
 	self selection isEmpty
 		ifTrue: [ ^ self ].
-		
-	self
-		copy: self selection from
-		to: self selection to
+	Clipboard clipboardText: (String cr join: self selectedTexts)
 ]
 
 { #category : #accessing }
@@ -163,14 +160,20 @@ AlbTextEditor >> cut: aFromIndex to: aToIndex [
 { #category : #'text - copy/paste' }
 AlbTextEditor >> cutSelected [
 	"Copy currently selected text to the clipboard and remove it from the editor.
+	Several selections are copied one per line and each of them is removed.
 	Note: I update the cursor location and selection"
-	
+
 	self selection isEmpty
 		ifTrue: [ ^ self ].
-	
-	self
-		cut: self selection from
-		to: self selection to
+	self selectedTexts size > 1
+		ifFalse: [
+			^ self
+				cut: self selection from
+				to: self selection to ].
+	self copySelected.
+	self deleter
+		selected;
+		delete
 ]
 
 { #category : #initialization }
@@ -881,6 +884,15 @@ AlbTextEditor >> selectedText [
 		  ifTrue: [
 		  self text from: self selection from + 1 to: self selection to ]
 		  ifFalse: [ self text from: 1 to: 0 ]
+]
+
+{ #category : #'text - copy/paste' }
+AlbTextEditor >> selectedTexts [
+	"Return the text of every selected interval, in text order"
+
+	^ Array streamContents: [ :aStream |
+		self selection do: [ :eachMonotoneSelection |
+			aStream nextPut: (self text from: eachMonotoneSelection from + 1 to: eachMonotoneSelection to) asString ] ]
 ]
 
 { #category : #'api - modification' }

@@ -82,6 +82,15 @@ AlbMultiCursorTest >> lines: aCollectionOfStrings [
 ]
 
 { #category : #helpers }
+AlbMultiCursorTest >> preservingClipboardDo: aBlock [
+	"Evaluate aBlock and restore the system clipboard afterwards, so that tests do not overwrite it"
+
+	| aSavedText |
+	aSavedText := Clipboard clipboardText asString.
+	aBlock ensure: [ Clipboard clipboardText: aSavedText ]
+]
+
+{ #category : #helpers }
 AlbMultiCursorTest >> randomSpecUsing: aRandom [
 	"Return a random spec of up to 12 characters with at least one cursor"
 
@@ -194,6 +203,27 @@ AlbMultiCursorTest >> test_backspace_merges_cursors_that_meet [
 	self deny: editor hasMultipleCursors
 ]
 
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_copy_selections_and_paste_them_one_per_cursor [
+
+	self preservingClipboardDo: [
+		| editor |
+		editor := self editorFrom: (self lines: #( '|one = 1' '|two = 2' '|three = 3' )).
+		editor selecter
+			extendToNextWordEnd;
+			select.
+		editor copySelected.
+		self assert: Clipboard clipboardText asString lines asArray equals: #( 'one' 'two' 'three' ).
+		editor deselecter
+			all;
+			deselect.
+		editor navigator
+			moveToLineEnd;
+			apply.
+		editor paste.
+		self assert: (self specOf: editor) equals: (self lines: #( 'one = 1one|' 'two = 2two|' 'three = 3three|' )) ]
+]
+
 { #category : #'tests - cursors' }
 AlbMultiCursorTest >> test_cursors_are_sorted_and_primary_is_kept [
 
@@ -212,6 +242,35 @@ AlbMultiCursorTest >> test_cursors_in_the_same_word_are_all_displayed [
 	element := self elementFrom: 'o|n|e two'.
 	positions := (self cursorElementsIn: element) collect: [ :each | each parent text asString -> each textPosition ].
 	self assert: positions asSet equals: { 'one' -> 1. 'one' -> 2 } asSet
+]
+
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_cut_removes_every_selection [
+
+	self preservingClipboardDo: [
+		| editor |
+		editor := self editorFrom: '|one |two |three'.
+		editor selecter
+			extendToNextWordEnd;
+			select.
+		editor cutSelected.
+		self assert: (self specOf: editor) equals: '| | |'.
+		self assert: editor selection isEmpty.
+		self assert: Clipboard clipboardText asString lines asArray equals: #( 'one' 'two' 'three' ) ]
+]
+
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_cut_single_selection_is_unchanged [
+
+	self preservingClipboardDo: [
+		| editor |
+		editor := self editorFrom: 'one |two three'.
+		editor selecter
+			extendToNextWordEnd;
+			select.
+		editor cutSelected.
+		self assert: (self specOf: editor) equals: 'one | three'.
+		self assert: Clipboard clipboardText asString equals: 'two' ]
 ]
 
 { #category : #'tests - shortcuts' }
@@ -431,7 +490,7 @@ AlbMultiCursorTest >> test_one_cursor_element_per_cursor [
 	self assert: (cursorElements select: [ :each | each == element cursorElement ]) size equals: 1
 ]
 
-{ #category : #'tests - inserting' }
+{ #category : #'tests - copy/paste' }
 AlbMultiCursorTest >> test_paste_at_every_cursor [
 
 	| editor |
@@ -441,6 +500,54 @@ AlbMultiCursorTest >> test_paste_at_every_cursor [
 		atCursor;
 		paste.
 	self assert: (self specOf: editor) equals: 'a--|b--|'
+]
+
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_paste_ignores_a_trailing_line_ending [
+
+	| editor |
+	editor := self editorFrom: 'a|b|'.
+	editor paster
+		text: (self lines: #( 'X' 'Y' '' ));
+		atCursor;
+		paste.
+	self assert: (self specOf: editor) equals: 'aX|bY|'
+]
+
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_paste_multiple_lines_with_a_single_cursor [
+
+	| editor |
+	editor := self editorFrom: 'a|b'.
+	editor paster
+		text: (self lines: #( 'X' 'Y' ));
+		atCursor;
+		paste.
+	self assert: (self specOf: editor) equals: (self lines: #( 'aX' 'Y|b' ))
+]
+
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_paste_one_line_per_cursor [
+
+	| editor |
+	editor := self editorFrom: 'a|b|c|'.
+	editor paster
+		text: (self lines: #( 'X' 'Y' 'Z' ));
+		atCursor;
+		paste.
+	self assert: (self specOf: editor) equals: 'aX|bY|cZ|'
+]
+
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_paste_whole_text_when_line_count_differs [
+
+	| editor |
+	editor := self editorFrom: 'a|b|'.
+	editor paster
+		text: (self lines: #( 'X' 'Y' 'Z' ));
+		atCursor;
+		paste.
+	self assert: (self specOf: editor) equals: (self lines: #( 'aX' 'Y' 'Z|bX' 'Y' 'Z|' ))
 ]
 
 { #category : #'tests - oracle' }
@@ -508,6 +615,17 @@ AlbMultiCursorTest >> test_select_all_keeps_a_single_cursor [
 		select.
 	self assert: (self specOf: editor) equals: 'abc|'.
 	self assert: (self selectionOf: editor) equals: { 0 -> 3 }
+]
+
+{ #category : #'tests - copy/paste' }
+AlbMultiCursorTest >> test_selected_texts_one_per_selection [
+
+	| editor |
+	editor := self editorFrom: '|one |two |three'.
+	editor selecter
+		extendToNextWordEnd;
+		select.
+	self assert: editor selectedTexts equals: #( 'one' 'two' 'three' )
 ]
 
 { #category : #'tests - selecting' }

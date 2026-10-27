@@ -797,6 +797,7 @@ AlbTextEditor >> restoreState: aTextEditorMemento [
 
 { #category : #accessing }
 AlbTextEditor >> restoreText: aText [
+
 	"before changing the text we must unsubscribe from existing one"
 	text ifNotNil: [ text unsubscribe: self ].
 	self history setUpToStart.

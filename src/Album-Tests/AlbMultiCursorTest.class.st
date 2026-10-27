@@ -97,6 +97,16 @@ AlbMultiCursorTest >> randomSpecUsing: aRandom [
 ]
 
 { #category : #helpers }
+AlbMultiCursorTest >> selectionOf: anEditor [
+	"Return the selected intervals as from -> to associations"
+
+	| theBounds |
+	theBounds := OrderedCollection new.
+	anEditor selection do: [ :each | theBounds add: each from -> each to ].
+	^ theBounds asArray
+]
+
+{ #category : #helpers }
 AlbMultiCursorTest >> setCursorsOf: anEditor from: aSpec [
 
 	| positions index navigator |
@@ -156,6 +166,22 @@ AlbMultiCursorTest >> test_backspace_at_every_cursor [
 	self assert: (self specOf: editor) equals: 'a|c|'
 ]
 
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_backspace_deletes_every_selection [
+
+	| editor |
+	editor := self editorFrom: '|one |two |three'.
+	editor selecter
+		extendToNextWordEnd;
+		select.
+	editor deleter
+		selected;
+		oneBeforeCursorIfOutsideOfSelection;
+		delete.
+	self assert: (self specOf: editor) equals: '| | |'.
+	self assert: editor selection isEmpty
+]
+
 { #category : #'tests - deleting' }
 AlbMultiCursorTest >> test_backspace_merges_cursors_that_meet [
 
@@ -195,6 +221,45 @@ AlbMultiCursorTest >> test_escape_keeps_only_the_primary_cursor [
 	element := self elementFrom: 'a|b|c|'.
 	AlbEditorDeselectAllShortcut new performOnEditor: element editor element: element dueTo: nil.
 	self assert: (self specOf: element editor) equals: 'a|bc'
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_extend_selection_at_every_cursor [
+
+	| editor |
+	editor := self editorFrom: '|one |two |three'.
+	editor selecter
+		moveOneToRight;
+		select.
+	editor selecter
+		moveOneToRight;
+		select.
+	self assert: (self specOf: editor) equals: 'on|e tw|o th|ree'.
+	self assert: (self selectionOf: editor) equals: { 0 -> 2. 4 -> 6. 8 -> 10 }
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_extend_selection_down_at_every_cursor [
+
+	| element |
+	element := self elementFrom: (self lines: #( '|abc' 'def' '|ghi' 'jkl' )).
+	element editor selecter
+		moveOneDown;
+		select.
+	self assert: (self specOf: element editor) equals: (self lines: #( 'abc' '|def' 'ghi' '|jkl' )).
+	self assert: (self selectionOf: element editor) equals: { 0 -> 4. 8 -> 12 }
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_extend_selection_to_word_end_at_every_cursor [
+
+	| editor |
+	editor := self editorFrom: '|one |two |three'.
+	editor selecter
+		extendToNextWordEnd;
+		select.
+	self assert: (self specOf: editor) equals: 'one| two| three|'.
+	self assert: (self selectionOf: editor) equals: { 0 -> 3. 4 -> 7. 8 -> 13 }
 ]
 
 { #category : #'tests - deleting' }
@@ -433,13 +498,109 @@ AlbMultiCursorTest >> test_remove_primary_cursor_promotes_a_secondary_one [
 ]
 
 { #category : #'tests - selecting' }
-AlbMultiCursorTest >> test_selecting_keeps_only_the_primary_cursor [
+AlbMultiCursorTest >> test_select_all_keeps_a_single_cursor [
+	"An explicit range replaces the cursors, as in VS Code"
 
 	| editor |
 	editor := self editorFrom: 'a|b|c'.
-	editor select: 0 to: 2.
+	editor selecter
+		all;
+		select.
+	self assert: (self specOf: editor) equals: 'abc|'.
+	self assert: (self selectionOf: editor) equals: { 0 -> 3 }
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_selections_that_meet_merge_their_cursors [
+	"The cursor kept is the one at the edge of the merged selection; it becomes primary"
+
+	| editor |
+	editor := self editorFrom: 'a|bc|def'.
+	editor selecter
+		moveOneToRight;
+		select.
+	editor selecter
+		moveOneToRight;
+		select.
+	self assert: (self specOf: editor) equals: 'abcde|f'.
+	self assert: (self selectionOf: editor) equals: { 1 -> 5 }.
 	self deny: editor hasMultipleCursors.
-	self assert: editor cursor position equals: 1
+	editor selecter
+		moveOneToLeft;
+		select.
+	self assert: (self selectionOf: editor) equals: { 1 -> 4 }
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_shrink_selection_at_every_cursor [
+
+	| editor |
+	editor := self editorFrom: '|one |two |three'.
+	editor selecter
+		moveOneToRight;
+		select.
+	editor selecter
+		moveOneToRight;
+		select.
+	editor selecter
+		moveOneToLeft;
+		select.
+	self assert: (self specOf: editor) equals: 'o|ne t|wo t|hree'.
+	self assert: (self selectionOf: editor) equals: { 0 -> 1. 4 -> 5. 8 -> 9 }
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_typing_over_selections_keeps_one_cursor_element_per_cursor [
+
+	| element |
+	element := self elementFrom: '|one |two |three'.
+	element editor selecter
+		extendToNextWordEnd;
+		select.
+	element editor inserter
+		atCursor;
+		string: 'X';
+		insert.
+	self assert: (self specOf: element editor) equals: 'X| X| X|'.
+	self assert: (self cursorElementsIn: element) size equals: 3
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_typing_over_selections_undo_and_redo [
+	"As with a single cursor, replacing selected text is undone in two steps: the insertion, then the deletion"
+
+	| editor |
+	editor := self editorFrom: '|one |two |three'.
+	editor selecter
+		extendToNextWordEnd;
+		select.
+	editor inserter
+		atCursor;
+		string: 'X';
+		insert.
+	editor undo.
+	self assert: (self specOf: editor) equals: '| | |'.
+	editor undo.
+	self assert: (self specOf: editor) equals: 'one| two| three|'.
+	editor redo.
+	editor redo.
+	self assert: (self specOf: editor) equals: 'X| X| X|'
+]
+
+{ #category : #'tests - selecting' }
+AlbMultiCursorTest >> test_typing_replaces_every_selection [
+
+	| editor |
+	editor := self editorFrom: '|one |two |three'.
+	editor selecter
+		extendToNextWordEnd;
+		select.
+	editor inserter
+		atCursor;
+		string: 'X';
+		insert.
+	self assert: (self specOf: editor) equals: 'X| X| X|'.
+	self assert: editor selection isEmpty
 ]
 
 { #category : #'tests - history' }

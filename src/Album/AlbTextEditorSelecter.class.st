@@ -44,65 +44,30 @@ AlbTextEditorSelecter >> extendToIndex: anIndex [
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToLineEnd [
-	"Extend selection to the end of the line"
-	|  cmd globalCursor delta |
+	"Extend the selection of every cursor to the end of its line"
 
-	globalCursor := self cursor.
-	delta := (self findTextIndexAtLineEnd: globalCursor) - globalCursor position.
-	cmd := (self
-			privateExtendSelectionRightAt: globalCursor position
-			by: delta) toMoveCursor: globalCursor by: delta.
-	
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateExtendToLineEndFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToLineStart [
+	"Extend the selection of every cursor to the start of its line"
 
-	"Extend selection to the start of the line"
-
-	| cmd delta globalCursor |
-
-	globalCursor := self cursor.
-	delta := globalCursor position
-	         - (self findTextIndexAtLineStart: globalCursor).
-	cmd := (self
-		        privateExtendSelectionLeftAt: globalCursor position
-		        by: delta) toMoveCursor: globalCursor by: delta negated.
-
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateExtendToLineStartFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToNextWordEnd [
-	"Extend selection to the end of the next word"
-	| aCursor aDelta cmd |
+	"Extend the selection of every cursor to the end of the next word"
 
-	aCursor := self cursor.
-	aDelta := (self findWordEndAfter: aCursor position) - aCursor position.
-	cmd := (self
-			privateExtendSelectionRightAt: aCursor position
-			by: aDelta)
-				toMoveCursor: aCursor
-				by: aDelta.
-	
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateExtendToNextWordEndFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> extendToPreviousWordStart [
-	"Extend selection to start of the previous word"
-	| aCursor aDelta cmd |
+	"Extend the selection of every cursor to the start of the previous word"
 
-	aCursor := self cursor.
-	aDelta := aCursor position - (self findWordEnlargedStartBefore: aCursor position).
-	cmd := (self
-			privateExtendSelectionLeftAt: aCursor position
-			by: aDelta)
-				toMoveCursor: aCursor
-				by: aDelta negated.
-	
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateExtendToPreviousWordStartFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
@@ -168,100 +133,30 @@ AlbTextEditorSelecter >> initialize [
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneDown [
-	"Select and move a cursor one line down"
-	| aCursor newCursorPosition cmd |
+	"Extend or shrink the selection of every cursor by one line down"
 
-	aCursor := self cursor.
-	newCursorPosition := self
-		findTextIndexBelowCursor: aCursor
-		ifAbsent: [
-			(self isCursorOnTheLastLine: aCursor)
-				ifTrue: [ self text size ]
-				ifFalse: [ aCursor position ] ].
-
-	(self selection anySatisfy: [ :aSelection | aCursor position = aSelection from ])
-		ifTrue: [
-			| aDelta |
-			aDelta := newCursorPosition - aCursor position.
-			cmd := AlbExtendSelectionCommand new 
-				editor: editor;
-				toDeselect: { BlSelection from: aCursor position to: newCursorPosition };
-				toMoveCursor: aCursor by: aDelta ]
-		ifFalse: [
-			| aDelta |
-			aDelta := (newCursorPosition min: self text size) - aCursor position.
-			cmd := AlbExtendSelectionCommand new 
-				editor: editor;
-				toSelect: { BlSelection from: aCursor position to: (newCursorPosition min: self text size) };
-				toMoveCursor: aCursor by: aDelta;
-				withoutResettingDesiredCoordinate ].
-		
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateMoveOneDownFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneToLeft [
-	"Select and move a cursor one character to the left"
-	| cmd aCursor |
+	"Extend or shrink the selection of every cursor by one character to the left"
 
-	aCursor := self cursor.
-	cmd := (self
-			privateExtendSelectionLeftAt: aCursor position
-			by: 1)
-				toMoveCursor: aCursor
-				by: -1.
-			
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateMoveOneToLeftFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneToRight [
-	"Select and move a cursor one character to the right"
-	| cmd aCursor |
+	"Extend or shrink the selection of every cursor by one character to the right"
 
-	aCursor := self cursor.
-	cmd := (self
-			privateExtendSelectionRightAt: aCursor position
-			by: 1)
-				toMoveCursor: aCursor
-				by: 1.
-	
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateMoveOneToRightFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorSelecter >> moveOneUp [
-	"Select and move a cursor one line up"
-	| aCursor newCursorPosition cmd |
-	
-	aCursor := self cursor.
-	newCursorPosition := self
-		findTextIndexAboveCursor: aCursor
-		ifAbsent: [
-			(self isCursorOnTheFirstLine: aCursor)
-				ifTrue: [ 0 ]
-				ifFalse: [ aCursor position ] ].
+	"Extend or shrink the selection of every cursor by one line up"
 
-	"the cursor is on the right side of the selection, we should deselect from the new potential position to its current location"
-	(self selection anySatisfy: [ :aSelection | aCursor position = aSelection to ])
-		ifTrue: [
-			| aDelta |
-			aDelta := aCursor position - newCursorPosition.
-			cmd := AlbExtendSelectionCommand new 
-				editor: editor;
-				toDeselect: { BlSelection from: newCursorPosition to: aCursor position };
-				toMoveCursor: aCursor by: aDelta negated ]
-		ifFalse: [
-			"the cursor is on the left side of the selection or is not inside any selection, we should extend it to the new potential location"
-			| aDelta |
-			aDelta := aCursor position - newCursorPosition.
-			cmd := AlbExtendSelectionCommand new 
-				editor: editor;
-				toSelect: { BlSelection from: newCursorPosition to: aCursor position };
-				toMoveCursor: aCursor by: aDelta negated;
-				withoutResettingDesiredCoordinate ].
-
-	commands add: cmd
+	editor cursors do: [ :eachCursor | self privateMoveOneUpFor: eachCursor ]
 ]
 
 { #category : #'api - configuration' }
@@ -386,6 +281,63 @@ AlbTextEditorSelecter >> privateExtendSelectionRightAt: aTextPosition by: anAmou
 ]
 
 { #category : #private }
+AlbTextEditorSelecter >> privateExtendToLineEndFor: globalCursor [
+	"Extend selection to the end of the line"
+
+	| cmd delta |
+	delta := (self findTextIndexAtLineEnd: globalCursor) - globalCursor position.
+	cmd := (self
+			privateExtendSelectionRightAt: globalCursor position
+			by: delta) toMoveCursor: globalCursor by: delta.
+	
+	commands add: cmd
+]
+
+{ #category : #private }
+AlbTextEditorSelecter >> privateExtendToLineStartFor: globalCursor [
+	"Extend selection to the start of the line"
+
+	| cmd delta |
+	delta := globalCursor position - (self findTextIndexAtLineStart: globalCursor).
+	cmd := (self
+		privateExtendSelectionLeftAt: globalCursor position
+		by: delta)
+			toMoveCursor: globalCursor
+			by: delta negated.
+	commands add: cmd
+]
+
+{ #category : #private }
+AlbTextEditorSelecter >> privateExtendToNextWordEndFor: aCursor [
+	"Extend selection to the end of the next word"
+
+	| aDelta cmd |
+	aDelta := (self findWordEndAfter: aCursor position) - aCursor position.
+	cmd := (self
+			privateExtendSelectionRightAt: aCursor position
+			by: aDelta)
+				toMoveCursor: aCursor
+				by: aDelta.
+	
+	commands add: cmd
+]
+
+{ #category : #private }
+AlbTextEditorSelecter >> privateExtendToPreviousWordStartFor: aCursor [
+	"Extend selection to start of the previous word"
+
+	| aDelta cmd |
+	aDelta := aCursor position - (self findWordEnlargedStartBefore: aCursor position).
+	cmd := (self
+			privateExtendSelectionLeftAt: aCursor position
+			by: aDelta)
+				toMoveCursor: aCursor
+				by: aDelta negated.
+	
+	commands add: cmd
+]
+
+{ #category : #private }
 AlbTextEditorSelecter >> privateFrom: aFromIndex to: aToIndex [
 
 	aFromIndex = aToIndex
@@ -395,18 +347,110 @@ AlbTextEditorSelecter >> privateFrom: aFromIndex to: aToIndex [
 ]
 
 { #category : #private }
+AlbTextEditorSelecter >> privateMoveOneDownFor: aCursor [
+	"Select and move a cursor one line down"
+
+	| newCursorPosition cmd |
+	newCursorPosition := self
+		findTextIndexBelowCursor: aCursor
+		ifAbsent: [
+			(self isCursorOnTheLastLine: aCursor)
+				ifTrue: [ self text size ]
+				ifFalse: [ aCursor position ] ].
+
+	(self selection anySatisfy: [ :aSelection | aCursor position = aSelection from ])
+		ifTrue: [
+			| aDelta |
+			aDelta := newCursorPosition - aCursor position.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toDeselect: { BlSelection from: aCursor position to: newCursorPosition };
+				toMoveCursor: aCursor by: aDelta ]
+		ifFalse: [
+			| aDelta |
+			aDelta := (newCursorPosition min: self text size) - aCursor position.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toSelect: { BlSelection from: aCursor position to: (newCursorPosition min: self text size) };
+				toMoveCursor: aCursor by: aDelta;
+				withoutResettingDesiredCoordinate ].
+		
+	commands add: cmd
+]
+
+{ #category : #private }
+AlbTextEditorSelecter >> privateMoveOneToLeftFor: aCursor [
+	"Select and move a cursor one character to the left"
+
+	| cmd |
+	cmd := (self
+			privateExtendSelectionLeftAt: aCursor position
+			by: 1)
+				toMoveCursor: aCursor
+				by: -1.
+			
+	commands add: cmd
+]
+
+{ #category : #private }
+AlbTextEditorSelecter >> privateMoveOneToRightFor: aCursor [
+	"Select and move a cursor one character to the right"
+
+	| cmd |
+	cmd := (self
+			privateExtendSelectionRightAt: aCursor position
+			by: 1)
+				toMoveCursor: aCursor
+				by: 1.
+	
+	commands add: cmd
+]
+
+{ #category : #private }
+AlbTextEditorSelecter >> privateMoveOneUpFor: aCursor [
+	"Select and move a cursor one line up"
+
+	| newCursorPosition cmd |
+	newCursorPosition := self
+		findTextIndexAboveCursor: aCursor
+		ifAbsent: [
+			(self isCursorOnTheFirstLine: aCursor)
+				ifTrue: [ 0 ]
+				ifFalse: [ aCursor position ] ].
+
+	"the cursor is on the right side of the selection, we should deselect from the new potential position to its current location"
+	(self selection anySatisfy: [ :aSelection | aCursor position = aSelection to ])
+		ifTrue: [
+			| aDelta |
+			aDelta := aCursor position - newCursorPosition.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toDeselect: { BlSelection from: newCursorPosition to: aCursor position };
+				toMoveCursor: aCursor by: aDelta negated ]
+		ifFalse: [
+			"the cursor is on the left side of the selection or is not inside any selection, we should extend it to the new potential location"
+			| aDelta |
+			aDelta := aCursor position - newCursorPosition.
+			cmd := AlbExtendSelectionCommand new 
+				editor: editor;
+				toSelect: { BlSelection from: newCursorPosition to: aCursor position };
+				toMoveCursor: aCursor by: aDelta negated;
+				withoutResettingDesiredCoordinate ].
+
+	commands add: cmd
+]
+
+{ #category : #private }
 AlbTextEditorSelecter >> privatePerformSelectAndDeselectCommands: theCommands [
-	| aDeselecter  |
 
+	| aDeselecter aNavigator |
 	aDeselecter := editor deselecter.
-
 	theCommands do: [ :aCommand |
 		aCommand toDeselectDo: [ :eachSelectionToDeselect |
 			aDeselecter
 				from: eachSelectionToDeselect from
 				to: eachSelectionToDeselect to ] ].
 	aDeselecter deselect.
-
 	theCommands do: [ :aCommand |
 		aCommand toSelectDo: [ :eachSelectionToSelect |
 			self
@@ -415,23 +459,20 @@ AlbTextEditorSelecter >> privatePerformSelectAndDeselectCommands: theCommands [
 	
 	shouldUpdateCursor
 		ifFalse: [ ^ self ].
-	
+	theCommands
+		ifEmpty: [ ^ self ].
+	"Move all cursors with a single navigator"
+	aNavigator := editor navigator.
+	aNavigator dueTo: self.
+	(theCommands allSatisfy: [ :aCommand | aCommand shouldResetDesiredCoordinate ])
+		ifTrue: [ aNavigator withResettingDesiredCoordinate ]
+		ifFalse: [ aNavigator withoutResettingDesiredCoordinate ].
 	theCommands do: [ :aCommand |
-		| aNavigator |
-		aNavigator := editor navigator.
-		aNavigator dueTo: self.
-		
-		aCommand shouldResetDesiredCoordinate
-			ifTrue: [ aNavigator withResettingDesiredCoordinate ]
-			ifFalse: [ aNavigator withoutResettingDesiredCoordinate ].
-		
 		aCommand toMoveCursorDo: [ :eachCursor :anAmount |
 			aNavigator move: eachCursor by: anAmount ].
 		aCommand toAddCursorDo: [ :aCursorPosition |
-			aNavigator moveTo: aCursorPosition ].
-		"aCommand toRemoveCursorsDo: [ :aCursor |
-			aNavigator remove: aCursor ]".
-		aNavigator apply ].
+			aNavigator moveTo: aCursorPosition ] ].
+	aNavigator apply
 ]
 
 { #category : #private }
@@ -463,8 +504,6 @@ AlbTextEditorSelecter >> privateSelect: aFromTextIndex to: aToTextIndex [
 AlbTextEditorSelecter >> select [
 
 	| toBeSelected |
-	"selections are not combined with multiple cursors: selecting keeps the primary cursor only"
-	editor removeSecondaryCursors.
 
 	self privatePerformSelectAndDeselectCommands: commands.
 	commands removeAll.
@@ -481,7 +520,12 @@ AlbTextEditorSelecter >> select [
 	toBeSelected do: [ :aMonotoneSelection | 
 		aMonotoneSelection interval size > 1 ifTrue: [ self privateSelect: aMonotoneSelection from to: aMonotoneSelection to ] ].
 	
-	selection ifNotEmpty: [ self notifyCursorRemoved: self cursor ]
+	"now that the editor selection is up to date, keep one cursor per selection"
+	editor hasMultipleCursors ifTrue: [
+		editor navigator
+			withMergingWithinSelection;
+			apply ].
+	selection ifNotEmpty: [ editor cursors do: [ :eachCursor | self notifyCursorRemoved: eachCursor ] ]
 	
 	" do not send updateCursors to self here otherwise, navigator moveUp is broken " 
 ]

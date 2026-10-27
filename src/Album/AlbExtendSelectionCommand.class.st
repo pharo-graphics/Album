@@ -7,8 +7,7 @@ Class {
 		'toDeselect',
 		'toMoveCursor',
 		'toAddCursor',
-		'shouldResetDesiredCoordinate',
-		'toRemoveCursors'
+		'shouldResetDesiredCoordinate'
 	],
 	#category : #'Album-Model-Operators'
 }
@@ -18,7 +17,7 @@ AlbExtendSelectionCommand >> editor: anEditor [
 	editor := anEditor
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 AlbExtendSelectionCommand >> initialize [
 	super initialize.
 
@@ -26,7 +25,6 @@ AlbExtendSelectionCommand >> initialize [
 	toDeselect := OrderedCollection new.
 	toMoveCursor := nil.
 	toAddCursor := nil.
-	toRemoveCursors := OrderedCollection new.
 	shouldResetDesiredCoordinate := true
 ]
 

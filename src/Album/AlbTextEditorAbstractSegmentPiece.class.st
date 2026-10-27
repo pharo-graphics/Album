@@ -106,10 +106,10 @@ AlbTextEditorAbstractSegmentPiece >> onCursorAdded: aCursor to: aPieceElement in
 	"Is sent when a cursor is added to a given piece element within provided editor element"
 
 	aPieceElement dispatchEvent: (AlbTextEditorShowCursorRequest new
-		 editorElement: anEditorElement;
-		 hasFocus: anEditorElement isFocused;
-		 cursorPosition: aCursor position;
-		 isPrimary: isPrimary)
+		editorElement: anEditorElement;
+		hasFocus: anEditorElement isFocused;
+		cursorPosition: aCursor position;
+		isPrimary: isPrimary)
 ]
 
 { #category : #'cursor - hooks' }

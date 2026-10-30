@@ -181,6 +181,39 @@ AlbTextEditorExamples class >> exampleMethodTextOpenEmbedElement [
 ]
 
 { #category : #examples }
+AlbTextEditorExamples class >> exampleMultiCursorEditing [
+	"Open an editor with a cursor at the start of every line: type to edit all lines at once.
+	Alt-click (Option-click on macOS) toggles a cursor,
+	Ctrl+Alt+Up/Down (Cmd+Option+Up/Down on macOS) adds a cursor above/below,
+	Escape keeps only the primary cursor"
+
+	<script>
+
+	| space editorElement editor text lineStarts |
+	text := String cr join: #(
+		'red := Color red.'
+		'green := Color green.'
+		'blue := Color blue.'
+		'yellow := Color yellow.' ).
+	editorElement := self newElement.
+	editorElement text: text asRopedText.
+	editorElement editor text attributes: { (BlFontSizeAttribute size: 18) }.
+	editor := editorElement editor.
+	lineStarts := OrderedCollection with: 0.
+	text withIndexDo: [ :each :index | each = Character cr ifTrue: [ lineStarts add: index ] ].
+	editor navigator
+		moveTo: lineStarts first;
+		apply.
+	lineStarts allButFirst do: [ :each | editor addCursorAt: each ].
+	space := BlSpace new.
+	space title: 'Album multi-cursor: Option/Alt-click, Cmd/Ctrl+Option+Up/Down, Esc'.
+	space extent: 700 @ 300.
+	space root addChild: editorElement.
+	space show.
+	editorElement infinite requestFocus
+]
+
+{ #category : #examples }
 AlbTextEditorExamples class >> exampleTextOpen [
 	<script>
 

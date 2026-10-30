@@ -17,7 +17,8 @@ Class {
 		'isFocused',
 		'cursor',
 		'hasEventHandlerAttribute',
-		'layoutPositionsRange'
+		'layoutPositionsRange',
+		'secondaryCursors'
 	],
 	#classInstVars : [
 		'isDebug'
@@ -40,6 +41,15 @@ AlbTextEditor class >> isDebug [
 { #category : #accessing }
 AlbTextEditor class >> isDebug: aBoolean [
 	isDebug := aBoolean
+]
+
+{ #category : #'cursor - management' }
+AlbTextEditor >> addCursorAt: aTextIndex [
+	"Add a cursor at a given text index. Nothing happens if a cursor is already there"
+
+	self navigator
+		addCursorAt: aTextIndex;
+		apply
 ]
 
 { #category : #'api - shortcuts' }
@@ -106,14 +116,11 @@ AlbTextEditor >> copy: aFromIndex to: aToIndex [
 
 { #category : #'text - copy/paste' }
 AlbTextEditor >> copySelected [
-	"Copy currently selected text to the clipboard"
-	
+	"Copy currently selected text to the clipboard. Several selections are copied one per line"
+
 	self selection isEmpty
 		ifTrue: [ ^ self ].
-		
-	self
-		copy: self selection from
-		to: self selection to
+	Clipboard clipboardText: (String cr join: self selectedTexts)
 ]
 
 { #category : #accessing }
@@ -132,10 +139,10 @@ AlbTextEditor >> cursor: aCursor [
 
 { #category : #accessing }
 AlbTextEditor >> cursors [
+	"Return all cursors (the primary one included) sorted by text position"
 
-	self deprecated: 'Use #cursor'.
-
-	^  { self cursor } 
+	<return: #Array of: #AlbTextEditorCursor>
+	^ ((self secondaryCursors copyWith: self cursor) asSortedCollection: [ :a :b | a position <= b position ]) asArray
 ]
 
 { #category : #'text - copy/paste' }
@@ -153,14 +160,20 @@ AlbTextEditor >> cut: aFromIndex to: aToIndex [
 { #category : #'text - copy/paste' }
 AlbTextEditor >> cutSelected [
 	"Copy currently selected text to the clipboard and remove it from the editor.
+	Several selections are copied one per line and each of them is removed.
 	Note: I update the cursor location and selection"
-	
+
 	self selection isEmpty
 		ifTrue: [ ^ self ].
-	
-	self
-		cut: self selection from
-		to: self selection to
+	self selectedTexts size > 1
+		ifFalse: [
+			^ self
+				cut: self selection from
+				to: self selection to ].
+	self copySelected.
+	self deleter
+		selected;
+		delete
 ]
 
 { #category : #initialization }
@@ -260,6 +273,12 @@ AlbTextEditor >> hasEventHandlerAttribute [
 	^ hasEventHandlerAttribute ifNil: [ false ]
 ]
 
+{ #category : #testing }
+AlbTextEditor >> hasMultipleCursors [
+
+	^ self secondaryCursors notEmpty
+]
+
 { #category : #'text - selection' }
 AlbTextEditor >> hasSelection [
 	"Return true of there is at least one selected character, false otherwise"
@@ -285,17 +304,15 @@ AlbTextEditor >> history: aTextEditorHistory [
 AlbTextEditor >> initialize [
 
 	super initialize.
-
 	hasEventHandlerAttribute := false.
 	filter := AlbTextEditorNoInputFilter new.
 	cursor := self defaultCursor.
+	secondaryCursors := OrderedCollection new.
 	selection := self defaultSelection.
 	selectionRecorder := self defaultSelectionRecorder.
 	shortcuts := AlbTextEditorShortcuts new.
 	history := AlbTextEditorHistory new.
-
 	isFocused := false.
-
 	self text: self defaultText
 ]
 
@@ -765,6 +782,16 @@ AlbTextEditor >> removeEditorShortcuts: aCollectionOfTextEditorShortcut [
 	aCollectionOfTextEditorShortcut do: [ :eachShortcut | self removeEditorShortcut: eachShortcut ]
 ]
 
+{ #category : #'cursor - management' }
+AlbTextEditor >> removeSecondaryCursors [
+	"Keep only the primary cursor"
+
+	self hasMultipleCursors ifFalse: [ ^ self ].
+	self navigator
+		removeSecondaryCursors;
+		apply
+]
+
 { #category : #'api - save state' }
 AlbTextEditor >> restoreState: aTextEditorMemento [
 
@@ -775,24 +802,20 @@ AlbTextEditor >> restoreState: aTextEditorMemento [
 AlbTextEditor >> restoreText: aText [
 
 	"before changing the text we must unsubscribe from existing one"
-
 	text ifNotNil: [ text unsubscribe: self ].
 	self history setUpToStart.
 	cursor := self defaultCursor.
-
+	secondaryCursors := OrderedCollection new.
 	text := aText.
 	" then subscribe to internal text state change (insertion/deletion/attribute change) "
 	self initializeText: text.
-
 	"Replacing text instance means that we can not guarantee structural integrity
 	of existing cache and have to rebuild it invalidating the whole underlying model structure"
 	segmentCollector
 		ifNil: [ segmentCollector := self newSegmentCollector ]
 		ifNotNil: [ segmentCollector resetCache ].
 	segmentCollector text: text.
-
 	self onTextReplaced.
-
 	"notify UI about structural update"
 	self notifyChanged
 ]
@@ -809,6 +832,13 @@ AlbTextEditor >> saveState: aTextEditorMemento [
 	<return: #AlbTextEditorMemento>
 	
 	^ aTextEditorMemento saveStateOf: self
+]
+
+{ #category : #'accessing - cursors' }
+AlbTextEditor >> secondaryCursors [
+	"Return the additional cursors, besides the primary #cursor"
+
+	^ secondaryCursors ifNil: [ secondaryCursors := OrderedCollection new ]
 ]
 
 { #category : #accessing }
@@ -854,6 +884,15 @@ AlbTextEditor >> selectedText [
 		  ifTrue: [
 		  self text from: self selection from + 1 to: self selection to ]
 		  ifFalse: [ self text from: 1 to: 0 ]
+]
+
+{ #category : #'text - copy/paste' }
+AlbTextEditor >> selectedTexts [
+	"Return the text of every selected interval, in text order"
+
+	^ Array streamContents: [ :aStream |
+		self selection do: [ :eachMonotoneSelection |
+			aStream nextPut: (self text from: eachMonotoneSelection from + 1 to: eachMonotoneSelection to) asString ] ]
 ]
 
 { #category : #'api - modification' }

@@ -13,7 +13,11 @@ Class {
 		'operations',
 		'dueTo',
 		'shouldHistorize',
-		'nextTextPosition'
+		'nextPositions',
+		'cursorsToAdd',
+		'positionsToRemove',
+		'shouldRemoveSecondaries',
+		'shouldMergeWithinSelection'
 	],
 	#category : #'Album-Model-Operators'
 }
@@ -33,19 +37,53 @@ AlbTextEditorNavigator >> addAtScreenPosition: aScreenPosition [
 	self moveToScreenPosition: aScreenPosition 
 ]
 
+{ #category : #'cursor - management' }
+AlbTextEditorNavigator >> addCursorAt: aTextPosition [
+	"Add a new cursor at a given text position, in addition to the existing ones"
+
+	self privateAssertPosition: aTextPosition.
+	cursorsToAdd add: aTextPosition
+]
+
 { #category : #'api - processing' }
 AlbTextEditorNavigator >> apply [
-	| prevTextPosition |
-	
-	prevTextPosition := self cursor position.
-	nextTextPosition := prevTextPosition.
-	operations do: [ :anOperation| anOperation performOn: self ].
-	
+
+	| previousPositions toRemove moves |
+	previousPositions := editor cursors collect: [ :each | each position ].
+	operations do: [ :anOperation | anOperation performOn: self ].
+
+	toRemove := self privateCursorsToRemove.
+	moves := OrderedCollection new.
+	nextPositions keysAndValuesDo: [ :aCursor :aPosition |
+		(toRemove includes: aCursor) ifFalse: [
+			moves add: aCursor -> (aCursor position -> (self privateNormalizePosition: aPosition)) ] ].
+
+	"first remove the cursors from their old location, then update the model,
+	and only then add them back, so that cursors sharing a segment do not hide each other"
+	toRemove do: [ :each | self notifyCursorRemoved: each ].
+	moves do: [ :each | self notifyCursorRemoved: (AlbTextEditorCursor position: each value key) ].
+
+	moves do: [ :each |
+		each key position: each value value.
+		shouldResetDesiredCoordinate ifTrue: [ each key resetDesiredCoordinate ] ].
+	editor secondaryCursors removeAll: toRemove.
+	cursorsToAdd do: [ :aPosition |
+		editor secondaryCursors add: (AlbTextEditorCursor position: (self privateNormalizePosition: aPosition)) ].
+	self privateMergeCursors do: [ :each | self notifyCursorRemoved: each ].
+
+	self selection ifEmpty: [ editor cursors do: [ :each | self notifyCursorAdded: each ] ].
+
+	moves do: [ :each |
+		each value key ~= each value value ifTrue: [
+			editor dispatchEvent: (AlbCursorMovedEvent
+				cursor: each key
+				from: each value key
+				to: each value value
+				dueTo: (dueTo ifNil: [ self ])) ] ].
 	shouldHistorize ifTrue: [
 		editor history
-			cursorsMovedFrom: {prevTextPosition} to: { nextTextPosition } ].
-
-	self privateMoveCursor: self cursor to: nextTextPosition.
+			cursorsMovedFrom: previousPositions
+			to: (editor cursors collect: [ :each | each position ]) ].
 	dueTo := nil
 ]
 
@@ -61,11 +99,16 @@ AlbTextEditorNavigator >> dueTo: aTextEditorOperator [
 
 { #category : #initialization }
 AlbTextEditorNavigator >> initialize [
+
 	super initialize.
 	operations := OrderedCollection new.
+	nextPositions := IdentityDictionary new.
+	cursorsToAdd := OrderedCollection new.
+	positionsToRemove := OrderedCollection new.
+	shouldRemoveSecondaries := false.
+	shouldMergeWithinSelection := false.
 	shouldResetDesiredCoordinate := true.
-	shouldHistorize := false.
-
+	shouldHistorize := false
 ]
 
 { #category : #'api - configuration' }
@@ -84,97 +127,110 @@ AlbTextEditorNavigator >> move: aCursor to: aTextPosition [
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveBy: aDelta [
-	"Move all cursors by a given delta. The operation is only applied on existing cursor, not the ones that will be added"
+	"Move all cursors by a given delta. The operation is only applied on existing cursors, not the ones that will be added"
 
-	operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: self cursor) delta: aDelta)
+	editor cursors do: [ :eachCursor |
+		operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: eachCursor) delta: aDelta) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveDown [
 	"Move all cursors down one line"
 
-	operations add: (AlbTextEditorNavigatorMoveDownOperation cursor: self cursor)
+	editor cursors do: [ :eachCursor |
+		operations add: (AlbTextEditorNavigatorMoveDownOperation cursor: eachCursor) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveLeft [
+	"Move all cursors one to the left"
 
-	| delta |
-	delta := -1.
-	(self hasString: String crlf beforeCursor: self cursor) ifTrue: [ delta := -2 ].
-	operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: self cursor) delta: delta)
+	editor cursors do: [ :eachCursor |
+		| delta |
+		delta := -1.
+		(self hasString: String crlf beforeCursor: eachCursor) ifTrue: [ delta := -2 ].
+		operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: eachCursor) delta: delta) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveRight [
 	"Move all cursors one to the right"
-	| delta |
-	delta := 1.
-	(self hasString: String crlf afterCursor: self cursor) ifTrue: [ delta := 2 ].
-	operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: self cursor) delta: delta)
+
+	editor cursors do: [ :eachCursor |
+		| delta |
+		delta := 1.
+		(self hasString: String crlf afterCursor: eachCursor) ifTrue: [ delta := 2 ].
+		operations add: ((AlbTextEditorNavigatorMoveByOperation cursor: eachCursor) delta: delta) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveTo: aTextPosition [
 	"Move all cursors to a given position (basically, remove all cursors except one)"
+
 	self privateAssertPosition: aTextPosition.
-
-	operations add: ((AlbTextEditorNavigatorMoveToOperation cursor: self cursor) position: aTextPosition).
-
+	shouldRemoveSecondaries := true.
+	operations add: ((AlbTextEditorNavigatorMoveToOperation cursor: self cursor) position: aTextPosition)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveToEndNextWord [
 	"Move all cursors to the end of the next word"
 
-	operations add: (AlbTextEditorNavigatorMoveToEndNextWordOperation cursor: self cursor)
+	editor cursors do: [ :eachCursor |
+		operations add: (AlbTextEditorNavigatorMoveToEndNextWordOperation cursor: eachCursor) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveToLineEnd [
 	"Move all cursors to the end of their corresponding lines"
 
-	operations add: (AlbTextEditorNavigatorMoveToLineEndOperation cursor: self cursor)
+	editor cursors do: [ :eachCursor |
+		operations add: (AlbTextEditorNavigatorMoveToLineEndOperation cursor: eachCursor) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveToLineStart [
 	"Move all cursors to the start of their corresponding lines"
 
-	operations add: (AlbTextEditorNavigatorMoveToLineStartOperation cursor: self cursor)
+	editor cursors do: [ :eachCursor |
+		operations add: (AlbTextEditorNavigatorMoveToLineStartOperation cursor: eachCursor) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveToScreenPosition: aScreenPosition [
 	"Move all cursors to a given screen position (basically, remove all cursors except one)"
-	operations add: ((AlbTextEditorNavigatorMoveAtScreenPositionOperation cursor: self cursor) screenPosition: aScreenPosition).
+
+	shouldRemoveSecondaries := true.
+	operations add: ((AlbTextEditorNavigatorMoveAtScreenPositionOperation cursor: self cursor) screenPosition: aScreenPosition)
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveToStartPreviousWord [
 	"Move all cursors to the start of the previous word"
 
-	operations add: (AlbTextEditorNavigatorMoveToStartPreviousWordOperation cursor: self cursor)
+	editor cursors do: [ :eachCursor |
+		operations add: (AlbTextEditorNavigatorMoveToStartPreviousWordOperation cursor: eachCursor) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveUp [
 	"Move all cursors up one line"
 
-	operations add: (AlbTextEditorNavigatorMoveUpOperation cursor: self cursor)
+	editor cursors do: [ :eachCursor |
+		operations add: (AlbTextEditorNavigatorMoveUpOperation cursor: eachCursor) ]
 ]
 
 { #category : #'api - configuration' }
 AlbTextEditorNavigator >> moveWithin: anInterval [
 	"Move all cursors so that they end up within a given text interval.
-	The operation is only applied on existing cursor, not the ones that will be added"
-	| aCursor |
+	The operation is only applied on existing cursors, not the ones that will be added"
 
-	aCursor := self cursor.
-	aCursor position < anInterval first
-		ifTrue: [ self move: aCursor to: anInterval first ]
-		ifFalse: [ aCursor position > anInterval last
-			ifTrue: [ self move: aCursor to: anInterval last ] ]
+	editor cursors do: [ :eachCursor |
+		eachCursor position < anInterval first
+			ifTrue: [ self move: eachCursor to: anInterval first ]
+			ifFalse: [
+				eachCursor position > anInterval last
+					ifTrue: [ self move: eachCursor to: anInterval last ] ] ]
 ]
 
 { #category : #'private - accessing' }
@@ -182,6 +238,77 @@ AlbTextEditorNavigator >> privateAssertPosition: aTextPosition [
 	self
 		assert: [ aTextPosition between: 0 and: self text size ]
 		description: [ 'Cursor position ({1}) must be within the interval [0.. {2}]' format: { aTextPosition . self text size } ].
+]
+
+{ #category : #private }
+AlbTextEditorNavigator >> privateCursorToKeepAmong: aCollectionOfCursors within: aMonotoneSelection [
+	"Prefer a cursor at an edge of the selection: the primary one if it is there, otherwise the one at the end"
+
+	| atEdges |
+	atEdges := aCollectionOfCursors select: [ :eachCursor |
+		eachCursor position = aMonotoneSelection from or: [ eachCursor position = aMonotoneSelection to ] ].
+	atEdges ifEmpty: [ atEdges := aCollectionOfCursors ].
+	^ atEdges
+		detect: [ :eachCursor | eachCursor == editor cursor ]
+		ifNone: [
+			atEdges
+				detect: [ :eachCursor | eachCursor position = aMonotoneSelection to ]
+				ifNone: [ atEdges first ] ]
+]
+
+{ #category : #private }
+AlbTextEditorNavigator >> privateCursorsToRemove [
+	"Return the cursors to be removed by this navigation. The primary cursor is never part of it:
+	if it must be removed while other cursors survive, one of them is promoted to primary first"
+
+	<return: #IdentitySet>
+	| toRemove |
+	toRemove := IdentitySet new.
+	shouldRemoveSecondaries ifTrue: [ toRemove addAll: editor secondaryCursors ].
+	positionsToRemove do: [ :aPosition |
+		editor cursors
+			detect: [ :each | each position = aPosition ]
+			ifFound: [ :aCursor | toRemove add: aCursor ] ].
+	(toRemove includes: editor cursor) ifFalse: [ ^ toRemove ].
+	toRemove remove: editor cursor.
+	(editor secondaryCursors reject: [ :each | toRemove includes: each ]) ifNotEmpty: [ :theSurvivors |
+		| anOldPrimary |
+		anOldPrimary := editor cursor.
+		editor secondaryCursors remove: theSurvivors first.
+		editor cursor: theSurvivors first.
+		editor secondaryCursors add: anOldPrimary.
+		toRemove add: anOldPrimary ].
+	^ toRemove
+]
+
+{ #category : #private }
+AlbTextEditorNavigator >> privateMergeCursors [
+	"Merge cursors that meet and return the removed ones:
+	- cursors sharing a position (the primary one wins)
+	- cursors within the same selection (one cursor per selection is kept, at its edge)"
+
+	<return: #Collection of: #AlbTextEditorCursor>
+	| removed occupiedPositions |
+	removed := OrderedCollection new.
+	occupiedPositions := Set with: editor cursor position.
+	editor secondaryCursors copy do: [ :eachCursor |
+		(occupiedPositions includes: eachCursor position)
+			ifTrue: [
+				editor secondaryCursors remove: eachCursor.
+				removed add: eachCursor ]
+			ifFalse: [ occupiedPositions add: eachCursor position ] ].
+	shouldMergeWithinSelection ifFalse: [ ^ removed ].
+	self selection do: [ :eachMonotoneSelection |
+		| inside keeper |
+		inside := editor cursors select: [ :eachCursor |
+			eachCursor position between: eachMonotoneSelection from and: eachMonotoneSelection to ].
+		inside size > 1 ifTrue: [
+			keeper := self privateCursorToKeepAmong: inside within: eachMonotoneSelection.
+			inside do: [ :eachCursor |
+				eachCursor == keeper ifFalse: [
+					self privateRemoveCursor: eachCursor keeping: keeper.
+					removed add: eachCursor ] ] ] ].
+	^ removed
 ]
 
 { #category : #private }
@@ -216,12 +343,46 @@ AlbTextEditorNavigator >> privateNormalizePosition: aTextPosition [
 
 { #category : #'private - registration' }
 AlbTextEditorNavigator >> privateRegisterForMove: aCursor by: aDelta [
-	nextTextPosition := self cursor position + aDelta
+
+	nextPositions at: aCursor put: aCursor position + aDelta
 ]
 
 { #category : #'private - registration' }
 AlbTextEditorNavigator >> privateRegisterForMove: aCursor to: aTextPosition [
-	nextTextPosition := aTextPosition
+
+	nextPositions at: aCursor put: aTextPosition
+]
+
+{ #category : #private }
+AlbTextEditorNavigator >> privateRemoveCursor: aCursor keeping: aKeptCursor [
+	"Remove aCursor from the editor. If it is the primary cursor, the kept one becomes primary"
+
+	aCursor == editor cursor
+		ifTrue: [
+			editor secondaryCursors remove: aKeptCursor.
+			editor cursor: aKeptCursor ]
+		ifFalse: [ editor secondaryCursors remove: aCursor ]
+]
+
+{ #category : #'cursor - management' }
+AlbTextEditorNavigator >> removeAt: aTextPosition [
+	"Remove the cursor at a given text position (used by the history)"
+
+	self removeCursorAt: aTextPosition
+]
+
+{ #category : #'cursor - management' }
+AlbTextEditorNavigator >> removeCursorAt: aTextPosition [
+	"Remove the cursor at a given text position. The last remaining cursor is never removed"
+
+	positionsToRemove add: aTextPosition
+]
+
+{ #category : #'cursor - management' }
+AlbTextEditorNavigator >> removeSecondaryCursors [
+	"Keep only the primary cursor"
+
+	shouldRemoveSecondaries := true
 ]
 
 { #category : #'api - events' }
@@ -243,6 +404,14 @@ AlbTextEditorNavigator >> withHistorization [
 	"Add cursor movement to the history sos that it can be undone / redone"
 	
 	shouldHistorize := true
+]
+
+{ #category : #accessing }
+AlbTextEditorNavigator >> withMergingWithinSelection [
+	"Also merge cursors that end up within the same selection, keeping one per selection.
+	Only meaningful while selections are being extended: other operations may move cursors before the selection is updated"
+
+	shouldMergeWithinSelection := true
 ]
 
 { #category : #'api - configuration' }

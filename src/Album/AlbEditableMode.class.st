@@ -52,6 +52,8 @@ AlbEditableMode >> defaultShortcuts [
 		  AlbEditorMoveCursorRightShortcut new.
 		  AlbEditorMoveCursorUpShortcut new.
 		  AlbEditorMoveCursorDownShortcut new.
+		  AlbEditorAddCursorAboveShortcut new.
+		  AlbEditorAddCursorBelowShortcut new.
 		  AlbEditorMoveCursorToPreviousWordShortcut new.
 		  AlbEditorMoveCursorToNextWordShortcut new.
 		  AlbEditorMoveCursorToLineStartShortcut new.

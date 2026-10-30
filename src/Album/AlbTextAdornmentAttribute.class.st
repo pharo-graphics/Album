@@ -7,8 +7,7 @@ Class {
 	#name : #AlbTextAdornmentAttribute,
 	#superclass : #BlTextAttribute,
 	#instVars : [
-		'shouldAppend',
-		'renderingStrategy'
+		'shouldAppend'
 	],
 	#category : #'Album-Attributes'
 }
@@ -18,7 +17,7 @@ AlbTextAdornmentAttribute >> affect: aTTextEditorTextualPiece in: anEditorElemen
 	"Return an element that should affect (either append or replace) a provided text piece"
 	<return: #SequenceableCollection of: #BlElement>
 	
-	^ self renderingStrategy affect: aTTextEditorTextualPiece in: anEditorElement
+	^ self doAffect: aTTextEditorTextualPiece in: anEditorElement
 ]
 
 { #category : #accessing }
@@ -27,18 +26,8 @@ AlbTextAdornmentAttribute >> beAppend [
 ]
 
 { #category : #accessing }
-AlbTextAdornmentAttribute >> beLazy [
-	self renderingStrategy: AlbTextAdornmentAttributeTaskItRenderingStrategy new.
-]
-
-{ #category : #accessing }
 AlbTextAdornmentAttribute >> beReplace [
 	shouldAppend := false
-]
-
-{ #category : #accessing }
-AlbTextAdornmentAttribute >> beSync [
-	self renderingStrategy: AlbTextAdornmentAttributeSyncRenderingStrategy new.
 ]
 
 { #category : #accessing }
@@ -53,8 +42,7 @@ AlbTextAdornmentAttribute >> doAffect: aTTextEditorTextualPiece in: anEditorElem
 AlbTextAdornmentAttribute >> initialize [
 	super initialize.
 	
-	shouldAppend := false.
-	self renderingStrategy: AlbTextAdornmentAttributeSyncRenderingStrategy new.
+	shouldAppend := false
 ]
 
 { #category : #initialization }
@@ -91,21 +79,6 @@ AlbTextAdornmentAttribute >> mayHaveExternalReferences [
 	"Answer if this attribute can have references to some external objects like AST nodes or computation results"
 
 	^ true
-]
-
-{ #category : #accessing }
-AlbTextAdornmentAttribute >> renderingStrategy [
-	<return: #AlbTextAdornmentAttributeRenderingStrategy>
-	^ renderingStrategy
-]
-
-{ #category : #accessing }
-AlbTextAdornmentAttribute >> renderingStrategy: aTextAdornmentAttributeRenderingStrategy [
-	self 
-		assert: [ aTextAdornmentAttributeRenderingStrategy isNotNil ] 
-		description: [ 'Text attribute rendering strategy must be non-nil' ].
-	aTextAdornmentAttributeRenderingStrategy attribute: self.
-	renderingStrategy := aTextAdornmentAttributeRenderingStrategy
 ]
 
 { #category : #testing }

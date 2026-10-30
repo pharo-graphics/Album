@@ -7,7 +7,7 @@ For example 'a|b|c' is the text abc with cursors at positions 1 and 2.
 "
 Class {
 	#name : #AlbMultiCursorTest,
-	#superclass : #TestCase,
+	#superclass : #BlSpaceTestCase,
 	#category : #'Album-Tests-Operators'
 }
 
@@ -30,7 +30,7 @@ AlbMultiCursorTest >> backspaceOracle: aSpec [
 AlbMultiCursorTest >> cursorElementsIn: anEditorElement [
 
 	| found |
-	anEditorElement forceLayout.
+	space settle.
 	found := OrderedCollection new.
 	anEditorElement allChildrenBreadthFirstDo: [ :each |
 		(each isKindOf: AlbCursorElement) ifTrue: [ found add: each ] ].
@@ -59,19 +59,16 @@ AlbMultiCursorTest >> editorFrom: aSpec [
 
 { #category : #helpers }
 AlbMultiCursorTest >> elementFrom: aSpec [
-	"Return a laid out editor element, for operations that need the rendered text"
+	"Return an editor element shown in the test space, for operations that need the rendered text"
 
-	| anElement aSpace |
+	| anElement |
 	anElement := AlbEditorElement new.
 	anElement constraintsDo: [ :c |
 		c horizontal exact: 400.
 		c vertical exact: 300 ].
-	aSpace := BlSpace new.
-	aSpace root addChild: anElement.
 	anElement text: (self editorFrom: aSpec) text.
-	anElement forceLayout.
-	self setCursorsOf: anElement editor from: aSpec.
-	anElement forceLayout.
+	space deferAndSettle: [ space root addChild: anElement ].
+	space deferAndSettle: [ self setCursorsOf: anElement editor from: aSpec ].
 	^ anElement
 ]
 
@@ -158,9 +155,8 @@ AlbMultiCursorTest >> test_add_cursor_below_and_above [
 	| element editor |
 	element := self elementFrom: (self lines: #( 'abc' 'd|ef' 'ghi' )).
 	editor := element editor.
-	AlbEditorAddCursorBelowShortcut new performOnEditor: editor element: element dueTo: nil.
-	element forceLayout.
-	AlbEditorAddCursorAboveShortcut new performOnEditor: editor element: element dueTo: nil.
+	space deferAndSettle: [ AlbEditorAddCursorBelowShortcut new performOnEditor: editor element: element dueTo: nil ].
+	space deferAndSettle: [ AlbEditorAddCursorAboveShortcut new performOnEditor: editor element: element dueTo: nil ].
 	self assert: (self specOf: editor) equals: (self lines: #( 'a|bc' 'd|ef' 'g|hi' ))
 ]
 
@@ -278,7 +274,7 @@ AlbMultiCursorTest >> test_escape_keeps_only_the_primary_cursor [
 
 	| element |
 	element := self elementFrom: 'a|b|c|'.
-	AlbEditorDeselectAllShortcut new performOnEditor: element editor element: element dueTo: nil.
+	space deferAndSettle: [ AlbEditorDeselectAllShortcut new performOnEditor: element editor element: element dueTo: nil ].
 	self assert: (self specOf: element editor) equals: 'a|bc'
 ]
 
@@ -302,9 +298,10 @@ AlbMultiCursorTest >> test_extend_selection_down_at_every_cursor [
 
 	| element |
 	element := self elementFrom: (self lines: #( '|abc' 'def' '|ghi' 'jkl' )).
-	element editor selecter
-		moveOneDown;
-		select.
+	space deferAndSettle: [
+		element editor selecter
+			moveOneDown;
+			select ].
 	self assert: (self specOf: element editor) equals: (self lines: #( 'abc' '|def' 'ghi' '|jkl' )).
 	self assert: (self selectionOf: element editor) equals: { 0 -> 4. 8 -> 12 }
 ]
@@ -407,9 +404,10 @@ AlbMultiCursorTest >> test_merged_cursors_remove_their_elements [
 
 	| element |
 	element := self elementFrom: 'a|b|cd|'.
-	element editor deleter
-		oneBeforeCursor;
-		delete.
+	space deferAndSettle: [
+		element editor deleter
+			oneBeforeCursor;
+			delete ].
 	self assert: (self specOf: element editor) equals: '|c|'.
 	self assert: (self cursorElementsIn: element) size equals: 2
 ]
@@ -430,9 +428,10 @@ AlbMultiCursorTest >> test_move_down_moves_every_cursor [
 
 	| element |
 	element := self elementFrom: (self lines: #( 'a|bc|' 'def' 'ghi' )).
-	element editor navigator
-		moveDown;
-		apply.
+	space deferAndSettle: [
+		element editor navigator
+			moveDown;
+			apply ].
 	self assert: (self specOf: element editor) equals: (self lines: #( 'abc' 'd|ef|' 'ghi' ))
 ]
 
@@ -672,13 +671,14 @@ AlbMultiCursorTest >> test_typing_over_selections_keeps_one_cursor_element_per_c
 
 	| element |
 	element := self elementFrom: '|one |two |three'.
-	element editor selecter
-		extendToNextWordEnd;
-		select.
-	element editor inserter
-		atCursor;
-		string: 'X';
-		insert.
+	space deferAndSettle: [
+		element editor selecter
+			extendToNextWordEnd;
+			select.
+		element editor inserter
+			atCursor;
+			string: 'X';
+			insert ].
 	self assert: (self specOf: element editor) equals: 'X| X| X|'.
 	self assert: (self cursorElementsIn: element) size equals: 3
 ]

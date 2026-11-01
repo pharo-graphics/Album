@@ -39,7 +39,7 @@ AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer [
 		in: [ :sp | sp root addChild: anEditor ];
 		host: host;
 		title: host asString;
-		extent: 200 asPoint;
+		extent: 200 @ 200;
 		show
 ]
 
@@ -56,7 +56,7 @@ AlbExamplesSeeClassSide class >> example_AlexandrieFixedMeasurer0 [
 	BlSpace new in: [ :sp | sp root addChild: element ];
 		host: host;
 		title: host asString;
-		extent: 200 asPoint;
+		extent: 200 @ 200;
 		show.
 ]
 
@@ -91,7 +91,7 @@ TTTCCATTCAGATGCGACCCCAGGTCAGGCGGGGCCACCCGCTGAGTTGAGGC'.
 	space := BlSpace new
 		         host: host;
 		         title: host asString;
-		         extent: 800 asPoint.
+		         extent: 800 @ 800.
 	space root
 		         addChild: root.
 	space show

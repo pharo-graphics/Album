@@ -8,8 +8,7 @@ Class {
 
 { #category : #'examples - measurement' }
 AlbTextEditorLayoutMeasurementExamples >> fit_content_Hello [
-	<gtExample>
-	<noTest>
+	<sampleInstance>
 	| anEditorElement |
 
 	anEditorElement := self newEditorElement: 'Hello'.

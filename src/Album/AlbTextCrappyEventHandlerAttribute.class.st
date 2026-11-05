@@ -29,6 +29,13 @@ AlbTextCrappyEventHandlerAttribute >> mayHaveExternalReferences [
 	^ true
 ]
 
+{ #category : #registration }
+AlbTextCrappyEventHandlerAttribute >> registerInEditor: aTextEditor [
+	"Called by aTextEditor when I am part of its text. I receive the cursor events directly through #handleEvent:, so I have nothing to hand over"
+
+	
+]
+
 { #category : #comparing }
 AlbTextCrappyEventHandlerAttribute >> type [
 	^ self

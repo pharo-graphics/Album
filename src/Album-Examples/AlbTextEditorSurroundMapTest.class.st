@@ -1,11 +1,11 @@
 Class {
-	#name : #AlbTextEditorSurroundMapExamples,
+	#name : #AlbTextEditorSurroundMapTest,
 	#superclass : #TestCase,
 	#category : #'Album-Examples-Editor'
 }
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> surroundSet [
+AlbTextEditorSurroundMapTest >> surroundSet [
 
 	| definitions |
 
@@ -24,7 +24,7 @@ AlbTextEditorSurroundMapExamples >> surroundSet [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> testSurroundSetClosing [
+AlbTextEditorSurroundMapTest >> testSurroundSetClosing [
 
 	| opening |
 	opening := self surroundSet
@@ -36,7 +36,7 @@ AlbTextEditorSurroundMapExamples >> testSurroundSetClosing [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> testSurroundSetClosingAbsent [
+AlbTextEditorSurroundMapTest >> testSurroundSetClosingAbsent [
 
 	| definition |
 	definition := self surroundSet
@@ -48,7 +48,7 @@ AlbTextEditorSurroundMapExamples >> testSurroundSetClosingAbsent [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningAbsent [
+AlbTextEditorSurroundMapTest >> testSurroundSetOpeningAbsent [
 
 	| definition |
 
@@ -62,7 +62,7 @@ AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningAbsent [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningConditionRejects [
+AlbTextEditorSurroundMapTest >> testSurroundSetOpeningConditionRejects [
 
 	| definition |
 	definition := self surroundSet
@@ -75,7 +75,7 @@ AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningConditionRejects [
 ]
 
 { #category : #examples }
-AlbTextEditorSurroundMapExamples >> testSurroundSetOpeningPresent [
+AlbTextEditorSurroundMapTest >> testSurroundSetOpeningPresent [
 	
 	| closing |
 

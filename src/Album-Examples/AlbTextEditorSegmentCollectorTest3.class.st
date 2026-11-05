@@ -1,11 +1,11 @@
 Class {
-	#name : #AlbTextEditorSegmentCollectorExamples2,
+	#name : #AlbTextEditorSegmentCollectorTest3,
 	#superclass : #TestCase,
 	#category : #'Album-Examples-Editor'
 }
 
 { #category : #examples }
-AlbTextEditorSegmentCollectorExamples2 >> testRetrieveLimitPlusOne [
+AlbTextEditorSegmentCollectorTest3 >> testRetrieveLimitPlusOne [
 	
 	| string limit editor collector |
 	limit := 500.
@@ -31,7 +31,7 @@ AlbTextEditorSegmentCollectorExamples2 >> testRetrieveLimitPlusOne [
 ]
 
 { #category : #examples }
-AlbTextEditorSegmentCollectorExamples2 >> testRetrieveWithinLimit [
+AlbTextEditorSegmentCollectorTest3 >> testRetrieveWithinLimit [
 
 	<gtExample>
 	| string cacheLimit limit editor collector |

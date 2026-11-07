@@ -447,6 +447,28 @@ AlbTextEditor >> notifyAttributesWithinCursor: aCollectionOfAttributes [
 				(eachAttribute wantsEvent: anEvent) ifTrue: [ eachAttribute handleEvent: anEvent ] ] ]
 ]
 
+{ #category : #'event handler attributes' }
+AlbTextEditor >> notifyCursorAttributesOfCursorPositions [
+	"Send an enter event to each event handler attribute of my text that contains one of my cursors, and a leave event to the others. Cursor attributes ignore repeated enter or leave events"
+
+	| intervals |
+	intervals := IdentityDictionary new.
+	text findAttributesSuchThat: [ :eachAttribute | eachAttribute isEventHandler ] indicesDo: [ :aStart :anEnd :anAttribute |
+			| previous |
+			previous := intervals at: anAttribute ifAbsent: [ aStart to: anEnd ].
+			intervals at: anAttribute put: ((previous first min: aStart) to: (previous last max: anEnd)) ].
+
+	intervals keysAndValuesDo: [ :anAttribute :anInterval |
+			| anEvent |
+			anEvent := (self cursors anySatisfy: [ :eachCursor | eachCursor position between: anInterval first and: anInterval last ])
+				           ifTrue: [ AlbTextCursorAttributeEnterEvent new ]
+				           ifFalse: [ AlbTextCursorAttributeLeaveEvent new ].
+			anEvent
+				textEditor: self;
+				interval: anInterval.
+			(anAttribute wantsEvent: anEvent) ifTrue: [ anAttribute handleEvent: anEvent ] ]
+]
+
 { #category : #'event firing' }
 AlbTextEditor >> notifyDeletedFrom: aFromIndex to: aToIndex [
 	self dispatchEvent: (AlbTextDeletedEvent new
@@ -756,12 +778,21 @@ AlbTextEditor >> redo [
 ]
 
 { #category : #'event handler attributes' }
-AlbTextEditor >> registerEventHandlerAttribute: anEventHandlerattribute from: aFromIndex to: aToIndex [
-	| eventHandlers |
+AlbTextEditor >> registerEventHandlerAttribute: anEventHandlerAttribute from: aFromIndex to: aToIndex [
+	"Remember that my text has event handler attributes, so that cursor moves notify them, and let the attribute register itself"
+
 	hasEventHandlerAttribute := true.
-	eventHandlers := anEventHandlerattribute eventDispatcher handlers.
-	anEventHandlerattribute  eventDispatcher removeEventHandlers.
-	eventHandlers do: [ :eachHandler | self addEventHandler: (BlEventForwarder forwardTo: eachHandler from: anEventHandlerattribute) ]	
+	anEventHandlerAttribute registerInEditor: self
+]
+
+{ #category : #'event handler attributes' }
+AlbTextEditor >> registerEventHandlerAttributesOfText [
+	"Register the event handler attributes already present in my text, so that they are notified as if they had been added after the text was set"
+
+	hasEventHandlerAttribute := false.
+	text
+		findAttributesSuchThat: [ :eachAttribute | eachAttribute isEventHandler ]
+		indicesDo: [ :aStart :anEnd :anAttribute | self registerEventHandlerAttribute: anAttribute from: aStart to: anEnd ]
 ]
 
 { #category : #'api - shortcuts' }
@@ -800,8 +831,8 @@ AlbTextEditor >> restoreState: aTextEditorMemento [
 
 { #category : #accessing }
 AlbTextEditor >> restoreText: aText [
-
 	"before changing the text we must unsubscribe from existing one"
+
 	text ifNotNil: [ text unsubscribe: self ].
 	self history setUpToStart.
 	cursor := self defaultCursor.
@@ -809,11 +840,10 @@ AlbTextEditor >> restoreText: aText [
 	text := aText.
 	" then subscribe to internal text state change (insertion/deletion/attribute change) "
 	self initializeText: text.
+	self registerEventHandlerAttributesOfText.
 	"Replacing text instance means that we can not guarantee structural integrity
 	of existing cache and have to rebuild it invalidating the whole underlying model structure"
-	segmentCollector
-		ifNil: [ segmentCollector := self newSegmentCollector ]
-		ifNotNil: [ segmentCollector resetCache ].
+	segmentCollector ifNil: [ segmentCollector := self newSegmentCollector ] ifNotNil: [ segmentCollector resetCache ].
 	segmentCollector text: text.
 	self onTextReplaced.
 	"notify UI about structural update"

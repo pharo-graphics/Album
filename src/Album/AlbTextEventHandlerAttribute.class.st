@@ -38,6 +38,16 @@ AlbTextEventHandlerAttribute >> isEventHandler [
 	^ true
 ]
 
+{ #category : #registration }
+AlbTextEventHandlerAttribute >> registerInEditor: aTextEditor [
+	"Called by aTextEditor when I am part of its text. Move my event handlers to aTextEditor so that the events it receives are forwarded to them"
+
+	| eventHandlers |
+	eventHandlers := self eventDispatcher handlers.
+	self eventDispatcher removeEventHandlers.
+	eventHandlers do: [ :eachHandler | aTextEditor addEventHandler: (BlEventForwarder forwardTo: eachHandler from: self) ]
+]
+
 { #category : #'api - event managing' }
 AlbTextEventHandlerAttribute >> wantsEvent: aBlEvent [
 

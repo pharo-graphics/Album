@@ -68,7 +68,7 @@ AlbTextElement >> assertCursorPosition: anIndex [
 { #category : #'cursor - accessing' }
 AlbTextElement >> cursorAt: aTextPosition ifFound: aFoundBlock ifNone: aNoneBlock [
 
-	(cursorElement notNil and: [ cursorElement textPosition = aTextPosition ])
+	(cursorElement isNotNil and: [ cursorElement textPosition = aTextPosition ])
 		ifTrue: [ ^ aFoundBlock value: cursorElement ].
 	^ self secondaryCursorElements
 		detect: [ :each | each textPosition = aTextPosition ]
@@ -87,7 +87,7 @@ AlbTextElement >> defaultMinWidth [
 { #category : #'cursor - accessing' }
 AlbTextElement >> hasCursor [
 
-	^ cursorElement notNil or: [ self secondaryCursorElements notEmpty ]
+	^ cursorElement isNotNil or: [ self secondaryCursorElements notEmpty ]
 ]
 
 { #category : #'cursor - accessing' }
@@ -167,7 +167,7 @@ AlbTextElement >> onLayout: aBounds context: aBlElementBoundsUpdateContext [
 AlbTextElement >> removeCursorAt: aTextIndex [
 	"Remove cursor at a given position"
 
-	(cursorElement notNil and: [ cursorElement textPosition = aTextIndex ]) ifTrue: [
+	(cursorElement isNotNil and: [ cursorElement textPosition = aTextIndex ]) ifTrue: [
 		| aRemoved |
 		aRemoved := cursorElement.
 		cursorElement removeFromParent.

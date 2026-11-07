@@ -22,7 +22,7 @@ AlbTextCursorAttribute >> enterAction [
 AlbTextCursorAttribute >> enterAction: aBlock [
 	"A Block in a form [ :aTextEditor :anEvent :aTextStart :aTextEnd | ]"
 	self 
-		assert: [ aBlock notNil ] 
+		assert: [ aBlock isNotNil ] 
 		description: [ 'Leave action should be initialized' ].
 	
 	enterAction := aBlock
@@ -57,7 +57,7 @@ AlbTextCursorAttribute >> leaveAction [
 AlbTextCursorAttribute >> leaveAction: aBlock [
 	"A Block in a form [ :aTextEditor :anEvent :aTextStart :aTextEnd | ]"
 	self 
-		assert: [ aBlock notNil ] 
+		assert: [ aBlock isNotNil ] 
 		description: [ 'Leave action should be initialized' ].
 
 	leaveAction := aBlock

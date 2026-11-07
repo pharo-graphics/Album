@@ -47,7 +47,7 @@ AlbTextHoverAttribute >> leaveAction [
 { #category : #accessing }
 AlbTextHoverAttribute >> leaveAction: aBlock [
 	self 
-		assert: [ aBlock notNil ] 
+		assert: [ aBlock isNotNil ] 
 		description: [ 'Leave action should be initialized' ].
 
 	leaveAction := aBlock

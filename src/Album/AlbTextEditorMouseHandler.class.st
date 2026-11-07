@@ -30,7 +30,7 @@ AlbTextEditorMouseHandler >> mouseDownEvent: anEvent [
 		              ifAbsent: [ nil ].
 
 	"Alt (Option on macOS) click toggles an additional cursor"
-	(anEvent modifiers isAlt and: [ aTextIndex notNil and: [ element isEditable ] ]) ifTrue: [
+	(anEvent modifiers isAlt and: [ aTextIndex isNotNil and: [ element isEditable ] ]) ifTrue: [
 		editor deselecter all deselect.
 		(editor cursors anySatisfy: [ :each | each position = aTextIndex ])
 			ifTrue: [ aNavigator removeCursorAt: aTextIndex ]

@@ -15,7 +15,7 @@ AlbTextClickAttribute >> action [
 { #category : #accessing }
 AlbTextClickAttribute >> action: aValuable [
 	self 
-		assert: [ aValuable notNil ] 
+		assert: [ aValuable isNotNil ] 
 		description: [ 'Action should be initialized' ].
 
 	action := aValuable

@@ -233,7 +233,7 @@ AlbTextEditorSegmentCollector >> computeForwardAt: anIndex [
 	"A loop to set the index to each new segment"
 	idx := 1.
 	seg := newSegments at: idx.
-	[ seg notNil and: [idx < newSegments size]] whileTrue: [ 
+	[ seg isNotNil and: [idx < newSegments size]] whileTrue: [ 
 		seg index: currSize + idx.
 		idx := idx + 1.
 		seg := newSegments at: idx

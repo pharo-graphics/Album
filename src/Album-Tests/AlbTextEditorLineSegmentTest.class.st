@@ -2102,7 +2102,7 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_2 [
 		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
 		ifNotFound: [].
 
-	self assert: aSegment notNil.
+	self assert: aSegment isNotNil.
 	self assert: aSegment index equals: 1.
 	self assert: aSegment delimiterLength equals: 1.
 	self assert: aSegment text asString equals: ('HA').
@@ -2122,7 +2122,7 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_3 [
 		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
 		ifNotFound: [].
 
-	self assert: aSegment notNil.
+	self assert: aSegment isNotNil.
 	self assert: aSegment index equals: 2.
 	self assert: aSegment delimiterLength equals: 2.
 	self assert: aSegment text asString equals: ''.
@@ -2141,7 +2141,7 @@ AlbTextEditorLineSegmentTest >> test_segment_in_HACrCrLfBA_at_4 [
 		ifFound: [ :aFoundSegment | aSegment := aFoundSegment ]
 		ifNotFound: [].
 
-	self assert: aSegment notNil.
+	self assert: aSegment isNotNil.
 	self assert: aSegment index equals: 2.
 	self assert: aSegment delimiterLength equals: 2.
 	self assert: aSegment text asString equals: ('').

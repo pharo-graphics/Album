@@ -101,7 +101,7 @@ AlbTextEditorOperatorTest >> test_editorCreatesOneCursorOnFocus [
 	anEditor := self test_editorHasNoFocusByDefault.
 	space deferAndSettle: [ space root addChild: anEditor ].
 
-	self assert: anEditor cursor notNil.
+	self assert: anEditor cursor isNotNil.
 
 	space deferAndSettle: [ anEditor requestFocus ].
 
@@ -130,7 +130,7 @@ AlbTextEditorOperatorTest >> test_editorOnAA [
 	anEditorElement := self newEditorElement: 'AA' asRopedText.
 	anEditor := anEditorElement editor.
 	
-	self assert: anEditor cursor notNil.
+	self assert: anEditor cursor isNotNil.
 	self assert: anEditor selection isEmpty.
 	
 	^ anEditorElement
@@ -144,7 +144,7 @@ AlbTextEditorOperatorTest >> test_editorOnAA_CR_BB [
 	anEditorElement := self newEditorElement: ('AA', String cr, 'BB' ) asRopedText.
 	anEditor := anEditorElement editor.
 	
-	self assert: anEditor cursor notNil.
+	self assert: anEditor cursor isNotNil.
 	self assert: anEditor selection isEmpty.
 	
 	^ anEditorElement
@@ -158,7 +158,7 @@ AlbTextEditorOperatorTest >> test_editorOnEmptyText [
 	anEditorElement := self newEditorElement: '' asRopedText.
 	anEditor := anEditorElement editor.
 	
-	self assert: anEditor cursor notNil.
+	self assert: anEditor cursor isNotNil.
 	self assert: anEditor selection isEmpty
 ]
 
@@ -170,7 +170,7 @@ AlbTextEditorOperatorTest >> test_editorOnMultilineText [
 	anEditorElement := self newEditorElementWithMultilineText.
 	anEditor := anEditorElement editor.
 	
-	self assert: anEditor cursor notNil.
+	self assert: anEditor cursor isNotNil.
 	self assert: anEditor selection isEmpty
 ]
 

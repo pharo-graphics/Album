@@ -61,12 +61,12 @@ AlbLineFlowLayout >> findClosestLineTo: aPoint [
 
 { #category : #testing }
 AlbLineFlowLayout >> hasElements [
-	^ lines notNil and: [ lines elements notNil ]
+	^ lines isNotNil and: [ lines elements isNotNil ]
 ]
 
 { #category : #testing }
 AlbLineFlowLayout >> hasLines [
-	^ lines notNil
+	^ lines isNotNil
 ]
 
 { #category : #initialization }

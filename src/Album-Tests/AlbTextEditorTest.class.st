@@ -10,10 +10,100 @@ Class {
 	#category : #'Album-Tests-TextEditor'
 }
 
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> addCursorAttributeLoggingIn: aCollection to: aText [
+	"Add to the 13 to 23 part of aText a cursor attribute that logs in aCollection when the cursor enters and leaves it"
+
+	(aText from: 13 to: 23)
+		onCursorEnter: [ :anEditor :anEvent :aFrom :aTo | aCollection add: #enter -> (aFrom to: aTo) ]
+		leave: [ :anEditor :anEvent :aFrom :aTo | aCollection add: #leave -> (aFrom to: aTo) ]
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> editorTextWithCursorAttributeLoggingIn: aCollection [
+	"Give the editor a text with a cursor attribute logging in aCollection, and forget the initial leave sent when the text is set"
+
+	textEditor text: (self textWithCursorAttributeLoggingIn: aCollection).
+	aCollection removeAll
+]
+
 { #category : #initialization }
 AlbTextEditorTest >> setUp [
 
 	textEditor := AlbTextEditor new
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> testCursorAttributeAddedToEditorTextFiresEnterAction [
+
+	| log |
+	log := OrderedCollection new.
+	textEditor text: 'Hello World- click here' asRopedText.
+	self addCursorAttributeLoggingIn: log to: textEditor text.
+	textEditor moveCursorTo: 15.
+	self assert: log asArray equals: { (#enter -> (13 to: 23)) }
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> testCursorAttributeDoesNotFireWhenCursorStaysOutside [
+
+	| log |
+	log := OrderedCollection new.
+	self editorTextWithCursorAttributeLoggingIn: log.
+	textEditor moveCursorTo: 2.
+	textEditor moveCursorTo: 5.
+	self assert: log isEmpty
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> testCursorAttributeFiresEnterActionOnceWhileCursorStaysInside [
+
+	| log |
+	log := OrderedCollection new.
+	self editorTextWithCursorAttributeLoggingIn: log.
+	textEditor moveCursorTo: 15.
+	textEditor moveCursorTo: 18.
+	self assert: log asArray equals: { (#enter -> (13 to: 23)) }
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> testCursorAttributeInInitialTextFiresEnterAction [
+
+	| log |
+	log := OrderedCollection new.
+	self editorTextWithCursorAttributeLoggingIn: log.
+	textEditor moveCursorTo: 15.
+	self assert: log asArray equals: { (#enter -> (13 to: 23)) }
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> testCursorAttributeInInitialTextFiresLeaveAction [
+
+	| log |
+	log := OrderedCollection new.
+	self editorTextWithCursorAttributeLoggingIn: log.
+	textEditor moveCursorTo: 15.
+	textEditor moveCursorTo: 2.
+	self assert: log asArray equals: {
+			(#enter -> (13 to: 23)).
+			(#leave -> (13 to: 23)) }
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> testSettingTextFiresLeaveActionOfCursorAttribute [
+
+	| log |
+	log := OrderedCollection new.
+	textEditor text: (self textWithCursorAttributeLoggingIn: log).
+	self assert: log asArray equals: { (#leave -> (13 to: 23)) }
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> testTextWithoutCursorAttributeHasNoEventHandlerAttribute [
+
+	textEditor text: (self textWithCursorAttributeLoggingIn: OrderedCollection new).
+	textEditor text: 'Hello' asRopedText.
+	self deny: textEditor hasEventHandlerAttribute
 ]
 
 { #category : #tests }
@@ -82,4 +172,14 @@ AlbTextEditorTest >> test_textFromString [
 AlbTextEditorTest >> test_textFromStringWithNonPrintableCharacter [
 	"non printable character test"
 	self should: [textEditor checkAndSetText: Character backspace asString] raise: Error.
+]
+
+{ #category : #'tests - cursor attributes' }
+AlbTextEditorTest >> textWithCursorAttributeLoggingIn: aCollection [
+	"Return the text 'Hello World- click here' whose 'click here' part (13 to 23) logs in aCollection when the cursor enters and leaves it"
+
+	| text |
+	text := 'Hello World- click here' asRopedText.
+	self addCursorAttributeLoggingIn: aCollection to: text.
+	^ text
 ]
